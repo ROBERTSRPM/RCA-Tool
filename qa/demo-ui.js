@@ -170,7 +170,7 @@ test('D-MOB-E2E', '375px: the full end-to-end flow (all 7 steps, 7-cause tree, a
   const calc = await e.buildAll(page, { sub, mode: 'mobile' });
   await e.finishVerify(page, { sub });
   await sub('report-mobile', 'Mobile report shows the same headline numbers', async () => {
-    const t = (await e.reportText(page)).toLowerCase(); ok(t.includes('annual loss $13,800') && t.includes('annual saving $10,350'), t.slice(0, 300)); await h.shot(page, 'mobile-e2e-report');
+    const t = (await e.reportText(page)).toLowerCase(); ok(t.includes('annual loss $13,800') && t.includes('expected saving (not yet verified) $10,350'), t.slice(0, 300)); await h.shot(page, 'mobile-e2e-report');
     const o = await h.overflowX(page); ok(o.sw <= o.cw, 'report overflow ' + o.sw);
   });
   await sub('tree-mobile', 'Mobile tree with 7 nodes: no page overflow, tree scroll container used', async () => {

@@ -71,8 +71,8 @@ Proposed stack: Next.js + TypeScript on Vercel, Supabase (Postgres, login, row-l
 |---|---|
 | 4.1 QA agent test plan and control inventory (`qa/test-plan.md`) | DONE |
 | 4.2 Automated browser tests, round 1: 263 checks, 241 passed, 15 defects (3 major) | DONE |
-| 4.3 Defects logged to `qa/defects.md`, fixed by build agent; independent retest (round 2) | IN PROGRESS |
-| 4.4 Same test suite run against the live Vercel URL | IN PROGRESS |
+| 4.3 Defects fixed by build agent; independent retest (round 2): all 15 round 1 defects fixed, DEF-16 not reproducible. Open: NEW-01 (minor, demo-mode two-tab race), NEW-02 (unconfirmed, sample missing once) | DONE |
+| 4.4 Suite run against the live site: 375 checks, 373 passed; 1 failure is NEW-01, 1 was a test expectation since corrected. Not covered: email flows, import offer, non-Chromium browsers, real touch devices | DONE |
 | 4.5 Data isolation tested by PM at database level and by QA through the app; full security review before paying customers | PARTLY DONE |
 
 ## Phase 5 - Launch

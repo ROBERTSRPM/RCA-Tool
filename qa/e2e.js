@@ -89,16 +89,21 @@ async function buildAll(page, { sub, mode }) {
   return calc;
 }
 
-async function finishVerify(page, { sub }) {
+async function finishVerify(page, { sub }, verified = false) {
   await f.fillVerify(page, { date: '2026-11-10', recurred: 'No, it has not recurred', after: IN.after, notes: 'No repeat in 3 weeks.' });
   await sub('verify-calc', 'Verify step money equals hand calc (before, after, saving, cost, payback)', async () => {
     const t = (await page.locator('dl').last().innerText()).replace(/\s+/g, ' ').toLowerCase();
     const has = (s) => ok(t.includes(s.toLowerCase()), 'expected "' + s + '" in: ' + t);
     has('Annual loss before ' + money(calc.annual));
     has('Annual loss after ' + money(calc.annualAfter));
-    has('Annual saving ' + money(calc.saving));
+    // labels changed in round 2 (intentional): saving is "Expected ... (not yet verified)" until the investigation is verified closed
+    has((verified ? 'Annual saving (verified) ' : 'Expected saving (not yet verified) ') + money(calc.saving));
     has('Total action cost ' + money(calc.actionCost));
     has('Payback period ' + months(calc.payback));
+    // cash / opportunity split, hand calc with default 100% lost for good: cash 1,800/event, opportunity 660 x 2.5 = 1,650/event
+    has('cash ' + money(1800 * IN.events) + ' · opportunity ' + money(1650 * IN.events));
+    has('cash ' + money(1800 * IN.after) + ' · opportunity ' + money(1650 * IN.after));
+    has('cash ' + money(1800 * (IN.events - IN.after)) + ' · opportunity ' + money(1650 * (IN.events - IN.after)));
   });
 }
 

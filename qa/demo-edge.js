@@ -107,6 +107,21 @@ test('D-PERS-1', 'Persistence: reload after each kind of edit (demo)', async ({ 
     await p2.close();
     ok(title === 'TAB1 TITLE' && asset === 'TAB2 ASSET', `after both tabs saved: title="${title}" asset="${asset}" (last writer replaced the whole problem object)`);
   });
+  await sub('concurrent-window', 'Two tabs edit different fields within the same ~350 ms autosave window: neither edit may be silently lost (3 tries)', async () => {
+    const lost = [];
+    for (let i = 0; i < 3; i++) {
+      const a = await page.context().newPage(); await a.goto(BASE + '/app/investigations/' + id); const b2 = await page.context().newPage(); await b2.goto(BASE + '/app/investigations/' + id);
+      await a.getByLabel('Site / area').waitFor(); await b2.getByLabel('Site / area').waitFor();
+      const sv = 'S' + i + Date.now(), wv = 'W' + i + Date.now();
+      await Promise.all([a.getByLabel('Site / area').fill(sv), b2.getByLabel('When did it happen?').fill(wv)]); await a.waitForTimeout(2500);
+      const notices = (await a.getByTestId('remote-notice').count()) + (await b2.getByTestId('remote-notice').count());
+      const c = await page.context().newPage(); await c.goto(BASE + '/app/investigations/' + id); await c.getByLabel('Site / area').waitFor();
+      const site = await c.getByLabel('Site / area').inputValue(), when = await c.getByLabel('When did it happen?').inputValue();
+      if (!(site === sv && when === wv)) lost.push(`try ${i}: site="${site}" (typed "${sv}") when="${when}" (typed "${wv}") notices=${notices}`);
+      await a.close(); await b2.close(); await c.close();
+    }
+    eq(lost, []);
+  });
 }));
 
 // ---------------------------------------------------------------- numbers
@@ -165,7 +180,7 @@ test('D-EDGE-NUM', 'Number fields: zero, negative, non-numeric, decimals, huge; 
     await sub('payback-' + name, `Verify: events after = "${after}" -> saving ${saving}, payback ${pay} (no divide-by-zero)`, async () => {
       await f.fillVerify(page, { after });
       const t = (await page.locator('dl').last().innerText()).replace(/\s+/g, ' ').toLowerCase();
-      ok(t.includes(('annual saving ' + saving).toLowerCase()), t); ok(t.includes(('payback period ' + pay).toLowerCase()), t); ok(!/nan|infinity/.test(t), t);
+      ok(t.includes(('expected saving (not yet verified) ' + saving).toLowerCase()), t); ok(t.includes(('payback period ' + pay).toLowerCase()), t); ok(!/nan|infinity/.test(t), t);
     });
   }
   await sub('payback-zero-cost', 'Action cost 0 with saving: payback "under 0.1 months"', async () => {
@@ -175,7 +190,7 @@ test('D-EDGE-NUM', 'Number fields: zero, negative, non-numeric, decimals, huge; 
   });
   await sub('report-no-after', 'Report without an after figure says "Not yet" and explains', async () => {
     await f.fillVerify(page, { after: '' }); const t = await e.reportText(page);
-    const tl = t.toLowerCase(); ok(tl.includes('annual saving not yet') && tl.includes('savings cannot be calculated'), t.slice(0, 400));
+    const tl = t.toLowerCase(); ok(tl.includes('expected saving (not yet verified) not yet') && tl.includes('savings cannot be calculated'), t.slice(0, 400));
   });
 }));
 function note_(s) { h.note('observation', s); }
@@ -210,7 +225,7 @@ test('D-EDGE-TEXT', 'Very long text, HTML/script text and special characters ren
   });
   await sub('no-xss', 'No script ran, no dialog opened, no injected elements anywhere', async () => {
     for (const u of ['/app', '/app/investigations/' + id + '#problem', '#report', '#cause', '#actions']) {
-      if (u.startsWith('#')) { await page.evaluate((x) => { location.hash = x; location.reload(); }, u); } else await page.goto(BASE + u);
+      if (u.startsWith('#')) { await page.evaluate((x) => { location.hash = x; }, u); await page.reload(); } else await page.goto(BASE + u);
       await page.waitForTimeout(700);
       eq(await page.evaluate(() => window.__xss === undefined), true, 'xss flag set on ' + u);
       eq(await page.evaluate(() => document.querySelectorAll('article img[src="x"], main img[src="x"], b').length), 0, 'injected element on ' + u);
@@ -270,7 +285,8 @@ test('D-EDGE-NAV', 'Invalid id, unknown routes, back/forward, double-click creat
     for (const id of ['%3Cscript%3Ealert(1)%3C%2Fscript%3E', 'a'.repeat(3000), '..%2F..%2Fapp', '%00', "'; DROP TABLE x;--"]) {
       const r = await page.goto(BASE + '/app/investigations/' + id); const st = r.status();
       await page.waitForTimeout(500); const t = await page.locator('body').innerText();
-      ok(st < 500 && /not found|Investigations/i.test(t), `id ${id.slice(0, 30)} -> HTTP ${st}: ${t.slice(0, 80)}`);
+      // a 403 from the hosting platform's traversal filter (Vercel) is an acceptable rejection of '../'
+      ok(st < 500 && (st === 403 || /not found|Investigations/i.test(t)), `id ${id.slice(0, 30)} -> HTTP ${st}: ${t.slice(0, 80)}`);
     }
   });
   await sub('unknown-route', 'Unknown route /nope and /app/investigations/ return a 404 page', async () => {

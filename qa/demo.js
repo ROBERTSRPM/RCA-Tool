@@ -127,8 +127,8 @@ test('D-DASH-2', 'Dashboard buttons: duplicate, delete cancel/confirm, reset sam
     await page.reload(); await page.getByText('No investigations yet').waitFor(); // must stay empty (seed flag)
     await h.shot(page, 'demo-dashboard-empty');
     await page.getByRole('button', { name: 'Load the sample investigation' }).click();
-    // UX note: loading the sample asks a "Reset the sample data?" question; see defects.md
-    await page.getByRole('alertdialog').getByRole('button', { name: 'Reset sample' }).click();
+    // round 2 (intentional change b): loading the sample into an empty list must not ask for confirmation
+    await page.waitForTimeout(300); eq(await page.getByRole('alertdialog').count(), 0, 'confirm dialog still shown for Load the sample');
     await page.getByText('Repeat bearing and mechanical seal failures').first().waitFor();
   });
   await sub('empty-new', 'Empty state "Start a new investigation" button works', async () => {
@@ -169,6 +169,9 @@ test('D-E2E-1', 'Full flow: new investigation, 7 steps, hand-checked numbers, da
   await page.locator('li:has(label:has-text("What will be done?"))').nth(0).getByLabel('Status', { exact: true }).selectOption({ label: 'Done' });
   await page.locator('li:has(label:has-text("What will be done?"))').nth(1).getByLabel('Status', { exact: true }).selectOption({ label: 'Done' });
   await waitSaved(page);
+  await sub('verified-label', 'Once all actions are Done, review says no recurrence and a date is set, Verify says "Annual saving (verified)" and the status is Closed', async () => {
+    await step(page, 'Verify'); const t = (await page.locator('dl').last().innerText()).replace(/\s+/g, ' ').toLowerCase(); ok(t.includes('annual saving (verified) ' + money(calc.saving).toLowerCase()), t);
+  });
   await page.goto(BASE + '/app');
   await sub('dash-3', 'Dashboard after closing: loss $0, open 0, overdue 0, saved $209,050; row says Closed', async () => {
     const s = await e.dashStats(page);
@@ -183,13 +186,14 @@ test('D-E2E-1', 'Full flow: new investigation, 7 steps, hand-checked numbers, da
   const has = (s) => ok(repL.includes(s.toLowerCase()), 'report missing "' + s + '"');
   await sub('report', 'Report content matches data and hand-calculated figures', async () => {
     has(e.PROBLEM.title); has('Conveyor C-7 gearbox · Packing hall B · Event on 20 Oct 2026'); has('Status: Closed');
-    has('Annual loss ' + money(calc.annual)); has('Annual saving ' + money(calc.saving)); has('Action cost ' + money(calc.actionCost)); has('Payback ' + e.months(calc.payback));
-    has('(5.5 h × 120 cartons/h × $2.5 + $1,800 repair) × 4 events per year = $13,800 per year');
-    has('Each event loses 660 cartons and costs $3,450');
+    has('Annual loss ' + money(calc.annual)); has('Annual saving (verified) ' + money(calc.saving)); has('Action cost ' + money(calc.actionCost)); has('Payback ' + e.months(calc.payback));
+    // round 2 report format (loss table). Hand calc: 660 cartons/event, 100% lost for good -> opportunity 660 x 2.5 = 1,650/event = 6,600/yr; cash = repair 1,800/event = 7,200/yr
+    has('Each event stops production for 5.5 h at 120 cartons/h, so 660 cartons are not produced'); has('100% is lost for good, 0% is made up later and 0% is covered by buffer stock');
+    has('Cash: repair $1,800 $7,200'); has('Cash costs $1,800 $7,200'); has('Opportunity loss (660 cartons lost for good × $2.5) $1,650 $6,600'); has('Total $3,450 $13,800'); has('$13,800 per year in total');
     for (const x of ['Oil sample report', 'Operator interview', 'Alignment check', 'Gearbox oil starved', 'Oil level not checked on rounds', 'Inspection route has no gearbox oil check', 'Coupling misaligned', 'No alignment spec in install procedure', 'Wrong grease used', 'Grease type not on lubrication chart']) has(x);
     has('Add gearbox oil check to daily route'); has('Sam Patel'); has('10 Jan 2026'); has('1 Mar 2027'); has('$1,200'); has('$951'); has('Total $2,151');
     has('Review date 10 Nov 2026'); has('No repeat in 3 weeks.');
-    has('Annual loss falls from $13,800 to $3,450: a saving of $10,350 per year for an action cost of $2,151, paid back in 2.5 months');
+    has('Annual loss falls from $13,800 to $3,450: a saving of $10,350 per year (cash $5,400, opportunity $4,950) for an action cost of $2,151, paid back in 2.5 months'); ok(!repL.includes('not yet verified'), 'closed investigation still says not yet verified');
     eq(await page.locator('article.print-sheet h2:has-text("Root causes") + ol li').count(), 2, 'root cause list');
   });
   await sub('report-ruledout', 'Report marks ruled-out cause and category/evidence tags', async () => {

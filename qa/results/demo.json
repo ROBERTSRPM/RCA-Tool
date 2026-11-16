@@ -1,120 +1,115 @@
 {
   "suite": "demo",
-  "base": "http://localhost:3811",
-  "at": "2026-11-16T12:45:42.726Z",
+  "base": "https://rca-tool-omega.vercel.app",
+  "at": "2026-11-16T13:44:55.092Z",
   "results": [
     {
-      "id": "D-A11Y-1.names",
-      "title": "Every input/select/textarea has an accessible name (all pages)",
+      "id": "D-EDGE-NAV.bad-id",
+      "title": "Invalid investigation id shows \"Investigation not found\" with a working link back",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "D-A11Y-1.btn-names",
-      "title": "Every button/link has an accessible name",
+      "id": "D-EDGE-NAV.weird-ids",
+      "title": "Ids with special characters (%00, <script>, very long, ../) do not crash the page",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "D-A11Y-1.lang",
-      "title": "<html lang> is set and exactly one <h1> per page",
+      "id": "D-EDGE-NAV.unknown-route",
+      "title": "Unknown route /nope and /app/investigations/ return a 404 page",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "D-A11Y-1.titles",
-      "title": "Each page has its own <title>",
+      "id": "D-EDGE-NAV.bad-hash",
+      "title": "Unknown #hash falls back to the Problem step",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "D-A11Y-1.dup-ids",
-      "title": "No duplicate element ids",
+      "id": "D-EDGE-NAV.deep-link",
+      "title": "Deep links #report and #cause open those steps",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "D-A11Y-1.ws-names",
-      "title": "Workspace: all 7 steps have labelled inputs and named buttons",
+      "id": "D-EDGE-NAV.back-fwd",
+      "title": "Browser back/forward: dashboard -> workspace -> steps -> back returns to dashboard, forward returns to workspace",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "D-A11Y-1.stepper-name",
-      "title": "Stepper button accessible names read naturally (\"Problem, complete\" not \"Problem(complete)\")",
+      "id": "D-EDGE-NAV.bfcache-edit",
+      "title": "Back to the dashboard after editing shows the edited title",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "D-A11Y-1.small-targets",
-      "title": "Interactive controls are at least 24x24 CSS px (WCAG 2.2 min) on every step",
+      "id": "D-EDGE-NAV.dblclick-dashboard",
+      "title": "Double-clicking \"New investigation\" creates exactly one investigation",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "D-A11Y-1.contrast-desktop",
-      "title": "Text contrast >= 4.5:1 (3:1 large) on all pages (desktop)",
+      "id": "D-EDGE-NAV.dblclick-dashboard-human",
+      "title": "Human-speed double click (2 clicks 120 ms apart) on \"New investigation\" creates exactly one",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "D-A11Y-1.focus-visible",
-      "title": "Keyboard focus is visibly indicated on buttons, links, inputs (outline or ring)",
+      "id": "D-EDGE-NAV.hashchange",
+      "title": "Changing only the #hash in the address bar of an open investigation switches the step",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "D-A11Y-1.keyboard-main",
-      "title": "Dashboard main controls reachable by Tab: New investigation, Open, Duplicate, Delete, Reset sample",
+      "id": "D-EDGE-NAV.dblclick-landing",
+      "title": "Double-clicking \"Start a new investigation\" on the landing page creates exactly one",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "D-A11Y-1.keyboard-tree",
-      "title": "Cause tree: boxes reachable and selectable by keyboard (Tab + Enter), toolbar then reachable",
+      "id": "D-EDGE-NAV.dblclick-dup",
+      "title": "Double-clicking Duplicate creates exactly one copy",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "D-A11Y-1.keyboard-modal",
-      "title": "Confirm dialog: focus moves into it, Escape closes, focus returns to trigger",
+      "id": "D-EDGE-NAV.rapid-new-nav",
+      "title": "Pressing \"New investigation\" then browser Back immediately leaves no half-created junk beyond one blank",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "D-A11Y-1.modal-focus-return",
-      "title": "After closing the dialog with Escape focus returns to the button that opened it",
+      "id": "D-EDGE-NAV",
+      "title": "Invalid id, unknown routes, back/forward, double-click create",
       "status": "pass",
       "detail": "",
-      "ms": 0
-    },
-    {
-      "id": "D-A11Y-1.account-menu-kbd",
-      "title": "Skip link / landmarks: page has a <main> landmark on dashboard and workspace",
-      "status": "pass",
-      "detail": "",
-      "ms": 0
-    },
-    {
-      "id": "D-A11Y-1",
-      "title": "Accessibility: names, labels, headings, language, titles, focus visibility, keyboard reach, contrast",
-      "status": "pass",
-      "detail": "",
-      "ms": 24443
+      "ms": 15411
     }
   ],
-  "notes": []
+  "notes": [
+    {
+      "kind": "observation",
+      "text": "Step changes use history.replaceState, so Back leaves the investigation instead of going to the previous step; after Forward the step shown is Report"
+    },
+    {
+      "kind": "observation",
+      "text": "Blank \"Untitled investigation\" rows remain if user creates and abandons: 5"
+    }
+  ]
 }

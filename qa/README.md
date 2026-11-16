@@ -14,7 +14,7 @@ Black-box Playwright tests (plain Node scripts, no test runner needed). They onl
 cd /home/user/rca-platform/qa
 BASE_URL=https://your-deployed-site.example node run-all.js     # default http://localhost:3555
 ```
-`run-all.js` = account cleanup -> demo suite -> signed-in suite -> control inventory, then prints totals.
+`run-all.js` = account cleanup -> demo suite -> loss feature suite (`loss.js`) -> signed-in suite -> control inventory, then prints totals.
 Takes roughly 10-15 minutes.
 
 ## Run parts
@@ -31,7 +31,7 @@ Test ids: `D-*` demo, `A-*` signed in. Sub-checks are `ID.sub`. Results: `result
 
 ## Files
 - `harness.js` runner and helpers; `flows.js` UI flows; `e2e.js` end-to-end flow with independent hand calculations.
-- `demo.js` (+ `demo-tree.js`, `demo-edge.js`, `demo-ui.js`), `account.js`, `inventory.js`, `run-all.js`.
+- `loss.js` (round 2: shares, recovery, buffer holding, other costs, cash vs opportunity; desktop and 375px), `demo.js` (+ `demo-tree.js`, `demo-edge.js`, `demo-ui.js`), `account.js`, `inventory.js`, `run-all.js`.
 - `test-plan.md`, `defects.md`.
 
 ## Notes for the deployed run

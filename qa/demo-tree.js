@@ -98,7 +98,8 @@ test('D-TREE-1', 'Cause tree operations: add child/sibling, edit, delete, collap
     const d = page.getByRole('alertdialog'); await d.waitFor(); ok((await d.innerText()).includes('1 action is linked'), await d.innerText());
     await d.getByRole('button', { name: 'Delete' }).click();
     await step(page, 'Actions');
-    eq(await page.getByLabel('Fixes this root cause').inputValue(), '', 'action should now be unlinked');
+    // round 2 (intentional change c): unlinked actions sit in a "Not linked to a root cause" group with a re-link control
+    await page.getByTestId('unlinked-actions').waitFor(); eq(await page.getByTestId('unlinked-actions').getByLabel('Re-link to a root cause').inputValue(), '', 'action should now be unlinked');
   });
   await sub('details-btn', '"Details" toolbar button is present and scrolls to the panel without error', async () => {
     await step(page, 'Cause tree'); await f.selectCause(page, 'Cause two EDITED');

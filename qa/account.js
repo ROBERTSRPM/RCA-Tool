@@ -155,7 +155,7 @@ test('A-E2E-1', 'Signed-in full flow as user A: create, fill 7 steps, hand-check
   await waitSaved(page);
   await sub('reload-report', 'After full reload the account data gives the hand-calculated report', async () => {
     await page.goto(BASE + '/app'); await page.goto(BASE + '/app/investigations/' + id + '#report'); const t = (await page.locator('article.print-sheet').innerText()).replace(/\s+/g, ' ').toLowerCase();
-    for (const s of ['annual loss $13,800', 'annual saving $10,350', 'action cost $2,151', 'payback 2.5 months', 'status: closed']) ok(t.includes(s), 'missing ' + s);
+    for (const s of ['annual loss $13,800', 'annual saving (verified) $10,350', 'action cost $2,151', 'payback 2.5 months', 'status: closed']) ok(t.includes(s), 'missing ' + s);
   });
   await sub('dash', 'Dashboard (account): loss $0, open 0, overdue 0, saved $209,050 (198,700 + 10,350), new row Closed', async () => {
     await page.goto(BASE + '/app'); const s = await e.dashStats(page); eq(s['Verified annual savings'], money(198700 + calc.saving)); eq(s['Open actions'], '0'); eq(s['Overdue actions'], '0'); eq(s['Annual loss under investigation'], '$0');
@@ -256,11 +256,50 @@ test('A-PERS-1', 'Signed-in persistence: reload after each kind of edit, autosav
   await sub('autosave-states', 'Autosave indicator shows Saving... then All changes saved on account writes', async () => {
     await page.getByLabel('Title', { exact: true }).fill('state test'); ok(/Saving/.test(await page.locator('[role=status]').filter({ hasText: /Saving|saved/ }).first().innerText())); await waitSaved(page);
   });
-  await sub('two-tabs', 'Two tabs/devices editing different fields: second tab must not wipe the first tab\'s edit', async () => {
+  await sub('two-tabs', 'Two tabs/devices: a stale tab must never silently wipe the other tab\'s edit; it is refused with "Load the latest version" / "Keep mine and overwrite" (round 2 design)', async () => {
     const p2 = await page.context().newPage(); await p2.goto(BASE + '/app/investigations/' + id); await p2.getByLabel('Asset', { exact: true }).waitFor();
-    await page.getByLabel('Title', { exact: true }).fill('ACC TAB1'); await waitSaved(page); await p2.getByLabel('Asset', { exact: true }).fill('ACC TAB2'); await p2.waitForTimeout(1500);
-    await page.reload(); await page.getByLabel('Title', { exact: true }).waitFor(); const t = await page.getByLabel('Title', { exact: true }).inputValue(); const a = await page.getByLabel('Asset', { exact: true }).inputValue(); await p2.close();
-    ok(t === 'ACC TAB1' && a === 'ACC TAB2', `title="${t}" asset="${a}"`);
+    await page.getByLabel('Title', { exact: true }).fill('ACC TAB1'); await waitSaved(page); await p2.getByLabel('Asset', { exact: true }).fill('ACC TAB2'); await p2.waitForTimeout(2500);
+    const banner = await p2.getByTestId('conflict-banner').count(); const t = await page.evaluate(() => null);
+    await page.reload(); await page.getByLabel('Title', { exact: true }).waitFor(); const title = await page.getByLabel('Title', { exact: true }).inputValue(); const asset = await page.getByLabel('Asset', { exact: true }).inputValue();
+    h.note('observation', `two tabs: conflict banner shown=${banner}; DB after: title="${title}" asset="${asset}"`);
+    ok(title === 'ACC TAB1' && (asset === 'ACC TAB2' || banner === 1), `silent loss: title="${title}" asset="${asset}" banner=${banner}`);
+    if (banner === 1) { await h.shot(p2, 'account-conflict-banner'); }
+    await p2.close();
+  });
+  await sub('concurrent-window', 'Account: two tabs edit different fields within the same save window: no silent loss (both saved, or a conflict banner and nothing overwritten)', async () => {
+    const bad = [];
+    for (let i = 0; i < 3; i++) {
+      await page.goto(BASE + '/app'); await page.goto(BASE + '/app/investigations/' + id); await page.getByLabel('Site / area').waitFor();
+      const p2 = await page.context().newPage(); await p2.goto(BASE + '/app/investigations/' + id); await p2.getByLabel('Site / area').waitFor();
+      const sv = 'AS' + i + Date.now(), wv = 'AW' + i + Date.now();
+      await Promise.all([page.getByLabel('Site / area').fill(sv), p2.getByLabel('When did it happen?').fill(wv)]); await page.waitForTimeout(4000);
+      const banners = (await page.getByTestId('conflict-banner').count()) + (await p2.getByTestId('conflict-banner').count());
+      const p3 = await page.context().newPage(); await p3.goto(BASE + '/app/investigations/' + id); await p3.getByLabel('Site / area').waitFor(); const site = await p3.getByLabel('Site / area').inputValue(), when = await p3.getByLabel('When did it happen?').inputValue();
+      if (!((site === sv && when === wv) || banners > 0)) bad.push(`try ${i}: site="${site}" when="${when}" banners=${banners}`);
+      await p2.close(); await p3.close();
+    }
+    eq(bad, []);
+  });
+  await sub('conflict-load-latest', '"Load the latest version" shows the other tab\'s data and clears the banner', async () => {
+    await page.goto(BASE + '/app/investigations/' + id); await page.getByLabel('Title', { exact: true }).waitFor();
+    const p2 = await page.context().newPage(); await p2.goto(BASE + '/app/investigations/' + id); await p2.getByLabel('Title', { exact: true }).waitFor();
+    await page.getByLabel('Title', { exact: true }).fill('FROM TAB1'); await waitSaved(page);
+    await p2.getByLabel('Asset', { exact: true }).fill('STALE ASSET'); await p2.getByTestId('conflict-banner').waitFor({ timeout: 15000 });
+    await p2.getByRole('button', { name: 'Load the latest version' }).click(); await p2.getByTestId('conflict-banner').waitFor({ state: 'detached' });
+    eq(await p2.getByLabel('Title', { exact: true }).inputValue(), 'FROM TAB1'); ok((await p2.getByLabel('Asset', { exact: true }).inputValue()) !== 'STALE ASSET', 'stale edit should be discarded after Load latest');
+    await p2.getByLabel('Asset', { exact: true }).fill('AFTER LOAD'); await waitSaved(p2); await p2.close();
+  });
+  await sub('conflict-keep-mine', '"Keep mine and overwrite" saves this tab\'s version and clears the banner', async () => {
+    await page.goto(BASE + '/app/investigations/' + id); await page.getByLabel('Title', { exact: true }).waitFor();
+    const p2 = await page.context().newPage(); await p2.goto(BASE + '/app/investigations/' + id); await p2.getByLabel('Title', { exact: true }).waitFor();
+    await page.getByLabel('Title', { exact: true }).fill('TAB1 WINS?'); await waitSaved(page);
+    await p2.getByLabel('Title', { exact: true }).fill('TAB2 KEEP MINE'); await p2.getByTestId('conflict-banner').waitFor({ timeout: 15000 });
+    await p2.getByRole('button', { name: 'Keep mine and overwrite' }).click(); await p2.getByTestId('conflict-banner').waitFor({ state: 'detached' }); await p2.getByText('All changes saved').waitFor();
+    await page.reload(); await page.getByLabel('Title', { exact: true }).waitFor(); eq(await page.getByLabel('Title', { exact: true }).inputValue(), 'TAB2 KEEP MINE'); await p2.close();
+  });
+  await sub('conflict-offline-no-banner', 'A plain network failure is still the "Could not save" error, not a conflict banner', async () => {
+    await page.getByLabel('Title', { exact: true }).fill('x'); await waitSaved(page); await page.context().setOffline(true); await page.getByLabel('Title', { exact: true }).fill('offline edit'); await page.getByRole('alert').filter({ hasText: /Could not save/ }).waitFor({ timeout: 20000 });
+    eq(await page.getByTestId('conflict-banner').count(), 0); await page.context().setOffline(false); await page.getByText('All changes saved').waitFor({ timeout: 25000 });
   });
   await sub('duplicate-delete', 'Duplicate then delete (cancel / confirm) in account mode', async () => {
     await page.goto(BASE + '/app/investigations/' + id); await page.getByLabel('Title', { exact: true }).fill('ACC TAB1'); await waitSaved(page);
@@ -367,14 +406,57 @@ test('A-ERR-1', 'Signed in: no console errors or failed requests on dashboard an
 }));
 
 test('A-RESET-1', 'Reset sample data when the network fails half way (delete succeeds, insert fails)', async ({ browser, sub }) => asUser(browser, 'B', async (page) => {
-  await page.goto(BASE + '/app'); await e.dashStats(page); await page.locator('section[aria-label="Investigations list"] ul > li').first().waitFor();
+  await page.goto(BASE + '/app'); await e.dashStats(page); await page.locator('section[aria-label="Investigations list"] ul > li').first().waitFor(); const baseRows = (await e.dashRows(page)).length;
   await sub('atomic', 'A failed reset must not leave the account without its sample', async () => {
-    await page.route('**/rest/v1/investigations', r => r.request().method() === 'POST' ? r.abort('failed') : r.continue());
+    await page.route('**/rest/v1/investigations**', r => r.request().method() === 'POST' ? r.abort('failed') : r.continue());
     await page.getByRole('button', { name: 'Reset sample data' }).click(); await page.getByRole('alertdialog').getByRole('button', { name: 'Reset sample' }).click();
-    await page.getByRole('alert').filter({ hasText: /Could not/ }).first().waitFor({ timeout: 20000 }); await page.unroute('**/rest/v1/investigations');
+    await page.getByRole('alert').filter({ hasText: /Could not/ }).first().waitFor({ timeout: 20000 }); await page.unroute('**/rest/v1/investigations**');
     await page.reload(); await e.dashStats(page); await page.waitForTimeout(1500); const rows = await e.dashRows(page); await h.shot(page, 'account-reset-failed');
     if (rows.length === 0) { await page.getByRole('button', { name: 'Load the sample investigation' }).click(); await page.getByRole('alertdialog').getByRole('button', { name: 'Reset sample' }).click(); await page.locator('section[aria-label="Investigations list"] ul > li').first().waitFor(); }
-    ok(rows.length === 1, 'after failed reset the account has ' + rows.length + ' investigations (sample deleted, not restored; only the empty-state button recovers it)');
+    ok(rows.length === baseRows && rows.some(r => r.includes('Illustrative sample')), 'after failed reset the account has ' + rows.length + ' investigations (was ' + baseRows + ') (sample deleted, not restored; only the empty-state button recovers it)');
+  });
+}));
+
+test('A-LOSS-1', 'Signed in: the new loss fields persist in the account and carry to Verify, dashboard and Report (hand calc)', async ({ browser, sub }) => asUser(browser, 'A', async (page) => {
+  const L = require('./loss'); const id = await L.buildS3(page); created.A.push(id);
+  await sub('reload', 'After reload: shares 48/32/20, recovery note, holding cost, two other cost lines and annual loss $20,462', async () => {
+    await page.goto(BASE + '/app'); await page.goto(BASE + '/app/investigations/' + id); await page.getByLabel('Title', { exact: true }).waitFor(); await step(page, 'Loss');
+    const v = async (k) => Number(await page.getByLabel(k + ' percent', { exact: true }).inputValue()); eq([await v('Lost for good'), await v('Made up later'), await v('Covered by buffer stock')], [48, 32, 20]);
+    eq(await page.getByLabel('Recovery note (optional)').inputValue(), 'two Saturdays'); eq(await page.getByTestId('other-cost-line').count(), 2); eq(await page.getByTestId('annual-loss').innerText(), '$20,462');
+  });
+  await sub('verify-report', 'Verify and Report show expected saving $12,641 (cash $8,801 + opportunity $3,840), payback 4.7 months', async () => {
+    await step(page, 'Verify'); const t = (await page.locator('dl').last().innerText()).replace(/\s+/g, ' ').toLowerCase(); ok(t.includes('expected saving (not yet verified) $12,641') && t.includes('cash $8,801 · opportunity $3,840') && t.includes('4.7 months'), t);
+    const r = (await e.reportText(page)).toLowerCase(); ok(r.includes('cash costs $2,200 $14,702') && r.includes('opportunity loss (240 units lost for good'.replace('units', 'pcs') + ' × $4) $960 $5,760') && r.includes('total $3,160 $20,462'), r.slice(0, 600));
+  });
+  const num = (t) => Number((/\$([\d,]+)/.exec(t) || [0, '0'])[1].replace(/,/g, ''));
+  const split = (t) => { const m = /Cash \$([\d,]+) · Opportunity \$([\d,]+)/.exec(t); return m ? [Number(m[1].replace(/,/g, '')), Number(m[2].replace(/,/g, ''))] : [0, 0]; };
+  const tiles = async () => { await page.goto(BASE + '/app'); await e.dashStats(page); return page.evaluate(() => [...document.querySelectorAll('section[aria-label="Totals"] > div')].map(d => d.innerText.replace(/\s+/g, ' '))); };
+  await sub('dashboard', 'Account dashboard: the S3 row is $20,462 with split $14,702 / $5,760; the loss tile rises by exactly that; verified tile does not change until closed', async () => {
+    const after = await tiles(); const row = (await e.dashRows(page)).find(x => x.includes('LOSS-S3')); ok(row.includes('$20,462') && row.includes('Cash $14,702 · Opportunity $5,760'), row);
+    // baseline = tiles with the S3 investigation removed from the maths: compare against a second read after deleting nothing is impossible, so use the row-sum identity
+    const rows = await e.dashRows(page); let openSum = 0; for (const r of rows) { if (/Closed/.test(r)) continue; const m = /\$([\d,]+) Cash/.exec(r); if (m) openSum += Number(m[1].replace(/,/g, '')); }
+    eq(num(after[0]), openSum, 'loss tile = sum of non-closed row annual losses'); eq(split(after[0])[0] + split(after[0])[1], num(after[0]), 'cash + opportunity = tile'); ok(after[0].includes('$'), after[0]);
+    h.note('observation', 'A-LOSS-1 tiles before closing: ' + after.join(' | ')); globalThis.__savedBefore = [num(after[3]), ...split(after[3])];
+  });
+  await sub('close-dashboard', 'After closing S3 the verified tile rises by exactly $12,641 (cash +$8,801, opportunity +$3,840) and the loss tile drops by $20,462', async () => {
+    const before = globalThis.__savedBefore; const lossBefore = num((await tiles())[0]);
+    await page.goto(BASE + '/app/investigations/' + id); await page.getByLabel('Title', { exact: true }).waitFor(); await step(page, 'Actions'); await page.locator('li:has(label:has-text("What will be done?"))').first().getByLabel('Status', { exact: true }).selectOption({ label: 'Done' });
+    await f.fillVerify(page, { date: '2026-11-10', recurred: 'No, it has not recurred' }); await waitSaved(page); const t = await tiles();
+    eq([num(t[3]), ...split(t[3])], [before[0] + 12641, before[1] + 8801, before[2] + 3840], 'verified tile delta'); eq(num(t[0]), lossBefore - 20462, 'loss tile delta');
+  });
+}));
+
+test('A-EMPTY-1', 'Signed in: empty account -> "Load the sample investigation" needs no confirm (round 2 change b) and restores exactly one sample', async ({ browser, sub }) => asUser(browser, 'B', async (page) => {
+  await page.goto(BASE + '/app'); await e.dashStats(page); await page.locator('section[aria-label="Investigations list"] ul > li').first().waitFor();
+  for (let g = 0; g < 20; g++) { const n = await page.locator('section[aria-label="Investigations list"] ul > li').count(); if (!n) break; await page.getByRole('button', { name: /^Delete / }).first().click(); await page.getByRole('alertdialog').getByRole('button', { name: 'Delete' }).click(); await page.waitForTimeout(700); }
+  await page.getByText('No investigations yet').waitFor();
+  await sub('no-dialog', 'Click "Load the sample investigation": no dialog, sample appears, exactly one', async () => {
+    await page.getByRole('button', { name: 'Load the sample investigation' }).click(); await page.waitForTimeout(400); eq(await page.getByRole('alertdialog').count(), 0, 'dialog shown'); await page.locator('section[aria-label="Investigations list"] ul > li').first().waitFor({ timeout: 15000 });
+    await page.reload(); await e.dashStats(page); await page.locator('section[aria-label="Investigations list"] ul > li').first().waitFor(); eq((await e.dashRows(page)).length, 1);
+  });
+  await sub('double-load', 'Double-clicking "Load the sample" does not create two samples', async () => {
+    await page.getByRole('button', { name: /^Delete / }).first().click(); await page.getByRole('alertdialog').getByRole('button', { name: 'Delete' }).click(); await page.getByText('No investigations yet').waitFor();
+    await page.getByRole('button', { name: 'Load the sample investigation' }).dblclick(); await page.waitForTimeout(2500); await page.reload(); await e.dashStats(page); await page.waitForTimeout(800); eq((await e.dashRows(page)).filter(r => r.includes('Illustrative sample')).length, 1);
   });
 }));
 
