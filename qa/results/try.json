@@ -1,0 +1,64 @@
+{
+  "suite": "try",
+  "base": "http://localhost:3555",
+  "at": "2026-11-16T11:33:22.770Z",
+  "results": [
+    {
+      "id": "X1.problem",
+      "title": "Problem step accepts all 8 fields",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "X1.loss-calc",
+      "title": "Loss live calc equals hand calc (lost units, lost margin, cost/event, annual loss)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "X1.evidence",
+      "title": "Evidence: 3 items listed, types and \"Not linked\" shown",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "X1.tree-leaf-delete",
+      "title": "Deleting a leaf cause needs no confirmation and removes it",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "X1.tree-nodes",
+      "title": "Tree has 7 causes covering Physical, Human and System / Latent",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "X1.actions-tiles",
+      "title": "Actions tiles: total cost, 0 of 2 done, 1 overdue, 0 roots unlinked",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "X1.verify-calc",
+      "title": "Verify step money equals hand calc (before, after, saving, cost, payback)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "X1",
+      "title": "e2e",
+      "status": "pass",
+      "detail": "",
+      "ms": 4410
+    }
+  ],
+  "notes": []
+}
