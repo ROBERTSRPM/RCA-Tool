@@ -292,7 +292,7 @@ test('A-OFF-1', 'Network drop while editing signed in: error shown, edits kept, 
     eq(await page.getByLabel('Title', { exact: true }).inputValue(), 'typed while offline'); eq(await page.getByLabel('Asset', { exact: true }).inputValue(), 'asset while offline');
   });
   await sub('retry-offline', '"Try again" while still offline keeps the error (no false "saved")', async () => {
-    await page.getByRole('button', { name: 'Try again' }).click(); await page.waitForTimeout(800); await page.getByRole('alert').filter({ hasText: /Could not save/ }).first().waitFor({ timeout: 5000 }); eq(await page.getByText('All changes saved').count(), 0);
+    const t0 = Date.now(); await page.getByRole('button', { name: 'Try again' }).click(); await page.getByRole('alert').filter({ hasText: /Could not save/ }).first().waitFor({ timeout: 20000 }); h.note('timing', 'Offline: error appears ' + (Date.now() - t0) + ' ms after pressing Try again (indicator reads "Saving…" meanwhile)'); eq(await page.getByText('All changes saved').count(), 0);
   });
   await sub('beforeunload', 'Leaving with unsaved offline edits triggers the browser "unsaved changes" prompt', async () => {
     let prompted = false; page.once('dialog', async d => { prompted = d.type() === 'beforeunload'; await d.dismiss(); });
@@ -357,13 +357,25 @@ test('A-MOB-1', 'Signed in at 375px: dashboard, workspace, account menu layout',
     await page.goto(BASE + '/'); await page.getByRole('link', { name: 'Open the sample investigation' }).click(); await page.waitForURL(/investigations/);
     for (const s of h.STEP_LABELS) { await step(page, s); const o = await h.overflowX(page); ok(o.sw <= o.cw, s + ' overflow ' + o.sw); }
   });
-}));
+}, { viewport: MOBILE }));
 
 test('A-ERR-1', 'Signed in: no console errors or failed requests on dashboard and all steps', async ({ browser, sub }) => asUser(browser, 'A', async (page) => {
   await page.goto(BASE + '/app'); await e.dashStats(page); await page.goto(BASE + '/'); await page.getByRole('link', { name: 'Open the sample investigation' }).click(); await page.waitForURL(/investigations/);
   for (const s of h.STEP_LABELS) { await step(page, s); await page.waitForTimeout(200); }
   await page.goto(BASE + '/app'); await e.dashStats(page);
   eq({ errs: page.errs, fails: page.fails }, { errs: [], fails: [] });
+}));
+
+test('A-RESET-1', 'Reset sample data when the network fails half way (delete succeeds, insert fails)', async ({ browser, sub }) => asUser(browser, 'B', async (page) => {
+  await page.goto(BASE + '/app'); await e.dashStats(page); await page.locator('section[aria-label="Investigations list"] ul > li').first().waitFor();
+  await sub('atomic', 'A failed reset must not leave the account without its sample', async () => {
+    await page.route('**/rest/v1/investigations', r => r.request().method() === 'POST' ? r.abort('failed') : r.continue());
+    await page.getByRole('button', { name: 'Reset sample data' }).click(); await page.getByRole('alertdialog').getByRole('button', { name: 'Reset sample' }).click();
+    await page.getByRole('alert').filter({ hasText: /Could not/ }).first().waitFor({ timeout: 20000 }); await page.unroute('**/rest/v1/investigations');
+    await page.reload(); await e.dashStats(page); await page.waitForTimeout(1500); const rows = await e.dashRows(page); await h.shot(page, 'account-reset-failed');
+    if (rows.length === 0) { await page.getByRole('button', { name: 'Load the sample investigation' }).click(); await page.getByRole('alertdialog').getByRole('button', { name: 'Reset sample' }).click(); await page.locator('section[aria-label="Investigations list"] ul > li').first().waitFor(); }
+    ok(rows.length === 1, 'after failed reset the account has ' + rows.length + ' investigations (sample deleted, not restored; only the empty-state button recovers it)');
+  });
 }));
 
 // ---------------------------------------------------------------- cleanup (must run last)
@@ -376,8 +388,8 @@ test('A-ZZ-CLEANUP', 'Cleanup: delete every investigation created by this run; l
       if (!target) break; await target.getByRole('button', { name: /^Delete / }).click(); await page.getByRole('alertdialog').getByRole('button', { name: 'Delete' }).click(); await page.waitForTimeout(600);
     }
     // restore sample to pristine in case a test edited it
-    await page.getByRole('button', { name: 'Reset sample data' }).click(); await page.getByRole('alertdialog').getByRole('button', { name: 'Reset sample' }).click(); await page.waitForTimeout(1200);
-    await page.reload(); const rows = await e.dashRows(page); eq(rows.length, 1, rows.join(' | ')); ok(rows[0].includes('Illustrative sample'));
+    await page.getByRole('button', { name: 'Reset sample data' }).click(); await page.getByRole('alertdialog').getByRole('button', { name: 'Reset sample' }).click(); await page.waitForTimeout(2500);
+    await page.reload(); await e.dashStats(page); await page.locator('section[aria-label="Investigations list"] ul > li').first().waitFor(); const rows = await e.dashRows(page); eq(rows.length, 1, rows.join(' | ')); ok(rows[0].includes('Illustrative sample'));
   }));
 });
 

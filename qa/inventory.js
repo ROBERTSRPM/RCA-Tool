@@ -26,7 +26,7 @@ async function list(page, scope) {
   await p.goto(h.BASE + '/app/investigations/sample-p101'); await p.waitForTimeout(1500);
   for (const s of h.STEP_LABELS) {
     await h.step(p, s);
-    inv['workspace step ' + s] = await list(p, 'main, #__next, body > div');
+    inv['workspace step ' + s] = await list(p);
     if (s === 'Evidence') { await p.getByRole('button', { name: 'Edit' }).first().click(); inv['workspace step Evidence (item expanded)'] = await list(p); }
     if (s === 'Cause tree') {
       await p.getByRole('button', { name: /^Select cause: Pump runs/ }).first().click().catch(() => {});

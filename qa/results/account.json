@@ -1,91 +1,28 @@
 {
   "suite": "account",
   "base": "http://localhost:3555",
-  "at": "2026-11-16T11:54:11.636Z",
+  "at": "2026-11-16T12:02:29.132Z",
   "results": [
     {
-      "id": "A-OFF-1.offline-error",
-      "title": "Going offline and editing shows a readable save error with \"Try again\"",
+      "id": "A-ZZ-CLEANUP.clean-A",
+      "title": "Account A left with only the seeded sample",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "A-OFF-1.offline-keeps-typing",
-      "title": "More edits while offline are kept in the page (not discarded), other steps usable",
+      "id": "A-ZZ-CLEANUP.clean-B",
+      "title": "Account B left with only the seeded sample",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "A-OFF-1.retry-offline",
-      "title": "\"Try again\" while still offline keeps the error (no false \"saved\")",
-      "status": "fail",
-      "detail": "assertion failed",
-      "ms": 0
-    },
-    {
-      "id": "A-OFF-1.beforeunload",
-      "title": "Leaving with unsaved offline edits triggers the browser \"unsaved changes\" prompt",
+      "id": "A-ZZ-CLEANUP",
+      "title": "Cleanup: delete every investigation created by this run; leave each account with only its sample",
       "status": "pass",
       "detail": "",
-      "ms": 0
-    },
-    {
-      "id": "A-OFF-1.recover",
-      "title": "Back online: \"online\" event flushes and the indicator returns to \"All changes saved\"",
-      "status": "pass",
-      "detail": "",
-      "ms": 0
-    },
-    {
-      "id": "A-OFF-1.recover-persisted",
-      "title": "After recovery a reload shows the offline-typed values (nothing lost)",
-      "status": "pass",
-      "detail": "",
-      "ms": 0
-    },
-    {
-      "id": "A-OFF-1.auto-retry",
-      "title": "Offline error auto-retries (about 8 s) once the network returns even without a new edit or the online event",
-      "status": "pass",
-      "detail": "",
-      "ms": 0
-    },
-    {
-      "id": "A-OFF-1.offline-dashboard",
-      "title": "Dashboard while offline shows a readable error (no blank crash)",
-      "status": "fail",
-      "detail": "assertion failed",
-      "ms": 0
-    },
-    {
-      "id": "A-OFF-1.offline-create",
-      "title": "Creating a new investigation while offline shows an error and does not navigate",
-      "status": "pass",
-      "detail": "",
-      "ms": 0
-    },
-    {
-      "id": "A-OFF-1.offline-load",
-      "title": "Opening an investigation while offline does not claim it is missing/deleted",
-      "status": "pass",
-      "detail": "",
-      "ms": 0
-    },
-    {
-      "id": "A-OFF-1.offline-open-existing",
-      "title": "Network failing during investigation open: page says \"not found / deleted\" misleadingly? (observed)",
-      "status": "pass",
-      "detail": "",
-      "ms": 0
-    },
-    {
-      "id": "A-OFF-1",
-      "title": "Network drop while editing signed in: error shown, edits kept, recovery on reconnect",
-      "status": "pass",
-      "detail": "",
-      "ms": 42355
+      "ms": 11313
     }
   ],
   "notes": []

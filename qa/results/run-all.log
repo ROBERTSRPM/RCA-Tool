@@ -1,0 +1,187 @@
+
+=== node account.js A-ZZ-CLEANUP
+  pass A-ZZ-CLEANUP.clean-A Account A left with only the seeded sample
+  pass A-ZZ-CLEANUP.clean-B Account B left with only the seeded sample
+PASS A-ZZ-CLEANUP Cleanup: delete every investigation created by this run; leave each account with only its sample
+
+account: 3/3 passed, 0 failed
+
+=== node demo.js 
+  pass D-LAND-1.hdr Landing shows headline, 3 benefit cards, video placeholder
+  pass D-LAND-1.logo Logo link goes to the landing page / app
+  pass D-LAND-1.open-app "Open the app" -> /app
+  pass D-LAND-1.signin "Sign in" header link -> /login
+  pass D-LAND-1.create-acct "Create account" header link -> /signup
+  pass D-LAND-1.sample "Open the sample investigation" opens the sample workspace
+  pass D-LAND-1.start-new "Start a new investigation" creates one and opens it
+  FAIL D-LAND-1.footer Footer copy is accurate now that accounts exist
+       Footer says: "Your data stays in this browser for now. Sample figures are illustrative." although sign-in with cloud storage exists
+PASS D-LAND-1 Landing page: every link and button works
+  pass D-DASH-1.totals Totals: loss under investigation $0 (sample is closed), 0 open, 0 overdue, saved $198,700
+  pass D-DASH-1.row Sample row shows $238,440, Closed, sample chip
+PASS D-DASH-1 Dashboard (sample only): totals equal hand calculation
+  pass D-DASH-2.dup Duplicate creates "Copy of ..." and opens it
+  pass D-DASH-2.dup-numbers Duplicate keeps the money identical (both rows $238,440)
+  pass D-DASH-2.del-cancel Delete + Cancel keeps the investigation
+  pass D-DASH-2.del-esc Delete dialog closes on Escape and on backdrop click
+  pass D-DASH-2.del-confirm Delete + confirm removes it
+  pass D-DASH-2.reset-sample Reset sample data: cancel keeps edits; confirm restores original
+  pass D-DASH-2.reset-keeps-own Reset sample leaves own investigations untouched
+  pass D-DASH-2.empty Delete everything -> empty state, then "Load the sample investigation" restores it
+  pass D-DASH-2.empty-new Empty state "Start a new investigation" button works
+PASS D-DASH-2 Dashboard buttons: duplicate, delete cancel/confirm, reset sample, empty state
+  pass D-E2E-1.problem Problem step accepts all 8 fields
+  pass D-E2E-1.loss-calc Loss live calc equals hand calc (lost units, lost margin, cost/event, annual loss)
+  pass D-E2E-1.evidence Evidence: 3 items listed, types and "Not linked" shown
+  pass D-E2E-1.tree-leaf-delete Deleting a leaf cause needs no confirmation and removes it
+  pass D-E2E-1.tree-nodes Tree has 7 causes covering Physical, Human and System / Latent
+  pass D-E2E-1.actions-tiles Actions tiles: total cost, 0 of 2 done, 1 overdue, 0 roots unlinked
+  pass D-E2E-1.qc-midway Quality check lists "needs action" findings before verification (cause without system cause etc.)
+  pass D-E2E-1.dash-1 Dashboard totals (open work, unverified): loss $13,800, open 2, overdue 1, saved $198,700
+  pass D-E2E-1.verify-calc Verify step money equals hand calc (before, after, saving, cost, payback)
+  FAIL D-E2E-1.dash-2 Verified savings must not count while actions are still open (review says "no recurrence" but 2 actions not done)
+       saving counted before actions are complete: expected "$198,700" but got "$209,050"
+  pass D-E2E-1.dash-3 Dashboard after closing: loss $0, open 0, overdue 0, saved $209,050; row says Closed
+  pass D-E2E-1.report Report content matches data and hand-calculated figures
+  pass D-E2E-1.report-ruledout Report marks ruled-out cause and category/evidence tags
+  pass D-E2E-1.reload After reload the report is identical (everything persisted)
+  pass D-E2E-1.print Print emulation: app chrome hidden, report visible, A4 PDF renders
+PASS D-E2E-1 Full flow: new investigation, 7 steps, hand-checked numbers, dashboard, report, reload
+  pass D-TREE-1.empty Empty tree shows "Start here" prompt and failure-event box; Tree has no Expand/Collapse all
+  pass D-TREE-1.child-focus Add child: new box is selected and its text box has keyboard focus
+  pass D-TREE-1.order Siblings are inserted directly after the source (one, two, three)
+  pass D-TREE-1.top-no-sibling Failure event has no Sibling / Move / Delete buttons
+  pass D-TREE-1.edit Edit text of a selected cause persists in the box and panel
+  pass D-TREE-1.move Move up/down reorders; buttons disabled at the ends
+  pass D-TREE-1.status-cat Category and status radios switch and reflect aria-checked
+  pass D-TREE-1.collapse Collapse hides children with "+N hidden" chip; Expand and chip restore them
+  pass D-TREE-1.collapse-all Collapse all / Expand all toggle every branch
+  pass D-TREE-1.del-parent-cancel Delete cause with children: confirm names the count; Cancel keeps all
+  pass D-TREE-1.del-parent-confirm Delete with children + confirm removes the whole branch; parent becomes selected
+  pass D-TREE-1.del-linked-action Deleting a root cause that has an action warns and unlinks the action
+  pass D-TREE-1.details-btn "Details" toolbar button is present and scrolls to the panel without error
+PASS D-TREE-1 Cause tree operations: add child/sibling, edit, delete, collapse/expand, move, status
+  pass D-TREE-2.tree-count Tree view of the sample shows all 19 causes + failure event
+  pass D-TREE-2.whys 5 Whys: chain = path to selected cause; "Because" arrows; sibling chips switch; deeper buttons
+  pass D-TREE-2.whys-add 5 Whys "Add another Why" adds a child of the last box and selects it
+  pass D-TREE-2.fish Fishbone: three category columns with counts; text edit appears in Tree
+  pass D-TREE-2.fish-sum Fishbone column counts sum to the number of causes (excl. failure event)
+  pass D-TREE-2.fish-empty Fishbone with no causes shows empty guidance
+  pass D-TREE-2.tab-state Tab aria-selected tracks the active view
+PASS D-TREE-2 Switching Tree / 5 Whys / Fishbone keeps data; every view control works
+  pass D-QC-1.blank Blank investigation: problem-missing, loss-not-quantified, no-causes findings; panel opens on desktop
+  pass D-QC-1.jump-problem Rule problem-missing: "Go to Problem" opens Problem step
+  pass D-QC-1.clear-problem Rule problem-missing clears when all 8 fields are filled
+  pass D-QC-1.partial-problem Rule problem-missing lists only the remaining fields
+  pass D-QC-1.jump-loss Rule loss-not-quantified: "Go to Loss" opens Loss step
+  pass D-QC-1.loss-partial Loss finding shrinks as inputs are entered, then clears
+  pass D-QC-1.loss-zero Loss inputs of 0 still count as "not quantified"
+  pass D-QC-1.no-root Rule no-root-cause (tree started): "No cause is flagged as a root cause yet" and jump -> Cause tree
+  pass D-QC-1.no-latent Rule branch-without-system-cause: Physical leaf flagged; jump selects that node
+  pass D-QC-1.no-latent-human Rule branch-without-system-cause also fires for a Human leaf, not for ruled-out
+  pass D-QC-1.verified-no-ev Rule verified-without-evidence: needs Verified + no evidence; shown in panel warning only when evidence exists
+  pass D-QC-1.evidence-clears Linking evidence clears verified-without-evidence
+  pass D-QC-1.system-clears Adding a System cause beneath the Human leaf clears the branch rule; flagging root cause clears no-root-cause
+  pass D-QC-1.root-no-action Rule root-cause-without-action: appears, jump -> Actions
+  pass D-QC-1.action-incomplete Rule action-missing-owner-or-date: both missing, then owner only, then clears
+  pass D-QC-1.overdue Rule action-overdue: past due + not done flags; "today" is not overdue; Done clears it
+  pass D-QC-1.verify-missing Rule done-without-verification: all done + unreviewed; jump -> Verify; clears when reviewed
+  pass D-QC-1.recurred Rule failure-recurred: "Yes" flags; Verify shows alert + "Reopen the cause tree" -> Cause tree; jump -> Cause tree
+  pass D-QC-1.all-clear With everything fixed the panel shows "All clear"
+  pass D-QC-1.sort Findings are sorted High first, then Medium
+  pass D-QC-1.toggle Quality panel header toggles open/closed (aria-expanded)
+PASS D-QC-1 Quality check: each rule triggers, jump link lands on the right step, clears when fixed
+  pass D-PERS-1.autosave-states Autosave indicator: "Saving..." after typing, then "All changes saved"
+  pass D-PERS-1.problem Problem fields survive reload (all 8)
+  pass D-PERS-1.url-hash Reload keeps the current step via the #hash
+  pass D-PERS-1.loss Loss inputs, unit and currency survive reload
+  pass D-PERS-1.evidence Evidence add / edit / delete survive reload
+  pass D-PERS-1.tree Tree structure, text, category, status, root flag, evidence link, collapse survive reload
+  pass D-PERS-1.tree-move-delete Tree move and delete survive reload
+  pass D-PERS-1.actions Actions add / edit / status / delete survive reload
+  pass D-PERS-1.verify Verification fields survive reload
+  pass D-PERS-1.fast-reload Edit then reload within 100 ms (before the 350 ms debounce) does not lose the edit
+  pass D-PERS-1.nav-away Edit then click "All investigations" immediately keeps the edit
+  FAIL D-PERS-1.title-doc Browser tab title follows the investigation title
+       RootLoop: the root cause tool that closes the loop
+  FAIL D-PERS-1.two-tabs Two tabs editing different fields of one investigation do not overwrite each other
+       after both tabs saved: title="NAV EDIT" asset="TAB2 ASSET" (last writer replaced the whole problem object)
+PASS D-PERS-1 Persistence: reload after each kind of edit (demo)
+  pass D-EDGE-NUM.letters Letters are rejected in number fields
+  pass D-EDGE-NUM.negative Negative numbers cannot be entered (minus key ignored) - no explanation shown
+  [observation] "1,000" -> "7", "1e3" -> "7" 
+  pass D-EDGE-NUM.paste-comma Pasting "1,000" or "1e3" is silently rejected (field keeps previous value)
+  pass D-EDGE-NUM.decimals Decimals ".5", "5.", "0.001" accepted; live calc rounds to 2 dp
+  pass D-EDGE-NUM.zero-loss All zeros: annual loss $0, no NaN/Infinity anywhere
+  FAIL D-EDGE-NUM.huge Huge values (1e20) format without NaN/scientific and without horizontal overflow
+       mobile overflow with huge numbers: scrollWidth 1237 > 375 (annual loss shows "$999,999,800,000,010,000,000,000,000,000,000,000,000,000,000,000,000,000")
+  pass D-EDGE-NUM.currency Currency: max 4 chars; empty falls back to $; unit empty falls back to "units"
+  pass D-EDGE-NUM.payback-after-empty Verify: events after = "" -> saving Not entered, payback n/a (no divide-by-zero)
+  pass D-EDGE-NUM.payback-after=events (saving 0) Verify: events after = "4" -> saving $0, payback n/a (no divide-by-zero)
+  pass D-EDGE-NUM.payback-after>events (negative saving) Verify: events after = "6" -> saving -$6,900, payback n/a (no divide-by-zero)
+  pass D-EDGE-NUM.payback-after=0 Verify: events after = "0" -> saving $13,800, payback 1.9 months (no divide-by-zero)
+  pass D-EDGE-NUM.payback-after=1 Verify: events after = "1" -> saving $10,350, payback 2.5 months (no divide-by-zero)
+  pass D-EDGE-NUM.payback-zero-cost Action cost 0 with saving: payback "under 0.1 months"
+  pass D-EDGE-NUM.report-no-after Report without an after figure says "Not yet" and explains
+PASS D-EDGE-NUM Number fields: zero, negative, non-numeric, decimals, huge; payback edge cases
+  pass D-EDGE-TEXT.overflow-problem 375px: "Problem" step has no horizontal page overflow with 3000-char words
+  FAIL D-EDGE-TEXT.overflow-loss 375px: "Loss" step has no horizontal page overflow with 3000-char words
+       scrollWidth 1244 > clientWidth 375
+  FAIL D-EDGE-TEXT.overflow-evidence 375px: "Evidence" step has no horizontal page overflow with 3000-char words
+       scrollWidth 42456 > clientWidth 375
+  pass D-EDGE-TEXT.overflow-cause 375px: "Cause tree" step has no horizontal page overflow with 3000-char words
+  pass D-EDGE-TEXT.overflow-actions 375px: "Actions" step has no horizontal page overflow with 3000-char words
+  pass D-EDGE-TEXT.overflow-verify 375px: "Verify" step has no horizontal page overflow with 3000-char words
+  FAIL D-EDGE-TEXT.overflow-report 375px: "Report" step has no horizontal page overflow with 3000-char words
+       scrollWidth 42583 > clientWidth 375
+  FAIL D-EDGE-TEXT.views 5 Whys and Fishbone views with long text: no page overflow
+       Fishbone overflow 42499>375
+  pass D-EDGE-TEXT.dash-overflow Dashboard with long/special title: no overflow
+  pass D-EDGE-TEXT.no-xss No script ran, no dialog opened, no injected elements anywhere
+  pass D-EDGE-TEXT.as-text Special text is shown literally in the report and survives a round trip
+  pass D-EDGE-TEXT.delete-msg Delete dialog shows the hostile title as text
+  FAIL D-EDGE-TEXT.doc-title document.title contains the title as plain text
+       RootLoop: the root cause tool that closes the loop
+PASS D-EDGE-TEXT Very long text, HTML/script text and special characters render as text and do not break layout
+  pass D-EDGE-DATE.past-future-event Event dates 1900-01-01 and 2999-12-31 are accepted and shown formatted
+  [observation] No validation for an event date in the future (2999-12-31 accepted silently) 
+  pass D-EDGE-DATE.future-event-flag Future event date (after today) is not flagged by the quality check
+  pass D-EDGE-DATE.clear-date Clearing the date makes the quality check list "date of event" again
+  pass D-EDGE-DATE.overdue-done Past due date on a Done action is not overdue; on an Open action it is; dashboard counts it
+  [observation] Review date before event date: no validation 
+  pass D-EDGE-DATE.review-before-event Review date earlier than the event date is accepted without any warning (observation)
+PASS D-EDGE-DATE Dates in the past and future
+  pass D-EDGE-NAV.bad-id Invalid investigation id shows "Investigation not found" with a working link back
+  pass D-EDGE-NAV.weird-ids Ids with special characters (%00, <script>, very long, ../) do not crash the page
+  pass D-EDGE-NAV.unknown-route Unknown route /nope and /app/investigations/ return a 404 page
+  pass D-EDGE-NAV.bad-hash Unknown #hash falls back to the Problem step
+  pass D-EDGE-NAV.deep-link Deep links #report and #cause open those steps
+  [observation] Step changes use history.replaceState, so Back leaves the investigation instead of going to the previous step; after Forward the step shown is Report 
+  pass D-EDGE-NAV.back-fwd Browser back/forward: dashboard -> workspace -> steps -> back returns to dashboard, forward returns to workspace
+  pass D-EDGE-NAV.bfcache-edit Back to the dashboard after editing shows the edited title
+  FAIL D-EDGE-NAV.dblclick-dashboard Double-clicking "New investigation" creates exactly one investigation
+       created 2: expected 1 but got 2
+  pass D-EDGE-NAV.dblclick-dashboard-human Human-speed double click (2 clicks 120 ms apart) on "New investigation" creates exactly one
+  FAIL D-EDGE-NAV.hashchange Changing only the #hash in the address bar of an open investigation switches the step
+       hashchange ignored; still on Loss: expected "Report" but got "Loss"
+  FAIL D-EDGE-NAV.dblclick-landing Double-clicking "Start a new investigation" on the landing page creates exactly one
+       created 2: expected 1 but got 2
+  FAIL D-EDGE-NAV.dblclick-dup Double-clicking Duplicate creates exactly one copy
+       created 2: expected 1 but got 2
+  [observation] Blank "Untitled investigation" rows remain if user creates and abandons: 8 
+  pass D-EDGE-NAV.rapid-new-nav Pressing "New investigation" then browser Back immediately leaves no half-created junk beyond one blank
+PASS D-EDGE-NAV Invalid id, unknown routes, back/forward, double-click create
+  FAIL D-EDGE-ACT.hidden-after-unflag After the only root cause is un-flagged the existing action is still visible and editable
+       Actions step shows 0 action cards (it shows "Flag a root cause first") although 1 action with cost $500 still exists
+  [observation] Quality: Fix first The loss is not quantified yet. Still needed: events per year, downtime hours per event, production rate, margin per unit. Go to Loss | Fix first No cause is flagged as a root cause yet. Go to Cause tree | Should fix Problem statement is missing: title, asset, site or area, date of event, what happened, where, when, impact. Go to Problem | Should fix This branch stops at a Physical cause: "Only root". Ask "why?" again to find the System / Latent cause beneath. Go to Cause tree ; report has action text: true 
+  pass D-EDGE-ACT.hidden-still-counted Hidden action still counts in quality findings, report and dashboard (data and UI disagree)
+PASS D-EDGE-ACT Actions whose root cause is unflagged or deleted
+  pass D-EDGE-EVID.upload Upload a 3000x2000 PNG: preview appears, button changes to "Replace photo", stored as JPEG <= 800px
+  pass D-EDGE-EVID.non-image Non-image file shows "That file is not an image." alert
+  pass D-EDGE-EVID.photo-persist-report Photo persists after reload and appears in the report
+  pass D-EDGE-EVID.remove-photo "Remove photo" removes the image
+  pass D-EDGE-EVID.link-delete Delete evidence linked to a cause: confirm says "linked to 1 cause"; after confirm the cause chip/link is gone
+  pass D-EDGE-EVID.evidence-types All six evidence types selectable and shown in the list/report
+PASS D-EDGE-EVID Evidence: link/unlink, delete confirm, photo upload, non-image file
+  [observation] Corrupt demo data is silently shown as "No investigations yet" and overwritten on the next save (no warning) 
+  pass D-EDGE-STORE.corrupt Corrupt localStorage JSON: app does not crash (shows empty state) and recovers when a new investigation is created
