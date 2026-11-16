@@ -112,6 +112,10 @@ async function loginState(browser, email) {
   await page.context().close();
   return st;
 }
+async function withPage(browser, opts, fn) {
+  const page = await newPage(browser, opts);
+  try { return await fn(page); } finally { await page.context().close().catch(() => {}); }
+}
 const money = (n) => (n < 0 ? '-' : '') + '$' + Math.abs(Math.round(n)).toLocaleString('en-US');
 
-module.exports = { BASE, PASSWORD, USER_A, USER_B, SHOTS, DESKTOP, MOBILE, test, note, eq, ok, run, newPage, shot, overflowX, step, settle, waitSaved, demoNew, login, loginState, money, STEP_LABELS };
+module.exports = { withPage, BASE, PASSWORD, USER_A, USER_B, SHOTS, DESKTOP, MOBILE, test, note, eq, ok, run, newPage, shot, overflowX, step, settle, waitSaved, demoNew, login, loginState, money, STEP_LABELS };

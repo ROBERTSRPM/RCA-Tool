@@ -1,0 +1,274 @@
+{
+  "suite": "demo",
+  "base": "http://localhost:3555",
+  "at": "2026-11-16T11:35:01.937Z",
+  "results": [
+    {
+      "id": "D-LAND-1.hdr",
+      "title": "Landing shows headline, 3 benefit cards, video placeholder",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-LAND-1.logo",
+      "title": "Logo link goes to the landing page / app",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-LAND-1.open-app",
+      "title": "\"Open the app\" -> /app",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-LAND-1.signin",
+      "title": "\"Sign in\" header link -> /login",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-LAND-1.create-acct",
+      "title": "\"Create account\" header link -> /signup",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-LAND-1.sample",
+      "title": "\"Open the sample investigation\" opens the sample workspace",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-LAND-1.start-new",
+      "title": "\"Start a new investigation\" creates one and opens it",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-LAND-1.footer",
+      "title": "Footer copy is accurate now that accounts exist",
+      "status": "fail",
+      "detail": "Footer says: \"Your data stays in this browser for now. Sample figures are illustrative.\" although sign-in with cloud storage exists",
+      "ms": 0
+    },
+    {
+      "id": "D-LAND-1",
+      "title": "Landing page: every link and button works",
+      "status": "pass",
+      "detail": "",
+      "ms": 903
+    },
+    {
+      "id": "D-DASH-1.totals",
+      "title": "Totals: loss under investigation $0 (sample is closed), 0 open, 0 overdue, saved $198,700",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-DASH-1.row",
+      "title": "Sample row shows $238,440, Closed, sample chip",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-DASH-1",
+      "title": "Dashboard (sample only): totals equal hand calculation",
+      "status": "pass",
+      "detail": "",
+      "ms": 328
+    },
+    {
+      "id": "D-DASH-2.dup",
+      "title": "Duplicate creates \"Copy of ...\" and opens it",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-DASH-2.dup-numbers",
+      "title": "Duplicate keeps the money identical (both rows $238,440)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-DASH-2.del-cancel",
+      "title": "Delete + Cancel keeps the investigation",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-DASH-2.del-esc",
+      "title": "Delete dialog closes on Escape and on backdrop click",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-DASH-2.del-confirm",
+      "title": "Delete + confirm removes it",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-DASH-2.reset-sample",
+      "title": "Reset sample data: cancel keeps edits; confirm restores original",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-DASH-2.reset-keeps-own",
+      "title": "Reset sample leaves own investigations untouched",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-DASH-2.empty",
+      "title": "Delete everything -> empty state, then \"Load the sample investigation\" restores it",
+      "status": "fail",
+      "detail": "locator.waitFor: Timeout 30000ms exceeded. | Call log: | \u001b[2m  - waiting for getByText('Repeat bearing and mechanical seal failures').first() to be visible\u001b[22m | ",
+      "ms": 0
+    },
+    {
+      "id": "D-DASH-2.empty-new",
+      "title": "Empty state \"Start a new investigation\" button works",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-DASH-2",
+      "title": "Dashboard buttons: duplicate, delete cancel/confirm, reset sample, empty state",
+      "status": "pass",
+      "detail": "",
+      "ms": 34537
+    },
+    {
+      "id": "D-E2E-1.problem",
+      "title": "Problem step accepts all 8 fields",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-E2E-1.loss-calc",
+      "title": "Loss live calc equals hand calc (lost units, lost margin, cost/event, annual loss)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-E2E-1.evidence",
+      "title": "Evidence: 3 items listed, types and \"Not linked\" shown",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-E2E-1.tree-leaf-delete",
+      "title": "Deleting a leaf cause needs no confirmation and removes it",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-E2E-1.tree-nodes",
+      "title": "Tree has 7 causes covering Physical, Human and System / Latent",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-E2E-1.actions-tiles",
+      "title": "Actions tiles: total cost, 0 of 2 done, 1 overdue, 0 roots unlinked",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-E2E-1.qc-midway",
+      "title": "Quality check lists \"needs action\" findings before verification (cause without system cause etc.)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-E2E-1.dash-1",
+      "title": "Dashboard totals (open work, unverified): loss $13,800, open 2, overdue 1, saved $198,700",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-E2E-1.verify-calc",
+      "title": "Verify step money equals hand calc (before, after, saving, cost, payback)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-E2E-1.dash-2",
+      "title": "Verified savings must not count while actions are still open (review says \"no recurrence\" but 2 actions not done)",
+      "status": "fail",
+      "detail": "saving counted before actions are complete: expected \"$198,700\" but got \"$209,050\"",
+      "ms": 0
+    },
+    {
+      "id": "D-E2E-1.dash-3",
+      "title": "Dashboard after closing: loss $0, open 0, overdue 0, saved $209,050; row says Closed",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-E2E-1.report",
+      "title": "Report content matches data and hand-calculated figures",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-E2E-1.report-ruledout",
+      "title": "Report marks ruled-out cause and category/evidence tags",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-E2E-1.reload",
+      "title": "After reload the report is identical (everything persisted)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-E2E-1.print",
+      "title": "Print emulation: app chrome hidden, report visible, A4 PDF renders",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-E2E-1",
+      "title": "Full flow: new investigation, 7 steps, hand-checked numbers, dashboard, report, reload",
+      "status": "pass",
+      "detail": "",
+      "ms": 6850
+    }
+  ],
+  "notes": []
+}

@@ -1,0 +1,11 @@
+const h = require('./harness'); const e=require('./e2e');
+(async()=>{ const {chromium}=require('playwright'); const b=await chromium.launch(); const p=await h.newPage(b);
+await p.goto(h.BASE+'/app'); await e.dashStats(p);
+await p.getByRole('button',{name:/^Delete /}).first().click(); await p.getByRole('alertdialog').getByRole('button',{name:'Delete'}).click();
+await p.getByText('No investigations yet').waitFor();
+await p.reload(); await p.getByText('No investigations yet').waitFor();
+await p.getByRole('button', { name: 'Load the sample investigation' }).click();
+await p.waitForTimeout(1500);
+console.log(await p.evaluate(()=>document.querySelector('main').innerText.slice(0,500)));
+console.log(await p.evaluate(()=>Object.keys(localStorage).map(k=>k+':'+localStorage[k].slice(0,80))));
+await b.close();})();

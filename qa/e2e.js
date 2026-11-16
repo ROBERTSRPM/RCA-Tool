@@ -103,3 +103,18 @@ async function finishVerify(page, { sub }) {
 }
 
 module.exports = { IN, calc, months, PROBLEM, buildAll, finishVerify };
+
+// ---- reusable readers
+async function dashStats(page) {
+  await page.getByText('Open actions', { exact: true }).first().waitFor();
+  await page.waitForFunction(() => !document.querySelector('section[aria-label="Totals"]').innerText.includes('…'), null, { timeout: 20000 });
+  return page.evaluate(() => Object.fromEntries([...document.querySelectorAll('section[aria-label="Totals"] > div')].map(d => { const p = d.querySelectorAll('p'); return [p[0].textContent.trim(), p[1].textContent.trim()]; })));
+}
+async function dashRows(page) {
+  return page.evaluate(() => [...document.querySelectorAll('section[aria-label="Investigations list"] ul > li')].map(li => li.innerText.replace(/\s+/g, ' ').trim()));
+}
+async function reportText(page) {
+  await step(page, 'Report');
+  return (await page.locator('article.print-sheet').innerText()).replace(/\s+/g, ' ');
+}
+module.exports.dashStats = dashStats; module.exports.dashRows = dashRows; module.exports.reportText = reportText;
