@@ -1,0 +1,23 @@
+{
+  "fps": 30,
+  "audio": null,
+  "scenes": [
+    {"id": "s01", "title": "Hook: same failure, again", "duration": 33},
+    {"id": "s02", "title": "Owner story 1 (title card)", "duration": 20},
+    {"id": "s03", "title": "What RCA is", "duration": 34},
+    {"id": "s04", "title": "What RCA is not", "duration": 35},
+    {"id": "s05", "title": "Why it matters", "duration": 33},
+    {"id": "s06", "title": "The hidden plant", "duration": 34},
+    {"id": "s07", "title": "Owner story 2 (title card, optional)", "duration": 15},
+    {"id": "s08", "title": "Six parts: 1 to 3", "duration": 33},
+    {"id": "s09", "title": "Six parts: 3 to 6", "duration": 35},
+    {"id": "s10", "title": "Worked example: the pump", "duration": 34},
+    {"id": "s11", "title": "Worked example: the loss", "duration": 33},
+    {"id": "s12", "title": "Worked example: evidence", "duration": 33},
+    {"id": "s13", "title": "Worked example: physical and human causes", "duration": 44},
+    {"id": "s14", "title": "Worked example: system causes", "duration": 30},
+    {"id": "s15", "title": "Worked example: verify and act", "duration": 40},
+    {"id": "s16", "title": "Worked example: results", "duration": 40},
+    {"id": "s17", "title": "Close: the system", "duration": 53}
+  ]
+}
