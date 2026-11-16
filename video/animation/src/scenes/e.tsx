@@ -59,7 +59,7 @@ export const S16: React.FC = () => {
           </g>
           <g opacity={r(0.69, 0.73)} transform={`translate(${flagX} 0)`}>
             <line x1={0} y1={640} x2={0} y2={760} stroke={C.text} strokeWidth={6} />
-            <path d="M0 640 H190 L165 676 L190 712 H0 Z" fill={C.green} />
+            <path d="M0 640 H260 L235 676 L260 712 H0 Z" fill={C.green} />
             <text x={20} y={690} fontSize={40} fontWeight={800} fill="#08130e" fontFamily={FONT}>Paid back</text>
           </g>
         </Full>

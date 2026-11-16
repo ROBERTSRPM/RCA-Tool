@@ -244,12 +244,12 @@ export const S04: React.FC = () => {
         <g transform={`translate(${lerp(280, 40, swap) } 140)`} opacity={1 - swap}><Bearing color={C.mute} cracked /></g>
         <g transform={`translate(${lerp(640, 280, swap)} 140)`} opacity={swap}><Bearing color={C.green} /></g>
         <GIn a={0.78} b={0.84} y={20}>
-          <g transform="translate(150 290)">
+          <g transform="translate(150 272)">
             <rect x={-40} y={-24} width={80} height={14} rx={4} fill={C.amber} />
             <rect x={-26} y={-2} width={80} height={14} rx={4} fill={C.amber} />
           </g>
-          <path d="M390 262 C390 262 362 296 362 312 A28 28 0 0 0 418 312 C418 296 390 262 390 262 Z" fill={C.amber} />
-          <text x={280} y={392} textAnchor="middle" fontSize={38} fontWeight={700} fill={C.amber} fontFamily={FONT}>Conditions remain</text>
+          <path d="M390 250 C390 250 362 284 362 300 A28 28 0 0 0 418 300 C418 284 390 250 390 250 Z" fill={C.amber} />
+          <text x={280} y={378} textAnchor="middle" fontSize={38} fontWeight={700} fill={C.amber} fontFamily={FONT}>Conditions remain</text>
         </GIn>
       </NotCard>
     </Stage>
