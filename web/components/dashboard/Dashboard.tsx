@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { calcLoss, formatMoney } from "@/lib/finance";
 import { formatDate, todayISO } from "@/lib/dates";
 import { getStore } from "@/lib/store";
@@ -36,6 +36,7 @@ export function Dashboard() {
   const [items, setItems] = useState<Investigation[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const today = todayISO();
+  const duplicating = useRef(false);
 
   const refresh = useCallback(async () => {
     try {
@@ -71,18 +72,27 @@ export function Dashboard() {
         inv,
         sum: summarise(inv, today),
         annual: calcLoss(inv.loss).annualLoss,
+        cash: calcLoss(inv.loss).annualCash,
+        opportunity: calcLoss(inv.loss).annualOpportunity,
       })),
     [items, today],
   );
 
+  const hasSample = rows.some((r) => r.inv.isSample);
   const currency = mostCommon(rows.map((r) => r.inv.loss.currency || "$"));
   const mixed = rows.some((r) => (r.inv.loss.currency || "$") !== currency);
   const counted = rows.filter((r) => (r.inv.loss.currency || "$") === currency);
   const totals = {
     loss: counted.filter((r) => r.sum.status !== "closed").reduce((s, r) => s + r.annual, 0),
+    lossCash: counted.filter((r) => r.sum.status !== "closed").reduce((s, r) => s + r.cash, 0),
+    lossOpportunity: counted
+      .filter((r) => r.sum.status !== "closed")
+      .reduce((s, r) => s + r.opportunity, 0),
     open: rows.reduce((s, r) => s + r.sum.openActions, 0),
     overdue: rows.reduce((s, r) => s + r.sum.overdueActions, 0),
     saved: counted.reduce((s, r) => s + r.sum.verifiedSaving, 0),
+    savedCash: counted.reduce((s, r) => s + r.sum.verifiedCash, 0),
+    savedOpportunity: counted.reduce((s, r) => s + r.sum.verifiedOpportunity, 0),
   };
 
   /** Runs a store change and shows a readable error instead of failing silently. */
@@ -96,11 +106,22 @@ export function Dashboard() {
   }
 
   async function duplicate(inv: Investigation) {
-    await attempt(async () => {
-      const copy = await getStore().duplicate(inv.id);
-      await refresh();
-      if (copy) router.push(`/app/investigations/${copy.id}`);
-    });
+    if (duplicating.current) return; // a double click must make one copy
+    duplicating.current = true;
+    let navigating = false;
+    try {
+      await attempt(async () => {
+        const copy = await getStore().duplicate(inv.id);
+        await refresh();
+        if (copy) {
+          navigating = true;
+          router.push(`/app/investigations/${copy.id}`);
+        }
+      });
+    } finally {
+      // Stay locked while navigating to the copy so a late second click is ignored.
+      if (!navigating) duplicating.current = false;
+    }
   }
 
   async function remove(inv: Investigation) {
@@ -119,7 +140,8 @@ export function Dashboard() {
   }
 
   async function resetSample() {
-    const ok = await confirm({
+    // Loading the sample when there is none is not destructive: no warning needed.
+    const ok = !hasSample || await confirm({
       title: "Reset the sample data?",
       message:
         "The sample investigation will be restored to its original state. Any changes you made to it are lost. Your own investigations are not touched.",
@@ -155,6 +177,11 @@ export function Dashboard() {
           label="Annual loss under investigation"
           value={items ? formatMoney(totals.loss, currency) : "…"}
           hint="Open investigations, per year"
+          split={
+            items
+              ? `Cash ${formatMoney(totals.lossCash, currency)} · Opportunity ${formatMoney(totals.lossOpportunity, currency)}`
+              : undefined
+          }
         />
         <Stat
           label="Open actions"
@@ -170,7 +197,12 @@ export function Dashboard() {
         <Stat
           label="Verified annual savings"
           value={items ? formatMoney(totals.saved, currency) : "…"}
-          hint="Failure confirmed stopped"
+          hint="Closed investigations only: failure confirmed stopped"
+          split={
+            items && totals.saved > 0
+              ? `Cash ${formatMoney(totals.savedCash, currency)} · Opportunity ${formatMoney(totals.savedOpportunity, currency)}`
+              : undefined
+          }
           tone={totals.saved > 0 ? "good" : "neutral"}
         />
       </section>
@@ -219,7 +251,7 @@ export function Dashboard() {
               <span className="w-[136px]" />
             </div>
             <ul className="divide-y divide-slate-200">
-              {rows.map(({ inv, sum, annual }) => (
+              {rows.map(({ inv, sum, annual, cash, opportunity }) => (
                 <li
                   key={inv.id}
                   className="grid grid-cols-2 gap-x-4 gap-y-3 px-4 py-4 sm:px-5 lg:grid-cols-[minmax(0,2.4fr)_minmax(0,1.2fr)_minmax(0,1.1fr)_70px_80px_auto] lg:items-center"
@@ -242,27 +274,33 @@ export function Dashboard() {
                     )}
                   </div>
                   <div>
-                    <p className="mb-1 text-xs font-semibold uppercase text-slate-400 lg:hidden">
+                    <p className="mb-1 text-xs font-semibold uppercase text-slate-500 lg:hidden">
                       Status
                     </p>
                     <StatusBadge status={sum.status} />
                   </div>
                   <div className="lg:text-right">
-                    <p className="mb-1 text-xs font-semibold uppercase text-slate-400 lg:hidden">
+                    <p className="mb-1 text-xs font-semibold uppercase text-slate-500 lg:hidden">
                       Annual loss
                     </p>
                     <p className="font-semibold tabular-nums text-slate-900">
                       {annual > 0 ? formatMoney(annual, inv.loss.currency) : "Not quantified"}
                     </p>
+                    {annual > 0 && (
+                      <p className="text-xs text-slate-500">
+                        Cash {formatMoney(cash, inv.loss.currency)} · Opportunity{" "}
+                        {formatMoney(opportunity, inv.loss.currency)}
+                      </p>
+                    )}
                   </div>
                   <div className="lg:text-right">
-                    <p className="mb-1 text-xs font-semibold uppercase text-slate-400 lg:hidden">
+                    <p className="mb-1 text-xs font-semibold uppercase text-slate-500 lg:hidden">
                       Open actions
                     </p>
                     <p className="font-semibold tabular-nums">{sum.openActions}</p>
                   </div>
                   <div className="lg:text-right">
-                    <p className="mb-1 text-xs font-semibold uppercase text-slate-400 lg:hidden">
+                    <p className="mb-1 text-xs font-semibold uppercase text-slate-500 lg:hidden">
                       Overdue
                     </p>
                     <p
@@ -297,11 +335,13 @@ function Stat({
   label,
   value,
   hint,
+  split,
   tone = "neutral",
 }: {
   label: string;
   value: string;
   hint: string;
+  split?: string;
   tone?: "neutral" | "good" | "bad";
 }) {
   const color =
@@ -313,6 +353,7 @@ function Stat({
         {value}
       </p>
       <p className="mt-0.5 text-xs text-slate-500">{hint}</p>
+      {split && <p className="mt-0.5 text-xs text-slate-500">{split}</p>}
     </div>
   );
 }

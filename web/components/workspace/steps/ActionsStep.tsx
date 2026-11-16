@@ -31,6 +31,9 @@ export function ActionsStep({ inv, update, go }: StepProps) {
   const total = totalActionCost(inv.actions);
   const overdue = inv.actions.filter((a) => isOverdue(a)).length;
   const done = inv.actions.filter((a) => a.status === "done").length;
+  const rootIds = new Set(roots.map((r) => r.id));
+  const linked = inv.actions.filter((a) => rootIds.has(a.causeId));
+  const unlinked = inv.actions.filter((a) => !rootIds.has(a.causeId));
   const unlinkedRoots = roots.filter((r) => !inv.actions.some((a) => a.causeId === r.id));
 
   function add(causeId = roots[0]?.id ?? "") {
@@ -60,6 +63,100 @@ export function ActionsStep({ inv, update, go }: StepProps) {
     });
     if (ok) update((i) => ({ ...i, actions: i.actions.filter((x) => x.id !== a.id) }));
   }
+
+  const renderCard = (a: ActionItem) => {
+    const idx = inv.actions.indexOf(a);
+    const late = isOverdue(a);
+    const cause = findNode(inv.tree, a.causeId);
+    const stale = cause !== null && !cause.isRootCause;
+    const isLinked = rootIds.has(a.causeId);
+    return (
+      <li
+        key={a.id}
+        className={`rounded-xl border p-4 ${
+          late ? "border-red-300 bg-red-50/60" : "border-slate-200 bg-slate-50/50"
+        }`}
+      >
+        <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+          <p className="flex flex-wrap items-center gap-2 text-sm font-bold text-slate-700">
+            Action {idx + 1}
+            {late && (
+              <span className="chip bg-red-600 text-white">
+                Overdue since {formatDate(a.dueDate)}
+              </span>
+            )}
+            {a.status === "done" && (
+              <span className="chip bg-emerald-100 text-emerald-800">Done</span>
+            )}
+          </p>
+          <button
+            className="btn btn-danger btn-sm"
+            aria-label={`Delete action ${idx + 1}`}
+            onClick={() => remove(a)}
+          >
+            <Icon name="trash" size={16} /> Delete
+          </button>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <SelectField
+            className="sm:col-span-2 lg:col-span-4"
+            label={isLinked ? "Fixes this root cause" : "Re-link to a root cause"}
+            help={
+              isLinked
+                ? undefined
+                : stale
+                  ? `This action was linked to "${cause.text || "(no text)"}", which is no longer flagged as a root cause.`
+                  : roots.length === 0
+                    ? "There is no root cause to link to yet. Flag one in the cause tree."
+                    : "Pick the root cause this action addresses."
+            }
+            value={isLinked ? a.causeId : ""}
+            onChange={(v) => change(a.id, { causeId: v })}
+            options={[
+              { value: "", label: "Not linked, choose a root cause" },
+              ...roots.map((r) => ({
+                value: r.id,
+                label: r.text || "(no text)",
+              })),
+            ]}
+          />
+          <TextAreaField
+            className="sm:col-span-2 lg:col-span-4"
+            label="What will be done?"
+            rows={2}
+            placeholder="e.g. Add seal replacement to the 6-monthly PM plan"
+            value={a.description}
+            onChange={(v) => change(a.id, { description: v })}
+          />
+          <TextField
+            label="Owner"
+            help="One named person."
+            placeholder="e.g. Sam Patel"
+            value={a.owner}
+            onChange={(v) => change(a.id, { owner: v })}
+          />
+          <TextField
+            label="Due date"
+            type="date"
+            value={a.dueDate}
+            onChange={(v) => change(a.id, { dueDate: v })}
+          />
+          <SelectField
+            label="Status"
+            value={a.status}
+            onChange={(v) => change(a.id, { status: v })}
+            options={ACTION_STATUS}
+          />
+          <NumberField
+            label="Cost"
+            prefix={cur}
+            value={a.cost}
+            onChange={(v) => change(a.id, { cost: v })}
+          />
+        </div>
+      </li>
+    );
+  };
 
   return (
     <div className="space-y-5">
@@ -98,7 +195,7 @@ export function ActionsStep({ inv, update, go }: StepProps) {
         )}
 
         <div className="mt-5">
-          {roots.length === 0 ? (
+          {inv.actions.length === 0 && roots.length === 0 ? (
             <EmptyState
               title="Flag a root cause first"
               action={
@@ -121,99 +218,24 @@ export function ActionsStep({ inv, update, go }: StepProps) {
             >
               What will you change so this cannot happen again? Add one action per fix.
             </EmptyState>
-          ) : (
-            <ul className="space-y-4">
-              {inv.actions.map((a, idx) => {
-                const late = isOverdue(a);
-                const cause = findNode(inv.tree, a.causeId);
-                const stale = cause !== null && !cause.isRootCause;
-                return (
-                  <li
-                    key={a.id}
-                    className={`rounded-xl border p-4 ${
-                      late ? "border-red-300 bg-red-50/60" : "border-slate-200 bg-slate-50/50"
-                    }`}
-                  >
-                    <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-                      <p className="flex flex-wrap items-center gap-2 text-sm font-bold text-slate-700">
-                        Action {idx + 1}
-                        {late && (
-                          <span className="chip bg-red-600 text-white">
-                            Overdue since {formatDate(a.dueDate)}
-                          </span>
-                        )}
-                        {a.status === "done" && (
-                          <span className="chip bg-emerald-100 text-emerald-800">Done</span>
-                        )}
-                      </p>
-                      <button
-                        className="btn btn-danger btn-sm"
-                        aria-label={`Delete action ${idx + 1}`}
-                        onClick={() => remove(a)}
-                      >
-                        <Icon name="trash" size={16} /> Delete
-                      </button>
-                    </div>
-                    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                      <SelectField
-                        className="sm:col-span-2 lg:col-span-4"
-                        label="Fixes this root cause"
-                        help={
-                          stale
-                            ? "This cause is no longer flagged as a root cause."
-                            : !cause
-                              ? "Pick the root cause this action addresses."
-                              : undefined
-                        }
-                        value={a.causeId}
-                        onChange={(v) => change(a.id, { causeId: v })}
-                        options={[
-                          { value: "", label: "Not linked, choose a root cause" },
-                          ...(cause && stale ? [{ value: cause.id, label: cause.text || "(no text)" }] : []),
-                          ...roots.map((r) => ({
-                            value: r.id,
-                            label: r.text || "(no text)",
-                          })),
-                        ]}
-                      />
-                      <TextAreaField
-                        className="sm:col-span-2 lg:col-span-4"
-                        label="What will be done?"
-                        rows={2}
-                        placeholder="e.g. Add seal replacement to the 6-monthly PM plan"
-                        value={a.description}
-                        onChange={(v) => change(a.id, { description: v })}
-                      />
-                      <TextField
-                        label="Owner"
-                        help="One named person."
-                        placeholder="e.g. Sam Patel"
-                        value={a.owner}
-                        onChange={(v) => change(a.id, { owner: v })}
-                      />
-                      <TextField
-                        label="Due date"
-                        type="date"
-                        value={a.dueDate}
-                        onChange={(v) => change(a.id, { dueDate: v })}
-                      />
-                      <SelectField
-                        label="Status"
-                        value={a.status}
-                        onChange={(v) => change(a.id, { status: v })}
-                        options={ACTION_STATUS}
-                      />
-                      <NumberField
-                        label="Cost"
-                        prefix={cur}
-                        value={a.cost}
-                        onChange={(v) => change(a.id, { cost: v })}
-                      />
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
+          ) : null}
+          {inv.actions.length > 0 && (
+            <div className="space-y-6">
+              {linked.length > 0 && <ul className="space-y-4">{linked.map(renderCard)}</ul>}
+              {unlinked.length > 0 && (
+                <section aria-labelledby="unlinked-heading" data-testid="unlinked-actions">
+                  <h3 id="unlinked-heading" className="text-base font-bold text-slate-900">
+                    Not linked to a root cause
+                  </h3>
+                  <p className="mb-3 mt-0.5 text-sm text-slate-600">
+                    {roots.length === 0
+                      ? "No cause is flagged as a root cause right now, so these actions have nothing to link to. Flag a root cause in the cause tree, then re-link them here, or delete them."
+                      : "These actions are not tied to a current root cause: the cause may have been deleted or un-flagged, or the action was left general. They still count in the totals. Pick a root cause below to re-link each one."}
+                  </p>
+                  <ul className="space-y-4">{unlinked.map(renderCard)}</ul>
+                </section>
+              )}
+            </div>
           )}
         </div>
       </SectionCard>

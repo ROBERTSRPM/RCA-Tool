@@ -112,4 +112,18 @@ describe("runQualityCheck", () => {
     const order = { high: 0, medium: 1, low: 2 } as const;
     expect([...sev].sort((a, b) => order[a] - order[b])).toEqual(sev);
   });
+
+  it("flags actions whose cause was removed or is no longer a root cause (DEF-03)", () => {
+    const inv = buildSample();
+    const gone = { ...inv, actions: [...inv.actions, { ...inv.actions[0], id: "x", causeId: "no-such-node" }] };
+    expect(rules(gone)).toContain("action-not-linked");
+    const unflagged = { ...inv, tree: JSON.parse(JSON.stringify(inv.tree)) };
+    const first = inv.actions.find((a) => a.causeId)!;
+    const mark = (n: Investigation["tree"]) => {
+      if (n.id === first.causeId) n.isRootCause = false;
+      n.children.forEach(mark);
+    };
+    mark(unflagged.tree);
+    expect(rules(unflagged)).toContain("action-not-linked");
+  });
 });

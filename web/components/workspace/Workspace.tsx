@@ -24,7 +24,8 @@ function readHash(): StepId {
 }
 
 export function Workspace({ initial }: { initial: Investigation }) {
-  const { inv, update, save, retry } = useAutosavedInvestigation(initial);
+  const { inv, update, save, retry, loadLatest, keepMine, notice } =
+    useAutosavedInvestigation(initial);
   const [step, setStep] = useState<StepId>(() => readHash());
   const [selectedNode, setSelectedNode] = useState<string | undefined>(undefined);
   const stepperRef = useRef<HTMLOListElement>(null);
@@ -39,7 +40,22 @@ export function Workspace({ initial }: { initial: Investigation }) {
   }, []);
 
   useEffect(() => {
-    document.title = `${inv.problem.title || "New investigation"} · ${BRAND_NAME}`;
+    const onHash = () => setStep(readHash());
+    window.addEventListener("hashchange", onHash);
+    return () => window.removeEventListener("hashchange", onHash);
+  }, []);
+
+  useEffect(() => {
+    const wanted = `${inv.problem.title || "New investigation"} · ${BRAND_NAME}`;
+    document.title = wanted;
+    // Next.js streams its own <title> in after hydration and would put the
+    // default back; keep ours while this page is open.
+    const keep = () => {
+      if (document.title !== wanted) document.title = wanted;
+    };
+    const observer = new MutationObserver(keep);
+    observer.observe(document.head, { childList: true, subtree: true, characterData: true });
+    return () => observer.disconnect();
   }, [inv.problem.title]);
 
   useEffect(() => {
@@ -51,17 +67,52 @@ export function Workspace({ initial }: { initial: Investigation }) {
   const stepProps = { inv, update, go };
 
   return (
-    <div className="mx-auto max-w-6xl px-4 pb-16 pt-4 sm:px-6 sm:pt-6">
+    <main className="mx-auto max-w-6xl px-4 pb-16 pt-4 sm:px-6 sm:pt-6">
       <div className="no-print">
         <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
           <Link
             href="/app"
-            className="inline-flex items-center gap-1 text-sm font-semibold text-slate-600 hover:text-slate-900"
+            className="inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-slate-600 hover:text-slate-900"
           >
             <Icon name="left" size={16} /> All investigations
           </Link>
           <SaveIndicator save={save} retry={retry} />
         </div>
+        {save.status === "conflict" && (
+          <div
+            role="alert"
+            data-testid="conflict-banner"
+            className="mt-3 rounded-xl border border-red-300 bg-red-50 p-4"
+          >
+            <p className="font-bold text-red-900">
+              This investigation was changed elsewhere.
+            </p>
+            <p className="mt-1 text-sm text-red-800">
+              Someone saved a newer version from another tab or device, so your latest edits
+              have not been saved. Nothing has been overwritten yet. Choose what to keep.
+            </p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              <button className="btn btn-dark" onClick={() => void loadLatest()}>
+                Load the latest version
+              </button>
+              <button className="btn btn-danger" onClick={() => void keepMine()}>
+                Keep mine and overwrite
+              </button>
+            </div>
+            <p className="mt-2 text-xs text-red-800">
+              Loading the latest version discards the edits you made here since you opened it.
+            </p>
+          </div>
+        )}
+        {notice && (
+          <p
+            role="status"
+            data-testid="remote-notice"
+            className="mt-3 rounded-lg border border-sky-200 bg-sky-50 px-3 py-2 text-sm text-sky-900"
+          >
+            {notice}
+          </p>
+        )}
         <h1 className="mt-2 text-xl font-bold leading-tight tracking-tight text-slate-900 sm:text-2xl">
           {inv.problem.title || "New investigation"}
         </h1>
@@ -86,6 +137,7 @@ export function Workspace({ initial }: { initial: Investigation }) {
                   <button
                     onClick={() => go(s.id)}
                     aria-current={active ? "step" : undefined}
+                    aria-label={done ? `${s.label} (complete)` : undefined}
                     className={`flex min-h-12 w-full items-center gap-2 rounded-lg border px-3 py-2 text-left transition-colors ${
                       active
                         ? "border-slate-900 bg-slate-900 text-white shadow"
@@ -104,7 +156,6 @@ export function Workspace({ initial }: { initial: Investigation }) {
                       {done ? <Icon name="check" size={14} strokeWidth={3} /> : i + 1}
                     </span>
                     <span className="text-sm font-semibold whitespace-nowrap">{s.label}</span>
-                    {done && <span className="sr-only">(complete)</span>}
                   </button>
                 </li>
               );
@@ -145,7 +196,7 @@ export function Workspace({ initial }: { initial: Investigation }) {
           </button>
         )}
       </div>
-    </div>
+    </main>
   );
 }
 
@@ -168,7 +219,11 @@ function SaveIndicator({
     );
   }
   const text =
-    save.status === "saved" ? "All changes saved" : "Saving…";
+    save.status === "saved"
+      ? "All changes saved"
+      : save.status === "conflict"
+        ? "Not saved: changed elsewhere"
+        : "Saving…";
   return (
     <span
       role="status"

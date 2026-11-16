@@ -136,7 +136,7 @@ export function NumberField({
     <Field label={label} help={help} htmlFor={id} className={className}>
       <div className="relative">
         {prefix && (
-          <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-slate-500">
+          <span className="pointer-events-none absolute inset-y-0 left-3 flex max-w-[25%] items-center truncate text-slate-500">
             {prefix}
           </span>
         )}
@@ -147,8 +147,8 @@ export function NumberField({
           autoComplete="off"
           className="input"
           style={{
-            paddingLeft: prefix ? `${12 + prefix.length * 9 + 6}px` : undefined,
-            paddingRight: suffix ? `${12 + suffix.length * 8 + 8}px` : undefined,
+            paddingLeft: prefix ? `min(${12 + prefix.length * 9 + 6}px, 30%)` : undefined,
+            paddingRight: suffix ? `min(${12 + suffix.length * 8 + 8}px, 45%)` : undefined,
           }}
           value={shown}
           placeholder={placeholder}
@@ -160,7 +160,7 @@ export function NumberField({
           }}
         />
         {suffix && (
-          <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-sm text-slate-500">
+          <span className="pointer-events-none absolute inset-y-0 right-3 flex max-w-[40%] items-center truncate text-sm text-slate-500">
             {suffix}
           </span>
         )}
@@ -275,8 +275,12 @@ export function ConfirmProvider({ children }: { children: ReactNode }) {
   const [opts, setOpts] = useState<ConfirmOptions | null>(null);
   const resolver = useRef<((v: boolean) => void) | null>(null);
   const cancelRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const returnFocus = useRef<HTMLElement | null>(null);
 
   const confirm = useCallback<ConfirmFn>((o) => {
+    const active = document.activeElement;
+    returnFocus.current = active instanceof HTMLElement && active !== document.body ? active : null;
     setOpts(o);
     return new Promise<boolean>((resolve) => {
       resolver.current = resolve;
@@ -287,13 +291,42 @@ export function ConfirmProvider({ children }: { children: ReactNode }) {
     resolver.current?.(v);
     resolver.current = null;
     setOpts(null);
+    const back = returnFocus.current;
+    returnFocus.current = null;
+    // Wait for the dialog to unmount, then put focus back where it was.
+    if (back) {
+      back.focus();
+      setTimeout(() => back.isConnected && back.focus(), 0);
+    }
   }, []);
 
   useEffect(() => {
     if (!opts) return;
     cancelRef.current?.focus();
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") close(false);
+      if (e.key === "Escape") {
+        close(false);
+        return;
+      }
+      if (e.key !== "Tab") return;
+      // Keep Tab and Shift+Tab inside the dialog.
+      const items = dialogRef.current?.querySelectorAll<HTMLElement>(
+        "button:not([disabled]), [href], input, select, textarea, [tabindex]:not([tabindex='-1'])",
+      );
+      if (!items || items.length === 0) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      const active = document.activeElement;
+      if (!dialogRef.current?.contains(active)) {
+        e.preventDefault();
+        first.focus();
+      } else if (e.shiftKey && active === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -308,6 +341,7 @@ export function ConfirmProvider({ children }: { children: ReactNode }) {
           onClick={() => close(false)}
         >
           <div
+            ref={dialogRef}
             role="alertdialog"
             aria-modal="true"
             aria-labelledby="confirm-title"

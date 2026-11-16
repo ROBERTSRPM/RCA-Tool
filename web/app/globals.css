@@ -5,6 +5,10 @@
   --color-accent-strong: #d97706;
   --color-accent-soft: #fef3c7;
   --color-ink: #0f172a;
+  /* Muted text: darker than the Tailwind default so it stays at 4.5:1 or better
+     on white, slate-50, slate-100 and slate-200 surfaces. On dark surfaces use
+     slate-400 (7:1 on slate-900). */
+  --color-slate-500: #566377;
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
@@ -15,6 +19,7 @@ html {
 }
 
 body {
+  overflow-wrap: anywhere;
   background: #f1f5f9;
   color: #0f172a;
   font-family: var(--font-sans);
@@ -52,7 +57,7 @@ body {
     @apply bg-red-600 text-white hover:bg-red-700;
   }
   .input {
-    @apply w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-base text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-300;
+    @apply w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-base text-slate-900 shadow-sm placeholder:text-slate-500 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-300;
   }
   .label {
     @apply mb-1 block text-sm font-semibold text-slate-800;
@@ -155,4 +160,9 @@ body {
   .avoid-break {
     break-inside: avoid;
   }
+}
+
+/* Long unbroken strings (URLs, 20-digit numbers) must wrap, not widen the page. */
+.break-words {
+  overflow-wrap: anywhere;
 }

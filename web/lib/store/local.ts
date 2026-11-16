@@ -1,9 +1,9 @@
 import { blankInvestigation, cloneInvestigation } from "../investigation";
 import { buildSample, SAMPLE_ID } from "../sample";
 import type { Investigation, InvestigationPatch } from "../types";
-import { StoreError, type InvestigationStore } from "./types";
+import { CONFLICT_MESSAGE, nextTimestamp, StoreError, type InvestigationStore } from "./types";
 
-const DATA_KEY = "rca.investigations.v1";
+export const DATA_KEY = "rca.investigations.v1";
 const SEEDED_KEY = "rca.seeded.v1";
 
 /** Minimal storage surface so tests and the in-memory fallback can share code. */
@@ -106,14 +106,17 @@ export class LocalStorageInvestigationStore implements InvestigationStore {
     return inv;
   }
 
-  async update(id: string, patch: InvestigationPatch) {
+  async update(id: string, patch: InvestigationPatch, expectedUpdatedAt?: string) {
     const all = this.read();
     const idx = all.findIndex((i) => i.id === id);
     if (idx < 0) throw new StoreError("Investigation not found.", "not_found");
+    if (expectedUpdatedAt !== undefined && all[idx].updatedAt !== expectedUpdatedAt) {
+      throw new StoreError(CONFLICT_MESSAGE, "conflict");
+    }
     const next: Investigation = {
       ...all[idx],
       ...patch,
-      updatedAt: new Date().toISOString(),
+      updatedAt: nextTimestamp(all[idx].updatedAt),
     };
     all[idx] = next;
     this.write(all);
@@ -135,6 +138,6 @@ export class LocalStorageInvestigationStore implements InvestigationStore {
 
   async resetSample() {
     const rest = this.read().filter((i) => i.id !== SAMPLE_ID);
-    this.write([buildSample(), ...rest]);
+    this.write([{ ...buildSample(), updatedAt: nextTimestamp() }, ...rest]);
   }
 }

@@ -53,7 +53,8 @@ const routed: InvestigationStore = {
   list: async () => (await ready, currentStore().list()),
   get: async (id) => (await ready, currentStore().get(id)),
   create: async (seed) => (await ready, currentStore().create(seed)),
-  update: async (id, patch) => (await ready, currentStore().update(id, patch)),
+  update: async (id, patch, expected) =>
+    (await ready, currentStore().update(id, patch, expected)),
   delete: async (id) => (await ready, currentStore().delete(id)),
   duplicate: async (id) => (await ready, currentStore().duplicate(id)),
   resetSample: async () => (await ready, currentStore().resetSample()),

@@ -106,7 +106,7 @@ function AutoTextarea({
       value={value}
       placeholder={placeholder}
       onChange={(e) => onChange(e.target.value)}
-      className="block w-full resize-none rounded-md border border-slate-300 bg-white px-2 py-1.5 text-base leading-snug text-slate-900 placeholder:text-slate-400 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-300 sm:text-sm"
+      className="block w-full resize-none rounded-md border border-slate-300 bg-white px-2 py-1.5 text-base leading-snug text-slate-900 placeholder:text-slate-500 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-300 sm:text-sm"
     />
   );
 }
@@ -189,14 +189,14 @@ export function NodeCard({
             type="button"
             tabIndex={-1}
             aria-hidden="true"
-            className="block w-full cursor-pointer text-left"
+            className="block min-h-6 w-full cursor-pointer text-left"
             onClick={() => cx.select(node.id)}
           >
             <span
               className={`block whitespace-pre-wrap break-words text-sm leading-snug ${
                 node.status === "ruled_out" && !isTop ? "text-slate-500 line-through" : ""
               } ${node.status === "hypothesis" && !isTop ? "italic text-slate-700" : ""} ${
-                !text ? "text-slate-400" : ""
+                !text ? "text-slate-500" : ""
               } ${node.isRootCause ? "font-semibold" : ""}`}
             >
               {text || placeholder}

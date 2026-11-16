@@ -131,6 +131,23 @@ export function runQualityCheck(
     }
   }
 
+  // 6b. Actions whose cause is missing or no longer a root cause
+  const rootIds = new Set(roots.map((r) => r.id));
+  for (const a of inv.actions) {
+    // An empty causeId is a deliberately general action (the sample has some);
+    // a causeId that points at nothing, or at a cause that is no longer a root
+    // cause, is an action that lost its cause.
+    if (a.causeId !== "" && !rootIds.has(a.causeId)) {
+      out.push({
+        id: `action-unlinked-${a.id}`,
+        rule: "action-not-linked",
+        severity: "medium",
+        message: `Action "${clip(a.description)}" is not linked to a root cause (its cause was removed or is no longer flagged as a root cause). Link it to a root cause or delete it.`,
+        step: "actions",
+      });
+    }
+  }
+
   // 7. Actions with no owner or due date
   for (const a of inv.actions) {
     const missing: string[] = [];

@@ -2,7 +2,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { blankInvestigation, cloneInvestigation } from "../investigation";
 import { buildSample, SAMPLE_ID } from "../sample";
 import type { Investigation, InvestigationPatch } from "../types";
-import { StoreError, type InvestigationStore } from "./types";
+import { CONFLICT_MESSAGE, nextTimestamp, StoreError, type InvestigationStore } from "./types";
 
 const TABLE = "investigations";
 const SEEDED_FLAG = "rca_seeded";
@@ -27,13 +27,22 @@ export function toStoreError(e: unknown, action: string): StoreError {
   ) {
     return new StoreError("Your session has expired. Sign in again to save.", "auth");
   }
-  if (msg.includes("failed to fetch") || msg.includes("network") || msg.includes("load failed")) {
+  if (msg.includes("failed to fetch") || msg.includes("network") || msg.includes("load failed") ||
+    msg.includes("abort") ||
+    msg.includes("timed out")) {
     return new StoreError(`Could not ${action}: no connection to the server.`, "network");
   }
   if (err.code === "42501") {
     return new StoreError(`Could not ${action}: not allowed.`, "auth");
   }
   return new StoreError(`Could not ${action}. ${err.message ?? ""}`.trim(), "unknown");
+}
+
+/** Fails at once, with a plain message, when the browser knows it is offline. */
+function assertOnline(action: string): void {
+  if (typeof navigator !== "undefined" && navigator.onLine === false) {
+    throw new StoreError(`Could not ${action}: no connection to the server.`, "network");
+  }
 }
 
 /** The id the seeded sample gets in an account (primary key is global). */
@@ -119,31 +128,44 @@ export class SupabaseInvestigationStore implements InvestigationStore {
   }
 
   async create(seed: InvestigationPatch = {}) {
+    assertOnline("save");
     const inv = blankInvestigation(seed);
     await this.insertRow(inv);
     return inv;
   }
 
-  async update(id: string, patch: InvestigationPatch) {
+  async update(id: string, patch: InvestigationPatch, expectedUpdatedAt?: string) {
+    assertOnline("save");
     const { data: cur, error: readErr } = await this.db
       .from(TABLE)
-      .select("data")
+      .select("data, updated_at")
       .eq("id", id)
       .maybeSingle();
     if (readErr) throw toStoreError(readErr, "save");
     if (!cur) throw new StoreError("Investigation not found.", "not_found");
+    const stored = cur.data as Investigation;
+    if (expectedUpdatedAt !== undefined && stored.updatedAt !== expectedUpdatedAt) {
+      throw new StoreError(CONFLICT_MESSAGE, "conflict");
+    }
     const next: Investigation = {
-      ...(cur.data as Investigation),
+      ...stored,
       ...patch,
-      updatedAt: new Date().toISOString(),
+      updatedAt: nextTimestamp(stored.updatedAt),
     };
+    // Optimistic concurrency: the write only matches if the row's updated_at is
+    // still the one we just read, so a save from another tab or device between
+    // our read and write is never overwritten.
     const { data: rows, error } = await this.db
       .from(TABLE)
       .update({ data: next, updated_at: next.updatedAt })
       .eq("id", id)
+      .eq("updated_at", cur.updated_at as string)
       .select("id");
     if (error) throw toStoreError(error, "save");
     if (!rows || rows.length === 0) {
+      // Either someone saved first, or the row is gone.
+      const { data: again } = await this.db.from(TABLE).select("id").eq("id", id).maybeSingle();
+      if (again) throw new StoreError(CONFLICT_MESSAGE, "conflict");
       throw new StoreError("Investigation not found.", "not_found");
     }
     return next;
@@ -162,14 +184,21 @@ export class SupabaseInvestigationStore implements InvestigationStore {
     return copy;
   }
 
+  /**
+   * Insert-or-replace the account's sample under its fixed id first, and only
+   * then remove any other leftover sample rows. If a step fails, the account
+   * still has a sample (the old one or the new one), never none.
+   */
   async resetSample() {
-    const existing = (await this.fetchAll()).filter((i) => i.isSample);
-    for (const s of existing) await this.delete(s.id);
-    await this.insertRow({
-      ...buildSample(),
-      id: accountSampleId(this.userId),
-      updatedAt: new Date().toISOString(),
-    });
+    assertOnline("reset the sample");
+    const sampleId = accountSampleId(this.userId);
+    const fresh = { ...buildSample(), id: sampleId, updatedAt: nextTimestamp() };
+    const { error } = await this.db
+      .from(TABLE)
+      .upsert({ id: sampleId, data: fresh, updated_at: fresh.updatedAt }, { onConflict: "id" });
+    if (error) throw toStoreError(error, "reset the sample");
+    const others = (await this.fetchAll()).filter((i) => i.isSample && i.id !== sampleId);
+    for (const s of others) await this.delete(s.id);
   }
 
   /** Inserts investigations copied from this browser, under fresh ids. */

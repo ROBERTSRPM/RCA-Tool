@@ -51,4 +51,19 @@ describe("LocalStorageInvestigationStore", () => {
     const s = new LocalStorageInvestigationStore(() => mem);
     expect(await s.list()).toEqual([]);
   });
+
+  it("refuses to overwrite a newer version (DEF-01)", async () => {
+    const inv = await store.create();
+    const tab1 = await store.update(inv.id, { problem: { ...inv.problem, title: "From tab 1" } }, inv.updatedAt);
+    expect(tab1.updatedAt).not.toBe(inv.updatedAt);
+    // tab 2 still holds the old updatedAt
+    await expect(
+      store.update(inv.id, { problem: { ...inv.problem, asset: "Pump" } }, inv.updatedAt),
+    ).rejects.toMatchObject({ code: "conflict" });
+    expect((await store.get(inv.id))!.problem.title).toBe("From tab 1");
+    expect((await store.get(inv.id))!.problem.asset).toBe("");
+    // with the latest version it goes through
+    const ok = await store.update(inv.id, { problem: { ...inv.problem, asset: "Pump" } }, tab1.updatedAt);
+    expect(ok.problem.asset).toBe("Pump");
+  });
 });

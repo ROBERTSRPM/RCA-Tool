@@ -1,6 +1,12 @@
 "use client";
 
-import { calcLoss, calcVerification, formatMoney, formatMonths } from "@/lib/finance";
+import {
+  calcLoss,
+  calcVerification,
+  formatMoney,
+  formatMonths,
+  isVerifiedClosed,
+} from "@/lib/finance";
 import type { Recurrence } from "@/lib/types";
 import { Icon } from "../../icons";
 import { NumberField, SectionCard, TextAreaField, TextField } from "../../ui";
@@ -16,6 +22,9 @@ export function VerifyStep({ inv, update, go }: StepProps) {
   const v = inv.verification;
   const cur = inv.loss.currency || "$";
   const calc = calcVerification(inv);
+  const verified = isVerifiedClosed(inv);
+  const split = (cash: number, opp: number) =>
+    `Cash ${formatMoney(cash, cur)} · Opportunity ${formatMoney(opp, cur)}`;
   const setV = (patch: Partial<typeof v>) =>
     update((i) => ({ ...i, verification: { ...i.verification, ...patch } }));
   const openActions = inv.actions.filter((a) => a.status !== "done").length;
@@ -97,23 +106,35 @@ export function VerifyStep({ inv, update, go }: StepProps) {
         }
       >
         <dl className="grid grid-cols-2 gap-3 lg:grid-cols-5">
-          <Metric label="Annual loss before" value={formatMoney(calc.annualLossBefore, cur)} />
+          <Metric
+            label="Annual loss before"
+            value={formatMoney(calc.annualLossBefore, cur)}
+            sub={split(calc.cashBefore, calc.opportunityBefore)}
+          />
           <Metric
             label="Annual loss after"
             value={calc.hasAfterFigure ? formatMoney(calc.annualLossAfter, cur) : "Not entered"}
             sub={
               calc.hasAfterFigure
-                ? `${formatMoney(calcLoss(inv.loss).costPerEvent, cur)} × ${v.eventsPerYearAfter}`
+                ? `${formatMoney(calcLoss(inv.loss).costPerEvent, cur)} × ${v.eventsPerYearAfter}` +
+                  (calcLoss(inv.loss).bufferHoldingPerYear > 0
+                    ? ` + ${formatMoney(calcLoss(inv.loss).bufferHoldingPerYear, cur)} buffer holding (assumed to continue)`
+                    : "") +
+                  `. ${split(calc.cashAfter, calc.opportunityAfter)}`
                 : undefined
             }
           />
           <Metric
-            label="Annual saving"
+            label={verified ? "Annual saving (verified)" : "Expected saving (not yet verified)"}
             value={calc.hasAfterFigure ? formatMoney(calc.annualSaving, cur) : "Not entered"}
             good={calc.annualSaving > 0}
             sub={
-              calc.hasAfterFigure && v.recurred !== "no"
-                ? "Counts as verified once the review says it has not recurred"
+              calc.hasAfterFigure
+                ? `${split(calc.cashSaving, calc.opportunitySaving)}. ${
+                    verified
+                      ? "Verified: all actions are done and the failure has not recurred."
+                      : "Counts as verified, and in the dashboard total, only when all actions are done and the review (with a date) says it has not recurred."
+                  }`
                 : undefined
             }
           />
@@ -143,7 +164,7 @@ function Metric({
   return (
     <div className="rounded-lg bg-slate-100 p-3">
       <dt className="text-xs font-semibold uppercase tracking-wide text-slate-500">{label}</dt>
-      <dd className={`mt-0.5 text-xl font-bold tabular-nums ${good ? "text-emerald-600" : "text-slate-900"}`}>
+      <dd className={`mt-0.5 break-words text-xl font-bold tabular-nums ${good ? "text-emerald-700" : "text-slate-900"}`}>
         {value}
       </dd>
       {sub && <p className="mt-0.5 text-xs text-slate-500">{sub}</p>}

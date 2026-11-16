@@ -1,6 +1,6 @@
 import { todayISO } from "./dates";
 import type { ActionItem, Investigation, InvestigationStatus } from "./types";
-import { verifiedSaving } from "./finance";
+import { isVerifiedClosed, verifiedSaving, verifiedSavingSplit } from "./finance";
 
 export const STATUS_LABELS: Record<InvestigationStatus, string> = {
   draft: "Draft",
@@ -31,9 +31,7 @@ export function deriveStatus(inv: Investigation): InvestigationStatus {
   const { actions, verification, tree } = inv;
   if (verification.recurred === "yes") return "investigating";
   if (actions.length > 0 && actions.every((a) => a.status === "done")) {
-    return verification.recurred === "no" && verification.reviewDate
-      ? "closed"
-      : "verifying";
+    return isVerifiedClosed(inv) ? "closed" : "verifying";
   }
   if (actions.length > 0) return "actions";
   return tree.children.length === 0 ? "draft" : "investigating";
@@ -44,6 +42,8 @@ export interface InvestigationSummary {
   openActions: number;
   overdueActions: number;
   verifiedSaving: number;
+  verifiedCash: number;
+  verifiedOpportunity: number;
 }
 
 export function summarise(
@@ -55,5 +55,7 @@ export function summarise(
     openActions: inv.actions.filter(isOpenAction).length,
     overdueActions: inv.actions.filter((a) => isOverdue(a, today)).length,
     verifiedSaving: verifiedSaving(inv),
+    verifiedCash: verifiedSavingSplit(inv).cash,
+    verifiedOpportunity: verifiedSavingSplit(inv).opportunity,
   };
 }

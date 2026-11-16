@@ -88,8 +88,9 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="border-t border-slate-800 px-4 py-8 text-center text-sm text-slate-500">
-        Your data stays in this browser for now. Sample figures are illustrative.
+      <footer className="border-t border-slate-800 px-4 py-8 text-center text-sm text-slate-400">
+        Without an account your work stays in this browser; with an account it is saved to your account.
+        Sample figures are illustrative.
       </footer>
     </div>
   );

@@ -41,6 +41,7 @@ function DemoBanner() {
       data-testid="demo-banner"
       className="no-print border-b border-amber-200 bg-amber-50 px-4 py-1.5 text-center text-sm text-amber-900"
     >
+      <p>
       You are in demo mode: work is saved only in this browser.{" "}
       <Link href="/signup" className="font-semibold underline">
         Create a free account
@@ -49,6 +50,7 @@ function DemoBanner() {
       <Link href="/login" className="whitespace-nowrap font-semibold underline">
         Sign in
       </Link>
+      </p>
     </div>
   );
 }

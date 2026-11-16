@@ -36,16 +36,16 @@ export function FishboneView() {
           event.
         </p>
       ) : (
-        <div className="grid gap-4 lg:grid-cols-3">
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-4 lg:grid-cols-3">
           {ORDER.map((cat) => (
             <section
               key={cat}
               aria-label={CATEGORY_LABEL[cat]}
-              className={`rounded-xl border-t-4 bg-white p-3 shadow-sm ring-1 ring-slate-200 ${CAT_STYLE[cat].head}`}
+              className={`min-w-0 rounded-xl border-t-4 bg-white p-3 shadow-sm ring-1 ring-slate-200 ${CAT_STYLE[cat].head}`}
             >
               <h3 className={`text-sm font-bold uppercase tracking-wide ${CAT_STYLE[cat].text}`}>
                 {CATEGORY_LABEL[cat]}{" "}
-                <span className="font-semibold text-slate-400">({groups[cat].length})</span>
+                <span className="font-semibold text-slate-500">({groups[cat].length})</span>
               </h3>
               <p className="mb-3 text-xs text-slate-500">{CATEGORY_HELP[cat]}</p>
               {groups[cat].length === 0 ? (

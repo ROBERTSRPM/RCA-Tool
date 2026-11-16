@@ -112,7 +112,7 @@ export function EvidenceStep({ inv, update }: StepProps) {
                   )}
                   <div className="min-w-0 flex-1 basis-48">
                     <p className="font-semibold text-slate-900">
-                      {e.title || <span className="text-slate-400">Untitled evidence</span>}
+                      {e.title || <span className="text-slate-500">Untitled evidence</span>}
                     </p>
                     <p className="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-slate-500">
                       <span className="chip bg-slate-200 text-slate-700">{evidenceTypeLabel(e.type)}</span>

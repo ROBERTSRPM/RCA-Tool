@@ -3,12 +3,15 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { registerFlusher } from "./pending";
 import { getStore, StoreError } from "./store";
+import { DATA_KEY } from "./store/local";
 import type { Investigation, InvestigationPatch } from "./types";
 
 export type SaveState =
   | { status: "saved" }
   | { status: "dirty" }
   | { status: "saving" }
+  /** Someone else saved a newer version; our edits are held back, not written. */
+  | { status: "conflict" }
   | { status: "error"; message: string };
 
 const DEBOUNCE_MS = 350;
@@ -32,6 +35,10 @@ export function useAutosavedInvestigation(initial: Investigation) {
   const failed = useRef(false);
   const unmounted = useRef(false);
   const [save, setSave] = useState<SaveState>({ status: "saved" });
+  /** updatedAt of the version this tab last loaded or saved (optimistic concurrency token) */
+  const base = useRef(initial.updatedAt);
+  const conflict = useRef(false);
+  const [notice, setNotice] = useState<string | null>(null);
 
   const clearTimers = () => {
     if (timer.current) clearTimeout(timer.current);
@@ -43,6 +50,7 @@ export function useAutosavedInvestigation(initial: Investigation) {
   const flushRef = useRef<() => Promise<boolean>>(async () => true);
 
   const run = useCallback(async (): Promise<boolean> => {
+    if (conflict.current) return false; // never write over a newer version
     while (dirty.current) {
       dirty.current = false;
       const cur = latest.current;
@@ -57,9 +65,15 @@ export function useAutosavedInvestigation(initial: Investigation) {
       };
       setSave({ status: "saving" });
       try {
-        await getStore().update(cur.id, patch);
+        const saved = await getStore().update(cur.id, patch, base.current);
+        base.current = saved.updatedAt;
       } catch (e) {
         dirty.current = true; // keep every edit; nothing is discarded
+        if (e instanceof StoreError && e.code === "conflict") {
+          conflict.current = true;
+          setSave({ status: "conflict" });
+          return false;
+        }
         failed.current = true;
         setSave({
           status: "error",
@@ -103,12 +117,108 @@ export function useAutosavedInvestigation(initial: Investigation) {
       latest.current = fn(latest.current);
       setInv(latest.current);
       dirty.current = true;
-      setSave((s) => (s.status === "saving" || s.status === "error" ? s : { status: "dirty" }));
+      setNotice(null);
+      setSave((s) =>
+        s.status === "saving" || s.status === "error" || s.status === "conflict"
+          ? s
+          : { status: "dirty" },
+      );
       if (timer.current) clearTimeout(timer.current);
       timer.current = setTimeout(() => void flush(), DEBOUNCE_MS);
     },
     [flush],
   );
+
+  /** Looks for a newer saved version (another tab or device) and reacts to it. */
+  const checkRemote = useCallback(async () => {
+    if (running.current || conflict.current || unmounted.current) return;
+    let latestInv: Investigation | null;
+    try {
+      latestInv = await getStore().get(latest.current.id);
+    } catch {
+      return;
+    }
+    if (!latestInv || latestInv.updatedAt === base.current) return;
+    if (running.current || conflict.current) return;
+    if (dirty.current || timer.current) {
+      // Unsaved edits here and a newer version there: never pick a winner silently.
+      if (timer.current) clearTimeout(timer.current);
+      timer.current = null;
+      dirty.current = true;
+      conflict.current = true;
+      setSave({ status: "conflict" });
+      return;
+    }
+    latest.current = latestInv;
+    base.current = latestInv.updatedAt;
+    setInv(latestInv);
+    setNotice("This investigation was updated from another tab or device. Showing the latest version.");
+  }, []);
+
+  /** Conflict choice 1: drop my unsaved edits and show what is saved. */
+  const loadLatest = useCallback(async () => {
+    try {
+      const fresh = await getStore().get(latest.current.id);
+      if (!fresh) {
+        setSave({ status: "error", message: "Could not load the latest version: it no longer exists." });
+        return;
+      }
+      if (timer.current) clearTimeout(timer.current);
+      timer.current = null;
+      latest.current = fresh;
+      base.current = fresh.updatedAt;
+      dirty.current = false;
+      conflict.current = false;
+      failed.current = false;
+      setInv(fresh);
+      setNotice(null);
+      setSave({ status: "saved" });
+    } catch (e) {
+      setSave({
+        status: "error",
+        message: e instanceof StoreError ? e.message : "Could not load the latest version.",
+      });
+    }
+  }, []);
+
+  /** Conflict choice 2: keep what is on screen and overwrite the saved version. */
+  const keepMine = useCallback(async () => {
+    try {
+      const fresh = await getStore().get(latest.current.id);
+      if (!fresh) {
+        setSave({ status: "error", message: "Could not save: this investigation was deleted elsewhere." });
+        return;
+      }
+      base.current = fresh.updatedAt;
+      conflict.current = false;
+      dirty.current = true;
+      await flush();
+    } catch (e) {
+      conflict.current = true;
+      setSave({
+        status: "error",
+        message: e instanceof StoreError ? e.message : "Could not save your changes.",
+      });
+    }
+  }, [flush]);
+
+  useEffect(() => {
+    const onStorage = (e: StorageEvent) => {
+      // Another tab wrote to browser storage (demo mode keeps everything there).
+      if (e.key === null || e.key === DATA_KEY) void checkRemote();
+    };
+    const onVisible = () => {
+      if (document.visibilityState === "visible") void checkRemote();
+    };
+    window.addEventListener("storage", onStorage);
+    document.addEventListener("visibilitychange", onVisible);
+    window.addEventListener("focus", onVisible);
+    return () => {
+      window.removeEventListener("storage", onStorage);
+      document.removeEventListener("visibilitychange", onVisible);
+      window.removeEventListener("focus", onVisible);
+    };
+  }, [checkRemote]);
 
   useEffect(() => {
     const onHide = () => {
@@ -119,7 +229,7 @@ export function useAutosavedInvestigation(initial: Investigation) {
       if (dirty.current) void flush();
     };
     const onBeforeUnload = (e: BeforeUnloadEvent) => {
-      if (dirty.current || failed.current) e.preventDefault();
+      if (dirty.current || failed.current || conflict.current) e.preventDefault();
     };
     document.addEventListener("visibilitychange", onHide);
     window.addEventListener("pagehide", onPageHide);
@@ -139,7 +249,7 @@ export function useAutosavedInvestigation(initial: Investigation) {
     };
   }, [flush]);
 
-  return { inv, update, save, retry: flush };
+  return { inv, update, save, retry: flush, loadLatest, keepMine, notice };
 }
 
 export type LoadState =

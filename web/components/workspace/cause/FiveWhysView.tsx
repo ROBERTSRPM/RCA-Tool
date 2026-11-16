@@ -28,7 +28,7 @@ export function FiveWhysView() {
           return (
             <li key={node.id}>
               {i > 0 && (
-                <div className="flex items-center gap-2 py-1.5 pl-3 text-xs font-semibold uppercase tracking-wide text-slate-400">
+                <div className="flex items-center gap-2 py-1.5 pl-3 text-xs font-semibold uppercase tracking-wide text-slate-500">
                   <Icon name="down" size={16} /> because
                 </div>
               )}

@@ -7,7 +7,10 @@ import {
   formatMoney,
   formatMonths,
   formatNumber,
+  isVerifiedClosed,
+  wholeShares,
 } from "@/lib/finance";
+import { OTHER_COST_CATEGORIES } from "@/lib/types";
 import { failureText } from "@/lib/investigation";
 import { SAMPLE_NOTE } from "@/lib/sample";
 import { deriveStatus, isOverdue, STATUS_LABELS } from "@/lib/status";
@@ -28,6 +31,9 @@ export function ReportStep({ inv }: StepProps) {
   const unit = inv.loss.unitName || "units";
   const c = calcLoss(inv.loss);
   const v = calcVerification(inv);
+  const verified = isVerifiedClosed(inv);
+  const shares = wholeShares(inv.loss);
+  const others = (inv.loss.otherCosts ?? []).filter((o) => (o.amount ?? 0) > 0);
   const roots = rootCauses(inv.tree);
   const evNo = new Map(inv.evidence.map((e, i) => [e.id, i + 1]));
   const outline = flatten(inv.tree);
@@ -75,7 +81,7 @@ export function ReportStep({ inv }: StepProps) {
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
             <Kpi label="Annual loss" value={formatMoney(c.annualLoss, cur)} />
             <Kpi
-              label="Annual saving"
+              label={verified ? "Annual saving (verified)" : "Expected saving (not yet verified)"}
               value={v.hasAfterFigure ? formatMoney(v.annualSaving, cur) : "Not yet"}
             />
             <Kpi label="Action cost" value={formatMoney(v.totalActionCost, cur)} />
@@ -96,15 +102,84 @@ export function ReportStep({ inv }: StepProps) {
 
         <Section title="2. Loss">
           <p>
-            ({formatNumber(inv.loss.downtimeHours ?? 0, 2)} h × {formatNumber(inv.loss.ratePerHour ?? 0, 2)}{" "}
-            {unit}/h × {cur}
-            {formatNumber(inv.loss.marginPerUnit ?? 0, 2)} + {formatMoney(inv.loss.repairCost ?? 0, cur)} repair) ×{" "}
-            {formatNumber(inv.loss.eventsPerYear ?? 0, 2)} events per year ={" "}
-            <strong>{formatMoney(c.annualLoss, cur)} per year</strong>.
+            Each event stops production for {formatNumber(inv.loss.downtimeHours ?? 0, 2)} h at{" "}
+            {formatNumber(inv.loss.ratePerHour ?? 0, 2)} {unit}/h, so {formatNumber(c.lostUnitsPerEvent, 1)}{" "}
+            {unit} are not produced. Of that, {shares.lost}% is lost for good, {shares.madeUp}% is
+            made up later and {shares.buffer}% is covered by buffer stock.
           </p>
+          <div className="mt-2 overflow-x-auto">
+            <table className="w-full border-collapse text-left text-xs">
+              <thead>
+                <tr className="border-b-2 border-slate-900">
+                  <th className="py-1 pr-2">Cost</th>
+                  <th className="py-1 pr-2 text-right">Per event</th>
+                  <th className="py-1 text-right">Per year ({formatNumber(inv.loss.eventsPerYear ?? 0, 2)} events)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-slate-200">
+                  <td className="py-1 pr-2">Cash: repair</td>
+                  <td className="py-1 pr-2 text-right tabular-nums">{formatMoney(c.repairPerEvent, cur)}</td>
+                  <td className="py-1 text-right tabular-nums">
+                    {formatMoney(c.repairPerEvent * (inv.loss.eventsPerYear ?? 0), cur)}
+                  </td>
+                </tr>
+                {c.recoveryPerEvent > 0 && (
+                  <tr className="border-b border-slate-200">
+                    <td className="py-1 pr-2">
+                      Cash: recovery of production made up later
+                      {inv.loss.recoveryNote ? ` (${inv.loss.recoveryNote})` : ""}
+                    </td>
+                    <td className="py-1 pr-2 text-right tabular-nums">{formatMoney(c.recoveryPerEvent, cur)}</td>
+                    <td className="py-1 text-right tabular-nums">
+                      {formatMoney(c.recoveryPerEvent * (inv.loss.eventsPerYear ?? 0), cur)}
+                    </td>
+                  </tr>
+                )}
+                {others.map((o) => (
+                  <tr key={o.id} className="border-b border-slate-200">
+                    <td className="py-1 pr-2">
+                      Cash: {OTHER_COST_CATEGORIES.find((k) => k.value === o.category)?.label ?? "Other"}
+                      {o.description ? ` (${o.description})` : ""}
+                    </td>
+                    <td className="py-1 pr-2 text-right tabular-nums">{formatMoney(o.amount ?? 0, cur)}</td>
+                    <td className="py-1 text-right tabular-nums">
+                      {formatMoney((o.amount ?? 0) * (inv.loss.eventsPerYear ?? 0), cur)}
+                    </td>
+                  </tr>
+                ))}
+                {c.bufferHoldingPerYear > 0 && (
+                  <tr className="border-b border-slate-200">
+                    <td className="py-1 pr-2">Cash: buffer stock holding (yearly)</td>
+                    <td className="py-1 pr-2 text-right">n/a</td>
+                    <td className="py-1 text-right tabular-nums">{formatMoney(c.bufferHoldingPerYear, cur)}</td>
+                  </tr>
+                )}
+                <tr className="border-b border-slate-200 font-bold">
+                  <td className="py-1 pr-2">Cash costs</td>
+                  <td className="py-1 pr-2 text-right tabular-nums">{formatMoney(c.cashPerEvent, cur)}</td>
+                  <td className="py-1 text-right tabular-nums">{formatMoney(c.annualCash, cur)}</td>
+                </tr>
+                <tr className="border-b border-slate-200 font-bold">
+                  <td className="py-1 pr-2">
+                    Opportunity loss ({formatNumber(c.unitsLostForGoodPerEvent, 1)} {unit} lost for good × {cur}
+                    {formatNumber(inv.loss.marginPerUnit ?? 0, 2)})
+                  </td>
+                  <td className="py-1 pr-2 text-right tabular-nums">{formatMoney(c.opportunityPerEvent, cur)}</td>
+                  <td className="py-1 text-right tabular-nums">{formatMoney(c.annualOpportunity, cur)}</td>
+                </tr>
+                <tr className="border-b-2 border-slate-900 font-bold">
+                  <td className="py-1 pr-2">Total</td>
+                  <td className="py-1 pr-2 text-right tabular-nums">{formatMoney(c.costPerEvent, cur)}</td>
+                  <td className="py-1 text-right tabular-nums">{formatMoney(c.annualLoss, cur)}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
           <p className="mt-1 text-slate-600">
-            Each event loses {formatNumber(c.lostUnitsPerEvent, 1)} {unit} and costs{" "}
-            {formatMoney(c.costPerEvent, cur)}.
+            Per year: {formatNumber(c.hoursLostPerYear, 1)} hours lost and {formatNumber(c.unitsLostPerYear, 1)}{" "}
+            {unit} not produced ({formatNumber(c.unitsLostForGoodPerYear, 1)} {unit} lost for good).{" "}
+            <strong>{formatMoney(c.annualLoss, cur)} per year</strong> in total.
           </p>
         </Section>
 
@@ -149,7 +224,7 @@ export function ReportStep({ inv }: StepProps) {
                   </span>
                   <span
                     className={`min-w-0 flex-1 ${
-                      node.status === "ruled_out" && !top ? "text-slate-400 line-through" : ""
+                      node.status === "ruled_out" && !top ? "text-slate-500 line-through" : ""
                     } ${node.isRootCause ? "font-bold text-slate-900" : ""}`}
                   >
                     {top ? failureText(inv) || "Failure event" : node.text || "(no text)"}
@@ -260,10 +335,13 @@ export function ReportStep({ inv }: StepProps) {
           {v.hasAfterFigure ? (
             <p className="mt-2">
               Annual loss falls from <strong>{formatMoney(v.annualLossBefore, cur)}</strong> to{" "}
-              <strong>{formatMoney(v.annualLossAfter, cur)}</strong>: a saving of{" "}
-              <strong>{formatMoney(v.annualSaving, cur)} per year</strong> for an action cost of{" "}
-              {formatMoney(v.totalActionCost, cur)}, paid back in {formatMonths(v.paybackMonths)}.
-              {inv.verification.recurred !== "no" && " This saving is not yet verified."}
+              <strong>{formatMoney(v.annualLossAfter, cur)}</strong>: {verified ? "a saving" : "an expected saving"} of{" "}
+              <strong>{formatMoney(v.annualSaving, cur)} per year</strong> (cash{" "}
+              {formatMoney(v.cashSaving, cur)}, opportunity {formatMoney(v.opportunitySaving, cur)}) for an
+              action cost of {formatMoney(v.totalActionCost, cur)}, paid back in{" "}
+              {formatMonths(v.paybackMonths)}.
+              {!verified &&
+                " This saving is not yet verified: it counts only when all actions are done and the review, with a date, says the failure has not recurred."}
             </p>
           ) : (
             <Muted>Savings cannot be calculated until the expected events per year after the fix are entered.</Muted>
@@ -304,7 +382,7 @@ function Facts({ rows }: { rows: [string, string][] }) {
       {rows.map(([k, val]) => (
         <div key={k} className="avoid-break flex gap-2">
           <dt className="w-32 flex-none font-bold text-slate-700">{k}</dt>
-          <dd className="min-w-0 flex-1">{val || <span className="text-slate-400">Not recorded</span>}</dd>
+          <dd className="min-w-0 flex-1">{val || <span className="text-slate-500">Not recorded</span>}</dd>
         </div>
       ))}
     </dl>

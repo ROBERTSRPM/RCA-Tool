@@ -42,14 +42,60 @@ export interface Problem {
   impact: string;
 }
 
+export type OtherCostCategory =
+  | "parts"
+  | "labour"
+  | "contractors"
+  | "scrap"
+  | "penalties"
+  | "secondary"
+  | "safety"
+  | "other";
+
+export const OTHER_COST_CATEGORIES: { value: OtherCostCategory; label: string }[] = [
+  { value: "parts", label: "Repair parts" },
+  { value: "labour", label: "Repair labour and call-out" },
+  { value: "contractors", label: "Contractors and hire" },
+  { value: "scrap", label: "Scrap and restart waste" },
+  { value: "penalties", label: "Customer penalties" },
+  { value: "secondary", label: "Secondary damage" },
+  { value: "safety", label: "Safety and environment" },
+  { value: "other", label: "Other" },
+];
+
+export interface OtherCost {
+  id: string;
+  category: OtherCostCategory;
+  description: string;
+  amount: number | null;
+}
+
 export interface Loss {
   eventsPerYear: number | null;
   downtimeHours: number | null;
   ratePerHour: number | null;
   unitName: string;
   marginPerUnit: number | null;
+  /** Simple default cash cost per event (parts, labour, contractors). */
   repairCost: number | null;
   currency: string;
+  /*
+   * Fields below were added later. Old investigations do not have them, so
+   * every reader must treat "missing" as: 100% lost for good, no extra costs.
+   */
+  /** % of the lost production that was never made up (costed as margin). */
+  shareLost?: number;
+  /** % of the lost production that was made up later (costed as recovery). */
+  shareMadeUp?: number;
+  /** % of the lost production covered by buffer stock (no cost per event). */
+  shareBuffer?: number;
+  /** Cash cost per event of making the production up later. */
+  recoveryCost?: number | null;
+  recoveryNote?: string;
+  /** Optional yearly cost of holding the buffer stock, attributed to this failure. */
+  bufferHoldingCostPerYear?: number | null;
+  /** Extra cash costs per event, on top of the simple repair cost. */
+  otherCosts?: OtherCost[];
 }
 
 export interface EvidenceItem {
