@@ -6,6 +6,8 @@ import type {
 } from "./types";
 
 export const SAMPLE_ID = "sample-p201";
+/** updatedAt of a sample nobody has edited (every edit stamps a new time). */
+export const SAMPLE_UPDATED_AT = "2026-02-02T08:00:00.000Z";
 export const SAMPLE_NOTE =
   "Illustrative sample. Names, figures and events are invented to show how a finished investigation looks.";
 
@@ -23,139 +25,201 @@ function node(
 
 const evidence: EvidenceItem[] = [
   {
-    id: "ev-vibration",
+    id: "ev-a1",
     type: "data",
-    title: "Vibration and bearing temperature trend, last 4 failures",
-    note: "Drive-end bearing temperature climbs from 62 C to over 95 C in the 2 to 3 weeks before each failure. Vibration spectrum shows bearing defect frequencies only. No cavitation or flow-related signature at any point.",
+    title: "A1: DCS flow trend, discharge valve log and pump curve overlay",
+    note: "Flow sits at about 60% of best efficiency flow for most operating hours. The pump is run away from the point it was selected for. Discharge valve position log shows it throttled most of the time.",
     date: "2025-02-14",
     image: null,
   },
   {
-    id: "ev-oil",
-    type: "photo",
-    title: "Failed drive-end bearing and oil sample",
-    note: "Oil milky and grey, laboratory result shows 8% water and fine silica (slurry solids). Bearing races pitted and discoloured by heat. Photo held in the maintenance share, ref BRG-0211.",
-    date: "2025-02-12",
-    image: null,
-  },
-  {
-    id: "ev-seal",
+    id: "ev-a2",
     type: "inspection",
-    title: "Bearing housing labyrinth seal inspection",
-    note: "Lip wear of 3.5 mm against a 0.5 mm limit. The CMMS shows no replacement of these seals in the last 5 years. Pump rebuilt 4 times in that period.",
+    title: "A2: Bearing race wear track, soft foot check, maintenance history search",
+    note: "Off-centre wear track on the bearing races, typical of misalignment. One foot lifts when its bolt is loosened. No alignment record exists for 4 of the 6 rebuilds.",
     date: "2025-02-18",
     image: null,
   },
   {
-    id: "ev-wo",
-    type: "document",
-    title: "Last three P-201 rebuild work orders",
-    note: "None record a shaft alignment reading or a tolerance. The work order template has no alignment step and no supervisor sign-off.",
-    date: "2025-02-20",
+    id: "ev-a3",
+    type: "photo",
+    title: "A3: Oil samples at teardown, housing seal and breather inspection",
+    note: "Water and solids found in the oil at teardown. Housing seals are worn and the breather vent is open to wash-down.",
+    date: "2025-02-12",
     image: null,
   },
   {
-    id: "ev-interview",
-    type: "interview",
-    title: "Operator interviews, all four crews",
-    note: "Three of four crews admit to turning the gland water down 'to save water', as the shift water-use KPI counts pump gland water. Nobody knew a minimum flow existed. The strainer is only cleaned when someone notices.",
+    id: "ev-b1",
+    type: "inspection",
+    title: "B1: Seal face inspection, flush flow reading, strainer inspection",
+    note: "Seal faces scored and heat cracked (ran dry or hot). Measured flush flow is below design. Strainer found packed with solids.",
+    date: "2025-02-19",
+    image: null,
+  },
+  {
+    id: "ev-b3",
+    type: "document",
+    title: "B3: Rebuild job cards and fitter interview",
+    note: "No set length is recorded on any of the 3 seal rebuild cards. Fitters set the seal by experience.",
+    date: "2025-02-21",
+    image: null,
+  },
+  {
+    id: "ev-r1",
+    type: "document",
+    title: "Root 1: Throughput change history, impeller size vs current duty, change records",
+    note: "Throughput changed with no pump duty review on file. The impeller is oversized for the current duty.",
+    date: "2025-02-24",
+    image: null,
+  },
+  {
+    id: "ev-r2",
+    type: "document",
+    title: "Root 2: Work instructions and training records",
+    note: "No document states an alignment method, tolerance or record. No laser tool on site and no training records.",
+    date: "2025-02-24",
+    image: null,
+  },
+  {
+    id: "ev-r3",
+    type: "document",
+    title: "Root 3: Review of the rebuild procedure",
+    note: "No seal setting step, no soft foot check, and housing seals are reused.",
     date: "2025-02-25",
     image: null,
   },
   {
-    id: "ev-glandflow",
+    id: "ev-r4",
+    type: "document",
+    title: "Root 4: Job close-out records",
+    note: "The pump was returned to service without an alignment or vibration reading.",
+    date: "2025-02-25",
+    image: null,
+  },
+  {
+    id: "ev-r5",
+    type: "document",
+    title: "Root 5: Inspection route and PM list",
+    note: "Neither flush flow nor oil condition appears on any inspection route.",
+    date: "2025-02-26",
+    image: null,
+  },
+  {
+    id: "ev-r6",
     type: "data",
-    title: "Gland water flow log vs failures",
-    note: "Flow was below 8 L/min in the week before 5 of 6 failures. Pump data sheet minimum is 12 L/min. Strainer pressure drop doubled over the same weeks.",
-    date: "2025-02-27",
+    title: "Root 6: Maintenance system history",
+    note: "Six events were logged under two generic codes (bearing failure, seal failure) with no cause field filled, so the repeat pattern was invisible.",
+    date: "2025-02-26",
     image: null,
   },
 ];
 
 const tree: CauseNode = node(
   "n-root",
-  "Slurry pump P-201 stops with a failed bearing and leaking gland seal, about 6 times a year",
+  "Repeat bearing and mechanical seal failures on P-201",
   "physical",
   "verified",
   [],
   [
     node(
-      "n-bearing",
-      "Drive-end bearing overheats and seizes",
+      "n-a",
+      "A. Bearings fail early",
       "physical",
       "verified",
-      ["ev-vibration", "ev-oil"],
+      ["ev-a1", "ev-a2", "ev-a3"],
       [
         node(
-          "n-contam",
-          "Slurry and water get into the bearing oil",
+          "n-a1",
+          "A1. Pump runs at about 60% of best efficiency flow, so radial load on the shaft is high",
           "physical",
           "verified",
-          ["ev-oil"],
+          ["ev-a1"],
           [
             node(
-              "n-labyrinth",
-              "Bearing housing labyrinth seal is worn out",
-              "physical",
+              "n-a1h",
+              "Operators throttle the discharge valve to match downstream demand",
+              "human",
               "verified",
-              ["ev-seal"],
+              ["ev-a1"],
               [
                 node(
-                  "n-nopm",
-                  "Housing seal replacement is not in the PM plan, so it only changes if someone happens to notice",
+                  "n-root1",
+                  "ROOT 1: Pump duty was never reviewed after throughput changed; impeller is oversized for current duty; no management-of-change trigger for duty changes",
                   "system",
                   "verified",
-                  ["ev-seal"],
+                  ["ev-r1"],
                   [],
                   true,
                 ),
               ],
             ),
+          ],
+        ),
+        node(
+          "n-a2",
+          "A2. Coupling misalignment and a soft foot after rebuilds",
+          "physical",
+          "verified",
+          ["ev-a2"],
+          [
             node(
-              "n-oilcan",
-              "Oil is topped up from a shared open can that has been left in the dusty pump area",
+              "n-a2h",
+              "Fitters align by straight edge and feel; soft foot is not checked",
               "human",
               "verified",
-              ["ev-oil"],
+              ["ev-a2"],
               [
                 node(
-                  "n-nolube",
-                  "There is no lubrication standard and no labelled sealed containers for this area",
+                  "n-root2",
+                  "ROOT 2: No precision alignment standard (method, tolerance, record), no laser tool, fitters not trained",
                   "system",
-                  "hypothesis",
+                  "verified",
+                  ["ev-r2"],
                   [],
+                  true,
+                ),
+                node(
+                  "n-root4",
+                  "ROOT 4: No verification after repair (alignment record, vibration reading) before handover",
+                  "system",
+                  "verified",
+                  ["ev-r4"],
+                  [],
+                  true,
                 ),
               ],
-            ),
-            node(
-              "n-wronggrade",
-              "Wrong grade of oil used in the bearing housing",
-              "physical",
-              "ruled_out",
-              ["ev-oil"],
             ),
           ],
         ),
         node(
-          "n-misalign",
-          "Shaft is misaligned after rebuilds, loading the bearing",
+          "n-a3",
+          "A3. Bearing oil contaminated with water and solids (worn housing seals, open breather)",
           "physical",
           "verified",
-          ["ev-vibration", "ev-wo"],
+          ["ev-a3"],
           [
             node(
-              "n-noalign",
-              "Fitters rebuild the pump without checking alignment",
+              "n-a3h",
+              "Wash-down hose aimed at bearing housings; oil topped up from open containers",
               "human",
               "verified",
-              ["ev-wo"],
+              ["ev-a3"],
               [
                 node(
-                  "n-notemplate",
-                  "The rebuild work order has no alignment step, tolerance or supervisor sign-off",
+                  "n-root3",
+                  "ROOT 3: Rebuild procedure gaps: reuses worn housing seals, no sealed-breather or isolator standard, no soft foot check",
                   "system",
                   "verified",
-                  ["ev-wo"],
+                  ["ev-r3"],
+                  [],
+                  true,
+                ),
+                node(
+                  "n-root5b",
+                  "ROOT 5b: Oil condition not on any inspection route",
+                  "system",
+                  "verified",
+                  ["ev-r5"],
                   [],
                   true,
                 ),
@@ -166,52 +230,75 @@ const tree: CauseNode = node(
       ],
     ),
     node(
-      "n-gland",
-      "Gland seal leaks and slurry reaches the bearing housing",
+      "n-b",
+      "B. Mechanical seals fail early",
       "physical",
       "verified",
-      ["ev-glandflow"],
+      ["ev-b1", "ev-a1", "ev-a2", "ev-b3"],
       [
         node(
-          "n-lowflow",
-          "Gland water flow is too low to keep slurry out of the seal",
+          "n-b1",
+          "B1. Seal faces run dry or hot because flush flow is restricted (strainer packed, flush valve part closed)",
           "physical",
           "verified",
-          ["ev-glandflow"],
+          ["ev-b1"],
           [
             node(
-              "n-strainer",
-              "Gland water strainer is blocked with scale and solids",
-              "physical",
+              "n-b1h",
+              "Flush strainer not checked; flush valve position not verified after maintenance",
+              "human",
               "verified",
-              ["ev-glandflow"],
+              ["ev-b1"],
               [
                 node(
-                  "n-noalarm",
-                  "There is no low-flow alarm and no routine for cleaning the strainer",
+                  "n-root5a",
+                  "ROOT 5a: Flush is on no inspection route; no flow indicator or low-flow alarm",
                   "system",
                   "verified",
-                  ["ev-glandflow", "ev-interview"],
+                  ["ev-r5"],
                   [],
                   true,
                 ),
               ],
             ),
+          ],
+        ),
+        node(
+          "n-b2",
+          "B2. Seal faces and sleeve see excess shaft movement",
+          "physical",
+          "verified",
+          ["ev-a1", "ev-a2"],
+          [
             node(
-              "n-throttle",
-              "Operators turn the gland water down to save water",
+              "n-b2s",
+              "Driven by A1 (off best efficiency point) and A2 (misalignment); same roots 1, 2 and 4",
+              "system",
+              "verified",
+              ["ev-a1", "ev-a2"],
+            ),
+          ],
+        ),
+        node(
+          "n-b3",
+          "B3. Seal set length not controlled on rebuild",
+          "physical",
+          "verified",
+          ["ev-b3"],
+          [
+            node(
+              "n-b3h",
+              "Seal set by experience, not recorded",
               "human",
               "verified",
-              ["ev-interview"],
+              ["ev-b3"],
               [
                 node(
-                  "n-kpi",
-                  "No minimum gland flow is defined, and the water-use KPI rewards turning it down",
+                  "n-b3s",
+                  "ROOT 3 (again): rebuild procedure has no seal setting step or check",
                   "system",
                   "verified",
-                  ["ev-interview", "ev-glandflow"],
-                  [],
-                  true,
+                  ["ev-r3"],
                 ),
               ],
             ),
@@ -220,113 +307,163 @@ const tree: CauseNode = node(
       ],
     ),
     node(
-      "n-cavitation",
-      "Pump runs away from its best efficiency point and cavitates",
-      "physical",
-      "ruled_out",
-      ["ev-vibration"],
+      "n-c",
+      "C. Cross-cutting: failures are not recorded in a way that shows the pattern",
+      "system",
+      "verified",
+      ["ev-r6"],
+      [
+        node(
+          "n-root6",
+          "ROOT 6: Failures coded only as \"bearing failure\" or \"seal failure\" in the maintenance system, so the repeat pattern and causes were invisible",
+          "system",
+          "verified",
+          ["ev-r6"],
+          [],
+          true,
+        ),
+      ],
     ),
   ],
 );
 
+/** Sign-off date 2025-03-03; due dates are the case study's weeks from sign-off. */
 const actions: ActionItem[] = [
   {
     id: "act-1",
-    causeId: "n-nopm",
+    causeId: "n-root1",
     description:
-      "Fit bearing isolators to P-201 and add housing seal inspection and replacement to the 6-monthly PM plan",
-    owner: "Thandi Mokoena (Planner)",
-    dueDate: "2025-04-30",
+      "Trim impeller / re-rate duty so the operating point sits near best efficiency (needs shutdown)",
+    owner: "Reliability engineer with process engineer",
+    dueDate: "2025-04-28",
     status: "done",
-    cost: 4200,
+    cost: 28000,
   },
   {
     id: "act-2",
-    causeId: "n-notemplate",
+    causeId: "n-root5a",
     description:
-      "Add a laser alignment reading, tolerance and supervisor sign-off to the pump rebuild work order, and brief all 8 fitters",
-    owner: "Pieter van Wyk (Mechanical Supervisor)",
-    dueDate: "2025-04-15",
+      "Upgrade seal flush: flow indicator, clean strainer, add to inspection route",
+    owner: "Mechanical supervisor",
+    dueDate: "2025-03-31",
     status: "done",
-    cost: 2600,
+    cost: 12000,
   },
   {
     id: "act-3",
-    causeId: "n-noalarm",
+    causeId: "n-root2",
     description:
-      "Install a gland water flow meter with a low-flow alarm in the control room",
-    owner: "Sipho Dlamini (Instrument Technician)",
-    dueDate: "2025-05-31",
+      "Write alignment standard, buy laser alignment tool, train fitters (standard week 4, training week 8)",
+    owner: "Maintenance manager",
+    dueDate: "2025-04-28",
     status: "done",
-    cost: 5400,
+    cost: 8000,
   },
   {
     id: "act-4",
-    causeId: "n-noalarm",
+    causeId: "n-root3",
     description:
-      "Fit a duplex strainer and add a weekly strainer clean to operator rounds",
-    owner: "Anna Botha (Operations Lead)",
-    dueDate: "2025-05-15",
+      "Fit bearing housing isolators and sealed breathers; write rebuild checklist with seal setting, soft foot check, alignment record and vibration reading before handover. Also fixes Roots 4 and 5b, see the next two lines; cost counted once here",
+    owner: "Mechanical supervisor and planner",
+    dueDate: "2025-04-14",
     status: "done",
-    cost: 3300,
+    cost: 7000,
+  },
+  {
+    id: "act-4b",
+    causeId: "n-root4",
+    description:
+      "Require alignment record and vibration reading before handover (part of the action above, cost included there)",
+    owner: "Mechanical supervisor and planner",
+    dueDate: "2025-04-14",
+    status: "done",
+    cost: 0,
+  },
+  {
+    id: "act-4c",
+    causeId: "n-root5b",
+    description:
+      "Add oil condition check to the inspection route (part of the action above, cost included there)",
+    owner: "Mechanical supervisor and planner",
+    dueDate: "2025-04-14",
+    status: "done",
+    cost: 0,
   },
   {
     id: "act-5",
-    causeId: "n-kpi",
-    description:
-      "Set a minimum gland flow of 12 L/min on the pump data sheet and remove gland water from the shift water-use KPI",
-    owner: "Marcus Reid (Plant Manager)",
-    dueDate: "2025-03-31",
+    causeId: "",
+    description: "Engineering and project time across all actions",
+    owner: "Reliability engineer",
+    dueDate: "2025-04-28",
     status: "done",
-    cost: 600,
+    cost: 5000,
   },
   {
     id: "act-6",
-    causeId: "n-nopm",
-    description:
-      "Introduce a lubrication standard with labelled, sealed oil containers for the pump area",
-    owner: "Thandi Mokoena (Planner)",
-    dueDate: "2025-06-30",
+    causeId: "n-root1",
+    description: "Add pump duty to the management-of-change checklist",
+    owner: "Plant engineering manager",
+    dueDate: "2025-03-24",
     status: "done",
-    cost: 900,
+    cost: 0,
+  },
+  {
+    id: "act-7",
+    causeId: "n-root6",
+    description: "Add cause and failure-mode fields to repair coding",
+    owner: "Maintenance planner",
+    dueDate: "2025-03-24",
+    status: "done",
+    cost: 0,
+  },
+  {
+    id: "act-8",
+    causeId: "",
+    description:
+      "Effectiveness check: report failures, hours and cost at 90 days and 12 months",
+    owner: "Reliability engineer, reported to plant manager",
+    dueDate: "2026-03-02",
+    status: "done",
+    cost: 0,
   },
 ];
 
 /**
- * Figures, worked through the app's own formulas:
- *  lost units/event   = 14 h x 85 t/h            = 1,190 t
- *  lost margin/event  = 1,190 t x $42            = $49,980
- *  cost/event         = $49,980 + $9,500 repair  = $59,480
- *  annual loss        = $59,480 x 6              = $356,880
- *  after fix (1/yr)   = $59,480                  ; saving = $297,400
- *  action cost        = $17,000                  ; payback = 0.7 months
+ * Figures follow the case study sheet (video/case-study.md), worked through
+ * the app's own formulas:
+ *  lost units/event   = 14 h x 120 t/h           = 1,680 t
+ *  lost margin/event  = 1,680 t x $18            = $30,240
+ *  cost/event         = $30,240 + $9,500 repair  = $39,740
+ *  annual loss        = $39,740 x 6              = $238,440 (84 h lost)
+ *  after fix (1/yr)   = $39,740                  ; saving = $198,700
+ *  action cost        = $60,000                  ; payback = 3.6 months
  */
 export function buildSample(): Investigation {
   return {
     id: SAMPLE_ID,
     schemaVersion: 1,
     createdAt: "2025-02-11T08:00:00.000Z",
-    updatedAt: "2026-02-02T08:00:00.000Z",
+    updatedAt: SAMPLE_UPDATED_AT,
     isSample: true,
     problem: {
-      title: "Repeat bearing and seal failures on slurry pump P-201",
-      asset: "Slurry pump P-201 (tailings transfer)",
-      site: "Concentrator plant, thickener area",
+      title: "Repeat bearing and mechanical seal failures on slurry pump P-201",
+      asset: "Slurry pump P-201",
+      site: "Concentrator plant, slurry feed area",
       eventDate: "2025-02-11",
       whatHappened:
-        "The drive-end bearing seized and the gland seal leaked slurry onto the floor. The pump tripped on high bearing temperature and had to be stripped and rebuilt. This is the sixth failure of this type in the last 12 months.",
+        "P-201 slurry feed pump failed 6 times in 12 months (3 mechanical seal, 3 bearing), losing 84 hours of production and costing $238,440 per year in lost margin and repair.",
       where:
-        "Drive-end bearing housing and gland seal of P-201, which transfers tailings from the thickener to the tailings dam.",
-      when: "Early shift, during normal operation at full throughput. Previous failures were spread across all shifts and all seasons.",
+        "Drive-end and non-drive-end bearings and the mechanical seal of P-201, a single slurry feed pump with no standby.",
+      when: "Spread across all shifts and seasons over the last 12 months: 3 mechanical seal events and 3 bearing events.",
       impact:
-        "Tailings transfer stops and the thickener fills within about 6 hours, so plant feed is cut back until the pump is repaired. Each failure also costs a bearing set, a seal kit and a clean-up crew.",
+        "There is no buffer capacity, so a pump stop is a line stop and lost hours are lost production hours. Each failure takes 14 hours to diagnose, isolate, drain, rebuild and restart, losing 1,680 tonnes at 120 t/h, which is $30,240 of margin plus $9,500 of repair. Secondary damage, overtime premium, delayed planned work and environmental clean-up are not counted, so the real loss is higher.",
     },
     loss: {
       eventsPerYear: 6,
       downtimeHours: 14,
-      ratePerHour: 85,
+      ratePerHour: 120,
       unitName: "tonnes",
-      marginPerUnit: 42,
+      marginPerUnit: 18,
       repairCost: 9500,
       currency: "$",
     },
@@ -334,11 +471,11 @@ export function buildSample(): Investigation {
     tree,
     actions,
     verification: {
-      reviewDate: "2026-02-02",
+      reviewDate: "2026-03-02",
       recurred: "no",
       eventsPerYearAfter: 1,
       notes:
-        "No bearing or seal failure on P-201 for 9 months since the last action closed. Gland water flow has held above 12 L/min and the low-flow alarm has fired twice and was cleared by operators within the hour. We count 1 failure a year to stay conservative.",
+        "Failures measured over 12 months after the actions: 1 per year, down from 6. Cost and hours per event are held at the same values as before so the comparison is fair. Capacity released: 70 hours, 8,400 tonnes, $151,200 of margin plus $47,500 of repair cost avoided, which equals the $198,700 annual saving. Simple payback ignores the time value of money, tax and cost of capital. All figures are illustrative.",
     },
   };
 }

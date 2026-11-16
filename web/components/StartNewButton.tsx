@@ -16,7 +16,9 @@ export function StartNewButton({
 }) {
   const router = useRouter();
   const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   return (
+    <>
     <button
       className={`btn ${
         variant === "primary" ? "btn-primary" : variant === "dark" ? "btn-dark" : "btn-secondary"
@@ -24,9 +26,12 @@ export function StartNewButton({
       disabled={busy}
       onClick={async () => {
         setBusy(true);
+        setError(null);
         try {
           const inv = await getStore().create();
           router.push(`/app/investigations/${inv.id}`);
+        } catch (e) {
+          setError(e instanceof Error && e.message ? e.message : "Could not create the investigation.");
         } finally {
           setBusy(false);
         }
@@ -35,5 +40,11 @@ export function StartNewButton({
       <Icon name="plus" />
       {label}
     </button>
+    {error && (
+      <span role="alert" className="text-sm font-medium text-red-600">
+        {error}
+      </span>
+    )}
+    </>
   );
 }

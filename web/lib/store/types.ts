@@ -1,9 +1,8 @@
 import type { Investigation, InvestigationPatch } from "../types";
 
 /**
- * Persistence boundary. Phase A implements this over localStorage; the next
- * phase swaps in a database-backed implementation (every call is async for
- * that reason) without touching any UI code.
+ * Persistence boundary. Implemented over localStorage (demo mode) and over
+ * Supabase (signed in); see lib/store/index.ts for how one is chosen.
  */
 export interface InvestigationStore {
   /** All investigations, most recently updated first. */
@@ -23,7 +22,7 @@ export interface InvestigationStore {
 export class StoreError extends Error {
   constructor(
     message: string,
-    readonly code: "quota" | "not_found" | "unknown",
+    readonly code: "quota" | "not_found" | "network" | "auth" | "unknown",
   ) {
     super(message);
     this.name = "StoreError";

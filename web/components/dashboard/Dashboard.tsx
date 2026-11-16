@@ -8,6 +8,7 @@ import { formatDate, todayISO } from "@/lib/dates";
 import { getStore } from "@/lib/store";
 import { summarise } from "@/lib/status";
 import type { Investigation } from "@/lib/types";
+import { useAuth } from "../auth/AuthProvider";
 import { Icon } from "../icons";
 import { StartNewButton } from "../StartNewButton";
 import { StatusBadge } from "../StatusBadge";
@@ -30,6 +31,8 @@ function mostCommon(values: string[]): string {
 export function Dashboard() {
   const router = useRouter();
   const confirm = useConfirm();
+  const { state: auth } = useAuth();
+  const where = auth.status === "in" ? "your account" : "this browser";
   const [items, setItems] = useState<Investigation[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const today = todayISO();
@@ -38,25 +41,29 @@ export function Dashboard() {
     try {
       setItems(await getStore().list());
     } catch {
-      setError("Could not read saved investigations from this browser.");
+      setError(`Could not read saved investigations from ${where}.`);
       setItems([]);
     }
-  }, []);
+  }, [where]);
 
   useEffect(() => {
     let live = true;
     getStore()
       .list()
       .then((l) => live && setItems(l))
-      .catch(() => {
+      .catch((e) => {
         if (!live) return;
-        setError("Could not read saved investigations from this browser.");
+        setError(
+          e instanceof Error && e.message
+            ? e.message
+            : `Could not read saved investigations from ${where}.`,
+        );
         setItems([]);
       });
     return () => {
       live = false;
     };
-  }, []);
+  }, [where]);
 
   const rows = useMemo(
     () =>
@@ -78,23 +85,37 @@ export function Dashboard() {
     saved: counted.reduce((s, r) => s + r.sum.verifiedSaving, 0),
   };
 
+  /** Runs a store change and shows a readable error instead of failing silently. */
+  async function attempt(fn: () => Promise<void>) {
+    try {
+      setError(null);
+      await fn();
+    } catch (e) {
+      setError(e instanceof Error && e.message ? e.message : "That did not work. Try again.");
+    }
+  }
+
   async function duplicate(inv: Investigation) {
-    const copy = await getStore().duplicate(inv.id);
-    await refresh();
-    if (copy) router.push(`/app/investigations/${copy.id}`);
+    await attempt(async () => {
+      const copy = await getStore().duplicate(inv.id);
+      await refresh();
+      if (copy) router.push(`/app/investigations/${copy.id}`);
+    });
   }
 
   async function remove(inv: Investigation) {
     const name = inv.problem.title || "this untitled investigation";
     const ok = await confirm({
       title: "Delete this investigation?",
-      message: `"${name}" and all its evidence, causes and actions will be permanently deleted from this browser.`,
+      message: `"${name}" and all its evidence, causes and actions will be permanently deleted from ${where}.`,
       confirmLabel: "Delete",
       danger: true,
     });
     if (!ok) return;
-    await getStore().delete(inv.id);
-    await refresh();
+    await attempt(async () => {
+      await getStore().delete(inv.id);
+      await refresh();
+    });
   }
 
   async function resetSample() {
@@ -105,8 +126,10 @@ export function Dashboard() {
       confirmLabel: "Reset sample",
     });
     if (!ok) return;
-    await getStore().resetSample();
-    await refresh();
+    await attempt(async () => {
+      await getStore().resetSample();
+      await refresh();
+    });
   }
 
   return (

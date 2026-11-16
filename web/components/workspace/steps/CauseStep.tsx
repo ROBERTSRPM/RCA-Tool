@@ -177,15 +177,13 @@ export function CauseStep({
           )}
         </div>
 
-        <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_300px]">
-          <div className="min-w-0" role="tabpanel">
-            {view === "tree" && <TreeView />}
-            {view === "whys" && <FiveWhysView />}
-            {view === "fishbone" && <FishboneView />}
-          </div>
-          <div ref={detailsRef} className="scroll-mt-20 lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] lg:self-start lg:overflow-y-auto">
-            <NodePanel update={update} go={go} />
-          </div>
+        <div className="min-w-0" role="tabpanel">
+          {view === "tree" && <TreeView />}
+          {view === "whys" && <FiveWhysView />}
+          {view === "fishbone" && <FishboneView />}
+        </div>
+        <div ref={detailsRef} className="mt-5 scroll-mt-20">
+          <NodePanel update={update} go={go} />
         </div>
       </SectionCard>
     </CauseContext.Provider>

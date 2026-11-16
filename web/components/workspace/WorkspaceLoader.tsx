@@ -1,11 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import { useAuth } from "@/components/auth/AuthProvider";
 import { useLoadedInvestigation } from "@/lib/hooks";
 import { Workspace } from "./Workspace";
 
 export function WorkspaceLoader({ id }: { id: string }) {
   const state = useLoadedInvestigation(id);
+  const { state: auth } = useAuth();
+  const signedIn = auth.status === "in";
   if (state.status === "loading") {
     return (
       <div className="mx-auto max-w-5xl space-y-4 px-4 py-8">
@@ -20,8 +23,9 @@ export function WorkspaceLoader({ id }: { id: string }) {
       <main className="mx-auto max-w-lg px-4 py-16 text-center">
         <h1 className="h-page">Investigation not found</h1>
         <p className="mt-2 text-slate-600">
-          It may have been deleted, or it was saved in a different browser. Your investigations
-          are stored in the browser you created them in.
+          {signedIn
+            ? "It may have been deleted, or it belongs to a different account. You can only open investigations in the account you are signed in to."
+            : "It may have been deleted, or it was saved in a different browser. In demo mode your investigations are stored in the browser you created them in."}
         </p>
         <Link href="/app" className="btn btn-primary mt-6">
           Back to all investigations

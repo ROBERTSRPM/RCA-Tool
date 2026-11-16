@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { BRAND_NAME } from "@/lib/brand";
 import { useAutosavedInvestigation } from "@/lib/hooks";
 import { runQualityCheck } from "@/lib/quality";
 import { SAMPLE_NOTE } from "@/lib/sample";
@@ -38,7 +39,7 @@ export function Workspace({ initial }: { initial: Investigation }) {
   }, []);
 
   useEffect(() => {
-    document.title = `${inv.problem.title || "New investigation"} · RootLoop`;
+    document.title = `${inv.problem.title || "New investigation"} · ${BRAND_NAME}`;
   }, [inv.problem.title]);
 
   useEffect(() => {
@@ -153,14 +154,14 @@ function SaveIndicator({
   retry,
 }: {
   save: ReturnType<typeof useAutosavedInvestigation>["save"];
-  retry: () => void;
+  retry: () => Promise<boolean>;
 }) {
   if (save.status === "error") {
     return (
       <span role="alert" className="flex items-center gap-2 text-sm font-medium text-red-700">
         <Icon name="alert" size={16} />
-        {save.message}
-        <button className="underline" onClick={retry}>
+        {/^could not/i.test(save.message) ? save.message : `Could not save. ${save.message}`}
+        <button className="btn btn-secondary btn-sm" onClick={() => void retry()}>
           Try again
         </button>
       </span>

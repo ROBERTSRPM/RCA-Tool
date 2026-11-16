@@ -28,7 +28,7 @@ export function NodePanel({
 
   if (isTop) {
     return (
-      <div className="card p-4">
+      <div className="card p-4" data-testid="node-panel">
         <h3 className="text-base font-bold text-slate-900">The failure event</h3>
         <p className="mt-1 text-sm text-slate-600">
           This is the top of the tree: what went wrong. Edit its wording in the box, then press{" "}
@@ -39,14 +39,15 @@ export function NodePanel({
   }
 
   return (
-    <div className="card space-y-5 p-4">
-      <div>
+    <div className="card space-y-5 p-4 lg:grid lg:grid-cols-3 lg:gap-x-8 lg:gap-y-4 lg:space-y-0 lg:p-5" data-testid="node-panel">
+      <div className="lg:col-span-3">
         <h3 className="text-base font-bold text-slate-900">Selected cause</h3>
         <p className="mt-0.5 line-clamp-2 text-sm text-slate-500">
           {node.text || "(no text yet, type in the box)"}
         </p>
       </div>
 
+      <div className="space-y-5">
       <fieldset>
         <legend className="label">Type of cause</legend>
         <div className="grid grid-cols-3 gap-1.5" role="radiogroup">
@@ -90,7 +91,9 @@ export function NodePanel({
         </div>
         <p className="help">{STATUS_HELP[node.status]}</p>
       </fieldset>
+      </div>
 
+      <div>
       <label className="flex min-h-11 cursor-pointer items-start gap-3 rounded-lg border-2 border-slate-200 p-3 has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50">
         <input
           type="checkbox"
@@ -105,6 +108,7 @@ export function NodePanel({
           </span>
         </span>
       </label>
+      </div>
 
       <fieldset>
         <legend className="label">Evidence that supports it</legend>

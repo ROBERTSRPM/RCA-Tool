@@ -11,6 +11,7 @@ import {
 } from "./finance";
 import { blankInvestigation } from "./investigation";
 import { buildSample } from "./sample";
+import { rootCauses } from "./tree";
 
 const loss = {
   eventsPerYear: 4,
@@ -103,14 +104,26 @@ describe("formatting", () => {
 
 describe("sample investigation", () => {
   const s = buildSample();
-  it("matches the figures quoted in the sample documentation", () => {
+  it("matches the case study data sheet (video/case-study.md)", () => {
     const v = calcVerification(s);
-    expect(calcLoss(s.loss).lostUnitsPerEvent).toBe(1190);
-    expect(calcLoss(s.loss).costPerEvent).toBe(59480);
-    expect(v.annualLossBefore).toBe(356880);
-    expect(v.annualLossAfter).toBe(59480);
-    expect(v.annualSaving).toBe(297400);
-    expect(v.totalActionCost).toBe(17000);
-    expect(v.paybackMonths).toBeCloseTo(0.686, 2);
+    expect(s.loss.eventsPerYear).toBe(6);
+    expect(s.loss.downtimeHours).toBe(14);
+    expect(s.loss.ratePerHour).toBe(120);
+    expect(s.loss.marginPerUnit).toBe(18);
+    expect(s.loss.repairCost).toBe(9500);
+    expect(s.verification.eventsPerYearAfter).toBe(1);
+    expect((s.loss.eventsPerYear ?? 0) * (s.loss.downtimeHours ?? 0)).toBe(84);
+    expect(calcLoss(s.loss).lostUnitsPerEvent).toBe(1680);
+    expect(calcLoss(s.loss).lostMarginPerEvent).toBe(30240);
+    expect(calcLoss(s.loss).costPerEvent).toBe(39740);
+    expect(v.annualLossBefore).toBe(238440);
+    expect(v.annualLossAfter).toBe(39740);
+    expect(v.annualSaving).toBe(198700);
+    expect(v.totalActionCost).toBe(60000);
+    expect(v.paybackMonths).toBeCloseTo(3.62, 2);
+  });
+  it("keeps the asset and has the 7 root-cause nodes of the case study", () => {
+    expect(s.problem.asset.toLowerCase()).toContain("slurry pump p-201");
+    expect(rootCauses(s.tree)).toHaveLength(7);
   });
 });

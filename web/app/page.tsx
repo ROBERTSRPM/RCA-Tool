@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Icon, type IconName } from "@/components/icons";
+import { AccountMenu } from "@/components/auth/AccountMenu";
 import { Logo } from "@/components/Logo";
 import { StartNewButton } from "@/components/StartNewButton";
 import { SAMPLE_ID } from "@/lib/sample";
@@ -27,9 +28,12 @@ export default function Home() {
     <div className="bg-slate-950 text-slate-100">
       <header className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
         <Logo />
-        <Link href="/app" className="btn btn-sm text-slate-200 hover:bg-slate-800">
-          Open the app
-        </Link>
+        <div className="flex items-center gap-1">
+          <Link href="/app" className="btn btn-sm hidden text-slate-200 hover:bg-slate-800 sm:inline-flex">
+            Open the app
+          </Link>
+          <AccountMenu />
+        </div>
       </header>
 
       <main>

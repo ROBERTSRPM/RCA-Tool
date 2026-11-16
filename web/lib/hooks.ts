@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { registerFlusher } from "./pending";
 import { getStore, StoreError } from "./store";
 import type { Investigation, InvestigationPatch } from "./types";
 
@@ -12,53 +13,97 @@ export type SaveState =
 
 const DEBOUNCE_MS = 350;
 
+const RETRY_MS = 8000;
+
 /**
  * Holds an investigation in React state and writes every change to the store
- * after a short pause. Also flushes when the tab is hidden or unmounted.
+ * after a short pause. Writes are serialised (never two in flight), a failed
+ * write keeps the edits in memory and retries on the next edit, when the
+ * connection returns, or on the Try again button. Also flushes when the tab is
+ * hidden or the page unmounts, and warns before leaving with unsaved edits.
  */
 export function useAutosavedInvestigation(initial: Investigation) {
   const [inv, setInv] = useState(initial);
   const latest = useRef(initial);
   const dirty = useRef(false);
+  const running = useRef<Promise<boolean> | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const retryTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const failed = useRef(false);
+  const unmounted = useRef(false);
   const [save, setSave] = useState<SaveState>({ status: "saved" });
 
-  const flush = useCallback(async () => {
+  const clearTimers = () => {
+    if (timer.current) clearTimeout(timer.current);
+    if (retryTimer.current) clearTimeout(retryTimer.current);
+    timer.current = null;
+    retryTimer.current = null;
+  };
+
+  const flushRef = useRef<() => Promise<boolean>>(async () => true);
+
+  const run = useCallback(async (): Promise<boolean> => {
+    while (dirty.current) {
+      dirty.current = false;
+      const cur = latest.current;
+      const patch: InvestigationPatch = {
+        isSample: cur.isSample,
+        problem: cur.problem,
+        loss: cur.loss,
+        evidence: cur.evidence,
+        tree: cur.tree,
+        actions: cur.actions,
+        verification: cur.verification,
+      };
+      setSave({ status: "saving" });
+      try {
+        await getStore().update(cur.id, patch);
+      } catch (e) {
+        dirty.current = true; // keep every edit; nothing is discarded
+        failed.current = true;
+        setSave({
+          status: "error",
+          message: e instanceof StoreError ? e.message : "Could not save your changes.",
+        });
+        if (retryTimer.current) clearTimeout(retryTimer.current);
+        if (!unmounted.current) {
+          retryTimer.current = setTimeout(() => void flushRef.current(), RETRY_MS);
+        }
+        return false;
+      }
+    }
+    failed.current = false;
+    setSave({ status: "saved" });
+    return true;
+  }, []);
+
+  const flush = useCallback((): Promise<boolean> => {
     if (timer.current) {
       clearTimeout(timer.current);
       timer.current = null;
     }
-    if (!dirty.current) return;
-    dirty.current = false;
-    const cur = latest.current;
-    const patch: InvestigationPatch = {
-      isSample: cur.isSample,
-      problem: cur.problem,
-      loss: cur.loss,
-      evidence: cur.evidence,
-      tree: cur.tree,
-      actions: cur.actions,
-      verification: cur.verification,
-    };
-    setSave({ status: "saving" });
-    try {
-      await getStore().update(cur.id, patch);
-      setSave(dirty.current ? { status: "dirty" } : { status: "saved" });
-    } catch (e) {
-      dirty.current = true;
-      setSave({
-        status: "error",
-        message: e instanceof StoreError ? e.message : "Could not save your changes.",
+    if (retryTimer.current) {
+      clearTimeout(retryTimer.current);
+      retryTimer.current = null;
+    }
+    if (!running.current) {
+      running.current = run().finally(() => {
+        running.current = null;
       });
     }
-  }, []);
+    return running.current;
+  }, [run]);
+
+  useEffect(() => {
+    flushRef.current = flush;
+  }, [flush]);
 
   const update = useCallback(
     (fn: (i: Investigation) => Investigation) => {
       latest.current = fn(latest.current);
       setInv(latest.current);
       dirty.current = true;
-      setSave((s) => (s.status === "saving" ? s : { status: "dirty" }));
+      setSave((s) => (s.status === "saving" || s.status === "error" ? s : { status: "dirty" }));
       if (timer.current) clearTimeout(timer.current);
       timer.current = setTimeout(() => void flush(), DEBOUNCE_MS);
     },
@@ -70,12 +115,27 @@ export function useAutosavedInvestigation(initial: Investigation) {
       if (document.visibilityState === "hidden") void flush();
     };
     const onPageHide = () => void flush();
+    const onOnline = () => {
+      if (dirty.current) void flush();
+    };
+    const onBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (dirty.current || failed.current) e.preventDefault();
+    };
     document.addEventListener("visibilitychange", onHide);
     window.addEventListener("pagehide", onPageHide);
+    window.addEventListener("online", onOnline);
+    window.addEventListener("beforeunload", onBeforeUnload);
+    unmounted.current = false;
+    const unregister = registerFlusher(flush);
     return () => {
       document.removeEventListener("visibilitychange", onHide);
       window.removeEventListener("pagehide", onPageHide);
+      window.removeEventListener("online", onOnline);
+      window.removeEventListener("beforeunload", onBeforeUnload);
+      unregister();
+      unmounted.current = true;
       void flush();
+      clearTimers();
     };
   }, [flush]);
 

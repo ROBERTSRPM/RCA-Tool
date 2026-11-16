@@ -290,7 +290,7 @@ function NodeToolbar({ node, isTop }: { node: CauseNode; isTop: boolean }) {
           <Icon name="trash" size={16} />
         </button>
       )}
-      <button className={`${sm} btn-secondary lg:hidden`} onClick={cx.scrollToDetails}>
+      <button className={`${sm} btn-secondary`} onClick={cx.scrollToDetails}>
         <Icon name="edit" size={15} /> Details
       </button>
       <span className="sr-only">{STATUS_LABEL[node.status]}</span>

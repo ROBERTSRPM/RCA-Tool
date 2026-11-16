@@ -1,23 +1,28 @@
 import Link from "next/link";
+import { AccountMenu } from "@/components/auth/AccountMenu";
+import { AppShell } from "@/components/auth/AppShell";
 import { Logo } from "@/components/Logo";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col">
       <header className="no-print sticky top-0 z-30 border-b border-slate-800 bg-slate-900">
-        <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6">
+        <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-2 px-4 sm:px-6">
           <Logo href="/app" />
           <nav className="flex items-center gap-1 text-sm">
-            <Link href="/app" className="rounded-lg px-3 py-2 font-medium text-slate-200 hover:bg-slate-800">
+            <Link href="/app" className="hidden rounded-lg px-3 py-2 font-medium text-slate-200 hover:bg-slate-800 sm:block">
               Investigations
             </Link>
-            <Link href="/" className="rounded-lg px-3 py-2 font-medium text-slate-400 hover:bg-slate-800">
+            <Link href="/" className="hidden rounded-lg px-3 py-2 font-medium text-slate-400 hover:bg-slate-800 sm:block">
               Home
             </Link>
+            <AccountMenu />
           </nav>
         </div>
       </header>
-      <div className="flex-1">{children}</div>
+      <div className="flex-1">
+        <AppShell>{children}</AppShell>
+      </div>
     </div>
   );
 }

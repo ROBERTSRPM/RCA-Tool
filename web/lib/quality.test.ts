@@ -63,9 +63,9 @@ describe("runQualityCheck", () => {
 
   it("flags root causes without an action, then clears when linked", () => {
     const s = buildSample();
-    const inv: Investigation = { ...s, actions: s.actions.filter((a) => a.causeId !== "n-kpi") };
+    const inv: Investigation = { ...s, actions: s.actions.filter((a) => a.causeId !== "n-root6") };
     const f = runQualityCheck(inv, TODAY).filter((f) => f.rule === "root-cause-without-action");
-    expect(f.map((x) => x.nodeId)).toEqual(["n-kpi"]);
+    expect(f.map((x) => x.nodeId)).toEqual(["n-root6"]);
   });
 
   it("flags actions missing owner or due date", () => {
