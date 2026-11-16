@@ -1,7 +1,7 @@
 # Test plan and results
 
 Run against `http://localhost:3555` (production build, port 3555). Desktop 1440x900 and mobile 375x812. Demo mode and signed in (accounts A and B).
-**192 tests run, 171 passed, 21 failed** (leaf checks; parent groups not double counted). Failures map to defects in defects.md.
+**263 tests run, 241 passed, 22 failed** (leaf checks; parent groups not double counted). Failures map to defects in defects.md.
 
 ## 1. Control inventory
 Every interactive control found by `inventory.js` (raw lists in results/inventory.json). "Result" = outcome of the exercising test.
@@ -42,7 +42,7 @@ Every interactive control found by `inventory.js` (raw lists in results/inventor
 | Edge cases | D-EDGE-NUM, -TEXT, -DATE, -NAV, -ACT, -EVID, -STORE |
 | Report / print | D-E2E-1.report, .print, A-E2E-1.print |
 | Console, a11y, layout | D-ERR-1, A-ERR-1, D-A11Y-1, D-MOB-1, A-MOB-1 |
-| Dashboard load time | A-PERF-1 (median ? ms) |
+| Dashboard load time | A-PERF-1 (median 651 ms) |
 
 ## 3. Results (all checks)
 | ID | Check | Result | Detail |
@@ -237,6 +237,77 @@ Every interactive control found by `inventory.js` (raw lists in results/inventor
 | D-MOB-E2E.verify-calc | Verify step money equals hand calc (before, after, saving, cost, payback) | pass |  |
 | D-MOB-E2E.report-mobile | Mobile report shows the same headline numbers | pass |  |
 | D-MOB-E2E.tree-mobile | Mobile tree with 7 nodes: no page overflow, tree scroll container used | pass |  |
+| A-00 | Setup: sign in as user A and user B (also: wrong-password test counts as A-AUTH) | pass |  |
+| A-AUTH-1.login-empty | Login: empty submit shows "Enter your email address." and "Enter your password." | pass |  |
+| A-AUTH-1.login-malformed | Login: malformed emails ("abc", "a@b", "a b@c.com", "a@b.c") are rejected client-side | pass |  |
+| A-AUTH-1.login-wrong-pw | Login: wrong password shows friendly message, stays on /login, no token stored | pass |  |
+| A-AUTH-1.login-unknown-user | Login: unknown email gives the same message (no account enumeration) | pass |  |
+| A-AUTH-1.login-ui | Login: password field is masked, inline error clears after fixing, Enter submits | pass |  |
+| A-AUTH-1.signup-empty | Signup: empty submit shows email + password errors (nothing sent) | pass |  |
+| A-AUTH-1.signup-weak | Signup: weak/short password (7 chars) rejected; mismatch rejected; hint visible | pass |  |
+| A-AUTH-1.signup-malformed | Signup: malformed email rejected | pass |  |
+| A-AUTH-1.signup-common-pw | Signup: 8-char all-numeric password "12345678" - client accepts (server decides); not submitted | pass |  |
+| A-AUTH-1.forgot-validation | Forgot password: empty and malformed email rejected, nothing sent | pass |  |
+| A-AUTH-1.reset-no-token | Reset password without a valid link shows "Reset link not valid" and a working "Request a new link" | pass |  |
+| A-AUTH-1.reset-bad-token | Reset password with garbage hash token does not crash and shows the invalid-link state | pass |  |
+| A-AUTH-1.auth-links | Auth page links: login<->signup, login->forgot, forgot->login, "Try the demo"->/app, logo | pass |  |
+| A-AUTH-1.signed-out-app | Signed out: /app and /app/investigations/<id> open in demo mode (banner shown), no redirect | pass |  |
+| A-AUTH-1.next-param | Login ?next= only honours same-site paths (open-redirect check): //evil.com and https://evil.com ignored | pass |  |
+| A-AUTH-1.next-valid | Login ?next=/app/investigations/sample-p101 returns there after sign in | pass |  |
+| A-AUTH-1.confirmed-banner | Login ?confirmed=1 shows "Email confirmed" notice | pass |  |
+| A-SESS-1.menu | Account menu shows user A email; menu has "My investigations" and "Sign out"; Escape and outside-click close it | pass |  |
+| A-SESS-1.no-banner | No demo banner when signed in | pass |  |
+| A-SESS-1.reload | Session survives reload and a fresh navigation (still user A, same data) | pass |  |
+| A-SESS-1.login-redirect | Visiting /login or /signup while signed in redirects to /app | pass |  |
+| A-SESS-1.sample-seeded | Account has its own seeded sample with the same hand-calculated totals as demo ($198,700 saved) | pass |  |
+| A-SESS-1.landing-sample-link | Landing "Open the sample investigation" maps to the account sample when signed in | pass |  |
+| A-SESS-1.demo-separate | Demo-mode data is separate: signing out shows demo store, not account data | pass |  |
+| A-SESS-1.signed-out-no-cache | After sign out, reloading does not show account data (token removed) | pass |  |
+| A-PERF-1.budget | Dashboard shows data within 3000 ms (median 651 ms) | pass |  |
+| A-E2E-1.problem | Problem step accepts all 8 fields | pass |  |
+| A-E2E-1.loss-calc | Loss live calc equals hand calc (lost units, lost margin, cost/event, annual loss) | pass |  |
+| A-E2E-1.evidence | Evidence: 3 items listed, types and "Not linked" shown | pass |  |
+| A-E2E-1.tree-leaf-delete | Deleting a leaf cause needs no confirmation and removes it | pass |  |
+| A-E2E-1.tree-nodes | Tree has 7 causes covering Physical, Human and System / Latent | pass |  |
+| A-E2E-1.actions-tiles | Actions tiles: total cost, 0 of 2 done, 1 overdue, 0 roots unlinked | pass |  |
+| A-E2E-1.verify-calc | Verify step money equals hand calc (before, after, saving, cost, payback) | pass |  |
+| A-E2E-1.reload-report | After full reload the account data gives the hand-calculated report | pass |  |
+| A-E2E-1.dash | Dashboard (account): loss $0, open 0, overdue 0, saved $209,050 (198,700 + 10,350), new row Closed | pass |  |
+| A-E2E-1.print | Print emulation of the account report hides app chrome (account menu, header) | pass |  |
+| A-E2E-1.autosave-xss | Special characters round-trip through the database as text | pass |  |
+| A-ISO-1.b-list | User B dashboard does not list user A's investigation (B sees only own sample) | pass |  |
+| A-ISO-1.b-direct | User B opening A's investigation URL directly gets "Investigation not found" (no data leaked) | pass |  |
+| A-ISO-1.b-direct-sample | User B opening A's sample id gets not found (B's sample id differs) | pass |  |
+| A-ISO-1.b-write | User B cannot modify A's row via the API (RLS): PATCH/DELETE affect 0 rows | pass |  |
+| A-ISO-1.a-still-ok | After B's attempts, A's investigation is intact | pass |  |
+| A-ISO-1.signed-out-direct | Signed out (demo) opening A's account URL gets "not found" (no account data without login) | pass |  |
+| A-ISO-1.b-delete-own-dup | User B duplicate of own sample stays in B only | pass |  |
+| A-ISO-1.a-list-no-b | User A does not see B's duplicate | pass |  |
+| A-PERS-1.problem-loss | Problem + Loss survive reload (account) | pass |  |
+| A-PERS-1.evidence-tree-actions-verify | Evidence, tree (flags, links, collapse), actions, verification survive reload (account) | pass |  |
+| A-PERS-1.fast-reload | Edit then reload within 60 ms - edit still saved (flush on pagehide) | pass |  |
+| A-PERS-1.autosave-states | Autosave indicator shows Saving... then All changes saved on account writes | pass |  |
+| A-PERS-1.two-tabs | Two tabs/devices editing different fields: second tab must not wipe the first tab's edit | **FAIL** | title="state test" asset="ACC TAB2" |
+| A-PERS-1.duplicate-delete | Duplicate then delete (cancel / confirm) in account mode | pass |  |
+| A-PERS-1.reset-sample | Reset sample data in account: edit sample, reset, original restored, own data untouched | pass |  |
+| A-OFF-1.offline-error | Going offline and editing shows a readable save error with "Try again" | pass |  |
+| A-OFF-1.offline-keeps-typing | More edits while offline are kept in the page (not discarded), other steps usable | pass |  |
+| A-OFF-1.retry-offline | "Try again" while still offline keeps the error (no false "saved") | pass |  |
+| A-OFF-1.beforeunload | Leaving with unsaved offline edits triggers the browser "unsaved changes" prompt | pass |  |
+| A-OFF-1.recover | Back online: "online" event flushes and the indicator returns to "All changes saved" | pass |  |
+| A-OFF-1.recover-persisted | After recovery a reload shows the offline-typed values (nothing lost) | pass |  |
+| A-OFF-1.auto-retry | Offline error auto-retries (about 8 s) once the network returns even without a new edit or the online event | pass |  |
+| A-OFF-1.offline-dashboard | Dashboard while offline shows a readable error (no blank crash) | pass |  |
+| A-OFF-1.offline-create | Creating a new investigation while offline shows an error and does not navigate | pass |  |
+| A-OFF-1.offline-load | Opening an investigation while offline does not claim it is missing/deleted | pass |  |
+| A-OFF-1.offline-open-existing | Network failing during investigation open: page says "not found / deleted" misleadingly? (observed) | pass |  |
+| A-SIGNOUT-1.flush-online | Typing then immediately signing out saves the edit first (online) | pass |  |
+| A-SIGNOUT-1.offline-signout | Offline unsaved edit then Sign out: warns "Some changes could not be saved"; Cancel keeps session; "Sign out anyway" signs out | pass |  |
+| A-MOB-1.dash | 375px signed-in dashboard: no overflow, long email truncated | pass |  |
+| A-MOB-1.menu | 375px account menu fits on screen | pass |  |
+| A-MOB-1.ws | 375px signed-in workspace: all steps no overflow | pass |  |
+| A-ERR-1 | Signed in: no console errors or failed requests on dashboard and all steps | pass |  |
+| A-RESET-1.atomic | A failed reset must not leave the account without its sample | pass |  |
 | A-ZZ-CLEANUP.clean-A | Account A left with only the seeded sample | pass |  |
 | A-ZZ-CLEANUP.clean-B | Account B left with only the seeded sample | pass |  |
 
@@ -248,3 +319,7 @@ Every interactive control found by `inventory.js` (raw lists in results/inventor
 - (observation) Blank "Untitled investigation" rows remain if user creates and abandons: 8
 - (observation) Quality: Fix first The loss is not quantified yet. Still needed: events per year, downtime hours per event, production rate, margin per unit. Go to Loss | Fix first No cause is flagged as a root cause yet. Go to Cause tree | Should fix Problem statement is missing: title, asset, site or area, date of event, what happened, where, when, impact. Go to Problem | Should fix This branch stops at a Physical cause: "Only root". Ask "why?" again to find the System / Latent cause beneath. Go to Cause tree ; report has action text: true
 - (observation) Corrupt demo data is silently shown as "No investigations yet" and overwritten on the next save (no warning)
+- (observation) Client-side password rule is length only (min 8); strength is left to the server. Not submitted to avoid creating an account.
+- (timing) Signed-in dashboard load ms (7 cold-context runs): 651, 660, 673, 652, 622, 650, 629; median 651; min 622; max 673
+- (observation) fast reload: beforeunload prompt shown=true, value after=QA: Gearbox seizure on conveyor C-7
+- (timing) Offline: error appears 14678 ms after pressing Try again (indicator reads "Saving…" meanwhile)
