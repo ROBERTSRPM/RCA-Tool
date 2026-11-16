@@ -16,3 +16,4 @@ PASS D-DASH-1 Dashboard (sample only): totals equal hand calculation
   pass D-DASH-2.del-esc Delete dialog closes on Escape and on backdrop click
   pass D-DASH-2.del-confirm Delete + confirm removes it
   pass D-DASH-2.reset-sample Reset sample data: cancel keeps edits; confirm restores original
+  pass D-DASH-2.reset-keeps-own Reset sample leaves own investigations untouched
