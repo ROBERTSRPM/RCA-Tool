@@ -1,0 +1,20 @@
+## insert ~1MB row
+HTTP 201 time 2.443316s
+
+## insert ~8MB row
+HTTP 201 time 3.842150s
+
+## insert ~40MB row
+HTTP 201 time 7.690643s
+
+## bulk insert 100 small rows in ONE request (row-count limit)
+HTTP 201
+## count
+content-range: 0-103/104
+## arbitrary shape: data not an investigation, id mismatch, unicode
+
+HTTP 201
+## cleanup
+HTTP 204
+[{"id":"sample-b6e455b6-dcf4-4557-bc90-ce7c1797d162"}]
+HTTP 200

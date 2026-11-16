@@ -1,0 +1,65 @@
+## public auth settings
+{
+    "external": {
+        "anonymous_users": false,
+        "apple": false,
+        "azure": false,
+        "bitbucket": false,
+        "discord": false,
+        "facebook": false,
+        "snapchat": false,
+        "figma": false,
+        "fly": false,
+        "github": false,
+        "gitlab": false,
+        "google": false,
+        "keycloak": false,
+        "kakao": false,
+        "linkedin": false,
+        "linkedin_oidc": false,
+        "notion": false,
+        "spotify": false,
+        "slack": false,
+        "slack_oidc": false,
+        "workos": false,
+        "twitch": false,
+        "twitter": false,
+        "email": true,
+        "phone": false,
+        "zoom": false
+    },
+    "disable_signup": false,
+    "mailer_autoconfirm": false,
+    "phone_autoconfirm": false,
+    "sms_provider": "twilio",
+    "saml_enabled": false,
+    "saml_private_key_next_configured": true,
+    "passkeys_enabled": false
+}
+## login: wrong password for existing user vs unknown user
+{"code":400,"error_code":"invalid_credentials","msg":"Invalid login credentials"} HTTP 400
+{"code":400,"error_code":"invalid_credentials","msg":"Invalid login credentials"} HTTP 400
+## open redirect via verify endpoint (bogus token, no email sent)
+redirect_to=https://evil.example.com/x
+HTTP/1.1 200 Connection Established
+HTTP/2 303 
+location: https://rca-tool-omega.vercel.app#error=access_denied&error_code=otp_expired&error_description=Email+link+is+invalid+or+has+expired&sb=
+redirect_to=//evil.example.com
+HTTP/1.1 200 Connection Established
+HTTP/2 303 
+location: https://rca-tool-omega.vercel.app#error=access_denied&error_code=otp_expired&error_description=Email+link+is+invalid+or+has+expired&sb=
+redirect_to=https://rca-tool-omega.vercel.app.evil.example.com/
+HTTP/1.1 200 Connection Established
+HTTP/2 303 
+location: https://rca-tool-omega.vercel.app#error=access_denied&error_code=otp_expired&error_description=Email+link+is+invalid+or+has+expired&sb=
+redirect_to=https://rca-tool-omega.vercel.app/reset-password
+HTTP/1.1 200 Connection Established
+HTTP/2 303 
+location: https://rca-tool-omega.vercel.app/reset-password#error=access_denied&error_code=otp_expired&error_description=Email+link+is+invalid+or+has+expired&sb=
+## password policy: change B's password to weak values (server side), restore afterwards
+weak 'a': {"code":422,"error_code":"weak_password","msg":"Password should be at least 6 characters.","weak_password":{"reasons":["length"]}} HTTP 422
+weak 'abcdef': {"id":"<r>","aud":"authenticated","role":"authenticated","email":"<r>","email_confirmed_at":"2026-11-16T10:31:56.485916Z","phone":"","confirmed_at"
+weak 'password': {"id":"<r>","aud":"authenticated","role":"authenticated","email":"<r>","email_confirmed_at":"2026-11-16T10:31:56.485916Z","phone":"","confirmed_at"
+weak '12345678': {"id":"<r>","aud":"authenticated","role":"authenticated","email":"<r>","email_confirmed_at":"2026-11-16T10:31:56.485916Z","phone":"","confirmed_at"
+## confirm original password works again
+login ok

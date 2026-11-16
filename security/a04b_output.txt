@@ -1,0 +1,17 @@
+baseline /app body text length 703
+
+## A: row whose data is not an investigation ({}), user-controllable via REST
+insert 201
+page errors: ["TypeError: Cannot read properties of undefined (reading 'recurred')"]
+body text (first 200): "This page couldn’t load\n\nReload to try again, or go back.\n\nReload\nBack"
+sample card visible: 0
+cleanup 204
+
+## B: one 8 MB row, time to load /app
+insert 201
+ms until app idle: 681 | page errors: ["TypeError: Cannot read properties of undefined (reading 'recurred')"]
+cleanup 204
+
+## C: clickjacking, framing the live site from a foreign origin
+frame loaded from site inside foreign page: true | title: RootLoop: the root cause tool that closes the loop
+remaining rows: [{"id":"sample-b6e455b6-dcf4-4557-bc90-ce7c1797d162"}]

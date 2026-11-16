@@ -1,0 +1,16 @@
+## sign-up with an EXISTING test address (1 request)
+{"id":"efdfb5eb-ca3b-4948-840f-e0b466ed0952","aud":"authenticated","role":"","email":"qa-user-a@rca-tool.test","phone":"","confirmation_sent_at":"2026-11-16T21:28:59.993298887Z","app_metadata":{"provider":"email","providers":["email"]},"user_metadata":{},"identities":[],"created_at":"2026-11-16T21:28:59.993298887Z","updated_at":"2026-11-16T21:28:59.993298887Z","is_anonymous":false} HTTP 200
+## sessions: login B, inspect token response fields
+{'access_token': '<redacted>', 'token_type': 'bearer', 'expires_in': 3600, 'expires_at': 1794868141, 'refresh_token': '<redacted>', 'weak_password': '<redacted>'}
+## refresh once, then re-use the OLD refresh token (rotation / reuse detection)
+refresh1: ok
+{"access_token":"<redacted>","token_type":"bearer","expires_in":3600,"expires_at":1794868143,"refresh_token":"<redacted>","user":{"id":"b6e455b6-dcf4-4557-bc90-ce7c1797d162","aud":"authenticated","role":"authenticated","email":"qa-user-b@rca-tool.tes
+## sign out (default scope) then use access token on REST
+logout HTTP 204
+[{"id":"sample-b6e455b6-dcf4-4557-bc90-ce7c1797d162"}] REST-after-logout HTTP 200
+{"code":400,"error_code":"refresh_token_not_found","msg":"Invalid Refresh Token: Refresh Token Not Found"} refresh-after-logout HTTP 400
+## one forgot-password request (existing test address A)
+{"code":400,"error_code":"email_address_invalid","msg":"Email address \"qa-user-a@rca-tool.test\" is invalid"} HTTP 400
+## 6 wrong-password logins in a row (rate-limit probe, handful only)
+400 400 400 400 400 400 
+HTTP 200
