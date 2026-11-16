@@ -19,14 +19,14 @@ export function ProblemStep({ inv, update }: StepProps) {
             className="sm:col-span-2"
             label="Title"
             help="Short and specific: what failed, and on what."
-            placeholder="e.g. Repeat bearing failures on pump P-201"
+            placeholder="e.g. Repeat bearing failures on pump P-101"
             value={p.title}
             onChange={(v) => set("title", v)}
           />
           <TextField
             label="Asset"
             help="The machine or equipment, with its tag number."
-            placeholder="e.g. Slurry pump P-201"
+            placeholder="e.g. Slurry pump P-101"
             value={p.asset}
             onChange={(v) => set("asset", v)}
           />

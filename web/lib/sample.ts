@@ -5,7 +5,7 @@ import type {
   Investigation,
 } from "./types";
 
-export const SAMPLE_ID = "sample-p201";
+export const SAMPLE_ID = "sample-p101";
 /** updatedAt of a sample nobody has edited (every edit stamps a new time). */
 export const SAMPLE_UPDATED_AT = "2026-02-02T08:00:00.000Z";
 export const SAMPLE_NOTE =
@@ -116,7 +116,7 @@ const evidence: EvidenceItem[] = [
 
 const tree: CauseNode = node(
   "n-root",
-  "Repeat bearing and mechanical seal failures on P-201",
+  "Repeat bearing and mechanical seal failures on P-101",
   "physical",
   "verified",
   [],
@@ -446,14 +446,14 @@ export function buildSample(): Investigation {
     updatedAt: SAMPLE_UPDATED_AT,
     isSample: true,
     problem: {
-      title: "Repeat bearing and mechanical seal failures on slurry pump P-201",
-      asset: "Slurry pump P-201",
+      title: "Repeat bearing and mechanical seal failures on slurry pump P-101",
+      asset: "Slurry pump P-101",
       site: "Concentrator plant, slurry feed area",
       eventDate: "2025-02-11",
       whatHappened:
-        "P-201 slurry feed pump failed 6 times in 12 months (3 mechanical seal, 3 bearing), losing 84 hours of production and costing $238,440 per year in lost margin and repair.",
+        "P-101 slurry feed pump failed 6 times in 12 months (3 mechanical seal, 3 bearing), losing 84 hours of production and costing $238,440 per year in lost margin and repair.",
       where:
-        "Drive-end and non-drive-end bearings and the mechanical seal of P-201, a single slurry feed pump with no standby.",
+        "Drive-end and non-drive-end bearings and the mechanical seal of P-101, a single slurry feed pump with no standby.",
       when: "Spread across all shifts and seasons over the last 12 months: 3 mechanical seal events and 3 bearing events.",
       impact:
         "There is no buffer capacity, so a pump stop is a line stop and lost hours are lost production hours. Each failure takes 14 hours to diagnose, isolate, drain, rebuild and restart, losing 1,680 tonnes at 120 t/h, which is $30,240 of margin plus $9,500 of repair. Secondary damage, overtime premium, delayed planned work and environmental clean-up are not counted, so the real loss is higher.",

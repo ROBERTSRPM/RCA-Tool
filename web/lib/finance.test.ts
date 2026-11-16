@@ -123,7 +123,7 @@ describe("sample investigation", () => {
     expect(v.paybackMonths).toBeCloseTo(3.62, 2);
   });
   it("keeps the asset and has the 7 root-cause nodes of the case study", () => {
-    expect(s.problem.asset.toLowerCase()).toContain("slurry pump p-201");
+    expect(s.problem.asset.toLowerCase()).toContain("slurry pump p-101");
     expect(rootCauses(s.tree)).toHaveLength(7);
   });
 });
