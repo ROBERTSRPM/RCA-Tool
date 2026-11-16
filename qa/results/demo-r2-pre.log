@@ -1,0 +1,18 @@
+  pass D-LAND-1.hdr Landing shows headline, 3 benefit cards, video placeholder
+  pass D-LAND-1.logo Logo link goes to the landing page / app
+  pass D-LAND-1.open-app "Open the app" -> /app
+  pass D-LAND-1.signin "Sign in" header link -> /login
+  pass D-LAND-1.create-acct "Create account" header link -> /signup
+  pass D-LAND-1.sample "Open the sample investigation" opens the sample workspace
+  pass D-LAND-1.start-new "Start a new investigation" creates one and opens it
+  pass D-LAND-1.footer Footer copy is accurate now that accounts exist
+PASS D-LAND-1 Landing page: every link and button works
+  pass D-DASH-1.totals Totals: loss under investigation $0 (sample is closed), 0 open, 0 overdue, saved $198,700
+  pass D-DASH-1.row Sample row shows $238,440, Closed, sample chip
+PASS D-DASH-1 Dashboard (sample only): totals equal hand calculation
+  pass D-DASH-2.dup Duplicate creates "Copy of ..." and opens it
+  pass D-DASH-2.dup-numbers Duplicate keeps the money identical (both rows $238,440)
+  pass D-DASH-2.del-cancel Delete + Cancel keeps the investigation
+  pass D-DASH-2.del-esc Delete dialog closes on Escape and on backdrop click
+  pass D-DASH-2.del-confirm Delete + confirm removes it
+  pass D-DASH-2.reset-sample Reset sample data: cancel keeps edits; confirm restores original

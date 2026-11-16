@@ -1,0 +1,29 @@
+{
+  "suite": "account",
+  "base": "http://localhost:3811",
+  "at": "2026-11-16T12:47:24.313Z",
+  "results": [
+    {
+      "id": "A-ZZ-CLEANUP.clean-A",
+      "title": "Account A left with only the seeded sample",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-ZZ-CLEANUP.clean-B",
+      "title": "Account B left with only the seeded sample",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-ZZ-CLEANUP",
+      "title": "Cleanup: delete every investigation created by this run; leave each account with only its sample",
+      "status": "pass",
+      "detail": "",
+      "ms": 13054
+    }
+  ],
+  "notes": []
+}

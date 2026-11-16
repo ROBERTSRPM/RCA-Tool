@@ -24,9 +24,9 @@ Rules the PM follows:
 | Step | Status |
 |---|---|
 | 0.1 Owner answers kickoff questions: ex Maintenance/Production/Plant Manager; animation + owner's voice; repeat pump failure case | DONE |
-| 0.2 GitHub repo ROBERTSRPM/rca-platform created; Claude GitHub App needs access to it before it can be attached | WAITING ON OWNER |
-| 0.3 Vercel project linked to the GitHub repo (auto-deploy on push) | NOT STARTED |
-| 0.4 Supabase project `rca-saas` created (Sydney); schema not yet applied | IN PROGRESS |
+| 0.2 GitHub repo ROBERTSRPM/RCA-Tool attached; all work pushed to `main` | DONE |
+| 0.3 Vercel project `rca-tool` linked to the repo (root directory `web`), auto-deploys on push: https://rca-tool-omega.vercel.app | DONE |
+| 0.4 Supabase project `rca-saas` (Sydney): `investigations` table with per-user row level security; Site URL and redirect URLs set by owner | DONE |
 
 ## Phase 1 - Market research
 | Step | Status |
@@ -46,10 +46,10 @@ Structure (target 8 to 10 minutes):
 
 | Step | Status |
 |---|---|
-| 2.1 Script with timings and on-screen visuals (`video/script.md`, 1,337 words, 17 scenes, arithmetic checked by PM) | DONE, owner review pending |
+| 2.1 Script: owner reviewed; scenes 1, 15, 16 revised in `video/voiceover.txt` (zero failures after fix, speed change instead of impeller trim, natural vs forced deterioration). `script.md`, `case-study.md`, animation and app sample still carry the old version until sign-off | WAITING ON OWNER |
 | 2.2 Worked example (`video/case-study.md`), illustrative numbers; owner to review technical accuracy | WAITING ON OWNER |
-| 2.3 Visuals: animated scenes rendered to MP4 (code-driven), charts, cause tree build-up | IN PROGRESS |
-| 2.4 Voiceover (owner's own voice recommended for authority) | NOT STARTED |
+| 2.3 Visuals: first cut rendered (Remotion, 17 scenes, 9:39, re-timable per scene). Re-render after script sign-off with a clear bottom-right corner for the owner's face | FIRST CUT DONE |
+| 2.4 Owner records video and audio per scene: full screen in scenes 1, 2, 7, 17; corner in 3 to 6, 8 to 10; voice only in 11 to 16 | WAITING ON OWNER |
 | 2.5 Title, description, chapters, thumbnail concepts (`video/youtube-metadata.md`) | DONE |
 
 ## Phase 3 - Product build
@@ -58,27 +58,27 @@ Proposed stack: Next.js + TypeScript on Vercel, Supabase (Postgres, login, row-l
 | Step | Status |
 |---|---|
 | 3.1 Product spec and data model from Phase 1 findings | DONE |
-| 3.2 App skeleton (phase A: browser storage, no login yet; phase B: Supabase login and database) | IN PROGRESS |
-| 3.3 Core RCA workflow: problem statement, evidence, cause tree (5 Whys, fishbone, logic tree), root causes | NOT STARTED |
-| 3.4 AI assistance: challenge weak causes, suggest missing branches, draft report | NOT STARTED |
-| 3.5 Actions: owners, due dates, close-out, effectiveness check for recurrence | NOT STARTED |
-| 3.6 Financial impact: loss per event, annualised cost, benefit of fix | NOT STARTED |
-| 3.7 Report export and share link | NOT STARTED |
-| 3.8 Landing page with the video embedded | NOT STARTED |
+| 3.2 App skeleton, demo mode on browser storage, Supabase login and per-user cloud storage (organisation and site structure: later) | DONE |
+| 3.3 Core RCA workflow: 7 steps, cause tree with Tree / 5 Whys / Fishbone views on one model, rule-based quality check | DONE |
+| 3.4 AI assistance: challenge weak causes, suggest missing branches, draft report (needs owner's Anthropic API key) | NOT STARTED |
+| 3.5 Actions: owners, due dates, close-out, recurrence check; savings count as verified only when actions are done and failure has not recurred | DONE |
+| 3.6 Financial impact: lost / made up / buffer split, optional cost lines, cash versus opportunity loss, saving and payback | DONE |
+| 3.7 Report: print / save as PDF (share link: later) | PARTLY DONE |
+| 3.8 Landing page (video placeholder until the video is published) | PARTLY DONE |
 
 ## Phase 4 - Independent QA
 | Step | Status |
 |---|---|
-| 4.1 QA agent writes a test plan covering every button, form and flow | NOT STARTED |
-| 4.2 Automated browser tests (Playwright) run locally before deployment | NOT STARTED |
-| 4.3 Defects logged to `qa/defects.md`, fixed by build agents, retested | NOT STARTED |
-| 4.4 Same test suite run against the live Vercel URL after deployment | NOT STARTED |
-| 4.5 Security review (login, data isolation between customers) | NOT STARTED |
+| 4.1 QA agent test plan and control inventory (`qa/test-plan.md`) | DONE |
+| 4.2 Automated browser tests, round 1: 263 checks, 241 passed, 15 defects (3 major) | DONE |
+| 4.3 Defects logged to `qa/defects.md`, fixed by build agent; independent retest (round 2) | IN PROGRESS |
+| 4.4 Same test suite run against the live Vercel URL | IN PROGRESS |
+| 4.5 Data isolation tested by PM at database level and by QA through the app; full security review before paying customers | PARTLY DONE |
 
 ## Phase 5 - Launch
 | Step | Status |
 |---|---|
-| 5.1 Production deploy and custom domain | NOT STARTED |
+| 5.1 Production deploy live on Vercel; custom domain, product name and own email service (Supabase's built-in sender allows only a few emails per hour) | PARTLY DONE |
 | 5.2 Video published, linked to landing page | NOT STARTED |
 | 5.3 First ten prospects contacted, feedback loop | NOT STARTED |
 
@@ -93,3 +93,10 @@ Proposed stack: Next.js + TypeScript on Vercel, Supabase (Postgres, login, row-l
 | Date | Decision | Reason |
 |---|---|---|
 | 2026-11-16 | Research and coding agents run on cheaper models; PM verifies | Token cost |
+| 2026-11-16 | Fresh Supabase project instead of reusing the paused one | Owner's choice |
+| 2026-11-16 | Investigation stored as one JSON document per row, owner-only access | Fast to build; team and site structure can be added later |
+| 2026-11-16 | Demo mode without an account, on browser storage | Self-serve trial with no sign-up friction |
+| 2026-11-16 | Lost margin applies only to production lost for good; made-up production is costed as recovery cost | Avoids double counting; credible to finance |
+| 2026-11-16 | Video example ends with zero failures; natural deterioration managed by condition monitoring | Owner's review |
+| 2026-11-16 | "RootLoop" is a placeholder name held in `web/lib/brand.ts` | Owner to decide |
+| 2026-11-16 | Watchdog scheduled task every 2 hours restarts work stopped by usage limits | Owner's request |
