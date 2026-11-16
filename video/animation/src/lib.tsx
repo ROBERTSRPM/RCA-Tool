@@ -139,10 +139,10 @@ export const Pump: React.FC<{color?: string; fill?: string; w?: number; sw?: num
 );
 
 export const Wrench: React.FC<{color?: string; size?: number}> = ({color = C.amber, size = 160}) => (
-  <svg width={size} height={size} viewBox="-50 -50 100 100">
+  <svg width={size} height={size} viewBox="-60 -60 120 120">
     <g transform="rotate(-40)">
-      <rect x="-9" y="-6" width="18" height="52" rx="9" fill={color} />
-      <path d="M-22 -44 A24 24 0 1 1 22 -44 L10 -44 L10 -30 L-10 -30 L-10 -44 Z" fill={color} />
+      <line x1={0} y1={-6} x2={0} y2={52} stroke={color} strokeWidth={19} strokeLinecap="round" />
+      <path d="M-13 -52 A27 27 0 1 0 13 -52" fill="none" stroke={color} strokeWidth={17} strokeLinecap="round" />
     </g>
   </svg>
 );

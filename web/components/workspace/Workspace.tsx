@@ -67,7 +67,7 @@ export function Workspace({ initial }: { initial: Investigation }) {
 
         {inv.isSample && (
           <p className="mt-3 rounded-lg border border-amber-300 bg-amber-50 px-3 py-2 text-sm text-amber-900">
-            <strong>Illustrative sample.</strong> {SAMPLE_NOTE} Feel free to edit it; use{" "}
+            <strong>{SAMPLE_NOTE}</strong> Feel free to edit it; use{" "}
             <em>Reset sample data</em> on the dashboard to restore it.
           </p>
         )}
@@ -75,7 +75,7 @@ export function Workspace({ initial }: { initial: Investigation }) {
         <nav aria-label="Investigation steps" className="mt-4">
           <ol
             ref={stepperRef}
-            className="-mx-4 flex gap-1 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0"
+            className="relative -mx-4 flex gap-1 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0"
           >
             {STEPS.map((s, i) => {
               const active = s.id === step;

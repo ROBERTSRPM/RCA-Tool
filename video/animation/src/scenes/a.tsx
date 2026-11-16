@@ -90,7 +90,7 @@ export const StoryCard: React.FC = () => {
   return (
     <Stage>
       <div style={{position: "absolute", inset: 0, transform: `scale(${zoom})`}}>
-        <Abs x={560} y={190} style={{opacity: 0.1 * r(0, 0.1)}}><Pump w={800} color={C.text} /></Abs>
+        <Abs x={560} y={190} style={{opacity: 0.06 * r(0, 0.1)}}><Pump w={800} color={C.text} /></Abs>
         <Abs x={0} y={400} w={1920} style={{textAlign: "center"}}>
           <Fade a={0.02} b={0.10} y={20} style={{fontSize: 40, letterSpacing: 10, color: C.amber, fontWeight: 700}}>OWNER STORY</Fade>
           <Fade a={0.06} b={0.16} y={30} style={{fontSize: 124, fontWeight: 800, letterSpacing: -3, marginTop: 24}}>From the plant floor</Fade>
@@ -151,8 +151,8 @@ export const S03: React.FC = () => {
             {i === 4 && <circle cx={x} cy={400} r={20} fill={cols[i]} />}
           </GIn>
         ))}
-        <GIn a={0.50} b={0.55} y={0}><text x={260} y={510} textAnchor="middle" fontSize={48} fontWeight={800} fill={C.amber} fontFamily={FONT}>Failure</text></GIn>
-        <GIn a={0.70} b={0.75} y={0}><text x={1500} y={510} textAnchor="middle" fontSize={48} fontWeight={800} fill={C.teal} fontFamily={FONT}>Root cause</text></GIn>
+        <GIn a={0.50} b={0.55} y={0}><text x={260} y={320} textAnchor="middle" fontSize={48} fontWeight={800} fill={C.amber} fontFamily={FONT}>Failure</text></GIn>
+        <GIn a={0.70} b={0.75} y={0}><text x={1500} y={320} textAnchor="middle" fontSize={48} fontWeight={800} fill={C.teal} fontFamily={FONT}>Root cause</text></GIn>
         <g opacity={r(0.54, 0.57) * (1 - r(0.73, 0.76))} transform={`translate(${lensX} 400)`}>
           <circle r={70} fill="rgba(255,255,255,0.06)" stroke={C.text} strokeWidth={7} />
           <line x1={50} y1={50} x2={105} y2={105} stroke={C.text} strokeWidth={14} strokeLinecap="round" />
@@ -189,7 +189,7 @@ const Bearing: React.FC<{color: string; cracked?: boolean}> = ({color, cracked})
 const NotCard: React.FC<{i: number; text: string; children: React.ReactNode}> = ({i, text, children}) => {
   const start = [0.04, 0.30, 0.60][i];
   return (
-    <Abs x={80 + i * 600} y={200} w={560} h={810}>
+    <Abs x={80 + i * 600} y={250} w={560} h={660}>
       <Fade a={start} b={start + 0.06} y={90} style={{height: "100%"}}>
         <Card color={C.red} style={{height: "100%", position: "relative", overflow: "hidden"}}>
           <div style={{position: "absolute", left: 24, top: 24}}>
@@ -197,7 +197,7 @@ const NotCard: React.FC<{i: number; text: string; children: React.ReactNode}> = 
           </div>
           <div style={{position: "absolute", right: 28, top: 36, fontSize: 40, letterSpacing: 6, fontWeight: 800, color: C.red}}>NOT</div>
           <svg width={560} height={400} viewBox="0 0 560 400" style={{position: "absolute", top: 100, left: 0}}>{children}</svg>
-          <div style={{position: "absolute", left: 36, right: 36, top: 520, fontSize: 48, fontWeight: 800, lineHeight: 1.2}}>{text}</div>
+          <div style={{position: "absolute", left: 36, right: 36, top: 495, fontSize: 48, fontWeight: 800, lineHeight: 1.2}}>{text}</div>
         </Card>
       </Fade>
     </Abs>
@@ -208,7 +208,7 @@ export const S04: React.FC = () => {
   const swap = r(0.66, 0.76, IO);
   return (
     <Stage>
-      <Abs x={0} y={50} w={1920} style={{textAlign: "center"}}><Fade a={0.0} b={0.05}><H1>What RCA is <span style={{color: C.red}}>not</span></H1></Fade></Abs>
+      <Abs x={0} y={90} w={1920} style={{textAlign: "center"}}><Fade a={0.0} b={0.05}><H1>What RCA is <span style={{color: C.red}}>not</span></H1></Fade></Abs>
       <NotCard i={0} text="Not a blame hunt">
         <g>
           <circle cx={130} cy={150} r={34} fill={C.steel} />
@@ -244,11 +244,11 @@ export const S04: React.FC = () => {
         <g transform={`translate(${lerp(280, 40, swap) } 140)`} opacity={1 - swap}><Bearing color={C.mute} cracked /></g>
         <g transform={`translate(${lerp(640, 280, swap)} 140)`} opacity={swap}><Bearing color={C.green} /></g>
         <GIn a={0.78} b={0.84} y={20}>
-          <g transform="translate(150 315)">
+          <g transform="translate(150 290)">
             <rect x={-40} y={-24} width={80} height={14} rx={4} fill={C.amber} />
             <rect x={-26} y={-2} width={80} height={14} rx={4} fill={C.amber} />
           </g>
-          <path d="M390 288 C390 288 362 322 362 338 A28 28 0 0 0 418 338 C418 322 390 288 390 288 Z" fill={C.amber} />
+          <path d="M390 262 C390 262 362 296 362 312 A28 28 0 0 0 418 312 C418 296 390 262 390 262 Z" fill={C.amber} />
           <text x={280} y={392} textAnchor="middle" fontSize={38} fontWeight={700} fill={C.amber} fontFamily={FONT}>Conditions remain</text>
         </GIn>
       </NotCard>

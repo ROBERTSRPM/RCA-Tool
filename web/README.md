@@ -1,36 +1,25 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# RootLoop (phase A)
 
-## Getting Started
+Root cause analysis for maintenance and reliability teams: investigate, track actions to done, and prove the failure stopped with the money quantified. Phase A is a fully working front end that stores everything in the browser (localStorage). No backend or login yet.
 
-First, run the development server:
+## Run
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev          # http://localhost:3000
+npm run build && npm start   # production
+npm run lint
+npm test             # vitest unit tests
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `app/` routes: `/` landing, `/app` dashboard, `/app/investigations/[id]` workspace.
+- `components/workspace/` the 7-step workspace; `cause/` holds the Tree, 5 Whys and Fishbone views over one tree.
+- `lib/types.ts` all domain types (one module).
+- `lib/store/types.ts` **the `InvestigationStore` interface** (list, get, create, update, delete, duplicate, resetSample; all async). `lib/store/local.ts` is the localStorage implementation (falls back to memory if storage is blocked or during server rendering). `lib/store/index.ts` `getStore()` is the single place to swap in a database store.
+- `lib/finance.ts` pure money calculations (tested).
+- `lib/quality.ts` pure rule-based quality check (tested); `lib/coach.ts` the `Coach` interface for a future AI.
+- `lib/tree.ts` pure immutable cause-tree operations (tested).
+- `lib/sample.ts` the illustrative sample investigation (seeded on first visit).
+- `lib/status.ts` investigation status is derived from the data, not stored.
