@@ -22,8 +22,8 @@ export const S16: React.FC = () => {
   const D = r(0.64, 0.68);
   const base = 900, hA = 500;
   const tA = r(0.04, 0.12), tB = r(0.12, 0.2);
-  const months = r(0.40, 0.48, IO) * 3;
-  const flagX = 120 + (1680 * 3) / 12;
+  const months = r(0.40, 0.48, IO) * 1.6;
+  const flagX = 120 + (1680 * 1.6) / 12;
   const hours = Math.round(84 * r(0.50, 0.57, IO)), tonnes = 10080 * r(0.51, 0.58, IO);
   const fill = lerp(0.1, 0.72, r(0.52, 0.60, IO));
   const nat = r(0.66, 0.72), forced = r(0.76, 0.82);
@@ -58,11 +58,11 @@ export const S16: React.FC = () => {
 
       {/* Phase 2: payback */}
       <div style={{position: "absolute", inset: 0, opacity: B}}>
-        <Abs x={80} y={110} w={1700} style={{fontSize: 72, fontWeight: 800}}>Payback on the <span style={{color: C.amber}}>$60,000</span> spend</Abs>
+        <Abs x={80} y={110} w={1700} style={{fontSize: 72, fontWeight: 800}}>Payback on the <span style={{color: C.amber}}>$32,000</span> spend</Abs>
         <Abs x={120} y={270} w={1700} style={{fontFamily: MONO, fontSize: 92, fontWeight: 700, lineHeight: 1.4}}>
-          <Fade a={0.31} b={0.35}>$60,000 ÷ $238,440</Fade>
-          <Fade a={0.35} b={0.39}><span style={{color: C.mute}}>= </span>0.25 years</Fade>
-          <Fade a={0.38} b={0.42}><span style={{color: C.mute}}>= </span><span style={{color: C.green}}>about 3 months</span></Fade>
+          <Fade a={0.31} b={0.35}>$32,000 ÷ $238,440</Fade>
+          <Fade a={0.35} b={0.39}><span style={{color: C.mute}}>= </span>0.13 years</Fade>
+          <Fade a={0.38} b={0.42}><span style={{color: C.mute}}>= </span><span style={{color: C.green}}>about 7 weeks</span></Fade>
         </Abs>
         <Full>
           <g opacity={r(0.38, 0.42)}>

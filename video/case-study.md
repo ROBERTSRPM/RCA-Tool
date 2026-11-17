@@ -75,20 +75,20 @@ Test used for each cause: "If this cause is true, what else must be true?" Then 
 
 | # | Action | Fixes | Owner (role) | Due (weeks from sign-off) | Cost |
 |---|---|---|---|---|---|
-| 1 | Fit a variable speed drive (VSD) and slow the pump, so it runs near its best efficiency point with the discharge valve wide open | Root 1 | Reliability engineer with process engineer | Week 8 (needs shutdown) | $28,000 |
+| 1 | Slow the pump on its existing variable speed drive (VSD), so it runs near its best efficiency point with the discharge valve wide open | Root 1 | Reliability engineer with process engineer | Week 2 | $0 |
 | 2 | Upgrade seal flush: flow indicator, clean strainer, add to inspection route | Root 5a | Mechanical supervisor | Week 4 | $12,000 |
 | 3 | Write alignment standard, buy laser alignment tool, train fitters | Root 2 | Maintenance manager | Standard week 4; training week 8 | $8,000 |
-| 4 | Fit bearing housing isolators and sealed breathers; add oil condition check to route; write rebuild checklist with seal setting, soft foot check, alignment record and vibration reading before handover | Roots 3, 4, 5b | Mechanical supervisor and planner | Week 6 | $7,000 |
+| 4 | Fit bearing isolators and breathers to the bearing housings (keeps wash-down water and solids out of the oil); add oil condition check to route; write rebuild checklist with seal setting, soft foot check, alignment record and vibration reading before handover | Roots 3, 4, 5b | Mechanical supervisor and planner | Week 6 | $7,000 |
 | 5 | Engineering and project time | All | Reliability engineer | Weeks 1 to 8 | $5,000 |
 | 6 | Add pump duty to the management-of-change checklist | Root 1 | Plant engineering manager | Week 3 | $0 |
 | 7 | Add cause and failure-mode fields to repair coding | Root 6 | Maintenance planner | Week 3 | $0 |
 | 8 | Effectiveness check: report failures, hours and cost at 90 days and 12 months | All | Reliability engineer, reported to plant manager | Week 13 and week 52 | $0 |
 
-Total one-time cost: $28,000 + $12,000 + $8,000 + $7,000 + $5,000 = $60,000.
+Total one-time cost: $0 + $12,000 + $8,000 + $7,000 + $5,000 = $32,000.
 
 ## 6. Calculations (all recomputed and checked)
 
-Cost items in the fix: Variable speed drive on the pump (slow the pump, valve wide open) $28,000; Seal flush upgrade (flow indicator, strainer, piping) $12,000; Laser alignment tool, alignment standard, fitter training $8,000; Bearing housing isolators, sealed breathers, rebuild checklist and verification kit $7,000; Engineering and project time $5,000.
+Cost items in the fix: Slowing the pump on its existing variable speed drive $0; Seal flush upgrade (flow indicator, strainer, piping) $12,000; Laser alignment tool, alignment standard, fitter training $8,000; Bearing housing isolators, sealed breathers, rebuild checklist and verification kit $7,000; Engineering and project time $5,000.
 
 **Per failure**
 - Lost production per failure = 14 h x 120 t/h = 1,680 t
@@ -106,7 +106,7 @@ Cost items in the fix: Variable speed drive on the pump (slow the pump, valve wi
 
 **Saving and payback**
 - Annual saving = $238,440 - $0 = $238,440
-- Payback = $60,000 / $238,440 = 0.25 years (0.2516) = 0.2516 x 12 = about 3 months (3.0 months, about 13 weeks)
+- Payback = $32,000 / $238,440 = 0.134 years (about 0.13) = 0.134 x 52 = 7.0 weeks = about 7 weeks (1.6 months)
 
 **Capacity released (hidden plant)**
 - Hours recovered = 6 x 14 h = 84 h
@@ -125,7 +125,7 @@ Bearings and seals still wear after the fix. That is natural deterioration and n
 |---|---|---|
 | Status after the fix | Managed | Removed |
 | What it is | Normal wear of bearings and seals | Wear we caused ourselves |
-| Handled by | Vibration, oil and flush checks; parts changed in a planned shutdown, before they fail | Roots 1 to 5 fixed (variable speed drive, alignment standard, sealed housings, flush indicator, rebuild checklist) |
+| Handled by | Vibration, oil and flush checks; parts changed in a planned shutdown, before they fail | Roots 1 to 5 fixed (slowing the pump on its existing variable speed drive, alignment standard, sealed housings, flush indicator, rebuild checklist) |
 
 ## 8. Presenter story (scene 2, not part of the case data)
 
@@ -133,4 +133,4 @@ The presenter tells a real experience: a bucket conveyor feeding the packaging l
 
 ## 9. Final numbers at a glance
 
-Per failure $39,740. Before: 6 failures, 84 h, $238,440 a year. After: 0 failures, $0 breakdown loss. Saving $238,440 a year. Cost $60,000. Payback $60,000 / $238,440 = 0.25 years = about 3 months. Recovered: 84 h and 10,080 t.
+Per failure $39,740. Before: 6 failures, 84 h, $238,440 a year. After: 0 failures, $0 breakdown loss. Saving $238,440 a year. Cost $32,000. Payback $32,000 / $238,440 = 0.13 years = about 7 weeks. Recovered: 84 h and 10,080 t.

@@ -121,10 +121,10 @@ const roots: [string, string][] = [
   ["Failures coded only as bearing failed", "Maintenance history"],
 ];
 const actions: [string, string, string, number, string?][] = [
-  ["Variable speed drive: slow the pump", "Reliability engineer", "Week 8", 28000, "Runs near its best point, valve wide open"],
+  ["Slow the pump on its existing variable speed drive", "Reliability engineer", "Week 2", 0, "Runs near its best point, valve wide open"],
   ["Seal flush indicator, on inspection route", "Mechanical supervisor", "Week 4", 12000, "Clean flush protects the seal faces"],
   ["Alignment standard, laser tool, training", "Maintenance manager", "Weeks 4 and 8", 8000, "Fitters trained to the standard"],
-  ["Sealed housings, rebuild checklist", "Supervisor and planner", "Week 6", 7000, "Vibration reading before handover"],
+  ["Bearing isolators and breathers, rebuild checklist", "Supervisor and planner", "Week 6", 7000, "Keeps wash-down water and solids out of the oil"],
   ["Engineering and project time", "Reliability engineer", "Weeks 1 to 8", 5000],
 ];
 export const S15: React.FC = () => {
@@ -168,7 +168,7 @@ export const S15: React.FC = () => {
       <Abs x={80} y={190} w={1760}>
         <Fade a={0.33} b={0.37} y={20}>
           <div style={{display: "flex", height: 70, alignItems: "center", fontSize: 36, fontWeight: 800, color: C.mute, letterSpacing: 2, borderBottom: `3px solid ${C.amber}`}}>
-            <div style={{width: 800, paddingLeft: 16}}>ACTION</div><div style={{width: 460}}>OWNER</div><div style={{width: 280}}>DUE</div><div style={{width: 220, textAlign: "right", paddingRight: 16}}>COST</div>
+            <div style={{width: 900, paddingLeft: 16}}>ACTION</div><div style={{width: 380}}>OWNER</div><div style={{width: 240}}>DUE</div><div style={{width: 240, textAlign: "right", paddingRight: 16}}>COST</div>
           </div>
         </Fade>
         {actions.map(([a, o, dd, c, sub], i) => {
@@ -176,17 +176,17 @@ export const S15: React.FC = () => {
           return (
             <Fade key={i} a={t0} b={t0 + 0.04} x={-40} y={0}>
               <div style={{display: "flex", height: 124, alignItems: "center", fontSize: 38, fontWeight: 600, borderBottom: `2px solid ${C.line}`}}>
-                <div style={{width: 800, paddingLeft: 16}}><div style={{fontWeight: 700}}>{a}</div>{sub && <div style={{fontSize: 30, color: C.teal, fontWeight: 600, marginTop: 4}}>{sub}</div>}</div>
-                <div style={{width: 460, color: C.mute, fontSize: 34}}>{o}</div><div style={{width: 280, color: C.mute, fontSize: 34}}>{dd}</div>
-                <div style={{width: 220, textAlign: "right", paddingRight: 16, fontFamily: MONO, fontWeight: 700, color: C.text}}>{money(c)}</div>
+                <div style={{width: 900, paddingLeft: 16}}><div style={{fontWeight: 700, fontSize: 32}}>{a}</div>{sub && <div style={{fontSize: 30, color: C.teal, fontWeight: 600, marginTop: 4}}>{sub}</div>}</div>
+                <div style={{width: 380, color: C.mute, fontSize: 32}}>{o}</div><div style={{width: 240, color: C.mute, fontSize: 32}}>{dd}</div>
+                <div style={{width: 240, textAlign: "right", paddingRight: 16, fontFamily: MONO, fontWeight: 700, color: C.text}}>{money(c)}{c === 0 && <span style={{fontSize: 22, color: C.green, marginLeft: 8, fontFamily: FONT}}>no cost</span>}</div>
               </div>
             </Fade>
           );
         })}
         <Fade a={0.90} b={0.95} y={10}>
           <div style={{display: "flex", height: 110, alignItems: "center", fontSize: 50, fontWeight: 800, justifyContent: "space-between", padding: "0 16px"}}>
-            <div style={{fontFamily: MONO, fontSize: 36, color: C.mute, fontWeight: 600}}>$28,000 + $12,000 + $8,000 + $7,000 + $5,000</div>
-            <div>Total <span style={{color: C.amber, fontFamily: MONO}}>= $60,000</span></div>
+            <div style={{fontFamily: MONO, fontSize: 36, color: C.mute, fontWeight: 600}}>$0 + $12,000 + $8,000 + $7,000 + $5,000</div>
+            <div>Total <span style={{color: C.amber, fontFamily: MONO}}>= $32,000</span></div>
           </div>
         </Fade>
       </Abs>
