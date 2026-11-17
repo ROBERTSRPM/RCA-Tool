@@ -1,7 +1,7 @@
 {
   "suite": "loss",
   "base": "http://localhost:3555",
-  "at": "2026-11-17T07:26:20.744Z",
+  "at": "2026-11-17T07:52:03.415Z",
   "results": [
     {
       "id": "LOSS-1-desk.default",
@@ -92,7 +92,7 @@
       "title": "Shares: always total 100, rebalance proportionally, typing/slider/edge input [desk]",
       "status": "pass",
       "detail": "",
-      "ms": 4870
+      "ms": 5688
     },
     {
       "id": "LOSS-2-desk.mix-S1",
@@ -183,7 +183,7 @@
       "title": "Hand-calculated costs for six share mixes (cash vs opportunity, per event and per year) [desk]",
       "status": "pass",
       "detail": "",
-      "ms": 1454
+      "ms": 1569
     },
     {
       "id": "LOSS-3-desk.empty",
@@ -239,7 +239,7 @@
       "title": "Other cost lines: add, categories, description, amount, remove, bad input [desk]",
       "status": "pass",
       "detail": "",
-      "ms": 1182
+      "ms": 1332
     },
     {
       "id": "LOSS-4-desk.verify",
@@ -288,7 +288,7 @@
       "title": "Figures carried into Verify, dashboard and Report for a mixed-share case (hand calc) [desk]",
       "status": "pass",
       "detail": "",
-      "ms": 10591
+      "ms": 11196
     },
     {
       "id": "LOSS-5-desk.dash",
@@ -344,7 +344,7 @@
       "title": "Old data without the new fields, and malformed stored shares [desk]",
       "status": "pass",
       "detail": "",
-      "ms": 1668
+      "ms": 1826
     },
     {
       "id": "LOSS-6-desk.layout",
@@ -379,7 +379,7 @@
       "title": "Layout of the new Loss step and Report loss table [desk]",
       "status": "pass",
       "detail": "",
-      "ms": 4277
+      "ms": 4595
     },
     {
       "id": "LOSS-7-desk.copy-same",
@@ -400,7 +400,7 @@
       "title": "Duplicate keeps the new loss fields and is independent of the original; sign-in dashboard unaffected [desk]",
       "status": "pass",
       "detail": "",
-      "ms": 4347
+      "ms": 4464
     },
     {
       "id": "LOSS-1-mob.default",
@@ -491,7 +491,7 @@
       "title": "Shares: always total 100, rebalance proportionally, typing/slider/edge input [mob]",
       "status": "pass",
       "detail": "",
-      "ms": 4648
+      "ms": 5384
     },
     {
       "id": "LOSS-2-mob.mix-S1",
@@ -582,7 +582,7 @@
       "title": "Hand-calculated costs for six share mixes (cash vs opportunity, per event and per year) [mob]",
       "status": "pass",
       "detail": "",
-      "ms": 1469
+      "ms": 1556
     },
     {
       "id": "LOSS-3-mob.empty",
@@ -638,7 +638,7 @@
       "title": "Other cost lines: add, categories, description, amount, remove, bad input [mob]",
       "status": "pass",
       "detail": "",
-      "ms": 1173
+      "ms": 1382
     },
     {
       "id": "LOSS-4-mob.verify",
@@ -687,7 +687,7 @@
       "title": "Figures carried into Verify, dashboard and Report for a mixed-share case (hand calc) [mob]",
       "status": "pass",
       "detail": "",
-      "ms": 10224
+      "ms": 10882
     },
     {
       "id": "LOSS-5-mob.dash",
@@ -743,7 +743,7 @@
       "title": "Old data without the new fields, and malformed stored shares [mob]",
       "status": "pass",
       "detail": "",
-      "ms": 1752
+      "ms": 1745
     },
     {
       "id": "LOSS-6-mob.layout",
@@ -778,7 +778,7 @@
       "title": "Layout of the new Loss step and Report loss table [mob]",
       "status": "pass",
       "detail": "",
-      "ms": 4115
+      "ms": 4278
     },
     {
       "id": "LOSS-7-mob.copy-same",
@@ -799,7 +799,7 @@
       "title": "Duplicate keeps the new loss fields and is independent of the original; sign-in dashboard unaffected [mob]",
       "status": "pass",
       "detail": "",
-      "ms": 3997
+      "ms": 4047
     }
   ],
   "notes": [

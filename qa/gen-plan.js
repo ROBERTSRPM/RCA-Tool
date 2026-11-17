@@ -2,7 +2,7 @@
 const fs = require('fs');
 const loadFrom = (dir) => (n) => { try { return JSON.parse(fs.readFileSync(__dirname + '/results/' + dir + '/' + n + '.json')); } catch { return { results: [], notes: [] }; } };
 const sets = {};
-for (const dir of ['local', 'live']) { const L = loadFrom(dir); const parts = ['demo', 'loss', 'account'].map(L); const rows = parts.flatMap(p => p.results); const leaf = rows.filter(r => !rows.some(o => o.id.startsWith(r.id + '.'))); sets[dir] = { parts, rows, leaf, pass: leaf.filter(r => r.status === 'pass').length, notes: parts.flatMap(p => p.notes), base: parts[0].base }; }
+for (const dir of ['local', 'live']) { const L = dir === 'local' ? loadFrom('..') : loadFrom('../round2/live'); const parts = (dir === 'local' ? ['demo', 'loss', 'features', 'account'] : ['demo', 'loss', 'account']).map(L); const rows = parts.flatMap(p => p.results); const leaf = rows.filter(r => !rows.some(o => o.id.startsWith(r.id + '.'))); sets[dir] = { parts, rows, leaf, pass: leaf.filter(r => r.status === 'pass').length, notes: parts.flatMap(p => p.notes), base: parts[0].base }; }
 const L0 = sets.local, L1 = sets.live;
 const demo = { base: L0.base, notes: L0.notes }, acc = { notes: L0.notes };
 const leaf = L0.leaf, pass = L0.pass;
@@ -10,7 +10,7 @@ const liveIds = new Map(L1.leaf.map(r => [r.id, r]));
 let md = `# Test plan and results
 
 Run against \`${demo.base}\` (production build, port 3555). Desktop 1440x900 and mobile 375x812. Demo mode and signed in (accounts A and B).
-**Round 2.** Local production build (${L0.base}): **${L0.leaf.length} checks, ${L0.pass} passed, ${L0.leaf.length - L0.pass} failed.** Live site (${L1.base}): **${L1.leaf.length} checks, ${L1.pass} passed, ${L1.leaf.length - L1.pass} failed.** (leaf checks; parent groups not counted twice). Failures map to defects in defects.md. Live note: D-EDGE-NAV.weird-ids failed live only because the hosting platform answers a ../ path with HTTP 403 (the test now accepts 403 as a valid rejection; re-run live: pass). Round 1 (old build) was 263 checks, 241 passed, 22 failed (kept in round1/).
+**Round 3 (this build, local production build only).** Local production build (${L0.base}): **${L0.leaf.length} checks, ${L0.pass} passed, ${L0.leaf.length - L0.pass} failed.** Round 2 live-site run for comparison (${L1.base}, old build): ${L1.leaf.length} checks, ${L1.pass} passed, ${L1.leaf.length - L1.pass} failed. (leaf checks; parent groups not counted twice). Failures map to defects in defects.md. Live note: D-EDGE-NAV.weird-ids failed live only because the hosting platform answers a ../ path with HTTP 403 (the test now accepts 403 as a valid rejection; re-run live: pass). Round 1 (old build) was 263 checks, 241 passed, 22 failed (kept in round1/).
 
 ## 1. Control inventory
 Every interactive control found by \`inventory.js\` (raw lists in results/inventory.json). "Result" = outcome of the exercising test.
@@ -33,6 +33,16 @@ Every interactive control found by \`inventory.js\` (raw lists in results/invent
 | 1 Problem | Title, Asset, Site/area, Date of event, What happened?, Where, When, Impact | D-E2E-1.problem, D-PERS-1.problem, D-EDGE-DATE | pass |
 | 2 Loss | Events/yr, Downtime, Production rate, Unit name, Margin, Repair cost, Currency + live calc | D-E2E-1.loss-calc, D-EDGE-NUM | pass |
 | 2 Loss (new) | 3 share percent fields, 3 sliders, share bar, Recovery cost, Recovery note, Buffer holding cost, Add a cost, per-line Category / Description / Amount / Remove, cash vs opportunity panel | LOSS-1..7 (desktop and 375px), A-LOSS-1 | pass |
+| 1 Problem (new) | Asset tag, Asset type (combo), Make and model, Duty or service, Criticality A/B/C (tap again clears), Failure mode (combo), register status text, links to the register | F-ASSET-1 | pass |
+| Problem / Cause tree (new) | Similar past failures panel: Open, Copy this cause into my tree (arrives as Hypothesis), Open the cause tree | F-SIM-1 | pass |
+| /app/assets (new) | Paste a list, Add asset (form: tag, type, make, duty, site, notes, criticality, Add/Cancel), Search assets, per-row Edit (Save changes/Cancel), Delete (+confirm), per-asset stats, paste Add N assets / Close | F-REG-1, F-REG-2 | pass |
+| /app/account (new) | Download my data, Change password form, Delete my account (typed confirmation, NOT executed), Clear browser data (demo), account menu link | F-ACCT-1 | pass |
+| 4 Cause tree (new) | Type of wear: Natural / Forced deterioration | F-DET-1 | pass |
+| 5 Actions (new) | Add corrective action, Add preventive action (per root cause), compact row expand/Close/Delete, Corrective or preventive?, Category (8), task fields (description, Do this every, Interval unit, Craft or trade, New task or change), Re-link, Maintenance plan changes + Copy for the planner, Spares check (needed, in stock, lead time, coverage, Add a spares holding action) | F-CAPA-1, F-PLAN-1, F-SPARES-1, F-QUAL-1 | pass |
+| 6 Verify (new) | Roll this fix out: candidate tick boxes, What to check, Create N rollout checks, per-check What/Who/Due/Result/Delete, Go to Asset details, Add a similar asset | F-ROLL-1 | pass |
+| 7 Report (new) | Maintenance plan changes, Spares check, Rollout to similar assets sections | F-PLAN-1, F-SPARES-1, F-ROLL-1 | pass |
+| Dashboard (new) | Rollout checks tile (open / created / same problem), unreadable-row Delete | F-ROLL-1, F-SEC-2 | pass |
+| Security (new) | CSP + 4 other headers on every route, image allowlist, malformed rows, password rule, global sign-out, next-redirect | F-SEC-1..3, F-ACCT-1, A-AUTH-1 | see defects |
 | 3 Evidence | Add evidence (both), Edit/Done, Delete (+confirm), Title, Type (6 options), Date, Note, Upload photo, Replace/Remove photo | D-E2E-1, D-EDGE-EVID | pass |
 | 4 Cause tree | Tabs Tree/5 Whys/Fishbone, Expand all, Collapse all, Ask the first Why?, box select, text box, toolbar Why?/Sibling/Move up/Move down/Collapse/Expand/Delete/Details, +N hidden chip, category radios (3), status radios (3), root-cause checkbox, evidence checkboxes, Go to Evidence | D-TREE-1, D-TREE-2, D-E2E-1, D-QC-1 | pass |
 | 5 Whys view | chain boxes, sibling chips, Dig-deeper buttons, Add another Why | D-TREE-2.whys, whys-add | pass |
@@ -55,7 +65,7 @@ Every interactive control found by \`inventory.js\` (raw lists in results/invent
 | Dashboard load time | A-PERF-1 (median ${(() => { const n = acc.notes.find(x => /dashboard load/.test(x.text)); return n && n.data ? n.data.median : '?'; })()} ms) |
 
 ## 3. Results (all checks)
-| ID | Check | Local | Live | Detail (local) |
+| ID | Check | Round 3 local | Round 2 live (old build) | Detail |
 |---|---|---|---|---|
 `;
 for (const r of leaf) { const lv = liveIds.get(r.id); md += `| ${r.id} | ${r.title.replace(/\|/g, '/')} | ${r.status === 'pass' ? 'pass' : '**FAIL**'} | ${lv ? (lv.status === 'pass' ? 'pass' : '**FAIL**') : 'n/a'} | ${(r.detail || '').replace(/\|/g, '/').slice(0, 140)} |\n`; }
