@@ -75,3 +75,51 @@ PASS D-TREE-2 Switching Tree / 5 Whys / Fishbone keeps data; every view control 
   pass D-QC-1.jump-loss Rule loss-not-quantified: "Go to Loss" opens Loss step
   pass D-QC-1.loss-partial Loss finding shrinks as inputs are entered, then clears
   pass D-QC-1.loss-zero Loss inputs of 0 still count as "not quantified"
+  pass D-QC-1.no-root Rule no-root-cause (tree started): "No cause is flagged as a root cause yet" and jump -> Cause tree
+  pass D-QC-1.no-latent Rule branch-without-system-cause: Physical leaf flagged; jump selects that node
+  pass D-QC-1.no-latent-human Rule branch-without-system-cause also fires for a Human leaf, not for ruled-out
+  pass D-QC-1.verified-no-ev Rule verified-without-evidence: needs Verified + no evidence; shown in panel warning only when evidence exists
+  pass D-QC-1.evidence-clears Linking evidence clears verified-without-evidence
+  pass D-QC-1.system-clears Adding a System cause beneath the Human leaf clears the branch rule; flagging root cause clears no-root-cause
+  pass D-QC-1.root-no-action Rule root-cause-without-action: appears, jump -> Actions
+  pass D-QC-1.action-incomplete Rule action-missing-owner-or-date: both missing, then owner only, then clears
+  pass D-QC-1.overdue Rule action-overdue: past due + not done flags; "today" is not overdue; Done clears it
+  pass D-QC-1.verify-missing Rule done-without-verification: all done + unreviewed; jump -> Verify; clears when reviewed
+  pass D-QC-1.recurred Rule failure-recurred: "Yes" flags; Verify shows alert + "Reopen the cause tree" -> Cause tree; jump -> Cause tree
+  pass D-QC-1.all-clear With everything fixed the panel shows "All clear"
+  pass D-QC-1.sort Findings are sorted High first, then Medium
+  pass D-QC-1.toggle Quality panel header toggles open/closed (aria-expanded)
+PASS D-QC-1 Quality check: each rule triggers, jump link lands on the right step, clears when fixed
+  pass D-PERS-1.autosave-states Autosave indicator: "Saving..." after typing, then "All changes saved"
+  pass D-PERS-1.problem Problem fields survive reload (all 8)
+  pass D-PERS-1.url-hash Reload keeps the current step via the #hash
+  pass D-PERS-1.loss Loss inputs, unit and currency survive reload
+  pass D-PERS-1.evidence Evidence add / edit / delete survive reload
+  pass D-PERS-1.tree Tree structure, text, category, status, root flag, evidence link, collapse survive reload
+  pass D-PERS-1.tree-move-delete Tree move and delete survive reload
+  pass D-PERS-1.actions Actions add / edit / status / delete survive reload
+  pass D-PERS-1.verify Verification fields survive reload
+  pass D-PERS-1.fast-reload Edit then reload within 100 ms (before the 350 ms debounce) does not lose the edit
+  pass D-PERS-1.nav-away Edit then click "All investigations" immediately keeps the edit
+  pass D-PERS-1.title-doc Browser tab title follows the investigation title
+  pass D-PERS-1.two-tabs Two tabs editing different fields of one investigation do not overwrite each other
+  FAIL D-PERS-1.concurrent-window Two tabs edit different fields within the same ~350 ms autosave window: neither edit may be silently lost (3 tries)
+       values differ: expected [] but got ["try 0: site=\"S01794901723942\" (typed \"S01794901723942\") when=\"Night shift, full speed\" (typed \"W01794901723942\") notices=0","try 1: site=\"S11794901727094\" (typed \"S11794901727094\") when=\"Night shift, full speed\" (typed \"W11794901727094\") notices=0","try 2: site=\"S11794901727094\" (typed \"S21794901730156\") when=\"W21794901730156\" (typed \"W21794901730156\") notices=1"]
+PASS D-PERS-1 Persistence: reload after each kind of edit (demo)
+  pass D-EDGE-NUM.letters Letters are rejected in number fields
+  pass D-EDGE-NUM.negative Negative numbers cannot be entered (minus key ignored) - no explanation shown
+  [observation] "1,000" -> "7", "1e3" -> "7" 
+  pass D-EDGE-NUM.paste-comma Pasting "1,000" or "1e3" is silently rejected (field keeps previous value)
+  pass D-EDGE-NUM.decimals Decimals ".5", "5.", "0.001" accepted; live calc rounds to 2 dp
+  pass D-EDGE-NUM.zero-loss All zeros: annual loss $0, no NaN/Infinity anywhere
+  pass D-EDGE-NUM.huge Huge values (1e20) format without NaN/scientific and without horizontal overflow
+  pass D-EDGE-NUM.currency Currency: max 4 chars; empty falls back to $; unit empty falls back to "units"
+  pass D-EDGE-NUM.payback-after-empty Verify: events after = "" -> saving Not entered, payback n/a (no divide-by-zero)
+  pass D-EDGE-NUM.payback-after=events (saving 0) Verify: events after = "4" -> saving $0, payback n/a (no divide-by-zero)
+  pass D-EDGE-NUM.payback-after>events (negative saving) Verify: events after = "6" -> saving -$6,900, payback n/a (no divide-by-zero)
+  pass D-EDGE-NUM.payback-after=0 Verify: events after = "0" -> saving $13,800, payback 1.9 months (no divide-by-zero)
+  pass D-EDGE-NUM.payback-after=1 Verify: events after = "1" -> saving $10,350, payback 2.5 months (no divide-by-zero)
+  pass D-EDGE-NUM.payback-zero-cost Action cost 0 with saving: payback "under 0.1 months"
+  pass D-EDGE-NUM.report-no-after Report without an after figure says "Not yet" and explains
+PASS D-EDGE-NUM Number fields: zero, negative, non-numeric, decimals, huge; payback edge cases
+  pass D-EDGE-TEXT.overflow-problem 375px: "Problem" step has no horizontal page overflow with 3000-char words
