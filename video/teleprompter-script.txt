@@ -1,5 +1,5 @@
 ROOT CAUSE ANALYSIS: TELEPROMPTER SCRIPT
-Total: 1506 words, about 10 min 2 s at a steady pace
+Total: 1525 words, about 10 min 10 s at a steady pace
 
 How to use this
 - One clip per scene. Say the scene number out loud before you start, then pause two seconds.
@@ -262,7 +262,7 @@ Fix these, and people are no longer set up to fail.
 
 ============================================================
 SCENE 15: WORKED EXAMPLE: VERIFY AND ACT
-[VOICE ONLY (still film yourself, only the audio is used)]  about 43 seconds
+[VOICE ONLY (still film yourself, only the audio is used)]  about 51 seconds
 ============================================================
 
 Before we act, we test each cause against the evidence.
@@ -274,14 +274,17 @@ The records are missing.
 A cause the evidence cannot support gets dropped.
 
 Then the actions.
-Slow the pump down with a variable speed drive, so it runs near its best point with the valve wide open.
+Slow the pump down on its variable speed drive, so it runs near its best point with the valve wide open.
+That one costs nothing.
+
 Fit a flush flow indicator and add it to the inspection route.
-
 Set an alignment standard, buy a laser tool and train the fitters.
-Seal the bearing housings, and add a rebuild checklist with a vibration reading before handover.
-Each has an owner and a date.
+Fit bearing isolators and breathers to the bearing housings, to keep wash-down water and solids out of the oil.
 
-Total cost, sixty thousand dollars.
+And add a rebuild checklist, with a vibration reading before handover.
+Each has an owner and a date.
+Total cost, thirty-two thousand dollars.
+
 
 ============================================================
 SCENE 16: WORKED EXAMPLE: RESULTS
@@ -292,8 +295,8 @@ Twelve months later, the pump has not had a single breakdown.
 Not one.
 The yearly loss of two hundred and thirty-eight thousand, four hundred and forty dollars is gone.
 
-Sixty thousand divided by that saving is about a quarter of a year.
-Payback is about three months.
+Thirty-two thousand divided by that saving is about an eighth of a year.
+Payback is about seven weeks.
 And eighty-four hours of production came back.
 
 That is ten thousand and eighty tonnes of capacity, from a pump we already owned.
