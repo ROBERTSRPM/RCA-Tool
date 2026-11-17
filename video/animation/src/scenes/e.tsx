@@ -170,7 +170,7 @@ export const S17: React.FC = () => {
   const vals = [300, 240, 170, 90, 30];
   return (
     <Stage>
-      <Abs x={0} y={350} w={1920} style={{textAlign: "center", opacity: intro}}>
+      <Abs x={0} y={350} w={1920} style={{textAlign: "center", opacity: intro, transform: `scale(${1 + r(0, 0.16, LIN) * 0.06})`}}>
         <Fade a={0.02} b={0.07} style={{fontSize: 96, fontWeight: 800, letterSpacing: -2}}>RCA is not an event.</Fade>
         <Fade a={0.08} b={0.13} style={{fontSize: 96, fontWeight: 800, letterSpacing: -2, color: C.amber, marginTop: 10}}>It is a system.</Fade>
       </Abs>
@@ -215,7 +215,7 @@ export const S17: React.FC = () => {
         </Fade>
       </div>
 
-      <div style={{position: "absolute", left: 480, top: 130, width: 960, height: 520, opacity: win, transform: `scale(${lerp(0.7, 1, win)})`}}>
+      <div style={{position: "absolute", left: 480, top: 130, width: 960, height: 520, opacity: win, transform: `translateY(${Math.sin(frame / 40) * 8 * win}px) scale(${lerp(0.7, 1, win)})`}}>
         <Card color={C.amber} style={{height: "100%", position: "relative", overflow: "hidden"}}>
           <div style={{height: 64, background: C.panel2, display: "flex", alignItems: "center", gap: 14, paddingLeft: 24, borderBottom: `2px solid ${C.line}`}}>
             {[C.red, C.amber, C.green].map((c) => <div key={c} style={{width: 22, height: 22, borderRadius: 11, background: c}} />)}

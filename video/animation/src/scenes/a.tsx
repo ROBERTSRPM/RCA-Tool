@@ -208,9 +208,9 @@ const Typed: React.FC<{text: string; a: number; b: number}> = ({text, a, b}) => 
 };
 export const S03: React.FC = () => {
   const {r} = useScene();
-  const xs = [260, 570, 880, 1190, 1500];
+  const xs = [260, 610, 960, 1310, 1660];
   const cols = [C.amber, C.steel, C.steel, C.steel, C.teal];
-  const lensX = lerp(260, 1500, r(0.56, 0.72, IO));
+  const lensX = lerp(260, 1660, r(0.56, 0.72, IO));
   const phaseA = 1 - r(0.40, 0.45, IO);
   return (
     <Stage>
@@ -218,10 +218,10 @@ export const S03: React.FC = () => {
         <Fade a={0.01} b={0.07} style={{fontSize: 84, fontWeight: 800, letterSpacing: -2}}>Root Cause Analysis <span style={{color: C.amber}}>(RCA)</span></Fade>
       </Abs>
       <div style={{opacity: phaseA}}>
-        <Abs x={0} y={290} w={1920} style={{textAlign: "center", fontSize: 88, fontWeight: 700}}>
+        <Abs x={0} y={250} w={1920} style={{textAlign: "center", fontSize: 88, fontWeight: 700}}>
           <Typed text="Why did this really happen?" a={0.08} b={0.20} />
         </Abs>
-        <Abs x={0} y={470} w={1920} style={{textAlign: "center", fontSize: 72, fontWeight: 600}}>
+        <Abs x={0} y={440} w={1920} style={{textAlign: "center", fontSize: 72, fontWeight: 600}}>
           <Fade a={0.2} b={0.24}>
             <span style={{color: C.mute}}>Not what </span>
             <span style={{position: "relative", color: C.mute}}>broke
@@ -229,39 +229,39 @@ export const S03: React.FC = () => {
             </span>
           </Fade>
         </Abs>
-        <Abs x={0} y={590} w={1920} style={{textAlign: "center", fontSize: 76, fontWeight: 800, color: C.teal}}>
+        <Abs x={0} y={570} w={1920} style={{textAlign: "center", fontSize: 76, fontWeight: 800, color: C.teal}}>
           <Fade a={0.29} b={0.35}>Why was it able to break?</Fade>
         </Abs>
       </div>
       <Full>
         {xs.slice(1).map((x, i) => (
-          <line key={i} x1={xs[i] + 52} y1={400} x2={x - 52} y2={400} stroke={C.line} strokeWidth={6} {...dash(206, r(0.46 + i * 0.045, 0.50 + i * 0.045))} />
+          <line key={i} x1={xs[i] + 52} y1={540} x2={x - 52} y2={540} stroke={C.line} strokeWidth={6} {...dash(246, r(0.46 + i * 0.045, 0.50 + i * 0.045))} />
         ))}
         {xs.map((x, i) => (
           <GIn key={i} a={0.46 + i * 0.045 - 0.02} b={0.48 + i * 0.045 + 0.02} y={0} s={0.4}>
-            <circle cx={x} cy={400} r={52} fill={C.panel} stroke={cols[i]} strokeWidth={6} />
-            {i > 0 && i < 4 && <text x={x} y={414} textAnchor="middle" fontSize={40} fontWeight={800} fill={cols[i]} fontFamily={FONT}>?</text>}
-            {i === 0 && <circle cx={x} cy={400} r={20} fill={cols[i]} />}
-            {i === 4 && <circle cx={x} cy={400} r={20} fill={cols[i]} />}
+            <circle cx={x} cy={540} r={52} fill={C.panel} stroke={cols[i]} strokeWidth={6} />
+            {i > 0 && i < 4 && <text x={x} y={554} textAnchor="middle" fontSize={40} fontWeight={800} fill={cols[i]} fontFamily={FONT}>?</text>}
+            {i === 0 && <circle cx={x} cy={540} r={20} fill={cols[i]} />}
+            {i === 4 && <circle cx={x} cy={540} r={20} fill={cols[i]} />}
           </GIn>
         ))}
-        <GIn a={0.50} b={0.55} y={0}><text x={260} y={320} textAnchor="middle" fontSize={48} fontWeight={800} fill={C.amber} fontFamily={FONT}>Failure</text></GIn>
-        <GIn a={0.70} b={0.75} y={0}><text x={1500} y={320} textAnchor="middle" fontSize={48} fontWeight={800} fill={C.teal} fontFamily={FONT}>Root cause</text></GIn>
-        <g opacity={r(0.54, 0.57) * (1 - r(0.73, 0.76))} transform={`translate(${lensX} 400)`}>
+        <GIn a={0.50} b={0.55} y={0}><text x={260} y={460} textAnchor="middle" fontSize={48} fontWeight={800} fill={C.amber} fontFamily={FONT}>Failure</text></GIn>
+        <GIn a={0.70} b={0.75} y={0}><text x={1660} y={460} textAnchor="middle" fontSize={48} fontWeight={800} fill={C.teal} fontFamily={FONT}>Root cause</text></GIn>
+        <g opacity={r(0.54, 0.57) * (1 - r(0.73, 0.76))} transform={`translate(${lensX} 540)`}>
           <circle r={70} fill="rgba(255,255,255,0.06)" stroke={C.text} strokeWidth={7} />
           <line x1={50} y1={50} x2={105} y2={105} stroke={C.text} strokeWidth={14} strokeLinecap="round" />
         </g>
-        <path d="M1500 460 C1500 530 1300 520 1300 584" fill="none" stroke={C.teal} strokeWidth={7} strokeLinecap="round" {...dash(300, r(0.76, 0.82))} />
-        <path d="M1276 556 L1300 588 L1324 556" fill="none" stroke={C.teal} strokeWidth={7} strokeLinecap="round" strokeLinejoin="round" opacity={r(0.80, 0.83)} />
+        <path d="M1660 605 C1660 670 1500 660 1500 722" fill="none" stroke={C.teal} strokeWidth={7} strokeLinecap="round" {...dash(340, r(0.76, 0.82))} />
+        <path d="M1476 694 L1500 726 L1524 694" fill="none" stroke={C.teal} strokeWidth={7} strokeLinecap="round" strokeLinejoin="round" opacity={r(0.80, 0.83)} />
       </Full>
-      <Abs x={300} y={604} w={1100}>
+      <Abs x={210} y={740} w={1500}>
         <Fade a={0.81} b={0.87} y={30}>
           <Card color={C.teal} style={{padding: "30px 36px", fontSize: 54, fontWeight: 700, lineHeight: 1.25, minHeight: 130, display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center"}}>
             Change to plant, procedure or way of working
           </Card>
         </Fade>
       </Abs>
-      <Abs x={0} y={830} w={1400} style={{textAlign: "center", fontSize: 84, fontWeight: 800}}>
+      <Abs x={0} y={930} w={1920} style={{textAlign: "center", fontSize: 92, fontWeight: 800}}>
         <Fade a={0.90} b={0.96}>No change = <span style={{color: C.amber}}>no analysis</span></Fade>
       </Abs>
     </Stage>
@@ -302,15 +302,15 @@ export const S04: React.FC = () => {
   const swap = r(0.66, 0.76, IO);
   return (
     <Stage>
-      <Abs x={80} y={60} w={1500}><Fade a={0.0} b={0.05}><H1 style={{fontSize: 80}}>What RCA is <span style={{color: C.red}}>not</span></H1></Fade></Abs>
-      {/* lower-left caption strip keeps clear of the presenter box (x >= 1408, y >= 760) */}
-      <Abs x={80} y={790} w={1300} h={200}>
+      <Abs x={0} y={60} w={1920} style={{textAlign: "center"}}><Fade a={0.0} b={0.05}><H1 style={{fontSize: 80}}>What RCA is <span style={{color: C.red}}>not</span></H1></Fade></Abs>
+      {/* caption strip across the full width */}
+      <Abs x={80} y={790} w={1760} h={200}>
         {[
           {a: 0.08, c: 0.30, t: <>Blame stops people sharing facts, and <span style={{color: C.amber}}>facts are all we have</span></>},
           {a: 0.32, c: 0.60, t: <>Overheated is <span style={{color: C.amber}}>where the investigation starts</span></>},
           {a: 0.62, c: 0.995, t: <>A new bearing treats the symptom. <span style={{color: C.amber}}>The conditions are still there.</span></>},
         ].map((q, i) => (
-          <Fade key={i} a={q.a} b={q.a + 0.05} c={i < 2 ? q.c - 0.03 : undefined} d={i < 2 ? q.c : undefined} y={14} style={{position: "absolute", inset: 0, display: "flex", alignItems: "center", fontSize: 54, fontWeight: 700, lineHeight: 1.2}}><div>{q.t}</div></Fade>
+          <Fade key={i} a={q.a} b={q.a + 0.05} c={i < 2 ? q.c - 0.03 : undefined} d={i < 2 ? q.c : undefined} y={14} style={{position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", textAlign: "center", fontSize: 52, fontWeight: 700, lineHeight: 1.2}}><div>{q.t}</div></Fade>
         ))}
       </Abs>
       <NotCard i={0} text="Not a blame hunt">

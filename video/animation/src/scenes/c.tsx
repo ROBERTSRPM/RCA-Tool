@@ -9,9 +9,9 @@ const Phase: React.FC<{a: number; b: number; children: React.ReactNode}> = ({a, 
 export const S09: React.FC = () => {
   const {r} = useScene();
   const bands = [
-    {name: "Physical", color: C.steel, n: 4, y: 200},
+    {name: "Physical", color: C.steel, n: 4, y: 170},
     {name: "Human", color: C.amber, n: 4, y: 385},
-    {name: "System / latent", color: C.teal, n: 6, y: 570},
+    {name: "System / latent", color: C.teal, n: 6, y: 600},
   ];
   const theory = new Set(["0-3", "2-5"]);
   return (
@@ -28,12 +28,12 @@ export const S09: React.FC = () => {
             const t = r(0.05 + bi * 0.07, 0.10 + bi * 0.07);
             return (
               <g key={bi} opacity={t}>
-                <rect x={80} y={b.y} width={1760} height={170} rx={20} fill={b.color} fillOpacity={0.1} stroke={b.color} strokeWidth={3} />
-                <text x={120} y={b.y + 100} fontSize={46} fontWeight={800} fill={b.color} fontFamily={FONT}>{b.name}</text>
+                <rect x={80} y={b.y} width={1760} height={190} rx={20} fill={b.color} fillOpacity={0.1} stroke={b.color} strokeWidth={3} />
+                <text x={120} y={b.y + 110} fontSize={46} fontWeight={800} fill={b.color} fontFamily={FONT}>{b.name}</text>
                 {[...Array(b.n)].map((_, i) => {
                   const nw = 170, gap = 26;
                   const x0 = 1800 - (b.n * nw + (b.n - 1) * gap);
-                  const x = x0 + i * (nw + gap), y = b.y + 40;
+                  const x = x0 + i * (nw + gap), y = b.y + 50;
                   const isTheory = theory.has(`${bi}-${i}`);
                   const st = 0.35 + (bi * 6 + i) * 0.008;
                   const k = r(st, st + 0.03, OUT);
@@ -55,7 +55,7 @@ export const S09: React.FC = () => {
             );
           })}
         </Full>
-        <Abs x={80} y={790} w={1300}>
+        <Abs x={80} y={850} w={1760}>
           <Fade a={0.24} b={0.29} c={0.31} d={0.34} y={10} style={{position: "absolute", width: "100%"}}>
             <Card color={C.teal} style={{padding: "20px 34px", fontSize: 44, fontWeight: 700, textAlign: "center"}}><span style={{color: C.teal}}>Latent</span> = hidden weakness in procedures, standards, management</Card>
           </Fade>
@@ -68,14 +68,14 @@ export const S09: React.FC = () => {
 
       <Phase a={0.54} b={0.72}>
         <Abs x={0} y={60} w={1920} style={{textAlign: "center"}}><H1 style={{fontSize: 64}}><Fade a={0.55} b={0.6}><span style={{color: C.amber}}>5</span>  Actions with an owner and a date</Fade></H1></Abs>
-        <Abs x={260} y={260} w={1400}>
+        <Abs x={260} y={250} w={1400}>
           <Fade a={0.57} b={0.62} y={50}>
             <Card color={C.amber} style={{padding: 0, overflow: "hidden"}}>
-              <div style={{display: "flex", background: C.panel2, height: 96, alignItems: "center", fontSize: 46, fontWeight: 800, color: C.amber}}>
+              <div style={{display: "flex", background: C.panel2, height: 120, alignItems: "center", fontSize: 52, fontWeight: 800, color: C.amber}}>
                 <div style={{flex: 3, paddingLeft: 40}}>Action</div><div style={{flex: 2}}>Owner</div><div style={{flex: 1.2}}>Date</div>
               </div>
               {[0, 1, 2].map((i) => (
-                <div key={i} style={{display: "flex", height: 120, alignItems: "center", borderTop: `2px solid ${C.line}`, opacity: r(0.60 + i * 0.03, 0.64 + i * 0.03)}}>
+                <div key={i} style={{display: "flex", height: 160, alignItems: "center", borderTop: `2px solid ${C.line}`, opacity: r(0.60 + i * 0.03, 0.64 + i * 0.03)}}>
                   <div style={{flex: 3, paddingLeft: 40}}><div style={{height: 22, borderRadius: 11, background: C.line, width: `${88 - i * 14}%`}} /></div>
                   <div style={{flex: 2}}><div style={{height: 22, borderRadius: 11, background: C.line, width: "62%"}} /></div>
                   <div style={{flex: 1.2}}><div style={{height: 22, borderRadius: 11, background: C.amber, opacity: 0.8, width: "58%"}} /></div>
@@ -90,7 +90,7 @@ export const S09: React.FC = () => {
         <Abs x={0} y={60} w={1920} style={{textAlign: "center"}}><H1 style={{fontSize: 64}}><Fade a={0.73} b={0.78}><span style={{color: C.amber}}>6</span>  Check that it worked</Fade></H1></Abs>
         <Full>
           <GIn a={0.74} b={0.79} y={30}>
-            <g transform="translate(250 250)">
+            <g transform="translate(250 330)">
               <rect width={360} height={380} rx={26} fill={C.panel} stroke={C.text} strokeWidth={6} />
               <path d="M0 110 H360" stroke={C.text} strokeWidth={6} />
               <rect width={360} height={110} rx={26} fill={C.amber} />
@@ -101,20 +101,20 @@ export const S09: React.FC = () => {
             </g>
           </GIn>
           <g opacity={r(0.76, 0.81)}>
-            <line x1={800} y1={680} x2={1360} y2={680} stroke={C.mute} strokeWidth={4} />
-            <line x1={800} y1={680} x2={800} y2={240} stroke={C.mute} strokeWidth={4} />
-            <text x={780} y={690} textAnchor="end" fontSize={40} fill={C.mute} fontFamily={FONT} fontWeight={600}>0</text>
-            <text x={1080} y={750} textAnchor="middle" fontSize={44} fill={C.text} fontFamily={FONT} fontWeight={700}>Failures per quarter</text>
-            {[0, 1, 2, 3, 4, 5].map((i) => <line key={i} x1={880 + i * 95} y1={675} x2={880 + i * 95} y2={690} stroke={C.mute} strokeWidth={3} />)}
+            <line x1={800} y1={800} x2={1800} y2={800} stroke={C.mute} strokeWidth={4} />
+            <line x1={800} y1={800} x2={800} y2={330} stroke={C.mute} strokeWidth={4} />
+            <text x={780} y={810} textAnchor="end" fontSize={40} fill={C.mute} fontFamily={FONT} fontWeight={600}>0</text>
+            <text x={1300} y={880} textAnchor="middle" fontSize={44} fill={C.text} fontFamily={FONT} fontWeight={700}>Failures per quarter</text>
+            {[0, 1, 2, 3, 4, 5].map((i) => <line key={i} x1={880 + i * 160} y1={795} x2={880 + i * 160} y2={810} stroke={C.mute} strokeWidth={3} />)}
           </g>
           {(() => {
             const vals = [400, 330, 250, 150, 70, 0];
-            const pts = vals.map((v, i) => [880 + i * 95, 680 - v]);
+            const pts = vals.map((v, i) => [880 + i * 160, 800 - v]);
             const d = pts.map((q, i) => (i ? "L" : "M") + q[0] + " " + q[1]).join(" ");
             const t = r(0.80, 0.9, IO);
             return (
               <g>
-                <path d={d} fill="none" stroke={C.green} strokeWidth={10} strokeLinecap="round" strokeLinejoin="round" {...dash(820, t)} />
+                <path d={d} fill="none" stroke={C.green} strokeWidth={10} strokeLinecap="round" strokeLinejoin="round" {...dash(950, t)} />
                 {pts.map((q, i) => <circle key={i} cx={q[0]} cy={q[1]} r={13} fill={C.green} opacity={r(0.8 + i * 0.016, 0.82 + i * 0.016)} />)}
               </g>
             );
@@ -186,7 +186,7 @@ export const S10: React.FC = () => {
         <g opacity={phase2}>
           <path d="M880 440 L880 560 L600 640" fill="none" stroke={C.amber} strokeWidth={5} strokeDasharray="8 8" />
           <circle cx={880} cy={436} r={10} fill={C.amber} />
-          <rect x={80} y={630} width={1300} height={400} rx={22} fill={C.panel} stroke={C.amber} strokeWidth={3} />
+          <rect x={80} y={640} width={1760} height={390} rx={22} fill={C.panel} stroke={C.amber} strokeWidth={3} />
           <rect x={440} y={660} width={80} height={350} fill="#4E6078" />
           <rect x={520} y={660} width={320} height={350} fill="#6B5232" opacity={0.7} />
           {[...Array(26)].map((_, i) => <circle key={i} cx={535 + rand(i) * 290} cy={672 + rand(i + 30) * 326} r={5 + rand(i + 9) * 5} fill="#B79A6A" opacity={0.7} />)}
@@ -200,9 +200,9 @@ export const S10: React.FC = () => {
           <text x={440} y={1000} fontSize={30} fill="none" />
         </g>
       </Full>
-      <Abs x={880} y={668} w={470}>
+      <Abs x={900} y={690} w={900}>
         <Fade a={0.34} b={0.40} c={0.6} d={0.65} y={14}>
-          <div style={{fontSize: 40, fontWeight: 600, lineHeight: 1.28}}>
+          <div style={{fontSize: 50, fontWeight: 600, lineHeight: 1.3}}>
             <span style={{color: C.amber, fontWeight: 800}}>Mechanical seal:</span> keeps the slurry inside the pump where the shaft passes through the casing.
           </div>
         </Fade>
@@ -210,12 +210,12 @@ export const S10: React.FC = () => {
       {/* 12 month strip */}
       <Full>
         <g opacity={phase3}>
-          <text x={120} y={680} fontSize={52} fontWeight={700} fill={C.text} fontFamily={FONT}>Twelve months</text>
-          <text x={1320} y={680} textAnchor="end" fontSize={52} fontWeight={700} fill={C.red} fontFamily={FONT}>6 failures</text>
-          <line x1={120} y1={850} x2={1320} y2={850} stroke={C.line} strokeWidth={8} strokeLinecap="round" />
-          {[...Array(13)].map((_, i) => <line key={i} x1={120 + i * 100} y1={838} x2={120 + i * 100} y2={862} stroke={C.line} strokeWidth={4} />)}
+          <text x={120} y={690} fontSize={52} fontWeight={700} fill={C.text} fontFamily={FONT}>Twelve months</text>
+          <text x={1800} y={690} textAnchor="end" fontSize={52} fontWeight={700} fill={C.red} fontFamily={FONT}>6 failures</text>
+          <line x1={120} y1={850} x2={1800} y2={850} stroke={C.line} strokeWidth={8} strokeLinecap="round" />
+          {[...Array(13)].map((_, i) => <line key={i} x1={120 + i * 140} y1={838} x2={120 + i * 140} y2={862} stroke={C.line} strokeWidth={4} />)}
           {months.map((mm, i) => {
-            const x = 120 + (mm.m - 0.5) * 100;
+            const x = 120 + (mm.m - 0.5) * 140;
             const t0 = 0.70 + i * 0.035;
             const t = r(t0, t0 + 0.03, OUT);
             const col = mm.k === "seal" ? C.red : C.pink;
@@ -227,8 +227,8 @@ export const S10: React.FC = () => {
             );
           })}
           <g opacity={r(0.9, 0.95)}>
-            <circle cx={140} cy={970} r={20} fill={C.red} /><text x={175} y={984} fontSize={40} fill={C.mute} fontFamily={FONT} fontWeight={600}>3 seal failures</text>
-            <rect x={660} y={952} width={36} height={36} fill={C.pink} transform="rotate(45 678 970)" /><text x={710} y={984} fontSize={40} fill={C.mute} fontFamily={FONT} fontWeight={600}>3 bearing failures</text>
+            <circle cx={470} cy={970} r={20} fill={C.red} /><text x={505} y={984} fontSize={40} fill={C.mute} fontFamily={FONT} fontWeight={600}>3 seal failures</text>
+            <rect x={1000} y={952} width={36} height={36} fill={C.pink} transform="rotate(45 1018 970)" /><text x={1050} y={984} fontSize={40} fill={C.mute} fontFamily={FONT} fontWeight={600}>3 bearing failures</text>
           </g>
         </g>
       </Full>
