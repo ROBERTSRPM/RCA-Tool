@@ -11,7 +11,7 @@ All numbers on this page are illustrative. They were chosen to show the method a
 | Failures in 12 months (before) | 6 | 3 mechanical seal events, 3 bearing events |
 | Hours lost per failure | 14 h | Diagnose, isolate, drain, rebuild, restart |
 | Production rate | 120 t/h | Line rate while running |
-| Margin per tonne | $18/t | Contribution margin; lost tonnes are not made up later |
+| Contribution margin per tonne | $18/t | Selling price minus variable cost per tonne; lost tonnes are not made up later |
 | Repair cost per event | $9,500 | Parts, labour, contractor and consumables |
 | Failures per year (after) | 0 | Measured over 12 months after actions: no breakdowns, so no breakdown loss ($0) |
 | Wear after the fix | Natural wear only | Bearings and seals still wear. The wear is monitored and the parts are changed in a planned shutdown (section 7) |
@@ -19,7 +19,7 @@ All numbers on this page are illustrative. They were chosen to show the method a
 
 ## 2. Problem statement
 
-P-101 slurry feed pump failed 6 times in 12 months (3 mechanical seal, 3 bearing), losing 84 hours of production and costing $238,440 per year in lost margin and repair.
+P-101 slurry feed pump failed 6 times in 12 months (3 mechanical seal, 3 bearing), losing 84 hours of production and costing $238,440 per year in lost contribution margin and repair.
 
 ## 3. Cause tree (level by level)
 
@@ -92,7 +92,7 @@ Cost items in the fix: Slowing the pump on its existing variable speed drive $0;
 
 **Per failure**
 - Lost production per failure = 14 h x 120 t/h = 1,680 t
-- Lost margin per failure = 1,680 t x $18/t = $30,240
+- Lost contribution margin per failure = 1,680 t x $18/t = $30,240
 - Repair cost per failure = $9,500
 - Total cost per failure = $30,240 + $9,500 = $39,740
 
@@ -111,7 +111,7 @@ Cost items in the fix: Slowing the pump on its existing variable speed drive $0;
 **Capacity released (hidden plant)**
 - Hours recovered = 6 x 14 h = 84 h
 - Tonnes recovered = 84 h x 120 t/h = 10,080 t
-- Margin on recovered tonnes = 10,080 t x $18/t = $181,440
+- Contribution margin on recovered tonnes = 10,080 t x $18/t = $181,440
 - Repair cost avoided = 6 x $9,500 = $57,000
 - Cross-check: $181,440 + $57,000 = $238,440, which equals the annual saving of $238,440.
 

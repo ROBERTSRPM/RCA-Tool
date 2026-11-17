@@ -1,0 +1,1045 @@
+{
+ "s01": [
+  {
+   "key": "call",
+   "say": "the call in the",
+   "lead": 0.05
+  },
+  {
+   "key": "first",
+   "say": "was it the first time",
+   "lead": 0.05
+  },
+  {
+   "key": "pump",
+   "say": "the same pump",
+   "lead": 0.05
+  },
+  {
+   "key": "gearbox",
+   "say": "the same gearbox",
+   "lead": 0.05
+  },
+  {
+   "key": "conveyor",
+   "say": "the same conveyor",
+   "lead": 0.05
+  },
+  {
+   "key": "count",
+   "say": "more times than",
+   "lead": 0.05
+  },
+  {
+   "key": "bill",
+   "say": "it is a bill",
+   "lead": 0.05
+  },
+  {
+   "key": "video",
+   "say": "this video is about",
+   "lead": 0.05
+  },
+  {
+   "key": "find",
+   "say": "find the real cause",
+   "lead": 0.05
+  }
+ ],
+ "s03": [
+  {
+   "key": "title",
+   "say": "root cause analysis",
+   "lead": 0.05
+  },
+  {
+   "key": "why",
+   "say": "why did this really happen",
+   "lead": 0.05
+  },
+  {
+   "key": "notwhat",
+   "say": "not what broke",
+   "lead": 0.05
+  },
+  {
+   "key": "broke",
+   "say": "broke",
+   "lead": 0.05
+  },
+  {
+   "key": "able",
+   "say": "why was it able",
+   "lead": 0.05
+  },
+  {
+   "key": "trace",
+   "say": "we trace a failure",
+   "lead": 0.05
+  },
+  {
+   "key": "through",
+   "say": "back through",
+   "lead": 0.05
+  },
+  {
+   "key": "chain",
+   "say": "chain of",
+   "lead": 0.05
+  },
+  {
+   "key": "causes",
+   "say": "causes until",
+   "lead": 0.05
+  },
+  {
+   "key": "reach",
+   "say": "until we reach",
+   "lead": 0.05
+  },
+  {
+   "key": "change",
+   "say": "we can change",
+   "lead": 0.05
+  },
+  {
+   "key": "arrow",
+   "say": "so it cannot happen",
+   "lead": 0.05
+  },
+  {
+   "key": "card",
+   "say": "a good rca ends",
+   "lead": 0.05
+  },
+  {
+   "key": "nochange",
+   "say": "if nothing changes",
+   "lead": 0.05
+  }
+ ],
+ "s04": [
+  {
+   "key": "title",
+   "say": "so let me say",
+   "lead": 0.05
+  },
+  {
+   "key": "blame",
+   "say": "it is not a hunt",
+   "lead": 0.05
+  },
+  {
+   "key": "ghost",
+   "say": "someone to blame",
+   "lead": 0.05
+  },
+  {
+   "key": "cap1",
+   "say": "the moment people feel",
+   "lead": 0.05
+  },
+  {
+   "key": "card1",
+   "say": "it is not stopping",
+   "lead": 0.05
+  },
+  {
+   "key": "bearing",
+   "say": "the bearing failed",
+   "lead": 0.05
+  },
+  {
+   "key": "cap2",
+   "say": "that is where the investigation",
+   "lead": 0.05
+  },
+  {
+   "key": "starthere",
+   "say": "investigation starts",
+   "lead": 0.05
+  },
+  {
+   "key": "card2",
+   "say": "and it is not replacing",
+   "lead": 0.05
+  },
+  {
+   "key": "swap",
+   "say": "replacing the part",
+   "lead": 0.05
+  },
+  {
+   "key": "cap3",
+   "say": "a new bearing treats",
+   "lead": 0.05
+  },
+  {
+   "key": "cond",
+   "say": "the conditions that killed",
+   "lead": 0.05
+  }
+ ],
+ "s05": [
+  {
+   "key": "fire",
+   "say": "because firefighting is",
+   "lead": 0.05
+  },
+  {
+   "key": "emer",
+   "say": "crews are tied up",
+   "lead": 0.05
+  },
+  {
+   "key": "slips",
+   "say": "so planned work slips",
+   "lead": 0.05
+  },
+  {
+   "key": "nextf",
+   "say": "that sets up the next",
+   "lead": 0.05
+  },
+  {
+   "key": "calm",
+   "say": "when repeat breakdowns stop",
+   "lead": 0.05
+  },
+  {
+   "key": "runs",
+   "say": "the plant runs",
+   "lead": 0.05
+  },
+  {
+   "key": "without",
+   "say": "without interruption",
+   "lead": 0.05
+  },
+  {
+   "key": "cost",
+   "say": "the cost to produce",
+   "lead": 0.05
+  },
+  {
+   "key": "falls",
+   "say": "each unit falls",
+   "token": 2,
+   "lead": 0.05
+  },
+  {
+   "key": "fixed",
+   "say": "because the same fixed",
+   "lead": 0.05
+  },
+  {
+   "key": "profit",
+   "say": "profit rises",
+   "lead": 0.05
+  },
+  {
+   "key": "rises",
+   "say": "rises",
+   "lead": 0.05
+  },
+  {
+   "key": "nonew",
+   "say": "no new equipment",
+   "lead": 0.05
+  }
+ ],
+ "s06": [
+  {
+   "key": "plant",
+   "say": "i call this",
+   "lead": 0.05
+  },
+  {
+   "key": "hidden",
+   "say": "the hidden plant",
+   "lead": 0.05
+  },
+  {
+   "key": "strip",
+   "say": "it disappears",
+   "lead": 0.05
+  },
+  {
+   "key": "hour",
+   "say": "an hour here",
+   "lead": 0.05
+  },
+  {
+   "key": "add",
+   "say": "and up those lost",
+   "lead": 0.05
+  },
+  {
+   "key": "find",
+   "say": "you can find a whole",
+   "lead": 0.05
+  },
+  {
+   "key": "built",
+   "say": "already built",
+   "lead": 0.05
+  },
+  {
+   "key": "staffed",
+   "say": "already staffed",
+   "lead": 0.05
+  },
+  {
+   "key": "paid",
+   "say": "already paid for",
+   "lead": 0.05
+  },
+  {
+   "key": "fixing",
+   "say": "fixing repeat failures",
+   "lead": 0.05
+  },
+  {
+   "key": "capex",
+   "say": "or capex",
+   "lead": 0.05
+  }
+ ],
+ "s08": [
+  {
+   "key": "six",
+   "say": "it has six parts",
+   "lead": 0.05
+  },
+  {
+   "key": "one",
+   "say": "one a clear",
+   "lead": 0.05
+  },
+  {
+   "key": "what",
+   "say": "problem statement",
+   "lead": 0.05
+  },
+  {
+   "key": "loss",
+   "say": "with the loss in numbers",
+   "lead": 0.05
+  },
+  {
+   "key": "hts",
+   "say": "hours tonnes dollars",
+   "lead": 0.05
+  },
+  {
+   "key": "two",
+   "say": "two evidence before",
+   "lead": 0.05
+  },
+  {
+   "key": "photos",
+   "say": "photos of failed",
+   "lead": 0.05
+  },
+  {
+   "key": "parts",
+   "say": "failed parts",
+   "lead": 0.05
+  },
+  {
+   "key": "trends",
+   "say": "trend data",
+   "lead": 0.05
+  },
+  {
+   "key": "logs",
+   "say": "maintenance history",
+   "lead": 0.05
+  },
+  {
+   "key": "three",
+   "say": "three",
+   "lead": 0.05
+  },
+  {
+   "key": "start",
+   "say": "start with the problem",
+   "lead": 0.05
+  },
+  {
+   "key": "asking",
+   "say": "keep asking why",
+   "lead": 0.05
+  },
+  {
+   "key": "branches",
+   "say": "in branches",
+   "lead": 0.05
+  },
+  {
+   "key": "straight",
+   "say": "not one straight",
+   "lead": 0.05
+  }
+ ],
+ "s09": [
+  {
+   "key": "layers",
+   "say": "the tree goes down",
+   "lead": 0.05
+  },
+  {
+   "key": "phys",
+   "say": "physical causes",
+   "lead": 0.05
+  },
+  {
+   "key": "part",
+   "say": "the part or the condition",
+   "lead": 0.05
+  },
+  {
+   "key": "human",
+   "say": "human causes",
+   "lead": 0.05
+  },
+  {
+   "key": "dec",
+   "say": "the decisions and actions",
+   "lead": 0.05
+  },
+  {
+   "key": "sys",
+   "say": "and system causes",
+   "lead": 0.05
+  },
+  {
+   "key": "latent",
+   "say": "also called latent",
+   "lead": 0.05
+  },
+  {
+   "key": "hidden",
+   "say": "those are hidden weaknesses",
+   "lead": 0.05
+  },
+  {
+   "key": "four",
+   "say": "four check every cause",
+   "lead": 0.05
+  },
+  {
+   "key": "evid",
+   "say": "against evidence",
+   "lead": 0.05
+  },
+  {
+   "key": "theory",
+   "say": "it stays a theory",
+   "lead": 0.05
+  },
+  {
+   "key": "five",
+   "say": "five actions",
+   "lead": 0.05
+  },
+  {
+   "key": "actions",
+   "say": "actions with an owner",
+   "lead": 0.05
+  },
+  {
+   "key": "six",
+   "say": "six a check afterwards",
+   "lead": 0.05
+  },
+  {
+   "key": "cal",
+   "say": "check afterwards",
+   "lead": 0.05
+  },
+  {
+   "key": "axes",
+   "say": "that the failure",
+   "lead": 0.05
+  },
+  {
+   "key": "stopped",
+   "say": "really stopped coming back",
+   "lead": 0.05
+  },
+  {
+   "key": "now",
+   "say": "now let me show",
+   "lead": 0.05
+  },
+  {
+   "key": "typical",
+   "say": "on a typical problem",
+   "lead": 0.05
+  }
+ ],
+ "s10": [
+  {
+   "key": "tank",
+   "say": "picture a slurry",
+   "lead": 0.05
+  },
+  {
+   "key": "pump",
+   "say": "pump feeding",
+   "lead": 0.05
+  },
+  {
+   "key": "process",
+   "say": "a process line",
+   "lead": 0.05
+  },
+  {
+   "key": "standby",
+   "say": "no standby pump",
+   "lead": 0.05
+  },
+  {
+   "key": "buffer",
+   "say": "no buffer tank",
+   "lead": 0.05
+  },
+  {
+   "key": "stops",
+   "say": "when it stops",
+   "lead": 0.05
+  },
+  {
+   "key": "linestops",
+   "say": "the line stops",
+   "lead": 0.05
+  },
+  {
+   "key": "twelve",
+   "say": "in twelve months",
+   "lead": 0.05
+  },
+  {
+   "key": "failed",
+   "say": "it has failed",
+   "lead": 0.05
+  },
+  {
+   "key": "bearings",
+   "say": "bearings and mechanical seals",
+   "lead": 0.05
+  },
+  {
+   "key": "seal",
+   "say": "a mechanical seal is",
+   "lead": 0.05
+  },
+  {
+   "key": "each",
+   "say": "each failure stops",
+   "lead": 0.05
+  },
+  {
+   "key": "fourteen",
+   "say": "fourteen hours",
+   "lead": 0.05
+  }
+ ],
+ "s11": [
+  {
+   "key": "chiprate",
+   "say": "the line runs at",
+   "lead": 0.05
+  },
+  {
+   "key": "cm",
+   "say": "contribution margin",
+   "lead": 0.05
+  },
+  {
+   "key": "l1",
+   "say": "fourteen hours times",
+   "lead": 0.05
+  },
+  {
+   "key": "l2",
+   "say": "times eighteen dollars",
+   "lead": 0.05
+  },
+  {
+   "key": "nine",
+   "say": "and nine thousand",
+   "lead": 0.05
+  },
+  {
+   "key": "l4",
+   "say": "that is thirty",
+   "lead": 0.05
+  },
+  {
+   "key": "sixf",
+   "say": "six failures",
+   "lead": 0.05
+  },
+  {
+   "key": "num",
+   "say": "two hundred and thirty",
+   "lead": 0.05
+  },
+  {
+   "key": "year",
+   "say": "a year",
+   "lead": 0.05
+  }
+ ],
+ "s12": [
+  {
+   "key": "ran",
+   "say": "the seal faces are scored",
+   "lead": 0.05
+  },
+  {
+   "key": "rac",
+   "say": "the bearing races show",
+   "lead": 0.05
+  },
+  {
+   "key": "oil",
+   "say": "oil samples show water",
+   "lead": 0.05
+  },
+  {
+   "key": "ctrl",
+   "say": "the control system shows",
+   "lead": 0.05
+  },
+  {
+   "key": "flow",
+   "say": "flow at about sixty",
+   "lead": 0.05
+  },
+  {
+   "key": "sixty",
+   "say": "sixty percent",
+   "lead": 0.05
+  },
+  {
+   "key": "bep",
+   "say": "that is the point where",
+   "lead": 0.05
+  },
+  {
+   "key": "maint",
+   "say": "and the maintenance system",
+   "lead": 0.05
+  },
+  {
+   "key": "norec",
+   "say": "no pump alignment records",
+   "lead": 0.05
+  },
+  {
+   "key": "four",
+   "say": "for four of the six",
+   "lead": 0.05
+  }
+ ],
+ "s13": [
+  {
+   "key": "top",
+   "say": "why did the seals",
+   "lead": 0.05
+  },
+  {
+   "key": "phys",
+   "say": "physical causes first",
+   "lead": 0.05
+  },
+  {
+   "key": "l1a",
+   "say": "the pump runs far",
+   "lead": 0.05
+  },
+  {
+   "key": "l1b",
+   "say": "poor alignment",
+   "lead": 0.05
+  },
+  {
+   "key": "foot",
+   "say": "including a soft foot",
+   "lead": 0.05
+  },
+  {
+   "key": "bend",
+   "say": "so tightening the bolts",
+   "lead": 0.05
+  },
+  {
+   "key": "three",
+   "say": "three",
+   "lead": 0.05
+  },
+  {
+   "key": "l1c",
+   "say": "contaminated bearing oil",
+   "lead": 0.05
+  },
+  {
+   "key": "l1d",
+   "say": "restricted seal flush",
+   "lead": 0.05
+  },
+  {
+   "key": "hum",
+   "say": "then the human level",
+   "lead": 0.05
+  },
+  {
+   "key": "l2a",
+   "say": "operators throttle",
+   "lead": 0.05
+  },
+  {
+   "key": "l2b",
+   "say": "fitters align",
+   "lead": 0.05
+  },
+  {
+   "key": "l2c",
+   "say": "hoses wash down",
+   "lead": 0.05
+  },
+  {
+   "key": "l2d",
+   "say": "nobody checks",
+   "lead": 0.05
+  }
+ ],
+ "s14": [
+  {
+   "key": "system",
+   "say": "this is the system level",
+   "lead": 0.05
+  },
+  {
+   "key": "n1",
+   "say": "nobody reviewed the pump",
+   "lead": 0.05
+  },
+  {
+   "key": "n2",
+   "say": "there is no precision",
+   "lead": 0.05
+  },
+  {
+   "key": "n3",
+   "say": "the rebuild procedure",
+   "lead": 0.05
+  },
+  {
+   "key": "n4",
+   "say": "there is no verification",
+   "lead": 0.05
+  },
+  {
+   "key": "n5",
+   "say": "flush and oil condition",
+   "lead": 0.05
+  },
+  {
+   "key": "n6",
+   "say": "and failures are logged",
+   "lead": 0.05
+  },
+  {
+   "key": "fix",
+   "say": "fix these",
+   "lead": 0.05
+  },
+  {
+   "key": "people",
+   "say": "people are no longer",
+   "lead": 0.05
+  }
+ ],
+ "s15": [
+  {
+   "key": "test",
+   "say": "we test each cause",
+   "lead": 0.05
+  },
+  {
+   "key": "flowtrend",
+   "say": "the flow trend shows",
+   "lead": 0.05
+  },
+  {
+   "key": "records",
+   "say": "the records are missing",
+   "lead": 0.05
+  },
+  {
+   "key": "cause",
+   "say": "a cause",
+   "lead": 0.05
+  },
+  {
+   "key": "support",
+   "say": "cannot support",
+   "lead": 0.05
+  },
+  {
+   "key": "dropped",
+   "say": "gets dropped",
+   "lead": 0.05
+  },
+  {
+   "key": "actions",
+   "say": "then the actions",
+   "lead": 0.05
+  },
+  {
+   "key": "slow",
+   "say": "slow the pump down",
+   "lead": 0.05
+  },
+  {
+   "key": "runs",
+   "say": "so it runs near",
+   "lead": 0.05
+  },
+  {
+   "key": "nothing",
+   "say": "costs nothing",
+   "lead": 0.05
+  },
+  {
+   "key": "flushflow",
+   "say": "fit a flush flow",
+   "lead": 0.05
+  },
+  {
+   "key": "standard",
+   "say": "set an alignment standard",
+   "lead": 0.05
+  },
+  {
+   "key": "train",
+   "say": "train the fitters",
+   "lead": 0.05
+  },
+  {
+   "key": "isolators",
+   "say": "fit bearing isolators",
+   "lead": 0.05
+  },
+  {
+   "key": "keep",
+   "say": "to keep wash",
+   "lead": 0.05
+  },
+  {
+   "key": "owner",
+   "say": "each has an owner",
+   "lead": 0.05
+  },
+  {
+   "key": "total",
+   "say": "total cost",
+   "lead": 0.05
+  },
+  {
+   "key": "sum",
+   "say": "thirty two thousand dollars",
+   "lead": 0.05
+  }
+ ],
+ "s16": [
+  {
+   "key": "months",
+   "say": "twelve months later",
+   "lead": 0.05
+  },
+  {
+   "key": "single",
+   "say": "not had a single",
+   "lead": 0.05
+  },
+  {
+   "key": "loss",
+   "say": "the yearly loss of",
+   "lead": 0.05
+  },
+  {
+   "key": "gone",
+   "say": "is gone",
+   "lead": 0.05
+  },
+  {
+   "key": "divided",
+   "say": "thirty two thousand divided",
+   "lead": 0.05
+  },
+  {
+   "key": "eighth",
+   "say": "about an eighth",
+   "lead": 0.05
+  },
+  {
+   "key": "payback",
+   "say": "payback is about seven",
+   "lead": 0.05
+  },
+  {
+   "key": "weeks",
+   "say": "weeks",
+   "lead": 0.05
+  },
+  {
+   "key": "hrs",
+   "say": "and eighty four",
+   "lead": 0.05
+  },
+  {
+   "key": "hrsend",
+   "say": "hours of production",
+   "role": "end",
+   "lead": 0
+  },
+  {
+   "key": "back",
+   "say": "came back",
+   "lead": 0.05
+  },
+  {
+   "key": "tonnes",
+   "say": "that is ten thousand",
+   "lead": 0.05
+  },
+  {
+   "key": "tonnesend",
+   "say": "tonnes of capacity",
+   "role": "end",
+   "lead": 0
+  },
+  {
+   "key": "capacity",
+   "say": "of capacity",
+   "lead": 0.05
+  },
+  {
+   "key": "pump",
+   "say": "from a pump",
+   "lead": 0.05
+  },
+  {
+   "key": "nowwear",
+   "say": "now bearings and seals",
+   "lead": 0.05
+  },
+  {
+   "key": "natural",
+   "say": "that is natural deterioration",
+   "lead": 0.05
+  },
+  {
+   "key": "removed",
+   "say": "what we removed",
+   "lead": 0.05
+  },
+  {
+   "key": "causing",
+   "say": "the wear we were causing",
+   "lead": 0.05
+  },
+  {
+   "key": "natwear",
+   "say": "the natural wear is now",
+   "lead": 0.05
+  },
+  {
+   "key": "vib",
+   "say": "vibration",
+   "lead": 0.05
+  },
+  {
+   "key": "parts",
+   "say": "and the parts are changed",
+   "lead": 0.05
+  },
+  {
+   "key": "changed",
+   "say": "changed in a planned",
+   "lead": 0.05
+  },
+  {
+   "key": "planned",
+   "say": "planned shutdown",
+   "lead": 0.05
+  },
+  {
+   "key": "before",
+   "say": "before they fail",
+   "lead": 0.05
+  }
+ ],
+ "s17": [
+  {
+   "key": "sys",
+   "say": "rca is not an event",
+   "lead": 0.05
+  },
+  {
+   "key": "system",
+   "say": "it is a system",
+   "lead": 0.05
+  },
+  {
+   "key": "trig",
+   "say": "set clear triggers",
+   "lead": 0.05
+  },
+  {
+   "key": "steps",
+   "say": "use the same steps",
+   "lead": 0.05
+  },
+  {
+   "key": "act",
+   "say": "track every action",
+   "lead": 0.05
+  },
+  {
+   "key": "chk",
+   "say": "and check at ninety days",
+   "lead": 0.05
+  },
+  {
+   "key": "close",
+   "say": "do that consistently",
+   "lead": 0.05
+  },
+  {
+   "key": "fade",
+   "say": "firefighting fades",
+   "lead": 0.05
+  },
+  {
+   "key": "tool",
+   "say": "so i am building",
+   "lead": 0.05
+  },
+  {
+   "key": "pick",
+   "say": "pick one repeat failure",
+   "lead": 0.05
+  },
+  {
+   "key": "thanks",
+   "say": "thank you for watching",
+   "lead": 0.05
+  }
+ ]
+}

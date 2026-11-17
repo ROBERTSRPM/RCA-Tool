@@ -64,15 +64,16 @@ const TreeCanvas: React.FC<{
 
 /* ---------------- S13 ---------------- */
 export const S13: React.FC = () => {
-  const {r} = useScene();
-  const k = r(0.34, 0.42, IO);
-  const inset = r(0.26, 0.31) * (1 - r(0.43, 0.46, IO));
+  const {r, q} = useScene();
+  const sp = (key: string, off = 0): Span => [q(key, off), q(key, off + 0.6)];
+  const k = r(q("bend"), q("bend", 2.2), IO);
+  const inset = r(q("foot"), q("foot", 0.6)) * (1 - r(q("three"), q("three", 0.5), IO));
   const lift = 26 * (1 - k);
   return (
     <Stage badge>
-      <TreeCanvas camY={0} top={[0.02, 0.08]}
-        p1={[0.08, 0.12]} l1={[[0.10, 0.15], [0.20, 0.25], [0.46, 0.51], [0.54, 0.59]]}
-        p2={[0.64, 0.68]} l2={[[0.68, 0.73], [0.76, 0.81], [0.84, 0.89], [0.91, 0.96]]}
+      <TreeCanvas camY={0} top={sp("top")}
+        p1={sp("phys")} l1={[sp("l1a"), sp("l1b"), sp("l1c"), sp("l1d")]}
+        p2={sp("hum")} l2={[sp("l2a"), sp("l2b"), sp("l2c"), sp("l2d")]}
         p3={[2, 3]} l3={[[2, 3], [2, 3], [2, 3], [2, 3], [2, 3], [2, 3]]} glow={0} bracket={[2, 3]} badge={[2, 3]} />
       <div style={{position: "absolute", left: 410, top: 640, width: 1100, height: 400, opacity: inset}}>
         <Card color={C.steel} style={{height: "100%", position: "relative"}}>
@@ -99,14 +100,15 @@ export const S13: React.FC = () => {
 
 /* ---------------- S14 ---------------- */
 export const S14: React.FC = () => {
-  const {r} = useScene();
-  const cam = lerp(0, -610, r(0.02, 0.20, IO));
-  const glow = r(0.78, 0.86);
+  const {r, q} = useScene();
+  const sp = (key: string, off = 0): Span => [q(key, off), q(key, off + 0.6)];
+  const cam = lerp(0, -610, r(q("system"), q("system", 2.0), IO));
+  const glow = r(q("fix"), q("fix", 1.0));
   return (
     <Stage badge>
       <TreeCanvas camY={cam} top={SHOWN} p1={SHOWN} l1={[SHOWN, SHOWN, SHOWN, SHOWN]} p2={SHOWN} l2={[SHOWN, SHOWN, SHOWN, SHOWN]}
-        p3={[0.14, 0.2]} l3={[[0.20, 0.25], [0.32, 0.37], [0.44, 0.49], [0.56, 0.61], [0.68, 0.73], [0.78, 0.83]]}
-        glow={glow} bracket={[0.86, 0.91]} badge={[0.92, 0.97]} />
+        p3={sp("system", 0.4)} l3={[sp("n1"), sp("n2"), sp("n3"), sp("n4"), sp("n5"), sp("n6")]}
+        glow={glow} bracket={sp("fix")} badge={sp("people")} />
     </Stage>
   );
 };
@@ -128,67 +130,69 @@ const actions: [string, string, string, number, string?][] = [
   ["Engineering and project time", "Reliability engineer", "Weeks 1 to 8", 5000],
 ];
 export const S15: React.FC = () => {
-  const {r} = useScene();
-  const p1o = 1 - r(0.30, 0.34, IO);
-  const drop = r(0.24, 0.28);
+  const {r, q, d} = useScene();
+  const p1o = 1 - r(q("actions"), q("actions", 0.5), IO);
+  const drop = r(q("support"), q("support", 0.5));
+  // owner and due-date cells fill in on "each has an owner and a date"; the cost of the first action on "that one costs nothing"
+  const cellT = (i: number) => q("owner", i * 0.3);
+  const subT = [q("runs"), q("flushflow", 1.2), q("train"), q("keep"), q("keep")];
   return (
     <Stage badge>
       <div style={{opacity: p1o}}>
-        <Abs x={60} y={104} w={1300} style={{fontSize: 58, fontWeight: 800}}><Fade a={0.0} b={0.05}>Test each cause against the evidence</Fade></Abs>
+        <Abs x={60} y={104} w={1300} style={{fontSize: 58, fontWeight: 800}}><Fade a={q("test")}>Test each cause against the evidence</Fade></Abs>
         {roots.map(([t, ev], i) => {
           const x = [90, 680, 1270][i % 3], y = 230 + Math.floor(i / 3) * 235;
-          const a = 0.02 + i * 0.008;
-          const tk = 0.05 + i * 0.022;
+          const a = q("test", i * 0.25);
+          // causes 1 and 2 are checked as their evidence is spoken, the other four when "the evidence cannot support" is said
+          const tk = i === 0 ? q("flowtrend", 0.3) : i === 1 ? q("records", 0.3) : q("support", (i - 2) * 0.3 + 0.3);
           return (
             <Abs key={i} x={x} y={y} w={560} h={205}>
-              <Fade a={a} b={a + 0.04} y={24} style={{height: "100%"}}>
-                <div style={{height: "100%", boxSizing: "border-box", background: `linear-gradient(${C.teal}26, ${C.teal}26), ${C.panel}`, border: `3px solid ${r(tk, tk + 0.03) > 0.5 ? C.green : C.teal}`, borderRadius: 16, padding: "14px 20px", position: "relative"}}>
+              <Fade a={a} b={a + d(0.5)} y={24} style={{height: "100%"}}>
+                <div style={{height: "100%", boxSizing: "border-box", background: `linear-gradient(${C.teal}26, ${C.teal}26), ${C.panel}`, border: `3px solid ${r(tk, tk + d(0.3)) > 0.5 ? C.green : C.teal}`, borderRadius: 16, padding: "14px 20px", position: "relative"}}>
                   <div style={{fontSize: 38, fontWeight: 700, lineHeight: 1.15, paddingRight: 56}}>{t}</div>
-                  <div style={{position: "absolute", left: 20, bottom: 14, display: "flex", alignItems: "center", gap: 12, fontSize: 36, fontWeight: 700, color: C.green, opacity: r(tk - 0.04, tk), transform: `translateX(${(1 - r(tk - 0.04, tk)) * -120}px)`}}>
+                  <div style={{position: "absolute", left: 20, bottom: 14, display: "flex", alignItems: "center", gap: 12, fontSize: 36, fontWeight: 700, color: C.green, opacity: r(tk - d(0.3), tk), transform: `translateX(${(1 - r(tk - d(0.3), tk)) * -120}px)`}}>
                     <div style={{width: 18, height: 18, borderRadius: 9, background: C.green}} />{ev}
                   </div>
-                  <div style={{position: "absolute", right: 16, top: 14}}><Check size={46} sw={9} t={r(tk, tk + 0.03)} /></div>
+                  <div style={{position: "absolute", right: 16, top: 14}}><Check size={46} sw={9} t={r(tk, tk + d(0.3))} /></div>
                 </div>
               </Fade>
             </Abs>
           );
         })}
         <Abs x={640} y={730} w={640} h={150}>
-          <Fade a={0.20} b={0.24} y={24} style={{height: "100%"}}>
+          <Fade a={q("cause")} b={q("cause", 0.5)} y={24} style={{height: "100%"}}>
             <div style={{height: "100%", boxSizing: "border-box", borderRadius: 16, border: `3px ${drop > 0.5 ? "dashed" : "solid"} ${drop > 0.5 ? "#6F8197" : C.steel}`, background: drop > 0.5 ? "#1A222D" : C.panel, display: "flex", alignItems: "center", justifyContent: "center", gap: 20, fontSize: 42, fontWeight: 700, color: drop > 0.5 ? "#7F90A4" : C.text, textDecoration: drop > 0.5 ? "line-through" : "none", position: "relative"}}>
               Bad bearing batch
-              <div style={{position: "absolute", right: 18, top: 12, textDecoration: "none"}}><Cross size={46} color={C.red} t={r(0.27, 0.30)} sw={9} /></div>
+              <div style={{position: "absolute", right: 18, top: 12, textDecoration: "none"}}><Cross size={46} color={C.red} t={r(q("support"), q("support", 0.5))} sw={9} /></div>
             </div>
           </Fade>
         </Abs>
-        <Abs x={640} y={900} w={640} style={{textAlign: "center", fontSize: 44, fontWeight: 700, color: C.red}}><Fade a={0.28} b={0.31}>No evidence, dropped</Fade></Abs>
+        <Abs x={640} y={900} w={640} style={{textAlign: "center", fontSize: 44, fontWeight: 700, color: C.red}}><Fade a={q("dropped")}>No evidence, dropped</Fade></Abs>
       </div>
 
-      <Abs x={80} y={104} w={1500} style={{fontSize: 58, fontWeight: 800}}><Fade a={0.33} b={0.37}>Actions with an owner and a due date</Fade></Abs>
+      <Abs x={80} y={104} w={1500} style={{fontSize: 58, fontWeight: 800}}><Fade a={q("actions")}>Actions with an owner and a due date</Fade></Abs>
       <Abs x={80} y={190} w={1760}>
-        <Fade a={0.33} b={0.37} y={20}>
+        <Fade a={q("actions")} y={20}>
           <div style={{display: "flex", height: 70, alignItems: "center", fontSize: 36, fontWeight: 800, color: C.mute, letterSpacing: 2, borderBottom: `3px solid ${C.amber}`}}>
             <div style={{width: 900, paddingLeft: 16}}>ACTION</div><div style={{width: 380}}>OWNER</div><div style={{width: 240}}>DUE</div><div style={{width: 240, textAlign: "right", paddingRight: 16}}>COST</div>
           </div>
         </Fade>
         {actions.map(([a, o, dd, c, sub], i) => {
-          const t0 = 0.36 + i * 0.12;
+          const t0 = [q("slow"), q("flushflow"), q("standard"), q("isolators"), q("owner")][i];
           return (
-            <Fade key={i} a={t0} b={t0 + 0.04} x={-40} y={0}>
+            <Fade key={i} a={t0} b={t0 + d(0.5)} x={-40} y={0}>
               <div style={{display: "flex", height: 124, alignItems: "center", fontSize: 38, fontWeight: 600, borderBottom: `2px solid ${C.line}`}}>
-                <div style={{width: 900, paddingLeft: 16}}><div style={{fontWeight: 700, fontSize: 32}}>{a}</div>{sub && <div style={{fontSize: 30, color: C.teal, fontWeight: 600, marginTop: 4}}>{sub}</div>}</div>
-                <div style={{width: 380, color: C.mute, fontSize: 32}}>{o}</div><div style={{width: 240, color: C.mute, fontSize: 32}}>{dd}</div>
-                <div style={{width: 240, textAlign: "right", paddingRight: 16, fontFamily: MONO, fontWeight: 700, color: C.text}}>{money(c)}{c === 0 && <span style={{fontSize: 22, color: C.green, marginLeft: 8, fontFamily: FONT}}>no cost</span>}</div>
+                <div style={{width: 900, paddingLeft: 16}}><div style={{fontWeight: 700, fontSize: 32}}>{a}</div>{sub && <div style={{fontSize: 30, color: C.teal, fontWeight: 600, marginTop: 4, opacity: r(subT[i], subT[i] + d(0.5))}}>{sub}</div>}</div>
+                <div style={{width: 380, color: C.mute, fontSize: 32, opacity: r(cellT(i), cellT(i) + d(0.4))}}>{o}</div><div style={{width: 240, color: C.mute, fontSize: 32, opacity: r(cellT(i), cellT(i) + d(0.4))}}>{dd}</div>
+                <div style={{width: 240, textAlign: "right", paddingRight: 16, fontFamily: MONO, fontWeight: 700, color: C.text, opacity: i === 0 ? r(q("nothing"), q("nothing", 0.4)) : 1}}>{money(c)}{c === 0 && <span style={{fontSize: 22, color: C.green, marginLeft: 8, fontFamily: FONT}}>no cost</span>}</div>
               </div>
             </Fade>
           );
         })}
-        <Fade a={0.90} b={0.95} y={10}>
-          <div style={{display: "flex", height: 110, alignItems: "center", fontSize: 50, fontWeight: 800, justifyContent: "space-between", padding: "0 16px"}}>
-            <div style={{fontFamily: MONO, fontSize: 36, color: C.mute, fontWeight: 600}}>$0 + $12,000 + $8,000 + $7,000 + $5,000</div>
-            <div>Total <span style={{color: C.amber, fontFamily: MONO}}>= $32,000</span></div>
-          </div>
-        </Fade>
+        <div style={{display: "flex", height: 110, alignItems: "center", fontSize: 50, fontWeight: 800, justifyContent: "space-between", padding: "0 16px"}}>
+          <Fade a={q("total")} y={10}><div style={{fontFamily: MONO, fontSize: 36, color: C.mute, fontWeight: 600}}>$0 + $12,000 + $8,000 + $7,000 + $5,000</div></Fade>
+          <Fade a={q("sum")} y={10}><div>Total <span style={{color: C.amber, fontFamily: MONO}}>= $32,000</span></div></Fade>
+        </div>
       </Abs>
     </Stage>
   );

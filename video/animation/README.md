@@ -31,9 +31,10 @@ Edit `scenes.json`. Each entry has an `id`, a `title`, a `duration` in seconds a
 {"id": "s11", "title": "Worked example: the loss", "duration": 33, "presenter": "none", "presenterVideo": null, "audio": null}
 ```
 
-Every animation beat inside a scene is a fraction of that scene's duration, so changing a duration stretches or
-compresses the whole scene. After recording, set each duration to the length of that scene's clip. Count-up numbers
-(scene 16) finish at about 60% of the scene, so they stay readable when you re-time.
+Animation beats are no longer fractions of the scene. Each beat is a cue in `cue-spec.json` (key -> spoken phrase), resolved against the
+word timings in `public/audio/timing/sXX.json` by `node scripts/make-cues.mjs` (writes `src/cues.json`, `--table` prints beat vs phrase times).
+Scenes call `q("key", offsetSeconds)`. After re-recording a scene: re-transcribe it into `timing/`, rerun make-cues, and set `duration` to the audio length plus 0.5 s.
+Count-ups end when the unit word is spoken (`hrsend`, `tonnesend` in scene 16).
 Scene 7 no longer exists: the ids are `s01` to `s06` and `s08` to `s17`. Scene 2 is the presenter's bucket conveyor story;
 its animation is only a fallback card.
 

@@ -168,7 +168,7 @@ SCENE 11: WORKED EXAMPLE: THE LOSS
 
 Now put the loss in numbers.
 The line runs at one hundred and twenty tonnes an hour.
-Margin or net profit is eighteen dollars a tonne.
+Contribution margin, the selling price minus the variable cost of each tonne, is eighteen dollars.
 
 Fourteen hours times one hundred and twenty is sixteen hundred and eighty tonnes.
 Times eighteen dollars is thirty thousand, two hundred and forty dollars.

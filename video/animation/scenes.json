@@ -21,7 +21,7 @@
     {
       "id": "s04",
       "title": "What RCA is not",
-      "duration": 38.8,
+      "duration": 38.766666666666666,
       "presenter": "none",
       "presenterVideo": null,
       "audio": "audio/s04.wav"
@@ -29,7 +29,7 @@
     {
       "id": "s05",
       "title": "Why it matters",
-      "duration": 42.0,
+      "duration": 41.96666666666667,
       "presenter": "none",
       "presenterVideo": null,
       "audio": "audio/s05.wav"
@@ -37,7 +37,7 @@
     {
       "id": "s06",
       "title": "The hidden plant",
-      "duration": 44.43333333333333,
+      "duration": 44.4,
       "presenter": "none",
       "presenterVideo": null,
       "audio": "audio/s06.wav"
@@ -45,7 +45,7 @@
     {
       "id": "s08",
       "title": "Six parts: 1 to 3",
-      "duration": 50.36666666666667,
+      "duration": 50.333333333333336,
       "presenter": "none",
       "presenterVideo": null,
       "audio": "audio/s08.wav"
@@ -61,7 +61,7 @@
     {
       "id": "s10",
       "title": "Worked example: the pump",
-      "duration": 40.766666666666666,
+      "duration": 40.733333333333334,
       "presenter": "none",
       "presenterVideo": null,
       "audio": "audio/s10.wav"
@@ -69,7 +69,7 @@
     {
       "id": "s11",
       "title": "Worked example: the loss",
-      "duration": 48.6,
+      "duration": 51.9,
       "presenter": "none",
       "presenterVideo": null,
       "audio": "audio/s11.wav"
@@ -77,7 +77,7 @@
     {
       "id": "s12",
       "title": "Worked example: evidence",
-      "duration": 45.36666666666667,
+      "duration": 45.333333333333336,
       "presenter": "none",
       "presenterVideo": null,
       "audio": "audio/s12.wav"
@@ -93,7 +93,7 @@
     {
       "id": "s14",
       "title": "Worked example: system causes",
-      "duration": 38.766666666666666,
+      "duration": 38.733333333333334,
       "presenter": "none",
       "presenterVideo": null,
       "audio": "audio/s14.wav"
@@ -101,7 +101,7 @@
     {
       "id": "s15",
       "title": "Worked example: verify and act",
-      "duration": 64.73333333333333,
+      "duration": 64.7,
       "presenter": "none",
       "presenterVideo": null,
       "audio": "audio/s15.wav"
@@ -117,7 +117,7 @@
     {
       "id": "s17",
       "title": "Close: the system",
-      "duration": 67.76666666666667,
+      "duration": 67.73333333333333,
       "presenter": "none",
       "presenterVideo": null,
       "audio": "audio/s17.wav"

@@ -71,3 +71,30 @@ Not used: notch, de-esser, presence lift (nothing measured that called for them)
 - True peak: -1.53 to -2.0 dBTP in every scene (original about -0.9), sample peak -2.2 dBFS.
 - Speech-band (300 Hz-3.4 kHz) RMS over speaking frames (above -30 dBFS): change -0.22 to +1.04 dB per scene, mean +0.2 dB. All within 1.5 dB.
 - Transcription check: scene 5 re-transcribed with faster-whisper small.en from a 16 kHz copy. The words are intact; the original and enhanced transcripts differ in one word (whisper wrote "breakdown" for the original and "breakdowns" for the enhanced, which is what the script says). Word-level similarity 0.99.
+
+## Scene 11 re-record (contribution margin sentence)
+
+New take: `Cont_margin.m4a` (9.86 s, 48 kHz mono AAC), one complete take of "Contribution margin, the selling price minus the variable cost of each tonne, is eighteen dollars." (whisper small.en: "Contribution margin, the selling price minus the variable cost of each ton, is $18"). Speech islands 1.66-2.85, 3.41-6.90, 7.40-8.89 s; the rest is room noise.
+
+### Splice (in the un-enhanced `original/s11.wav`, which is the post-gain domain)
+- Old sentence "Margin or net profit is eighteen dollars a tonne" = 8.241-12.310 s (4.07 s), between two digital-silence pauses of 0.821 s. Replaced by the new take (7.37 s, 30 ms fades at both edges, 40 ms pad), keeping both 0.821 s pauses. The scene is 3.30 s longer (51.40 s).
+- The new take's own pauses (0.56 s, 0.50 s) were set to digital silence like the rest of the recording. Original sentence left otherwise untouched.
+
+### Corrections before the common chain
+- Level: the take was recorded at about the same raw level as the original (-30.5 LUFS raw vs about -30.2) but with a much higher crest factor. A plosive on "contri-BU-tion" peaked at 0.86 (energy 20-200 Hz), so a local 220 Hz high-pass (4th order, 15 ms crossfade, 1.985-2.105 s) was applied, peak 0.86 to 0.40.
+- Spectrum: against the whole recording (long-term speech spectrum, 1/3 octave) the new take was +4 to +6 dB at 80-125 Hz, -4 to -8 dB at 630-1600 Hz, and +5 to +12 dB above 8 kHz (phone mic, closer, brighter). Gentle smoothed EQ (linear phase, 1 octave smoothing): -4.3 dB at 100 Hz, -1.6 dB at 160 Hz, +3.5 dB at 630-1250 Hz, -3 dB at 8 kHz, -9 dB at 12 kHz; no boost above 1.5 kHz. Result against the rest of scene 11: all 1/3-octave band differences within 3 dB, tilt -1.98 dB/oct vs -2.20.
+- Noise: the take's floor (quietest 10 % of non-zero 20 ms frames) was -84.8 dBFS raw, i.e. about 14 dB higher than the scene once gained. Pauses gated to digital silence and the common noise reduction applied. After the chain: floor -82.8 dBFS in the new sentence vs -84.5 (before) and -87.8 (after) in the rest of scene 11.
+- Gain: +16.2 dB (then the same 5 ms look-ahead limiter at -1.5 dBFS) chosen so that the sentence matches its neighbours.
+
+### Common chain (identical to the table above)
+`process()` with noise reduction 0.9 (profile from the file's own quiet frames), then the common +5.82 dB gain and limiter ceiling -2.2 dBFS. The script was checked first by running it on the old original s11: it reproduced the previous `s11.wav` to within 1 LSB. Previous enhanced file kept as `s11-previous.wav`.
+
+### Loudness result (final `s11.wav`)
+- Integrated, whole sentence: -15.82 LUFS; neighbours "The line runs at..." -15.72, "Fourteen hours..." -15.26, "Times eighteen dollars..." -16.11 (mean -15.70). Difference -0.12 LU. (Old sentence in the previous file: -15.64.)
+- Short-term (3 s): 3 s before -15.76; first 3 s of the sentence -14.79; last 3 s of the sentence -17.44 (the quiet tail "is eighteen dollars", natural fall of the voice, includes a pause); 3 s after -14.66.
+- True peak -1.75 dBTP, sample peak -2.2 dBFS (all scenes -1.5 or lower).
+- Re-transcription (faster-whisper small.en, 16 kHz): "Contribution margin, the selling price minus the variable cost of each tonne. Is eighteen dollars." Rest of the scene matches the script.
+
+## Word timings and animation sync
+- `timing/sXX.json`: word timings for all 15 final WAVs. Each speech island (separated by 0.25 s of digital silence) was transcribed separately (small.en, script as prompt), words that whisper placed after the island end were dropped as hallucinations, the first word of each island is set to the measured sound onset, and other word starts are snapped to a digital-silence onset within 0.25 s or to an energy dip within 0.12 s. Raw whisper times are kept (`s_whisper`). Expected accuracy about 0.1-0.2 s.
+- Animation beats now come from `cue-spec.json` (see README); scene durations are the audio length plus 0.5 s.

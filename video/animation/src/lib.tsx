@@ -1,5 +1,10 @@
 import React, {createContext, useContext} from "react";
 import {Easing, interpolate, useCurrentFrame} from "remotion";
+import cueData from "./cues.json";
+
+const FPS = 30;
+type CueRow = {say: string; phraseStart: number; beat: number};
+const CUES = cueData as unknown as Record<string, Record<string, CueRow>>;
 
 export const C = {
   bg: "#0D131B", panel: "#17212E", panel2: "#1D2A3A", line: "#33455B",
@@ -22,18 +27,31 @@ export const clamp01 = (x: number) => Math.max(0, Math.min(1, x));
 export const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 
 const Ctx = createContext({dur: 300, id: ""});
+
+/** Beat time in seconds for a cue key of a scene (the cue table is built from the word timings, see scripts/make-cues.mjs). */
+export const cueSec = (id: string, key: string): number => {
+  const row = CUES[id]?.[key];
+  if (!row) throw new Error(`No cue "${key}" for scene ${id}. Add it to cue-spec.json and run: node scripts/make-cues.mjs`);
+  return row.beat;
+};
 export const SceneProvider: React.FC<{dur: number; id: string; children: React.ReactNode}> = ({dur, id, children}) => (
   <Ctx.Provider value={{dur, id}}>{children}</Ctx.Provider>
 );
 
-/** Scene-relative progress. Every beat is a fraction of the scene, so re-timing scenes.json re-times the animation. */
+/**
+ * Scene-relative progress. Beats are driven by the spoken-word timings: `q("key")` is the start of the beat for that
+ * cue (a fraction of the scene, as `r` expects) and `q("key", 0.5)` is half a second later. `d(0.5)` is a duration of
+ * half a second as a fraction. Cues live in cue-spec.json and are resolved against public/audio/timing/*.json.
+ */
 export function useScene() {
   const frame = useCurrentFrame();
-  const {dur} = useContext(Ctx);
+  const {dur, id} = useContext(Ctx);
   const p = frame / dur;
   const r = (a: number, b: number, e: (x: number) => number = OUT) =>
     interpolate(p, [a, b], [0, 1], {extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: e});
-  return {frame, dur, p, r, sec: frame / 30};
+  const q = (key: string, off = 0) => ((cueSec(id, key) + off) * FPS) / dur;
+  const d = (sec: number) => (sec * FPS) / dur;
+  return {frame, dur, p, r, q, d, sec: frame / FPS};
 }
 
 /** HTML element that fades and slides in over [a,b] (scene fractions). Optional exit [c,d]. */
@@ -41,10 +59,10 @@ export const Fade: React.FC<{
   a: number; b?: number; c?: number; d?: number; y?: number; x?: number; s?: number;
   style?: React.CSSProperties; children?: React.ReactNode; e?: (x: number) => number;
 }> = ({a, b, c, d, y = 24, x = 0, s = 1, style, children, e = OUT}) => {
-  const {r} = useScene();
-  const bb = b ?? a + 0.04;
+  const {r, d: dd} = useScene();
+  const bb = b ?? a + dd(0.5);
   const i = r(a, bb, e);
-  const o = c !== undefined ? r(c, d ?? c + 0.04, IO) : 0;
+  const o = c !== undefined ? r(c, d ?? c + dd(0.4), IO) : 0;
   const v = i * (1 - o);
   return (
     <div style={{opacity: v, transform: `translate(${(1 - i) * x}px, ${(1 - i) * y}px) scale(${lerp(s, 1, i)})`, ...style}}>
@@ -58,10 +76,10 @@ export const GIn: React.FC<{
   a: number; b?: number; c?: number; d?: number; y?: number; x?: number; s?: number;
   children?: React.ReactNode; e?: (x: number) => number; origin?: string;
 }> = ({a, b, c, d, y = 20, x = 0, s = 1, children, e = OUT, origin}) => {
-  const {r} = useScene();
-  const bb = b ?? a + 0.04;
+  const {r, d: dd} = useScene();
+  const bb = b ?? a + dd(0.5);
   const i = r(a, bb, e);
-  const o = c !== undefined ? r(c, d ?? c + 0.04, IO) : 0;
+  const o = c !== undefined ? r(c, d ?? c + dd(0.4), IO) : 0;
   const v = i * (1 - o);
   return (
     <g opacity={v} style={{transformBox: "fill-box", transformOrigin: origin ?? "center", transform: `translate(${(1 - i) * x}px, ${(1 - i) * y}px) scale(${lerp(s, 1, i)})`}}>

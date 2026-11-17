@@ -1,0 +1,1244 @@
+{
+ "s01": {
+  "call": {
+   "say": "the call in the",
+   "phraseStart": 4.5,
+   "phraseEnd": 5.264,
+   "beat": 4.45
+  },
+  "first": {
+   "say": "was it the first time",
+   "phraseStart": 15.91,
+   "phraseEnd": 16.955,
+   "beat": 15.86
+  },
+  "pump": {
+   "say": "the same pump",
+   "phraseStart": 19.26,
+   "phraseEnd": 20.067,
+   "beat": 19.21
+  },
+  "gearbox": {
+   "say": "the same gearbox",
+   "phraseStart": 20.507,
+   "phraseEnd": 21.347,
+   "beat": 20.457
+  },
+  "conveyor": {
+   "say": "the same conveyor",
+   "phraseStart": 21.72,
+   "phraseEnd": 22.827,
+   "beat": 21.67
+  },
+  "count": {
+   "say": "more times than",
+   "phraseStart": 23.24,
+   "phraseEnd": 24.144,
+   "beat": 23.19
+  },
+  "bill": {
+   "say": "it is a bill",
+   "phraseStart": 31.5,
+   "phraseEnd": 32.329,
+   "beat": 31.45
+  },
+  "video": {
+   "say": "this video is about",
+   "phraseStart": 35.85,
+   "phraseEnd": 37.014,
+   "beat": 35.8
+  },
+  "find": {
+   "say": "find the real cause",
+   "phraseStart": 39.41,
+   "phraseEnd": 40.571,
+   "beat": 39.36
+  }
+ },
+ "s03": {
+  "title": {
+   "say": "root cause analysis",
+   "phraseStart": 0.23,
+   "phraseEnd": 1.43,
+   "beat": 0.18
+  },
+  "why": {
+   "say": "why did this really happen",
+   "phraseStart": 6.58,
+   "phraseEnd": 8.084,
+   "beat": 6.53
+  },
+  "notwhat": {
+   "say": "not what broke",
+   "phraseStart": 9.26,
+   "phraseEnd": 10.542,
+   "beat": 9.21
+  },
+  "broke": {
+   "say": "broke",
+   "phraseStart": 10.07,
+   "phraseEnd": 10.542,
+   "beat": 10.02
+  },
+  "able": {
+   "say": "why was it able",
+   "phraseStart": 12.2,
+   "phraseEnd": 13.385,
+   "beat": 12.15
+  },
+  "trace": {
+   "say": "we trace a failure",
+   "phraseStart": 15.51,
+   "phraseEnd": 16.672,
+   "beat": 15.46
+  },
+  "through": {
+   "say": "back through",
+   "phraseStart": 16.672,
+   "phraseEnd": 17.25,
+   "beat": 16.622
+  },
+  "chain": {
+   "say": "chain of",
+   "phraseStart": 17.65,
+   "phraseEnd": 18.252,
+   "beat": 17.6
+  },
+  "causes": {
+   "say": "causes until",
+   "phraseStart": 18.32,
+   "phraseEnd": 19.35,
+   "beat": 18.27
+  },
+  "reach": {
+   "say": "until we reach",
+   "phraseStart": 18.81,
+   "phraseEnd": 19.94,
+   "beat": 18.76
+  },
+  "change": {
+   "say": "we can change",
+   "phraseStart": 20.4,
+   "phraseEnd": 21.412,
+   "beat": 20.35
+  },
+  "arrow": {
+   "say": "so it cannot happen",
+   "phraseStart": 22.56,
+   "phraseEnd": 23.83,
+   "beat": 22.51
+  },
+  "card": {
+   "say": "a good rca ends",
+   "phraseStart": 27.62,
+   "phraseEnd": 29.215,
+   "beat": 27.57
+  },
+  "nochange": {
+   "say": "if nothing changes",
+   "phraseStart": 35.15,
+   "phraseEnd": 36.443,
+   "beat": 35.1
+  }
+ },
+ "s04": {
+  "title": {
+   "say": "so let me say",
+   "phraseStart": 0.25,
+   "phraseEnd": 1.01,
+   "beat": 0.2
+  },
+  "blame": {
+   "say": "it is not a hunt",
+   "phraseStart": 3.07,
+   "phraseEnd": 4.234,
+   "beat": 3.02
+  },
+  "ghost": {
+   "say": "someone to blame",
+   "phraseStart": 4.514,
+   "phraseEnd": 5.314,
+   "beat": 4.464
+  },
+  "cap1": {
+   "say": "the moment people feel",
+   "phraseStart": 6.09,
+   "phraseEnd": 7.315,
+   "beat": 6.04
+  },
+  "card1": {
+   "say": "it is not stopping",
+   "phraseStart": 13.17,
+   "phraseEnd": 14.31,
+   "beat": 13.12
+  },
+  "bearing": {
+   "say": "the bearing failed",
+   "phraseStart": 16.43,
+   "phraseEnd": 17.279,
+   "beat": 16.38
+  },
+  "cap2": {
+   "say": "that is where the investigation",
+   "phraseStart": 21.72,
+   "phraseEnd": 23.08,
+   "beat": 21.67
+  },
+  "starthere": {
+   "say": "investigation starts",
+   "phraseStart": 22.52,
+   "phraseEnd": 23.76,
+   "beat": 22.47
+  },
+  "card2": {
+   "say": "and it is not replacing",
+   "phraseStart": 25.06,
+   "phraseEnd": 26.586,
+   "beat": 25.01
+  },
+  "swap": {
+   "say": "replacing the part",
+   "phraseStart": 26.08,
+   "phraseEnd": 27.166,
+   "beat": 26.03
+  },
+  "cap3": {
+   "say": "a new bearing treats",
+   "phraseStart": 29.57,
+   "phraseEnd": 30.866,
+   "beat": 29.52
+  },
+  "cond": {
+   "say": "the conditions that killed",
+   "phraseStart": 32.67,
+   "phraseEnd": 34.257,
+   "beat": 32.62
+  }
+ },
+ "s05": {
+  "fire": {
+   "say": "because firefighting is",
+   "phraseStart": 3.18,
+   "phraseEnd": 4.864,
+   "beat": 3.13
+  },
+  "emer": {
+   "say": "crews are tied up",
+   "phraseStart": 10.14,
+   "phraseEnd": 11.396,
+   "beat": 10.09
+  },
+  "slips": {
+   "say": "so planned work slips",
+   "phraseStart": 13.01,
+   "phraseEnd": 14.356,
+   "beat": 12.96
+  },
+  "nextf": {
+   "say": "that sets up the next",
+   "phraseStart": 15.47,
+   "phraseEnd": 16.91,
+   "beat": 15.42
+  },
+  "calm": {
+   "say": "when repeat breakdowns stop",
+   "phraseStart": 18.02,
+   "phraseEnd": 19.66,
+   "beat": 17.97
+  },
+  "runs": {
+   "say": "the plant runs",
+   "phraseStart": 20.11,
+   "phraseEnd": 21.14,
+   "beat": 20.06
+  },
+  "without": {
+   "say": "without interruption",
+   "phraseStart": 21.14,
+   "phraseEnd": 22.28,
+   "beat": 21.09
+  },
+  "cost": {
+   "say": "the cost to produce",
+   "phraseStart": 23.28,
+   "phraseEnd": 24.226,
+   "beat": 23.23
+  },
+  "falls": {
+   "say": "each unit falls",
+   "phraseStart": 25.76,
+   "phraseEnd": 26.126,
+   "beat": 25.71
+  },
+  "fixed": {
+   "say": "because the same fixed",
+   "phraseStart": 27.02,
+   "phraseEnd": 28.856,
+   "beat": 26.97
+  },
+  "profit": {
+   "say": "profit rises",
+   "phraseStart": 33.08,
+   "phraseEnd": 33.886,
+   "beat": 33.03
+  },
+  "rises": {
+   "say": "rises",
+   "phraseStart": 33.5,
+   "phraseEnd": 33.886,
+   "beat": 33.45
+  },
+  "nonew": {
+   "say": "no new equipment",
+   "phraseStart": 38.01,
+   "phraseEnd": 39.344,
+   "beat": 37.96
+  }
+ },
+ "s06": {
+  "plant": {
+   "say": "i call this",
+   "phraseStart": 0.24,
+   "phraseEnd": 1.19,
+   "beat": 0.19
+  },
+  "hidden": {
+   "say": "the hidden plant",
+   "phraseStart": 1.27,
+   "phraseEnd": 2.15,
+   "beat": 1.22
+  },
+  "strip": {
+   "say": "it disappears",
+   "phraseStart": 8.8,
+   "phraseEnd": 9.643,
+   "beat": 8.75
+  },
+  "hour": {
+   "say": "an hour here",
+   "phraseStart": 9.73,
+   "phraseEnd": 10.663,
+   "beat": 9.68
+  },
+  "add": {
+   "say": "and up those lost",
+   "phraseStart": 15.83,
+   "phraseEnd": 17.516,
+   "beat": 15.78
+  },
+  "find": {
+   "say": "you can find a whole",
+   "phraseStart": 20.24,
+   "phraseEnd": 21.956,
+   "beat": 20.19
+  },
+  "built": {
+   "say": "already built",
+   "phraseStart": 25.82,
+   "phraseEnd": 26.594,
+   "beat": 25.77
+  },
+  "staffed": {
+   "say": "already staffed",
+   "phraseStart": 27.42,
+   "phraseEnd": 28.284,
+   "beat": 27.37
+  },
+  "paid": {
+   "say": "already paid for",
+   "phraseStart": 29.21,
+   "phraseEnd": 30.366,
+   "beat": 29.16
+  },
+  "fixing": {
+   "say": "fixing repeat failures",
+   "phraseStart": 31.28,
+   "phraseEnd": 32.944,
+   "beat": 31.23
+  },
+  "capex": {
+   "say": "or capex",
+   "phraseStart": 38.97,
+   "phraseEnd": 39.427,
+   "beat": 38.92
+  }
+ },
+ "s08": {
+  "six": {
+   "say": "it has six parts",
+   "phraseStart": 3.83,
+   "phraseEnd": 5.363,
+   "beat": 3.78
+  },
+  "one": {
+   "say": "one a clear",
+   "phraseStart": 6.52,
+   "phraseEnd": 8.035,
+   "beat": 6.47
+  },
+  "what": {
+   "say": "problem statement",
+   "phraseStart": 8.7,
+   "phraseEnd": 9.646,
+   "beat": 8.65
+  },
+  "loss": {
+   "say": "with the loss in numbers",
+   "phraseStart": 10.41,
+   "phraseEnd": 11.933,
+   "beat": 10.36
+  },
+  "hts": {
+   "say": "hours tonnes dollars",
+   "phraseStart": 13.98,
+   "phraseEnd": 16.256,
+   "beat": 13.93
+  },
+  "two": {
+   "say": "two evidence before",
+   "phraseStart": 22.14,
+   "phraseEnd": 23.996,
+   "beat": 22.09
+  },
+  "photos": {
+   "say": "photos of failed",
+   "phraseStart": 25.82,
+   "phraseEnd": 27.034,
+   "beat": 25.77
+  },
+  "parts": {
+   "say": "failed parts",
+   "phraseStart": 26.62,
+   "phraseEnd": 27.594,
+   "beat": 26.57
+  },
+  "trends": {
+   "say": "trend data",
+   "phraseStart": 28.2,
+   "phraseEnd": 29.183,
+   "beat": 28.15
+  },
+  "logs": {
+   "say": "maintenance history",
+   "phraseStart": 30.18,
+   "phraseEnd": 30.983,
+   "beat": 30.13
+  },
+  "three": {
+   "say": "three",
+   "phraseStart": 38.6,
+   "phraseEnd": 38.866,
+   "beat": 38.55
+  },
+  "start": {
+   "say": "start with the problem",
+   "phraseStart": 42.31,
+   "phraseEnd": 43.44,
+   "beat": 42.26
+  },
+  "asking": {
+   "say": "keep asking why",
+   "phraseStart": 44.07,
+   "phraseEnd": 45.264,
+   "beat": 44.02
+  },
+  "branches": {
+   "say": "in branches",
+   "phraseStart": 46.49,
+   "phraseEnd": 47.174,
+   "beat": 46.44
+  },
+  "straight": {
+   "say": "not one straight",
+   "phraseStart": 47.92,
+   "phraseEnd": 49.073,
+   "beat": 47.87
+  }
+ },
+ "s09": {
+  "layers": {
+   "say": "the tree goes down",
+   "phraseStart": 0.25,
+   "phraseEnd": 1.29,
+   "beat": 0.2
+  },
+  "phys": {
+   "say": "physical causes",
+   "phraseStart": 3.87,
+   "phraseEnd": 4.734,
+   "beat": 3.82
+  },
+  "part": {
+   "say": "the part or the condition",
+   "phraseStart": 5.6,
+   "phraseEnd": 7.304,
+   "beat": 5.55
+  },
+  "human": {
+   "say": "human causes",
+   "phraseStart": 8.34,
+   "phraseEnd": 9.144,
+   "beat": 8.29
+  },
+  "dec": {
+   "say": "the decisions and actions",
+   "phraseStart": 10.04,
+   "phraseEnd": 11.629,
+   "beat": 9.99
+  },
+  "sys": {
+   "say": "and system causes",
+   "phraseStart": 13.1,
+   "phraseEnd": 14.467,
+   "beat": 13.05
+  },
+  "latent": {
+   "say": "also called latent",
+   "phraseStart": 15.25,
+   "phraseEnd": 16.88,
+   "beat": 15.2
+  },
+  "hidden": {
+   "say": "those are hidden weaknesses",
+   "phraseStart": 18.98,
+   "phraseEnd": 20.265,
+   "beat": 18.93
+  },
+  "four": {
+   "say": "four check every cause",
+   "phraseStart": 27.41,
+   "phraseEnd": 29.535,
+   "beat": 27.36
+  },
+  "evid": {
+   "say": "against evidence",
+   "phraseStart": 29.61,
+   "phraseEnd": 30.615,
+   "beat": 29.56
+  },
+  "theory": {
+   "say": "it stays a theory",
+   "phraseStart": 33.86,
+   "phraseEnd": 35.075,
+   "beat": 33.81
+  },
+  "five": {
+   "say": "five actions",
+   "phraseStart": 36.05,
+   "phraseEnd": 37.388,
+   "beat": 36
+  },
+  "actions": {
+   "say": "actions with an owner",
+   "phraseStart": 36.94,
+   "phraseEnd": 38.528,
+   "beat": 36.89
+  },
+  "six": {
+   "say": "six a check afterwards",
+   "phraseStart": 40.39,
+   "phraseEnd": 42.716,
+   "beat": 40.34
+  },
+  "cal": {
+   "say": "check afterwards",
+   "phraseStart": 41.65,
+   "phraseEnd": 42.716,
+   "beat": 41.6
+  },
+  "axes": {
+   "say": "that the failure",
+   "phraseStart": 42.8,
+   "phraseEnd": 43.736,
+   "beat": 42.75
+  },
+  "stopped": {
+   "say": "really stopped coming back",
+   "phraseStart": 43.85,
+   "phraseEnd": 45.336,
+   "beat": 43.8
+  },
+  "now": {
+   "say": "now let me show",
+   "phraseStart": 46.22,
+   "phraseEnd": 47.14,
+   "beat": 46.17
+  },
+  "typical": {
+   "say": "on a typical problem",
+   "phraseStart": 48.54,
+   "phraseEnd": 49.866,
+   "beat": 48.49
+  }
+ },
+ "s10": {
+  "tank": {
+   "say": "picture a slurry",
+   "phraseStart": 10.27,
+   "phraseEnd": 11.135,
+   "beat": 10.22
+  },
+  "pump": {
+   "say": "pump feeding",
+   "phraseStart": 11.16,
+   "phraseEnd": 11.73,
+   "beat": 11.11
+  },
+  "process": {
+   "say": "a process line",
+   "phraseStart": 11.73,
+   "phraseEnd": 12.615,
+   "beat": 11.68
+  },
+  "standby": {
+   "say": "no standby pump",
+   "phraseStart": 13.69,
+   "phraseEnd": 14.759,
+   "beat": 13.64
+  },
+  "buffer": {
+   "say": "no buffer tank",
+   "phraseStart": 15.43,
+   "phraseEnd": 16.268,
+   "beat": 15.38
+  },
+  "stops": {
+   "say": "when it stops",
+   "phraseStart": 17.03,
+   "phraseEnd": 17.807,
+   "beat": 16.98
+  },
+  "linestops": {
+   "say": "the line stops",
+   "phraseStart": 18.2,
+   "phraseEnd": 18.927,
+   "beat": 18.15
+  },
+  "twelve": {
+   "say": "in twelve months",
+   "phraseStart": 20.5,
+   "phraseEnd": 21.373,
+   "beat": 20.45
+  },
+  "failed": {
+   "say": "it has failed",
+   "phraseStart": 21.373,
+   "phraseEnd": 22.633,
+   "beat": 21.323
+  },
+  "bearings": {
+   "say": "bearings and mechanical seals",
+   "phraseStart": 24.45,
+   "phraseEnd": 26.559,
+   "beat": 24.4
+  },
+  "seal": {
+   "say": "a mechanical seal is",
+   "phraseStart": 28.25,
+   "phraseEnd": 29.456,
+   "beat": 28.2
+  },
+  "each": {
+   "say": "each failure stops",
+   "phraseStart": 36.36,
+   "phraseEnd": 38.04,
+   "beat": 36.31
+  },
+  "fourteen": {
+   "say": "fourteen hours",
+   "phraseStart": 38.86,
+   "phraseEnd": 39.801,
+   "beat": 38.81
+  }
+ },
+ "s11": {
+  "chiprate": {
+   "say": "the line runs at",
+   "phraseStart": 3.34,
+   "phraseEnd": 4.916,
+   "beat": 3.29
+  },
+  "cm": {
+   "say": "contribution margin",
+   "phraseStart": 8.3,
+   "phraseEnd": 9.24,
+   "beat": 8.25
+  },
+  "l1": {
+   "say": "fourteen hours times",
+   "phraseStart": 16.47,
+   "phraseEnd": 17.57,
+   "beat": 16.42
+  },
+  "l2": {
+   "say": "times eighteen dollars",
+   "phraseStart": 23.87,
+   "phraseEnd": 25.237,
+   "beat": 23.82
+  },
+  "nine": {
+   "say": "and nine thousand",
+   "phraseStart": 31.16,
+   "phraseEnd": 32.847,
+   "beat": 31.11
+  },
+  "l4": {
+   "say": "that is thirty",
+   "phraseStart": 36.81,
+   "phraseEnd": 38.08,
+   "beat": 36.76
+  },
+  "sixf": {
+   "say": "six failures",
+   "phraseStart": 43.53,
+   "phraseEnd": 44.378,
+   "beat": 43.48
+  },
+  "num": {
+   "say": "two hundred and thirty",
+   "phraseStart": 45.99,
+   "phraseEnd": 47.32,
+   "beat": 45.94
+  },
+  "year": {
+   "say": "a year",
+   "phraseStart": 50.502,
+   "phraseEnd": 51.082,
+   "beat": 50.452
+  }
+ },
+ "s12": {
+  "ran": {
+   "say": "the seal faces are scored",
+   "phraseStart": 6.45,
+   "phraseEnd": 8.286,
+   "beat": 6.4
+  },
+  "rac": {
+   "say": "the bearing races show",
+   "phraseStart": 14.26,
+   "phraseEnd": 15.566,
+   "beat": 14.21
+  },
+  "oil": {
+   "say": "oil samples show water",
+   "phraseStart": 21.65,
+   "phraseEnd": 23.44,
+   "beat": 21.6
+  },
+  "ctrl": {
+   "say": "the control system shows",
+   "phraseStart": 25.58,
+   "phraseEnd": 26.969,
+   "beat": 25.53
+  },
+  "flow": {
+   "say": "flow at about sixty",
+   "phraseStart": 27.07,
+   "phraseEnd": 28.87,
+   "beat": 27.02
+  },
+  "sixty": {
+   "say": "sixty percent",
+   "phraseStart": 28.46,
+   "phraseEnd": 29.31,
+   "beat": 28.41
+  },
+  "bep": {
+   "say": "that is the point where",
+   "phraseStart": 32.6,
+   "phraseEnd": 33.758,
+   "beat": 32.55
+  },
+  "maint": {
+   "say": "and the maintenance system",
+   "phraseStart": 36.5,
+   "phraseEnd": 38.004,
+   "beat": 36.45
+  },
+  "norec": {
+   "say": "no pump alignment records",
+   "phraseStart": 39.2,
+   "phraseEnd": 41.554,
+   "beat": 39.15
+  },
+  "four": {
+   "say": "for four of the six",
+   "phraseStart": 42.61,
+   "phraseEnd": 43.861,
+   "beat": 42.56
+  }
+ },
+ "s13": {
+  "top": {
+   "say": "why did the seals",
+   "phraseStart": 4.8,
+   "phraseEnd": 5.731,
+   "beat": 4.75
+  },
+  "phys": {
+   "say": "physical causes first",
+   "phraseStart": 8.55,
+   "phraseEnd": 9.936,
+   "beat": 8.5
+  },
+  "l1a": {
+   "say": "the pump runs far",
+   "phraseStart": 11.48,
+   "phraseEnd": 12.837,
+   "beat": 11.43
+  },
+  "l1b": {
+   "say": "poor alignment",
+   "phraseStart": 19.66,
+   "phraseEnd": 20.749,
+   "beat": 19.61
+  },
+  "foot": {
+   "say": "including a soft foot",
+   "phraseStart": 22.46,
+   "phraseEnd": 23.738,
+   "beat": 22.41
+  },
+  "bend": {
+   "say": "so tightening the bolts",
+   "phraseStart": 28.89,
+   "phraseEnd": 30.245,
+   "beat": 28.84
+  },
+  "three": {
+   "say": "three",
+   "phraseStart": 33.15,
+   "phraseEnd": 33.458,
+   "beat": 33.1
+  },
+  "l1c": {
+   "say": "contaminated bearing oil",
+   "phraseStart": 34.71,
+   "phraseEnd": 35.478,
+   "beat": 34.66
+  },
+  "l1d": {
+   "say": "restricted seal flush",
+   "phraseStart": 37.31,
+   "phraseEnd": 38.884,
+   "beat": 37.26
+  },
+  "hum": {
+   "say": "then the human level",
+   "phraseStart": 45,
+   "phraseEnd": 46.441,
+   "beat": 44.95
+  },
+  "l2a": {
+   "say": "operators throttle",
+   "phraseStart": 47.68,
+   "phraseEnd": 48.66,
+   "beat": 47.63
+  },
+  "l2b": {
+   "say": "fitters align",
+   "phraseStart": 50.78,
+   "phraseEnd": 51.652,
+   "beat": 50.73
+  },
+  "l2c": {
+   "say": "hoses wash down",
+   "phraseStart": 54.83,
+   "phraseEnd": 55.844,
+   "beat": 54.78
+  },
+  "l2d": {
+   "say": "nobody checks",
+   "phraseStart": 58.16,
+   "phraseEnd": 58.933,
+   "beat": 58.11
+  }
+ },
+ "s14": {
+  "system": {
+   "say": "this is the system level",
+   "phraseStart": 2.21,
+   "phraseEnd": 3.816,
+   "beat": 2.16
+  },
+  "n1": {
+   "say": "nobody reviewed the pump",
+   "phraseStart": 7.59,
+   "phraseEnd": 9.117,
+   "beat": 7.54
+  },
+  "n2": {
+   "say": "there is no precision",
+   "phraseStart": 12.5,
+   "phraseEnd": 13.664,
+   "beat": 12.45
+  },
+  "n3": {
+   "say": "the rebuild procedure",
+   "phraseStart": 16.33,
+   "phraseEnd": 17.453,
+   "beat": 16.28
+  },
+  "n4": {
+   "say": "there is no verification",
+   "phraseStart": 19.65,
+   "phraseEnd": 20.86,
+   "beat": 19.6
+  },
+  "n5": {
+   "say": "flush and oil condition",
+   "phraseStart": 22.17,
+   "phraseEnd": 23.543,
+   "beat": 22.12
+  },
+  "n6": {
+   "say": "and failures are logged",
+   "phraseStart": 27.1,
+   "phraseEnd": 28.494,
+   "beat": 27.05
+  },
+  "fix": {
+   "say": "fix these",
+   "phraseStart": 34.3,
+   "phraseEnd": 34.886,
+   "beat": 34.25
+  },
+  "people": {
+   "say": "people are no longer",
+   "phraseStart": 35.72,
+   "phraseEnd": 36.766,
+   "beat": 35.67
+  }
+ },
+ "s15": {
+  "test": {
+   "say": "we test each cause",
+   "phraseStart": 1.55,
+   "phraseEnd": 2.69,
+   "beat": 1.5
+  },
+  "flowtrend": {
+   "say": "the flow trend shows",
+   "phraseStart": 7.31,
+   "phraseEnd": 8.36,
+   "beat": 7.26
+  },
+  "records": {
+   "say": "the records are missing",
+   "phraseStart": 11.25,
+   "phraseEnd": 12.195,
+   "beat": 11.2
+  },
+  "cause": {
+   "say": "a cause",
+   "phraseStart": 13.2,
+   "phraseEnd": 13.626,
+   "beat": 13.15
+  },
+  "support": {
+   "say": "cannot support",
+   "phraseStart": 15.02,
+   "phraseEnd": 15.857,
+   "beat": 14.97
+  },
+  "dropped": {
+   "say": "gets dropped",
+   "phraseStart": 15.96,
+   "phraseEnd": 16.677,
+   "beat": 15.91
+  },
+  "actions": {
+   "say": "then the actions",
+   "phraseStart": 17.98,
+   "phraseEnd": 18.785,
+   "beat": 17.93
+  },
+  "slow": {
+   "say": "slow the pump down",
+   "phraseStart": 19.585,
+   "phraseEnd": 20.345,
+   "beat": 19.535
+  },
+  "runs": {
+   "say": "so it runs near",
+   "phraseStart": 23.29,
+   "phraseEnd": 24.496,
+   "beat": 23.24
+  },
+  "nothing": {
+   "say": "costs nothing",
+   "phraseStart": 29.16,
+   "phraseEnd": 29.893,
+   "beat": 29.11
+  },
+  "flushflow": {
+   "say": "fit a flush flow",
+   "phraseStart": 30.82,
+   "phraseEnd": 32.016,
+   "beat": 30.77
+  },
+  "standard": {
+   "say": "set an alignment standard",
+   "phraseStart": 36.14,
+   "phraseEnd": 37.519,
+   "beat": 36.09
+  },
+  "train": {
+   "say": "train the fitters",
+   "phraseStart": 39.79,
+   "phraseEnd": 40.642,
+   "beat": 39.74
+  },
+  "isolators": {
+   "say": "fit bearing isolators",
+   "phraseStart": 42.07,
+   "phraseEnd": 43.618,
+   "beat": 42.02
+  },
+  "keep": {
+   "say": "to keep wash",
+   "phraseStart": 47.09,
+   "phraseEnd": 47.869,
+   "beat": 47.04
+  },
+  "owner": {
+   "say": "each has an owner",
+   "phraseStart": 56.76,
+   "phraseEnd": 58.274,
+   "beat": 56.71
+  },
+  "total": {
+   "say": "total cost",
+   "phraseStart": 60.69,
+   "phraseEnd": 61.324,
+   "beat": 60.64
+  },
+  "sum": {
+   "say": "thirty two thousand dollars",
+   "phraseStart": 62.51,
+   "phraseEnd": 63.725,
+   "beat": 62.46
+  }
+ },
+ "s16": {
+  "months": {
+   "say": "twelve months later",
+   "phraseStart": 0.25,
+   "phraseEnd": 1.11,
+   "beat": 0.2
+  },
+  "single": {
+   "say": "not had a single",
+   "phraseStart": 2.09,
+   "phraseEnd": 2.99,
+   "beat": 2.04
+  },
+  "loss": {
+   "say": "the yearly loss of",
+   "phraseStart": 5.49,
+   "phraseEnd": 6.576,
+   "beat": 5.44
+  },
+  "gone": {
+   "say": "is gone",
+   "phraseStart": 10.576,
+   "phraseEnd": 11.276,
+   "beat": 10.526
+  },
+  "divided": {
+   "say": "thirty two thousand divided",
+   "phraseStart": 12.17,
+   "phraseEnd": 13.754,
+   "beat": 12.12
+  },
+  "eighth": {
+   "say": "about an eighth",
+   "phraseStart": 15.63,
+   "phraseEnd": 17.054,
+   "beat": 15.58
+  },
+  "payback": {
+   "say": "payback is about seven",
+   "phraseStart": 18.91,
+   "phraseEnd": 20.353,
+   "beat": 18.86
+  },
+  "weeks": {
+   "say": "weeks",
+   "phraseStart": 20.47,
+   "phraseEnd": 20.693,
+   "beat": 20.42
+  },
+  "hrs": {
+   "say": "and eighty four",
+   "phraseStart": 21.74,
+   "phraseEnd": 23.051,
+   "beat": 21.69
+  },
+  "hrsend": {
+   "say": "hours of production",
+   "phraseStart": 23.06,
+   "phraseEnd": 23.93,
+   "beat": 23.06
+  },
+  "back": {
+   "say": "came back",
+   "phraseStart": 23.93,
+   "phraseEnd": 24.991,
+   "beat": 23.88
+  },
+  "tonnes": {
+   "say": "that is ten thousand",
+   "phraseStart": 26.34,
+   "phraseEnd": 27.894,
+   "beat": 26.29
+  },
+  "tonnesend": {
+   "say": "tonnes of capacity",
+   "phraseStart": 28.7,
+   "phraseEnd": 30.174,
+   "beat": 28.7
+  },
+  "capacity": {
+   "say": "of capacity",
+   "phraseStart": 29.274,
+   "phraseEnd": 30.174,
+   "beat": 29.224
+  },
+  "pump": {
+   "say": "from a pump",
+   "phraseStart": 31.05,
+   "phraseEnd": 31.75,
+   "beat": 31
+  },
+  "nowwear": {
+   "say": "now bearings and seals",
+   "phraseStart": 34.79,
+   "phraseEnd": 36.175,
+   "beat": 34.74
+  },
+  "natural": {
+   "say": "that is natural deterioration",
+   "phraseStart": 37.79,
+   "phraseEnd": 39.615,
+   "beat": 37.74
+  },
+  "removed": {
+   "say": "what we removed",
+   "phraseStart": 43.88,
+   "phraseEnd": 44.79,
+   "beat": 43.83
+  },
+  "causing": {
+   "say": "the wear we were causing",
+   "phraseStart": 48.66,
+   "phraseEnd": 50.124,
+   "beat": 48.61
+  },
+  "natwear": {
+   "say": "the natural wear is now",
+   "phraseStart": 52.13,
+   "phraseEnd": 54.175,
+   "beat": 52.08
+  },
+  "vib": {
+   "say": "vibration",
+   "phraseStart": 54.89,
+   "phraseEnd": 55.435,
+   "beat": 54.84
+  },
+  "parts": {
+   "say": "and the parts are changed",
+   "phraseStart": 58.53,
+   "phraseEnd": 59.875,
+   "beat": 58.48
+  },
+  "changed": {
+   "say": "changed in a planned",
+   "phraseStart": 59.5,
+   "phraseEnd": 60.615,
+   "beat": 59.45
+  },
+  "planned": {
+   "say": "planned shutdown",
+   "phraseStart": 60.36,
+   "phraseEnd": 61.115,
+   "beat": 60.31
+  },
+  "before": {
+   "say": "before they fail",
+   "phraseStart": 61.52,
+   "phraseEnd": 62.235,
+   "beat": 61.47
+  }
+ },
+ "s17": {
+  "sys": {
+   "say": "rca is not an event",
+   "phraseStart": 3.79,
+   "phraseEnd": 5.797,
+   "beat": 3.74
+  },
+  "system": {
+   "say": "it is a system",
+   "phraseStart": 8.28,
+   "phraseEnd": 9.521,
+   "beat": 8.23
+  },
+  "trig": {
+   "say": "set clear triggers",
+   "phraseStart": 12.96,
+   "phraseEnd": 14.113,
+   "beat": 12.91
+  },
+  "steps": {
+   "say": "use the same steps",
+   "phraseStart": 18.9,
+   "phraseEnd": 20.052,
+   "beat": 18.85
+  },
+  "act": {
+   "say": "track every action",
+   "phraseStart": 22.02,
+   "phraseEnd": 23,
+   "beat": 21.97
+  },
+  "chk": {
+   "say": "and check at ninety days",
+   "phraseStart": 25.07,
+   "phraseEnd": 27.169,
+   "beat": 25.02
+  },
+  "close": {
+   "say": "do that consistently",
+   "phraseStart": 32.11,
+   "phraseEnd": 33.07,
+   "beat": 32.06
+  },
+  "fade": {
+   "say": "firefighting fades",
+   "phraseStart": 33.895,
+   "phraseEnd": 35.275,
+   "beat": 33.845
+  },
+  "tool": {
+   "say": "so i am building",
+   "phraseStart": 52.9,
+   "phraseEnd": 53.65,
+   "beat": 52.85
+  },
+  "pick": {
+   "say": "pick one repeat failure",
+   "phraseStart": 60.38,
+   "phraseEnd": 62.003,
+   "beat": 60.33
+  },
+  "thanks": {
+   "say": "thank you for watching",
+   "phraseStart": 65.96,
+   "phraseEnd": 66.968,
+   "beat": 65.91
+  }
+ }
+}

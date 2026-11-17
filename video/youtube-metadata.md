@@ -1,6 +1,6 @@
 # YouTube metadata
 
-Chapter times are the real scene start times in `out/rca-explainer-final.mp4` (total 12:22; each scene is its voiceover plus 0.5 s). Re-check them if the video is re-rendered.
+Chapter times are the real scene start times in `out/rca-explainer-final.mp4` (total 12:26; each scene is its voiceover plus 0.5 s). Re-check them if the video is re-rendered.
 
 ## 5 title options
 
@@ -26,7 +26,7 @@ Chapters
 2:47 The hidden plant
 3:31 What an effective RCA looks like
 5:12 Worked example: slurry pump
-11:15 Close: RCA as a system
+11:18 Close: RCA as a system
 
 A tool to make this easy is coming soon. More to share later.
 
