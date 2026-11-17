@@ -3,6 +3,7 @@ import {Audio, Composition, Series, staticFile} from "remotion";
 import cfg from "../scenes.json";
 import {SceneProvider} from "./lib";
 import {SCENES} from "./scenes";
+import {ThumbPump, ThumbPlant} from "./Thumbnails";
 import {PresenterLayer, SceneCfg} from "./Presenter";
 
 const FPS = cfg.fps;
@@ -36,6 +37,8 @@ const Full: React.FC = () => (
 export const Root: React.FC = () => (
   <>
     <Composition id="RCA" component={Full} durationInFrames={total} fps={FPS} width={1920} height={1080} />
+    <Composition id="ThumbPump" component={ThumbPump} durationInFrames={1} fps={30} width={1280} height={720} />
+    <Composition id="ThumbPlant" component={ThumbPlant} durationInFrames={1} fps={30} width={1280} height={720} />
     {scenes.map((s) => {
       const Wrapped: React.FC = () => <SceneView s={s} />;
       return <Composition key={s.id} id={s.id} component={Wrapped} durationInFrames={frames(s.duration)} fps={FPS} width={1920} height={1080} />;
