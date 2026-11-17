@@ -1,7 +1,7 @@
 {
   "suite": "features",
-  "base": "http://localhost:3555",
-  "at": "2026-11-17T08:14:22.373Z",
+  "base": "https://rca-tool-omega.vercel.app",
+  "at": "2026-11-17T08:40:55.514Z",
   "results": [
     {
       "id": "F-ASSET-1-demo-desk.fields",
@@ -57,7 +57,7 @@
       "title": "Problem step: asset details fields, criticality, combo lists, auto-add to the register [demo-desk]",
       "status": "pass",
       "detail": "",
-      "ms": 8294
+      "ms": 9933
     },
     {
       "id": "F-ASSET-1-demo-mob.fields",
@@ -113,7 +113,7 @@
       "title": "Problem step: asset details fields, criticality, combo lists, auto-add to the register [demo-mob]",
       "status": "pass",
       "detail": "",
-      "ms": 8237
+      "ms": 9279
     },
     {
       "id": "F-ASSET-1-acct-desk.fields",
@@ -169,7 +169,7 @@
       "title": "Problem step: asset details fields, criticality, combo lists, auto-add to the register [acct-desk]",
       "status": "pass",
       "detail": "",
-      "ms": 21550
+      "ms": 27694
     },
     {
       "id": "F-REG-1-demo-desk.sample",
@@ -246,7 +246,7 @@
       "title": "Asset register page: sample assets, add/edit/delete, search, paste a list, validation, stats [demo-desk]",
       "status": "pass",
       "detail": "",
-      "ms": 6357
+      "ms": 8070
     },
     {
       "id": "F-REG-1-demo-mob.sample",
@@ -323,7 +323,7 @@
       "title": "Asset register page: sample assets, add/edit/delete, search, paste a list, validation, stats [demo-mob]",
       "status": "pass",
       "detail": "",
-      "ms": 5966
+      "ms": 7539
     },
     {
       "id": "F-REG-2-acct-desk.add-persist",
@@ -365,7 +365,7 @@
       "title": "Asset register signed in: empty, persistence, A/B isolation, direct API access denied [acct-desk]",
       "status": "pass",
       "detail": "",
-      "ms": 16241
+      "ms": 20674
     },
     {
       "id": "F-CAPA-1-demo-desk.empty",
@@ -449,7 +449,7 @@
       "title": "Actions step: corrective section, preventive groups, one expanded row at a time, kind, category, task fields [demo-desk]",
       "status": "pass",
       "detail": "",
-      "ms": 5029
+      "ms": 5752
     },
     {
       "id": "F-CAPA-1-demo-mob.empty",
@@ -533,7 +533,7 @@
       "title": "Actions step: corrective section, preventive groups, one expanded row at a time, kind, category, task fields [demo-mob]",
       "status": "pass",
       "detail": "",
-      "ms": 4767
+      "ms": 5800
     },
     {
       "id": "F-CAPA-1-acct-desk.empty",
@@ -617,7 +617,7 @@
       "title": "Actions step: corrective section, preventive groups, one expanded row at a time, kind, category, task fields [acct-desk]",
       "status": "pass",
       "detail": "",
-      "ms": 10700
+      "ms": 12978
     },
     {
       "id": "F-PLAN-1-demo-desk.empty",
@@ -673,7 +673,7 @@
       "title": "Maintenance plan changes: lines, intervals, planner text copied to the clipboard, report section [demo-desk]",
       "status": "pass",
       "detail": "",
-      "ms": 5075
+      "ms": 6461
     },
     {
       "id": "F-PLAN-1-demo-mob.empty",
@@ -729,7 +729,7 @@
       "title": "Maintenance plan changes: lines, intervals, planner text copied to the clipboard, report section [demo-mob]",
       "status": "pass",
       "detail": "",
-      "ms": 5074
+      "ms": 6105
     },
     {
       "id": "F-PLAN-1-acct-desk.empty",
@@ -785,7 +785,7 @@
       "title": "Maintenance plan changes: lines, intervals, planner text copied to the clipboard, report section [acct-desk]",
       "status": "pass",
       "detail": "",
-      "ms": 9824
+      "ms": 11060
     },
     {
       "id": "F-SPARES-1-demo-desk.fields",
@@ -855,7 +855,7 @@
       "title": "Spares check: flag at exactly 14 days, not at 13 or when in stock; one-tap spares action; quality rule; report [demo-desk]",
       "status": "pass",
       "detail": "",
-      "ms": 4182
+      "ms": 5214
     },
     {
       "id": "F-SPARES-1-demo-mob.fields",
@@ -925,7 +925,7 @@
       "title": "Spares check: flag at exactly 14 days, not at 13 or when in stock; one-tap spares action; quality rule; report [demo-mob]",
       "status": "pass",
       "detail": "",
-      "ms": 4170
+      "ms": 5055
     },
     {
       "id": "F-SPARES-1-acct-desk.fields",
@@ -995,7 +995,7 @@
       "title": "Spares check: flag at exactly 14 days, not at 13 or when in stock; one-tap spares action; quality rule; report [acct-desk]",
       "status": "pass",
       "detail": "",
-      "ms": 9267
+      "ms": 10873
     },
     {
       "id": "F-QUAL-1-demo-desk.natural",
@@ -1051,7 +1051,7 @@
       "title": "New quality rules: each triggers, its jump link lands on the right step, and it clears when fixed [demo-desk]",
       "status": "pass",
       "detail": "",
-      "ms": 7279
+      "ms": 8006
     },
     {
       "id": "F-QUAL-1-acct-desk.natural",
@@ -1107,7 +1107,7 @@
       "title": "New quality rules: each triggers, its jump link lands on the right step, and it clears when fixed [acct-desk]",
       "status": "pass",
       "detail": "",
-      "ms": 10732
+      "ms": 11726
     },
     {
       "id": "F-DET-1-demo-desk.toggle",
@@ -1135,7 +1135,7 @@
       "title": "Cause node deterioration: Natural / Forced toggles, persistence, shown in report [demo-desk]",
       "status": "pass",
       "detail": "",
-      "ms": 3007
+      "ms": 3938
     },
     {
       "id": "F-DET-1-demo-mob.toggle",
@@ -1163,7 +1163,7 @@
       "title": "Cause node deterioration: Natural / Forced toggles, persistence, shown in report [demo-mob]",
       "status": "pass",
       "detail": "",
-      "ms": 3020
+      "ms": 4033
     },
     {
       "id": "F-SIM-1-demo-desk.rank",
@@ -1219,7 +1219,7 @@
       "title": "Similar past failures: ranking by tag > type > failure mode > words, minimum score, reasons, copy cause arrives as Hypothesis [demo-desk]",
       "status": "pass",
       "detail": "",
-      "ms": 17400
+      "ms": 20327
     },
     {
       "id": "F-SIM-1-demo-mob.rank",
@@ -1275,7 +1275,7 @@
       "title": "Similar past failures: ranking by tag > type > failure mode > words, minimum score, reasons, copy cause arrives as Hypothesis [demo-mob]",
       "status": "pass",
       "detail": "",
-      "ms": 17251
+      "ms": 19627
     },
     {
       "id": "F-SIM-1-acct-desk.rank",
@@ -1331,7 +1331,7 @@
       "title": "Similar past failures: ranking by tag > type > failure mode > words, minimum score, reasons, copy cause arrives as Hypothesis [acct-desk]",
       "status": "pass",
       "detail": "",
-      "ms": 105783
+      "ms": 94521
     },
     {
       "id": "F-ROLL-1-demo-desk.encourage",
@@ -1422,7 +1422,7 @@
       "title": "Roll this fix out: candidate ranking (hand scores), reasons, checks, statuses, progress, dashboard count, report [demo-desk]",
       "status": "pass",
       "detail": "",
-      "ms": 9117
+      "ms": 10951
     },
     {
       "id": "F-ROLL-1-demo-mob.encourage",
@@ -1513,7 +1513,7 @@
       "title": "Roll this fix out: candidate ranking (hand scores), reasons, checks, statuses, progress, dashboard count, report [demo-mob]",
       "status": "pass",
       "detail": "",
-      "ms": 8737
+      "ms": 10680
     },
     {
       "id": "F-ROLL-1-acct-desk.encourage",
@@ -1604,7 +1604,7 @@
       "title": "Roll this fix out: candidate ranking (hand scores), reasons, checks, statuses, progress, dashboard count, report [acct-desk]",
       "status": "pass",
       "detail": "",
-      "ms": 26214
+      "ms": 28813
     },
     {
       "id": "F-SAMPLE-1.verify",
@@ -1653,7 +1653,7 @@
       "title": "Sample investigation (round 3 numbers): action cost $32,000, 0 failures after, saving $238,440, payback about 1.6 months, 5 sample assets",
       "status": "pass",
       "detail": "",
-      "ms": 1214
+      "ms": 2010
     },
     {
       "id": "F-SAMPLE-2.fixture",
@@ -1709,7 +1709,7 @@
       "title": "Sample upgrade: an unedited old sample (v1) is silently upgraded; an edited one is left alone",
       "status": "pass",
       "detail": "",
-      "ms": 5297
+      "ms": 8682
     },
     {
       "id": "F-SAMPLE-3.unedited",
@@ -1730,83 +1730,83 @@
       "title": "Sample upgrade signed in: unedited v1 sample row is upgraded, edited one is left alone (own account only; sample restored afterwards)",
       "status": "pass",
       "detail": "",
-      "ms": 18346
+      "ms": 22513
     },
     {
       "id": "F-SEC-1.hdr_",
       "title": "Security headers present on /",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "fetch failed",
       "ms": 0
     },
     {
       "id": "F-SEC-1.hdr_login",
       "title": "Security headers present on /login",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "fetch failed",
       "ms": 0
     },
     {
       "id": "F-SEC-1.hdr_signup",
       "title": "Security headers present on /signup",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "fetch failed",
       "ms": 0
     },
     {
       "id": "F-SEC-1.hdr_forgot_password",
       "title": "Security headers present on /forgot-password",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "fetch failed",
       "ms": 0
     },
     {
       "id": "F-SEC-1.hdr_reset_password",
       "title": "Security headers present on /reset-password",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "fetch failed",
       "ms": 0
     },
     {
       "id": "F-SEC-1.hdr_app",
       "title": "Security headers present on /app",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "fetch failed",
       "ms": 0
     },
     {
       "id": "F-SEC-1.hdr_app_assets",
       "title": "Security headers present on /app/assets",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "fetch failed",
       "ms": 0
     },
     {
       "id": "F-SEC-1.hdr_app_account",
       "title": "Security headers present on /app/account",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "fetch failed",
       "ms": 0
     },
     {
       "id": "F-SEC-1.hdr_app_investigations_sample_p101",
       "title": "Security headers present on /app/investigations/sample-p101",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "fetch failed",
       "ms": 0
     },
     {
       "id": "F-SEC-1.hdr_nope",
       "title": "Security headers present on /nope",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "fetch failed",
       "ms": 0
     },
     {
       "id": "F-SEC-1.csp-content",
       "title": "CSP forbids framing, objects, off-site forms, base-uri tricks and allows only own origin + the Supabase host for connections",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "missing frame-ancestors 'none'",
       "ms": 0
     },
     {
@@ -1849,7 +1849,7 @@
       "title": "Security headers and CSP on every route; no CSP violations while using every page",
       "status": "pass",
       "detail": "",
-      "ms": 15146
+      "ms": 18832
     },
     {
       "id": "F-SEC-2.image-types",
@@ -1905,7 +1905,7 @@
       "title": "Image upload allowlist, malformed rows, password rule",
       "status": "pass",
       "detail": "",
-      "ms": 13501
+      "ms": 17567
     },
     {
       "id": "F-ACCT-1.demo-page",
@@ -1982,7 +1982,7 @@
       "title": "Account page: demo mode (download, clear browser data) and signed in (download my data, change password validation, delete-account confirmation gate)",
       "status": "pass",
       "detail": "",
-      "ms": 15999
+      "ms": 20828
     },
     {
       "id": "F-SEC-3.png-shown",
@@ -2031,7 +2031,7 @@
       "title": "Stored image allowlist: only JPEG/PNG data URLs render; svg, javascript:, http(s) and oversized values in stored evidence are not shown as images",
       "status": "pass",
       "detail": "",
-      "ms": 9672
+      "ms": 11423
     },
     {
       "id": "F-UI-1-demo-desk.page_app_assets",
@@ -2080,7 +2080,7 @@
       "title": "New pages (assets, account) and new Actions/Verify sections: labels, 375px overflow, contrast, keyboard, console [demo-desk]",
       "status": "pass",
       "detail": "",
-      "ms": 9252
+      "ms": 10544
     },
     {
       "id": "F-UI-1-demo-mob.page_app_assets",
@@ -2129,7 +2129,7 @@
       "title": "New pages (assets, account) and new Actions/Verify sections: labels, 375px overflow, contrast, keyboard, console [demo-mob]",
       "status": "pass",
       "detail": "",
-      "ms": 9330
+      "ms": 10957
     },
     {
       "id": "F-UI-1-acct-desk.page_app_assets",
@@ -2178,28 +2178,7 @@
       "title": "New pages (assets, account) and new Actions/Verify sections: labels, 375px overflow, contrast, keyboard, console [acct-desk]",
       "status": "pass",
       "detail": "",
-      "ms": 11093
-    },
-    {
-      "id": "F-ZZ-CLEANUP.clean-A",
-      "title": "Account A: only the sample investigation and the 5 sample assets remain",
-      "status": "pass",
-      "detail": "",
-      "ms": 0
-    },
-    {
-      "id": "F-ZZ-CLEANUP.clean-B",
-      "title": "Account B: only the sample investigation and the 5 sample assets remain",
-      "status": "pass",
-      "detail": "",
-      "ms": 0
-    },
-    {
-      "id": "F-ZZ-CLEANUP",
-      "title": "Cleanup: both accounts end with only the sample investigation and the 5 sample assets",
-      "status": "pass",
-      "detail": "",
-      "ms": 19224
+      "ms": 12237
     },
     {
       "id": "F-LIMIT-1.too-large",
@@ -2246,8 +2225,8 @@
     {
       "id": "F-LIMIT-1.next-5",
       "title": "login ?next=/app/../..//evil.example never leaves this site (a request to evil.example is intercepted and counted)",
-      "status": "fail",
-      "detail": "OPEN REDIRECT: after sign-in the browser went to http://evil.example/",
+      "status": "pass",
+      "detail": "",
       "ms": 0
     },
     {
@@ -2274,29 +2253,29 @@
     {
       "id": "F-LIMIT-1.next-dots-921",
       "title": "login ?next=/app/..//evil.example (dot segments that normalise to //evil.example) stays on this site",
-      "status": "fail",
-      "detail": "OPEN REDIRECT: after sign-in the browser went to http://evil.example/",
+      "status": "pass",
+      "detail": "",
       "ms": 0
     },
     {
       "id": "F-LIMIT-1.next-dots-925",
       "title": "login ?next=/app/%2e%2e//evil.example (dot segments that normalise to //evil.example) stays on this site",
-      "status": "fail",
-      "detail": "OPEN REDIRECT: after sign-in the browser went to http://evil.example/",
+      "status": "pass",
+      "detail": "",
       "ms": 0
     },
     {
       "id": "F-LIMIT-1.next-dots-917",
       "title": "login ?next=/..//evil.example (dot segments that normalise to //evil.example) stays on this site",
-      "status": "fail",
-      "detail": "OPEN REDIRECT: after sign-in the browser went to http://evil.example/",
+      "status": "pass",
+      "detail": "",
       "ms": 0
     },
     {
       "id": "F-LIMIT-1.next-dots-923",
       "title": "login ?next=/a/../../evil.example/x (dot segments that normalise to //evil.example) stays on this site",
       "status": "fail",
-      "detail": "CSP violations during test: Applying inline style violates the following Content Security Policy directive 'style-src 'self''. Either the 'unsafe-inline' keyword, a hash ('sha256-Z5XTK23DFuEMs0PwnyZDO9SWxemQ5HxcpVaBNuUJyWY='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked. || CSP violation: style-src-elem blocked inline at http://localhost:3555/evil.example/x:1",
+      "detail": "CSP violations during test: Applying inline style violates the following Content Security Policy directive 'style-src 'self''. Either the 'unsafe-inline' keyword, a hash ('sha256-Z5XTK23DFuEMs0PwnyZDO9SWxemQ5HxcpVaBNuUJyWY='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked. || CSP violation: style-src-elem blocked inline at https://rca-tool-omega.vercel.app/evil.example/x:1",
       "ms": 0
     },
     {
@@ -2304,7 +2283,28 @@
       "title": "Signed-in size limit: a 6 MB investigation is refused with a readable message and the previous version stays saved; login next= bypass variants all land on this site",
       "status": "pass",
       "detail": "",
-      "ms": 95122
+      "ms": 134375
+    },
+    {
+      "id": "F-ZZ-CLEANUP.clean-A",
+      "title": "Account A: only the sample investigation and the 5 sample assets remain",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ZZ-CLEANUP.clean-B",
+      "title": "Account B: only the sample investigation and the 5 sample assets remain",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ZZ-CLEANUP",
+      "title": "Cleanup: both accounts end with only the sample investigation and the 5 sample assets",
+      "status": "pass",
+      "detail": "",
+      "ms": 21939
     }
   ],
   "notes": [
@@ -2319,10 +2319,6 @@
     {
       "kind": "observation",
       "text": "A task with an interval but no task description is listed in the plan using the action text, yet the quality check still says it needs a task description: true"
-    },
-    {
-      "kind": "observation",
-      "text": "script-src allows 'unsafe-inline' (needed by the framework bootstrap); style-src is 'self' with style-src-attr 'unsafe-inline'"
     },
     {
       "kind": "observation",
@@ -2375,10 +2371,6 @@
     {
       "kind": "observation",
       "text": "mobile Actions control heights (px): 36,99,119"
-    },
-    {
-      "kind": "observation",
-      "text": "oversize message: Could not save: this investigation is too large. Remove some photos from the evidence list and try again. Try again"
     },
     {
       "kind": "observation",
