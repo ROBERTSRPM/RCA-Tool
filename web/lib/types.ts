@@ -31,6 +31,8 @@ export type StepId =
   | "verify"
   | "report";
 
+export type Criticality = "" | "A" | "B" | "C";
+
 export interface Problem {
   title: string;
   asset: string;
@@ -40,6 +42,20 @@ export interface Problem {
   where: string;
   when: string;
   impact: string;
+  /*
+   * Asset details, added later. Old investigations do not have them: every
+   * reader treats "missing" as empty (use the helpers in lib/asset-info.ts).
+   */
+  /** Tag number, e.g. "P-101". Matches the asset register (case-insensitive, trimmed). */
+  assetTag?: string;
+  /** A label from ASSET_TYPES, or free text typed under "Other". */
+  assetType?: string;
+  makeModel?: string;
+  /** Duty or service, free text, e.g. "tailings transfer". */
+  duty?: string;
+  criticality?: Criticality;
+  /** A label from FAILURE_MODES, or free text. */
+  failureMode?: string;
 }
 
 export type OtherCostCategory =
@@ -107,6 +123,9 @@ export interface EvidenceItem {
   image: string | null; // downscaled JPEG data URL
 }
 
+/** Natural: normal wear in service. Forced: wear we caused. "" = not decided. */
+export type Deterioration = "" | "natural" | "forced";
+
 export interface CauseNode {
   id: string;
   text: string;
@@ -116,6 +135,35 @@ export interface CauseNode {
   isRootCause: boolean;
   collapsed: boolean;
   children: CauseNode[];
+  /** Optional, added later; missing means not decided. */
+  deterioration?: Deterioration;
+}
+
+/** Corrective: fix this failure and its damage. Preventive: stop it happening again. */
+export type ActionKind = "" | "corrective" | "preventive";
+
+export type ActionCategory =
+  | ""
+  | "repair"
+  | "design"
+  | "maintenance_task"
+  | "condition_monitoring"
+  | "spares"
+  | "procedure"
+  | "training"
+  | "operating_practice";
+
+export type IntervalUnit = "hours_run" | "days" | "weeks" | "months";
+
+/** Planner-ready detail for the Maintenance task and Condition monitoring categories. */
+export interface MaintenanceTask {
+  description: string;
+  intervalValue: number | null;
+  intervalUnit: IntervalUnit;
+  /** Craft or trade, e.g. "Mechanical fitter". */
+  craft: string;
+  /** A new task, or a change to a task that already exists in the plan. */
+  change: "new" | "changed";
 }
 
 export interface ActionItem {
@@ -126,6 +174,51 @@ export interface ActionItem {
   dueDate: string; // YYYY-MM-DD or ""
   status: ActionStatus;
   cost: number | null;
+  /** Added later; missing means not classified. */
+  kind?: ActionKind;
+  category?: ActionCategory;
+  task?: MaintenanceTask;
+}
+
+export type YesNoUnknown = "" | "yes" | "no";
+
+/** Was the right spare available when it failed? Optional on old investigations. */
+export interface SparesCheck {
+  needed: YesNoUnknown;
+  inStock: YesNoUnknown;
+  leadTimeDays: number | null;
+  /** How the gap was covered (borrowed, cannibalised, expedited, ...). */
+  coverage: string;
+}
+
+export type RolloutStatus = "open" | "no_issue" | "same_problem" | "fixed";
+
+/** A tracked check that the same failure cannot happen on a similar asset. */
+export interface RolloutCheck {
+  id: string;
+  assetId: string;
+  /** Copied from the register when created, so it still reads right if the asset is later deleted. */
+  assetTag: string;
+  assetLabel: string;
+  what: string;
+  owner: string;
+  dueDate: string;
+  status: RolloutStatus;
+}
+
+/** An entry in the asset register. Stored as one jsonb document per asset. */
+export interface Asset {
+  id: string;
+  tag: string;
+  type: string;
+  makeModel: string;
+  duty: string;
+  criticality: Criticality;
+  site: string;
+  notes: string;
+  isSample?: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface Verification {
@@ -147,6 +240,10 @@ export interface Investigation {
   tree: CauseNode; // the top node is the failure event
   actions: ActionItem[];
   verification: Verification;
+  /** Added later; missing means not recorded. */
+  spares?: SparesCheck;
+  /** Added later; missing means none. */
+  rollouts?: RolloutCheck[];
 }
 
 export type InvestigationPatch = Partial<

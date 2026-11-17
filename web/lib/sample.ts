@@ -1,5 +1,6 @@
 import type {
   ActionItem,
+  Asset,
   CauseNode,
   EvidenceItem,
   Investigation,
@@ -21,6 +22,17 @@ function node(
   isRootCause = false,
 ): CauseNode {
   return { id, text, category, status, evidenceIds, isRootCause, collapsed: false, children };
+}
+
+/** Nodes in the sample whose wear was caused by how the pump was run, set up or rebuilt. */
+const FORCED_NODE_IDS = new Set(["n-a1", "n-a2", "n-a3", "n-b1", "n-b2", "n-b3"]);
+
+function withDeterioration(n: CauseNode): CauseNode {
+  return {
+    ...n,
+    ...(FORCED_NODE_IDS.has(n.id) ? { deterioration: "forced" as const } : {}),
+    children: n.children.map(withDeterioration),
+  };
 }
 
 const evidence: EvidenceItem[] = [
@@ -114,7 +126,7 @@ const evidence: EvidenceItem[] = [
   },
 ];
 
-const tree: CauseNode = node(
+const rawTree: CauseNode = node(
   "n-root",
   "Repeat bearing and mechanical seal failures on P-101",
   "physical",
@@ -327,6 +339,8 @@ const tree: CauseNode = node(
   ],
 );
 
+const tree: CauseNode = withDeterioration(rawTree);
+
 /** Sign-off date 2025-03-03; due dates are the case study's weeks from sign-off. */
 const actions: ActionItem[] = [
   {
@@ -338,6 +352,8 @@ const actions: ActionItem[] = [
     dueDate: "2025-04-28",
     status: "done",
     cost: 28000,
+    kind: "preventive",
+    category: "design",
   },
   {
     id: "act-2",
@@ -348,6 +364,15 @@ const actions: ActionItem[] = [
     dueDate: "2025-03-31",
     status: "done",
     cost: 12000,
+    kind: "preventive",
+    category: "maintenance_task",
+    task: {
+      description: "Check seal flush flow on the new indicator and clean the flush strainer",
+      intervalValue: 1,
+      intervalUnit: "weeks",
+      craft: "Mechanical fitter",
+      change: "new",
+    },
   },
   {
     id: "act-3",
@@ -358,6 +383,8 @@ const actions: ActionItem[] = [
     dueDate: "2025-04-28",
     status: "done",
     cost: 8000,
+    kind: "preventive",
+    category: "procedure",
   },
   {
     id: "act-4",
@@ -368,6 +395,8 @@ const actions: ActionItem[] = [
     dueDate: "2025-04-14",
     status: "done",
     cost: 7000,
+    kind: "preventive",
+    category: "design",
   },
   {
     id: "act-4b",
@@ -378,6 +407,8 @@ const actions: ActionItem[] = [
     dueDate: "2025-04-14",
     status: "done",
     cost: 0,
+    kind: "preventive",
+    category: "procedure",
   },
   {
     id: "act-4c",
@@ -388,6 +419,15 @@ const actions: ActionItem[] = [
     dueDate: "2025-04-14",
     status: "done",
     cost: 0,
+    kind: "preventive",
+    category: "maintenance_task",
+    task: {
+      description: "Check bearing oil level and condition (water, solids, colour) on the inspection route",
+      intervalValue: 2,
+      intervalUnit: "weeks",
+      craft: "Lubrication technician",
+      change: "new",
+    },
   },
   {
     id: "act-5",
@@ -406,6 +446,8 @@ const actions: ActionItem[] = [
     dueDate: "2025-03-24",
     status: "done",
     cost: 0,
+    kind: "preventive",
+    category: "procedure",
   },
   {
     id: "act-7",
@@ -415,6 +457,8 @@ const actions: ActionItem[] = [
     dueDate: "2025-03-24",
     status: "done",
     cost: 0,
+    kind: "preventive",
+    category: "procedure",
   },
   {
     id: "act-8",
@@ -425,6 +469,49 @@ const actions: ActionItem[] = [
     dueDate: "2026-03-02",
     status: "done",
     cost: 0,
+  },
+  {
+    id: "act-9",
+    causeId: "n-root5a",
+    description:
+      "Clear the packed flush strainer, reset the flush valve and replace the scored seal faces on P-101 (repair cost is already in the per-event figure)",
+    owner: "Mechanical supervisor",
+    dueDate: "2025-03-10",
+    status: "done",
+    cost: 0,
+    kind: "corrective",
+    category: "repair",
+  },
+  {
+    id: "act-10",
+    causeId: "n-root4",
+    description:
+      "Take a vibration and bearing temperature reading on P-101 every month and trend it",
+    owner: "Reliability engineer",
+    dueDate: "2025-04-14",
+    status: "done",
+    cost: 0,
+    kind: "preventive",
+    category: "condition_monitoring",
+    task: {
+      description: "Vibration and bearing temperature reading on P-101 drive and non-drive end, trended in the maintenance system",
+      intervalValue: 1,
+      intervalUnit: "months",
+      craft: "Condition monitoring technician",
+      change: "new",
+    },
+  },
+  {
+    id: "act-11",
+    causeId: "n-root3",
+    description:
+      "Hold one spare seal cartridge and one bearing set for P-101 in stores (minimum stock 1; bought from the existing reliability spares budget, not costed here)",
+    owner: "Maintenance planner",
+    dueDate: "2025-03-24",
+    status: "done",
+    cost: 0,
+    kind: "preventive",
+    category: "spares",
   },
 ];
 
@@ -448,6 +535,12 @@ export function buildSample(): Investigation {
     problem: {
       title: "Repeat bearing and mechanical seal failures on slurry pump P-101",
       asset: "Slurry pump P-101",
+      assetTag: "P-101",
+      assetType: "Slurry pump",
+      makeModel: "Warman 8/6 AH",
+      duty: "Slurry feed to the concentrator, single pump with no standby",
+      criticality: "A",
+      failureMode: "Bearing failure",
       site: "Concentrator plant, slurry feed area",
       eventDate: "2025-02-11",
       whatHappened:
@@ -470,6 +563,14 @@ export function buildSample(): Investigation {
     evidence,
     tree,
     actions,
+    spares: {
+      needed: "yes",
+      inStock: "no",
+      leadTimeDays: 21,
+      coverage:
+        "A seal cartridge was borrowed from the P-102 stores each time and a bearing set was bought as an urgent order. A spare of each is now held for P-101.",
+    },
+    rollouts: [],
     verification: {
       reviewDate: "2026-03-02",
       recurred: "no",
@@ -478,4 +579,44 @@ export function buildSample(): Investigation {
         "Failures measured over 12 months after the actions: 1 per year, down from 6. Cost and hours per event are held at the same values as before so the comparison is fair. Capacity released: 70 hours, 8,400 tonnes, $151,200 of margin plus $47,500 of repair cost avoided, which equals the $198,700 annual saving. Simple payback ignores the time value of money, tax and cost of capital. All figures are illustrative.",
     },
   };
+}
+
+/** A sample asset's key; the same key gives the same id in demo mode and (with the user id) in an account. */
+export interface SampleAssetSeed {
+  key: string;
+  tag: string;
+  type: string;
+  makeModel: string;
+  duty: string;
+  criticality: Asset["criticality"];
+  site: string;
+}
+
+/**
+ * Illustrative register entries: P-101 itself, two slurry pumps of the same make
+ * and a lower-duty slurry pump (the roll-out candidates), and one process pump
+ * of a different type (never a candidate, because the type must match).
+ */
+export const SAMPLE_ASSET_SEEDS: SampleAssetSeed[] = [
+  { key: "p101", tag: "P-101", type: "Slurry pump", makeModel: "Warman 8/6 AH", duty: "Slurry feed to the concentrator, single pump with no standby", criticality: "A", site: "Concentrator plant, slurry feed area" },
+  { key: "p102", tag: "P-102", type: "Slurry pump", makeModel: "Warman 8/6 AH", duty: "Slurry feed to the concentrator, second line", criticality: "A", site: "Concentrator plant, slurry feed area" },
+  { key: "p103", tag: "P-103", type: "Slurry pump", makeModel: "Warman 6/4 AH", duty: "Tailings transfer to the tailings dam", criticality: "B", site: "Tailings area" },
+  { key: "p215", tag: "P-215", type: "Slurry pump", makeModel: "Warman 8/6 AH", duty: "Thickener underflow, slurry transfer", criticality: "B", site: "Thickener area" },
+  { key: "p210", tag: "P-210", type: "Centrifugal pump", makeModel: "Model ES-80", duty: "Process water supply to the mill", criticality: "C", site: "Concentrator plant, water area" },
+];
+
+export function buildSampleAssets(idFor: (key: string) => string = (k) => `sample-asset-${k}`): Asset[] {
+  return SAMPLE_ASSET_SEEDS.map((x) => ({
+    id: idFor(x.key),
+    tag: x.tag,
+    type: x.type,
+    makeModel: x.makeModel,
+    duty: x.duty,
+    criticality: x.criticality,
+    site: x.site,
+    notes: "",
+    isSample: true,
+    createdAt: "2025-02-11T08:00:00.000Z",
+    updatedAt: "2025-02-11T08:00:00.000Z",
+  }));
 }

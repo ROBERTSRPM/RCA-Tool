@@ -23,6 +23,12 @@ export function blankInvestigation(seed: InvestigationPatch = {}): Investigation
       where: "",
       when: "",
       impact: "",
+      assetTag: "",
+      assetType: "",
+      makeModel: "",
+      duty: "",
+      criticality: "",
+      failureMode: "",
     },
     loss: {
       eventsPerYear: null,
@@ -42,6 +48,7 @@ export function blankInvestigation(seed: InvestigationPatch = {}): Investigation
       eventsPerYearAfter: null,
       notes: "",
     },
+    rollouts: [],
     ...seed,
   };
 }
@@ -87,5 +94,7 @@ export function cloneInvestigation(src: Investigation): Investigation {
     })),
     loss: { ...src.loss },
     verification: { ...src.verification },
+    // A copy is a fresh investigation: rollout checks belong to the original event.
+    rollouts: [],
   };
 }

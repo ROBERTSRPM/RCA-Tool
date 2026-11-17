@@ -2,9 +2,11 @@
 
 import type { Problem } from "@/lib/types";
 import { SectionCard, TextAreaField, TextField } from "../../ui";
+import { AssetDetails } from "../AssetDetails";
+import { SimilarFailures } from "../SimilarFailures";
 import type { StepProps } from "../types";
 
-export function ProblemStep({ inv, update }: StepProps) {
+export function ProblemStep({ inv, update, go }: StepProps) {
   const set = <K extends keyof Problem>(key: K, value: Problem[K]) =>
     update((i) => ({ ...i, problem: { ...i.problem, [key]: value } }));
   const p = inv.problem;
@@ -81,6 +83,15 @@ export function ProblemStep({ inv, update }: StepProps) {
           />
         </div>
       </SectionCard>
+
+      <AssetDetails problem={inv.problem} update={update} />
+
+      <SimilarFailures
+        inv={inv}
+        update={update}
+        parentId={inv.tree.id}
+        onOpenTree={() => go("cause")}
+      />
     </div>
   );
 }

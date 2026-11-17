@@ -1,15 +1,19 @@
 import { getSupabase } from "../supabase/client";
+import { LocalStorageAssetStore } from "./assets-local";
+import { SupabaseAssetStore } from "./assets-supabase";
 import { LocalStorageInvestigationStore } from "./local";
 import { SupabaseInvestigationStore } from "./supabase";
-import type { InvestigationStore } from "./types";
+import type { AssetStore, InvestigationStore } from "./types";
 
-export type { InvestigationStore } from "./types";
+export type { AssetStore, InvestigationStore } from "./types";
 export { StoreError } from "./types";
 
 const local = new LocalStorageInvestigationStore();
+const localAssets = new LocalStorageAssetStore();
 
 let userId: string | null = null;
 let remote: SupabaseInvestigationStore | null = null;
+let remoteAssets: SupabaseAssetStore | null = null;
 
 let markReady: () => void = () => {};
 const ready = new Promise<void>((resolve) => {
@@ -25,6 +29,7 @@ export function setStoreUser(id: string | null): void {
   userId = id;
   const db = getSupabase();
   remote = id && db ? new SupabaseInvestigationStore(db, id) : null;
+  remoteAssets = id && db ? new SupabaseAssetStore(db, id) : null;
 }
 
 /** Called once the first session check has finished, releasing waiting calls. */
@@ -64,4 +69,19 @@ const routed: InvestigationStore = {
 
 export function getStore(): InvestigationStore {
   return routed;
+}
+
+/** The asset register: the account table when signed in, else browser storage. Same routing as getStore(). */
+const routedAssets: AssetStore = {
+  list: async () => (await ready, (remoteAssets ?? localAssets).list()),
+  exportAll: async () => (await ready, (remoteAssets ?? localAssets).exportAll()),
+  create: async (a) => (await ready, (remoteAssets ?? localAssets).create(a)),
+  createMany: async (a) => (await ready, (remoteAssets ?? localAssets).createMany(a)),
+  update: async (id, patch) => (await ready, (remoteAssets ?? localAssets).update(id, patch)),
+  delete: async (id) => (await ready, (remoteAssets ?? localAssets).delete(id)),
+  resetSampleAssets: async () => (await ready, (remoteAssets ?? localAssets).resetSampleAssets()),
+};
+
+export function getAssetStore(): AssetStore {
+  return routedAssets;
 }

@@ -1,8 +1,12 @@
 import { missingLossInputs } from "./finance";
 import { isOverdue } from "./status";
-import { CATEGORY_LABEL, flatten, rootCauses } from "./tree";
+import { CATEGORY_LABEL, findNode, flatten, pathTo, rootCauses } from "./tree";
+import { criticalSpareFlag, hasSparesAction, isTaskCategory, SPARES_FLAG_TEXT } from "./capa";
 import { todayISO } from "./dates";
-import type { Investigation, StepId } from "./types";
+import type { ActionItem, ActionCategory, CauseNode, Investigation, StepId } from "./types";
+
+/** Action categories that address a System / Latent cause. */
+const SYSTEMIC_CATEGORIES: ActionCategory[] = ["procedure", "training", "maintenance_task", "design"];
 
 export type Severity = "high" | "medium" | "low";
 
@@ -18,7 +22,10 @@ export interface Finding {
   nodeId?: string;
 }
 
-const PROBLEM_FIELDS: { key: keyof Investigation["problem"]; label: string }[] = [
+const PROBLEM_FIELDS: {
+  key: "title" | "asset" | "site" | "eventDate" | "whatHappened" | "where" | "when" | "impact";
+  label: string;
+}[] = [
   { key: "title", label: "title" },
   { key: "asset", label: "asset" },
   { key: "site", label: "site or area" },
@@ -205,6 +212,108 @@ export function runQualityCheck(
     });
   }
 
+  // 10. Corrective and preventive balance, per root cause
+  for (const rc of roots) {
+    const mine = inv.actions.filter((a) => a.causeId === rc.id);
+    const hasCorrective = mine.some((a) => a.kind === "corrective");
+    const hasPreventive = mine.some((a) => a.kind === "preventive");
+    if (hasCorrective && !hasPreventive) {
+      out.push({
+        id: `root-no-preventive-${rc.id}`,
+        rule: "corrective-without-preventive",
+        severity: "high",
+        message: `Root cause "${clip(rc.text)}" has corrective actions but no preventive action. Fixing the damage will not stop it happening again.`,
+        step: "actions",
+        nodeId: rc.id,
+      });
+    }
+  }
+
+  // 11. A System / Latent root cause needs a systemic fix. Only judged when the
+  // root cause has actions and every one of them has a category (older
+  // investigations have none, and are not flagged on a guess).
+  for (const rc of roots) {
+    if (rc.category !== "system") continue;
+    const mine = inv.actions.filter((a) => a.causeId === rc.id);
+    if (mine.length === 0 || mine.some((a) => !a.category)) continue;
+    if (!mine.some((a) => a.category && SYSTEMIC_CATEGORIES.includes(a.category))) {
+      out.push({
+        id: `system-root-no-systemic-action-${rc.id}`,
+        rule: "system-root-without-systemic-action",
+        severity: "medium",
+        message: `System / Latent root cause "${clip(rc.text)}" has no procedure, training, maintenance-task or design action. A repair alone will not remove a gap in how the work is managed.`,
+        step: "actions",
+        nodeId: rc.id,
+      });
+    }
+  }
+
+  // 12. A verified natural-deterioration cause must be managed by inspection or planned work.
+  for (const { node } of nodes) {
+    if (node.status === "verified" && node.deterioration === "natural") {
+      if (!naturalIsManaged(inv, node)) {
+        out.push({
+          id: `natural-no-task-${node.id}`,
+          rule: "natural-deterioration-unmanaged",
+          severity: "medium",
+          message: `"${clip(node.text)}" is verified as natural deterioration, but there is no maintenance task or condition monitoring action to manage it.`,
+          step: "actions",
+          nodeId: node.id,
+        });
+      }
+    }
+  }
+
+  // 13. Maintenance tasks a planner could not load: no interval or no task text.
+  for (const a of inv.actions) {
+    if (!isTaskCategory(a.category)) continue;
+    const t = a.task;
+    const missing: string[] = [];
+    if (!(t?.description ?? "").trim()) missing.push("a task description");
+    if (!t || t.intervalValue === null || !(t.intervalValue > 0)) missing.push("an interval");
+    if (missing.length) {
+      out.push({
+        id: `task-incomplete-${a.id}`,
+        rule: "task-missing-detail",
+        severity: "medium",
+        message: `Maintenance plan item "${clip(a.description)}" needs ${missing.join(" and ")} before a planner can load it.`,
+        step: "actions",
+      });
+    }
+  }
+
+  // 14. Spares gap with nothing done about it.
+  if (criticalSpareFlag(inv.spares) && !hasSparesAction(inv.actions)) {
+    out.push({
+      id: "spares-gap",
+      rule: "spares-long-lead-no-stock",
+      severity: "medium",
+      message: `${SPARES_FLAG_TEXT}: the supplier lead time is ${inv.spares?.leadTimeDays} days and none was in stock. Add a spares holding action.`,
+      step: "actions",
+    });
+  }
+
   const order: Record<Severity, number> = { high: 0, medium: 1, low: 2 };
   return out.sort((a, b) => order[a.severity] - order[b.severity]);
+}
+
+const MANAGING: ActionCategory[] = ["maintenance_task", "condition_monitoring"];
+
+function isManaging(a: ActionItem): boolean {
+  return !!a.category && MANAGING.includes(a.category);
+}
+
+/**
+ * True when a maintenance-task or condition-monitoring action is linked to the
+ * cause, to anything beneath it, or to anything above it on the same branch.
+ */
+export function naturalIsManaged(
+  inv: Pick<Investigation, "tree" | "actions">,
+  node: CauseNode,
+): boolean {
+  const branch = new Set<string>([
+    ...pathTo(inv.tree, node.id).map((n) => n.id),
+    ...flatten(findNode(inv.tree, node.id) ?? node).map((f) => f.node.id),
+  ]);
+  return inv.actions.some((a) => isManaging(a) && branch.has(a.causeId));
 }

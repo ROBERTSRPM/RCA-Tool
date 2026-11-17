@@ -403,3 +403,165 @@ export function IconButton({
     </button>
   );
 }
+
+/* ---------- Searchable list with free text ---------- */
+
+/**
+ * A text box that suggests items from a list as you type. Whatever is typed is
+ * kept, so anything not on the list is simply your own free-text entry. Choosing
+ * "Other" from the list clears the box so you can type your own wording.
+ */
+export function ComboField({
+  label,
+  help,
+  value,
+  onChange,
+  options,
+  placeholder,
+  className,
+}: {
+  label: string;
+  help?: string;
+  value: string;
+  onChange: (v: string) => void;
+  options: string[];
+  placeholder?: string;
+  className?: string;
+}) {
+  const id = useId();
+  const listId = `${id}-list`;
+  const [open, setOpen] = useState(false);
+  const [active, setActive] = useState(-1);
+  const exact = options.some((o) => o.toLowerCase() === value.trim().toLowerCase());
+  const q = value.trim().toLowerCase();
+  const shown = !q || exact ? options : options.filter((o) => o.toLowerCase().includes(q));
+  const choose = (o: string) => {
+    onChange(o === "Other" ? "" : o);
+    setOpen(false);
+    setActive(-1);
+  };
+  return (
+    <Field label={label} help={help} htmlFor={id} className={className}>
+      <div className="relative">
+        <input
+          id={id}
+          type="text"
+          role="combobox"
+          aria-expanded={open}
+          aria-controls={listId}
+          aria-autocomplete="list"
+          aria-activedescendant={open && active >= 0 ? `${id}-opt-${active}` : undefined}
+          autoComplete="off"
+          className="input"
+          value={value}
+          placeholder={placeholder ?? "Search the list or type your own"}
+          onFocus={() => setOpen(true)}
+          onBlur={() => {
+            setOpen(false);
+            setActive(-1);
+          }}
+          onChange={(e) => {
+            onChange(e.target.value);
+            setOpen(true);
+            setActive(-1);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "ArrowDown") {
+              e.preventDefault();
+              setOpen(true);
+              setActive((a) => Math.min(a + 1, shown.length - 1));
+            } else if (e.key === "ArrowUp") {
+              e.preventDefault();
+              setActive((a) => Math.max(a - 1, 0));
+            } else if (e.key === "Enter" && open && active >= 0 && shown[active]) {
+              e.preventDefault();
+              choose(shown[active]);
+            } else if (e.key === "Escape" && open) {
+              e.preventDefault();
+              setOpen(false);
+            }
+          }}
+        />
+        {open && shown.length > 0 && (
+          <ul
+            id={listId}
+            role="listbox"
+            aria-label={label}
+            className="absolute left-0 right-0 z-20 mt-1 max-h-60 overflow-y-auto rounded-lg border border-slate-300 bg-white py-1 shadow-lg"
+          >
+            {shown.map((o, i) => (
+              <li
+                key={o}
+                id={`${id}-opt-${i}`}
+                role="option"
+                aria-selected={o.toLowerCase() === value.trim().toLowerCase()}
+                // mouse down would blur the input and close the list before the click lands
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={() => choose(o)}
+                className={`flex min-h-11 cursor-pointer items-center px-3 text-sm text-slate-800 ${
+                  i === active ? "bg-amber-100" : "hover:bg-slate-100"
+                }`}
+              >
+                {o === "Other" ? "Other (type your own)" : o}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </Field>
+  );
+}
+
+/** A row of big choice buttons, each with a one-line explanation. Tap the chosen one again to clear it. */
+export function ChoiceGroup<T extends string>({
+  label,
+  help,
+  value,
+  onChange,
+  options,
+  className,
+}: {
+  label: string;
+  help?: string;
+  value: T | "";
+  onChange: (v: T | "") => void;
+  options: { value: T; label: string; help?: string }[];
+  className?: string;
+}) {
+  return (
+    <fieldset className={className}>
+      <legend className="label">{label}</legend>
+      <div
+        role="radiogroup"
+        aria-label={label}
+        className={`grid gap-1.5 ${options.length === 2 ? "sm:grid-cols-2" : "sm:grid-cols-3"}`}
+      >
+        {options.map((o) => {
+          const on = value === o.value;
+          return (
+            <button
+              key={o.value}
+              type="button"
+              role="radio"
+              aria-checked={on}
+              onClick={() => onChange(on ? "" : o.value)}
+              className={`min-h-11 rounded-lg border-2 px-3 py-2 text-left ${
+                on
+                  ? "border-slate-900 bg-slate-900 text-white"
+                  : "border-slate-200 bg-white text-slate-800 hover:bg-slate-50"
+              }`}
+            >
+              <span className="block text-sm font-bold leading-tight">{o.label}</span>
+              {o.help && (
+                <span className={`mt-0.5 block text-xs leading-snug ${on ? "text-slate-200" : "text-slate-600"}`}>
+                  {o.help}
+                </span>
+              )}
+            </button>
+          );
+        })}
+      </div>
+      {help && <p className="help">{help}</p>}
+    </fieldset>
+  );
+}

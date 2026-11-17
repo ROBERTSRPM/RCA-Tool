@@ -7,10 +7,21 @@
 import { uid } from "./id";
 import { blankInvestigation } from "./investigation";
 import type {
+  Asset,
+  ActionCategory,
   ActionItem,
+  ActionKind,
   ActionStatus,
   CauseNode,
   Category,
+  Criticality,
+  Deterioration,
+  IntervalUnit,
+  MaintenanceTask,
+  RolloutCheck,
+  RolloutStatus,
+  SparesCheck,
+  YesNoUnknown,
   EvidenceItem,
   EvidenceType,
   Investigation,
@@ -47,6 +58,23 @@ const NODE_STATUSES: NodeStatus[] = ["hypothesis", "verified", "ruled_out"];
 const EVIDENCE_TYPES: EvidenceType[] = ["photo", "data", "document", "interview", "inspection", "other"];
 const ACTION_STATUSES: ActionStatus[] = ["open", "in_progress", "done"];
 const RECURRENCES: Recurrence[] = ["unreviewed", "no", "yes"];
+const KINDS: ActionKind[] = ["", "corrective", "preventive"];
+const ACTION_CATEGORIES_ALL: ActionCategory[] = [
+  "",
+  "repair",
+  "design",
+  "maintenance_task",
+  "condition_monitoring",
+  "spares",
+  "procedure",
+  "training",
+  "operating_practice",
+];
+const INTERVAL_UNITS_ALL: IntervalUnit[] = ["hours_run", "days", "weeks", "months"];
+const DETERIORATIONS: Deterioration[] = ["", "natural", "forced"];
+const CRITICALITIES: Criticality[] = ["", "A", "B", "C"];
+const YES_NO: YesNoUnknown[] = ["", "yes", "no"];
+const ROLLOUT_STATUSES: RolloutStatus[] = ["open", "no_issue", "same_problem", "fixed"];
 const COST_CATEGORIES = OTHER_COST_CATEGORIES.map((c) => c.value);
 
 type Obj = Record<string, unknown>;
@@ -97,6 +125,10 @@ function normaliseNode(raw: unknown, depth: number, budget: { n: number }): Caus
     isRootCause: bool(get(o, "isRootCause")),
     collapsed: bool(get(o, "collapsed")),
     children,
+    // Optional fields stay absent when empty, so old data reads back exactly as it was stored.
+    ...(oneOf(get(o, "deterioration"), DETERIORATIONS, "") !== ""
+      ? { deterioration: oneOf(get(o, "deterioration"), DETERIORATIONS, "") }
+      : {}),
   };
 }
 
@@ -110,7 +142,67 @@ function normaliseAction(raw: unknown): ActionItem | null {
     dueDate: str(get(raw, "dueDate")),
     status: oneOf(get(raw, "status"), ACTION_STATUSES, "open"),
     cost: num(get(raw, "cost")),
+    ...(oneOf(get(raw, "kind"), KINDS, "") !== "" ? { kind: oneOf(get(raw, "kind"), KINDS, "") } : {}),
+    ...(oneOf(get(raw, "category"), ACTION_CATEGORIES_ALL, "") !== ""
+      ? { category: oneOf(get(raw, "category"), ACTION_CATEGORIES_ALL, "") }
+      : {}),
+    ...(isObj(get(raw, "task")) ? { task: normaliseTask(get(raw, "task") as Obj) } : {}),
   };
+}
+
+function normaliseTask(o: Obj): MaintenanceTask {
+  return {
+    description: str(get(o, "description")),
+    intervalValue: num(get(o, "intervalValue")),
+    intervalUnit: oneOf(get(o, "intervalUnit"), INTERVAL_UNITS_ALL, "months"),
+    craft: str(get(o, "craft")),
+    change: get(o, "change") === "changed" ? "changed" : "new",
+  };
+}
+
+function normaliseSpares(raw: unknown): SparesCheck | undefined {
+  if (!isObj(raw)) return undefined;
+  return {
+    needed: oneOf(get(raw, "needed"), YES_NO, ""),
+    inStock: oneOf(get(raw, "inStock"), YES_NO, ""),
+    leadTimeDays: num(get(raw, "leadTimeDays")),
+    coverage: str(get(raw, "coverage")),
+  };
+}
+
+function normaliseRollout(raw: unknown): RolloutCheck | null {
+  if (!isObj(raw)) return null;
+  return {
+    id: str(get(raw, "id")) || uid(),
+    assetId: str(get(raw, "assetId")),
+    assetTag: str(get(raw, "assetTag")),
+    assetLabel: str(get(raw, "assetLabel")),
+    what: str(get(raw, "what")),
+    owner: str(get(raw, "owner")),
+    dueDate: str(get(raw, "dueDate")),
+    status: oneOf(get(raw, "status"), ROLLOUT_STATUSES, "open"),
+  };
+}
+
+/** Tolerant reader for one asset document; null when it is not an object. */
+export function normaliseAsset(raw: unknown, rowId?: string): Asset | null {
+  if (!isObj(raw)) return null;
+  const now = new Date().toISOString();
+  const createdAt = str(get(raw, "createdAt")) || now;
+  const asset: Asset = {
+    id: rowId || str(get(raw, "id")) || uid(),
+    tag: str(get(raw, "tag")).trim(),
+    type: str(get(raw, "type")).trim(),
+    makeModel: str(get(raw, "makeModel")),
+    duty: str(get(raw, "duty")),
+    criticality: oneOf(get(raw, "criticality"), CRITICALITIES, ""),
+    site: str(get(raw, "site")),
+    notes: str(get(raw, "notes")),
+    createdAt,
+    updatedAt: str(get(raw, "updatedAt")) || createdAt,
+  };
+  if (get(raw, "isSample") === true) asset.isSample = true;
+  return asset;
 }
 
 function normaliseOtherCost(raw: unknown): OtherCost | null {
@@ -180,6 +272,12 @@ export function normaliseInvestigation(raw: unknown, rowId?: string): Investigat
       where: str(get(p, "where")),
       when: str(get(p, "when")),
       impact: str(get(p, "impact")),
+      assetTag: str(get(p, "assetTag")),
+      assetType: str(get(p, "assetType")),
+      makeModel: str(get(p, "makeModel")),
+      duty: str(get(p, "duty")),
+      criticality: oneOf(get(p, "criticality"), CRITICALITIES, ""),
+      failureMode: str(get(p, "failureMode")),
     },
     loss: normaliseLoss(get(raw, "loss"), base.loss),
     evidence: arr(get(raw, "evidence"))
@@ -195,6 +293,11 @@ export function normaliseInvestigation(raw: unknown, rowId?: string): Investigat
       eventsPerYearAfter: num(get(v, "eventsPerYearAfter")),
       notes: str(get(v, "notes")),
     },
+    ...(normaliseSpares(get(raw, "spares")) ? { spares: normaliseSpares(get(raw, "spares")) } : {}),
+    rollouts: arr(get(raw, "rollouts"))
+      .slice(0, 500)
+      .map(normaliseRollout)
+      .filter((x): x is RolloutCheck => x !== null),
   };
 }
 

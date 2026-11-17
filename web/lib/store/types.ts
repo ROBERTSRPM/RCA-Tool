@@ -1,5 +1,5 @@
 import type { UnreadableRow } from "../normalize";
-import type { Investigation, InvestigationPatch } from "../types";
+import type { Asset, Investigation, InvestigationPatch } from "../types";
 
 export type { UnreadableRow };
 
@@ -60,6 +60,8 @@ export class StoreError extends Error {
       | "conflict"
       | "too_large"
       | "limit"
+      /** The server does not have the table yet (its migration has not been applied). */
+      | "unavailable"
       | "unknown",
   ) {
     super(message);
@@ -76,3 +78,30 @@ export function nextTimestamp(previous?: string): string {
   const prev = previous ? Date.parse(previous) : NaN;
   return new Date(Number.isFinite(prev) && prev >= now ? prev + 1 : now).toISOString();
 }
+
+/** What can be changed on an asset after it is created. */
+export type AssetPatch = Partial<Omit<Asset, "id" | "createdAt" | "updatedAt">>;
+
+/**
+ * Persistence boundary for the asset register. Implemented over localStorage
+ * (demo mode) and over the Supabase `assets` table (signed in). Every method
+ * may throw a StoreError; code "unavailable" means the server has no assets
+ * table yet, which callers treat as "register not set up" and carry on.
+ */
+export interface AssetStore {
+  /** Every asset, sorted by tag. Seeds the sample assets once per browser or account. */
+  list(): Promise<Asset[]>;
+  /** Every stored row, unmodified, for the "Download my data" export. Empty when unavailable. */
+  exportAll(): Promise<RawRow[]>;
+  create(asset: Asset): Promise<Asset>;
+  createMany(assets: Asset[]): Promise<Asset[]>;
+  update(id: string, patch: AssetPatch): Promise<Asset>;
+  delete(id: string): Promise<void>;
+  /** Restores the sample assets (those whose tags the sample uses) without touching other assets. */
+  resetSampleAssets(): Promise<void>;
+}
+
+export const UNAVAILABLE_MESSAGE =
+  "The asset register is not set up on this server yet, so assets cannot be saved or listed. Everything else works.";
+
+export const MAX_ASSETS = 5000;

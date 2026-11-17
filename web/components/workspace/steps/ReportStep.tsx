@@ -16,7 +16,11 @@ import { failureText } from "@/lib/investigation";
 import { SAMPLE_NOTE } from "@/lib/sample";
 import { deriveStatus, isOverdue, STATUS_LABELS } from "@/lib/status";
 import { CATEGORY_LABEL, findNode, flatten, rootCauses, STATUS_LABEL } from "@/lib/tree";
+import { criticalSpareFlag, maintenancePlan, SPARES_FLAG_TEXT } from "@/lib/capa";
+import { categoryLabel, criticalityLabel, DETERIORATION_OPTIONS, kindLabel } from "@/lib/options";
 import { Icon } from "../../icons";
+import { PlanTable } from "../MaintenancePlan";
+import { RolloutReport } from "../RolloutPanel";
 import { evidenceTypeLabel } from "./EvidenceStep";
 import { ACTION_STATUS } from "./ActionsStep";
 import type { StepProps } from "../types";
@@ -40,6 +44,18 @@ export function ReportStep({ inv }: StepProps) {
   const outline = flatten(inv.tree);
   const status = STATUS_LABELS[deriveStatus(inv)];
   const p = inv.problem;
+  const plan = maintenancePlan(inv);
+  const spares = inv.spares;
+  const hasSpares = !!spares && (spares.needed !== "" || spares.coverage.trim() !== "");
+  const assetFacts: [string, string][] = [
+    ["Asset tag", (p.assetTag ?? "").trim()],
+    ["Asset type", (p.assetType ?? "").trim()],
+    ["Make and model", (p.makeModel ?? "").trim()],
+    ["Duty or service", (p.duty ?? "").trim()],
+    ["Criticality", criticalityLabel(p.criticality)],
+    ["Failure mode", (p.failureMode ?? "").trim()],
+  ];
+  const showAssetFacts = assetFacts.some(([, v]) => v);
 
   return (
     <div>
@@ -100,6 +116,12 @@ export function ReportStep({ inv }: StepProps) {
             ]}
           />
         </Section>
+
+        {showAssetFacts && (
+          <Section title="Asset">
+            <Facts rows={assetFacts.filter(([, v]) => v)} />
+          </Section>
+        )}
 
         <Section title="2. Loss">
           <p>
@@ -234,6 +256,8 @@ export function ReportStep({ inv }: StepProps) {
                         {" "}
                         [{CATEGORY_LABEL[node.category]}
                         {node.status !== "verified" && `, ${STATUS_LABEL[node.status].toLowerCase()}`}
+                        {node.deterioration &&
+                          `, ${DETERIORATION_OPTIONS.find((d) => d.value === node.deterioration)?.label.toLowerCase()} deterioration`}
                         {node.evidenceIds.length > 0 &&
                           `, evidence ${node.evidenceIds.map((id) => `E${evNo.get(id) ?? "?"}`).join(" ")}`}
                         ]
@@ -277,6 +301,7 @@ export function ReportStep({ inv }: StepProps) {
                 <thead>
                   <tr className="border-b-2 border-slate-900">
                     <th className="py-1 pr-2">Action</th>
+                    <th className="py-1 pr-2">Type</th>
                     <th className="py-1 pr-2">Fixes</th>
                     <th className="py-1 pr-2">Owner</th>
                     <th className="py-1 pr-2">Due</th>
@@ -290,6 +315,9 @@ export function ReportStep({ inv }: StepProps) {
                     return (
                       <tr key={a.id} className="avoid-break border-b border-slate-200 align-top">
                         <td className="py-1 pr-2">{a.description || "(no description)"}</td>
+                        <td className="py-1 pr-2 text-slate-700">
+                          {[kindLabel(a.kind), categoryLabel(a.category)].filter(Boolean).join(": ") || "Not set"}
+                        </td>
                         <td className="py-1 pr-2 text-slate-600">
                           {cause ? cause.text.slice(0, 60) + (cause.text.length > 60 ? "…" : "") : "Not linked"}
                         </td>
@@ -308,7 +336,7 @@ export function ReportStep({ inv }: StepProps) {
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colSpan={5} className="pt-1 pr-2 text-right font-bold">
+                    <td colSpan={6} className="pt-1 pr-2 text-right font-bold">
                       Total
                     </td>
                     <td className="pt-1 text-right font-bold tabular-nums">
@@ -320,6 +348,38 @@ export function ReportStep({ inv }: StepProps) {
             </div>
           )}
         </Section>
+
+        <Section title="Maintenance plan changes">
+          {plan.length === 0 ? (
+            <Muted>No new or changed maintenance tasks.</Muted>
+          ) : (
+            <>
+              <p className="mb-1 text-slate-600">
+                For the planner: load these into the maintenance system
+                {p.assetTag ? ` against ${p.assetTag}` : ""}.
+              </p>
+              <div className="overflow-x-auto">
+                <PlanTable lines={plan} />
+              </div>
+            </>
+          )}
+        </Section>
+
+        {hasSpares && spares && (
+          <Section title="Spares check">
+            <Facts
+              rows={[
+                ["Spare needed?", spares.needed === "yes" ? "Yes" : spares.needed === "no" ? "No" : ""],
+                ["In stock?", spares.needed === "yes" ? (spares.inStock === "yes" ? "Yes" : spares.inStock === "no" ? "No" : "") : ""],
+                ["Supplier lead time", spares.leadTimeDays === null ? "" : `${spares.leadTimeDays} days`],
+                ["Gap covered by", spares.coverage],
+              ]}
+            />
+            {criticalSpareFlag(spares) && (
+              <p className="mt-1 font-bold text-amber-900">Flag: {SPARES_FLAG_TEXT}.</p>
+            )}
+          </Section>
+        )}
 
         <Section title="6. Verification and savings">
           <Facts
@@ -347,6 +407,9 @@ export function ReportStep({ inv }: StepProps) {
           ) : (
             <Muted>Savings cannot be calculated until the expected events per year after the fix are entered.</Muted>
           )}
+        </Section>
+        <Section title="Rollout to similar assets">
+          <RolloutReport inv={inv} />
         </Section>
       </article>
     </div>

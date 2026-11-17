@@ -15,6 +15,7 @@ import {
   updateNode,
 } from "@/lib/tree";
 import type { CauseNode } from "@/lib/types";
+import { SimilarFailures } from "../SimilarFailures";
 import { Icon } from "../../icons";
 import { SectionCard, useConfirm } from "../../ui";
 import { CauseContext, type CauseCtx } from "../cause/context";
@@ -125,6 +126,7 @@ export function CauseStep({
 
   return (
     <CauseContext.Provider value={ctx}>
+      <div className="space-y-5">
       <SectionCard
         title="4. Find the cause: keep asking Why?"
         help="Start at the failure and ask why it happened. Add each answer as a cause. Keep going until you reach a System / Latent cause: a gap in procedure, training or planning. Flag the ones you will fix as root causes."
@@ -186,6 +188,13 @@ export function CauseStep({
           <NodePanel update={update} go={go} />
         </div>
       </SectionCard>
+      <SimilarFailures
+        inv={inv}
+        update={update}
+        parentId={effectiveId}
+        onAdded={(id) => setSelectedId(id)}
+      />
+      </div>
     </CauseContext.Provider>
   );
 }

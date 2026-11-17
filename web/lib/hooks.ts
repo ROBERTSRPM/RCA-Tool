@@ -62,6 +62,8 @@ export function useAutosavedInvestigation(initial: Investigation) {
         tree: cur.tree,
         actions: cur.actions,
         verification: cur.verification,
+        spares: cur.spares,
+        rollouts: cur.rollouts ?? [],
       };
       setSave({ status: "saving" });
       try {

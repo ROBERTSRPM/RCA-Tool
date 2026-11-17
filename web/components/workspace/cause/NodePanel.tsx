@@ -2,6 +2,7 @@
 
 import { evidenceTypeLabel } from "../steps/EvidenceStep";
 import { CATEGORY_HELP, CATEGORY_LABEL, findNode, STATUS_HELP, STATUS_LABEL } from "@/lib/tree";
+import { DETERIORATION_GUIDANCE, DETERIORATION_OPTIONS } from "@/lib/options";
 import type { Category, NodeStatus, StepId } from "@/lib/types";
 import { Icon } from "../../icons";
 import { CAT_STYLE } from "./NodeCard";
@@ -90,6 +91,39 @@ export function NodePanel({
           ))}
         </div>
         <p className="help">{STATUS_HELP[node.status]}</p>
+      </fieldset>
+
+      <fieldset>
+        <legend className="label">
+          Type of wear <span className="font-normal text-slate-600">(optional)</span>
+        </legend>
+        <div className="grid grid-cols-2 gap-1.5" role="radiogroup" aria-label="Type of wear">
+          {DETERIORATION_OPTIONS.map((d) => {
+            const on = node.deterioration === d.value;
+            return (
+              <button
+                key={d.value}
+                type="button"
+                role="radio"
+                aria-checked={on}
+                onClick={() => patch({ deterioration: on ? "" : d.value })}
+                className={`min-h-11 rounded-lg border-2 px-1.5 text-xs font-bold leading-tight sm:text-sm ${
+                  on
+                    ? "border-slate-900 bg-slate-900 text-white"
+                    : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
+                }`}
+              >
+                {d.label} deterioration
+              </button>
+            );
+          })}
+        </div>
+        <p className="help">
+          {node.deterioration
+            ? DETERIORATION_OPTIONS.find((d) => d.value === node.deterioration)?.help
+            : "Is this wear normal for the service, or did we cause it? Tap again to clear."}
+        </p>
+        <p className="help">{DETERIORATION_GUIDANCE}</p>
       </fieldset>
       </div>
 

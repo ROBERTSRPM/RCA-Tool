@@ -10,6 +10,7 @@ import {
 import type { Recurrence } from "@/lib/types";
 import { Icon } from "../../icons";
 import { NumberField, SectionCard, TextAreaField, TextField } from "../../ui";
+import { RolloutPanel } from "../RolloutPanel";
 import type { StepProps } from "../types";
 
 const OPTIONS: { value: Recurrence; label: string }[] = [
@@ -146,6 +147,8 @@ export function VerifyStep({ inv, update, go }: StepProps) {
           />
         </dl>
       </SectionCard>
+
+      <RolloutPanel inv={inv} update={update} go={go} />
     </div>
   );
 }

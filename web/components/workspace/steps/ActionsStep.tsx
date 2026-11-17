@@ -1,11 +1,13 @@
 "use client";
 
+import { blankTask, groupByRootCause, isTaskCategory } from "@/lib/capa";
 import { formatDate } from "@/lib/dates";
 import { formatMoney, totalActionCost } from "@/lib/finance";
 import { uid } from "@/lib/id";
+import { ACTION_CATEGORIES, ACTION_KINDS, INTERVAL_UNITS } from "@/lib/options";
 import { isOverdue } from "@/lib/status";
 import { findNode, rootCauses } from "@/lib/tree";
-import type { ActionItem, ActionStatus } from "@/lib/types";
+import type { ActionCategory, ActionItem, ActionKind, ActionStatus, IntervalUnit, MaintenanceTask } from "@/lib/types";
 import { Icon } from "../../icons";
 import {
   EmptyState,
@@ -16,6 +18,8 @@ import {
   TextField,
   useConfirm,
 } from "../../ui";
+import { MaintenancePlan } from "../MaintenancePlan";
+import { SparesCheck } from "../SparesCheck";
 import type { StepProps } from "../types";
 
 export const ACTION_STATUS: { value: ActionStatus; label: string }[] = [
@@ -32,11 +36,10 @@ export function ActionsStep({ inv, update, go }: StepProps) {
   const overdue = inv.actions.filter((a) => isOverdue(a)).length;
   const done = inv.actions.filter((a) => a.status === "done").length;
   const rootIds = new Set(roots.map((r) => r.id));
-  const linked = inv.actions.filter((a) => rootIds.has(a.causeId));
-  const unlinked = inv.actions.filter((a) => !rootIds.has(a.causeId));
   const unlinkedRoots = roots.filter((r) => !inv.actions.some((a) => a.causeId === r.id));
+  const { groups, unlinked } = groupByRootCause(inv);
 
-  function add(causeId = roots[0]?.id ?? "") {
+  function add(causeId = roots[0]?.id ?? "", kind: ActionKind = "") {
     const a: ActionItem = {
       id: uid(),
       causeId,
@@ -45,6 +48,7 @@ export function ActionsStep({ inv, update, go }: StepProps) {
       dueDate: "",
       status: "open",
       cost: null,
+      kind,
     };
     update((i) => ({ ...i, actions: [...i.actions, a] }));
   }
@@ -53,6 +57,8 @@ export function ActionsStep({ inv, update, go }: StepProps) {
       ...i,
       actions: i.actions.map((a) => (a.id === id ? { ...a, ...patch } : a)),
     }));
+  const changeTask = (a: ActionItem, patch: Partial<MaintenanceTask>) =>
+    change(a.id, { task: { ...(a.task ?? blankTask()), ...patch } });
 
   async function remove(a: ActionItem) {
     const ok = await confirm({
@@ -70,6 +76,7 @@ export function ActionsStep({ inv, update, go }: StepProps) {
     const cause = findNode(inv.tree, a.causeId);
     const stale = cause !== null && !cause.isRootCause;
     const isLinked = rootIds.has(a.causeId);
+    const task = a.task ?? blankTask();
     return (
       <li
         key={a.id}
@@ -97,9 +104,9 @@ export function ActionsStep({ inv, update, go }: StepProps) {
             <Icon name="trash" size={16} /> Delete
           </button>
         </div>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-2">
           <SelectField
-            className="sm:col-span-2 lg:col-span-4"
+            className="sm:col-span-2"
             label={isLinked ? "Fixes this root cause" : "Re-link to a root cause"}
             help={
               isLinked
@@ -120,14 +127,81 @@ export function ActionsStep({ inv, update, go }: StepProps) {
               })),
             ]}
           />
+          <SelectField
+            label="Corrective or preventive?"
+            help={ACTION_KINDS.find((k) => k.value === a.kind)?.help}
+            value={a.kind ?? ""}
+            onChange={(v) => change(a.id, { kind: v })}
+            options={[
+              { value: "", label: "Not set" },
+              ...ACTION_KINDS.map((k) => ({ value: k.value as ActionKind, label: k.label })),
+            ]}
+          />
+          <SelectField
+            label="Category"
+            value={a.category ?? ""}
+            onChange={(v: ActionCategory) =>
+              change(a.id, { category: v, ...(isTaskCategory(v) && !a.task ? { task: blankTask() } : {}) })
+            }
+            options={[
+              { value: "", label: "Not set" },
+              ...ACTION_CATEGORIES.map((c) => ({ value: c.value as ActionCategory, label: c.label })),
+            ]}
+          />
           <TextAreaField
-            className="sm:col-span-2 lg:col-span-4"
+            className="sm:col-span-2"
             label="What will be done?"
             rows={2}
             placeholder="e.g. Add seal replacement to the 6-monthly PM plan"
             value={a.description}
             onChange={(v) => change(a.id, { description: v })}
           />
+          {isTaskCategory(a.category) && (
+            <fieldset
+              className="grid gap-4 rounded-lg border border-slate-300 bg-white p-3 sm:col-span-2 sm:grid-cols-2"
+              data-testid="task-fields"
+            >
+              <legend className="px-1 text-sm font-bold text-slate-800">
+                Task for the maintenance plan
+              </legend>
+              <TextAreaField
+                className="sm:col-span-2"
+                label="Task description"
+                help="Written so a planner can load it: what to do, on what, to what standard."
+                rows={2}
+                placeholder="e.g. Check seal flush flow and clean the flush strainer"
+                value={task.description}
+                onChange={(v) => changeTask(a, { description: v })}
+              />
+              <NumberField
+                label="Do this every"
+                placeholder="e.g. 3"
+                value={task.intervalValue}
+                onChange={(v) => changeTask(a, { intervalValue: v })}
+              />
+              <SelectField<IntervalUnit>
+                label="Interval unit"
+                value={task.intervalUnit}
+                onChange={(v) => changeTask(a, { intervalUnit: v })}
+                options={INTERVAL_UNITS}
+              />
+              <TextField
+                label="Craft or trade"
+                placeholder="e.g. Mechanical fitter"
+                value={task.craft}
+                onChange={(v) => changeTask(a, { craft: v })}
+              />
+              <SelectField<"new" | "changed">
+                label="New task or a change?"
+                value={task.change}
+                onChange={(v) => changeTask(a, { change: v })}
+                options={[
+                  { value: "new", label: "A new task" },
+                  { value: "changed", label: "A change to an existing task" },
+                ]}
+              />
+            </fieldset>
+          )}
           <TextField
             label="Owner"
             help="One named person."
@@ -162,7 +236,7 @@ export function ActionsStep({ inv, update, go }: StepProps) {
     <div className="space-y-5">
       <SectionCard
         title="5. Fix it and track every action"
-        help="Each action should fix a root cause, have one named owner and a due date. Update the status as work gets done."
+        help="Each root cause needs two kinds of action: corrective (fix this failure and its damage) and preventive (stop it happening again). Give each one a named owner and a due date."
         right={
           roots.length > 0 && (
             <button className="btn btn-primary" onClick={() => add()}>
@@ -221,7 +295,52 @@ export function ActionsStep({ inv, update, go }: StepProps) {
           ) : null}
           {inv.actions.length > 0 && (
             <div className="space-y-6">
-              {linked.length > 0 && <ul className="space-y-4">{linked.map(renderCard)}</ul>}
+              {groups
+                .filter((g) => g.corrective.length + g.preventive.length + g.unclassified.length > 0)
+                .map((g) => (
+                  <section
+                    key={g.root.id}
+                    aria-label={`Actions for root cause: ${g.root.text || "(no text)"}`}
+                    data-testid="root-group"
+                    className="rounded-xl border-2 border-slate-200 p-3 sm:p-4"
+                  >
+                    <h3 className="text-base font-bold leading-snug text-slate-900">
+                      <span className="mr-2 rounded bg-slate-900 px-1.5 py-px align-middle text-[10px] font-bold uppercase text-white">
+                        Root cause
+                      </span>
+                      {g.root.text || "(no text)"}
+                    </h3>
+                    <div className="mt-3 grid gap-4 lg:grid-cols-2">
+                      <KindColumn
+                        title="Corrective"
+                        help="Fix this failure and its damage."
+                        addLabel="Add corrective action"
+                        onAdd={() => add(g.root.id, "corrective")}
+                        empty={g.preventive.length > 0 ? "No corrective action. Is the damage fixed?" : undefined}
+                      >
+                        {g.corrective.map(renderCard)}
+                      </KindColumn>
+                      <KindColumn
+                        title="Preventive"
+                        help="Stop it happening again."
+                        addLabel="Add preventive action"
+                        onAdd={() => add(g.root.id, "preventive")}
+                        empty={g.corrective.length > 0 ? "No preventive action yet. Fixing the damage alone will not stop it coming back." : undefined}
+                      >
+                        {g.preventive.map(renderCard)}
+                      </KindColumn>
+                    </div>
+                    {g.unclassified.length > 0 && (
+                      <div className="mt-4" data-testid="unclassified-actions">
+                        <p className="text-sm font-bold text-slate-800">Not classified yet</p>
+                        <p className="mb-2 text-sm text-slate-600">
+                          Choose corrective or preventive on each action and it moves to the right column.
+                        </p>
+                        <ul className="grid gap-4 lg:grid-cols-2">{g.unclassified.map(renderCard)}</ul>
+                      </div>
+                    )}
+                  </section>
+                ))}
               {unlinked.length > 0 && (
                 <section aria-labelledby="unlinked-heading" data-testid="unlinked-actions">
                   <h3 id="unlinked-heading" className="text-base font-bold text-slate-900">
@@ -232,13 +351,57 @@ export function ActionsStep({ inv, update, go }: StepProps) {
                       ? "No cause is flagged as a root cause right now, so these actions have nothing to link to. Flag a root cause in the cause tree, then re-link them here, or delete them."
                       : "These actions are not tied to a current root cause: the cause may have been deleted or un-flagged, or the action was left general. They still count in the totals. Pick a root cause below to re-link each one."}
                   </p>
-                  <ul className="space-y-4">{unlinked.map(renderCard)}</ul>
+                  <ul className="grid gap-4 lg:grid-cols-2">{unlinked.map(renderCard)}</ul>
                 </section>
               )}
             </div>
           )}
         </div>
       </SectionCard>
+
+      <SectionCard
+        title="Maintenance plan changes"
+        help="Every new or changed maintenance task and condition monitoring task, with its interval. Hand this to your planner to load into the maintenance system."
+      >
+        <MaintenancePlan inv={inv} />
+      </SectionCard>
+
+      <SparesCheck inv={inv} update={update} />
+    </div>
+  );
+}
+
+function KindColumn({
+  title,
+  help,
+  addLabel,
+  onAdd,
+  empty,
+  children,
+}: {
+  title: string;
+  help: string;
+  addLabel: string;
+  onAdd: () => void;
+  empty?: string;
+  children: React.ReactNode;
+}) {
+  const items = Array.isArray(children) ? children.length : children ? 1 : 0;
+  return (
+    <div className="min-w-0 rounded-lg bg-white p-3">
+      <div className="flex flex-wrap items-start justify-between gap-2">
+        <div>
+          <h4 className="text-sm font-bold text-slate-900">{title}</h4>
+          <p className="text-sm text-slate-600">{help}</p>
+        </div>
+        <button type="button" className="btn btn-secondary btn-sm" onClick={onAdd}>
+          <Icon name="plus" size={14} /> {addLabel}
+        </button>
+      </div>
+      {items === 0 && empty && (
+        <p className="mt-3 rounded-lg border border-amber-300 bg-amber-50 p-2 text-sm text-amber-900">{empty}</p>
+      )}
+      {items > 0 && <ul className="mt-3 space-y-4">{children}</ul>}
     </div>
   );
 }
