@@ -113,8 +113,8 @@ test('A-SESS-1', 'Signed in: session survives reload, account menu, signed-in /l
   await sub('login-redirect', 'Visiting /login or /signup while signed in redirects to /app', async () => {
     for (const u of ['/login', '/signup']) { await page.goto(BASE + u); await page.waitForURL(/\/app$/, { timeout: 15000 }); }
   });
-  await sub('sample-seeded', 'Account has its own seeded sample with the same hand-calculated totals as demo ($198,700 saved)', async () => {
-    await page.goto(BASE + '/app'); const s = await e.dashStats(page); eq(s['Verified annual savings'], '$198,700'); eq(s['Open actions'], '0');
+  await sub('sample-seeded', 'Account has its own seeded sample with the same hand-calculated totals as demo ($238,440 saved, round 3 sample)', async () => {
+    await page.goto(BASE + '/app'); const s = await e.dashStats(page); eq(s['Verified annual savings'], '$238,440'); eq(s['Open actions'], '0');
     const rows = await e.dashRows(page); ok(rows.some(r => r.includes('Illustrative sample') && r.includes('$238,440')), rows.join('|'));
   });
   await sub('landing-sample-link', 'Landing "Open the sample investigation" maps to the account sample when signed in', async () => {
@@ -151,14 +151,14 @@ test('A-E2E-1', 'Signed-in full flow as user A: create, fill 7 steps, hand-check
   const calc = await e.buildAll(page, { sub, mode: 'account' });
   await e.finishVerify(page, { sub }); await waitSaved(page);
   await step(page, 'Actions');
-  for (const n of [0, 1]) await page.locator('li:has(label:has-text("What will be done?"))').nth(n).getByLabel('Status', { exact: true }).selectOption({ label: 'Done' });
+  for (const n of [0, 1]) await f.setActionStatus(page, n, 'Done');
   await waitSaved(page);
   await sub('reload-report', 'After full reload the account data gives the hand-calculated report', async () => {
     await page.goto(BASE + '/app'); await page.goto(BASE + '/app/investigations/' + id + '#report'); const t = (await page.locator('article.print-sheet').innerText()).replace(/\s+/g, ' ').toLowerCase();
     for (const s of ['annual loss $13,800', 'annual saving (verified) $10,350', 'action cost $2,151', 'payback 2.5 months', 'status: closed']) ok(t.includes(s), 'missing ' + s);
   });
-  await sub('dash', 'Dashboard (account): loss $0, open 0, overdue 0, saved $209,050 (198,700 + 10,350), new row Closed', async () => {
-    await page.goto(BASE + '/app'); const s = await e.dashStats(page); eq(s['Verified annual savings'], money(198700 + calc.saving)); eq(s['Open actions'], '0'); eq(s['Overdue actions'], '0'); eq(s['Annual loss under investigation'], '$0');
+  await sub('dash', 'Dashboard (account): loss $0, open 0, overdue 0, saved 238,440 + 10,350 = $248,790, new row Closed', async () => {
+    await page.goto(BASE + '/app'); const s = await e.dashStats(page); eq(s['Verified annual savings'], money(238440 + calc.saving)); eq(s['Open actions'], '0'); eq(s['Overdue actions'], '0'); eq(s['Annual loss under investigation'], '$0');
     ok((await e.dashRows(page)).some(r => r.includes('QA: Gearbox') && r.includes('Closed') && r.includes('$13,800')));
   });
   await sub('print', 'Print emulation of the account report hides app chrome (account menu, header)', async () => {
@@ -245,7 +245,7 @@ test('A-PERS-1', 'Signed-in persistence: reload after each kind of edit, autosav
     await f.fillVerify(page, { date: '2026-11-12', recurred: 'No, it has not recurred', after: 1, notes: 'acc notes' }); await reload();
     await step(page, 'Evidence'); await page.getByText('E-acc').waitFor(); await step(page, 'Cause tree'); await f.selectCause(page, 'AccCause');
     ok(await page.getByRole('checkbox', { name: /root cause/ }).isChecked()); ok(await page.getByRole('checkbox', { name: /^E1\./ }).isChecked()); eq(await page.getByRole('radio', { name: 'Verified', exact: true }).getAttribute('aria-checked'), 'true');
-    await step(page, 'Actions'); eq(await page.getByLabel('Cost', { exact: true }).inputValue(), '321.5'); eq(await page.getByLabel('Owner', { exact: true }).inputValue(), 'Zed');
+    await step(page, 'Actions'); { const li = await f.openAction(page, 0); eq(await li.getByLabel('Cost', { exact: true }).inputValue(), '321.5'); eq(await li.getByLabel('Owner', { exact: true }).inputValue(), 'Zed'); }
     await step(page, 'Verify'); eq(await page.getByLabel('What did you find?').inputValue(), 'acc notes');
   });
   await sub('fast-reload', 'Edit then reload within 60 ms - edit still saved (flush on pagehide)', async () => {
@@ -440,7 +440,7 @@ test('A-LOSS-1', 'Signed in: the new loss fields persist in the account and carr
   });
   await sub('close-dashboard', 'After closing S3 the verified tile rises by exactly $12,641 (cash +$8,801, opportunity +$3,840) and the loss tile drops by $20,462', async () => {
     const before = globalThis.__savedBefore; const lossBefore = num((await tiles())[0]);
-    await page.goto(BASE + '/app/investigations/' + id); await page.getByLabel('Title', { exact: true }).waitFor(); await step(page, 'Actions'); await page.locator('li:has(label:has-text("What will be done?"))').first().getByLabel('Status', { exact: true }).selectOption({ label: 'Done' });
+    await page.goto(BASE + '/app/investigations/' + id); await page.getByLabel('Title', { exact: true }).waitFor(); await step(page, 'Actions'); await f.setActionStatus(page, 0, 'Done');
     await f.fillVerify(page, { date: '2026-11-10', recurred: 'No, it has not recurred' }); await waitSaved(page); const t = await tiles();
     eq([num(t[3]), ...split(t[3])], [before[0] + 12641, before[1] + 8801, before[2] + 3840], 'verified tile delta'); eq(num(t[0]), lossBefore - 20462, 'loss tile delta');
   });

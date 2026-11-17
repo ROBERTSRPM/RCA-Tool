@@ -1,7 +1,7 @@
 {
   "suite": "demo",
-  "base": "http://localhost:3611",
-  "at": "2026-11-17T05:49:16.187Z",
+  "base": "http://localhost:3555",
+  "at": "2026-11-17T06:05:55.643Z",
   "results": [
     {
       "id": "D-LAND-1.hdr",
@@ -64,13 +64,13 @@
       "title": "Landing page: every link and button works",
       "status": "pass",
       "detail": "",
-      "ms": 946
+      "ms": 926
     },
     {
       "id": "D-DASH-1.totals",
-      "title": "Totals: loss under investigation $0 (sample is closed), 0 open, 0 overdue, saved $198,700",
-      "status": "fail",
-      "detail": "values differ: expected \"$198,700\" but got \"$238,440\"",
+      "title": "Totals: loss under investigation $0 (sample is closed), 0 open, 0 overdue, saved $238,440 (round 3 sample)",
+      "status": "pass",
+      "detail": "",
       "ms": 0
     },
     {
@@ -85,7 +85,7 @@
       "title": "Dashboard (sample only): totals equal hand calculation",
       "status": "pass",
       "detail": "",
-      "ms": 292
+      "ms": 260
     },
     {
       "id": "D-DASH-2.dup",
@@ -155,7 +155,7 @@
       "title": "Dashboard buttons: duplicate, delete cancel/confirm, reset sample, empty state",
       "status": "pass",
       "detail": "",
-      "ms": 4694
+      "ms": 4677
     },
     {
       "id": "D-E2E-1.problem",
@@ -208,9 +208,9 @@
     },
     {
       "id": "D-E2E-1.dash-1",
-      "title": "Dashboard totals (open work, unverified): loss $13,800, open 2, overdue 1, saved $198,700",
-      "status": "fail",
-      "detail": "values differ: expected \"$198,700\" but got \"$238,440\"",
+      "title": "Dashboard totals (open work, unverified): loss $13,800, open 2, overdue 1, saved $238,440",
+      "status": "pass",
+      "detail": "",
       "ms": 0
     },
     {
@@ -223,16 +223,58 @@
     {
       "id": "D-E2E-1.dash-2",
       "title": "Verified savings must not count while actions are still open (review says \"no recurrence\" but 2 actions not done)",
-      "status": "fail",
-      "detail": "saving counted before actions are complete: expected \"$198,700\" but got \"$238,440\"",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-E2E-1.verified-label",
+      "title": "Once all actions are Done, review says no recurrence and a date is set, Verify says \"Annual saving (verified)\" and the status is Closed",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-E2E-1.dash-3",
+      "title": "Dashboard after closing: loss $0, open 0, overdue 0, saved $248,790; row says Closed",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-E2E-1.report",
+      "title": "Report content matches data and hand-calculated figures",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-E2E-1.report-ruledout",
+      "title": "Report marks ruled-out cause and category/evidence tags",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-E2E-1.reload",
+      "title": "After reload the report is identical (everything persisted)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "D-E2E-1.print",
+      "title": "Print emulation: app chrome hidden, report visible, A4 PDF renders",
+      "status": "pass",
+      "detail": "",
       "ms": 0
     },
     {
       "id": "D-E2E-1",
       "title": "Full flow: new investigation, 7 steps, hand-checked numbers, dashboard, report, reload",
-      "status": "fail",
-      "detail": "locator.selectOption: Timeout 30000ms exceeded. | Call log: | \u001b[2m  - waiting for locator('li:has(label:has-text(\"What will be done?\"))').first().getByLabel('Status', { exact: true })\u001b[22m | ",
-      "ms": 35383
+      "status": "pass",
+      "detail": "",
+      "ms": 7073
     },
     {
       "id": "D-TREE-1.empty",
@@ -330,7 +372,7 @@
       "title": "Cause tree operations: add child/sibling, edit, delete, collapse/expand, move, status",
       "status": "pass",
       "detail": "",
-      "ms": 33510
+      "ms": 33291
     },
     {
       "id": "D-TREE-2.tree-count",
@@ -386,7 +428,7 @@
       "title": "Switching Tree / 5 Whys / Fishbone keeps data; every view control works",
       "status": "pass",
       "detail": "",
-      "ms": 1257
+      "ms": 1053
     },
     {
       "id": "D-QC-1.blank",
@@ -489,22 +531,22 @@
     {
       "id": "D-QC-1.action-incomplete",
       "title": "Rule action-missing-owner-or-date: both missing, then owner only, then clears",
-      "status": "fail",
-      "detail": "locator.fill: Timeout 30000ms exceeded. | Call log: | \u001b[2m  - waiting for locator('li:has(label:has-text(\"What will be done?\"))').first().getByLabel('Owner', { exact: true })\u001b[22m | ",
+      "status": "pass",
+      "detail": "",
       "ms": 0
     },
     {
       "id": "D-QC-1.overdue",
       "title": "Rule action-overdue: past due + not done flags; \"today\" is not overdue; Done clears it",
-      "status": "fail",
-      "detail": "locator.fill: Timeout 30000ms exceeded. | Call log: | \u001b[2m  - waiting for locator('li:has(label:has-text(\"What will be done?\"))').first().getByLabel('Due date')\u001b[22m | ",
+      "status": "pass",
+      "detail": "",
       "ms": 0
     },
     {
       "id": "D-QC-1.verify-missing",
       "title": "Rule done-without-verification: all done + unreviewed; jump -> Verify; clears when reviewed",
-      "status": "fail",
-      "detail": "locator.selectOption: Timeout 30000ms exceeded. | Call log: | \u001b[2m  - waiting for locator('li:has(label:has-text(\"What will be done?\"))').first().getByLabel('Status', { exact: true })\u001b[22m | ",
+      "status": "pass",
+      "detail": "",
       "ms": 0
     },
     {
@@ -517,8 +559,8 @@
     {
       "id": "D-QC-1.all-clear",
       "title": "With everything fixed the panel shows \"All clear\"",
-      "status": "fail",
-      "detail": "locator.fill: Timeout 30000ms exceeded. | Call log: | \u001b[2m  - waiting for locator('li:has(label:has-text(\"What will be done?\"))').first().getByLabel('Due date')\u001b[22m | ",
+      "status": "pass",
+      "detail": "",
       "ms": 0
     },
     {
@@ -540,7 +582,7 @@
       "title": "Quality check: each rule triggers, jump link lands on the right step, clears when fixed",
       "status": "pass",
       "detail": "",
-      "ms": 126659
+      "ms": 8060
     },
     {
       "id": "D-PERS-1.autosave-states",
@@ -594,8 +636,8 @@
     {
       "id": "D-PERS-1.actions",
       "title": "Actions add / edit / status / delete survive reload",
-      "status": "fail",
-      "detail": "locator.inputValue: Timeout 30000ms exceeded. | Call log: | \u001b[2m  - waiting for locator('li:has(label:has-text(\"What will be done?\"))').first().getByLabel('Owner', { exact: true })\u001b[22m | ",
+      "status": "pass",
+      "detail": "",
       "ms": 0
     },
     {
@@ -637,7 +679,7 @@
       "id": "D-PERS-1.concurrent-window",
       "title": "Two tabs edit different fields within the same ~350 ms autosave window: neither edit may be silently lost (3 tries)",
       "status": "fail",
-      "detail": "values differ: expected [] but got [\"try 0: site=\\\"S01794894390970\\\" (typed \\\"S01794894390970\\\") when=\\\"Night shift, full speed\\\" (typed \\\"W01794894390970\\\") notices=1\",\"try 1: site=\\\"S01794894390970\\\" (typed \\\"S11794894394099\\\") when=\\\"W11794894394099\\\" (typed \\\"W11794894394099\\\") notices=1\",\"try 2: site=\\\"S21794894397216\\\" (typed \\\"S21794894397216\\\") when=\\\"W11794894394099\\\" (typed \\\"W21794894397216\\\") notices=0\"]",
+      "detail": "values differ: expected [] but got [\"try 0: site=\\\"S01794895420511\\\" (typed \\\"S01794895420511\\\") when=\\\"Night shift, full speed\\\" (typed \\\"W01794895420511\\\") notices=0\",\"try 1: site=\\\"S11794895423529\\\" (typed \\\"S11794895423529\\\") when=\\\"Night shift, full speed\\\" (typed \\\"W11794895423529\\\") notices=0\",\"try 2: site=\\\"S21794895426636\\\" (typed \\\"S21794895426636\\\") when=\\\"Night shift, full speed\\\" (typed \\\"W21794895426636\\\") notices=0\"]",
       "ms": 0
     },
     {
@@ -645,7 +687,7 @@
       "title": "Persistence: reload after each kind of edit (demo)",
       "status": "pass",
       "detail": "",
-      "ms": 54985
+      "ms": 25093
     },
     {
       "id": "D-EDGE-NUM.letters",
@@ -734,8 +776,8 @@
     {
       "id": "D-EDGE-NUM.payback-zero-cost",
       "title": "Action cost 0 with saving: payback \"under 0.1 months\"",
-      "status": "fail",
-      "detail": "locator.fill: Timeout 30000ms exceeded. | Call log: | \u001b[2m  - waiting for locator('li:has(label:has-text(\"What will be done?\"))').first().getByLabel('Cost', { exact: true })\u001b[22m | ",
+      "status": "pass",
+      "detail": "",
       "ms": 0
     },
     {
@@ -750,7 +792,7 @@
       "title": "Number fields: zero, negative, non-numeric, decimals, huge; payback edge cases",
       "status": "pass",
       "detail": "",
-      "ms": 34093
+      "ms": 4246
     },
     {
       "id": "D-EDGE-TEXT.overflow-problem",
@@ -848,7 +890,7 @@
       "title": "Very long text, HTML/script text and special characters render as text and do not break layout",
       "status": "pass",
       "detail": "",
-      "ms": 24054
+      "ms": 23798
     },
     {
       "id": "D-EDGE-DATE.past-future-event",
@@ -890,7 +932,7 @@
       "title": "Dates in the past and future",
       "status": "pass",
       "detail": "",
-      "ms": 4809
+      "ms": 4763
     },
     {
       "id": "D-EDGE-NAV.bad-id",
@@ -986,15 +1028,15 @@
     {
       "id": "D-EDGE-NAV",
       "title": "Invalid id, unknown routes, back/forward, double-click create",
-      "status": "pass",
-      "detail": "",
-      "ms": 11342
+      "status": "fail",
+      "detail": "CSP violations during test: Applying inline style violates the following Content Security Policy directive 'style-src 'self''. Either the 'unsafe-inline' keyword, a hash ('sha256-Z5XTK23DFuEMs0PwnyZDO9SWxemQ5HxcpVaBNuUJyWY='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked. || CSP violation: style-src-elem blocked inline at http://localhost:3555/nope:1 || Applying inline style violates the following Content Security Policy directive 'style-src 'self''. Either the 'unsafe-inline' keyword, a hash ('sha256-Z5XTK23DFuEMs0PwnyZDO9SWxemQ5HxcpVaBNuUJyWY='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked.",
+      "ms": 11296
     },
     {
       "id": "D-EDGE-ACT.hidden-after-unflag",
       "title": "After the only root cause is un-flagged the existing action is still visible and editable",
-      "status": "fail",
-      "detail": "Actions step shows 0 action cards (it shows \"Flag a root cause first\") although 1 action with cost $500 still exists",
+      "status": "pass",
+      "detail": "",
       "ms": 0
     },
     {
@@ -1009,7 +1051,7 @@
       "title": "Actions whose root cause is unflagged or deleted",
       "status": "pass",
       "detail": "",
-      "ms": 1799
+      "ms": 1870
     },
     {
       "id": "D-EDGE-EVID.upload",
@@ -1058,7 +1100,7 @@
       "title": "Evidence: link/unlink, delete confirm, photo upload, non-image file",
       "status": "pass",
       "detail": "",
-      "ms": 5346
+      "ms": 5328
     },
     {
       "id": "D-EDGE-STORE.corrupt",
@@ -1086,7 +1128,7 @@
       "title": "Browser storage faults: corrupt JSON, blocked storage",
       "status": "pass",
       "detail": "",
-      "ms": 2649
+      "ms": 2795
     },
     {
       "id": "D-ERR-1.pages-desktop",
@@ -1121,7 +1163,7 @@
       "title": "No console errors or failed requests on any page (desktop and 375px, every step and cause view)",
       "status": "pass",
       "detail": "",
-      "ms": 26880
+      "ms": 27205
     },
     {
       "id": "D-A11Y-1.names",
@@ -1233,7 +1275,7 @@
       "title": "Accessibility: names, labels, headings, language, titles, focus visibility, keyboard reach, contrast",
       "status": "pass",
       "detail": "",
-      "ms": 23726
+      "ms": 23968
     },
     {
       "id": "D-MOB-1.page_",
@@ -1366,7 +1408,7 @@
       "title": "375px layout: no horizontal overflow, clipped or off-screen content on every page and step (sample + filled)",
       "status": "pass",
       "detail": "",
-      "ms": 16858
+      "ms": 16495
     },
     {
       "id": "D-MOB-E2E.problem",
@@ -1436,7 +1478,7 @@
       "title": "375px: the full end-to-end flow (all 7 steps, 7-cause tree, actions, verify) works with touch-sized layout",
       "status": "pass",
       "detail": "",
-      "ms": 4587
+      "ms": 4405
     }
   ],
   "notes": [

@@ -99,7 +99,7 @@ test('D-TREE-1', 'Cause tree operations: add child/sibling, edit, delete, collap
     await d.getByRole('button', { name: 'Delete' }).click();
     await step(page, 'Actions');
     // round 2 (intentional change c): unlinked actions sit in a "Not linked to a root cause" group with a re-link control
-    await page.getByTestId('unlinked-actions').waitFor(); eq(await page.getByTestId('unlinked-actions').getByLabel('Re-link to a root cause').inputValue(), '', 'action should now be unlinked');
+    await page.getByTestId('unlinked-actions').waitFor(); await page.getByTestId('unlinked-actions').getByRole('button', { name: /^Edit action/ }).click(); eq(await page.getByTestId('unlinked-actions').getByLabel('Re-link to a root cause').inputValue(), '', 'action should now be unlinked');
   });
   await sub('details-btn', '"Details" toolbar button is present and scrolls to the panel without error', async () => {
     await step(page, 'Cause tree'); await f.selectCause(page, 'Cause two EDITED');
@@ -241,21 +241,21 @@ test('D-QC-1', 'Quality check: each rule triggers, jump link lands on the right 
     await step(page, 'Report'); await clickJump(page, /has no action to fix it/); eq(await f.activeStep(page), 'Actions');
   });
   await sub('action-incomplete', 'Rule action-missing-owner-or-date: both missing, then owner only, then clears', async () => {
-    await f.addAction(page, { cause: 'No rebuild checklist', desc: 'Write checklist' });
+    await f.addAction(page, { cause: 'No rebuild checklist', desc: 'Write checklist', category: 'Procedure or standard' });
     let t = await R(page); ok(has(t, /Action "Write checklist" needs an owner and a due date/), t.join('|'));
     ok(!has(t, /has no action to fix it/), 'root-no-action should clear once linked');
-    const li = page.locator('li:has(label:has-text("What will be done?"))').first();
+    let li = await f.openAction(page, 0);
     await li.getByLabel('Due date').fill('2027-02-02');
     t = await R(page); ok(has(t, /needs an owner\./), t.join('|'));
     await step(page, 'Report'); await clickJump(page, /needs an owner/); eq(await f.activeStep(page), 'Actions');
-    await li.getByLabel('Owner', { exact: true }).fill('Kim');
+    li = await f.openAction(page, 0); await li.getByLabel('Owner', { exact: true }).fill('Kim');
     t = await R(page); ok(!has(t, /Write checklist/), t.join('|'));
   });
   await sub('overdue', 'Rule action-overdue: past due + not done flags; "today" is not overdue; Done clears it', async () => {
-    const li = page.locator('li:has(label:has-text("What will be done?"))').first();
+    let li = await f.openAction(page, 0);
     await li.getByLabel('Due date').fill('2020-05-05');
     let t = await R(page); ok(has(t, /Action "Write checklist" is overdue \(was due 2020-05-05\)/), t.join('|'));
-    ok(await page.getByText('Overdue since 5 May 2020').count() === 1, 'chip on action card');
+    ok(await page.getByText('Overdue since 5 May 2020').count() === 1, 'overdue chip on the open action');
     const today = new Date(); const iso = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
     await li.getByLabel('Due date').fill(iso);
     t = await R(page); ok(!has(t, /overdue/), 'due today must not be overdue: ' + t.join('|'));
@@ -263,7 +263,7 @@ test('D-QC-1', 'Quality check: each rule triggers, jump link lands on the right 
     await step(page, 'Verify'); await clickJump(page, /is overdue/); eq(await f.activeStep(page), 'Actions');
   });
   await sub('verify-missing', 'Rule done-without-verification: all done + unreviewed; jump -> Verify; clears when reviewed', async () => {
-    const li = page.locator('li:has(label:has-text("What will be done?"))').first();
+    const li = await f.openAction(page, 0);
     await li.getByLabel('Status', { exact: true }).selectOption({ label: 'Done' });
     let t = await R(page); ok(has(t, /All actions are done but nobody has checked/), t.join('|'));
     ok(!has(t, /is overdue/), 'done action must not be overdue');
@@ -280,8 +280,7 @@ test('D-QC-1', 'Quality check: each rule triggers, jump link lands on the right 
     await f.fillVerify(page, { recurred: 'No, it has not recurred' });
   });
   await sub('all-clear', 'With everything fixed the panel shows "All clear"', async () => {
-    const li = page.locator('li:has(label:has-text("What will be done?"))').first();
-    await step(page, 'Actions'); await li.getByLabel('Due date').fill('2026-12-01');
+    await step(page, 'Actions'); const li = await f.openAction(page, 0); await li.getByLabel('Due date').fill('2026-12-01');
     await step(page, 'Cause tree'); await f.selectCause(page, 'Bearing seized'); await page.getByRole('radio', { name: 'System / Latent' }).click();
     const t = await R(page); ok(t.length === 0 || true);
     const txt = await page.locator('section[aria-label="Quality check"]').innerText();

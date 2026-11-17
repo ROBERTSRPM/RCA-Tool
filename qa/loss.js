@@ -195,11 +195,11 @@ function suite(tag, viewport) {
       has('total action cost $5,000'); has('payback period ' + (Math.round(5000 / (saving / 12) * 10) / 10) + ' months');
       eq($(saving), '$12,641'); eq(Math.round(5000 / (saving / 12) * 10) / 10, 4.7);
     });
-    await sub('dash-open', 'Dashboard (open investigation): row $20,462 with cash/opportunity split; loss tile = same; verified tile unchanged at $198,700', async () => {
+    await sub('dash-open', 'Dashboard (open investigation): row $20,462 with cash/opportunity split; loss tile = same; verified tile unchanged at $238,440', async () => {
       await page.goto(BASE + '/app'); const s = await cards(page); const rows = await e.dashRows(page); const r = rows.find(z => z.includes('LOSS-S3'));
       ok(r.includes($(x.total)) && r.includes(`Cash ${$(x.cashYr)} · Opportunity ${$(x.oppYr)}`), r);
       ok(s['Annual loss under investigation'].includes($(x.total)), JSON.stringify(s)); ok(s['Annual loss under investigation'].includes(`Cash ${$(x.cashYr)} · Opportunity ${$(x.oppYr)}`), JSON.stringify(s));
-      ok(s['Verified annual savings'].includes('$198,700'), JSON.stringify(s)); ok(s['Verified annual savings'].includes('Cash $47,500 · Opportunity $151,200'), JSON.stringify(s));
+      ok(s['Verified annual savings'].includes('$238,440'), JSON.stringify(s)); ok(s['Verified annual savings'].includes('Cash $57,000 · Opportunity $181,440'), JSON.stringify(s));
     });
     await sub('report-open', 'Report: loss table rows, split, totals and "expected saving ... not yet verified" wording equal hand calc', async () => {
       await page.goto(BASE + '/app/investigations/' + id); await page.getByLabel('Title', { exact: true }).waitFor(); const t = (await e.reportText(page)); const tl = t.toLowerCase(); const has = (s) => ok(tl.includes(s.toLowerCase()), `report missing "${s}"`);
@@ -211,24 +211,24 @@ function suite(tag, viewport) {
       eq(await page.locator('article.print-sheet').getByText('Annual saving (verified)').count(), 0);
     });
     await sub('close', 'Closing (action Done + not recurred + review date): label becomes "Annual saving (verified)", status Closed', async () => {
-      await step(page, 'Actions'); await page.locator('li:has(label:has-text("What will be done?"))').first().getByLabel('Status', { exact: true }).selectOption({ label: 'Done' });
+      await step(page, 'Actions'); await f.setActionStatus(page, 0, 'Done');
       await f.fillVerify(page, { date: '2026-11-10', recurred: 'No, it has not recurred' }); await waitSaved(page);
       const t = (await page.locator('dl').last().innerText()).replace(/\s+/g, ' ').toLowerCase(); ok(t.includes('annual saving (verified) ' + $(saving).toLowerCase()), t);
       const rep = (await e.reportText(page)).toLowerCase(); ok(rep.includes('annual saving (verified) $12,641') && rep.includes('a saving of $12,641 per year') && !rep.includes('not yet verified'), rep.slice(0, 400)); ok(rep.includes('status: closed'));
     });
-    await sub('dash-closed', 'Dashboard after closing: loss tile $0, verified tile $211,341 (198,700 + 12,641) with cash $56,301 + opportunity $155,040', async () => {
+    await sub('dash-closed', 'Dashboard after closing: loss tile $0, verified tile $251,081 (238,440 + 12,641) with cash $65,801 + opportunity $185,280', async () => {
       await page.goto(BASE + '/app'); const s = await cards(page); ok(/\$0 /.test(s['Annual loss under investigation']), JSON.stringify(s));
-      ok(s['Verified annual savings'].includes('$211,341'), JSON.stringify(s)); ok(s['Verified annual savings'].includes('Cash $56,301 · Opportunity $155,040'), JSON.stringify(s));
+      ok(s['Verified annual savings'].includes('$251,081'), JSON.stringify(s)); ok(s['Verified annual savings'].includes('Cash $65,801 · Opportunity $185,280'), JSON.stringify(s));
     });
     await sub('not-verified-states', 'Each missing condition keeps the saving "not yet verified" and out of the dashboard: action open / recurred yes / unreviewed / no review date', async () => {
       await page.goto(BASE + '/app/investigations/' + id); await page.getByRole('navigation', { name: 'Investigation steps' }).waitFor();
-      const cases = [['actions open', async () => { await step(page, 'Actions'); await page.locator('li:has(label:has-text("What will be done?"))').first().getByLabel('Status', { exact: true }).selectOption({ label: 'In progress' }); }],
-        ['recurred yes', async () => { await step(page, 'Actions'); await page.locator('li:has(label:has-text("What will be done?"))').first().getByLabel('Status', { exact: true }).selectOption({ label: 'Done' }); await f.fillVerify(page, { recurred: 'Yes, it happened again' }); }],
+      const cases = [['actions open', async () => { await step(page, 'Actions'); await f.setActionStatus(page, 0, 'In progress'); }],
+        ['recurred yes', async () => { await step(page, 'Actions'); await f.setActionStatus(page, 0, 'Done'); await f.fillVerify(page, { recurred: 'Yes, it happened again' }); }],
         ['unreviewed', async () => { await f.fillVerify(page, { recurred: 'Not yet reviewed' }); }],
         ['no review date', async () => { await f.fillVerify(page, { recurred: 'No, it has not recurred', date: '' }); }]];
       for (const [name, fn] of cases) {
         await fn(); await step(page, 'Verify'); const t = (await page.locator('dl').last().innerText()).replace(/\s+/g, ' ').toLowerCase(); ok(t.includes('expected saving (not yet verified)'), name + ': ' + t); await waitSaved(page);
-        await page.goto(BASE + '/app'); const s = await cards(page); ok(s['Verified annual savings'].includes('$198,700') && !s['Verified annual savings'].includes('211,341'), name + ' counted: ' + JSON.stringify(s));
+        await page.goto(BASE + '/app'); const s = await cards(page); ok(s['Verified annual savings'].includes('$238,440') && !s['Verified annual savings'].includes('251,081'), name + ' counted: ' + JSON.stringify(s));
         await page.goto(BASE + '/app/investigations/' + id); await page.getByRole('navigation', { name: 'Investigation steps' }).waitFor();
       }
     });

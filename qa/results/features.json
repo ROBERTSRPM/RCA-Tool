@@ -1,0 +1,176 @@
+{
+  "suite": "features",
+  "base": "http://localhost:3555",
+  "at": "2026-11-17T06:08:33.367Z",
+  "results": [
+    {
+      "id": "F-ASSET-1-demo-desk.fields",
+      "title": "Asset details section has tag, type, make/model, duty, criticality A/B/C, failure mode",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-demo-desk.combo-list",
+      "title": "Asset type and Failure mode lists open on focus, filter while typing, and accept your own text",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-demo-desk.criticality",
+      "title": "Criticality: choose A, tap again clears, B replaces A",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-demo-desk.register-status",
+      "title": "A new tag says \"It will be added to your asset register\", then \"In your asset register\" once saved; matching ignores case and spaces",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-demo-desk.persist",
+      "title": "All asset detail fields survive reload",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-demo-desk.register-entry",
+      "title": "The register now has ZZ-501 with the type, make, duty and criticality from the investigation, plus 1 investigation",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-demo-desk.long-text",
+      "title": "A 3000-character make/duty does not overflow the Problem step at this width",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-demo-desk",
+      "title": "Problem step: asset details fields, criticality, combo lists, auto-add to the register [demo-desk]",
+      "status": "pass",
+      "detail": "",
+      "ms": 8098
+    },
+    {
+      "id": "F-ASSET-1-demo-mob.fields",
+      "title": "Asset details section has tag, type, make/model, duty, criticality A/B/C, failure mode",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-demo-mob.combo-list",
+      "title": "Asset type and Failure mode lists open on focus, filter while typing, and accept your own text",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-demo-mob.criticality",
+      "title": "Criticality: choose A, tap again clears, B replaces A",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-demo-mob.register-status",
+      "title": "A new tag says \"It will be added to your asset register\", then \"In your asset register\" once saved; matching ignores case and spaces",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-demo-mob.persist",
+      "title": "All asset detail fields survive reload",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-demo-mob.register-entry",
+      "title": "The register now has ZZ-501 with the type, make, duty and criticality from the investigation, plus 1 investigation",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-demo-mob.long-text",
+      "title": "A 3000-character make/duty does not overflow the Problem step at this width",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-demo-mob",
+      "title": "Problem step: asset details fields, criticality, combo lists, auto-add to the register [demo-mob]",
+      "status": "pass",
+      "detail": "",
+      "ms": 7801
+    },
+    {
+      "id": "F-ASSET-1-acct-desk.fields",
+      "title": "Asset details section has tag, type, make/model, duty, criticality A/B/C, failure mode",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-acct-desk.combo-list",
+      "title": "Asset type and Failure mode lists open on focus, filter while typing, and accept your own text",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-acct-desk.criticality",
+      "title": "Criticality: choose A, tap again clears, B replaces A",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-acct-desk.register-status",
+      "title": "A new tag says \"It will be added to your asset register\", then \"In your asset register\" once saved; matching ignores case and spaces",
+      "status": "fail",
+      "detail": "after save: It will be added to your asset register.",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-acct-desk.persist",
+      "title": "All asset detail fields survive reload",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-acct-desk.register-entry",
+      "title": "The register now has ZZ-501 with the type, make, duty and criticality from the investigation, plus 1 investigation",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-acct-desk.long-text",
+      "title": "A 3000-character make/duty does not overflow the Problem step at this width",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-acct-desk",
+      "title": "Problem step: asset details fields, criticality, combo lists, auto-add to the register [acct-desk]",
+      "status": "pass",
+      "detail": "",
+      "ms": 20530
+    }
+  ],
+  "notes": []
+}

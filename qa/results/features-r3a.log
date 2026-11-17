@@ -1,0 +1,241 @@
+  pass F-ASSET-1-demo-desk.fields Asset details section has tag, type, make/model, duty, criticality A/B/C, failure mode
+  pass F-ASSET-1-demo-desk.combo-list Asset type and Failure mode lists open on focus, filter while typing, and accept your own text
+  pass F-ASSET-1-demo-desk.criticality Criticality: choose A, tap again clears, B replaces A
+  pass F-ASSET-1-demo-desk.register-status A new tag says "It will be added to your asset register", then "In your asset register" once saved; matching ignores case and spaces
+  pass F-ASSET-1-demo-desk.persist All asset detail fields survive reload
+  pass F-ASSET-1-demo-desk.register-entry The register now has ZZ-501 with the type, make, duty and criticality from the investigation, plus 1 investigation
+  pass F-ASSET-1-demo-desk.long-text A 3000-character make/duty does not overflow the Problem step at this width
+PASS F-ASSET-1-demo-desk Problem step: asset details fields, criticality, combo lists, auto-add to the register [demo-desk]
+  pass F-ASSET-1-demo-mob.fields Asset details section has tag, type, make/model, duty, criticality A/B/C, failure mode
+  pass F-ASSET-1-demo-mob.combo-list Asset type and Failure mode lists open on focus, filter while typing, and accept your own text
+  pass F-ASSET-1-demo-mob.criticality Criticality: choose A, tap again clears, B replaces A
+  pass F-ASSET-1-demo-mob.register-status A new tag says "It will be added to your asset register", then "In your asset register" once saved; matching ignores case and spaces
+  pass F-ASSET-1-demo-mob.persist All asset detail fields survive reload
+  pass F-ASSET-1-demo-mob.register-entry The register now has ZZ-501 with the type, make, duty and criticality from the investigation, plus 1 investigation
+  pass F-ASSET-1-demo-mob.long-text A 3000-character make/duty does not overflow the Problem step at this width
+PASS F-ASSET-1-demo-mob Problem step: asset details fields, criticality, combo lists, auto-add to the register [demo-mob]
+  pass F-ASSET-1-acct-desk.fields Asset details section has tag, type, make/model, duty, criticality A/B/C, failure mode
+  pass F-ASSET-1-acct-desk.combo-list Asset type and Failure mode lists open on focus, filter while typing, and accept your own text
+  pass F-ASSET-1-acct-desk.criticality Criticality: choose A, tap again clears, B replaces A
+  pass F-ASSET-1-acct-desk.register-status A new tag says "It will be added to your asset register", then "In your asset register" once saved; matching ignores case and spaces
+  pass F-ASSET-1-acct-desk.persist All asset detail fields survive reload
+  FAIL F-ASSET-1-acct-desk.register-entry The register now has ZZ-501 with the type, make, duty and criticality from the investigation, plus 1 investigation
+       ZZ-501 Gearbox B: Important Acme 9 · qa duty Area Edit Delete INVESTIGATIONS 2 FAILURES A YEAR 0 ANNUAL LOSS $0 F-ASSET gearbox noise · 1 Jun 2026 F-ASSET gearbox noise · 1 Jun 2026
+  pass F-ASSET-1-acct-desk.long-text A 3000-character make/duty does not overflow the Problem step at this width
+PASS F-ASSET-1-acct-desk Problem step: asset details fields, criticality, combo lists, auto-add to the register [acct-desk]
+  pass F-REG-1-demo-desk.sample Fresh register shows the 5 sample assets in tag order P-101, P-102, P-103, P-210, P-215, each marked Illustrative sample
+  pass F-REG-1-demo-desk.stats P-101 stats equal hand calc from the sample: 1 investigation, 6 failures a year, annual loss $238,440
+  pass F-REG-1-demo-desk.add-validation Add asset: empty tag and duplicate tag (any case) are refused with a clear message
+  pass F-REG-1-demo-desk.add Add asset with all fields shows it in the list; cancel closes the form without adding
+  pass F-REG-1-demo-desk.edit Edit: change duty and save; tag clash refused; cancel discards
+  FAIL F-REG-1-demo-desk.search Search matches tag, type, make, duty and area; no match message; clearing restores the list
+       query "slurry pump": expected 3 but got 4
+  FAIL F-REG-1-demo-desk.paste Paste a list: counts new / repeated / blank lines exactly, adds only the new ones
+       values differ: expected 9 but got 4
+  pass F-REG-1-demo-desk.stats-linked Stats follow investigations by tag: a 3-events/yr investigation with annual loss $9,000 on QA-1 shows 1 / 3 / $9,000
+  pass F-REG-1-demo-desk.delete Delete asset: message mentions investigations that use the tag; Cancel keeps it; Delete removes it and keeps the investigation
+  pass F-REG-1-demo-desk.layout Register page layout: no overflow at this width; long values wrap
+PASS F-REG-1-demo-desk Asset register page: sample assets, add/edit/delete, search, paste a list, validation, stats [demo-desk]
+  pass F-REG-1-demo-mob.sample Fresh register shows the 5 sample assets in tag order P-101, P-102, P-103, P-210, P-215, each marked Illustrative sample
+  pass F-REG-1-demo-mob.stats P-101 stats equal hand calc from the sample: 1 investigation, 6 failures a year, annual loss $238,440
+  pass F-REG-1-demo-mob.add-validation Add asset: empty tag and duplicate tag (any case) are refused with a clear message
+  pass F-REG-1-demo-mob.add Add asset with all fields shows it in the list; cancel closes the form without adding
+  pass F-REG-1-demo-mob.edit Edit: change duty and save; tag clash refused; cancel discards
+  FAIL F-REG-1-demo-mob.search Search matches tag, type, make, duty and area; no match message; clearing restores the list
+       query "slurry pump": expected 3 but got 4
+  FAIL F-REG-1-demo-mob.paste Paste a list: counts new / repeated / blank lines exactly, adds only the new ones
+       values differ: expected 9 but got 4
+  pass F-REG-1-demo-mob.stats-linked Stats follow investigations by tag: a 3-events/yr investigation with annual loss $9,000 on QA-1 shows 1 / 3 / $9,000
+  pass F-REG-1-demo-mob.delete Delete asset: message mentions investigations that use the tag; Cancel keeps it; Delete removes it and keeps the investigation
+  pass F-REG-1-demo-mob.layout Register page layout: no overflow at this width; long values wrap
+PASS F-REG-1-demo-mob Asset register page: sample assets, add/edit/delete, search, paste a list, validation, stats [demo-mob]
+  pass F-REG-2-acct-desk.add-persist Asset added signed in persists after reload and shows in A's list
+  FAIL F-REG-2-acct-desk.b-sees-own User B's register has the 5 sample assets and does not show A's asset
+       locator.waitFor: Timeout 30000ms exceeded. | Call log: | [2m  - waiting for getByTestId('asset-row').first() to be visible[22m | 
+  FAIL F-REG-2-acct-desk.b-api User B cannot read, change or delete A's asset row through the API; anonymous gets nothing
+       locator.waitFor: Timeout 30000ms exceeded. | Call log: | [2m  - waiting for getByTestId('asset-row').first() to be visible[22m | 
+  FAIL F-REG-2-acct-desk.b-direct-write B writing an asset with A's tag does not collide with or change A's asset
+       locator.waitFor: Timeout 30000ms exceeded. | Call log: | [2m  - waiting for getByTestId('asset-row').first() to be visible[22m | 
+  pass F-REG-2-acct-desk.delete A deletes the asset: gone after reload
+PASS F-REG-2-acct-desk Asset register signed in: empty, persistence, A/B isolation, direct API access denied [acct-desk]
+  pass F-CAPA-1-demo-desk.empty Empty Actions step: corrective section with "No corrective action yet" prompt, one preventive group per root cause with "No action yet"
+  pass F-CAPA-1-demo-desk.corrective Add corrective action: lands in the Corrective section, is linked to "The failure event", editor opens at once
+  pass F-CAPA-1-demo-desk.preventive Add preventive action under each root cause: appears in that group only; kind is Preventive
+  pass F-CAPA-1-demo-desk.one-open Rows expand in place one at a time: opening another row closes the first; Close button collapses
+  pass F-CAPA-1-demo-desk.tiles Tiles: total action cost 800 + 100 + 50 = $950; 0 of 3 done; root causes without action 0
+  pass F-CAPA-1-demo-desk.task-fields Task fields appear only for Maintenance task / Condition monitoring; changing category away hides them
+  pass F-CAPA-1-demo-desk.categories Category list offers the 8 categories + Not set
+  FAIL F-CAPA-1-demo-desk.kind-switch Changing a corrective action to preventive re-links it to a root cause; preventive to corrective links it to the failure event
+       assertion failed
+  pass F-CAPA-1-demo-desk.delete Delete action: dialog, cancel keeps, confirm removes; tiles update
+  pass F-CAPA-1-demo-desk.persist Actions with kind, category, task survive reload
+  pass F-CAPA-1-demo-desk.layout Actions step layout at this width: no overflow, rows fit
+PASS F-CAPA-1-demo-desk Actions step: corrective section, preventive groups, one expanded row at a time, kind, category, task fields [demo-desk]
+  pass F-CAPA-1-demo-mob.empty Empty Actions step: corrective section with "No corrective action yet" prompt, one preventive group per root cause with "No action yet"
+  pass F-CAPA-1-demo-mob.corrective Add corrective action: lands in the Corrective section, is linked to "The failure event", editor opens at once
+  pass F-CAPA-1-demo-mob.preventive Add preventive action under each root cause: appears in that group only; kind is Preventive
+  pass F-CAPA-1-demo-mob.one-open Rows expand in place one at a time: opening another row closes the first; Close button collapses
+  pass F-CAPA-1-demo-mob.tiles Tiles: total action cost 800 + 100 + 50 = $950; 0 of 3 done; root causes without action 0
+  pass F-CAPA-1-demo-mob.task-fields Task fields appear only for Maintenance task / Condition monitoring; changing category away hides them
+  pass F-CAPA-1-demo-mob.categories Category list offers the 8 categories + Not set
+  FAIL F-CAPA-1-demo-mob.kind-switch Changing a corrective action to preventive re-links it to a root cause; preventive to corrective links it to the failure event
+       assertion failed
+  pass F-CAPA-1-demo-mob.delete Delete action: dialog, cancel keeps, confirm removes; tiles update
+  pass F-CAPA-1-demo-mob.persist Actions with kind, category, task survive reload
+  pass F-CAPA-1-demo-mob.layout Actions step layout at this width: no overflow, rows fit
+PASS F-CAPA-1-demo-mob Actions step: corrective section, preventive groups, one expanded row at a time, kind, category, task fields [demo-mob]
+  pass F-CAPA-1-acct-desk.empty Empty Actions step: corrective section with "No corrective action yet" prompt, one preventive group per root cause with "No action yet"
+  pass F-CAPA-1-acct-desk.corrective Add corrective action: lands in the Corrective section, is linked to "The failure event", editor opens at once
+  pass F-CAPA-1-acct-desk.preventive Add preventive action under each root cause: appears in that group only; kind is Preventive
+  pass F-CAPA-1-acct-desk.one-open Rows expand in place one at a time: opening another row closes the first; Close button collapses
+  pass F-CAPA-1-acct-desk.tiles Tiles: total action cost 800 + 100 + 50 = $950; 0 of 3 done; root causes without action 0
+  pass F-CAPA-1-acct-desk.task-fields Task fields appear only for Maintenance task / Condition monitoring; changing category away hides them
+  pass F-CAPA-1-acct-desk.categories Category list offers the 8 categories + Not set
+  FAIL F-CAPA-1-acct-desk.kind-switch Changing a corrective action to preventive re-links it to a root cause; preventive to corrective links it to the failure event
+       assertion failed
+  pass F-CAPA-1-acct-desk.delete Delete action: dialog, cancel keeps, confirm removes; tiles update
+  pass F-CAPA-1-acct-desk.persist Actions with kind, category, task survive reload
+  pass F-CAPA-1-acct-desk.layout Actions step layout at this width: no overflow, rows fit
+PASS F-CAPA-1-acct-desk Actions step: corrective section, preventive groups, one expanded row at a time, kind, category, task fields [acct-desk]
+  pass F-PLAN-1-demo-desk.empty No tasks: the plan section explains how tasks appear and has no Copy button
+  FAIL F-PLAN-1-demo-desk.lines Plan lists the 4 tasks with: New/Change, interval text ("every 3 months", "every 500 hours run", "every week", "every 2.5 weeks"), craft, root cause
+       plan missing "New task: Clean flush strainer and check flow" in Task Interval Craft Prevents Owner and due New task:Clean flush strainer and check flow (Maintenance task) every 3 months Mechanical fitter Flush strainer never cleaned Sam Patel 1 Mar 2027 Change to existing task:Take bearing vibration reading (Condition monitoring) every 500 hours run Reliability tech Flush strainer never cleaned Ana 15 Apr 2027 New task:Weekly walk-down (Maintenance task) every week Not set Flush strainer never cleaned Unassigned No date New task:Check (Maintenance task) ever
+  pass F-PLAN-1-demo-desk.fallbacks A task with no description uses the action text; no craft shows "Not set"
+  pass F-PLAN-1-demo-desk.copy "Copy for the planner" puts tab-separated text with header, 10 columns and one row per task on the clipboard (hand-built expected text)
+  FAIL F-PLAN-1-demo-desk.quality-task Quality: tasks missing description/interval are flagged ("a task description and an interval")
+       weekly walk-down has an interval and falls back to action text? Fix first The loss is not quantified yet. Still needed: events per year, downtime hours per event, production rate, margin per unit. Go to Loss|Should fix Action "Weekly walk-down" needs an owner and a due date. Go to Actions|Should fix Action "Half-weekly check" needs an owner and a due date. Go to Actions|Should fix Action "No detail at all" needs an owner and a due date. Go to Actions|Should fix Maintenance plan item "Weekly walk-down" needs a task description before a planner can load it. Go to Actions|Should fix Maintenance plan item "No detail at all" needs a task description and an interval before a planner can load it. Go to Actions
+  pass F-PLAN-1-demo-desk.report Report has a "Maintenance plan changes" section with the same tasks
+  pass F-PLAN-1-demo-desk.persist Tasks (interval, craft, change) survive reload
+PASS F-PLAN-1-demo-desk Maintenance plan changes: lines, intervals, planner text copied to the clipboard, report section [demo-desk]
+  pass F-PLAN-1-demo-mob.empty No tasks: the plan section explains how tasks appear and has no Copy button
+  FAIL F-PLAN-1-demo-mob.lines Plan lists the 4 tasks with: New/Change, interval text ("every 3 months", "every 500 hours run", "every week", "every 2.5 weeks"), craft, root cause
+       plan missing "New task: Clean flush strainer and check flow" in New task Maintenance task Clean flush strainer and check flow Interval every 3 months Craft Mechanical fitter Prevents Flush strainer never cleaned Owner Sam Patel Due 1 Mar 2027 Change to existing task Condition monitoring Take bearing vibration reading Interval every 500 hours run Craft Reliability tech Prevents Flush strainer never cleaned Owner Ana Due 15 Apr 2027 New task Maintenance task Weekly walk-down Interval every week Craft Not set Prevents Flush strainer never cleaned Owner Unassign
+  pass F-PLAN-1-demo-mob.fallbacks A task with no description uses the action text; no craft shows "Not set"
+  pass F-PLAN-1-demo-mob.copy "Copy for the planner" puts tab-separated text with header, 10 columns and one row per task on the clipboard (hand-built expected text)
+  FAIL F-PLAN-1-demo-mob.quality-task Quality: tasks missing description/interval are flagged ("a task description and an interval")
+       weekly walk-down has an interval and falls back to action text? Fix first The loss is not quantified yet. Still needed: events per year, downtime hours per event, production rate, margin per unit. Go to Loss|Should fix Action "Weekly walk-down" needs an owner and a due date. Go to Actions|Should fix Action "Half-weekly check" needs an owner and a due date. Go to Actions|Should fix Action "No detail at all" needs an owner and a due date. Go to Actions|Should fix Maintenance plan item "Weekly walk-down" needs a task description before a planner can load it. Go to Actions|Should fix Maintenance plan item "No detail at all" needs a task description and an interval before a planner can load it. Go to Actions
+  pass F-PLAN-1-demo-mob.report Report has a "Maintenance plan changes" section with the same tasks
+  pass F-PLAN-1-demo-mob.persist Tasks (interval, craft, change) survive reload
+PASS F-PLAN-1-demo-mob Maintenance plan changes: lines, intervals, planner text copied to the clipboard, report section [demo-mob]
+  pass F-PLAN-1-acct-desk.empty No tasks: the plan section explains how tasks appear and has no Copy button
+  FAIL F-PLAN-1-acct-desk.lines Plan lists the 4 tasks with: New/Change, interval text ("every 3 months", "every 500 hours run", "every week", "every 2.5 weeks"), craft, root cause
+       plan missing "New task: Clean flush strainer and check flow" in Task Interval Craft Prevents Owner and due New task:Clean flush strainer and check flow (Maintenance task) every 3 months Mechanical fitter Flush strainer never cleaned Sam Patel 1 Mar 2027 Change to existing task:Take bearing vibration reading (Condition monitoring) every 500 hours run Reliability tech Flush strainer never cleaned Ana 15 Apr 2027 New task:Weekly walk-down (Maintenance task) every week Not set Flush strainer never cleaned Unassigned No date New task:Check (Maintenance task) ever
+  pass F-PLAN-1-acct-desk.fallbacks A task with no description uses the action text; no craft shows "Not set"
+  pass F-PLAN-1-acct-desk.copy "Copy for the planner" puts tab-separated text with header, 10 columns and one row per task on the clipboard (hand-built expected text)
+  FAIL F-PLAN-1-acct-desk.quality-task Quality: tasks missing description/interval are flagged ("a task description and an interval")
+       weekly walk-down has an interval and falls back to action text? Fix first The loss is not quantified yet. Still needed: events per year, downtime hours per event, production rate, margin per unit. Go to Loss|Should fix Action "Weekly walk-down" needs an owner and a due date. Go to Actions|Should fix Action "Half-weekly check" needs an owner and a due date. Go to Actions|Should fix Action "No detail at all" needs an owner and a due date. Go to Actions|Should fix Maintenance plan item "Weekly walk-down" needs a task description before a planner can load it. Go to Actions|Should fix Maintenance plan item "No detail at all" needs a task description and an interval before a planner can load it. Go to Actions
+  pass F-PLAN-1-acct-desk.report Report has a "Maintenance plan changes" section with the same tasks
+  pass F-PLAN-1-acct-desk.persist Tasks (interval, craft, change) survive reload
+PASS F-PLAN-1-acct-desk Maintenance plan changes: lines, intervals, planner text copied to the clipboard, report section [acct-desk]
+  FAIL F-SPARES-1-demo-desk.fields Spares check shows only "Was a spare part needed?" until Yes is chosen; then stock, lead time, coverage appear
+       locator.waitFor: Timeout 30000ms exceeded. | Call log: | [2m  - waiting for getByRole('region', { name: 'Spares check' }).getByRole('radiogroup', { name: 'Was a spare part needed?' }) to be visible[22m | 
+FAIL F-SPARES-1-demo-desk Spares check: flag at exactly 14 days, not at 13 or when in stock; one-tap spares action; quality rule; report [demo-desk]
+     locator.click: Timeout 30000ms exceeded. | Call log: | [2m  - waiting for getByRole('region', { name: 'Spares check' }).getByRole('radiogroup', { name: 'Was it in stock?' }).getByRole('radio', { name: 'No', exact: true })[22m | 
+  FAIL F-SPARES-1-demo-mob.fields Spares check shows only "Was a spare part needed?" until Yes is chosen; then stock, lead time, coverage appear
+       locator.waitFor: Timeout 30000ms exceeded. | Call log: | [2m  - waiting for getByRole('region', { name: 'Spares check' }).getByRole('radiogroup', { name: 'Was a spare part needed?' }) to be visible[22m | 
+FAIL F-SPARES-1-demo-mob Spares check: flag at exactly 14 days, not at 13 or when in stock; one-tap spares action; quality rule; report [demo-mob]
+     locator.click: Timeout 30000ms exceeded. | Call log: | [2m  - waiting for getByRole('region', { name: 'Spares check' }).getByRole('radiogroup', { name: 'Was it in stock?' }).getByRole('radio', { name: 'No', exact: true })[22m | 
+  FAIL F-SPARES-1-acct-desk.fields Spares check shows only "Was a spare part needed?" until Yes is chosen; then stock, lead time, coverage appear
+       locator.waitFor: Timeout 30000ms exceeded. | Call log: | [2m  - waiting for getByRole('region', { name: 'Spares check' }).getByRole('radiogroup', { name: 'Was a spare part needed?' }) to be visible[22m | 
+FAIL F-SPARES-1-acct-desk Spares check: flag at exactly 14 days, not at 13 or when in stock; one-tap spares action; quality rule; report [acct-desk]
+     locator.click: Timeout 30000ms exceeded. | Call log: | [2m  - waiting for getByRole('region', { name: 'Spares check' }).getByRole('radiogroup', { name: 'Was it in stock?' }).getByRole('radio', { name: 'No', exact: true })[22m | 
+  pass F-QUAL-1-demo-desk.natural natural-deterioration-unmanaged: verified + natural wear with no maintenance task or condition monitoring action is flagged; jump -> Actions; a Condition monitoring action on its branch clears it
+  pass F-QUAL-1-demo-desk.forced-no-flag The same cause marked Forced (not natural) is not flagged by that rule; toggling the type of wear off clears it
+  FAIL F-QUAL-1-demo-desk.task-incomplete task-missing-detail: a maintenance task with no interval is flagged; entering the interval clears it
+       li.getByRole(...).catch is not a function
+  pass F-QUAL-1-demo-desk.system-systemic system-root-without-systemic-action: a System/Latent root cause whose only (categorised) action is a Repair is flagged; a Procedure action clears it; uncategorised actions are not judged
+  pass F-QUAL-1-demo-desk.corrective-only corrective-without-preventive: a root cause that has only a corrective action is flagged (high); adding a preventive one clears it; jump -> Actions
+  pass F-QUAL-1-demo-desk.unlinked action-not-linked: un-flagging the root cause of an action flags it; the action appears under "Not linked to a root cause"; re-linking clears it
+  pass F-QUAL-1-demo-desk.severity-links Every new finding has a "Go to ..." button and the panel count matches the number of findings
+PASS F-QUAL-1-demo-desk New quality rules: each triggers, its jump link lands on the right step, and it clears when fixed [demo-desk]
+  pass F-QUAL-1-acct-desk.natural natural-deterioration-unmanaged: verified + natural wear with no maintenance task or condition monitoring action is flagged; jump -> Actions; a Condition monitoring action on its branch clears it
+  pass F-QUAL-1-acct-desk.forced-no-flag The same cause marked Forced (not natural) is not flagged by that rule; toggling the type of wear off clears it
+  FAIL F-QUAL-1-acct-desk.task-incomplete task-missing-detail: a maintenance task with no interval is flagged; entering the interval clears it
+       li.getByRole(...).catch is not a function
+  pass F-QUAL-1-acct-desk.system-systemic system-root-without-systemic-action: a System/Latent root cause whose only (categorised) action is a Repair is flagged; a Procedure action clears it; uncategorised actions are not judged
+  pass F-QUAL-1-acct-desk.corrective-only corrective-without-preventive: a root cause that has only a corrective action is flagged (high); adding a preventive one clears it; jump -> Actions
+  pass F-QUAL-1-acct-desk.unlinked action-not-linked: un-flagging the root cause of an action flags it; the action appears under "Not linked to a root cause"; re-linking clears it
+  pass F-QUAL-1-acct-desk.severity-links Every new finding has a "Go to ..." button and the panel count matches the number of findings
+PASS F-QUAL-1-acct-desk New quality rules: each triggers, its jump link lands on the right step, and it clears when fixed [acct-desk]
+  pass F-DET-1-demo-desk.toggle Natural, Forced, and tap-again-to-clear behave as radios; default is not decided; help text changes
+  pass F-DET-1-demo-desk.persist Deterioration survives reload
+  pass F-DET-1-demo-desk.panel-top The failure event itself has no deterioration control
+PASS F-DET-1-demo-desk Cause node deterioration: Natural / Forced toggles, persistence, shown in report [demo-desk]
+  pass F-DET-1-demo-mob.toggle Natural, Forced, and tap-again-to-clear behave as radios; default is not decided; help text changes
+  pass F-DET-1-demo-mob.persist Deterioration survives reload
+  pass F-DET-1-demo-mob.panel-top The failure event itself has no deterioration control
+PASS F-DET-1-demo-mob Cause node deterioration: Natural / Forced toggles, persistence, shown in report [demo-mob]
+  FAIL F-SIM-1-demo-desk.rank Panel on the Problem step lists O1, then O2, then O3; O4 (one shared word) and O5 are not listed
+       F-SIM O1 same tag | F-SIM O2 type and mode | Repeat bearing and mechanical seal failures on slurry pump P-101
+  FAIL F-SIM-1-demo-desk.reasons Reasons shown: O1 "Same asset (X-1)", "Same asset type (Gearbox)", "Same failure mode (Bearing failure)"; O2 type+mode but no tag; O3 shared words only
+       Same failure mode (Bearing failure) Shared words: bearing
+  FAIL F-SIM-1-demo-desk.cause-text Each match shows its root causes and "What fixed it" text; Open link goes to that investigation
+       assertion failed
+  FAIL F-SIM-1-demo-desk.copy "Copy this cause into my tree" adds it under the failure event as a Hypothesis (not verified, not a root cause, no evidence); button turns to "Copied"; message with link to the tree
+       locator.click: Timeout 30000ms exceeded. | Call log: | [2m  - waiting for getByTestId('similar-item').first().getByRole('button', { name: 'Copy this cause into my tree' })[22m | [2m    - locator resolved to <button type="button" class="btn btn-secondary btn-sm mt-1">…</button>[22m | [2m  - attempting click action[22m | [2m    - waiting for element to be visible, enabled and stable[22m
+  pass F-SIM-1-demo-desk.cause-step-panel The Cause tree step also shows the Similar past failures panel and a copy there adds under the selected cause
+  pass F-SIM-1-demo-desk.empty An investigation with no similar ones shows "No similar failures yet" guidance
+  pass F-SIM-1-demo-desk.self-excluded An investigation is never listed as similar to itself and a copy of it (Duplicate) is listed as similar
+PASS F-SIM-1-demo-desk Similar past failures: ranking by tag > type > failure mode > words, minimum score, reasons, copy cause arrives as Hypothesis [demo-desk]
+  FAIL F-SIM-1-demo-mob.rank Panel on the Problem step lists O1, then O2, then O3; O4 (one shared word) and O5 are not listed
+       F-SIM O1 same tag | F-SIM O2 type and mode | Repeat bearing and mechanical seal failures on slurry pump P-101
+  FAIL F-SIM-1-demo-mob.reasons Reasons shown: O1 "Same asset (X-1)", "Same asset type (Gearbox)", "Same failure mode (Bearing failure)"; O2 type+mode but no tag; O3 shared words only
+       Same failure mode (Bearing failure) Shared words: bearing
+  FAIL F-SIM-1-demo-mob.cause-text Each match shows its root causes and "What fixed it" text; Open link goes to that investigation
+       assertion failed
+  FAIL F-SIM-1-demo-mob.copy "Copy this cause into my tree" adds it under the failure event as a Hypothesis (not verified, not a root cause, no evidence); button turns to "Copied"; message with link to the tree
+       locator.click: Timeout 30000ms exceeded. | Call log: | [2m  - waiting for getByTestId('similar-item').first().getByRole('button', { name: 'Copy this cause into my tree' })[22m | 
+  pass F-SIM-1-demo-mob.cause-step-panel The Cause tree step also shows the Similar past failures panel and a copy there adds under the selected cause
+  pass F-SIM-1-demo-mob.empty An investigation with no similar ones shows "No similar failures yet" guidance
+  pass F-SIM-1-demo-mob.self-excluded An investigation is never listed as similar to itself and a copy of it (Duplicate) is listed as similar
+PASS F-SIM-1-demo-mob Similar past failures: ranking by tag > type > failure mode > words, minimum score, reasons, copy cause arrives as Hypothesis [demo-mob]
+  FAIL F-SIM-1-acct-desk.rank Panel on the Problem step lists O1, then O2, then O3; O4 (one shared word) and O5 are not listed
+       F-SIM O1 same tag | F-SIM O2 type and mode | F-QUAL rules | Repeat bearing and mechanical seal failures on slurry pump P-101
+  FAIL F-SIM-1-acct-desk.reasons Reasons shown: O1 "Same asset (X-1)", "Same asset type (Gearbox)", "Same failure mode (Bearing failure)"; O2 type+mode but no tag; O3 shared words only
+       Same asset type (Gearbox)
+  pass F-SIM-1-acct-desk.cause-text Each match shows its root causes and "What fixed it" text; Open link goes to that investigation
+  FAIL F-SIM-1-acct-desk.copy "Copy this cause into my tree" adds it under the failure event as a Hypothesis (not verified, not a root cause, no evidence); button turns to "Copied"; message with link to the tree
+       assertion failed
+  pass F-SIM-1-acct-desk.cause-step-panel The Cause tree step also shows the Similar past failures panel and a copy there adds under the selected cause
+  pass F-SIM-1-acct-desk.empty An investigation with no similar ones shows "No similar failures yet" guidance
+  pass F-SIM-1-acct-desk.self-excluded An investigation is never listed as similar to itself and a copy of it (Duplicate) is listed as similar
+PASS F-SIM-1-acct-desk Similar past failures: ranking by tag > type > failure mode > words, minimum score, reasons, copy cause arrives as Hypothesis [acct-desk]
+  pass F-ROLL-1-demo-desk.encourage Before verification the panel says "Best done once the fix is verified"
+  FAIL F-ROLL-1-demo-desk.rank Candidates: P-102, P-215, P-103 in that order; the centrifugal pump P-210 and the asset itself are not listed
+       P-101,P-102,P-215,P-103: expected ["P-102","P-215","P-103"] but got ["P-101","P-102","P-215","P-103"]
+  FAIL F-ROLL-1-demo-desk.reasons Reasons: P-102 same make+model, similar duty (slurry, feed, concentrator), criticality A; P-103 similar make (warman) and criticality B
+       P-101 A: Critical Warman 8/6 AH · Slurry feed to the concentrator, single pump with no standby Same type (Slurry pump) Similar duty (slurry, feed, concentrator, single) Same make and model (Warman 8/6 AH) Criticality A
+  pass F-ROLL-1-demo-desk.create Tick P-102 and P-215, default text prefilled from root causes and preventive actions, create 2 checks; ticked ones show "Check created" and can no longer be picked
+  FAIL F-ROLL-1-demo-desk.statuses Result options: Open, Checked: no issue, Checked: same problem found, Fixed; progress counts finished ones; "same problem" shows the red notice
+       Rollout progress: 1 of 2 checked1 has the same problem P-101 · Slurry pump (Slurry feed to the concentrator, single pump with no standby) Checked: same problem found Delete What to check Who will check it Check due Result Open Checked: no issue Checked: same problem found Fixed The same problem was found. Fix it, then set the result to Fixed. P-102 · Slurry pump (Slurry feed to the concentrator, second line) Open Delete What to check Who will check it Check due Result Open Checked: no issue Checked: same problem found Fixed
+  FAIL F-ROLL-1-demo-desk.edit-check Per-check owner, due date and "what to check" can be edited; delete asks for confirmation
+       locator.click: Timeout 30000ms exceeded. | Call log: | [2m  - waiting for getByRole('button', { name: /^Delete rollout check for P-215/ })[22m | 
+  FAIL F-ROLL-1-demo-desk.dashboard Dashboard "Rollout checks" tile: open count and "of N created" (hand: 2 created, 0 open now)
+       ROLLOUT CHECKS 1 Open, of 2 created 1 found the same problem
+  pass F-ROLL-1-demo-desk.dashboard-open Setting one back to Open and one to same problem: tile shows 1 open and "1 found the same problem"
+  pass F-ROLL-1-demo-desk.report Report section "Rollout to similar assets" lists the checks with their results
+  pass F-ROLL-1-demo-desk.verified-message When the fix is verified the panel says "The fix is verified. This is the moment to spread it"
+  pass F-ROLL-1-demo-desk.needs-type With no asset type set the panel asks for it and offers "Go to Asset details"
+  pass F-ROLL-1-demo-desk.no-candidates A type with no other assets shows the empty guidance and the "add a similar asset" form
+PASS F-ROLL-1-demo-desk Roll this fix out: candidate ranking (hand scores), reasons, checks, statuses, progress, dashboard count, report [demo-desk]
+  pass F-ROLL-1-demo-mob.encourage Before verification the panel says "Best done once the fix is verified"
+  FAIL F-ROLL-1-demo-mob.rank Candidates: P-102, P-215, P-103 in that order; the centrifugal pump P-210 and the asset itself are not listed
+       P-101,P-102,P-215,P-103: expected ["P-102","P-215","P-103"] but got ["P-101","P-102","P-215","P-103"]
+  FAIL F-ROLL-1-demo-mob.reasons Reasons: P-102 same make+model, similar duty (slurry, feed, concentrator), criticality A; P-103 similar make (warman) and criticality B
+       P-101 A: Critical Warman 8/6 AH · Slurry feed to the concentrator, single pump with no standby Same type (Slurry pump) Similar duty (slurry, feed, concentrator, single) Same make and model (Warman 8/6 AH) Criticality A
+  pass F-ROLL-1-demo-mob.create Tick P-102 and P-215, default text prefilled from root causes and preventive actions, create 2 checks; ticked ones show "Check created" and can no longer be picked
+  FAIL F-ROLL-1-demo-mob.statuses Result options: Open, Checked: no issue, Checked: same problem found, Fixed; progress counts finished ones; "same problem" shows the red notice
+       Rollout progress: 1 of 2 checked1 has the same problem P-101 · Slurry pump (Slurry feed to the concentrator, single pump with no standby) Checked: same problem found Delete What to check Who will check it Check due Result Open Checked: no issue Checked: same problem found Fixed The same problem was found. Fix it, then set the result to Fixed. P-102 · Slurry pump (Slurry feed to the concentrator, second line) Open Delete What to check Who will check it Check due Result Open Checked: no issue Checked: same problem found Fixed
+  FAIL F-ROLL-1-demo-mob.edit-check Per-check owner, due date and "what to check" can be edited; delete asks for confirmation
+       locator.click: Timeout 30000ms exceeded. | Call log: | [2m  - waiting for getByRole('button', { name: /^Delete rollout check for P-215/ })[22m | 
+  FAIL F-ROLL-1-demo-mob.dashboard Dashboard "Rollout checks" tile: open count and "of N created" (hand: 2 created, 0 open now)
+       ROLLOUT CHECKS 1 Open, of 2 created 1 found the same problem
+  pass F-ROLL-1-demo-mob.dashboard-open Setting one back to Open and one to same problem: tile shows 1 open and "1 found the same problem"
+  pass F-ROLL-1-demo-mob.report Report section "Rollout to similar assets" lists the checks with their results
+  pass F-ROLL-1-demo-mob.verified-message When the fix is verified the panel says "The fix is verified. This is the moment to spread it"
+  pass F-ROLL-1-demo-mob.needs-type With no asset type set the panel asks for it and offers "Go to Asset details"
+  pass F-ROLL-1-demo-mob.no-candidates A type with no other assets shows the empty guidance and the "add a similar asset" form
+PASS F-ROLL-1-demo-mob Roll this fix out: candidate ranking (hand scores), reasons, checks, statuses, progress, dashboard count, report [demo-mob]
+  pass F-ROLL-1-acct-desk.encourage Before verification the panel says "Best done once the fix is verified"
+  FAIL F-ROLL-1-acct-desk.rank Candidates: P-102, P-215, P-103 in that order; the centrifugal pump P-210 and the asset itself are not listed
+       locator.waitFor: Timeout 15000ms exceeded. | Call log: | [2m  - waiting for getByTestId('rollout-candidates') to be visible[22m | 

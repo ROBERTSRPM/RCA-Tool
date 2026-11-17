@@ -6,7 +6,7 @@ const f = require('./flows');
 const e = require('./e2e');
 const { test, eq, ok, step, waitSaved, withPage, money, BASE, MOBILE } = h;
 const tb = (page) => page.getByRole('toolbar', { name: 'Cause actions' });
-const cardsLi = (page) => page.locator('li:has(label:has-text("What will be done?"))');
+const cardsLi = (page) => f.rows(page);
 
 // ---------------------------------------------------------------- persistence
 test('D-PERS-1', 'Persistence: reload after each kind of edit (demo)', async ({ browser, sub }) => withPage(browser, {}, async (page) => {
@@ -67,7 +67,7 @@ test('D-PERS-1', 'Persistence: reload after each kind of edit (demo)', async ({ 
   });
   await sub('actions', 'Actions add / edit / status / delete survive reload', async () => {
     await f.addAction(page, { cause: 'T1a', desc: 'Do it', owner: 'Pat', due: '2027-05-05', status: 'In progress', cost: 77.5 }); await reload(); await step(page, 'Actions');
-    const li = cardsLi(page).first();
+    const li = await f.openAction(page, 0);
     eq(await li.getByLabel('Owner', { exact: true }).inputValue(), 'Pat'); eq(await li.getByLabel('Due date').inputValue(), '2027-05-05');
     eq(await li.getByLabel('Status', { exact: true }).inputValue(), 'in_progress'); eq(await li.getByLabel('Cost', { exact: true }).inputValue(), '77.5');
     await page.getByRole('button', { name: 'Delete action 1' }).click(); await page.getByRole('alertdialog').getByRole('button', { name: 'Cancel' }).click();
@@ -184,7 +184,7 @@ test('D-EDGE-NUM', 'Number fields: zero, negative, non-numeric, decimals, huge; 
     });
   }
   await sub('payback-zero-cost', 'Action cost 0 with saving: payback "under 0.1 months"', async () => {
-    await step(page, 'Actions'); await cardsLi(page).nth(0).getByLabel('Cost', { exact: true }).fill(''); await cardsLi(page).nth(1).getByLabel('Cost', { exact: true }).fill('');
+    await step(page, 'Actions'); for (const k of [0, 1]) { const li = await f.openAction(page, k); await li.getByLabel('Cost', { exact: true }).fill(''); }
     await f.fillVerify(page, { after: 1 });
     const t = (await page.locator('dl').last().innerText()).replace(/\s+/g, ' ').toLowerCase(); ok(t.includes('under 0.1 months'), t);
   });

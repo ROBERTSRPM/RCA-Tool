@@ -61,6 +61,8 @@ async function newPage(browser, { viewport = DESKTOP, storageState, offline } = 
   const context = await browser.newContext({ viewport, storageState, acceptDownloads: true });
   const page = await context.newPage();
   page.errs = [];
+  // round 3: every Content-Security-Policy violation is logged as a console error, so it counts as a failure everywhere errs is asserted
+  await page.addInitScript(() => { document.addEventListener('securitypolicyviolation', (e) => console.error('CSP violation: ' + e.violatedDirective + ' blocked ' + e.blockedURI + ' at ' + (e.sourceFile || '') + ':' + (e.lineNumber || ''))); });
   page.fails = [];
   page.on('console', m => { if (m.type() === 'error') page.errs.push(m.text()); });
   page.on('pageerror', e => page.errs.push('pageerror: ' + e.message));
@@ -118,7 +120,13 @@ async function loginState(browser, email) {
 }
 async function withPage(browser, opts, fn) {
   const page = await newPage(browser, opts);
-  try { return await fn(page); } finally { await page.context().close().catch(() => {}); }
+  try {
+    const r = await fn(page);
+    // round 3: any Content-Security-Policy violation seen during a test is a failure of that test
+    const csp = page.errs.filter(x => /CSP violation|Content Security Policy|Refused to (apply|load|execute|connect|frame)/i.test(x));
+    if (csp.length) throw new Error('CSP violations during test: ' + csp.slice(0, 3).join(' || '));
+    return r;
+  } finally { await page.context().close().catch(() => {}); }
 }
 const money = (n) => (n < 0 ? '-' : '') + '$' + Math.abs(Math.round(n)).toLocaleString('en-US');
 

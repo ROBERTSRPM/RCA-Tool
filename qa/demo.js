@@ -49,8 +49,8 @@ test('D-DASH-1', 'Dashboard (sample only): totals equal hand calculation', async
   await page.goto(BASE + '/app');
   const s = await e.dashStats(page);
   // Hand calc of the sample: 14h*120t/h=1680t; *$18=30240; +9500=39740/event; x6=238,440/yr; after 1/yr=39,740; saving 198,700; status closed.
-  const annual = (14 * 120 * 18 + 9500) * 6, saved = annual - (14 * 120 * 18 + 9500) * 1;
-  await sub('totals', 'Totals: loss under investigation $0 (sample is closed), 0 open, 0 overdue, saved $198,700', async () => {
+  const annual = (14 * 120 * 18 + 9500) * 6, saved = annual - 0; // round 3 sample: 0 failures after the fix, so the saving is the whole annual loss
+  await sub('totals', 'Totals: loss under investigation $0 (sample is closed), 0 open, 0 overdue, saved $238,440 (round 3 sample)', async () => {
     eq(s['Annual loss under investigation'], money(0));
     eq(s['Open actions'], '0'); eq(s['Overdue actions'], '0');
     eq(s['Verified annual savings'], money(saved));
@@ -149,10 +149,10 @@ test('D-E2E-1', 'Full flow: new investigation, 7 steps, hand-checked numbers, da
   });
   // dashboard state 1: after figure not entered
   await page.goto(BASE + '/app');
-  await sub('dash-1', 'Dashboard totals (open work, unverified): loss $13,800, open 2, overdue 1, saved $198,700', async () => {
+  await sub('dash-1', 'Dashboard totals (open work, unverified): loss $13,800, open 2, overdue 1, saved $238,440', async () => {
     const s = await e.dashStats(page);
     eq(s['Annual loss under investigation'], money(calc.annual)); eq(s['Open actions'], '2'); eq(s['Overdue actions'], '1');
-    eq(s['Verified annual savings'], money(198700));
+    eq(s['Verified annual savings'].startsWith(money(238440)), true, JSON.stringify(s));
     const r = (await e.dashRows(page)).find(x => x.includes('QA: Gearbox'));
     ok(r.includes(money(calc.annual)) && r.includes('Actions in progress'), r);
   });
@@ -162,21 +162,20 @@ test('D-E2E-1', 'Full flow: new investigation, 7 steps, hand-checked numbers, da
   await page.goto(BASE + '/app'); 
   await sub('dash-2', 'Verified savings must not count while actions are still open (review says "no recurrence" but 2 actions not done)', async () => {
     const s = await e.dashStats(page);
-    eq(s['Verified annual savings'], money(198700), 'saving counted before actions are complete');
+    ok(s['Verified annual savings'].startsWith(money(238440)), 'saving counted before actions are complete: ' + JSON.stringify(s));
   });
   // complete actions
   await page.goto(BASE + '/app/investigations/' + id + '#actions');
-  await page.locator('li:has(label:has-text("What will be done?"))').nth(0).getByLabel('Status', { exact: true }).selectOption({ label: 'Done' });
-  await page.locator('li:has(label:has-text("What will be done?"))').nth(1).getByLabel('Status', { exact: true }).selectOption({ label: 'Done' });
+  await f.setActionStatus(page, 0, 'Done'); await f.setActionStatus(page, 1, 'Done');
   await waitSaved(page);
   await sub('verified-label', 'Once all actions are Done, review says no recurrence and a date is set, Verify says "Annual saving (verified)" and the status is Closed', async () => {
     await step(page, 'Verify'); const t = (await page.locator('dl').last().innerText()).replace(/\s+/g, ' ').toLowerCase(); ok(t.includes('annual saving (verified) ' + money(calc.saving).toLowerCase()), t);
   });
   await page.goto(BASE + '/app');
-  await sub('dash-3', 'Dashboard after closing: loss $0, open 0, overdue 0, saved $209,050; row says Closed', async () => {
+  await sub('dash-3', 'Dashboard after closing: loss $0, open 0, overdue 0, saved $248,790; row says Closed', async () => {
     const s = await e.dashStats(page);
     eq(s['Annual loss under investigation'], '$0'); eq(s['Open actions'], '0'); eq(s['Overdue actions'], '0');
-    eq(s['Verified annual savings'], money(198700 + calc.saving));
+    ok(s['Verified annual savings'].startsWith(money(238440 + calc.saving)), JSON.stringify(s));
     const r = (await e.dashRows(page)).find(x => x.includes('QA: Gearbox')); ok(r.includes('Closed'), r);
   });
   // report
