@@ -43,3 +43,31 @@ I cannot listen to the audio. These come from whisper small.en, checked again wi
 - Scene 16: "before they fail" is heard as "before they fade" (probably noise).
 - Long mid-scene pauses of about 0.85-1.5 s were left as the presenter paced them. Only pauses over 1.5 s were shortened.
 - Whisper dropped the first attempt in two places in its full-file pass (scene 15 "Slow the pump down", scene 16 "12 months later" x3). Only a per-phrase transcription exposed them. I re-checked every scene file by re-transcription. No scene shows missing, doubled or clipped words beyond the recogniser noise above, but a listen to the join points would confirm it.
+
+## Audio enhancement (second pass)
+
+Originals are kept in `original/` (the 15 WAVs and the first `full-preview.mp3`). `s01.wav`..`s17.wav` here are the enhanced versions (48 kHz mono 16-bit). Also written: `full-preview-enhanced.mp3` (128 kbps, 0.6 s between scenes, 743.5 s) and `before-after.mp3` (20 s of scene 9 from 8 s to 28 s, original, 0.5 s silence, the same 20 s enhanced; 40.5 s). I cannot listen, so every choice below rests on measurements.
+
+### What the measurements showed (originals)
+- The pauses are digital silence: 17-31 % of all samples are exactly 0 and the 0.5 s quietest windows read -66 dBFS or lower (several are -180). So there is no stationary room noise in the pauses to profile. The previous pass already removed it.
+- The only low-level, non-zero material is the tail of words and short gaps between words. For those frames (20 ms, -75 to -52 dBFS in the original) the spectrum is flat and hiss-like at about -62 dBFS overall. That is the noise that remains and is what I worked on. Speech runs at about -20 dBFS, so the gap is about 40 dB.
+- Hum: no peak at 50, 60, 100, 120, 150 or 180 Hz. The largest line over the neighbouring floor was 2.1 dB (not a tone). No notch was applied.
+- Clipping: none (no sample at or above 0.999). DC offset: 1e-6 to 7e-5, nothing to remove (the high-pass takes it anyway).
+- Sibilance: 5-9 kHz band power is 3-12 dB below the 1-4 kHz band in speech frames. Not harsh. No de-esser.
+- Presence: 3-5 kHz is 7-12 dB below 0.3-3 kHz band power, a normal speech slope, not dull. No presence lift.
+- Loudness of the originals: -15.2 to -17.6 LUFS per scene, -16.2 LUFS joined; sample peak -1.5 dBFS (limiter), true peak about -0.9 dBTP.
+
+### Chain (same for all scenes, `scratchpad` scripts, Python: scipy, noisereduce, numba, pyloudnorm)
+1. High-pass, 4th-order Butterworth, 80 Hz.
+2. Spectral noise reduction, `noisereduce` stationary, `prop_decrease` 0.9, threshold 1.0 sigma, FFT 2048, 400 Hz frequency smoothing, 60 ms time smoothing. The noise profile is taken from the file's own quietest non-zero frames (20 ms frames between -75 and -52 dBFS).
+3. Gentle downward expander at the gaps only: below -55 dBFS (20 ms RMS), ratio 1.6:1, at most 8 dB reduction, 5 ms attack, 150 ms release. It lowers the hiss between words and the word tails a little.
+4. Light compressor: threshold -22 dB, ratio 2.2:1, 8 dB soft knee, 20 ms attack, 200 ms release.
+5. One common gain (+5.8 dB, set from the joined recording so that the joined integrated loudness is -16.0 LUFS), then a 5 ms look-ahead peak limiter with its ceiling at -2.2 dBFS so that the true peak (4x oversampled) stays below -1.5 dBTP.
+Not used: notch, de-esser, presence lift (nothing measured that called for them).
+
+### Results
+- Noise floor (mean level of the quietest 10 % of non-zero 20 ms frames): about -57 to -64 dBFS before, -61 to -73 dBFS after, i.e. 3.5 to 8.6 dB lower, in absolute terms (mean 5.7 dB), even though the whole file is about the same loudness. The level of the "low frames" (-75 to -52 dBFS band, same frames before and after) falls by 6.7 dB on average (5.9 to 7.6 dB). I stopped there on purpose: the 10-15 dB asked for would need stronger reduction on material that is mostly the decay of words, which risks the underwater sound. The pauses stay digitally silent.
+- Integrated loudness: joined -16.03 LUFS (original -16.21). Per scene -15.4 to -16.9 LUFS (originals -15.2 to -17.6), so the spread is smaller.
+- True peak: -1.53 to -2.0 dBTP in every scene (original about -0.9), sample peak -2.2 dBFS.
+- Speech-band (300 Hz-3.4 kHz) RMS over speaking frames (above -30 dBFS): change -0.22 to +1.04 dB per scene, mean +0.2 dB. All within 1.5 dB.
+- Transcription check: scene 5 re-transcribed with faster-whisper small.en from a 16 kHz copy. The words are intact; the original and enhanced transcripts differ in one word (whisper wrote "breakdown" for the original and "breakdowns" for the enhanced, which is what the script says). Word-level similarity 0.99.

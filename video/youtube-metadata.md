@@ -1,6 +1,6 @@
 # YouTube metadata
 
-Chapter times follow the planned scene durations in `animation/scenes.json` (total about 9:11). After the final render, re-check each timestamp against the finished video before publishing.
+Chapter times are the real scene start times in `out/rca-explainer-final.mp4` (total 12:22; each scene is its voiceover plus 0.5 s). Re-check them if the video is re-rendered.
 
 ## 5 title options
 
@@ -20,13 +20,13 @@ I speak as someone who has worked as a Maintenance Manager, a Production Manager
 
 Chapters
 0:00 Hook: the cost of the same breakdown
-0:38 What root cause analysis is
-1:11 What RCA is not
-1:45 Why it matters
-2:18 The hidden plant
-2:51 What an effective RCA looks like
-3:58 Worked example: slurry pump
-8:20 Close: RCA as a system
+0:45 What root cause analysis is
+1:26 What RCA is not
+2:05 Why it matters
+2:47 The hidden plant
+3:31 What an effective RCA looks like
+5:12 Worked example: slurry pump
+11:15 Close: RCA as a system
 
 A tool to make this easy is coming soon. More to share later.
 
