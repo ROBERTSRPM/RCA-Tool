@@ -1,7 +1,7 @@
 {
   "suite": "demo",
   "base": "http://localhost:3611",
-  "at": "2026-11-17T01:08:47.102Z",
+  "at": "2026-11-17T01:58:05.538Z",
   "results": [
     {
       "id": "D-LAND-1.hdr",
@@ -64,13 +64,13 @@
       "title": "Landing page: every link and button works",
       "status": "pass",
       "detail": "",
-      "ms": 1428
+      "ms": 761
     },
     {
       "id": "D-DASH-1.totals",
       "title": "Totals: loss under investigation $0 (sample is closed), 0 open, 0 overdue, saved $198,700",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "values differ: expected \"$198,700\" but got \"$238,440\"",
       "ms": 0
     },
     {
@@ -85,7 +85,7 @@
       "title": "Dashboard (sample only): totals equal hand calculation",
       "status": "pass",
       "detail": "",
-      "ms": 477
+      "ms": 236
     },
     {
       "id": "D-DASH-2.dup",
@@ -155,7 +155,7 @@
       "title": "Dashboard buttons: duplicate, delete cancel/confirm, reset sample, empty state",
       "status": "pass",
       "detail": "",
-      "ms": 5548
+      "ms": 4579
     },
     {
       "id": "D-E2E-1.problem",
@@ -209,8 +209,8 @@
     {
       "id": "D-E2E-1.dash-1",
       "title": "Dashboard totals (open work, unverified): loss $13,800, open 2, overdue 1, saved $198,700",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "values differ: expected \"$198,700\" but got \"$238,440\"",
       "ms": 0
     },
     {
@@ -223,8 +223,8 @@
     {
       "id": "D-E2E-1.dash-2",
       "title": "Verified savings must not count while actions are still open (review says \"no recurrence\" but 2 actions not done)",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "saving counted before actions are complete: expected \"$198,700\" but got \"$238,440\"",
       "ms": 0
     },
     {
@@ -237,8 +237,8 @@
     {
       "id": "D-E2E-1.dash-3",
       "title": "Dashboard after closing: loss $0, open 0, overdue 0, saved $209,050; row says Closed",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "values differ: expected \"$209,050\" but got \"$248,790\"",
       "ms": 0
     },
     {
@@ -274,7 +274,7 @@
       "title": "Full flow: new investigation, 7 steps, hand-checked numbers, dashboard, report, reload",
       "status": "pass",
       "detail": "",
-      "ms": 8284
+      "ms": 6691
     },
     {
       "id": "D-TREE-1.empty",
@@ -372,7 +372,7 @@
       "title": "Cause tree operations: add child/sibling, edit, delete, collapse/expand, move, status",
       "status": "pass",
       "detail": "",
-      "ms": 3389
+      "ms": 2888
     },
     {
       "id": "D-TREE-2.tree-count",
@@ -428,7 +428,7 @@
       "title": "Switching Tree / 5 Whys / Fishbone keeps data; every view control works",
       "status": "pass",
       "detail": "",
-      "ms": 1301
+      "ms": 1101
     },
     {
       "id": "D-QC-1.blank",
@@ -582,7 +582,7 @@
       "title": "Quality check: each rule triggers, jump link lands on the right step, clears when fixed",
       "status": "pass",
       "detail": "",
-      "ms": 8985
+      "ms": 8116
     },
     {
       "id": "D-PERS-1.autosave-states",
@@ -679,7 +679,7 @@
       "id": "D-PERS-1.concurrent-window",
       "title": "Two tabs edit different fields within the same ~350 ms autosave window: neither edit may be silently lost (3 tries)",
       "status": "fail",
-      "detail": "values differ: expected [] but got [\"try 0: site=\\\"S01794877571773\\\" (typed \\\"S01794877571773\\\") when=\\\"Night shift, full speed\\\" (typed \\\"W01794877571773\\\") notices=0\",\"try 1: site=\\\"S11794877575040\\\" (typed \\\"S11794877575040\\\") when=\\\"Night shift, full speed\\\" (typed \\\"W11794877575040\\\") notices=0\",\"try 2: site=\\\"S21794877578255\\\" (typed \\\"S21794877578255\\\") when=\\\"Night shift, full speed\\\" (typed \\\"W21794877578255\\\") notices=0\"]",
+      "detail": "values differ: expected [] but got [\"try 0: site=\\\"S01794880552688\\\" (typed \\\"S01794880552688\\\") when=\\\"Night shift, full speed\\\" (typed \\\"W01794880552688\\\") notices=0\",\"try 1: site=\\\"S11794880555769\\\" (typed \\\"S11794880555769\\\") when=\\\"Night shift, full speed\\\" (typed \\\"W11794880555769\\\") notices=0\",\"try 2: site=\\\"S21794880558847\\\" (typed \\\"S21794880558847\\\") when=\\\"Night shift, full speed\\\" (typed \\\"W21794880558847\\\") notices=0\"]",
       "ms": 0
     },
     {
@@ -687,7 +687,7 @@
       "title": "Persistence: reload after each kind of edit (demo)",
       "status": "pass",
       "detail": "",
-      "ms": 27202
+      "ms": 25105
     },
     {
       "id": "D-EDGE-NUM.letters",
@@ -792,7 +792,7 @@
       "title": "Number fields: zero, negative, non-numeric, decimals, huge; payback edge cases",
       "status": "pass",
       "detail": "",
-      "ms": 4800
+      "ms": 4128
     },
     {
       "id": "D-EDGE-TEXT.overflow-problem",
@@ -890,7 +890,7 @@
       "title": "Very long text, HTML/script text and special characters render as text and do not break layout",
       "status": "pass",
       "detail": "",
-      "ms": 29953
+      "ms": 22869
     },
     {
       "id": "D-EDGE-DATE.past-future-event",
@@ -932,7 +932,7 @@
       "title": "Dates in the past and future",
       "status": "pass",
       "detail": "",
-      "ms": 5605
+      "ms": 4682
     },
     {
       "id": "D-EDGE-NAV.bad-id",
@@ -1030,7 +1030,7 @@
       "title": "Invalid id, unknown routes, back/forward, double-click create",
       "status": "pass",
       "detail": "",
-      "ms": 12384
+      "ms": 11105
     },
     {
       "id": "D-EDGE-ACT.hidden-after-unflag",
@@ -1051,7 +1051,7 @@
       "title": "Actions whose root cause is unflagged or deleted",
       "status": "pass",
       "detail": "",
-      "ms": 2083
+      "ms": 1699
     },
     {
       "id": "D-EDGE-EVID.upload",
@@ -1100,7 +1100,7 @@
       "title": "Evidence: link/unlink, delete confirm, photo upload, non-image file",
       "status": "pass",
       "detail": "",
-      "ms": 5855
+      "ms": 5146
     },
     {
       "id": "D-EDGE-STORE.corrupt",
@@ -1128,7 +1128,7 @@
       "title": "Browser storage faults: corrupt JSON, blocked storage",
       "status": "pass",
       "detail": "",
-      "ms": 3488
+      "ms": 2580
     },
     {
       "id": "D-ERR-1.pages-desktop",
@@ -1163,7 +1163,7 @@
       "title": "No console errors or failed requests on any page (desktop and 375px, every step and cause view)",
       "status": "pass",
       "detail": "",
-      "ms": 28620
+      "ms": 26853
     },
     {
       "id": "D-A11Y-1.names",
@@ -1275,7 +1275,7 @@
       "title": "Accessibility: names, labels, headings, language, titles, focus visibility, keyboard reach, contrast",
       "status": "pass",
       "detail": "",
-      "ms": 26696
+      "ms": 23575
     },
     {
       "id": "D-MOB-1.page_",
@@ -1408,7 +1408,7 @@
       "title": "375px layout: no horizontal overflow, clipped or off-screen content on every page and step (sample + filled)",
       "status": "pass",
       "detail": "",
-      "ms": 20148
+      "ms": 16791
     },
     {
       "id": "D-MOB-E2E.problem",
@@ -1478,7 +1478,7 @@
       "title": "375px: the full end-to-end flow (all 7 steps, 7-cause tree, actions, verify) works with touch-sized layout",
       "status": "pass",
       "detail": "",
-      "ms": 6316
+      "ms": 4476
     }
   ],
   "notes": [

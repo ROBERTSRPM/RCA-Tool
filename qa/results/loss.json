@@ -1,7 +1,7 @@
 {
   "suite": "loss",
   "base": "http://localhost:3611",
-  "at": "2026-11-17T01:10:00.518Z",
+  "at": "2026-11-17T01:58:50.122Z",
   "results": [
     {
       "id": "LOSS-1-desk.default",
@@ -92,7 +92,7 @@
       "title": "Shares: always total 100, rebalance proportionally, typing/slider/edge input [desk]",
       "status": "pass",
       "detail": "",
-      "ms": 8077
+      "ms": 4551
     },
     {
       "id": "LOSS-2-desk.mix-S1",
@@ -183,7 +183,7 @@
       "title": "Hand-calculated costs for six share mixes (cash vs opportunity, per event and per year) [desk]",
       "status": "pass",
       "detail": "",
-      "ms": 2411
+      "ms": 1278
     },
     {
       "id": "LOSS-3-desk.empty",
@@ -239,7 +239,7 @@
       "title": "Other cost lines: add, categories, description, amount, remove, bad input [desk]",
       "status": "pass",
       "detail": "",
-      "ms": 2125
+      "ms": 959
     },
     {
       "id": "LOSS-4-desk.verify",
@@ -251,8 +251,8 @@
     {
       "id": "LOSS-4-desk.dash-open",
       "title": "Dashboard (open investigation): row $20,462 with cash/opportunity split; loss tile = same; verified tile unchanged at $198,700",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "{\"Annual loss under investigation\":\"ANNUAL LOSS UNDER INVESTIGATION $20,462 Open investigations, per year Cash $14,702 · Opportunity $5,760\",\"Open actions\":\"OPEN ACTIONS 1 Not yet done\",\"Overdue actions\":\"OVERDUE ACTIONS 0 Past their due date\",\"Verified annual savings\":\"VERIFIED ANNUAL SAVINGS $238,440 Closed investigations only: failure confirmed stopped Cash $57,000 · Opportunity $181,440\",\"Rollout checks\":\"ROLLOUT CHECKS 0 Open. Spread a proven fix to similar assets\"}",
       "ms": 0
     },
     {
@@ -272,15 +272,15 @@
     {
       "id": "LOSS-4-desk.dash-closed",
       "title": "Dashboard after closing: loss tile $0, verified tile $211,341 (198,700 + 12,641) with cash $56,301 + opportunity $155,040",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "{\"Annual loss under investigation\":\"ANNUAL LOSS UNDER INVESTIGATION $0 Open investigations, per year Cash $0 · Opportunity $0\",\"Open actions\":\"OPEN ACTIONS 0 Not yet done\",\"Overdue actions\":\"OVERDUE ACTIONS 0 Past their due date\",\"Verified annual savings\":\"VERIFIED ANNUAL SAVINGS $251,081 Closed investigations only: failure confirmed stopped Cash $65,801 · Opportunity $185,280\",\"Rollout checks\":\"ROLLOUT CHECKS 0 Open. Spread a proven fix to similar assets\"}",
       "ms": 0
     },
     {
       "id": "LOSS-4-desk.not-verified-states",
       "title": "Each missing condition keeps the saving \"not yet verified\" and out of the dashboard: action open / recurred yes / unreviewed / no review date",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "actions open counted: {\"Annual loss under investigation\":\"ANNUAL LOSS UNDER INVESTIGATION $20,462 Open investigations, per year Cash $14,702 · Opportunity $5,760\",\"Open actions\":\"OPEN ACTIONS 1 Not yet done\",\"Overdue actions\":\"OVERDUE ACTIONS 0 Past their due date\",\"Verified annual savings\":\"VERIFIED ANNUAL SAVINGS $238,440 Closed investigations only: failure confirmed stopped Cash $57,000 · Opportunity $181,440\",\"Rollout checks\":\"ROLLOUT CHECKS 0 Open. Spread a proven fix to similar assets\"}",
       "ms": 0
     },
     {
@@ -288,7 +288,7 @@
       "title": "Figures carried into Verify, dashboard and Report for a mixed-share case (hand calc) [desk]",
       "status": "pass",
       "detail": "",
-      "ms": 12542
+      "ms": 5978
     },
     {
       "id": "LOSS-5-desk.dash",
@@ -344,7 +344,7 @@
       "title": "Old data without the new fields, and malformed stored shares [desk]",
       "status": "pass",
       "detail": "",
-      "ms": 2550
+      "ms": 1639
     },
     {
       "id": "LOSS-6-desk.layout",
@@ -379,7 +379,7 @@
       "title": "Layout of the new Loss step and Report loss table [desk]",
       "status": "pass",
       "detail": "",
-      "ms": 5575
+      "ms": 4007
     },
     {
       "id": "LOSS-7-desk.copy-same",
@@ -400,7 +400,7 @@
       "title": "Duplicate keeps the new loss fields and is independent of the original; sign-in dashboard unaffected [desk]",
       "status": "pass",
       "detail": "",
-      "ms": 5496
+      "ms": 4015
     },
     {
       "id": "LOSS-1-mob.default",
@@ -491,7 +491,7 @@
       "title": "Shares: always total 100, rebalance proportionally, typing/slider/edge input [mob]",
       "status": "pass",
       "detail": "",
-      "ms": 6350
+      "ms": 4211
     },
     {
       "id": "LOSS-2-mob.mix-S1",
@@ -582,7 +582,7 @@
       "title": "Hand-calculated costs for six share mixes (cash vs opportunity, per event and per year) [mob]",
       "status": "pass",
       "detail": "",
-      "ms": 1857
+      "ms": 1254
     },
     {
       "id": "LOSS-3-mob.empty",
@@ -638,7 +638,7 @@
       "title": "Other cost lines: add, categories, description, amount, remove, bad input [mob]",
       "status": "pass",
       "detail": "",
-      "ms": 1516
+      "ms": 934
     },
     {
       "id": "LOSS-4-mob.verify",
@@ -650,8 +650,8 @@
     {
       "id": "LOSS-4-mob.dash-open",
       "title": "Dashboard (open investigation): row $20,462 with cash/opportunity split; loss tile = same; verified tile unchanged at $198,700",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "{\"Annual loss under investigation\":\"ANNUAL LOSS UNDER INVESTIGATION $20,462 Open investigations, per year Cash $14,702 · Opportunity $5,760\",\"Open actions\":\"OPEN ACTIONS 1 Not yet done\",\"Overdue actions\":\"OVERDUE ACTIONS 0 Past their due date\",\"Verified annual savings\":\"VERIFIED ANNUAL SAVINGS $238,440 Closed investigations only: failure confirmed stopped Cash $57,000 · Opportunity $181,440\",\"Rollout checks\":\"ROLLOUT CHECKS 0 Open. Spread a proven fix to similar assets\"}",
       "ms": 0
     },
     {
@@ -671,15 +671,15 @@
     {
       "id": "LOSS-4-mob.dash-closed",
       "title": "Dashboard after closing: loss tile $0, verified tile $211,341 (198,700 + 12,641) with cash $56,301 + opportunity $155,040",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "{\"Annual loss under investigation\":\"ANNUAL LOSS UNDER INVESTIGATION $0 Open investigations, per year Cash $0 · Opportunity $0\",\"Open actions\":\"OPEN ACTIONS 0 Not yet done\",\"Overdue actions\":\"OVERDUE ACTIONS 0 Past their due date\",\"Verified annual savings\":\"VERIFIED ANNUAL SAVINGS $251,081 Closed investigations only: failure confirmed stopped Cash $65,801 · Opportunity $185,280\",\"Rollout checks\":\"ROLLOUT CHECKS 0 Open. Spread a proven fix to similar assets\"}",
       "ms": 0
     },
     {
       "id": "LOSS-4-mob.not-verified-states",
       "title": "Each missing condition keeps the saving \"not yet verified\" and out of the dashboard: action open / recurred yes / unreviewed / no review date",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "actions open counted: {\"Annual loss under investigation\":\"ANNUAL LOSS UNDER INVESTIGATION $20,462 Open investigations, per year Cash $14,702 · Opportunity $5,760\",\"Open actions\":\"OPEN ACTIONS 1 Not yet done\",\"Overdue actions\":\"OVERDUE ACTIONS 0 Past their due date\",\"Verified annual savings\":\"VERIFIED ANNUAL SAVINGS $238,440 Closed investigations only: failure confirmed stopped Cash $57,000 · Opportunity $181,440\",\"Rollout checks\":\"ROLLOUT CHECKS 0 Open. Spread a proven fix to similar assets\"}",
       "ms": 0
     },
     {
@@ -687,7 +687,7 @@
       "title": "Figures carried into Verify, dashboard and Report for a mixed-share case (hand calc) [mob]",
       "status": "pass",
       "detail": "",
-      "ms": 11809
+      "ms": 5954
     },
     {
       "id": "LOSS-5-mob.dash",
@@ -743,7 +743,7 @@
       "title": "Old data without the new fields, and malformed stored shares [mob]",
       "status": "pass",
       "detail": "",
-      "ms": 2314
+      "ms": 1563
     },
     {
       "id": "LOSS-6-mob.layout",
@@ -778,7 +778,7 @@
       "title": "Layout of the new Loss step and Report loss table [mob]",
       "status": "pass",
       "detail": "",
-      "ms": 5102
+      "ms": 3849
     },
     {
       "id": "LOSS-7-mob.copy-same",
@@ -799,7 +799,7 @@
       "title": "Duplicate keeps the new loss fields and is independent of the original; sign-in dashboard unaffected [mob]",
       "status": "pass",
       "detail": "",
-      "ms": 5105
+      "ms": 4047
     }
   ],
   "notes": [
