@@ -144,7 +144,8 @@ export function runQualityCheck(
     // An empty causeId is a deliberately general action (the sample has some);
     // a causeId that points at nothing, or at a cause that is no longer a root
     // cause, is an action that lost its cause.
-    if (a.causeId !== "" && !rootIds.has(a.causeId)) {
+    // A corrective action is linked to the failure event itself (the top node).
+    if (a.causeId !== "" && a.causeId !== inv.tree.id && !rootIds.has(a.causeId)) {
       out.push({
         id: `action-unlinked-${a.id}`,
         rule: "action-not-linked",

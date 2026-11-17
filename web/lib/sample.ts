@@ -472,9 +472,9 @@ const actions: ActionItem[] = [
   },
   {
     id: "act-9",
-    causeId: "n-root5a",
+    causeId: "n-root",
     description:
-      "Clear the packed flush strainer, reset the flush valve and replace the scored seal faces on P-101 (repair cost is already in the per-event figure)",
+      "Rebuild the pump with new bearings and a new mechanical seal, laser aligned (cost is already in the repair cost per event)",
     owner: "Mechanical supervisor",
     dueDate: "2025-03-10",
     status: "done",

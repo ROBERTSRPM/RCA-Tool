@@ -2,6 +2,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { blankInvestigation, cloneInvestigation } from "../investigation";
 import { readRow, sanitiseForSave } from "../normalize";
 import { buildSample, SAMPLE_ID } from "../sample";
+import { upgradeSampleIfOld } from "../sample-upgrade";
 import type { Investigation, InvestigationPatch } from "../types";
 import {
   CONFLICT_MESSAGE,
@@ -133,18 +134,42 @@ export class SupabaseInvestigationStore implements InvestigationStore {
     return this.seeding;
   }
 
+  /**
+   * Replaces an older, unedited sample by the current one. The write only
+   * matches while the row's updated_at is unchanged, so an edit saved from
+   * another tab in the meantime is never overwritten. Failure is ignored.
+   */
+  private async upgradeSample(inv: Investigation, updatedAt: string | null): Promise<Investigation> {
+    const next = upgradeSampleIfOld(inv);
+    if (!next || !updatedAt) return inv;
+    try {
+      const clean = sanitiseForSave(next);
+      const { data, error } = await this.db
+        .from(TABLE)
+        .update({ data: clean, updated_at: clean.updatedAt })
+        .eq("id", inv.id)
+        .eq("updated_at", updatedAt)
+        .select("id");
+      if (!error && data && data.length > 0) return clean;
+    } catch {
+      /* keep showing the old one */
+    }
+    return inv;
+  }
+
   private async fetchAll(): Promise<ListResult> {
     const { data, error } = await this.db
       .from(TABLE)
-      .select("id, data")
+      .select("id, data, updated_at")
       .order("updated_at", { ascending: false });
     if (error) throw toStoreError(error, "load your investigations");
     const items: Investigation[] = [];
     const unreadable: { id: string }[] = [];
     for (const r of data ?? []) {
       const row = readRow(String(r.id), r.data);
-      if (row.ok) items.push(row.inv);
-      else unreadable.push({ id: row.id });
+      if (row.ok) {
+        items.push(row.inv.isSample ? await this.upgradeSample(row.inv, (r.updated_at as string | null) ?? null) : row.inv);
+      } else unreadable.push({ id: row.id });
     }
     return { items, unreadable };
   }
@@ -178,13 +203,14 @@ export class SupabaseInvestigationStore implements InvestigationStore {
   async get(id: string) {
     const { data, error } = await this.db
       .from(TABLE)
-      .select("data")
+      .select("data, updated_at")
       .eq("id", id)
       .maybeSingle();
     if (error) throw toStoreError(error, "load the investigation");
     if (data) {
       const row = readRow(id, data.data);
-      return row.ok ? row.inv : null;
+      if (!row.ok) return null;
+      return row.inv.isSample ? this.upgradeSample(row.inv, (data.updated_at as string | null) ?? null) : row.inv;
     }
     // The landing page links to the shared sample id; map it to the account's own sample.
     if (id === SAMPLE_ID) {

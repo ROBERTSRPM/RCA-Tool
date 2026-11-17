@@ -1,6 +1,7 @@
 import { blankInvestigation, cloneInvestigation } from "../investigation";
 import { readRow, sanitiseForSave } from "../normalize";
 import { buildSample, SAMPLE_ID } from "../sample";
+import { upgradeSampleIfOld } from "../sample-upgrade";
 import type { Investigation, InvestigationPatch } from "../types";
 import {
   CONFLICT_MESSAGE,
@@ -100,6 +101,22 @@ export class LocalStorageInvestigationStore implements InvestigationStore {
       if (r.ok) items.push(r.inv);
       else if (id) unreadable.push({ id });
       // An entry with no id at all cannot be shown or deleted by id; it is dropped on the next write.
+    }
+    // An older sample that nobody edited is replaced by the current one, silently.
+    let upgraded = false;
+    for (let i = 0; i < items.length; i++) {
+      const next = upgradeSampleIfOld(items[i]);
+      if (next) {
+        items[i] = next;
+        upgraded = true;
+      }
+    }
+    if (upgraded) {
+      try {
+        this.write(items);
+      } catch {
+        /* storage full or blocked: the upgraded sample is still shown this time */
+      }
     }
     return { items, unreadable };
   }

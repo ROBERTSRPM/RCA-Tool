@@ -23,6 +23,8 @@ export function AssetsPage() {
   const confirm = useConfirm();
   const { state } = useAssets();
   const [invs, setInvs] = useState<Investigation[]>([]);
+  // The list shows as soon as the assets arrive; the figures from investigations fill in when they do.
+  const [invsLoaded, setInvsLoaded] = useState(false);
   const [query, setQuery] = useState("");
   const [mode, setMode] = useState<"none" | "add" | "paste">("none");
   const [editing, setEditing] = useState<string | null>(null);
@@ -32,8 +34,12 @@ export function AssetsPage() {
     let live = true;
     getStore()
       .list()
-      .then((l) => live && setInvs(l))
-      .catch(() => undefined);
+      .then((l) => {
+        if (!live) return;
+        setInvs(l);
+        setInvsLoaded(true);
+      })
+      .catch(() => live && setInvsLoaded(true));
     return () => {
       live = false;
     };
@@ -200,7 +206,7 @@ export function AssetsPage() {
                     }}
                   />
                 ) : (
-                  <AssetCard asset={a} invs={invs} onEdit={() => setEditing(a.id)} onDelete={() => remove(a)} />
+                  <AssetCard asset={a} invs={invs} loaded={invsLoaded} onEdit={() => setEditing(a.id)} onDelete={() => remove(a)} />
                 )}
               </li>
             ))}
@@ -214,11 +220,13 @@ export function AssetsPage() {
 function AssetCard({
   asset: a,
   invs,
+  loaded,
   onEdit,
   onDelete,
 }: {
   asset: Asset;
   invs: Investigation[];
+  loaded: boolean;
   onEdit: () => void;
   onDelete: () => void;
 }) {
@@ -260,16 +268,16 @@ function AssetCard({
       <dl className="mt-3 grid gap-2 text-sm sm:grid-cols-3 sm:gap-3">
         <div className="flex items-baseline justify-between gap-3 rounded-lg bg-slate-100 p-2.5 sm:block">
           <dt className="text-xs font-semibold uppercase tracking-wide text-slate-500">Investigations</dt>
-          <dd className="mt-0.5 text-lg font-bold tabular-nums text-slate-900">{st.investigations.length}</dd>
+          <dd className="mt-0.5 text-lg font-bold tabular-nums text-slate-900">{loaded ? st.investigations.length : "…"}</dd>
         </div>
         <div className="flex items-baseline justify-between gap-3 rounded-lg bg-slate-100 p-2.5 sm:block">
           <dt className="text-xs font-semibold uppercase tracking-wide text-slate-500">Failures a year</dt>
-          <dd className="mt-0.5 text-lg font-bold tabular-nums text-slate-900">{formatNumber(st.failuresPerYear, 1)}</dd>
+          <dd className="mt-0.5 text-lg font-bold tabular-nums text-slate-900">{loaded ? formatNumber(st.failuresPerYear, 1) : "…"}</dd>
         </div>
         <div className="flex items-baseline justify-between gap-3 rounded-lg bg-slate-100 p-2.5 sm:block">
           <dt className="text-xs font-semibold uppercase tracking-wide text-slate-500">Annual loss</dt>
           <dd className="mt-0.5 break-words text-lg font-bold tabular-nums text-slate-900">
-            {formatMoney(st.annualLoss, st.currency)}
+            {loaded ? formatMoney(st.annualLoss, st.currency) : "…"}
           </dd>
         </div>
       </dl>

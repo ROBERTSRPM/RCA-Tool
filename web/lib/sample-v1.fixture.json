@@ -1,0 +1,522 @@
+{
+ "id": "sample-p101",
+ "schemaVersion": 1,
+ "createdAt": "2025-02-11T08:00:00.000Z",
+ "updatedAt": "2026-02-02T08:00:00.000Z",
+ "isSample": true,
+ "problem": {
+  "title": "Repeat bearing and mechanical seal failures on slurry pump P-101",
+  "asset": "Slurry pump P-101",
+  "site": "Concentrator plant, slurry feed area",
+  "eventDate": "2025-02-11",
+  "whatHappened": "P-101 slurry feed pump failed 6 times in 12 months (3 mechanical seal, 3 bearing), losing 84 hours of production and costing $238,440 per year in lost margin and repair.",
+  "where": "Drive-end and non-drive-end bearings and the mechanical seal of P-101, a single slurry feed pump with no standby.",
+  "when": "Spread across all shifts and seasons over the last 12 months: 3 mechanical seal events and 3 bearing events.",
+  "impact": "There is no buffer capacity, so a pump stop is a line stop and lost hours are lost production hours. Each failure takes 14 hours to diagnose, isolate, drain, rebuild and restart, losing 1,680 tonnes at 120 t/h, which is $30,240 of margin plus $9,500 of repair. Secondary damage, overtime premium, delayed planned work and environmental clean-up are not counted, so the real loss is higher."
+ },
+ "loss": {
+  "eventsPerYear": 6,
+  "downtimeHours": 14,
+  "ratePerHour": 120,
+  "unitName": "tonnes",
+  "marginPerUnit": 18,
+  "repairCost": 9500,
+  "currency": "$"
+ },
+ "evidence": [
+  {
+   "id": "ev-a1",
+   "type": "data",
+   "title": "A1: DCS flow trend, discharge valve log and pump curve overlay",
+   "note": "Flow sits at about 60% of best efficiency flow for most operating hours. The pump is run away from the point it was selected for. Discharge valve position log shows it throttled most of the time.",
+   "date": "2025-02-14",
+   "image": null
+  },
+  {
+   "id": "ev-a2",
+   "type": "inspection",
+   "title": "A2: Bearing race wear track, soft foot check, maintenance history search",
+   "note": "Off-centre wear track on the bearing races, typical of misalignment. One foot lifts when its bolt is loosened. No alignment record exists for 4 of the 6 rebuilds.",
+   "date": "2025-02-18",
+   "image": null
+  },
+  {
+   "id": "ev-a3",
+   "type": "photo",
+   "title": "A3: Oil samples at teardown, housing seal and breather inspection",
+   "note": "Water and solids found in the oil at teardown. Housing seals are worn and the breather vent is open to wash-down.",
+   "date": "2025-02-12",
+   "image": null
+  },
+  {
+   "id": "ev-b1",
+   "type": "inspection",
+   "title": "B1: Seal face inspection, flush flow reading, strainer inspection",
+   "note": "Seal faces scored and heat cracked (ran dry or hot). Measured flush flow is below design. Strainer found packed with solids.",
+   "date": "2025-02-19",
+   "image": null
+  },
+  {
+   "id": "ev-b3",
+   "type": "document",
+   "title": "B3: Rebuild job cards and fitter interview",
+   "note": "No set length is recorded on any of the 3 seal rebuild cards. Fitters set the seal by experience.",
+   "date": "2025-02-21",
+   "image": null
+  },
+  {
+   "id": "ev-r1",
+   "type": "document",
+   "title": "Root 1: Throughput change history, impeller size vs current duty, change records",
+   "note": "Throughput changed with no pump duty review on file. The impeller is oversized for the current duty.",
+   "date": "2025-02-24",
+   "image": null
+  },
+  {
+   "id": "ev-r2",
+   "type": "document",
+   "title": "Root 2: Work instructions and training records",
+   "note": "No document states an alignment method, tolerance or record. No laser tool on site and no training records.",
+   "date": "2025-02-24",
+   "image": null
+  },
+  {
+   "id": "ev-r3",
+   "type": "document",
+   "title": "Root 3: Review of the rebuild procedure",
+   "note": "No seal setting step, no soft foot check, and housing seals are reused.",
+   "date": "2025-02-25",
+   "image": null
+  },
+  {
+   "id": "ev-r4",
+   "type": "document",
+   "title": "Root 4: Job close-out records",
+   "note": "The pump was returned to service without an alignment or vibration reading.",
+   "date": "2025-02-25",
+   "image": null
+  },
+  {
+   "id": "ev-r5",
+   "type": "document",
+   "title": "Root 5: Inspection route and PM list",
+   "note": "Neither flush flow nor oil condition appears on any inspection route.",
+   "date": "2025-02-26",
+   "image": null
+  },
+  {
+   "id": "ev-r6",
+   "type": "data",
+   "title": "Root 6: Maintenance system history",
+   "note": "Six events were logged under two generic codes (bearing failure, seal failure) with no cause field filled, so the repeat pattern was invisible.",
+   "date": "2025-02-26",
+   "image": null
+  }
+ ],
+ "tree": {
+  "id": "n-root",
+  "text": "Repeat bearing and mechanical seal failures on P-101",
+  "category": "physical",
+  "status": "verified",
+  "evidenceIds": [],
+  "isRootCause": false,
+  "collapsed": false,
+  "children": [
+   {
+    "id": "n-a",
+    "text": "A. Bearings fail early",
+    "category": "physical",
+    "status": "verified",
+    "evidenceIds": [
+     "ev-a1",
+     "ev-a2",
+     "ev-a3"
+    ],
+    "isRootCause": false,
+    "collapsed": false,
+    "children": [
+     {
+      "id": "n-a1",
+      "text": "A1. Pump runs at about 60% of best efficiency flow, so radial load on the shaft is high",
+      "category": "physical",
+      "status": "verified",
+      "evidenceIds": [
+       "ev-a1"
+      ],
+      "isRootCause": false,
+      "collapsed": false,
+      "children": [
+       {
+        "id": "n-a1h",
+        "text": "Operators throttle the discharge valve to match downstream demand",
+        "category": "human",
+        "status": "verified",
+        "evidenceIds": [
+         "ev-a1"
+        ],
+        "isRootCause": false,
+        "collapsed": false,
+        "children": [
+         {
+          "id": "n-root1",
+          "text": "ROOT 1: Pump duty was never reviewed after throughput changed; impeller is oversized for current duty; no management-of-change trigger for duty changes",
+          "category": "system",
+          "status": "verified",
+          "evidenceIds": [
+           "ev-r1"
+          ],
+          "isRootCause": true,
+          "collapsed": false,
+          "children": []
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "id": "n-a2",
+      "text": "A2. Coupling misalignment and a soft foot after rebuilds",
+      "category": "physical",
+      "status": "verified",
+      "evidenceIds": [
+       "ev-a2"
+      ],
+      "isRootCause": false,
+      "collapsed": false,
+      "children": [
+       {
+        "id": "n-a2h",
+        "text": "Fitters align by straight edge and feel; soft foot is not checked",
+        "category": "human",
+        "status": "verified",
+        "evidenceIds": [
+         "ev-a2"
+        ],
+        "isRootCause": false,
+        "collapsed": false,
+        "children": [
+         {
+          "id": "n-root2",
+          "text": "ROOT 2: No precision alignment standard (method, tolerance, record), no laser tool, fitters not trained",
+          "category": "system",
+          "status": "verified",
+          "evidenceIds": [
+           "ev-r2"
+          ],
+          "isRootCause": true,
+          "collapsed": false,
+          "children": []
+         },
+         {
+          "id": "n-root4",
+          "text": "ROOT 4: No verification after repair (alignment record, vibration reading) before handover",
+          "category": "system",
+          "status": "verified",
+          "evidenceIds": [
+           "ev-r4"
+          ],
+          "isRootCause": true,
+          "collapsed": false,
+          "children": []
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "id": "n-a3",
+      "text": "A3. Bearing oil contaminated with water and solids (worn housing seals, open breather)",
+      "category": "physical",
+      "status": "verified",
+      "evidenceIds": [
+       "ev-a3"
+      ],
+      "isRootCause": false,
+      "collapsed": false,
+      "children": [
+       {
+        "id": "n-a3h",
+        "text": "Wash-down hose aimed at bearing housings; oil topped up from open containers",
+        "category": "human",
+        "status": "verified",
+        "evidenceIds": [
+         "ev-a3"
+        ],
+        "isRootCause": false,
+        "collapsed": false,
+        "children": [
+         {
+          "id": "n-root3",
+          "text": "ROOT 3: Rebuild procedure gaps: reuses worn housing seals, no sealed-breather or isolator standard, no soft foot check",
+          "category": "system",
+          "status": "verified",
+          "evidenceIds": [
+           "ev-r3"
+          ],
+          "isRootCause": true,
+          "collapsed": false,
+          "children": []
+         },
+         {
+          "id": "n-root5b",
+          "text": "ROOT 5b: Oil condition not on any inspection route",
+          "category": "system",
+          "status": "verified",
+          "evidenceIds": [
+           "ev-r5"
+          ],
+          "isRootCause": true,
+          "collapsed": false,
+          "children": []
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "id": "n-b",
+    "text": "B. Mechanical seals fail early",
+    "category": "physical",
+    "status": "verified",
+    "evidenceIds": [
+     "ev-b1",
+     "ev-a1",
+     "ev-a2",
+     "ev-b3"
+    ],
+    "isRootCause": false,
+    "collapsed": false,
+    "children": [
+     {
+      "id": "n-b1",
+      "text": "B1. Seal faces run dry or hot because flush flow is restricted (strainer packed, flush valve part closed)",
+      "category": "physical",
+      "status": "verified",
+      "evidenceIds": [
+       "ev-b1"
+      ],
+      "isRootCause": false,
+      "collapsed": false,
+      "children": [
+       {
+        "id": "n-b1h",
+        "text": "Flush strainer not checked; flush valve position not verified after maintenance",
+        "category": "human",
+        "status": "verified",
+        "evidenceIds": [
+         "ev-b1"
+        ],
+        "isRootCause": false,
+        "collapsed": false,
+        "children": [
+         {
+          "id": "n-root5a",
+          "text": "ROOT 5a: Flush is on no inspection route; no flow indicator or low-flow alarm",
+          "category": "system",
+          "status": "verified",
+          "evidenceIds": [
+           "ev-r5"
+          ],
+          "isRootCause": true,
+          "collapsed": false,
+          "children": []
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "id": "n-b2",
+      "text": "B2. Seal faces and sleeve see excess shaft movement",
+      "category": "physical",
+      "status": "verified",
+      "evidenceIds": [
+       "ev-a1",
+       "ev-a2"
+      ],
+      "isRootCause": false,
+      "collapsed": false,
+      "children": [
+       {
+        "id": "n-b2s",
+        "text": "Driven by A1 (off best efficiency point) and A2 (misalignment); same roots 1, 2 and 4",
+        "category": "system",
+        "status": "verified",
+        "evidenceIds": [
+         "ev-a1",
+         "ev-a2"
+        ],
+        "isRootCause": false,
+        "collapsed": false,
+        "children": []
+       }
+      ]
+     },
+     {
+      "id": "n-b3",
+      "text": "B3. Seal set length not controlled on rebuild",
+      "category": "physical",
+      "status": "verified",
+      "evidenceIds": [
+       "ev-b3"
+      ],
+      "isRootCause": false,
+      "collapsed": false,
+      "children": [
+       {
+        "id": "n-b3h",
+        "text": "Seal set by experience, not recorded",
+        "category": "human",
+        "status": "verified",
+        "evidenceIds": [
+         "ev-b3"
+        ],
+        "isRootCause": false,
+        "collapsed": false,
+        "children": [
+         {
+          "id": "n-b3s",
+          "text": "ROOT 3 (again): rebuild procedure has no seal setting step or check",
+          "category": "system",
+          "status": "verified",
+          "evidenceIds": [
+           "ev-r3"
+          ],
+          "isRootCause": false,
+          "collapsed": false,
+          "children": []
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "id": "n-c",
+    "text": "C. Cross-cutting: failures are not recorded in a way that shows the pattern",
+    "category": "system",
+    "status": "verified",
+    "evidenceIds": [
+     "ev-r6"
+    ],
+    "isRootCause": false,
+    "collapsed": false,
+    "children": [
+     {
+      "id": "n-root6",
+      "text": "ROOT 6: Failures coded only as \"bearing failure\" or \"seal failure\" in the maintenance system, so the repeat pattern and causes were invisible",
+      "category": "system",
+      "status": "verified",
+      "evidenceIds": [
+       "ev-r6"
+      ],
+      "isRootCause": true,
+      "collapsed": false,
+      "children": []
+     }
+    ]
+   }
+  ]
+ },
+ "actions": [
+  {
+   "id": "act-1",
+   "causeId": "n-root1",
+   "description": "Trim impeller / re-rate duty so the operating point sits near best efficiency (needs shutdown)",
+   "owner": "Reliability engineer with process engineer",
+   "dueDate": "2025-04-28",
+   "status": "done",
+   "cost": 28000
+  },
+  {
+   "id": "act-2",
+   "causeId": "n-root5a",
+   "description": "Upgrade seal flush: flow indicator, clean strainer, add to inspection route",
+   "owner": "Mechanical supervisor",
+   "dueDate": "2025-03-31",
+   "status": "done",
+   "cost": 12000
+  },
+  {
+   "id": "act-3",
+   "causeId": "n-root2",
+   "description": "Write alignment standard, buy laser alignment tool, train fitters (standard week 4, training week 8)",
+   "owner": "Maintenance manager",
+   "dueDate": "2025-04-28",
+   "status": "done",
+   "cost": 8000
+  },
+  {
+   "id": "act-4",
+   "causeId": "n-root3",
+   "description": "Fit bearing housing isolators and sealed breathers; write rebuild checklist with seal setting, soft foot check, alignment record and vibration reading before handover. Also fixes Roots 4 and 5b, see the next two lines; cost counted once here",
+   "owner": "Mechanical supervisor and planner",
+   "dueDate": "2025-04-14",
+   "status": "done",
+   "cost": 7000
+  },
+  {
+   "id": "act-4b",
+   "causeId": "n-root4",
+   "description": "Require alignment record and vibration reading before handover (part of the action above, cost included there)",
+   "owner": "Mechanical supervisor and planner",
+   "dueDate": "2025-04-14",
+   "status": "done",
+   "cost": 0
+  },
+  {
+   "id": "act-4c",
+   "causeId": "n-root5b",
+   "description": "Add oil condition check to the inspection route (part of the action above, cost included there)",
+   "owner": "Mechanical supervisor and planner",
+   "dueDate": "2025-04-14",
+   "status": "done",
+   "cost": 0
+  },
+  {
+   "id": "act-5",
+   "causeId": "",
+   "description": "Engineering and project time across all actions",
+   "owner": "Reliability engineer",
+   "dueDate": "2025-04-28",
+   "status": "done",
+   "cost": 5000
+  },
+  {
+   "id": "act-6",
+   "causeId": "n-root1",
+   "description": "Add pump duty to the management-of-change checklist",
+   "owner": "Plant engineering manager",
+   "dueDate": "2025-03-24",
+   "status": "done",
+   "cost": 0
+  },
+  {
+   "id": "act-7",
+   "causeId": "n-root6",
+   "description": "Add cause and failure-mode fields to repair coding",
+   "owner": "Maintenance planner",
+   "dueDate": "2025-03-24",
+   "status": "done",
+   "cost": 0
+  },
+  {
+   "id": "act-8",
+   "causeId": "",
+   "description": "Effectiveness check: report failures, hours and cost at 90 days and 12 months",
+   "owner": "Reliability engineer, reported to plant manager",
+   "dueDate": "2026-03-02",
+   "status": "done",
+   "cost": 0
+  }
+ ],
+ "verification": {
+  "reviewDate": "2026-03-02",
+  "recurred": "no",
+  "eventsPerYearAfter": 1,
+  "notes": "Failures measured over 12 months after the actions: 1 per year, down from 6. Cost and hours per event are held at the same values as before so the comparison is fair. Capacity released: 70 hours, 8,400 tonnes, $151,200 of margin plus $47,500 of repair cost avoided, which equals the $198,700 annual saving. Simple payback ignores the time value of money, tax and cost of capital. All figures are illustrative."
+ }
+}

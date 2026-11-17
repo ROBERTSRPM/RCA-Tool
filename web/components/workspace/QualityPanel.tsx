@@ -20,7 +20,7 @@ export function QualityPanel({
   go: (step: StepId, nodeId?: string) => void;
 }) {
   const [open, setOpen] = useState(() =>
-    typeof window !== "undefined" ? window.innerWidth >= 1024 : false,
+    typeof window !== "undefined" ? window.innerWidth >= 1024 && findings.length > 0 : false,
   );
   const stepLabel = (id: StepId) => STEPS.find((s) => s.id === id)?.label ?? id;
   const high = findings.filter((f) => f.severity === "high").length;

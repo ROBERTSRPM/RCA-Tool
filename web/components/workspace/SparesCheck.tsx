@@ -22,10 +22,11 @@ export function SparesCheck({ inv, update }: Pick<StepProps, "inv" | "update">) 
 
   return (
     <SectionCard
+      className="!p-4"
       title="Spares check"
-      help="Was the right spare there when it failed? A long wait for a part turns a short repair into a long stop."
+      help="Was the right spare there when it failed?"
     >
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <ChoiceGroup<Exclude<YesNoUnknown, "">>
           label="Was a spare part needed?"
           options={YES_NO}
@@ -42,14 +43,13 @@ export function SparesCheck({ inv, update }: Pick<StepProps, "inv" | "update">) 
             />
             <NumberField
               label="Supplier lead time"
-              help="Days from order to delivery."
-              suffix="days"
+                            suffix="days"
               value={s.leadTimeDays}
               onChange={(v) => set({ leadTimeDays: v })}
             />
             <TextAreaField
               label="How was the gap covered?"
-              help="Borrowed, cannibalised, expedited, repaired in the workshop..."
+              placeholder="Borrowed, cannibalised, expedited..."
               rows={2}
               value={s.coverage}
               onChange={(v) => set({ coverage: v })}
@@ -62,21 +62,18 @@ export function SparesCheck({ inv, update }: Pick<StepProps, "inv" | "update">) 
         <div
           role="note"
           data-testid="spares-flag"
-          className="mt-4 rounded-xl border border-amber-300 bg-amber-50 p-4"
+          className="mt-3 rounded-xl border border-amber-300 bg-amber-50 p-3"
         >
           <p className="flex items-start gap-2 font-bold text-amber-950">
             <Icon name="alert" size={18} className="mt-0.5 flex-none" />
             {SPARES_FLAG_TEXT}
           </p>
           <p className="mt-1 text-sm text-amber-900">
-            The part was not in stock and takes {s.leadTimeDays} days to arrive (14 days or more).
-            Holding one spare means the next failure is a repair, not a wait.
+            Not in stock and {s.leadTimeDays} days to arrive. Holding one spare makes the next
+            failure a repair, not a wait.{" "}
+            {covered && <strong className="text-emerald-800">A spares holding action is on the list.</strong>}
           </p>
-          {covered ? (
-            <p className="mt-2 text-sm font-semibold text-emerald-800">
-              A spares holding action is on the list.
-            </p>
-          ) : (
+          {!covered && (
             <button
               type="button"
               className="btn btn-primary mt-3"

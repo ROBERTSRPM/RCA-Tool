@@ -55,6 +55,35 @@ export function groupByRootCause(inv: Pick<Investigation, "tree" | "actions">): 
   return { groups, unlinked: inv.actions.filter((a) => !rootIds.has(a.causeId)) };
 }
 
+export interface ActionLayout {
+  /** Every corrective action, whatever it is linked to. */
+  corrective: ActionItem[];
+  /** One entry per root cause: its preventive actions, then any not yet classified. */
+  groups: { root: CauseNode; actions: ActionItem[] }[];
+  /** Non-corrective actions not linked to a current root cause. */
+  unlinked: ActionItem[];
+}
+
+/**
+ * How the Actions step lays actions out: corrective ones in one list (they
+ * answer to the failure event), the rest grouped by the root cause they prevent.
+ */
+export function layoutActions(inv: Pick<Investigation, "tree" | "actions">): ActionLayout {
+  const roots = rootCauses(inv.tree);
+  const rootIds = new Set(roots.map((r) => r.id));
+  const rest = inv.actions.filter((a) => a.kind !== "corrective");
+  return {
+    corrective: inv.actions.filter((a) => a.kind === "corrective"),
+    groups: roots.map((root) => ({
+      root,
+      actions: rest
+        .filter((a) => a.causeId === root.id)
+        .sort((a, b) => Number(b.kind === "preventive") - Number(a.kind === "preventive")),
+    })),
+    unlinked: rest.filter((a) => !rootIds.has(a.causeId)),
+  };
+}
+
 /* ---------- Maintenance plan changes ---------- */
 
 const UNIT_WORD: Record<IntervalUnit, [string, string]> = {

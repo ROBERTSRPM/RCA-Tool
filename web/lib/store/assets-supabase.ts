@@ -85,9 +85,10 @@ export class SupabaseAssetStore implements AssetStore {
   private seedIfNew(existing: Asset[]): Promise<void> {
     if (!this.seeding) {
       this.seeding = (async () => {
-        const { data, error } = await this.db.auth.getUser();
-        if (error || !data.user) return;
-        if (data.user.user_metadata?.[SEEDED_FLAG]) return;
+        // The session is cached in the browser: no network round trip just to read a flag.
+        const { data, error } = await this.db.auth.getSession();
+        if (error || !data.session) return;
+        if (data.session.user.user_metadata?.[SEEDED_FLAG]) return;
         const samples = buildSampleAssets().map((a) => ({
           ...a,
           id: accountSampleAssetId(this.userId, a.id.replace("sample-asset-", "")),
@@ -112,12 +113,16 @@ export class SupabaseAssetStore implements AssetStore {
 
   async list() {
     let all = await this.fetchAll();
-    try {
-      await this.seedIfNew(all);
-      all = await this.fetchAll();
-    } catch (e) {
-      // Seeding is a nicety: a failure here must not hide the register.
-      if (e instanceof StoreError && e.code === "unavailable") throw e;
+    // Only an empty register can need the one-time sample seeding, so the usual
+    // case is a single request.
+    if (all.length === 0) {
+      try {
+        await this.seedIfNew(all);
+        all = await this.fetchAll();
+      } catch (e) {
+        // Seeding is a nicety: a failure here must not hide the register.
+        if (e instanceof StoreError && e.code === "unavailable") throw e;
+      }
     }
     return sortAssets(all);
   }
