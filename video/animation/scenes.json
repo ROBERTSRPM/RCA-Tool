@@ -3,7 +3,6 @@
   "audio": null,
   "scenes": [
     {"id": "s01", "title": "Hook: same failure, again", "duration": 38, "presenter": "full", "presenterVideo": null, "audio": null},
-    {"id": "s02", "title": "Presenter story: the bucket conveyor", "duration": 52, "presenter": "full", "presenterVideo": null, "audio": null},
     {"id": "s03", "title": "What RCA is", "duration": 33, "presenter": "corner", "presenterVideo": null, "audio": null},
     {"id": "s04", "title": "What RCA is not", "duration": 34, "presenter": "corner", "presenterVideo": null, "audio": null},
     {"id": "s05", "title": "Why it matters", "duration": 33, "presenter": "corner", "presenterVideo": null, "audio": null},

@@ -1,6 +1,6 @@
 # YouTube metadata
 
-Chapter times follow the planned scene durations in `animation/scenes.json` (total about 10:03). After the final render, re-check each timestamp against the finished video before publishing.
+Chapter times follow the planned scene durations in `animation/scenes.json` (total about 9:11). After the final render, re-check each timestamp against the finished video before publishing.
 
 ## 5 title options
 
@@ -20,14 +20,13 @@ I speak as someone who has worked as a Maintenance Manager, a Production Manager
 
 Chapters
 0:00 Hook: the cost of the same breakdown
-0:38 My story: a bucket conveyor that failed four times
-1:30 What root cause analysis is
-2:03 What RCA is not
-2:37 Why it matters
-3:10 The hidden plant
-3:43 What an effective RCA looks like
-4:50 Worked example: slurry pump
-9:12 Close: RCA as a system
+0:38 What root cause analysis is
+1:11 What RCA is not
+1:45 Why it matters
+2:18 The hidden plant
+2:51 What an effective RCA looks like
+3:58 Worked example: slurry pump
+8:20 Close: RCA as a system
 
 A tool to make this easy is coming soon. More to share later.
 

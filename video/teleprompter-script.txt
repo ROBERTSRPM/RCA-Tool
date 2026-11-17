@@ -1,12 +1,12 @@
 ROOT CAUSE ANALYSIS: TELEPROMPTER SCRIPT
-Total: 1525 words, about 10 min 10 s at a steady pace
+Total: 1399 words, about 9 min 20 s at a steady pace
 
 How to use this
 - One clip per scene. Say the scene number out loud before you start, then pause two seconds.
 - If you fluff a line, pause, then repeat the whole sentence. Do not stop the recording.
 - Speak a little slower than feels natural. Pause at each blank line.
 - Look into the lens for the whole clip, including the voice-only scenes.
-- There is no scene 7. The numbering is kept so the clips match the animation.
+- There is no scene 2 or scene 7. The numbering is kept so the clips match the animation.
 
 ============================================================
 SCENE 1: THE HOOK
@@ -30,31 +30,6 @@ And we keep paying it.
 This video is about how to stop it.
 
 Find the real cause, fix it, and prove it stays fixed.
-
-============================================================
-SCENE 2: MY STORY
-[ON CAMERA, FULL SCREEN]  about 52 seconds
-============================================================
-
-Let me tell you about one I lived through.
-We had a bucket conveyor feeding our packaging lines.
-In one year it failed about four times.
-
-Each time, production stopped, and packaging stopped with it.
-We did not have enough spare buckets.
-
-So we stripped the least worn buckets out of the damaged sets and patched the conveyor back together, just to get running.
-The new buckets had to be made to order, then air freighted in.
-That meant more cost and more waiting.
-
-And until they arrived, we were running on salvaged parts, with the lines exposed to the next failure.
-Four times in one year.
-Same conveyor.
-
-Same scramble.
-Every time, we got it running.
-But getting it running is not the same as fixing it.
-
 
 ============================================================
 SCENE 3: WHAT RCA IS
@@ -81,7 +56,7 @@ SCENE 4: WHAT RCA IS NOT
 
 So let me say what RCA is not.
 It is not a hunt for someone to blame.
-The moment people feel blamed, they stop sharing facts, and facts are all we have.
+The moment people feel blamed, they stop sharing facts, and facts are all we need.
 
 It is not stopping at the first cause.
 The bearing failed because it overheated.
@@ -188,12 +163,12 @@ Each failure stops the line for fourteen hours.
 
 ============================================================
 SCENE 11: WORKED EXAMPLE: THE LOSS
-[VOICE ONLY (still film yourself, only the audio is used)]  about 33 seconds
+[VOICE ONLY (still film yourself, only the audio is used)]  about 34 seconds
 ============================================================
 
 Now put the loss in numbers.
 The line runs at one hundred and twenty tonnes an hour.
-Margin is eighteen dollars a tonne.
+Margin or net profit is eighteen dollars a tonne.
 
 Fourteen hours times one hundred and twenty is sixteen hundred and eighty tonnes.
 Times eighteen dollars is thirty thousand, two hundred and forty dollars.
@@ -204,7 +179,7 @@ Six failures is two hundred and thirty-eight thousand, four hundred and forty do
 
 ============================================================
 SCENE 12: WORKED EXAMPLE: EVIDENCE
-[VOICE ONLY (still film yourself, only the audio is used)]  about 32 seconds
+[VOICE ONLY (still film yourself, only the audio is used)]  about 33 seconds
 ============================================================
 
 Next, evidence, before opinions.
@@ -216,7 +191,7 @@ Oil samples show water and solids.
 The control system shows flow at about sixty percent of the pump's best efficiency flow.
 
 That is the point where the pump runs smoothest.
-And the maintenance system shows no alignment records for four of the six rebuilds.
+And the maintenance system shows no pump alignment records for four of the six rebuilds.
 
 ============================================================
 SCENE 13: WORKED EXAMPLE: PHYSICAL AND HUMAN CAUSES
