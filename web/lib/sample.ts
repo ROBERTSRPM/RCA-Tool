@@ -347,11 +347,11 @@ const actions: ActionItem[] = [
     id: "act-1",
     causeId: "n-root1",
     description:
-      "Trim impeller / re-rate duty so the operating point sits near best efficiency (needs shutdown)",
+      "Slow the pump on its existing variable speed drive so it runs near its best point with the valve wide open",
     owner: "Reliability engineer with process engineer",
     dueDate: "2025-04-28",
     status: "done",
-    cost: 28000,
+    cost: 0,
     kind: "preventive",
     category: "design",
   },
@@ -390,7 +390,7 @@ const actions: ActionItem[] = [
     id: "act-4",
     causeId: "n-root3",
     description:
-      "Fit bearing housing isolators and sealed breathers; write rebuild checklist with seal setting, soft foot check, alignment record and vibration reading before handover. Also fixes Roots 4 and 5b, see the next two lines; cost counted once here",
+      "Fit bearing isolators and breathers to the bearing housings to keep wash-down water and solids out of the oil",
     owner: "Mechanical supervisor and planner",
     dueDate: "2025-04-14",
     status: "done",
@@ -522,8 +522,8 @@ const actions: ActionItem[] = [
  *  lost margin/event  = 1,680 t x $18            = $30,240
  *  cost/event         = $30,240 + $9,500 repair  = $39,740
  *  annual loss        = $39,740 x 6              = $238,440 (84 h lost)
- *  after fix (1/yr)   = $39,740                  ; saving = $198,700
- *  action cost        = $60,000                  ; payback = 3.6 months
+ *  after fix (0/yr)   = $0                       ; saving = $238,440
+ *  action cost        = $32,000                  ; payback = 1.6 months
  */
 export function buildSample(): Investigation {
   return {
@@ -574,9 +574,9 @@ export function buildSample(): Investigation {
     verification: {
       reviewDate: "2026-03-02",
       recurred: "no",
-      eventsPerYearAfter: 1,
+      eventsPerYearAfter: 0,
       notes:
-        "Failures measured over 12 months after the actions: 1 per year, down from 6. Cost and hours per event are held at the same values as before so the comparison is fair. Capacity released: 70 hours, 8,400 tonnes, $151,200 of margin plus $47,500 of repair cost avoided, which equals the $198,700 annual saving. Simple payback ignores the time value of money, tax and cost of capital. All figures are illustrative.",
+        "Failures measured over 12 months after the actions: none, down from 6. Cost and hours per event are held at the same values as before so the comparison is fair. Capacity released: 84 hours, 10,080 tonnes, $181,440 of margin plus $57,000 of repair cost avoided, which equals the $238,440 annual saving. Simple payback ignores the time value of money, tax and cost of capital. All figures are illustrative.",
     },
   };
 }

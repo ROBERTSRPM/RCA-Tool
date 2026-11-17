@@ -122,16 +122,16 @@ describe("sample investigation", () => {
     expect(s.loss.ratePerHour).toBe(120);
     expect(s.loss.marginPerUnit).toBe(18);
     expect(s.loss.repairCost).toBe(9500);
-    expect(s.verification.eventsPerYearAfter).toBe(1);
+    expect(s.verification.eventsPerYearAfter).toBe(0);
     expect((s.loss.eventsPerYear ?? 0) * (s.loss.downtimeHours ?? 0)).toBe(84);
     expect(calcLoss(s.loss).lostUnitsPerEvent).toBe(1680);
     expect(calcLoss(s.loss).lostMarginPerEvent).toBe(30240);
     expect(calcLoss(s.loss).costPerEvent).toBe(39740);
     expect(v.annualLossBefore).toBe(238440);
-    expect(v.annualLossAfter).toBe(39740);
-    expect(v.annualSaving).toBe(198700);
-    expect(v.totalActionCost).toBe(60000);
-    expect(v.paybackMonths).toBeCloseTo(3.62, 2);
+    expect(v.annualLossAfter).toBe(0);
+    expect(v.annualSaving).toBe(238440);
+    expect(v.totalActionCost).toBe(32000);
+    expect(v.paybackMonths).toBeCloseTo((32000 / 238440) * 12, 2);
   });
   it("keeps the asset and has the 7 root-cause nodes of the case study", () => {
     expect(s.problem.asset.toLowerCase()).toContain("slurry pump p-101");
@@ -284,7 +284,7 @@ describe("calcLoss with the new cost model", () => {
     expect(c.annualCash).toBe(57000);
     expect(c.annualOpportunity).toBe(181440);
     expect(c.annualLoss).toBe(238440);
-    expect(verifiedSaving(s)).toBe(198700);
+    expect(verifiedSaving(s)).toBe(238440);
     expect(isVerifiedClosed(s)).toBe(true);
   });
 });

@@ -101,13 +101,13 @@ describe("a server without the assets table", () => {
 
 describe("the illustrative sample", () => {
   const s = buildSample();
-  it("keeps its money figures", () => {
+  it("follows the final video script figures", () => {
     expect(calcLoss(s.loss).annualLoss).toBe(238440);
     const v = calcVerification(s);
-    expect(v.totalActionCost).toBe(60000);
-    expect(v.annualSaving).toBe(198700);
-    expect(verifiedSaving(s)).toBe(198700);
-    expect(v.paybackMonths).toBeCloseTo(3.62, 1);
+    expect(v.totalActionCost).toBe(32000);
+    expect(v.annualSaving).toBe(238440);
+    expect(verifiedSaving(s)).toBe(238440);
+    expect(v.paybackMonths).toBeCloseTo(1.61, 1);
   });
   it("is still flagged illustrative", () => {
     expect(s.isSample).toBe(true);
