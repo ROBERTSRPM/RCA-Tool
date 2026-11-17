@@ -1,8 +1,659 @@
 {
   "suite": "account",
   "base": "https://rca-tool-omega.vercel.app",
-  "at": "2026-11-17T00:29:41.674Z",
+  "at": "2026-11-17T00:39:39.327Z",
   "results": [
+    {
+      "id": "A-00",
+      "title": "Setup: sign in as user A and user B (also: wrong-password test counts as A-AUTH)",
+      "status": "pass",
+      "detail": "",
+      "ms": 4826
+    },
+    {
+      "id": "A-AUTH-1.login-empty",
+      "title": "Login: empty submit shows \"Enter your email address.\" and \"Enter your password.\"",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-AUTH-1.login-malformed",
+      "title": "Login: malformed emails (\"abc\", \"a@b\", \"a b@c.com\", \"a@b.c\") are rejected client-side",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-AUTH-1.login-wrong-pw",
+      "title": "Login: wrong password shows friendly message, stays on /login, no token stored",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-AUTH-1.login-unknown-user",
+      "title": "Login: unknown email gives the same message (no account enumeration)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-AUTH-1.login-ui",
+      "title": "Login: password field is masked, inline error clears after fixing, Enter submits",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-AUTH-1.signup-empty",
+      "title": "Signup: empty submit shows email + password errors (nothing sent)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-AUTH-1.signup-weak",
+      "title": "Signup: weak/short password (7 chars) rejected; mismatch rejected; hint visible",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-AUTH-1.signup-malformed",
+      "title": "Signup: malformed email rejected",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-AUTH-1.signup-common-pw",
+      "title": "Signup: 8-char all-numeric password \"12345678\" - client accepts (server decides); not submitted",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-AUTH-1.forgot-validation",
+      "title": "Forgot password: empty and malformed email rejected, nothing sent",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-AUTH-1.reset-no-token",
+      "title": "Reset password without a valid link shows \"Reset link not valid\" and a working \"Request a new link\"",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-AUTH-1.reset-bad-token",
+      "title": "Reset password with garbage hash token does not crash and shows the invalid-link state",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-AUTH-1.auth-links",
+      "title": "Auth page links: login<->signup, login->forgot, forgot->login, \"Try the demo\"->/app, logo",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-AUTH-1.signed-out-app",
+      "title": "Signed out: /app and /app/investigations/<id> open in demo mode (banner shown), no redirect",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-AUTH-1.next-param",
+      "title": "Login ?next= only honours same-site paths (open-redirect check): //evil.com and https://evil.com ignored",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-AUTH-1.next-valid",
+      "title": "Login ?next=/app/investigations/sample-p101 returns there after sign in",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-AUTH-1.confirmed-banner",
+      "title": "Login ?confirmed=1 shows \"Email confirmed\" notice",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-AUTH-1",
+      "title": "Auth forms: validation, wrong password, links, signed-out access",
+      "status": "pass",
+      "detail": "",
+      "ms": 21991
+    },
+    {
+      "id": "A-SESS-1.menu",
+      "title": "Account menu shows user A email; menu has \"My investigations\" and \"Sign out\"; Escape and outside-click close it",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-SESS-1.no-banner",
+      "title": "No demo banner when signed in",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-SESS-1.reload",
+      "title": "Session survives reload and a fresh navigation (still user A, same data)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-SESS-1.login-redirect",
+      "title": "Visiting /login or /signup while signed in redirects to /app",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-SESS-1.sample-seeded",
+      "title": "Account has its own seeded sample with the same hand-calculated totals as demo ($198,700 saved)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-SESS-1.landing-sample-link",
+      "title": "Landing \"Open the sample investigation\" maps to the account sample when signed in",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-SESS-1.demo-separate",
+      "title": "Demo-mode data is separate: signing out shows demo store, not account data",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-SESS-1.signed-out-no-cache",
+      "title": "After sign out, reloading does not show account data (token removed)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-SESS-1",
+      "title": "Signed in: session survives reload, account menu, signed-in /login redirect, sign out, demo data separate",
+      "status": "pass",
+      "detail": "",
+      "ms": 10543
+    },
+    {
+      "id": "A-PERF-1.budget",
+      "title": "Dashboard shows data within 3000 ms (median 1656 ms)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-PERF-1",
+      "title": "Signed-in dashboard load time (navigation start to totals + rows rendered)",
+      "status": "pass",
+      "detail": "",
+      "ms": 12075
+    },
+    {
+      "id": "A-E2E-1.problem",
+      "title": "Problem step accepts all 8 fields",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-E2E-1.loss-calc",
+      "title": "Loss live calc equals hand calc (lost units, lost margin, cost/event, annual loss)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-E2E-1.evidence",
+      "title": "Evidence: 3 items listed, types and \"Not linked\" shown",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-E2E-1.tree-leaf-delete",
+      "title": "Deleting a leaf cause needs no confirmation and removes it",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-E2E-1.tree-nodes",
+      "title": "Tree has 7 causes covering Physical, Human and System / Latent",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-E2E-1.actions-tiles",
+      "title": "Actions tiles: total cost, 0 of 2 done, 1 overdue, 0 roots unlinked",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-E2E-1.verify-calc",
+      "title": "Verify step money equals hand calc (before, after, saving, cost, payback)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-E2E-1.reload-report",
+      "title": "After full reload the account data gives the hand-calculated report",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-E2E-1.dash",
+      "title": "Dashboard (account): loss $0, open 0, overdue 0, saved $209,050 (198,700 + 10,350), new row Closed",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-E2E-1.print",
+      "title": "Print emulation of the account report hides app chrome (account menu, header)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-E2E-1.autosave-xss",
+      "title": "Special characters round-trip through the database as text",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-E2E-1",
+      "title": "Signed-in full flow as user A: create, fill 7 steps, hand-checked numbers, reload, report, dashboard, cleanup",
+      "status": "pass",
+      "detail": "",
+      "ms": 23844
+    },
+    {
+      "id": "A-ISO-1.b-list",
+      "title": "User B dashboard does not list user A's investigation (B sees only own sample)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-ISO-1.b-direct",
+      "title": "User B opening A's investigation URL directly gets \"Investigation not found\" (no data leaked)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-ISO-1.b-direct-sample",
+      "title": "User B opening A's sample id gets not found (B's sample id differs)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-ISO-1.b-write",
+      "title": "User B cannot modify A's row via the API (RLS): PATCH/DELETE affect 0 rows",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-ISO-1.a-still-ok",
+      "title": "After B's attempts, A's investigation is intact",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-ISO-1.signed-out-direct",
+      "title": "Signed out (demo) opening A's account URL gets \"not found\" (no account data without login)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-ISO-1.b-delete-own-dup",
+      "title": "User B duplicate of own sample stays in B only",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-ISO-1.a-list-no-b",
+      "title": "User A does not see B's duplicate",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-ISO-1",
+      "title": "Data isolation between user A and user B (list and direct URL)",
+      "status": "pass",
+      "detail": "",
+      "ms": 29311
+    },
+    {
+      "id": "A-PERS-1.problem-loss",
+      "title": "Problem + Loss survive reload (account)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-PERS-1.evidence-tree-actions-verify",
+      "title": "Evidence, tree (flags, links, collapse), actions, verification survive reload (account)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-PERS-1.fast-reload",
+      "title": "Edit then reload within 60 ms - edit still saved (flush on pagehide)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-PERS-1.autosave-states",
+      "title": "Autosave indicator shows Saving... then All changes saved on account writes",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-PERS-1.two-tabs",
+      "title": "Two tabs/devices: a stale tab must never silently wipe the other tab's edit; it is refused with \"Load the latest version\" / \"Keep mine and overwrite\" (round 2 design)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-PERS-1.concurrent-window",
+      "title": "Account: two tabs edit different fields within the same save window: no silent loss (both saved, or a conflict banner and nothing overwritten)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-PERS-1.conflict-load-latest",
+      "title": "\"Load the latest version\" shows the other tab's data and clears the banner",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-PERS-1.conflict-keep-mine",
+      "title": "\"Keep mine and overwrite\" saves this tab's version and clears the banner",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-PERS-1.conflict-offline-no-banner",
+      "title": "A plain network failure is still the \"Could not save\" error, not a conflict banner",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-PERS-1.duplicate-delete",
+      "title": "Duplicate then delete (cancel / confirm) in account mode",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-PERS-1.reset-sample",
+      "title": "Reset sample data in account: edit sample, reset, original restored, own data untouched",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-PERS-1",
+      "title": "Signed-in persistence: reload after each kind of edit, autosave states, second device/tab",
+      "status": "pass",
+      "detail": "",
+      "ms": 88263
+    },
+    {
+      "id": "A-OFF-1.offline-error",
+      "title": "Going offline and editing shows a readable save error with \"Try again\"",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-OFF-1.offline-keeps-typing",
+      "title": "More edits while offline are kept in the page (not discarded), other steps usable",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-OFF-1.retry-offline",
+      "title": "\"Try again\" while still offline keeps the error (no false \"saved\")",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-OFF-1.beforeunload",
+      "title": "Leaving with unsaved offline edits triggers the browser \"unsaved changes\" prompt",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-OFF-1.recover",
+      "title": "Back online: \"online\" event flushes and the indicator returns to \"All changes saved\"",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-OFF-1.recover-persisted",
+      "title": "After recovery a reload shows the offline-typed values (nothing lost)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-OFF-1.auto-retry",
+      "title": "Offline error auto-retries (about 8 s) once the network returns even without a new edit or the online event",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-OFF-1.offline-dashboard",
+      "title": "Dashboard while offline shows a readable error (no blank crash)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-OFF-1.offline-create",
+      "title": "Creating a new investigation while offline shows an error and does not navigate",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-OFF-1.offline-load",
+      "title": "Opening an investigation while offline does not claim it is missing/deleted",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-OFF-1.offline-open-existing",
+      "title": "Network failing during investigation open: page says \"not found / deleted\" misleadingly? (observed)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-OFF-1",
+      "title": "Network drop while editing signed in: error shown, edits kept, recovery on reconnect",
+      "status": "pass",
+      "detail": "",
+      "ms": 21789
+    },
+    {
+      "id": "A-SIGNOUT-1.flush-online",
+      "title": "Typing then immediately signing out saves the edit first (online)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-SIGNOUT-1.offline-signout",
+      "title": "Offline unsaved edit then Sign out: warns \"Some changes could not be saved\"; Cancel keeps session; \"Sign out anyway\" signs out",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-SIGNOUT-1",
+      "title": "Sign out with unsaved edits",
+      "status": "pass",
+      "detail": "",
+      "ms": 14900
+    },
+    {
+      "id": "A-MOB-1.dash",
+      "title": "375px signed-in dashboard: no overflow, long email truncated",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-MOB-1.menu",
+      "title": "375px account menu fits on screen",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-MOB-1.ws",
+      "title": "375px signed-in workspace: all steps no overflow",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-MOB-1",
+      "title": "Signed in at 375px: dashboard, workspace, account menu layout",
+      "status": "pass",
+      "detail": "",
+      "ms": 5902
+    },
+    {
+      "id": "A-ERR-1",
+      "title": "Signed in: no console errors or failed requests on dashboard and all steps",
+      "status": "pass",
+      "detail": "",
+      "ms": 7510
+    },
+    {
+      "id": "A-RESET-1.atomic",
+      "title": "A failed reset must not leave the account without its sample",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-RESET-1",
+      "title": "Reset sample data when the network fails half way (delete succeeds, insert fails)",
+      "status": "pass",
+      "detail": "",
+      "ms": 4205
+    },
+    {
+      "id": "A-LOSS-1.reload",
+      "title": "After reload: shares 48/32/20, recovery note, holding cost, two other cost lines and annual loss $20,462",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-LOSS-1.verify-report",
+      "title": "Verify and Report show expected saving $12,641 (cash $8,801 + opportunity $3,840), payback 4.7 months",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-LOSS-1.dashboard",
+      "title": "Account dashboard: the S3 row is $20,462 with split $14,702 / $5,760; the loss tile rises by exactly that; verified tile does not change until closed",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-LOSS-1.close-dashboard",
+      "title": "After closing S3 the verified tile rises by exactly $12,641 (cash +$8,801, opportunity +$3,840) and the loss tile drops by $20,462",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-LOSS-1",
+      "title": "Signed in: the new loss fields persist in the account and carry to Verify, dashboard and Report (hand calc)",
+      "status": "pass",
+      "detail": "",
+      "ms": 16446
+    },
+    {
+      "id": "A-EMPTY-1.no-dialog",
+      "title": "Click \"Load the sample investigation\": no dialog, sample appears, exactly one",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-EMPTY-1.double-load",
+      "title": "Double-clicking \"Load the sample\" does not create two samples",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "A-EMPTY-1",
+      "title": "Signed in: empty account -> \"Load the sample investigation\" needs no confirm (round 2 change b) and restores exactly one sample",
+      "status": "pass",
+      "detail": "",
+      "ms": 14979
+    },
     {
       "id": "A-ZZ-CLEANUP.clean-A",
       "title": "Account A left with only the seeded sample",
@@ -22,8 +673,45 @@
       "title": "Cleanup: delete every investigation created by this run; leave each account with only its sample",
       "status": "pass",
       "detail": "",
-      "ms": 16597
+      "ms": 19788
     }
   ],
-  "notes": []
+  "notes": [
+    {
+      "kind": "observation",
+      "text": "Client-side password rule is length only (min 8); strength is left to the server. Not submitted to avoid creating an account."
+    },
+    {
+      "kind": "timing",
+      "text": "Signed-in dashboard load ms (7 cold-context runs): 1656, 1498, 1756, 1695, 1664, 1564, 1553; median 1656; min 1498; max 1756",
+      "data": {
+        "runs": [
+          1656,
+          1498,
+          1756,
+          1695,
+          1664,
+          1564,
+          1553
+        ],
+        "median": 1656
+      }
+    },
+    {
+      "kind": "observation",
+      "text": "fast reload: beforeunload prompt shown=true, value after=QA: Gearbox seizure on conveyor C-7"
+    },
+    {
+      "kind": "observation",
+      "text": "two tabs: conflict banner shown=1; DB after: title=\"ACC TAB1\" asset=\"Conveyor C-7 gearbox\""
+    },
+    {
+      "kind": "timing",
+      "text": "Offline: error appears 42 ms after pressing Try again (indicator reads \"Saving…\" meanwhile)"
+    },
+    {
+      "kind": "observation",
+      "text": "A-LOSS-1 tiles before closing: ANNUAL LOSS UNDER INVESTIGATION $34,262 Open investigations, per year Cash $21,902 · Opportunity $12,360 | OPEN ACTIONS 2 Not yet done | OVERDUE ACTIONS 0 Past their due date | VERIFIED ANNUAL SAVINGS $209,050 Closed investigations only: failure confirmed stopped Cash $52,900 · Opportunity $156,150"
+    }
+  ]
 }
