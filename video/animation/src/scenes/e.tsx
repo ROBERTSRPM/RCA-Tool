@@ -1,84 +1,151 @@
 import React from "react";
-import {Abs, C, Card, Check, clamp01, dash, Fade, FONT, FactoryShape, Full, GIn, IO, LIN, lerp, money, MONO, num, OUT, Pill, Stage, useScene} from "../lib";
+import {Abs, C, Card, Check, Cross, clamp01, dash, Fade, FONT, FactoryShape, Full, GIn, IO, LIN, lerp, money, MONO, num, OUT, Pill, Stage, useScene} from "../lib";
 
 /* ---------------- S16 ---------------- */
+// Timeline (fractions of the scene): 0.02-0.28 before/after bars, 0.30-0.46 payback, 0.48-0.62 recovered capacity,
+// 0.64-1.00 natural vs forced deterioration. Every count-up finishes by about 0.58.
+const Bullet: React.FC<{a: number; color: string; children: React.ReactNode; mark?: "check" | "cross"}> = ({a, color, children, mark = "check"}) => {
+  const {r} = useScene();
+  const t = r(a, a + 0.04);
+  return (
+    <div style={{display: "flex", alignItems: "center", gap: 22, fontSize: 38, fontWeight: 600, minHeight: 92, lineHeight: 1.15, opacity: t, transform: `translateX(${(1 - t) * 30}px)`}}>
+      {mark === "check" ? <Check size={44} sw={9} color={color} t={t} /> : <Cross size={44} sw={9} color={color} t={t} />}
+      <span style={mark === "cross" ? {textDecoration: "line-through", textDecorationColor: C.red, textDecorationThickness: 3, color: C.mute} : undefined}>{children}</span>
+    </div>
+  );
+};
 export const S16: React.FC = () => {
   const {r} = useScene();
-  const A = 1 - r(0.44, 0.49, IO);
-  const B = r(0.49, 0.53) * (1 - r(0.74, 0.79, IO));
-  const Cc = r(0.79, 0.84);
-  const base = 800, hA = 460, hB = 460 * (39740 / 238440);
-  const tA = r(0.04, 0.16), tB = r(0.17, 0.27);
-  const months = r(0.60, 0.70, IO) * 3.6;
-  const flagX = 120 + (1680 * 3.6) / 12;
-  const hours = Math.round(70 * r(0.82, 0.90, IO)), tonnes = 8400 * r(0.84, 0.94, IO);
-  const fill = lerp(0.1, 0.72, r(0.84, 0.97, IO));
+  const A = r(0.01, 0.03) * (1 - r(0.28, 0.32, IO));
+  const B = r(0.30, 0.34) * (1 - r(0.46, 0.50, IO));
+  const Cc = r(0.48, 0.52) * (1 - r(0.62, 0.66, IO));
+  const D = r(0.64, 0.68);
+  const base = 900, hA = 500;
+  const tA = r(0.04, 0.12), tB = r(0.12, 0.2);
+  const months = r(0.40, 0.48, IO) * 3;
+  const flagX = 120 + (1680 * 3) / 12;
+  const hours = Math.round(84 * r(0.50, 0.57, IO)), tonnes = 10080 * r(0.51, 0.58, IO);
+  const fill = lerp(0.1, 0.72, r(0.52, 0.60, IO));
+  const nat = r(0.66, 0.72), forced = r(0.76, 0.82);
   return (
     <Stage badge>
-      <Full>
-        <defs><clipPath id="hclip"><rect x={0} y={-20 + 290 * (1 - fill)} width={420} height={300} /></clipPath></defs>
-        <g opacity={A}>
-          <line x1={400} y1={base} x2={1500} y2={base} stroke={C.line} strokeWidth={5} />
-          <rect x={520} y={base - hA * tA} width={300} height={hA * tA} rx={12} fill={C.amber} />
-          <rect x={1100} y={base - hB * tB} width={300} height={hB * tB} rx={12} fill={C.green} />
-          <text x={670} y={base - hA * tA - 70} textAnchor="middle" fontSize={64} fontWeight={800} fill={C.amber} fontFamily={FONT} opacity={tA}>$238,440</text>
-          <text x={670} y={base - hA * tA - 20} textAnchor="middle" fontSize={40} fontWeight={600} fill={C.mute} fontFamily={FONT} opacity={tA}>per year</text>
-          <text x={1250} y={base - hB * tB - 70} textAnchor="middle" fontSize={64} fontWeight={800} fill={C.green} fontFamily={FONT} opacity={tB}>$39,740</text>
-          <text x={1250} y={base - hB * tB - 20} textAnchor="middle" fontSize={40} fontWeight={600} fill={C.mute} fontFamily={FONT} opacity={tB}>per year</text>
-          <text x={670} y={base + 68} textAnchor="middle" fontSize={44} fontWeight={700} fill={C.text} fontFamily={FONT}>Before: 6 failures</text>
-          <text x={1250} y={base + 68} textAnchor="middle" fontSize={44} fontWeight={700} fill={C.text} fontFamily={FONT}>After: 1 failure</text>
-          <g opacity={r(0.32, 0.38)}>
-            <line x1={830} y1={base - hA} x2={1560} y2={base - hA} stroke={C.mute} strokeWidth={3} strokeDasharray="10 8" />
-            <path d={`M1470 ${base - hA} V${base - hB - 130}`} stroke={C.green} strokeWidth={6} fill="none" {...dash(300, r(0.34, 0.41))} />
-            <path d={`M1450 ${base - hB - 150} L1470 ${base - hB - 118} L1490 ${base - hB - 150}`} stroke={C.green} strokeWidth={6} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      {/* Phase 1: zero breakdowns, loss gone */}
+      <div style={{position: "absolute", inset: 0, opacity: A}}>
+        <Abs x={80} y={110} w={1500} style={{fontSize: 72, fontWeight: 800}}><Fade a={0.01} b={0.06}>Twelve months later: <span style={{color: C.green}}>zero breakdowns</span></Fade></Abs>
+        <Full>
+          <line x1={240} y1={base} x2={1680} y2={base} stroke={C.line} strokeWidth={5} />
+          <rect x={380} y={base - hA * tA} width={400} height={hA * tA} rx={14} fill={C.amber} />
+          <rect x={1060} y={base - 8} width={400} height={8} rx={4} fill={C.green} opacity={tB} />
+          <text x={580} y={base - hA * tA - 70} textAnchor="middle" fontSize={84} fontWeight={800} fill={C.amber} fontFamily={FONT} opacity={tA}>$238,440</text>
+          <text x={580} y={base - hA * tA - 18} textAnchor="middle" fontSize={44} fontWeight={600} fill={C.mute} fontFamily={FONT} opacity={tA}>breakdown loss per year</text>
+          <text x={1260} y={base - 110} textAnchor="middle" fontSize={120} fontWeight={800} fill={C.green} fontFamily={FONT} opacity={tB}>$0</text>
+          <text x={1260} y={base - 40} textAnchor="middle" fontSize={44} fontWeight={600} fill={C.mute} fontFamily={FONT} opacity={tB}>breakdown loss per year</text>
+          <text x={580} y={base + 70} textAnchor="middle" fontSize={50} fontWeight={700} fill={C.text} fontFamily={FONT}>Before: 6 breakdowns</text>
+          <text x={1260} y={base + 70} textAnchor="middle" fontSize={50} fontWeight={700} fill={C.text} fontFamily={FONT}>After: 0 breakdowns</text>
+          <g opacity={r(0.18, 0.24)}>
+            <line x1={800} y1={base - hA} x2={1700} y2={base - hA} stroke={C.mute} strokeWidth={3} strokeDasharray="10 8" />
+            <path d={`M1560 ${base - hA} V${base - 40}`} stroke={C.green} strokeWidth={8} fill="none" {...dash(600, r(0.19, 0.26))} />
+            <path d={`M1536 ${base - 66} L1560 ${base - 30} L1584 ${base - 66}`} stroke={C.green} strokeWidth={8} fill="none" strokeLinecap="round" strokeLinejoin="round" opacity={r(0.24, 0.27)} />
           </g>
-        </g>
-      </Full>
-      <Abs x={80} y={120} w={1500} style={{fontSize: 58, fontWeight: 800, opacity: A}}><Fade a={0.02} b={0.07}>Yearly loss on P-101</Fade></Abs>
-      <Abs x={1540} y={400} w={360} style={{opacity: A}}>
-        <Fade a={0.38} b={0.44} x={30} y={0}>
-          <div style={{fontSize: 60, fontWeight: 800, color: C.green}}>$198,700</div>
-          <div style={{fontSize: 40, fontWeight: 600, color: C.mute, lineHeight: 1.2}}>saved per year</div>
-        </Fade>
-      </Abs>
+        </Full>
+        <Abs x={1600} y={380} w={300}>
+          <Fade a={0.2} b={0.26} x={30} y={0}>
+            <div style={{fontSize: 54, fontWeight: 800, color: C.green, lineHeight: 1.05}}>$238,440</div>
+            <div style={{fontSize: 38, fontWeight: 600, color: C.mute, lineHeight: 1.2, marginTop: 6}}>saved per year</div>
+          </Fade>
+        </Abs>
+      </div>
 
+      {/* Phase 2: payback */}
       <div style={{position: "absolute", inset: 0, opacity: B}}>
-        <Abs x={80} y={120} w={1500} style={{fontSize: 58, fontWeight: 800}}>Payback on the $60,000 spend</Abs>
-        <Abs x={120} y={230} w={1600} style={{fontFamily: MONO, fontSize: 66, fontWeight: 700, lineHeight: 1.35}}>
-          <Fade a={0.50} b={0.55}>$60,000 ÷ $198,700</Fade>
-          <Fade a={0.55} b={0.60}><span style={{color: C.mute}}>= </span>0.30 years</Fade>
-          <Fade a={0.59} b={0.64}><span style={{color: C.mute}}>= </span><span style={{color: C.green}}>about 3.6 months</span></Fade>
+        <Abs x={80} y={110} w={1700} style={{fontSize: 72, fontWeight: 800}}>Payback on the <span style={{color: C.amber}}>$60,000</span> spend</Abs>
+        <Abs x={120} y={270} w={1700} style={{fontFamily: MONO, fontSize: 92, fontWeight: 700, lineHeight: 1.4}}>
+          <Fade a={0.31} b={0.35}>$60,000 ÷ $238,440</Fade>
+          <Fade a={0.35} b={0.39}><span style={{color: C.mute}}>= </span>0.25 years</Fade>
+          <Fade a={0.38} b={0.42}><span style={{color: C.mute}}>= </span><span style={{color: C.green}}>about 3 months</span></Fade>
         </Abs>
         <Full>
-          <g opacity={r(0.58, 0.63)}>
-            <rect x={120} y={760} width={1680} height={56} rx={28} fill={C.panel2} stroke={C.line} strokeWidth={3} />
-            <rect x={120} y={760} width={Math.max(4, (1680 * months) / 12)} height={56} rx={28} fill={C.green} />
-            {[...Array(13)].map((_, i) => <line key={i} x1={120 + i * 140} y1={830} x2={120 + i * 140} y2={850} stroke={C.mute} strokeWidth={3} />)}
-            <text x={120} y={905} fontSize={40} fill={C.mute} fontFamily={FONT} fontWeight={600}>Start</text>
-            <text x={1800} y={905} textAnchor="end" fontSize={40} fill={C.mute} fontFamily={FONT} fontWeight={600}>12 months</text>
+          <g opacity={r(0.38, 0.42)}>
+            <rect x={120} y={780} width={1680} height={72} rx={36} fill={C.panel2} stroke={C.line} strokeWidth={3} />
+            <rect x={120} y={780} width={Math.max(4, (1680 * months) / 12)} height={72} rx={36} fill={C.green} />
+            {[...Array(13)].map((_, i) => <line key={i} x1={120 + i * 140} y1={870} x2={120 + i * 140} y2={894} stroke={C.mute} strokeWidth={3} />)}
+            <text x={120} y={960} fontSize={46} fill={C.mute} fontFamily={FONT} fontWeight={600}>Start</text>
+            <text x={1800} y={960} textAnchor="end" fontSize={46} fill={C.mute} fontFamily={FONT} fontWeight={600}>12 months</text>
           </g>
-          <g opacity={r(0.69, 0.73)} transform={`translate(${flagX} 0)`}>
-            <line x1={0} y1={640} x2={0} y2={760} stroke={C.text} strokeWidth={6} />
-            <path d="M0 640 H260 L235 676 L260 712 H0 Z" fill={C.green} />
-            <text x={20} y={690} fontSize={40} fontWeight={800} fill="#08130e" fontFamily={FONT}>Paid back</text>
+          <g opacity={r(0.45, 0.48)} transform={`translate(${flagX} 0)`}>
+            <line x1={0} y1={640} x2={0} y2={780} stroke={C.text} strokeWidth={6} />
+            <path d="M0 640 H280 L255 678 L280 716 H0 Z" fill={C.green} />
+            <text x={20} y={692} fontSize={42} fontWeight={800} fill="#08130e" fontFamily={FONT}>Paid back</text>
           </g>
         </Full>
       </div>
 
+      {/* Phase 3: capacity recovered */}
       <div style={{position: "absolute", inset: 0, opacity: Cc}}>
-        <Full>
-          <defs />
-          <g transform="translate(1050 250) scale(1.3)">
+        <svg width={1920} height={1080} style={{position: "absolute", left: 0, top: 0}}>
+          <defs><clipPath id="hclip"><rect x={0} y={-20 + 290 * (1 - fill)} width={420} height={300} /></clipPath></defs>
+          <g transform="translate(1180 260) scale(1.35)">
             <FactoryShape stroke={C.green} dashed sw={5} />
             <g clipPath="url(#hclip)" opacity={0.85}><FactoryShape stroke="none" fill={C.green} /></g>
             <FactoryShape stroke={C.green} sw={5} />
           </g>
-          <text x={1310} y={690} textAnchor="middle" fontSize={50} fontWeight={800} fill={C.green} fontFamily={FONT}>Hidden plant, released</text>
-        </Full>
-        <Abs x={110} y={190} w={850}>
-          <div style={{display: "flex", alignItems: "baseline", gap: 24}}><span style={{fontFamily: MONO, fontSize: 170, fontWeight: 800, color: C.green}}>{hours}</span><span style={{fontSize: 64, fontWeight: 700}}>hours back</span></div>
-          <div style={{display: "flex", alignItems: "baseline", gap: 24, marginTop: 60}}><span style={{fontFamily: MONO, fontSize: 120, fontWeight: 800, color: C.green}}>{num(tonnes)} t</span></div>
-          <div style={{fontSize: 56, fontWeight: 700, color: C.mute, marginTop: 6}}>of capacity, from a pump already owned</div>
+          <text x={1460} y={760} textAnchor="middle" fontSize={54} fontWeight={800} fill={C.green} fontFamily={FONT}>Hidden plant, released</text>
+        </svg>
+        <Abs x={100} y={150} w={1100}>
+          <div style={{display: "flex", alignItems: "baseline", gap: 28}}><span style={{fontFamily: MONO, fontSize: 220, fontWeight: 800, color: C.green}}>{hours}</span><span style={{fontSize: 80, fontWeight: 700}}>hours back</span></div>
+          <div style={{fontFamily: MONO, fontSize: 40, color: C.mute, marginTop: -6, opacity: r(0.5, 0.53)}}>6 failures × 14 h = 84 h</div>
+          <div style={{display: "flex", alignItems: "baseline", gap: 24, marginTop: 50}}><span style={{fontFamily: MONO, fontSize: 160, fontWeight: 800, color: C.green}}>{num(tonnes)} t</span></div>
+          <div style={{fontFamily: MONO, fontSize: 40, color: C.mute, marginTop: -2, opacity: r(0.53, 0.56)}}>84 h × 120 t/h = 10,080 t</div>
+          <div style={{fontSize: 56, fontWeight: 700, color: C.text, marginTop: 40}}>of capacity, from a pump already owned</div>
+        </Abs>
+      </div>
+
+      {/* Phase 4: natural vs forced deterioration */}
+      <div style={{position: "absolute", inset: 0, opacity: D}}>
+        <Abs x={80} y={104} w={1760} style={{fontSize: 62, fontWeight: 800}}><Fade a={0.64} b={0.69}>Bearings and seals still wear. <span style={{color: C.amber}}>Not all wear is equal.</span></Fade></Abs>
+        {/* left column */}
+        <Abs x={80} y={220} w={850} h={800}>
+          <div style={{height: "100%", opacity: nat, transform: `translateY(${(1 - nat) * 40}px)`}}>
+            <Card color={C.teal} style={{height: "100%", boxSizing: "border-box", padding: "34px 44px", position: "relative"}}>
+              <div style={{fontSize: 36, letterSpacing: 4, fontWeight: 800, color: C.teal}}>NATURAL DETERIORATION</div>
+              <div style={{fontSize: 74, fontWeight: 800, color: C.teal, lineHeight: 1.05, marginTop: 8}}>Managed</div>
+              <svg width={760} height={220} viewBox="0 0 760 220" style={{marginTop: 10}}>
+                <line x1={30} y1={190} x2={730} y2={190} stroke={C.mute} strokeWidth={3} />
+                <line x1={30} y1={190} x2={30} y2={20} stroke={C.mute} strokeWidth={3} />
+                <line x1={30} y1={50} x2={730} y2={50} stroke={C.red} strokeWidth={3} strokeDasharray="10 8" />
+                <text x={720} y={38} textAnchor="end" fontSize={28} fill={C.red} fontFamily={FONT} fontWeight={700}>failure limit</text>
+                <path d="M30 180 L330 110 L330 180 L630 110" fill="none" stroke={C.teal} strokeWidth={7} strokeLinejoin="round" strokeLinecap="round" {...dash(700, r(0.70, 0.84, LIN))} />
+                <text x={330} y={216} textAnchor="middle" fontSize={28} fill={C.amber} fontFamily={FONT} fontWeight={700} opacity={r(0.76, 0.80)}>planned shutdown</text>
+              </svg>
+              <div style={{marginTop: 20}}>
+                <Bullet a={0.84} color={C.teal}>Vibration, oil and flush checks</Bullet>
+                <Bullet a={0.89} color={C.teal}>Parts changed in a planned shutdown</Bullet>
+                <Bullet a={0.94} color={C.teal}>Before they fail</Bullet>
+              </div>
+            </Card>
+          </div>
+        </Abs>
+        {/* right column */}
+        <Abs x={990} y={220} w={850} h={800}>
+          <div style={{height: "100%", opacity: forced, transform: `translateY(${(1 - forced) * 40}px)`}}>
+            <Card color={C.red} style={{height: "100%", boxSizing: "border-box", padding: "34px 44px", position: "relative"}}>
+              <div style={{fontSize: 36, letterSpacing: 4, fontWeight: 800, color: C.red}}>FORCED DETERIORATION</div>
+              <div style={{fontSize: 74, fontWeight: 800, color: C.green, lineHeight: 1.05, marginTop: 8}}>Removed</div>
+              <svg width={760} height={220} viewBox="0 0 760 220" style={{marginTop: 10}}>
+                <line x1={30} y1={190} x2={730} y2={190} stroke={C.mute} strokeWidth={3} />
+                <line x1={30} y1={190} x2={30} y2={20} stroke={C.mute} strokeWidth={3} />
+                <line x1={30} y1={50} x2={730} y2={50} stroke={C.red} strokeWidth={3} strokeDasharray="10 8" />
+                <path d="M30 180 Q300 170 440 50" fill="none" stroke={C.red} strokeWidth={7} strokeLinecap="round" strokeDasharray={r(0.84, 0.9) > 0.5 ? "4 12" : undefined} opacity={1 - 0.6 * r(0.84, 0.9)} />
+                <path d="M30 180 L730 150" fill="none" stroke={C.green} strokeWidth={7} strokeLinecap="round" opacity={r(0.86, 0.92)} />
+                <text x={500} y={100} fontSize={30} fill={C.red} fontFamily={FONT} fontWeight={700} opacity={1 - 0.5 * r(0.84, 0.9)}>caused by us</text>
+                <text x={730} y={210} textAnchor="end" fontSize={28} fill={C.green} fontFamily={FONT} fontWeight={700} opacity={r(0.88, 0.94)}>natural wear only</text>
+              </svg>
+              <div style={{fontSize: 40, fontWeight: 600, color: C.mute, lineHeight: 1.2, margin: "12px 0 14px"}}>The wear we were causing ourselves</div>
+              <Bullet a={0.84} color={C.green} mark="cross">Running off its best point</Bullet>
+              <Bullet a={0.89} color={C.green} mark="cross">Misalignment and soft foot</Bullet>
+              <Bullet a={0.94} color={C.green} mark="cross">Dirty oil and a starved seal flush</Bullet>
+            </Card>
+          </div>
         </Abs>
       </div>
     </Stage>
@@ -91,12 +158,12 @@ const CX = 960, CY = 590, RX = 720, RY = 370;
 const ang = (k: number) => ((-90 + (k * 360) / 7) * Math.PI) / 180;
 const pt = (a: number): [number, number] => [CX + RX * Math.cos(a), CY + RY * Math.sin(a)];
 export const S17: React.FC = () => {
-  const {r, frame} = useScene();
+  const {r, frame, dur} = useScene();
   const times = [0.17, 0.24, 0.30, 0.36, 0.42, 0.50, 0.58];
   const intro = 1 - r(0.13, 0.17, IO);
   const loopO = r(0.15, 0.18) * (1 - r(0.80, 0.85, IO));
   const loopS = lerp(1, 0.55, r(0.80, 0.86, IO));
-  const spin = ang(0) + (r(0.64, 0.66) > 0 ? ((frame - 0.64 * 1590) * 0.016) : 0);
+  const spin = ang(0) + (r(0.64, 0.66) > 0 ? ((frame - 0.64 * dur) * 0.016) : 0);
   const [dx, dy] = pt(spin);
   const win = r(0.84, 0.90);
   const chart = r(0.66, 0.76);
@@ -159,14 +226,14 @@ export const S17: React.FC = () => {
               <path d="M30 -48 L48 -22 L18 -22 Z" fill={C.amber} />
               <circle r={14} fill={C.green} />
             </svg>
-            <div style={{fontSize: 92, fontWeight: 800, letterSpacing: -2, color: C.amber, marginTop: 10}}>Coming soon</div>
-            <div style={{fontSize: 46, fontWeight: 600, color: C.text, marginTop: 14}}>Root cause analysis, made easy</div>
+            <div style={{fontSize: 56, fontWeight: 700, color: C.text, marginTop: 14}}>A tool to make this easy:</div>
+            <div style={{fontSize: 110, fontWeight: 800, letterSpacing: -2, color: C.amber, marginTop: 4}}>coming soon</div>
           </div>
         </Card>
       </div>
       <Abs x={0} y={720} w={1920} style={{textAlign: "center"}}>
         <Fade a={0.91} b={0.96} style={{fontSize: 70, fontWeight: 800, letterSpacing: -1}}>Pick one repeat failure. Run the six steps.</Fade>
-        <Fade a={0.95} b={0.99} y={14} style={{marginTop: 44}}><Pill color={C.red} style={{background: C.red, color: "#fff", height: 84, fontSize: 44, padding: "0 56px", letterSpacing: 1}}>Subscribe for what comes next</Pill></Fade>
+        <Fade a={0.95} b={0.99} y={14} style={{marginTop: 44, fontSize: 52, fontWeight: 700, color: C.mute}}>Thanks for watching</Fade>
       </Abs>
     </Stage>
   );

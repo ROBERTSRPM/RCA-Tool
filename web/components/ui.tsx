@@ -486,7 +486,7 @@ export function ComboField({
           <ul
             id={listId}
             role="listbox"
-            aria-label={label}
+            aria-label="Suggestions"
             className="absolute left-0 right-0 z-20 mt-1 max-h-60 overflow-y-auto rounded-lg border border-slate-300 bg-white py-1 shadow-lg"
           >
             {shown.map((o, i) => (

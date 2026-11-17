@@ -120,25 +120,25 @@ const roots: [string, string][] = [
   ["Flush and oil not on inspection route", "Inspection routes"],
   ["Failures coded only as bearing failed", "Maintenance history"],
 ];
-const actions: [string, string, string, number][] = [
-  ["Trim impeller, re-rate pump duty", "Reliability engineer", "Week 8", 28000],
-  ["Seal flush indicator and route", "Mechanical supervisor", "Week 4", 12000],
-  ["Alignment standard, laser tool", "Maintenance manager", "Weeks 4 and 8", 8000],
-  ["Isolators, breathers, checklist", "Supervisor and planner", "Week 6", 7000],
+const actions: [string, string, string, number, string?][] = [
+  ["Variable speed drive: slow the pump", "Reliability engineer", "Week 8", 28000, "Runs near its best point, valve wide open"],
+  ["Seal flush indicator, on inspection route", "Mechanical supervisor", "Week 4", 12000, "Clean flush protects the seal faces"],
+  ["Alignment standard, laser tool, training", "Maintenance manager", "Weeks 4 and 8", 8000, "Fitters trained to the standard"],
+  ["Sealed housings, rebuild checklist", "Supervisor and planner", "Week 6", 7000, "Vibration reading before handover"],
   ["Engineering and project time", "Reliability engineer", "Weeks 1 to 8", 5000],
 ];
 export const S15: React.FC = () => {
   const {r} = useScene();
-  const p1o = 1 - r(0.50, 0.55, IO);
-  const drop = r(0.40, 0.46);
+  const p1o = 1 - r(0.30, 0.34, IO);
+  const drop = r(0.24, 0.28);
   return (
     <Stage badge>
       <div style={{opacity: p1o}}>
         <Abs x={60} y={104} w={1300} style={{fontSize: 58, fontWeight: 800}}><Fade a={0.0} b={0.05}>Test each cause against the evidence</Fade></Abs>
         {roots.map(([t, ev], i) => {
           const x = [90, 680, 1270][i % 3], y = 230 + Math.floor(i / 3) * 235;
-          const a = 0.03 + i * 0.012;
-          const tk = 0.10 + i * 0.035;
+          const a = 0.02 + i * 0.008;
+          const tk = 0.05 + i * 0.022;
           return (
             <Abs key={i} x={x} y={y} w={560} h={205}>
               <Fade a={a} b={a + 0.04} y={24} style={{height: "100%"}}>
@@ -154,37 +154,37 @@ export const S15: React.FC = () => {
           );
         })}
         <Abs x={640} y={730} w={640} h={150}>
-          <Fade a={0.32} b={0.37} y={24} style={{height: "100%"}}>
+          <Fade a={0.20} b={0.24} y={24} style={{height: "100%"}}>
             <div style={{height: "100%", boxSizing: "border-box", borderRadius: 16, border: `3px ${drop > 0.5 ? "dashed" : "solid"} ${drop > 0.5 ? "#6F8197" : C.steel}`, background: drop > 0.5 ? "#1A222D" : C.panel, display: "flex", alignItems: "center", justifyContent: "center", gap: 20, fontSize: 42, fontWeight: 700, color: drop > 0.5 ? "#7F90A4" : C.text, textDecoration: drop > 0.5 ? "line-through" : "none", position: "relative"}}>
               Bad bearing batch
-              <div style={{position: "absolute", right: 18, top: 12, textDecoration: "none"}}><Cross size={46} color={C.red} t={r(0.44, 0.48)} sw={9} /></div>
+              <div style={{position: "absolute", right: 18, top: 12, textDecoration: "none"}}><Cross size={46} color={C.red} t={r(0.27, 0.30)} sw={9} /></div>
             </div>
           </Fade>
         </Abs>
-        <Abs x={640} y={900} w={640} style={{textAlign: "center", fontSize: 44, fontWeight: 700, color: C.red}}><Fade a={0.46} b={0.5}>No evidence, dropped</Fade></Abs>
+        <Abs x={640} y={900} w={640} style={{textAlign: "center", fontSize: 44, fontWeight: 700, color: C.red}}><Fade a={0.28} b={0.31}>No evidence, dropped</Fade></Abs>
       </div>
 
-      <Abs x={80} y={104} w={1500} style={{fontSize: 58, fontWeight: 800}}><Fade a={0.56} b={0.61}>Actions with an owner and a due date</Fade></Abs>
-      <Abs x={80} y={200} w={1760}>
-        <Fade a={0.56} b={0.61} y={20}>
+      <Abs x={80} y={104} w={1500} style={{fontSize: 58, fontWeight: 800}}><Fade a={0.33} b={0.37}>Actions with an owner and a due date</Fade></Abs>
+      <Abs x={80} y={190} w={1760}>
+        <Fade a={0.33} b={0.37} y={20}>
           <div style={{display: "flex", height: 70, alignItems: "center", fontSize: 36, fontWeight: 800, color: C.mute, letterSpacing: 2, borderBottom: `3px solid ${C.amber}`}}>
-            <div style={{width: 740, paddingLeft: 16}}>ACTION</div><div style={{width: 520}}>OWNER</div><div style={{width: 300}}>DUE</div><div style={{width: 200, textAlign: "right", paddingRight: 16}}>COST</div>
+            <div style={{width: 800, paddingLeft: 16}}>ACTION</div><div style={{width: 460}}>OWNER</div><div style={{width: 280}}>DUE</div><div style={{width: 220, textAlign: "right", paddingRight: 16}}>COST</div>
           </div>
         </Fade>
-        {actions.map(([a, o, d, c], i) => {
-          const t0 = 0.60 + i * 0.075;
-          const v = r(t0 + 0.02, t0 + 0.07);
+        {actions.map(([a, o, dd, c, sub], i) => {
+          const t0 = 0.36 + i * 0.12;
           return (
             <Fade key={i} a={t0} b={t0 + 0.04} x={-40} y={0}>
-              <div style={{display: "flex", height: 100, alignItems: "center", fontSize: 36, fontWeight: 600, borderBottom: `2px solid ${C.line}`}}>
-                <div style={{width: 740, paddingLeft: 16}}>{a}</div><div style={{width: 520, color: C.mute}}>{o}</div><div style={{width: 300, color: C.mute}}>{d}</div>
-                <div style={{width: 200, textAlign: "right", paddingRight: 16, fontFamily: MONO, fontWeight: 700, color: C.text}}>{money(c * v)}</div>
+              <div style={{display: "flex", height: 124, alignItems: "center", fontSize: 38, fontWeight: 600, borderBottom: `2px solid ${C.line}`}}>
+                <div style={{width: 800, paddingLeft: 16}}><div style={{fontWeight: 700}}>{a}</div>{sub && <div style={{fontSize: 30, color: C.teal, fontWeight: 600, marginTop: 4}}>{sub}</div>}</div>
+                <div style={{width: 460, color: C.mute, fontSize: 34}}>{o}</div><div style={{width: 280, color: C.mute, fontSize: 34}}>{dd}</div>
+                <div style={{width: 220, textAlign: "right", paddingRight: 16, fontFamily: MONO, fontWeight: 700, color: C.text}}>{money(c)}</div>
               </div>
             </Fade>
           );
         })}
-        <Fade a={0.93} b={0.97} y={10}>
-          <div style={{display: "flex", height: 100, alignItems: "center", fontSize: 44, fontWeight: 800, justifyContent: "space-between", padding: "0 16px"}}>
+        <Fade a={0.90} b={0.95} y={10}>
+          <div style={{display: "flex", height: 110, alignItems: "center", fontSize: 50, fontWeight: 800, justifyContent: "space-between", padding: "0 16px"}}>
             <div style={{fontFamily: MONO, fontSize: 36, color: C.mute, fontWeight: 600}}>$28,000 + $12,000 + $8,000 + $7,000 + $5,000</div>
             <div>Total <span style={{color: C.amber, fontFamily: MONO}}>= $60,000</span></div>
           </div>

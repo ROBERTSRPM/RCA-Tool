@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import type { Problem } from "@/lib/types";
 import { SectionCard, TextAreaField, TextField } from "../../ui";
 import { AssetDetails } from "../AssetDetails";
@@ -10,6 +11,8 @@ export function ProblemStep({ inv, update, go }: StepProps) {
   const set = <K extends keyof Problem>(key: K, value: Problem[K]) =>
     update((i) => ({ ...i, problem: { ...i.problem, [key]: value } }));
   const p = inv.problem;
+  // The cause just copied from a similar failure, so "Open the cause tree" can select it.
+  const [added, setAdded] = useState<string | undefined>(undefined);
   return (
     <div className="space-y-5">
       <SectionCard
@@ -90,7 +93,8 @@ export function ProblemStep({ inv, update, go }: StepProps) {
         inv={inv}
         update={update}
         parentId={inv.tree.id}
-        onOpenTree={() => go("cause")}
+        onAdded={setAdded}
+        onOpenTree={() => go("cause", added)}
       />
     </div>
   );

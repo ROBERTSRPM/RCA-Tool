@@ -20,7 +20,7 @@ export const S05: React.FC = () => {
   const seg = Math.floor(spin * 4), f = spin * 4 - seg;
   const A = pts[seg], B = pts[(seg + 1) % 4];
   const dot = [lerp(A[0], B[0], f), lerp(A[1], B[1], f)];
-  const base = 720;
+  const base = 690;
   const k = (a: number, b: number) => r(a, b);
   return (
     <Stage>
@@ -47,22 +47,22 @@ export const S05: React.FC = () => {
         <Abs x={1000} y={600} w={880} style={{textAlign: "center", fontSize: 56, fontWeight: 800}}><Fade a={0.30} b={0.36}>Uninterrupted operation</Fade></Abs>
       </div>
       <Full>
-        <g opacity={r(0.46, 0.50)}>
-          <line x1={200} y1={base} x2={1720} y2={base} stroke={C.line} strokeWidth={4} />
+        <g opacity={r(0.46, 0.50)} transform="translate(-130 0)">
+          <line x1={200} y1={base} x2={1560} y2={base} stroke={C.line} strokeWidth={4} />
           <Bar x={330} h={440} color={C.amber} t={k(0.48, 0.58)} base={base} />
           <Bar x={540} h={300} color={C.green} t={k(0.54, 0.66)} base={base} />
           <Bar x={1050} h={190} color={C.amber} t={k(0.62, 0.72)} base={base} />
           <Bar x={1260} h={390} color={C.green} t={k(0.66, 0.78)} base={base} />
-          <text x={625} y={base + 62} textAnchor="middle" fontSize={48} fontWeight={800} fill={C.text} fontFamily={FONT}>Cost per unit</text>
-          <text x={1345} y={base + 62} textAnchor="middle" fontSize={48} fontWeight={800} fill={C.text} fontFamily={FONT}>Profit</text>
-          <rect x={560} y={base + 120} width={30} height={30} rx={6} fill={C.amber} />
-          <text x={604} y={base + 148} fontSize={40} fill={C.mute} fontFamily={FONT} fontWeight={600}>Firefighting</text>
-          <rect x={930} y={base + 120} width={30} height={30} rx={6} fill={C.green} />
-          <text x={974} y={base + 148} fontSize={40} fill={C.mute} fontFamily={FONT} fontWeight={600}>Uninterrupted</text>
+          <text x={625} y={base + 66} textAnchor="middle" fontSize={48} fontWeight={800} fill={C.text} fontFamily={FONT}>Cost per unit</text>
+          <text x={1345} y={base + 66} textAnchor="middle" fontSize={48} fontWeight={800} fill={C.text} fontFamily={FONT}>Profit</text>
+          <rect x={560} y={base + 110} width={30} height={30} rx={6} fill={C.amber} />
+          <text x={604} y={base + 138} fontSize={40} fill={C.mute} fontFamily={FONT} fontWeight={600}>Firefighting</text>
+          <rect x={930} y={base + 110} width={30} height={30} rx={6} fill={C.green} />
+          <text x={974} y={base + 138} fontSize={40} fill={C.mute} fontFamily={FONT} fontWeight={600}>Uninterrupted</text>
         </g>
       </Full>
       <Abs x={0} y={110} w={1920} style={{textAlign: "center", fontSize: 60, fontWeight: 800}}><Fade a={0.50} b={0.56}>Same fixed costs, <span style={{color: C.green}}>more good output</span></Fade></Abs>
-      <Abs x={0} y={930} w={1920} style={{textAlign: "center", fontSize: 64, fontWeight: 800}}><Fade a={0.86} b={0.92}>No new equipment. No major project.</Fade></Abs>
+      <Abs x={40} y={900} w={1340} style={{textAlign: "center", fontSize: 64, fontWeight: 800}}><Fade a={0.86} b={0.92}>No new equipment. No major project.</Fade></Abs>
     </Stage>
   );
 };
@@ -75,7 +75,7 @@ const lostBlocks = [
 export const S06: React.FC = () => {
   const {r} = useScene();
   const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-  const sx = 110, sw = 1700, dw = sw / 7;
+  const sx = 110, sw = 1260, dw = sw / 7;
   const ghostX = lerp(140, 780, r(0.12, 0.22, IO));
   const fill = r(0.54, 0.74, IO);
   const gY = 170, S = 1.3;
@@ -129,7 +129,7 @@ export const S06: React.FC = () => {
       <Abs x={0} y={90} w={1920} style={{textAlign: "center", fontSize: 56, fontWeight: 800}}>
         <Fade a={0.64} b={0.72} y={10} style={{display: "none"}}>{""}</Fade>
       </Abs>
-      <Abs x={400} y={930} w={1120}>
+      <Abs x={110} y={920} w={1260}>
         <Fade a={0.87} b={0.91} c={0.96} d={0.995} y={10}>
           <Card color={C.amber} style={{padding: "16px 30px", fontSize: 44, fontWeight: 700, textAlign: "center"}}><span style={{color: C.amber}}>CAPEX</span> = money spent on new assets</Card>
         </Fade>
@@ -163,24 +163,24 @@ export const S08: React.FC = () => {
   const rows = ["What", "Where", "When", "Loss"];
   return (
     <Stage>
-      <Abs x={80} y={170} w={800}>
+      <Abs x={60} y={110} w={840}>
         {steps.map((s, i) => {
           const on = i < 3 ? r(lit[i], lit[i] + 0.04) : 0;
           return (
-            <Fade key={s} a={0.0 + i * 0.012} b={0.05 + i * 0.012} x={-30} y={0} style={{height: 118}}>
-              <div style={{display: "flex", alignItems: "center", gap: 26, height: 100, padding: "0 22px", borderRadius: 18, background: on > 0.5 ? "rgba(245,165,36,0.12)" : "transparent", border: `2px solid ${on > 0.5 ? C.amber : "transparent"}`}}>
+            <Fade key={s} a={0.0 + i * 0.012} b={0.05 + i * 0.012} x={-30} y={0} style={{height: 142}}>
+              <div style={{display: "flex", alignItems: "center", gap: 26, height: 120, padding: "0 22px", borderRadius: 18, background: on > 0.5 ? "rgba(245,165,36,0.12)" : "transparent", border: `2px solid ${on > 0.5 ? C.amber : "transparent"}`}}>
                 <div style={{width: 72, height: 72, borderRadius: 36, border: `4px solid ${on > 0.5 ? C.amber : "#4A5B70"}`, background: on > 0.5 ? C.amber : "transparent", color: on > 0.5 ? "#10161e" : "#6B7D92", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 44, fontWeight: 800}}>{i + 1}</div>
-                <div style={{fontSize: 46, fontWeight: 700, color: on > 0.5 ? C.text : "#6F8197"}}>{s}</div>
+                <div style={{fontSize: 50, fontWeight: 700, color: on > 0.5 ? C.text : "#6F8197"}}>{s}</div>
               </div>
             </Fade>
           );
         })}
       </Abs>
       {/* card 1 */}
-      <Abs x={930} y={150} w={900} h={780}>
+      <Abs x={930} y={120} w={900} h={620}>
         <Fade a={cardT[0][0]} b={cardT[0][0] + 0.04} c={cardT[0][1]} d={cardT[0][1] + 0.03} x={50} y={0} style={{height: "100%"}}>
           <Card color={C.amber} style={{height: "100%", padding: 44}}>
-            <div style={{fontSize: 56, fontWeight: 800, marginBottom: 36}}>Problem statement</div>
+            <div style={{fontSize: 56, fontWeight: 800, marginBottom: 24}}>Problem statement</div>
             {rows.map((t, i) => (
               <div key={t} style={{display: "flex", alignItems: "center", gap: 30, height: 120}}>
                 <div style={{width: 170, fontSize: 46, fontWeight: 700, color: C.mute}}>{t}</div>
@@ -195,7 +195,7 @@ export const S08: React.FC = () => {
         {/* card 2 */}
         <Fade a={cardT[1][0]} b={cardT[1][0] + 0.04} c={cardT[1][1]} d={cardT[1][1] + 0.03} x={50} y={0} style={{position: "absolute", inset: 0}}>
           <Card color={C.amber} style={{height: "100%", padding: 44}}>
-            <div style={{fontSize: 56, fontWeight: 800, marginBottom: 70}}>Evidence before opinions</div>
+            <div style={{fontSize: 56, fontWeight: 800, marginBottom: 50}}>Evidence before opinions</div>
             <div style={{display: "flex", justifyContent: "space-between"}}>
               {["Photos", "Trends", "Logs", "Parts"].map((t, i) => (
                 <Fade key={t} a={0.38 + i * 0.045} b={0.42 + i * 0.045} y={-90} style={{textAlign: "center", width: 190}}>
@@ -209,7 +209,7 @@ export const S08: React.FC = () => {
         {/* card 3 */}
         <Fade a={cardT[2][0]} b={cardT[2][0] + 0.04} c={0.985} d={0.998} x={50} y={0} style={{position: "absolute", inset: 0}}>
           <Card color={C.amber} style={{height: "100%"}}>
-            <svg width={896} height={776} viewBox="0 0 896 776" style={{position: "absolute", inset: 0}}>
+            <svg width={896} height={616} viewBox="0 30 896 616" style={{position: "absolute", inset: 0}}>
               {[0, 1, 2].map((i) => {
                 const cx = 448 + (i - 1) * 270;
                 const t = r(0.68 + i * 0.045, 0.74 + i * 0.045);
@@ -232,8 +232,8 @@ export const S08: React.FC = () => {
               })}
               <g opacity={r(0.65, 0.7)}><rect x={348} y={180} width={200} height={70} rx={14} fill={C.panel2} stroke={C.amber} strokeWidth={5} /></g>
             </svg>
-            <div style={{position: "absolute", left: 0, right: 0, top: 60, textAlign: "center", fontSize: 56, fontWeight: 800, opacity: r(0.65, 0.7)}}>Keep asking why</div>
-            <div style={{position: "absolute", left: 0, right: 0, bottom: 50, textAlign: "center", fontSize: 44, fontWeight: 600, color: C.mute, opacity: r(0.88, 0.93)}}>In branches, not one straight line</div>
+            <div style={{position: "absolute", left: 0, right: 0, top: 40, textAlign: "center", fontSize: 56, fontWeight: 800, opacity: r(0.65, 0.7)}}>Keep asking why</div>
+            <div style={{position: "absolute", left: 0, right: 0, bottom: 16, textAlign: "center", fontSize: 42, fontWeight: 600, color: C.mute, opacity: r(0.88, 0.93)}}>In branches, not one straight line</div>
           </Card>
         </Fade>
       </Abs>

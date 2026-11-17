@@ -13,6 +13,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             <Link href="/app" className="hidden rounded-lg px-3 py-2 font-medium text-slate-200 hover:bg-slate-800 sm:block">
               Investigations
             </Link>
+            <Link href="/app/assets" className="hidden rounded-lg px-3 py-2 font-medium text-slate-200 hover:bg-slate-800 sm:block">
+              Assets
+            </Link>
             <Link href="/" className="hidden rounded-lg px-3 py-2 font-medium text-slate-400 hover:bg-slate-800 sm:block">
               Home
             </Link>
@@ -22,6 +25,14 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             <AccountMenu />
           </nav>
         </div>
+        <nav aria-label="Sections" className="flex gap-1 border-t border-slate-800 px-3 py-1 text-sm sm:hidden">
+          <Link href="/app" className="flex min-h-11 items-center rounded-lg px-3 font-medium text-slate-200 hover:bg-slate-800">
+            Investigations
+          </Link>
+          <Link href="/app/assets" className="flex min-h-11 items-center rounded-lg px-3 font-medium text-slate-200 hover:bg-slate-800">
+            Assets
+          </Link>
+        </nav>
       </header>
       <div className="flex-1">
         <AppShell>{children}</AppShell>

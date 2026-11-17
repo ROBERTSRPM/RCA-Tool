@@ -32,7 +32,7 @@ export function MaintenancePlan({ inv }: { inv: PlanInv }) {
     <div data-testid="maintenance-plan">
       {lines.length === 0 ? (
         <p className="rounded-lg bg-slate-100 p-3 text-sm text-slate-700">
-          No maintenance tasks yet. When an action's category is <strong>Maintenance task</strong> or{" "}
+          No maintenance tasks yet. When an action&apos;s category is <strong>Maintenance task</strong> or{" "}
           <strong>Condition monitoring</strong>, it is listed here with its interval, ready to hand to
           your planner.
         </p>
@@ -105,7 +105,7 @@ export function PlanTable({ lines }: { lines: PlanLine[] }) {
           <th className="py-1 pr-2">Interval</th>
           <th className="py-1 pr-2">Craft</th>
           <th className="py-1 pr-2">Prevents</th>
-          <th className="py-1 pr-2">Owner</th>
+          <th className="py-1 pr-2 whitespace-nowrap">Owner</th>
           <th className="py-1">Due</th>
         </tr>
       </thead>
@@ -120,9 +120,9 @@ export function PlanTable({ lines }: { lines: PlanLine[] }) {
             <td className={`py-1 pr-2 whitespace-nowrap ${l.interval ? "" : "font-bold text-red-700"}`}>
               {l.interval || "Not set"}
             </td>
-            <td className="py-1 pr-2">{l.craft || <span className="text-slate-600">Not set</span>}</td>
-            <td className="py-1 pr-2 text-slate-700">{l.rootCause || "Not linked"}</td>
-            <td className="py-1 pr-2">{l.owner || "Unassigned"}</td>
+            <td className="min-w-[7rem] py-1 pr-2">{l.craft || <span className="text-slate-600">Not set</span>}</td>
+            <td className="min-w-[12rem] py-1 pr-2 text-slate-700">{l.rootCause || "Not linked"}</td>
+            <td className="min-w-[6rem] py-1 pr-2">{l.owner || "Unassigned"}</td>
             <td className="py-1 whitespace-nowrap">{l.dueDate ? formatDate(l.dueDate) : "None"}</td>
           </tr>
         ))}

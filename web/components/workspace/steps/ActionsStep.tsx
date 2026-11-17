@@ -285,9 +285,17 @@ export function ActionsStep({ inv, update, go }: StepProps) {
             <EmptyState
               title="No actions yet"
               action={
-                <button className="btn btn-primary" onClick={() => add()}>
-                  <Icon name="plus" /> Add the first action
-                </button>
+                <div className="flex flex-col gap-2 sm:flex-row">
+                  <button className="btn btn-primary" onClick={() => add()}>
+                    <Icon name="plus" /> Add the first action
+                  </button>
+                  <button className="btn btn-secondary" onClick={() => add(roots[0].id, "corrective")}>
+                    Add corrective action
+                  </button>
+                  <button className="btn btn-secondary" onClick={() => add(roots[0].id, "preventive")}>
+                    Add preventive action
+                  </button>
+                </div>
               }
             >
               What will you change so this cannot happen again? Add one action per fix.

@@ -1,13 +1,21 @@
 import type { RawRow } from "./store/types";
 
 /** The JSON document written by "Download my data". */
-export function buildExport(rows: RawRow[], email: string | null, now = new Date()) {
+export function buildExport(
+  rows: RawRow[],
+  email: string | null,
+  now = new Date(),
+  assets: RawRow[] = [],
+) {
   return {
     exportedAt: now.toISOString(),
     account: email,
     format: "rootloop-export-v1",
     count: rows.length,
     investigations: rows,
+    /** The asset register (added later; an older export simply has no such key). */
+    assetCount: assets.length,
+    assets,
   };
 }
 

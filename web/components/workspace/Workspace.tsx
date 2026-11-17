@@ -6,7 +6,9 @@ import { BRAND_NAME } from "@/lib/brand";
 import { useAutosavedInvestigation } from "@/lib/hooks";
 import { runQualityCheck } from "@/lib/quality";
 import { SAMPLE_NOTE } from "@/lib/sample";
+import { rolloutProgress } from "@/lib/rollout";
 import { isStepComplete, STEPS } from "@/lib/steps";
+import { ensureAssetFor } from "@/lib/use-assets";
 import type { Investigation, StepId } from "@/lib/types";
 import { Icon } from "../icons";
 import { QualityPanel } from "./QualityPanel";
@@ -63,6 +65,32 @@ export function Workspace({ initial }: { initial: Investigation }) {
     el?.scrollIntoView({ inline: "center", block: "nearest" });
   }, [step]);
 
+  // Make sure the investigation's asset tag is in the asset register, once the
+  // details have settled (not on every keystroke) and again when leaving the page.
+  const problemRef = useRef(inv.problem);
+  useEffect(() => {
+    problemRef.current = inv.problem;
+  }, [inv.problem]);
+  const ensurePending = useRef(false);
+  const pr = inv.problem;
+  const assetSig = [pr.assetTag, pr.assetType, pr.makeModel, pr.duty, pr.criticality, pr.site].join("\u0001");
+  useEffect(() => {
+    if (!(problemRef.current.assetTag ?? "").trim()) return;
+    ensurePending.current = true;
+    const t = setTimeout(() => {
+      ensurePending.current = false;
+      void ensureAssetFor(problemRef.current);
+    }, 1500);
+    return () => clearTimeout(t);
+  }, [assetSig]);
+  useEffect(
+    () => () => {
+      if (ensurePending.current) void ensureAssetFor(problemRef.current);
+    },
+    [],
+  );
+
+  const rollout = rolloutProgress(inv.rollouts);
   const idx = STEPS.findIndex((s) => s.id === step);
   const stepProps = { inv, update, go };
 
@@ -116,6 +144,27 @@ export function Workspace({ initial }: { initial: Investigation }) {
         <h1 className="mt-2 text-xl font-bold leading-tight tracking-tight text-slate-900 sm:text-2xl">
           {inv.problem.title || "New investigation"}
         </h1>
+
+        {(inv.problem.assetTag || rollout.total > 0) && (
+          <p className="mt-1 flex flex-wrap items-center gap-2 text-sm text-slate-600" data-testid="header-meta">
+            {inv.problem.assetTag && (
+              <span>
+                <strong className="text-slate-800">{inv.problem.assetTag}</strong>
+                {inv.problem.assetType ? ` · ${inv.problem.assetType}` : ""}
+                {inv.problem.criticality ? ` · Criticality ${inv.problem.criticality}` : ""}
+              </span>
+            )}
+            {rollout.total > 0 && (
+              <button
+                type="button"
+                className="chip bg-emerald-100 text-emerald-900 hover:bg-emerald-200"
+                onClick={() => go("verify")}
+              >
+                Rollout: {rollout.done} of {rollout.total} checked
+              </button>
+            )}
+          </p>
+        )}
 
         {inv.isSample && (
           <p className="mt-3 rounded-lg border border-amber-300 bg-amber-50 px-3 py-2 text-sm text-amber-900">

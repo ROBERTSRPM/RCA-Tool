@@ -1,7 +1,7 @@
 {
   "suite": "demo",
-  "base": "https://rca-tool-omega.vercel.app",
-  "at": "2026-11-17T00:33:27.456Z",
+  "base": "http://localhost:3611",
+  "at": "2026-11-17T01:08:47.102Z",
   "results": [
     {
       "id": "D-LAND-1.hdr",
@@ -64,7 +64,7 @@
       "title": "Landing page: every link and button works",
       "status": "pass",
       "detail": "",
-      "ms": 3094
+      "ms": 1428
     },
     {
       "id": "D-DASH-1.totals",
@@ -85,7 +85,7 @@
       "title": "Dashboard (sample only): totals equal hand calculation",
       "status": "pass",
       "detail": "",
-      "ms": 940
+      "ms": 477
     },
     {
       "id": "D-DASH-2.dup",
@@ -155,7 +155,7 @@
       "title": "Dashboard buttons: duplicate, delete cancel/confirm, reset sample, empty state",
       "status": "pass",
       "detail": "",
-      "ms": 6490
+      "ms": 5548
     },
     {
       "id": "D-E2E-1.problem",
@@ -274,7 +274,7 @@
       "title": "Full flow: new investigation, 7 steps, hand-checked numbers, dashboard, report, reload",
       "status": "pass",
       "detail": "",
-      "ms": 9129
+      "ms": 8284
     },
     {
       "id": "D-TREE-1.empty",
@@ -372,7 +372,7 @@
       "title": "Cause tree operations: add child/sibling, edit, delete, collapse/expand, move, status",
       "status": "pass",
       "detail": "",
-      "ms": 4172
+      "ms": 3389
     },
     {
       "id": "D-TREE-2.tree-count",
@@ -428,7 +428,7 @@
       "title": "Switching Tree / 5 Whys / Fishbone keeps data; every view control works",
       "status": "pass",
       "detail": "",
-      "ms": 1965
+      "ms": 1301
     },
     {
       "id": "D-QC-1.blank",
@@ -582,7 +582,7 @@
       "title": "Quality check: each rule triggers, jump link lands on the right step, clears when fixed",
       "status": "pass",
       "detail": "",
-      "ms": 9369
+      "ms": 8985
     },
     {
       "id": "D-PERS-1.autosave-states",
@@ -679,7 +679,7 @@
       "id": "D-PERS-1.concurrent-window",
       "title": "Two tabs edit different fields within the same ~350 ms autosave window: neither edit may be silently lost (3 tries)",
       "status": "fail",
-      "detail": "values differ: expected [] but got [\"try 0: site=\\\"Packing hall B\\\" (typed \\\"S01794875439524\\\") when=\\\"W01794875439524\\\" (typed \\\"W01794875439524\\\") notices=0\",\"try 1: site=\\\"Packing hall B\\\" (typed \\\"S11794875443024\\\") when=\\\"W11794875443024\\\" (typed \\\"W11794875443024\\\") notices=1\",\"try 2: site=\\\"S21794875446535\\\" (typed \\\"S21794875446535\\\") when=\\\"W11794875443024\\\" (typed \\\"W21794875446535\\\") notices=0\"]",
+      "detail": "values differ: expected [] but got [\"try 0: site=\\\"S01794877571773\\\" (typed \\\"S01794877571773\\\") when=\\\"Night shift, full speed\\\" (typed \\\"W01794877571773\\\") notices=0\",\"try 1: site=\\\"S11794877575040\\\" (typed \\\"S11794877575040\\\") when=\\\"Night shift, full speed\\\" (typed \\\"W11794877575040\\\") notices=0\",\"try 2: site=\\\"S21794877578255\\\" (typed \\\"S21794877578255\\\") when=\\\"Night shift, full speed\\\" (typed \\\"W21794877578255\\\") notices=0\"]",
       "ms": 0
     },
     {
@@ -687,7 +687,7 @@
       "title": "Persistence: reload after each kind of edit (demo)",
       "status": "pass",
       "detail": "",
-      "ms": 32304
+      "ms": 27202
     },
     {
       "id": "D-EDGE-NUM.letters",
@@ -792,7 +792,7 @@
       "title": "Number fields: zero, negative, non-numeric, decimals, huge; payback edge cases",
       "status": "pass",
       "detail": "",
-      "ms": 5616
+      "ms": 4800
     },
     {
       "id": "D-EDGE-TEXT.overflow-problem",
@@ -890,7 +890,7 @@
       "title": "Very long text, HTML/script text and special characters render as text and do not break layout",
       "status": "pass",
       "detail": "",
-      "ms": 30017
+      "ms": 29953
     },
     {
       "id": "D-EDGE-DATE.past-future-event",
@@ -932,7 +932,7 @@
       "title": "Dates in the past and future",
       "status": "pass",
       "detail": "",
-      "ms": 6423
+      "ms": 5605
     },
     {
       "id": "D-EDGE-NAV.bad-id",
@@ -1030,7 +1030,7 @@
       "title": "Invalid id, unknown routes, back/forward, double-click create",
       "status": "pass",
       "detail": "",
-      "ms": 15576
+      "ms": 12384
     },
     {
       "id": "D-EDGE-ACT.hidden-after-unflag",
@@ -1051,7 +1051,7 @@
       "title": "Actions whose root cause is unflagged or deleted",
       "status": "pass",
       "detail": "",
-      "ms": 2669
+      "ms": 2083
     },
     {
       "id": "D-EDGE-EVID.upload",
@@ -1100,7 +1100,7 @@
       "title": "Evidence: link/unlink, delete confirm, photo upload, non-image file",
       "status": "pass",
       "detail": "",
-      "ms": 6558
+      "ms": 5855
     },
     {
       "id": "D-EDGE-STORE.corrupt",
@@ -1128,7 +1128,7 @@
       "title": "Browser storage faults: corrupt JSON, blocked storage",
       "status": "pass",
       "detail": "",
-      "ms": 4787
+      "ms": 3488
     },
     {
       "id": "D-ERR-1.pages-desktop",
@@ -1163,7 +1163,7 @@
       "title": "No console errors or failed requests on any page (desktop and 375px, every step and cause view)",
       "status": "pass",
       "detail": "",
-      "ms": 31537
+      "ms": 28620
     },
     {
       "id": "D-A11Y-1.names",
@@ -1275,7 +1275,7 @@
       "title": "Accessibility: names, labels, headings, language, titles, focus visibility, keyboard reach, contrast",
       "status": "pass",
       "detail": "",
-      "ms": 28426
+      "ms": 26696
     },
     {
       "id": "D-MOB-1.page_",
@@ -1408,7 +1408,7 @@
       "title": "375px layout: no horizontal overflow, clipped or off-screen content on every page and step (sample + filled)",
       "status": "pass",
       "detail": "",
-      "ms": 20391
+      "ms": 20148
     },
     {
       "id": "D-MOB-E2E.problem",
@@ -1478,7 +1478,7 @@
       "title": "375px: the full end-to-end flow (all 7 steps, 7-cause tree, actions, verify) works with touch-sized layout",
       "status": "pass",
       "detail": "",
-      "ms": 5831
+      "ms": 6316
     }
   ],
   "notes": [

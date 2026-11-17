@@ -1,5 +1,7 @@
 # YouTube metadata
 
+Chapter times follow the planned scene durations in `animation/scenes.json` (total about 10:03). After the final render, re-check each timestamp against the finished video before publishing.
+
 ## 5 title options
 
 1. Root Cause Analysis Explained: How to Stop Fixing the Same Breakdown
@@ -10,21 +12,24 @@
 
 ## Description
 
-Do you keep fixing the same pump, gearbox or conveyor? Root cause analysis (RCA) is how you find out why it really failed, and change something so it stops coming back.
+Do you keep fixing the same pump, gearbox or conveyor? I start with a bucket conveyor that failed four times in one year. Root cause analysis (RCA) is how you find out why it really failed, and change something so it stops coming back.
 
-In this video I walk through what RCA is and what it is not, why it matters for cost per unit, profit and capacity without large CAPEX, what an effective RCA looks like, and a full worked example on a slurry pump with repeat bearing and mechanical seal failures. The numbers in the worked example are illustrative, to show the method, and are not benchmarks.
+In this video I walk through what RCA is and what it is not, why it matters for cost per unit, profit and capacity without large CAPEX, what an effective RCA looks like, and a full worked example on a slurry pump with repeat bearing and mechanical seal failures, ending with zero breakdowns in twelve months and the difference between natural and forced deterioration. The numbers in the worked example are illustrative, to show the method, and are not benchmarks.
 
 I speak as someone who has worked as a Maintenance Manager, a Production Manager and a Site/Plant Manager in heavy industry. This is for maintenance, reliability, production and plant managers in manufacturing, utilities and resources (mining, oil and gas).
 
 Chapters
 0:00 Hook: the cost of the same breakdown
-0:53 What root cause analysis is
-2:02 Why it matters
-3:24 What an effective RCA looks like
-4:32 Worked example: slurry pump
-8:46 Close: RCA as a system
+0:38 My story: a bucket conveyor that failed four times
+1:30 What root cause analysis is
+2:03 What RCA is not
+2:37 Why it matters
+3:10 The hidden plant
+3:43 What an effective RCA looks like
+4:50 Worked example: slurry pump
+9:12 Close: RCA as a system
 
-I am building a tool to make RCA easy to run and follow up. More soon: [PRODUCT]
+A tool to make this easy is coming soon. More to share later.
 
 Subscribe for more practical reliability and operations content.
 

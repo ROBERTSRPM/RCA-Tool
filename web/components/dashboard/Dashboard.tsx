@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { calcLoss, formatMoney } from "@/lib/finance";
 import { formatDate, todayISO } from "@/lib/dates";
-import { getStore } from "@/lib/store";
+import { rolloutProgress } from "@/lib/rollout";
+import { getAssetStore, getStore } from "@/lib/store";
 import { summarise } from "@/lib/status";
 import type { Investigation } from "@/lib/types";
 import { useAuth } from "../auth/AuthProvider";
@@ -97,6 +98,9 @@ export function Dashboard() {
       .reduce((s, r) => s + r.opportunity, 0),
     open: rows.reduce((s, r) => s + r.sum.openActions, 0),
     overdue: rows.reduce((s, r) => s + r.sum.overdueActions, 0),
+    rolloutOpen: rows.reduce((s, r) => s + rolloutProgress(r.inv.rollouts).open, 0),
+    rolloutTotal: rows.reduce((s, r) => s + rolloutProgress(r.inv.rollouts).total, 0),
+    rolloutSame: rows.reduce((s, r) => s + rolloutProgress(r.inv.rollouts).sameProblem, 0),
     saved: counted.reduce((s, r) => s + r.sum.verifiedSaving, 0),
     savedCash: counted.reduce((s, r) => s + r.sum.verifiedCash, 0),
     savedOpportunity: counted.reduce((s, r) => s + r.sum.verifiedOpportunity, 0),
@@ -171,6 +175,8 @@ export function Dashboard() {
     if (!ok) return;
     await attempt(async () => {
       await getStore().resetSample();
+      // The sample's sister assets come back too. A server without an assets table is not an error here.
+      await getAssetStore().resetSampleAssets().catch(() => undefined);
       await refresh();
     });
   }
@@ -193,7 +199,7 @@ export function Dashboard() {
         </div>
       </div>
 
-      <section aria-label="Totals" className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
+      <section aria-label="Totals" className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-5">
         <Stat
           label="Annual loss under investigation"
           value={items ? formatMoney(totals.loss, currency) : "…"}
@@ -225,6 +231,20 @@ export function Dashboard() {
               : undefined
           }
           tone={totals.saved > 0 ? "good" : "neutral"}
+        />
+        <Stat
+          className="col-span-2 lg:col-span-1"
+          label="Rollout checks"
+          value={items ? String(totals.rolloutOpen) : "…"}
+          hint={
+            items
+              ? totals.rolloutTotal === 0
+                ? "Open. Spread a proven fix to similar assets"
+                : `Open, of ${totals.rolloutTotal} created`
+              : "Open"
+          }
+          split={items && totals.rolloutSame > 0 ? `${totals.rolloutSame} found the same problem` : undefined}
+          tone={totals.rolloutSame > 0 ? "bad" : "neutral"}
         />
       </section>
       {mixed && (
@@ -381,7 +401,9 @@ function Stat({
   hint,
   split,
   tone = "neutral",
+  className = "",
 }: {
+  className?: string;
   label: string;
   value: string;
   hint: string;
@@ -391,7 +413,7 @@ function Stat({
   const color =
     tone === "good" ? "text-emerald-600" : tone === "bad" ? "text-red-600" : "text-slate-900";
   return (
-    <div className="card p-4">
+    <div className={`card p-4 ${className}`}>
       <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{label}</p>
       <p className={`mt-1.5 text-2xl font-bold tabular-nums tracking-tight sm:text-3xl ${color}`}>
         {value}

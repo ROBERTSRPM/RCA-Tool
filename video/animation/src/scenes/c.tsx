@@ -9,15 +9,15 @@ const Phase: React.FC<{a: number; b: number; children: React.ReactNode}> = ({a, 
 export const S09: React.FC = () => {
   const {r} = useScene();
   const bands = [
-    {name: "Physical", color: C.steel, n: 4, y: 170},
-    {name: "Human", color: C.amber, n: 4, y: 390},
-    {name: "System / latent", color: C.teal, n: 6, y: 610},
+    {name: "Physical", color: C.steel, n: 4, y: 200},
+    {name: "Human", color: C.amber, n: 4, y: 385},
+    {name: "System / latent", color: C.teal, n: 6, y: 570},
   ];
   const theory = new Set(["0-3", "2-5"]);
   return (
     <Stage>
       <Phase a={0.0} b={0.54}>
-        <Abs x={0} y={50} w={1920} style={{textAlign: "center"}}>
+        <Abs x={0} y={40} w={1920} style={{textAlign: "center"}}>
           <H1 style={{fontSize: 64}}>
             <Fade a={0.02} b={0.07} c={0.31} d={0.34} style={{position: "absolute", width: "100%"}}>Three layers of cause</Fade>
             <Fade a={0.34} b={0.39} y={10} style={{position: "absolute", width: "100%"}}><span style={{color: C.amber}}>4</span>  Check every cause against evidence</Fade>
@@ -28,12 +28,12 @@ export const S09: React.FC = () => {
             const t = r(0.05 + bi * 0.07, 0.10 + bi * 0.07);
             return (
               <g key={bi} opacity={t}>
-                <rect x={80} y={b.y} width={1760} height={200} rx={20} fill={b.color} fillOpacity={0.1} stroke={b.color} strokeWidth={3} />
-                <text x={120} y={b.y + 115} fontSize={46} fontWeight={800} fill={b.color} fontFamily={FONT}>{b.name}</text>
+                <rect x={80} y={b.y} width={1760} height={170} rx={20} fill={b.color} fillOpacity={0.1} stroke={b.color} strokeWidth={3} />
+                <text x={120} y={b.y + 100} fontSize={46} fontWeight={800} fill={b.color} fontFamily={FONT}>{b.name}</text>
                 {[...Array(b.n)].map((_, i) => {
                   const nw = 170, gap = 26;
                   const x0 = 1800 - (b.n * nw + (b.n - 1) * gap);
-                  const x = x0 + i * (nw + gap), y = b.y + 55;
+                  const x = x0 + i * (nw + gap), y = b.y + 40;
                   const isTheory = theory.has(`${bi}-${i}`);
                   const st = 0.35 + (bi * 6 + i) * 0.008;
                   const k = r(st, st + 0.03, OUT);
@@ -55,7 +55,7 @@ export const S09: React.FC = () => {
             );
           })}
         </Full>
-        <Abs x={160} y={850} w={1600}>
+        <Abs x={80} y={790} w={1300}>
           <Fade a={0.24} b={0.29} c={0.31} d={0.34} y={10} style={{position: "absolute", width: "100%"}}>
             <Card color={C.teal} style={{padding: "20px 34px", fontSize: 44, fontWeight: 700, textAlign: "center"}}><span style={{color: C.teal}}>Latent</span> = hidden weakness in procedures, standards, management</Card>
           </Fade>
@@ -90,7 +90,7 @@ export const S09: React.FC = () => {
         <Abs x={0} y={60} w={1920} style={{textAlign: "center"}}><H1 style={{fontSize: 64}}><Fade a={0.73} b={0.78}><span style={{color: C.amber}}>6</span>  Check that it worked</Fade></H1></Abs>
         <Full>
           <GIn a={0.74} b={0.79} y={30}>
-            <g transform="translate(250 300)">
+            <g transform="translate(250 250)">
               <rect width={360} height={380} rx={26} fill={C.panel} stroke={C.text} strokeWidth={6} />
               <path d="M0 110 H360" stroke={C.text} strokeWidth={6} />
               <rect width={360} height={110} rx={26} fill={C.amber} />
@@ -101,20 +101,20 @@ export const S09: React.FC = () => {
             </g>
           </GIn>
           <g opacity={r(0.76, 0.81)}>
-            <line x1={800} y1={720} x2={1760} y2={720} stroke={C.mute} strokeWidth={4} />
-            <line x1={800} y1={720} x2={800} y2={260} stroke={C.mute} strokeWidth={4} />
-            <text x={780} y={730} textAnchor="end" fontSize={40} fill={C.mute} fontFamily={FONT} fontWeight={600}>0</text>
-            <text x={1280} y={800} textAnchor="middle" fontSize={44} fill={C.text} fontFamily={FONT} fontWeight={700}>Failures per quarter</text>
-            {[0, 1, 2, 3, 4, 5].map((i) => <line key={i} x1={880 + i * 160} y1={715} x2={880 + i * 160} y2={730} stroke={C.mute} strokeWidth={3} />)}
+            <line x1={800} y1={680} x2={1360} y2={680} stroke={C.mute} strokeWidth={4} />
+            <line x1={800} y1={680} x2={800} y2={240} stroke={C.mute} strokeWidth={4} />
+            <text x={780} y={690} textAnchor="end" fontSize={40} fill={C.mute} fontFamily={FONT} fontWeight={600}>0</text>
+            <text x={1080} y={750} textAnchor="middle" fontSize={44} fill={C.text} fontFamily={FONT} fontWeight={700}>Failures per quarter</text>
+            {[0, 1, 2, 3, 4, 5].map((i) => <line key={i} x1={880 + i * 95} y1={675} x2={880 + i * 95} y2={690} stroke={C.mute} strokeWidth={3} />)}
           </g>
           {(() => {
             const vals = [400, 330, 250, 150, 70, 0];
-            const pts = vals.map((v, i) => [880 + i * 160, 720 - v]);
+            const pts = vals.map((v, i) => [880 + i * 95, 680 - v]);
             const d = pts.map((q, i) => (i ? "L" : "M") + q[0] + " " + q[1]).join(" ");
             const t = r(0.80, 0.9, IO);
             return (
               <g>
-                <path d={d} fill="none" stroke={C.green} strokeWidth={10} strokeLinecap="round" strokeLinejoin="round" {...dash(1100, t)} />
+                <path d={d} fill="none" stroke={C.green} strokeWidth={10} strokeLinecap="round" strokeLinejoin="round" {...dash(820, t)} />
                 {pts.map((q, i) => <circle key={i} cx={q[0]} cy={q[1]} r={13} fill={C.green} opacity={r(0.8 + i * 0.016, 0.82 + i * 0.016)} />)}
               </g>
             );
@@ -186,7 +186,7 @@ export const S10: React.FC = () => {
         <g opacity={phase2}>
           <path d="M880 440 L880 560 L600 640" fill="none" stroke={C.amber} strokeWidth={5} strokeDasharray="8 8" />
           <circle cx={880} cy={436} r={10} fill={C.amber} />
-          <rect x={80} y={640} width={1760} height={390} rx={22} fill={C.panel} stroke={C.amber} strokeWidth={3} />
+          <rect x={80} y={630} width={1300} height={400} rx={22} fill={C.panel} stroke={C.amber} strokeWidth={3} />
           <rect x={440} y={660} width={80} height={350} fill="#4E6078" />
           <rect x={520} y={660} width={320} height={350} fill="#6B5232" opacity={0.7} />
           {[...Array(26)].map((_, i) => <circle key={i} cx={535 + rand(i) * 290} cy={672 + rand(i + 30) * 326} r={5 + rand(i + 9) * 5} fill="#B79A6A" opacity={0.7} />)}
@@ -200,9 +200,9 @@ export const S10: React.FC = () => {
           <text x={440} y={1000} fontSize={30} fill="none" />
         </g>
       </Full>
-      <Abs x={900} y={680} w={900}>
+      <Abs x={880} y={668} w={470}>
         <Fade a={0.34} b={0.40} c={0.6} d={0.65} y={14}>
-          <div style={{fontSize: 46, fontWeight: 600, lineHeight: 1.3}}>
+          <div style={{fontSize: 40, fontWeight: 600, lineHeight: 1.28}}>
             <span style={{color: C.amber, fontWeight: 800}}>Mechanical seal:</span> keeps the slurry inside the pump where the shaft passes through the casing.
           </div>
         </Fade>
@@ -210,12 +210,12 @@ export const S10: React.FC = () => {
       {/* 12 month strip */}
       <Full>
         <g opacity={phase3}>
-          <text x={120} y={690} fontSize={44} fontWeight={700} fill={C.text} fontFamily={FONT}>Twelve months</text>
-          <text x={1800} y={690} textAnchor="end" fontSize={44} fontWeight={700} fill={C.red} fontFamily={FONT}>6 failures</text>
-          <line x1={120} y1={850} x2={1800} y2={850} stroke={C.line} strokeWidth={8} strokeLinecap="round" />
-          {[...Array(13)].map((_, i) => <line key={i} x1={120 + i * 140} y1={838} x2={120 + i * 140} y2={862} stroke={C.line} strokeWidth={4} />)}
+          <text x={120} y={680} fontSize={52} fontWeight={700} fill={C.text} fontFamily={FONT}>Twelve months</text>
+          <text x={1320} y={680} textAnchor="end" fontSize={52} fontWeight={700} fill={C.red} fontFamily={FONT}>6 failures</text>
+          <line x1={120} y1={850} x2={1320} y2={850} stroke={C.line} strokeWidth={8} strokeLinecap="round" />
+          {[...Array(13)].map((_, i) => <line key={i} x1={120 + i * 100} y1={838} x2={120 + i * 100} y2={862} stroke={C.line} strokeWidth={4} />)}
           {months.map((mm, i) => {
-            const x = 120 + (mm.m - 0.5) * 140;
+            const x = 120 + (mm.m - 0.5) * 100;
             const t0 = 0.70 + i * 0.035;
             const t = r(t0, t0 + 0.03, OUT);
             const col = mm.k === "seal" ? C.red : C.pink;
@@ -227,8 +227,8 @@ export const S10: React.FC = () => {
             );
           })}
           <g opacity={r(0.9, 0.95)}>
-            <circle cx={470} cy={960} r={20} fill={C.red} /><text x={505} y={974} fontSize={40} fill={C.mute} fontFamily={FONT} fontWeight={600}>3 seal failures</text>
-            <rect x={1000} y={942} width={36} height={36} fill={C.pink} transform="rotate(45 1018 960)" /><text x={1050} y={974} fontSize={40} fill={C.mute} fontFamily={FONT} fontWeight={600}>3 bearing failures</text>
+            <circle cx={140} cy={970} r={20} fill={C.red} /><text x={175} y={984} fontSize={40} fill={C.mute} fontFamily={FONT} fontWeight={600}>3 seal failures</text>
+            <rect x={660} y={952} width={36} height={36} fill={C.pink} transform="rotate(45 678 970)" /><text x={710} y={984} fontSize={40} fill={C.mute} fontFamily={FONT} fontWeight={600}>3 bearing failures</text>
           </g>
         </g>
       </Full>
@@ -238,9 +238,9 @@ export const S10: React.FC = () => {
 
 /* ---------------- S11 ---------------- */
 const Line: React.FC<{y: number; a: number; parts: [string, string][]; hot?: boolean}> = ({y, a, parts, hot}) => (
-  <Abs x={80} y={y} w={1150}>
+  <Abs x={60} y={y} w={1260}>
     <Fade a={a} b={a + 0.04} x={-40} y={0}>
-      <div style={{fontFamily: MONO, fontSize: 48, fontWeight: 700, height: 100, display: "flex", alignItems: "center", borderBottom: `2px solid ${hot ? C.amber : C.line}`, background: hot ? "rgba(245,165,36,0.12)" : "transparent", paddingLeft: 16, whiteSpace: "pre"}}>
+      <div style={{fontFamily: MONO, fontSize: 54, fontWeight: 700, height: 128, display: "flex", alignItems: "center", borderBottom: `3px solid ${hot ? C.amber : C.line}`, background: hot ? "rgba(245,165,36,0.12)" : "transparent", paddingLeft: 20, whiteSpace: "pre"}}>
         {parts.map(([t, c], i) => <span key={i} style={{color: c}}>{t}</span>)}
       </div>
     </Fade>
@@ -251,20 +251,20 @@ export const S11: React.FC = () => {
   const chips = ["Line rate 120 t/h", "Margin $18/t", "Repair $9,500"];
   return (
     <Stage badge>
-      <Abs x={80} y={120} w={1200} style={{display: "flex", gap: 20}}>
-        {chips.map((t, i) => <Fade key={t} a={0.02 + i * 0.03} b={0.06 + i * 0.03} y={14}><Pill color={C.steel} style={{fontSize: 38, fontWeight: 700, letterSpacing: 0, height: 64}}>{t}</Pill></Fade>)}
+      <Abs x={60} y={96} w={1300} style={{display: "flex", gap: 20}}>
+        {chips.map((t, i) => <Fade key={t} a={0.02 + i * 0.03} b={0.06 + i * 0.03} y={14}><Pill color={C.steel} style={{fontSize: 40, fontWeight: 700, letterSpacing: 0, height: 72}}>{t}</Pill></Fade>)}
       </Abs>
-      <Line y={280} a={0.12} parts={[["14 h × 120 t/h ", C.mute], ["= 1,680 t", C.text]]} />
-      <Line y={400} a={0.28} parts={[["1,680 t × $18/t ", C.mute], ["= $30,240 ", C.text], ["lost margin", C.mute]]} />
-      <Line y={520} a={0.42} parts={[["+ $9,500 ", C.text], ["repair", C.mute]]} />
-      <Line y={640} a={0.54} parts={[["= $39,740 ", C.text], ["per failure", C.mute]]} />
-      <Line y={760} a={0.68} hot parts={[["× 6 failures = ", C.mute], ["$238,440 ", C.amber], ["per year", C.amber]]} />
-      <Abs x={1290} y={280} w={570}>
-        <Fade a={0.78} b={0.84} x={40} y={0}>
-          <Card color={C.amber} style={{padding: "30px 36px"}}>
-            <div style={{fontSize: 36, letterSpacing: 4, fontWeight: 800, color: C.amber, marginBottom: 20}}>PROBLEM STATEMENT</div>
-            {["P-101 slurry pump:", "6 failures in 12 months,", "84 hours lost,", "$238,440 per year."].map((t, i) => (
-              <Fade key={t} a={0.80 + i * 0.035} b={0.84 + i * 0.035} y={10}><div style={{fontSize: 44, fontWeight: i === 3 ? 800 : 600, color: i === 3 ? C.amber : C.text, lineHeight: 1.4}}>{t}</div></Fade>
+      <Line y={230} a={0.12} parts={[["14 h × 120 t/h ", C.mute], ["= 1,680 t", C.text]]} />
+      <Line y={378} a={0.28} parts={[["1,680 t × $18/t ", C.mute], ["= $30,240 ", C.text], ["lost margin", C.mute]]} />
+      <Line y={526} a={0.42} parts={[["+ $9,500 ", C.text], ["repair", C.mute]]} />
+      <Line y={674} a={0.54} parts={[["= $39,740 ", C.text], ["per failure", C.mute]]} />
+      <Line y={822} a={0.68} hot parts={[["× 6 failures = ", C.mute], ["$238,440 ", C.amber], ["per year", C.amber]]} />
+      <Abs x={1370} y={230} w={500} h={720}>
+        <Fade a={0.78} b={0.84} x={40} y={0} style={{height: "100%"}}>
+          <Card color={C.amber} style={{padding: "36px 36px", height: "100%", boxSizing: "border-box"}}>
+            <div style={{fontSize: 36, letterSpacing: 4, fontWeight: 800, color: C.amber, marginBottom: 30}}>PROBLEM STATEMENT</div>
+            {["P-101 slurry pump:", "6 failures", "in 12 months,", "84 hours lost,", "$238,440", "per year."].map((t, i) => (
+              <Fade key={t} a={0.80 + i * 0.025} b={0.84 + i * 0.025} y={10}><div style={{fontSize: 50, fontWeight: i >= 4 ? 800 : 600, color: i >= 4 ? C.amber : C.text, lineHeight: 1.25, marginBottom: i === 0 || i === 2 || i === 3 ? 24 : 0}}>{t}</div></Fade>
             ))}
           </Card>
         </Fade>
@@ -296,8 +296,8 @@ export const S12: React.FC = () => {
   for (let a = -70; a <= 110; a += 10) wear.push(`${10 + 81 * Math.cos((a * Math.PI) / 180)},${81 * Math.sin((a * Math.PI) / 180)}`);
   return (
     <Stage badge>
-      <Tile x={80} y={130} w={560} h={410} a={0.06} tag="Ran dry" col={C.red}>
-        <g transform="translate(280 160)">
+      <Tile x={80} y={120} w={560} h={470} a={0.06} tag="Ran dry" col={C.red}>
+        <g transform="translate(280 190) scale(1.15)">
           <path d={ringPath(112, 56)} fillRule="evenodd" fill="#8E9AAB" stroke="#C5CFDB" strokeWidth={4} />
           {[72, 84, 96].map((rad) => <circle key={rad} r={rad} fill="none" stroke="#505C6C" strokeWidth={3} strokeDasharray={`${rad * 3} ${rad * 1.2}`} />)}
           {[20, 100, 170, 235, 300].map((ang, i) => {
@@ -307,15 +307,15 @@ export const S12: React.FC = () => {
           })}
         </g>
       </Tile>
-      <Tile x={680} y={130} w={560} h={410} a={0.20} tag="Misalignment" col={C.amber}>
-        <g transform="translate(280 160)">
+      <Tile x={680} y={120} w={560} h={470} a={0.20} tag="Misalignment" col={C.amber}>
+        <g transform="translate(280 190) scale(1.15)">
           <path d={ringPath(112, 60)} fillRule="evenodd" fill="#AEB9C7" stroke="#D9E1EA" strokeWidth={4} />
           <circle r={81} fill="none" stroke="#7B889A" strokeWidth={16} />
           <polyline points={wear.join(" ")} fill="none" stroke="#1E252F" strokeWidth={16} strokeLinejoin="round" strokeLinecap="round" />
         </g>
       </Tile>
-      <Tile x={1280} y={130} w={560} h={410} a={0.32} tag="Water and solids" col={C.steel}>
-        <g transform="translate(200 20)">
+      <Tile x={1280} y={120} w={560} h={470} a={0.32} tag="Water and solids" col={C.steel}>
+        <g transform="translate(190 40) scale(1.1)">
           <defs><clipPath id="vial"><path d="M30 10 H130 V40 H118 V222 Q118 270 80 270 Q42 270 42 222 V40 H30 Z" /></clipPath></defs>
           <g clipPath="url(#vial)">
             <rect x={0} y={0} width={160} height={300} fill="#1B2838" />
@@ -326,7 +326,7 @@ export const S12: React.FC = () => {
           <path d="M30 10 H130 V40 H118 V222 Q118 270 80 270 Q42 270 42 222 V40 H30 Z" fill="none" stroke={C.text} strokeWidth={5} strokeLinejoin="round" />
         </g>
       </Tile>
-      <Tile x={80} y={575} w={860} h={390} a={0.46} tag="About 60% of best efficiency flow" col={C.green}>
+      <Tile x={80} y={620} w={860} h={400} a={0.46} tag="About 60% of best efficiency flow" col={C.green}>
         <g transform="translate(60 14)">
           <line x1={20} y1={250} x2={420} y2={250} stroke={C.mute} strokeWidth={4} />
           <line x1={40} y1={20} x2={40} y2={250} stroke={C.mute} strokeWidth={4} />
@@ -342,7 +342,7 @@ export const S12: React.FC = () => {
           <text x={0} y={190} fontSize={36} fill={C.mute} fontFamily={FONT}>control system</text>
         </g>
       </Tile>
-      <Tile x={980} y={575} w={860} h={390} a={0.76} tag="4 of 6 rebuilds: no record" col={C.red}>
+      <Tile x={980} y={620} w={860} h={400} a={0.76} tag="4 of 6 rebuilds: no record" col={C.red}>
         <text x={430} y={52} textAnchor="middle" fontSize={38} fontWeight={700} fill={C.mute} fontFamily={FONT}>Alignment record</text>
         {[0, 1, 2, 3, 4, 5].map((i) => {
           const col = Math.floor(i / 3), row = i % 3;
@@ -361,7 +361,15 @@ export const S12: React.FC = () => {
           );
         })}
       </Tile>
-      <Abs x={0} y={990} w={1920} style={{textAlign: "center", fontSize: 38, color: C.mute, fontWeight: 600}}>
+      {[{x: 80, a: 0.46, t: "Control system", s: "Where does the pump run?"}, {x: 980, a: 0.76, t: "Maintenance system", s: "What was recorded?"}].map((p) => (
+        <Abs key={p.t} x={p.x} y={620} w={860} h={400}>
+          <div style={{height: "100%", boxSizing: "border-box", border: `3px dashed ${C.line}`, borderRadius: 20, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 14, opacity: r(0.02, 0.08) * (1 - r(p.a, p.a + 0.04))}}>
+            <div style={{fontSize: 60, fontWeight: 800, color: C.mute}}>{p.t}</div>
+            <div style={{fontSize: 40, fontWeight: 600, color: "#6F8197"}}>{p.s}</div>
+          </div>
+        </Abs>
+      ))}
+      <Abs x={0} y={1030} w={1920} style={{textAlign: "center", fontSize: 38, color: C.mute, fontWeight: 600}}>
         <Fade a={0.62} b={0.67} y={8}><span style={{color: C.green, fontWeight: 800}}>BEP</span> = best efficiency point</Fade>
       </Abs>
     </Stage>

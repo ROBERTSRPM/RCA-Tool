@@ -17,7 +17,7 @@ import {
   validatePasswordMatch,
 } from "@/lib/auth/validate";
 import { flushAllPending } from "@/lib/pending";
-import { getLocalStore, getStore } from "@/lib/store";
+import { getAssetStore, getLocalStore, getStore } from "@/lib/store";
 import { getSupabase } from "@/lib/supabase/client";
 import { useConfirm } from "../ui";
 import { FormError, FormField } from "./AuthFrame";
@@ -42,7 +42,9 @@ function DownloadData({ email }: { email: string | null }) {
     try {
       await flushAllPending();
       const rows = await getStore().exportAll();
-      const doc = buildExport(rows, email);
+      // The register is part of the export; a server without the table just has none.
+      const assets = await getAssetStore().exportAll().catch(() => []);
+      const doc = buildExport(rows, email, new Date(), assets);
       const blob = new Blob([JSON.stringify(doc, null, 2)], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
@@ -52,7 +54,10 @@ function DownloadData({ email }: { email: string | null }) {
       a.click();
       a.remove();
       setTimeout(() => URL.revokeObjectURL(url), 10000);
-      setMsg({ ok: true, text: `Downloaded ${rows.length} ${rows.length === 1 ? "investigation" : "investigations"}.` });
+      setMsg({
+        ok: true,
+        text: `Downloaded ${rows.length} ${rows.length === 1 ? "investigation" : "investigations"} and ${assets.length} ${assets.length === 1 ? "asset" : "assets"}.`,
+      });
     } catch (e) {
       setMsg({ ok: false, text: e instanceof Error && e.message ? e.message : "Could not download your data." });
     } finally {
@@ -62,7 +67,7 @@ function DownloadData({ email }: { email: string | null }) {
   return (
     <>
       <p>
-        One JSON file with all your investigations, including photos. It is created in your
+        One JSON file with all your investigations (including photos) and your asset register. It is created in your
         browser; nothing is sent anywhere else.
       </p>
       <button type="button" className="btn btn-secondary" disabled={busy} onClick={download}>
@@ -183,7 +188,7 @@ function DeleteAccount() {
   return (
     <form onSubmit={remove} noValidate className="max-w-md space-y-3" aria-label="Delete my account">
       <p>
-        This permanently deletes your account and every investigation in it, including photos.
+        This permanently deletes your account, every investigation in it (including photos) and your asset register.
         It cannot be undone. Download your data first if you want a copy.
       </p>
       <FormField
