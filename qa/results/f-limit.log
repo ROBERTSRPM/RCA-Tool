@@ -1,0 +1,14 @@
+  [observation] oversize message: Could not save: this investigation is too large. Remove some photos from the evidence list and try again. Try again 
+  pass F-LIMIT-1.too-large Saving a ~6 MB investigation shows "this investigation is too large" with Try again, keeps the app usable, and nothing oversized is stored
+  pass F-LIMIT-1.next-0 login ?next=//evil.example never leaves this site
+  pass F-LIMIT-1.next-1 login ?next=https://evil.example/x never leaves this site
+  pass F-LIMIT-1.next-2 login ?next=/\evil.example never leaves this site
+  pass F-LIMIT-1.next-3 login ?next=javascript:alert(1) never leaves this site
+  pass F-LIMIT-1.next-4 login ?next=/%2F%2Fevil.example never leaves this site
+  pass F-LIMIT-1.next-5 login ?next=/app/../..//evil.example never leaves this site
+  pass F-LIMIT-1.next-6 login ?next=/%5Cevil.example never leaves this site
+  pass F-LIMIT-1.next-7 login ?next=data:text/html,hi never leaves this site
+  pass F-LIMIT-1.next-8 login ?next=/app%0d%0aLocation:%20https://evil.example never leaves this site
+PASS F-LIMIT-1 Signed-in size limit: a 6 MB investigation is refused with a readable message and the previous version stays saved; login next= bypass variants all land on this site
+
+features: 11/11 passed, 0 failed

@@ -140,3 +140,58 @@ At the start of the third local run, account A had no investigations at all and 
 - With downtime 0 but repair/other costs entered the annual loss still shows the cash costs ($13,202 in the test); the quality check correctly asks for downtime.
 - Live site only: a request path containing `../` is answered with HTTP 403 by the hosting platform instead of the app's own "not found" page (acceptable; the test now accepts 403).
 - Signed-in dashboard load, navigation to data shown, 7 cold runs: local median 1071 ms (606-1124), live median 1572 ms (1500-1784).
+
+
+---
+
+# Round 3 (build on branch `work`, local production build only; live site not tested this round)
+
+Scope: asset details and register, Actions redesign (corrective / preventive, task fields, maintenance plan, spares), the new quality rules, deterioration, similar past failures, rollout, new sample and sample upgrade, security changes (headers/CSP, redirects, image handling, malformed rows, password rule, global sign-out, account page, size limits). Suite run: 668 checks (661 passed, 7 failed; the 7 failures are 3 defects below: NEW-01, R3-01 and R3-07), including the new-feature groups across demo and signed in, desktop and 375px, see test-plan.md.
+
+## Round 3 status of earlier open items
+- **NEW-01 (demo mode, two tabs editing inside the same ~350 ms window lose one edit): NOT FIXED.** D-PERS-1.concurrent-window still fails 3 of 3 tries. Signed in the conflict banner still protects the same race (A-PERS-1.concurrent-window passes). Severity unchanged: Minor.
+- **NEW-02 (account lost its sample once): still unconfirmed.** Not seen again in this round. Related observation: user B's asset register was empty at the start of the round (the one-time seeding flag was already set), see R3-06.
+- DEF-01 to DEF-16: not re-run individually this round; the original reproduction tests all still pass (no regression).
+
+## New defects
+
+### R3-07 MAJOR (security) - open redirect after login still possible with dot-segments in `next`
+Tests: F-LIMIT-1.next-5, next-dots-921, next-dots-925, next-dots-917 (all fail, reproduced 6 of 6 times by hand and in the suite).
+Steps: while signed out open `/login?next=%2Fapp%2F..%2F%2Fevil.example` (that is `/app/..//evil.example`), sign in with a valid account. Also `/app/../..//evil.example`, `/app/%2e%2e//evil.example`, `/..//evil.example`.
+Expected: the validation added this round sends the user to a same-site path (or /app). Actual: after sign-in the browser navigates to `http://evil.example/` (confirmed by intercepting requests to that host). The check accepts the value because it starts with a single `/` and is not `//`, then re-builds the target from the URL parser's normalised pathname, where the dot segments collapse to `//evil.example`, a protocol-relative URL. Plain forms (`//evil.example`, `https://...`, `/\evil.example`, `javascript:`, `data:`, encoded slashes and CRLF) are all correctly refused. Fix: reject any `next` whose decoded form contains `..` or `/.` segments, or compare the normalised result and refuse it when it starts with `//`.
+
+### R3-01 Minor - the 404 page violates the new Content-Security-Policy and is a dead end
+Test: D-EDGE-NAV (the run fails with "CSP violations during test"); the same happens for any unknown URL.
+Steps: open `/nope` or `/app/investigations` (no id). Console error: "Applying inline style violates the following Content Security Policy directive 'style-src 'self''" and `securitypolicyviolation` for style-src-elem. Expected: no violation. Actual: framework 404 page uses an inline style the policy blocks; the page shows only "404 This page could not be found." with no link back to the app (screenshot shots/demo-404.png). Every other page and step is clean (F-SEC-1 walk, D-ERR-1, A-ERR-1, F-UI-1).
+
+### R3-02 Minor (security hardening) - CSP is not strict: `script-src` allows 'unsafe-inline'
+Test: F-SEC-1 (observation). Header: `script-src 'self' 'unsafe-inline'`. A script element injected at run time executes ("dynamically injected inline script executes: true"). The rest of the policy is good (default-src self, no wildcards, no unsafe-eval, frame-ancestors none, object-src none, base-uri/form-action self, connect-src limited to the app and the Supabase host, external images blocked). No XSS was found anywhere (hostile text renders as text in every view), so this is defence in depth; a nonce/hash based policy would make the CSP effective against a future XSS bug.
+
+### R3-03 Cosmetic - plan and quality check disagree about a task with no task text
+Test: F-PLAN-1 (observation). A maintenance task that has an interval but no "Task description" is listed in the Maintenance plan and in "Copy for the planner" using the action's description, yet the quality check says it "needs a task description before a planner can load it". Either the fallback or the rule should change.
+
+### R3-04 Cosmetic - the "too large" message always blames photos
+Test: F-LIMIT-1. A 6 MB text note is refused correctly ("Could not save: this investigation is too large", with Try again, nothing lost, earlier version stays saved) but the message says "Remove some photos from the evidence list".
+
+### R3-05 Minor (usability) - on a signed-in account the asset register status lags about 4 s
+Test: F-ASSET-1 (signed in). After typing a new tag the line stays at "It will be added to your asset register." for about 4 s (autosave delay plus register write) before turning to "In your asset register.". Demo mode is instant. Not wrong, but on a phone it looks stuck.
+
+### R3-06 Minor - existing signed-in accounts do not get the 5 sample assets
+Observed on both test accounts at the start of the round: B's register was empty ("No assets yet") although the sample investigation (tag P-101) was present, and A's register held only the tags auto-created from investigations. The sample assets (P-101, P-102, P-103, P-210, P-215) appear only for a brand-new account or after "Reset sample data" on the dashboard (which restored them in both accounts). Effect: for an existing user the sample's "Roll this fix out" has nothing to suggest, which weakens the demo of the rollout feature. The seeding only runs for an empty register with the one-time flag unset.
+
+## Verified as working (round 3)
+- Sample numbers: action cost $32,000, 0 failures after, saving $238,440 (verified), payback 32,000 / (238,440 / 12) = 1.6 months, quality All clear, dashboard cash $57,000 + opportunity $181,440, 5 sample assets in demo; P-101 shows 1 investigation, 6 failures a year, $238,440 in the register.
+- Sample upgrade: an unedited v1 sample is replaced silently (also when only UI state such as "collapsed" differs); a v1 sample with an edited title, an action cost or an evidence note is left alone; signed in the same (rows written with the old fixture, upgraded or kept as expected); Reset restores the new sample.
+- Similar past failures: hand scores S1 100 (tag 50, type 20, failure mode 15, 5 shared words capped at 15), S2 41, S3 6 (the minimum), S4 3 and S5 0 hidden; reasons shown; a copied cause arrives as an unverified, non-root Hypothesis with no evidence.
+- Rollout ranking: P-102 (49), P-215 (36), P-103 (22) for subject P-101; different-type P-210 and the asset itself never listed; statuses, progress bar, dashboard count and report section correct.
+- New quality rules (corrective without preventive, system root without systemic action, natural deterioration unmanaged, task missing detail, spares gap, action not linked) each trigger, jump to the right step and clear.
+- Spares flag fires at exactly 14 days (not at 13, 0 or when in stock). Maintenance plan text for the planner matches the hand-built tab-separated expectation.
+- Security: five headers on every route; eight of the twelve tested `next=` forms are refused correctly (the four dot-segment variants are not, see R3-07); image re-encoding (SVG/GIF are rasterised, script in an SVG never ran; stored SVG/javascript:/http/HTML image values are dropped); malformed stored rows show "This investigation could not be read" with Delete; password rule hint and refusal of common / email passwords; account page (download JSON without credentials, change-password validation, delete-account button disabled until the phrase DELETE is typed; the real deletion and a real password change were NOT performed); global sign-out revokes the other device's refresh token (HTTP 400); asset register isolation between A and B including direct API calls (B cannot see A's rows, anonymous gets nothing); 6 MB investigation refused readably.
+
+## Usability notes for a maintenance engineer on a phone (375px)
+- The Problem step is now very long: asset details sit above a "Similar past failures" panel that can run past 3,000 px; the lists are hard to skim one-handed. Collapsing the panel by default, or showing only the top 3 with "show more", would help.
+- On the Actions step the title, stepper and quality card take about 450 px, so the first action row is below the fold on a phone.
+- Picking "Other" in the asset type or failure-mode list clears the field instead of keeping the word "Other"; people may think the tap did nothing.
+- The compact action rows, the maintenance plan cards and the rollout checkboxes are touch friendly and wrap correctly (no overflow on any new page or step at 375px). The collapsed action row is 36 px tall, slightly under the 40 px used elsewhere.
+- Observation: a stored 3 MB image value is displayed without a size cap on read (the 5 MB per-investigation database limit is the only guard).
+- Observation: after a global sign-out the other open tab keeps showing the account until its access token expires (up to one hour), although its refresh token is revoked.

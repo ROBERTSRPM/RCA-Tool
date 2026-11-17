@@ -1,0 +1,118 @@
+{
+  "suite": "features-recheck",
+  "base": "http://localhost:3555",
+  "at": "2026-11-17T08:19:59.948Z",
+  "results": [
+    {
+      "id": "F-LIMIT-1.too-large",
+      "title": "Saving a ~6 MB investigation shows \"this investigation is too large\" with Try again, keeps the app usable, and nothing oversized is stored",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-LIMIT-1.next-0",
+      "title": "login ?next=//evil.example never leaves this site (a request to evil.example is intercepted and counted)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-LIMIT-1.next-1",
+      "title": "login ?next=https://evil.example/x never leaves this site (a request to evil.example is intercepted and counted)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-LIMIT-1.next-2",
+      "title": "login ?next=/\\evil.example never leaves this site (a request to evil.example is intercepted and counted)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-LIMIT-1.next-3",
+      "title": "login ?next=javascript:alert(1) never leaves this site (a request to evil.example is intercepted and counted)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-LIMIT-1.next-4",
+      "title": "login ?next=/%2F%2Fevil.example never leaves this site (a request to evil.example is intercepted and counted)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-LIMIT-1.next-5",
+      "title": "login ?next=/app/../..//evil.example never leaves this site (a request to evil.example is intercepted and counted)",
+      "status": "fail",
+      "detail": "OPEN REDIRECT: after sign-in the browser went to http://evil.example/",
+      "ms": 0
+    },
+    {
+      "id": "F-LIMIT-1.next-6",
+      "title": "login ?next=/%5Cevil.example never leaves this site (a request to evil.example is intercepted and counted)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-LIMIT-1.next-7",
+      "title": "login ?next=data:text/html,hi never leaves this site (a request to evil.example is intercepted and counted)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-LIMIT-1.next-8",
+      "title": "login ?next=/app%0d%0aLocation:%20https://evil.example never leaves this site (a request to evil.example is intercepted and counted)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-LIMIT-1.next-dots-921",
+      "title": "login ?next=/app/..//evil.example (dot segments that normalise to //evil.example) stays on this site",
+      "status": "fail",
+      "detail": "OPEN REDIRECT: after sign-in the browser went to http://evil.example/",
+      "ms": 0
+    },
+    {
+      "id": "F-LIMIT-1.next-dots-925",
+      "title": "login ?next=/app/%2e%2e//evil.example (dot segments that normalise to //evil.example) stays on this site",
+      "status": "fail",
+      "detail": "OPEN REDIRECT: after sign-in the browser went to http://evil.example/",
+      "ms": 0
+    },
+    {
+      "id": "F-LIMIT-1.next-dots-917",
+      "title": "login ?next=/..//evil.example (dot segments that normalise to //evil.example) stays on this site",
+      "status": "fail",
+      "detail": "OPEN REDIRECT: after sign-in the browser went to http://evil.example/",
+      "ms": 0
+    },
+    {
+      "id": "F-LIMIT-1.next-dots-923",
+      "title": "login ?next=/a/../../evil.example/x (dot segments that normalise to //evil.example) stays on this site",
+      "status": "fail",
+      "detail": "CSP violations during test: Applying inline style violates the following Content Security Policy directive 'style-src 'self''. Either the 'unsafe-inline' keyword, a hash ('sha256-Z5XTK23DFuEMs0PwnyZDO9SWxemQ5HxcpVaBNuUJyWY='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked. || CSP violation: style-src-elem blocked inline at http://localhost:3555/evil.example/x:1",
+      "ms": 0
+    },
+    {
+      "id": "F-LIMIT-1",
+      "title": "Signed-in size limit: a 6 MB investigation is refused with a readable message and the previous version stays saved; login next= bypass variants all land on this site",
+      "status": "pass",
+      "detail": "",
+      "ms": 95122
+    }
+  ],
+  "notes": [
+    {
+      "kind": "observation",
+      "text": "oversize message: Could not save: this investigation is too large. Remove some photos from the evidence list and try again. Try again"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 # Test plan and results
 
 Run against `http://localhost:3555` (production build, port 3555). Desktop 1440x900 and mobile 375x812. Demo mode and signed in (accounts A and B).
-**Round 2.** Local production build (http://localhost:3555): **375 checks, 374 passed, 1 failed.** Live site (https://rca-tool-omega.vercel.app): **375 checks, 373 passed, 2 failed.** (leaf checks; parent groups not counted twice). Failures map to defects in defects.md. Live note: D-EDGE-NAV.weird-ids failed live only because the hosting platform answers a ../ path with HTTP 403 (the test now accepts 403 as a valid rejection; re-run live: pass). Round 1 (old build) was 263 checks, 241 passed, 22 failed (kept in round1/).
+**Round 3 (this build, local production build only).** Local production build (http://localhost:3555): **668 checks, 661 passed, 7 failed.** Round 2 live-site run for comparison (https://rca-tool-omega.vercel.app, old build): 375 checks, 373 passed, 2 failed. (leaf checks; parent groups not counted twice). Failures map to defects in defects.md. Live note: D-EDGE-NAV.weird-ids failed live only because the hosting platform answers a ../ path with HTTP 403 (the test now accepts 403 as a valid rejection; re-run live: pass). Round 1 (old build) was 263 checks, 241 passed, 22 failed (kept in round1/).
 
 ## 1. Control inventory
 Every interactive control found by `inventory.js` (raw lists in results/inventory.json). "Result" = outcome of the exercising test.
@@ -24,6 +24,16 @@ Every interactive control found by `inventory.js` (raw lists in results/inventor
 | 1 Problem | Title, Asset, Site/area, Date of event, What happened?, Where, When, Impact | D-E2E-1.problem, D-PERS-1.problem, D-EDGE-DATE | pass |
 | 2 Loss | Events/yr, Downtime, Production rate, Unit name, Margin, Repair cost, Currency + live calc | D-E2E-1.loss-calc, D-EDGE-NUM | pass |
 | 2 Loss (new) | 3 share percent fields, 3 sliders, share bar, Recovery cost, Recovery note, Buffer holding cost, Add a cost, per-line Category / Description / Amount / Remove, cash vs opportunity panel | LOSS-1..7 (desktop and 375px), A-LOSS-1 | pass |
+| 1 Problem (new) | Asset tag, Asset type (combo), Make and model, Duty or service, Criticality A/B/C (tap again clears), Failure mode (combo), register status text, links to the register | F-ASSET-1 | pass |
+| Problem / Cause tree (new) | Similar past failures panel: Open, Copy this cause into my tree (arrives as Hypothesis), Open the cause tree | F-SIM-1 | pass |
+| /app/assets (new) | Paste a list, Add asset (form: tag, type, make, duty, site, notes, criticality, Add/Cancel), Search assets, per-row Edit (Save changes/Cancel), Delete (+confirm), per-asset stats, paste Add N assets / Close | F-REG-1, F-REG-2 | pass |
+| /app/account (new) | Download my data, Change password form, Delete my account (typed confirmation, NOT executed), Clear browser data (demo), account menu link | F-ACCT-1 | pass |
+| 4 Cause tree (new) | Type of wear: Natural / Forced deterioration | F-DET-1 | pass |
+| 5 Actions (new) | Add corrective action, Add preventive action (per root cause), compact row expand/Close/Delete, Corrective or preventive?, Category (8), task fields (description, Do this every, Interval unit, Craft or trade, New task or change), Re-link, Maintenance plan changes + Copy for the planner, Spares check (needed, in stock, lead time, coverage, Add a spares holding action) | F-CAPA-1, F-PLAN-1, F-SPARES-1, F-QUAL-1 | pass |
+| 6 Verify (new) | Roll this fix out: candidate tick boxes, What to check, Create N rollout checks, per-check What/Who/Due/Result/Delete, Go to Asset details, Add a similar asset | F-ROLL-1 | pass |
+| 7 Report (new) | Maintenance plan changes, Spares check, Rollout to similar assets sections | F-PLAN-1, F-SPARES-1, F-ROLL-1 | pass |
+| Dashboard (new) | Rollout checks tile (open / created / same problem), unreadable-row Delete | F-ROLL-1, F-SEC-2 | pass |
+| Security (new) | CSP + 4 other headers on every route, image allowlist, malformed rows, password rule, global sign-out, next-redirect | F-SEC-1..3, F-ACCT-1, A-AUTH-1 | see defects |
 | 3 Evidence | Add evidence (both), Edit/Done, Delete (+confirm), Title, Type (6 options), Date, Note, Upload photo, Replace/Remove photo | D-E2E-1, D-EDGE-EVID | pass |
 | 4 Cause tree | Tabs Tree/5 Whys/Fishbone, Expand all, Collapse all, Ask the first Why?, box select, text box, toolbar Why?/Sibling/Move up/Move down/Collapse/Expand/Delete/Details, +N hidden chip, category radios (3), status radios (3), root-cause checkbox, evidence checkboxes, Go to Evidence | D-TREE-1, D-TREE-2, D-E2E-1, D-QC-1 | pass |
 | 5 Whys view | chain boxes, sibling chips, Dig-deeper buttons, Add another Why | D-TREE-2.whys, whys-add | pass |
@@ -43,10 +53,10 @@ Every interactive control found by `inventory.js` (raw lists in results/inventor
 | Edge cases | D-EDGE-NUM, -TEXT, -DATE, -NAV, -ACT, -EVID, -STORE |
 | Report / print | D-E2E-1.report, .print, A-E2E-1.print |
 | Console, a11y, layout | D-ERR-1, A-ERR-1, D-A11Y-1, D-MOB-1, A-MOB-1 |
-| Dashboard load time | A-PERF-1 (median 1071 ms) |
+| Dashboard load time | A-PERF-1 (median 1063 ms) |
 
 ## 3. Results (all checks)
-| ID | Check | Local | Live | Detail (local) |
+| ID | Check | Round 3 local | Round 2 live (old build) | Detail |
 |---|---|---|---|---|
 | D-LAND-1.hdr | Landing shows headline, 3 benefit cards, video placeholder | pass | pass |  |
 | D-LAND-1.logo | Logo link goes to the landing page / app | pass | pass |  |
@@ -56,7 +66,7 @@ Every interactive control found by `inventory.js` (raw lists in results/inventor
 | D-LAND-1.sample | "Open the sample investigation" opens the sample workspace | pass | pass |  |
 | D-LAND-1.start-new | "Start a new investigation" creates one and opens it | pass | pass |  |
 | D-LAND-1.footer | Footer copy is accurate now that accounts exist | pass | pass |  |
-| D-DASH-1.totals | Totals: loss under investigation $0 (sample is closed), 0 open, 0 overdue, saved $198,700 | pass | pass |  |
+| D-DASH-1.totals | Totals: loss under investigation $0 (sample is closed), 0 open, 0 overdue, saved $238,440 (round 3 sample) | pass | pass |  |
 | D-DASH-1.row | Sample row shows $238,440, Closed, sample chip | pass | pass |  |
 | D-DASH-2.dup | Duplicate creates "Copy of ..." and opens it | pass | pass |  |
 | D-DASH-2.dup-numbers | Duplicate keeps the money identical (both rows $238,440) | pass | pass |  |
@@ -74,11 +84,11 @@ Every interactive control found by `inventory.js` (raw lists in results/inventor
 | D-E2E-1.tree-nodes | Tree has 7 causes covering Physical, Human and System / Latent | pass | pass |  |
 | D-E2E-1.actions-tiles | Actions tiles: total cost, 0 of 2 done, 1 overdue, 0 roots unlinked | pass | pass |  |
 | D-E2E-1.qc-midway | Quality check lists "needs action" findings before verification (cause without system cause etc.) | pass | pass |  |
-| D-E2E-1.dash-1 | Dashboard totals (open work, unverified): loss $13,800, open 2, overdue 1, saved $198,700 | pass | pass |  |
+| D-E2E-1.dash-1 | Dashboard totals (open work, unverified): loss $13,800, open 2, overdue 1, saved $238,440 | pass | pass |  |
 | D-E2E-1.verify-calc | Verify step money equals hand calc (before, after, saving, cost, payback) | pass | pass |  |
 | D-E2E-1.dash-2 | Verified savings must not count while actions are still open (review says "no recurrence" but 2 actions not done) | pass | pass |  |
 | D-E2E-1.verified-label | Once all actions are Done, review says no recurrence and a date is set, Verify says "Annual saving (verified)" and the status is Closed | pass | pass |  |
-| D-E2E-1.dash-3 | Dashboard after closing: loss $0, open 0, overdue 0, saved $209,050; row says Closed | pass | pass |  |
+| D-E2E-1.dash-3 | Dashboard after closing: loss $0, open 0, overdue 0, saved $248,790; row says Closed | pass | pass |  |
 | D-E2E-1.report | Report content matches data and hand-calculated figures | pass | pass |  |
 | D-E2E-1.report-ruledout | Report marks ruled-out cause and category/evidence tags | pass | pass |  |
 | D-E2E-1.reload | After reload the report is identical (everything persisted) | pass | pass |  |
@@ -137,7 +147,7 @@ Every interactive control found by `inventory.js` (raw lists in results/inventor
 | D-PERS-1.nav-away | Edit then click "All investigations" immediately keeps the edit | pass | pass |  |
 | D-PERS-1.title-doc | Browser tab title follows the investigation title | pass | pass |  |
 | D-PERS-1.two-tabs | Two tabs editing different fields of one investigation do not overwrite each other | pass | pass |  |
-| D-PERS-1.concurrent-window | Two tabs edit different fields within the same ~350 ms autosave window: neither edit may be silently lost (3 tries) | **FAIL** | **FAIL** | values differ: expected [] but got ["try 0: site=\"S01794835491895\" (typed \"S01794835491895\") when=\"Night shift, full speed\" (typed \"W |
+| D-PERS-1.concurrent-window | Two tabs edit different fields within the same ~350 ms autosave window: neither edit may be silently lost (3 tries) | **FAIL** | **FAIL** | values differ: expected [] but got ["try 0: site=\"S01794901723942\" (typed \"S01794901723942\") when=\"Night shift, full speed\" (typed \"W |
 | D-EDGE-NUM.letters | Letters are rejected in number fields | pass | pass |  |
 | D-EDGE-NUM.negative | Negative numbers cannot be entered (minus key ignored) - no explanation shown | pass | pass |  |
 | D-EDGE-NUM.paste-comma | Pasting "1,000" or "1e3" is silently rejected (field keeps previous value) | pass | pass |  |
@@ -183,6 +193,7 @@ Every interactive control found by `inventory.js` (raw lists in results/inventor
 | D-EDGE-NAV.dblclick-landing | Double-clicking "Start a new investigation" on the landing page creates exactly one | pass | pass |  |
 | D-EDGE-NAV.dblclick-dup | Double-clicking Duplicate creates exactly one copy | pass | pass |  |
 | D-EDGE-NAV.rapid-new-nav | Pressing "New investigation" then browser Back immediately leaves no half-created junk beyond one blank | pass | pass |  |
+| D-EDGE-NAV | Invalid id, unknown routes, back/forward, double-click create | **FAIL** | n/a | CSP violations during test: Applying inline style violates the following Content Security Policy directive 'style-src 'self''. Either the 'u |
 | D-EDGE-ACT.hidden-after-unflag | After the only root cause is un-flagged the existing action is still visible and editable | pass | pass |  |
 | D-EDGE-ACT.hidden-still-counted | Hidden action still counts in quality findings, report and dashboard (data and UI disagree) | pass | pass |  |
 | D-EDGE-EVID.upload | Upload a 3000x2000 PNG: preview appears, button changes to "Replace photo", stored as JPEG <= 800px | pass | pass |  |
@@ -272,10 +283,10 @@ Every interactive control found by `inventory.js` (raw lists in results/inventor
 | LOSS-3-desk.remove | Remove deletes only that line and updates totals | pass | pass |  |
 | LOSS-3-desk.currency | Other-cost amount prefix follows the currency symbol | pass | pass |  |
 | LOSS-4-desk.verify | Verify: before/after/expected saving with cash vs opportunity split, buffer holding assumed to continue, payback 4.7 months | pass | pass |  |
-| LOSS-4-desk.dash-open | Dashboard (open investigation): row $20,462 with cash/opportunity split; loss tile = same; verified tile unchanged at $198,700 | pass | pass |  |
+| LOSS-4-desk.dash-open | Dashboard (open investigation): row $20,462 with cash/opportunity split; loss tile = same; verified tile unchanged at $238,440 | pass | pass |  |
 | LOSS-4-desk.report-open | Report: loss table rows, split, totals and "expected saving ... not yet verified" wording equal hand calc | pass | pass |  |
 | LOSS-4-desk.close | Closing (action Done + not recurred + review date): label becomes "Annual saving (verified)", status Closed | pass | pass |  |
-| LOSS-4-desk.dash-closed | Dashboard after closing: loss tile $0, verified tile $211,341 (198,700 + 12,641) with cash $56,301 + opportunity $155,040 | pass | pass |  |
+| LOSS-4-desk.dash-closed | Dashboard after closing: loss tile $0, verified tile $251,081 (238,440 + 12,641) with cash $65,801 + opportunity $185,280 | pass | pass |  |
 | LOSS-4-desk.not-verified-states | Each missing condition keeps the saving "not yet verified" and out of the dashboard: action open / recurred yes / unreviewed / no review date | pass | pass |  |
 | LOSS-5-desk.dash | Old record (no share fields) keeps the old maths: $18,000 = $6,000 cash + $12,000 opportunity | pass | pass |  |
 | LOSS-5-desk.open-old | Opening the old record shows 100/0/0, empty other costs, no recovery fields, and the same annual loss | pass | pass |  |
@@ -322,10 +333,10 @@ Every interactive control found by `inventory.js` (raw lists in results/inventor
 | LOSS-3-mob.remove | Remove deletes only that line and updates totals | pass | pass |  |
 | LOSS-3-mob.currency | Other-cost amount prefix follows the currency symbol | pass | pass |  |
 | LOSS-4-mob.verify | Verify: before/after/expected saving with cash vs opportunity split, buffer holding assumed to continue, payback 4.7 months | pass | pass |  |
-| LOSS-4-mob.dash-open | Dashboard (open investigation): row $20,462 with cash/opportunity split; loss tile = same; verified tile unchanged at $198,700 | pass | pass |  |
+| LOSS-4-mob.dash-open | Dashboard (open investigation): row $20,462 with cash/opportunity split; loss tile = same; verified tile unchanged at $238,440 | pass | pass |  |
 | LOSS-4-mob.report-open | Report: loss table rows, split, totals and "expected saving ... not yet verified" wording equal hand calc | pass | pass |  |
 | LOSS-4-mob.close | Closing (action Done + not recurred + review date): label becomes "Annual saving (verified)", status Closed | pass | pass |  |
-| LOSS-4-mob.dash-closed | Dashboard after closing: loss tile $0, verified tile $211,341 (198,700 + 12,641) with cash $56,301 + opportunity $155,040 | pass | pass |  |
+| LOSS-4-mob.dash-closed | Dashboard after closing: loss tile $0, verified tile $251,081 (238,440 + 12,641) with cash $65,801 + opportunity $185,280 | pass | pass |  |
 | LOSS-4-mob.not-verified-states | Each missing condition keeps the saving "not yet verified" and out of the dashboard: action open / recurred yes / unreviewed / no review date | pass | pass |  |
 | LOSS-5-mob.dash | Old record (no share fields) keeps the old maths: $18,000 = $6,000 cash + $12,000 opportunity | pass | pass |  |
 | LOSS-5-mob.open-old | Opening the old record shows 100/0/0, empty other costs, no recovery fields, and the same annual loss | pass | pass |  |
@@ -340,6 +351,298 @@ Every interactive control found by `inventory.js` (raw lists in results/inventor
 | LOSS-6-mob.huge | Huge loss numbers wrap inside the live-calculation panel (no page overflow at this width) | pass | pass |  |
 | LOSS-7-mob.copy-same | Copy has 48/32/20, the 2 other-cost lines, recovery note and the same annual loss $20,462 | pass | pass |  |
 | LOSS-7-mob.copy-independent | Editing the copy (shares, remove a cost line) does not change the original | pass | pass |  |
+| F-ASSET-1-demo-desk.fields | Asset details section has tag, type, make/model, duty, criticality A/B/C, failure mode | pass | n/a |  |
+| F-ASSET-1-demo-desk.combo-list | Asset type and Failure mode lists open on focus, filter while typing, and accept your own text | pass | n/a |  |
+| F-ASSET-1-demo-desk.criticality | Criticality: choose A, tap again clears, B replaces A | pass | n/a |  |
+| F-ASSET-1-demo-desk.register-status | A new tag says "It will be added to your asset register", then "In your asset register" once saved; matching ignores case and spaces | pass | n/a |  |
+| F-ASSET-1-demo-desk.persist | All asset detail fields survive reload | pass | n/a |  |
+| F-ASSET-1-demo-desk.register-entry | The register now has ZZ-501 with the type, make, duty and criticality from the investigation, plus 1 investigation | pass | n/a |  |
+| F-ASSET-1-demo-desk.long-text | A 3000-character make/duty does not overflow the Problem step at this width | pass | n/a |  |
+| F-ASSET-1-demo-mob.fields | Asset details section has tag, type, make/model, duty, criticality A/B/C, failure mode | pass | n/a |  |
+| F-ASSET-1-demo-mob.combo-list | Asset type and Failure mode lists open on focus, filter while typing, and accept your own text | pass | n/a |  |
+| F-ASSET-1-demo-mob.criticality | Criticality: choose A, tap again clears, B replaces A | pass | n/a |  |
+| F-ASSET-1-demo-mob.register-status | A new tag says "It will be added to your asset register", then "In your asset register" once saved; matching ignores case and spaces | pass | n/a |  |
+| F-ASSET-1-demo-mob.persist | All asset detail fields survive reload | pass | n/a |  |
+| F-ASSET-1-demo-mob.register-entry | The register now has ZZ-501 with the type, make, duty and criticality from the investigation, plus 1 investigation | pass | n/a |  |
+| F-ASSET-1-demo-mob.long-text | A 3000-character make/duty does not overflow the Problem step at this width | pass | n/a |  |
+| F-ASSET-1-acct-desk.fields | Asset details section has tag, type, make/model, duty, criticality A/B/C, failure mode | pass | n/a |  |
+| F-ASSET-1-acct-desk.combo-list | Asset type and Failure mode lists open on focus, filter while typing, and accept your own text | pass | n/a |  |
+| F-ASSET-1-acct-desk.criticality | Criticality: choose A, tap again clears, B replaces A | pass | n/a |  |
+| F-ASSET-1-acct-desk.register-status | A new tag says "It will be added to your asset register", then "In your asset register" once saved; matching ignores case and spaces | pass | n/a |  |
+| F-ASSET-1-acct-desk.persist | All asset detail fields survive reload | pass | n/a |  |
+| F-ASSET-1-acct-desk.register-entry | The register now has ZZ-501 with the type, make, duty and criticality from the investigation, plus 1 investigation | pass | n/a |  |
+| F-ASSET-1-acct-desk.long-text | A 3000-character make/duty does not overflow the Problem step at this width | pass | n/a |  |
+| F-REG-1-demo-desk.sample | Fresh register shows the 5 sample assets in tag order P-101, P-102, P-103, P-210, P-215, each marked Illustrative sample | pass | n/a |  |
+| F-REG-1-demo-desk.stats | P-101 stats equal hand calc from the sample: 1 investigation, 6 failures a year, annual loss $238,440 | pass | n/a |  |
+| F-REG-1-demo-desk.add-validation | Add asset: empty tag and duplicate tag (any case) are refused with a clear message | pass | n/a |  |
+| F-REG-1-demo-desk.add | Add asset with all fields shows it in the list; cancel closes the form without adding | pass | n/a |  |
+| F-REG-1-demo-desk.edit | Edit: change duty and save; tag clash refused; cancel discards | pass | n/a |  |
+| F-REG-1-demo-desk.search | Search matches tag, type, make, duty and area; no match message; clearing restores the list | pass | n/a |  |
+| F-REG-1-demo-desk.paste | Paste a list: counts new / repeated / blank lines exactly, adds only the new ones | pass | n/a |  |
+| F-REG-1-demo-desk.stats-linked | Stats follow investigations by tag: a 3-events/yr investigation with annual loss $9,000 on QA-1 shows 1 / 3 / $9,000 | pass | n/a |  |
+| F-REG-1-demo-desk.delete | Delete asset: message mentions investigations that use the tag; Cancel keeps it; Delete removes it and keeps the investigation | pass | n/a |  |
+| F-REG-1-demo-desk.layout | Register page layout: no overflow at this width; long values wrap | pass | n/a |  |
+| F-REG-1-demo-mob.sample | Fresh register shows the 5 sample assets in tag order P-101, P-102, P-103, P-210, P-215, each marked Illustrative sample | pass | n/a |  |
+| F-REG-1-demo-mob.stats | P-101 stats equal hand calc from the sample: 1 investigation, 6 failures a year, annual loss $238,440 | pass | n/a |  |
+| F-REG-1-demo-mob.add-validation | Add asset: empty tag and duplicate tag (any case) are refused with a clear message | pass | n/a |  |
+| F-REG-1-demo-mob.add | Add asset with all fields shows it in the list; cancel closes the form without adding | pass | n/a |  |
+| F-REG-1-demo-mob.edit | Edit: change duty and save; tag clash refused; cancel discards | pass | n/a |  |
+| F-REG-1-demo-mob.search | Search matches tag, type, make, duty and area; no match message; clearing restores the list | pass | n/a |  |
+| F-REG-1-demo-mob.paste | Paste a list: counts new / repeated / blank lines exactly, adds only the new ones | pass | n/a |  |
+| F-REG-1-demo-mob.stats-linked | Stats follow investigations by tag: a 3-events/yr investigation with annual loss $9,000 on QA-1 shows 1 / 3 / $9,000 | pass | n/a |  |
+| F-REG-1-demo-mob.delete | Delete asset: message mentions investigations that use the tag; Cancel keeps it; Delete removes it and keeps the investigation | pass | n/a |  |
+| F-REG-1-demo-mob.layout | Register page layout: no overflow at this width; long values wrap | pass | n/a |  |
+| F-REG-2-acct-desk.add-persist | Asset added signed in persists after reload and shows in A's list | pass | n/a |  |
+| F-REG-2-acct-desk.b-sees-own | User B's register has the 5 sample assets and does not show A's asset | pass | n/a |  |
+| F-REG-2-acct-desk.b-api | User B cannot read, change or delete A's asset row through the API; anonymous gets nothing | pass | n/a |  |
+| F-REG-2-acct-desk.b-direct-write | B writing an asset with A's tag does not collide with or change A's asset | pass | n/a |  |
+| F-REG-2-acct-desk.delete | A deletes the asset: gone after reload | pass | n/a |  |
+| F-CAPA-1-demo-desk.empty | Empty Actions step: corrective section with "No corrective action yet" prompt, one preventive group per root cause with "No action yet" | pass | n/a |  |
+| F-CAPA-1-demo-desk.corrective | Add corrective action: lands in the Corrective section, is linked to "The failure event", editor opens at once | pass | n/a |  |
+| F-CAPA-1-demo-desk.preventive | Add preventive action under each root cause: appears in that group only; kind is Preventive | pass | n/a |  |
+| F-CAPA-1-demo-desk.one-open | Rows expand in place one at a time: opening another row closes the first; Close button collapses | pass | n/a |  |
+| F-CAPA-1-demo-desk.tiles | Tiles: total action cost 800 + 100 + 50 = $950; 0 of 3 done; root causes without action 0 | pass | n/a |  |
+| F-CAPA-1-demo-desk.task-fields | Task fields appear only for Maintenance task / Condition monitoring; changing category away hides them | pass | n/a |  |
+| F-CAPA-1-demo-desk.categories | Category list offers the 8 categories + Not set | pass | n/a |  |
+| F-CAPA-1-demo-desk.kind-switch | Corrective -> Preventive moves a failure-event action onto the first root cause; Preventive -> Corrective keeps its root-cause link and the action moves to the Corrective section | pass | n/a |  |
+| F-CAPA-1-demo-desk.delete | Delete action: dialog, cancel keeps, confirm removes; tiles update | pass | n/a |  |
+| F-CAPA-1-demo-desk.persist | Actions with kind, category, task survive reload | pass | n/a |  |
+| F-CAPA-1-demo-desk.layout | Actions step layout at this width: no overflow, rows fit | pass | n/a |  |
+| F-CAPA-1-demo-mob.empty | Empty Actions step: corrective section with "No corrective action yet" prompt, one preventive group per root cause with "No action yet" | pass | n/a |  |
+| F-CAPA-1-demo-mob.corrective | Add corrective action: lands in the Corrective section, is linked to "The failure event", editor opens at once | pass | n/a |  |
+| F-CAPA-1-demo-mob.preventive | Add preventive action under each root cause: appears in that group only; kind is Preventive | pass | n/a |  |
+| F-CAPA-1-demo-mob.one-open | Rows expand in place one at a time: opening another row closes the first; Close button collapses | pass | n/a |  |
+| F-CAPA-1-demo-mob.tiles | Tiles: total action cost 800 + 100 + 50 = $950; 0 of 3 done; root causes without action 0 | pass | n/a |  |
+| F-CAPA-1-demo-mob.task-fields | Task fields appear only for Maintenance task / Condition monitoring; changing category away hides them | pass | n/a |  |
+| F-CAPA-1-demo-mob.categories | Category list offers the 8 categories + Not set | pass | n/a |  |
+| F-CAPA-1-demo-mob.kind-switch | Corrective -> Preventive moves a failure-event action onto the first root cause; Preventive -> Corrective keeps its root-cause link and the action moves to the Corrective section | pass | n/a |  |
+| F-CAPA-1-demo-mob.delete | Delete action: dialog, cancel keeps, confirm removes; tiles update | pass | n/a |  |
+| F-CAPA-1-demo-mob.persist | Actions with kind, category, task survive reload | pass | n/a |  |
+| F-CAPA-1-demo-mob.layout | Actions step layout at this width: no overflow, rows fit | pass | n/a |  |
+| F-CAPA-1-acct-desk.empty | Empty Actions step: corrective section with "No corrective action yet" prompt, one preventive group per root cause with "No action yet" | pass | n/a |  |
+| F-CAPA-1-acct-desk.corrective | Add corrective action: lands in the Corrective section, is linked to "The failure event", editor opens at once | pass | n/a |  |
+| F-CAPA-1-acct-desk.preventive | Add preventive action under each root cause: appears in that group only; kind is Preventive | pass | n/a |  |
+| F-CAPA-1-acct-desk.one-open | Rows expand in place one at a time: opening another row closes the first; Close button collapses | pass | n/a |  |
+| F-CAPA-1-acct-desk.tiles | Tiles: total action cost 800 + 100 + 50 = $950; 0 of 3 done; root causes without action 0 | pass | n/a |  |
+| F-CAPA-1-acct-desk.task-fields | Task fields appear only for Maintenance task / Condition monitoring; changing category away hides them | pass | n/a |  |
+| F-CAPA-1-acct-desk.categories | Category list offers the 8 categories + Not set | pass | n/a |  |
+| F-CAPA-1-acct-desk.kind-switch | Corrective -> Preventive moves a failure-event action onto the first root cause; Preventive -> Corrective keeps its root-cause link and the action moves to the Corrective section | pass | n/a |  |
+| F-CAPA-1-acct-desk.delete | Delete action: dialog, cancel keeps, confirm removes; tiles update | pass | n/a |  |
+| F-CAPA-1-acct-desk.persist | Actions with kind, category, task survive reload | pass | n/a |  |
+| F-CAPA-1-acct-desk.layout | Actions step layout at this width: no overflow, rows fit | pass | n/a |  |
+| F-PLAN-1-demo-desk.empty | No tasks: the plan section explains how tasks appear and has no Copy button | pass | n/a |  |
+| F-PLAN-1-demo-desk.lines | Plan lists the 4 tasks with: New/Change, interval text ("every 3 months", "every 500 hours run", "every week", "every 2.5 weeks"), craft, root cause | pass | n/a |  |
+| F-PLAN-1-demo-desk.fallbacks | A task with no description uses the action text; no craft shows "Not set" | pass | n/a |  |
+| F-PLAN-1-demo-desk.copy | "Copy for the planner" puts tab-separated text with header, 10 columns and one row per task on the clipboard (hand-built expected text) | pass | n/a |  |
+| F-PLAN-1-demo-desk.quality-task | Quality: tasks missing description/interval are flagged ("a task description and an interval") | pass | n/a |  |
+| F-PLAN-1-demo-desk.report | Report has a "Maintenance plan changes" section with the same tasks | pass | n/a |  |
+| F-PLAN-1-demo-desk.persist | Tasks (interval, craft, change) survive reload | pass | n/a |  |
+| F-PLAN-1-demo-mob.empty | No tasks: the plan section explains how tasks appear and has no Copy button | pass | n/a |  |
+| F-PLAN-1-demo-mob.lines | Plan lists the 4 tasks with: New/Change, interval text ("every 3 months", "every 500 hours run", "every week", "every 2.5 weeks"), craft, root cause | pass | n/a |  |
+| F-PLAN-1-demo-mob.fallbacks | A task with no description uses the action text; no craft shows "Not set" | pass | n/a |  |
+| F-PLAN-1-demo-mob.copy | "Copy for the planner" puts tab-separated text with header, 10 columns and one row per task on the clipboard (hand-built expected text) | pass | n/a |  |
+| F-PLAN-1-demo-mob.quality-task | Quality: tasks missing description/interval are flagged ("a task description and an interval") | pass | n/a |  |
+| F-PLAN-1-demo-mob.report | Report has a "Maintenance plan changes" section with the same tasks | pass | n/a |  |
+| F-PLAN-1-demo-mob.persist | Tasks (interval, craft, change) survive reload | pass | n/a |  |
+| F-PLAN-1-acct-desk.empty | No tasks: the plan section explains how tasks appear and has no Copy button | pass | n/a |  |
+| F-PLAN-1-acct-desk.lines | Plan lists the 4 tasks with: New/Change, interval text ("every 3 months", "every 500 hours run", "every week", "every 2.5 weeks"), craft, root cause | pass | n/a |  |
+| F-PLAN-1-acct-desk.fallbacks | A task with no description uses the action text; no craft shows "Not set" | pass | n/a |  |
+| F-PLAN-1-acct-desk.copy | "Copy for the planner" puts tab-separated text with header, 10 columns and one row per task on the clipboard (hand-built expected text) | pass | n/a |  |
+| F-PLAN-1-acct-desk.quality-task | Quality: tasks missing description/interval are flagged ("a task description and an interval") | pass | n/a |  |
+| F-PLAN-1-acct-desk.report | Report has a "Maintenance plan changes" section with the same tasks | pass | n/a |  |
+| F-PLAN-1-acct-desk.persist | Tasks (interval, craft, change) survive reload | pass | n/a |  |
+| F-SPARES-1-demo-desk.fields | Spares check shows only "Was a spare part needed?" until Yes is chosen; then stock, lead time, coverage appear | pass | n/a |  |
+| F-SPARES-1-demo-desk.lead-13 | Not in stock, lead time 13 days: flag not shown (threshold is 14) | pass | n/a |  |
+| F-SPARES-1-demo-desk.lead-14 | Not in stock, lead time 14 days: flag shown (threshold is 14) | pass | n/a |  |
+| F-SPARES-1-demo-desk.lead-60 | Not in stock, lead time 60 days: flag shown (threshold is 14) | pass | n/a |  |
+| F-SPARES-1-demo-desk.lead-0 | Not in stock, lead time 0 days: flag not shown (threshold is 14) | pass | n/a |  |
+| F-SPARES-1-demo-desk.in-stock | In stock = Yes removes the flag even with 60 days lead time | pass | n/a |  |
+| F-SPARES-1-demo-desk.one-tap | "Add a spares holding action": adds a preventive Spares holding action for the first root cause with the asset and lead time in the text; flag text says it is on the list; quality rule clears | pass | n/a |  |
+| F-SPARES-1-demo-desk.report | Report shows the Spares check section with the flag line | pass | n/a |  |
+| F-SPARES-1-demo-desk.persist | Spares answers survive reload | pass | n/a |  |
+| F-SPARES-1-demo-mob.fields | Spares check shows only "Was a spare part needed?" until Yes is chosen; then stock, lead time, coverage appear | pass | n/a |  |
+| F-SPARES-1-demo-mob.lead-13 | Not in stock, lead time 13 days: flag not shown (threshold is 14) | pass | n/a |  |
+| F-SPARES-1-demo-mob.lead-14 | Not in stock, lead time 14 days: flag shown (threshold is 14) | pass | n/a |  |
+| F-SPARES-1-demo-mob.lead-60 | Not in stock, lead time 60 days: flag shown (threshold is 14) | pass | n/a |  |
+| F-SPARES-1-demo-mob.lead-0 | Not in stock, lead time 0 days: flag not shown (threshold is 14) | pass | n/a |  |
+| F-SPARES-1-demo-mob.in-stock | In stock = Yes removes the flag even with 60 days lead time | pass | n/a |  |
+| F-SPARES-1-demo-mob.one-tap | "Add a spares holding action": adds a preventive Spares holding action for the first root cause with the asset and lead time in the text; flag text says it is on the list; quality rule clears | pass | n/a |  |
+| F-SPARES-1-demo-mob.report | Report shows the Spares check section with the flag line | pass | n/a |  |
+| F-SPARES-1-demo-mob.persist | Spares answers survive reload | pass | n/a |  |
+| F-SPARES-1-acct-desk.fields | Spares check shows only "Was a spare part needed?" until Yes is chosen; then stock, lead time, coverage appear | pass | n/a |  |
+| F-SPARES-1-acct-desk.lead-13 | Not in stock, lead time 13 days: flag not shown (threshold is 14) | pass | n/a |  |
+| F-SPARES-1-acct-desk.lead-14 | Not in stock, lead time 14 days: flag shown (threshold is 14) | pass | n/a |  |
+| F-SPARES-1-acct-desk.lead-60 | Not in stock, lead time 60 days: flag shown (threshold is 14) | pass | n/a |  |
+| F-SPARES-1-acct-desk.lead-0 | Not in stock, lead time 0 days: flag not shown (threshold is 14) | pass | n/a |  |
+| F-SPARES-1-acct-desk.in-stock | In stock = Yes removes the flag even with 60 days lead time | pass | n/a |  |
+| F-SPARES-1-acct-desk.one-tap | "Add a spares holding action": adds a preventive Spares holding action for the first root cause with the asset and lead time in the text; flag text says it is on the list; quality rule clears | pass | n/a |  |
+| F-SPARES-1-acct-desk.report | Report shows the Spares check section with the flag line | pass | n/a |  |
+| F-SPARES-1-acct-desk.persist | Spares answers survive reload | pass | n/a |  |
+| F-QUAL-1-demo-desk.natural | natural-deterioration-unmanaged: verified + natural wear with no maintenance task or condition monitoring action is flagged; jump -> Actions; a Condition monitoring action on its branch clears it | pass | n/a |  |
+| F-QUAL-1-demo-desk.forced-no-flag | The same cause marked Forced (not natural) is not flagged by that rule; toggling the type of wear off clears it | pass | n/a |  |
+| F-QUAL-1-demo-desk.task-incomplete | task-missing-detail: a maintenance task with no interval is flagged; entering the interval clears it | pass | n/a |  |
+| F-QUAL-1-demo-desk.system-systemic | system-root-without-systemic-action: a System/Latent root cause whose only (categorised) action is a Repair is flagged; a Procedure action clears it; uncategorised actions are not judged | pass | n/a |  |
+| F-QUAL-1-demo-desk.corrective-only | corrective-without-preventive: a root cause that has only a corrective action is flagged (high); adding a preventive one clears it; jump -> Actions | pass | n/a |  |
+| F-QUAL-1-demo-desk.unlinked | action-not-linked: un-flagging the root cause of an action flags it; the action appears under "Not linked to a root cause"; re-linking clears it | pass | n/a |  |
+| F-QUAL-1-demo-desk.severity-links | Every new finding has a "Go to ..." button and the panel count matches the number of findings | pass | n/a |  |
+| F-QUAL-1-acct-desk.natural | natural-deterioration-unmanaged: verified + natural wear with no maintenance task or condition monitoring action is flagged; jump -> Actions; a Condition monitoring action on its branch clears it | pass | n/a |  |
+| F-QUAL-1-acct-desk.forced-no-flag | The same cause marked Forced (not natural) is not flagged by that rule; toggling the type of wear off clears it | pass | n/a |  |
+| F-QUAL-1-acct-desk.task-incomplete | task-missing-detail: a maintenance task with no interval is flagged; entering the interval clears it | pass | n/a |  |
+| F-QUAL-1-acct-desk.system-systemic | system-root-without-systemic-action: a System/Latent root cause whose only (categorised) action is a Repair is flagged; a Procedure action clears it; uncategorised actions are not judged | pass | n/a |  |
+| F-QUAL-1-acct-desk.corrective-only | corrective-without-preventive: a root cause that has only a corrective action is flagged (high); adding a preventive one clears it; jump -> Actions | pass | n/a |  |
+| F-QUAL-1-acct-desk.unlinked | action-not-linked: un-flagging the root cause of an action flags it; the action appears under "Not linked to a root cause"; re-linking clears it | pass | n/a |  |
+| F-QUAL-1-acct-desk.severity-links | Every new finding has a "Go to ..." button and the panel count matches the number of findings | pass | n/a |  |
+| F-DET-1-demo-desk.toggle | Natural, Forced, and tap-again-to-clear behave as radios; default is not decided; help text changes | pass | n/a |  |
+| F-DET-1-demo-desk.persist | Deterioration survives reload | pass | n/a |  |
+| F-DET-1-demo-desk.panel-top | The failure event itself has no deterioration control | pass | n/a |  |
+| F-DET-1-demo-mob.toggle | Natural, Forced, and tap-again-to-clear behave as radios; default is not decided; help text changes | pass | n/a |  |
+| F-DET-1-demo-mob.persist | Deterioration survives reload | pass | n/a |  |
+| F-DET-1-demo-mob.panel-top | The failure event itself has no deterioration control | pass | n/a |  |
+| F-SIM-1-demo-desk.rank | Panel lists S1 (score 100), S2 (41), S3 (6, the minimum) in that order; S4 (one shared word = 3) and S5 are not listed | pass | n/a |  |
+| F-SIM-1-demo-desk.reasons | Reasons shown: O1 "Same asset (X-1)", "Same asset type (Gearbox)", "Same failure mode (Bearing failure)"; O2 type+mode but no tag; O3 shared words only | pass | n/a |  |
+| F-SIM-1-demo-desk.cause-text | Each match shows its root causes and "What fixed it" text; Open link goes to that investigation | pass | n/a |  |
+| F-SIM-1-demo-desk.copy | "Copy this cause into my tree" adds it under the failure event as a Hypothesis (not verified, not a root cause, no evidence); button turns to "Copied"; message with link to the tree | pass | n/a |  |
+| F-SIM-1-demo-desk.cause-step-panel | The Cause tree step also shows the Similar past failures panel and a copy there adds under the selected cause | pass | n/a |  |
+| F-SIM-1-demo-desk.empty | An investigation with no similar ones shows "No similar failures yet" guidance | pass | n/a |  |
+| F-SIM-1-demo-desk.self-excluded | An investigation is never listed as similar to itself and a copy of it (Duplicate) is listed as similar | pass | n/a |  |
+| F-SIM-1-demo-mob.rank | Panel lists S1 (score 100), S2 (41), S3 (6, the minimum) in that order; S4 (one shared word = 3) and S5 are not listed | pass | n/a |  |
+| F-SIM-1-demo-mob.reasons | Reasons shown: O1 "Same asset (X-1)", "Same asset type (Gearbox)", "Same failure mode (Bearing failure)"; O2 type+mode but no tag; O3 shared words only | pass | n/a |  |
+| F-SIM-1-demo-mob.cause-text | Each match shows its root causes and "What fixed it" text; Open link goes to that investigation | pass | n/a |  |
+| F-SIM-1-demo-mob.copy | "Copy this cause into my tree" adds it under the failure event as a Hypothesis (not verified, not a root cause, no evidence); button turns to "Copied"; message with link to the tree | pass | n/a |  |
+| F-SIM-1-demo-mob.cause-step-panel | The Cause tree step also shows the Similar past failures panel and a copy there adds under the selected cause | pass | n/a |  |
+| F-SIM-1-demo-mob.empty | An investigation with no similar ones shows "No similar failures yet" guidance | pass | n/a |  |
+| F-SIM-1-demo-mob.self-excluded | An investigation is never listed as similar to itself and a copy of it (Duplicate) is listed as similar | pass | n/a |  |
+| F-SIM-1-acct-desk.rank | Panel lists S1 (score 100), S2 (41), S3 (6, the minimum) in that order; S4 (one shared word = 3) and S5 are not listed | pass | n/a |  |
+| F-SIM-1-acct-desk.reasons | Reasons shown: O1 "Same asset (X-1)", "Same asset type (Gearbox)", "Same failure mode (Bearing failure)"; O2 type+mode but no tag; O3 shared words only | pass | n/a |  |
+| F-SIM-1-acct-desk.cause-text | Each match shows its root causes and "What fixed it" text; Open link goes to that investigation | pass | n/a |  |
+| F-SIM-1-acct-desk.copy | "Copy this cause into my tree" adds it under the failure event as a Hypothesis (not verified, not a root cause, no evidence); button turns to "Copied"; message with link to the tree | pass | n/a |  |
+| F-SIM-1-acct-desk.cause-step-panel | The Cause tree step also shows the Similar past failures panel and a copy there adds under the selected cause | pass | n/a |  |
+| F-SIM-1-acct-desk.empty | An investigation with no similar ones shows "No similar failures yet" guidance | pass | n/a |  |
+| F-SIM-1-acct-desk.self-excluded | An investigation is never listed as similar to itself and a copy of it (Duplicate) is listed as similar | pass | n/a |  |
+| F-ROLL-1-demo-desk.encourage | Before verification the panel says "Best done once the fix is verified" | pass | n/a |  |
+| F-ROLL-1-demo-desk.rank | Candidates: P-102, P-215, P-103 in that order; the centrifugal pump P-210 and the asset itself are not listed | pass | n/a |  |
+| F-ROLL-1-demo-desk.reasons | Reasons: P-102 same make+model, similar duty (slurry, feed, concentrator), criticality A; P-103 similar make (warman) and criticality B | pass | n/a |  |
+| F-ROLL-1-demo-desk.create | Tick P-102 and P-215, default text prefilled from root causes and preventive actions, create 2 checks; ticked ones show "Check created" and can no longer be picked | pass | n/a |  |
+| F-ROLL-1-demo-desk.statuses | Result options: Open, Checked: no issue, Checked: same problem found, Fixed; progress counts finished ones; "same problem" shows the red notice | pass | n/a |  |
+| F-ROLL-1-demo-desk.edit-check | Per-check owner, due date and "what to check" can be edited; delete asks for confirmation | pass | n/a |  |
+| F-ROLL-1-demo-desk.dashboard | Dashboard "Rollout checks" tile: open count and "of N created" (hand: 2 created, 0 open now) | pass | n/a |  |
+| F-ROLL-1-demo-desk.dashboard-open | Setting one back to Open and one to same problem: tile shows 1 open and "1 found the same problem" | pass | n/a |  |
+| F-ROLL-1-demo-desk.report | Report section "Rollout to similar assets" lists the checks with their results | pass | n/a |  |
+| F-ROLL-1-demo-desk.verified-message | When the fix is verified the panel says "The fix is verified. This is the moment to spread it" | pass | n/a |  |
+| F-ROLL-1-demo-desk.needs-type | With no asset type set the panel asks for it and offers "Go to Asset details" | pass | n/a |  |
+| F-ROLL-1-demo-desk.no-candidates | A type with no other assets shows the empty guidance and the "add a similar asset" form | pass | n/a |  |
+| F-ROLL-1-demo-mob.encourage | Before verification the panel says "Best done once the fix is verified" | pass | n/a |  |
+| F-ROLL-1-demo-mob.rank | Candidates: P-102, P-215, P-103 in that order; the centrifugal pump P-210 and the asset itself are not listed | pass | n/a |  |
+| F-ROLL-1-demo-mob.reasons | Reasons: P-102 same make+model, similar duty (slurry, feed, concentrator), criticality A; P-103 similar make (warman) and criticality B | pass | n/a |  |
+| F-ROLL-1-demo-mob.create | Tick P-102 and P-215, default text prefilled from root causes and preventive actions, create 2 checks; ticked ones show "Check created" and can no longer be picked | pass | n/a |  |
+| F-ROLL-1-demo-mob.statuses | Result options: Open, Checked: no issue, Checked: same problem found, Fixed; progress counts finished ones; "same problem" shows the red notice | pass | n/a |  |
+| F-ROLL-1-demo-mob.edit-check | Per-check owner, due date and "what to check" can be edited; delete asks for confirmation | pass | n/a |  |
+| F-ROLL-1-demo-mob.dashboard | Dashboard "Rollout checks" tile: open count and "of N created" (hand: 2 created, 0 open now) | pass | n/a |  |
+| F-ROLL-1-demo-mob.dashboard-open | Setting one back to Open and one to same problem: tile shows 1 open and "1 found the same problem" | pass | n/a |  |
+| F-ROLL-1-demo-mob.report | Report section "Rollout to similar assets" lists the checks with their results | pass | n/a |  |
+| F-ROLL-1-demo-mob.verified-message | When the fix is verified the panel says "The fix is verified. This is the moment to spread it" | pass | n/a |  |
+| F-ROLL-1-demo-mob.needs-type | With no asset type set the panel asks for it and offers "Go to Asset details" | pass | n/a |  |
+| F-ROLL-1-demo-mob.no-candidates | A type with no other assets shows the empty guidance and the "add a similar asset" form | pass | n/a |  |
+| F-ROLL-1-acct-desk.encourage | Before verification the panel says "Best done once the fix is verified" | pass | n/a |  |
+| F-ROLL-1-acct-desk.rank | Candidates: P-102, P-215, P-103 in that order; the centrifugal pump P-210 and the asset itself are not listed | pass | n/a |  |
+| F-ROLL-1-acct-desk.reasons | Reasons: P-102 same make+model, similar duty (slurry, feed, concentrator), criticality A; P-103 similar make (warman) and criticality B | pass | n/a |  |
+| F-ROLL-1-acct-desk.create | Tick P-102 and P-215, default text prefilled from root causes and preventive actions, create 2 checks; ticked ones show "Check created" and can no longer be picked | pass | n/a |  |
+| F-ROLL-1-acct-desk.statuses | Result options: Open, Checked: no issue, Checked: same problem found, Fixed; progress counts finished ones; "same problem" shows the red notice | pass | n/a |  |
+| F-ROLL-1-acct-desk.edit-check | Per-check owner, due date and "what to check" can be edited; delete asks for confirmation | pass | n/a |  |
+| F-ROLL-1-acct-desk.dashboard | Dashboard "Rollout checks" tile: open count and "of N created" (hand: 2 created, 0 open now) | pass | n/a |  |
+| F-ROLL-1-acct-desk.dashboard-open | Setting one back to Open and one to same problem: tile shows 1 open and "1 found the same problem" | pass | n/a |  |
+| F-ROLL-1-acct-desk.report | Report section "Rollout to similar assets" lists the checks with their results | pass | n/a |  |
+| F-ROLL-1-acct-desk.verified-message | When the fix is verified the panel says "The fix is verified. This is the moment to spread it" | pass | n/a |  |
+| F-ROLL-1-acct-desk.needs-type | With no asset type set the panel asks for it and offers "Go to Asset details" | pass | n/a |  |
+| F-ROLL-1-acct-desk.no-candidates | A type with no other assets shows the empty guidance and the "add a similar asset" form | pass | n/a |  |
+| F-SAMPLE-1.verify | Verify step of the sample: before $238,440, after $0, saving $238,440 (verified), action cost $32,000, payback 1.6 months (32,000 / (238,440 / 12) = 1.61) | pass | n/a |  |
+| F-SAMPLE-1.actions | Sample actions tile: total cost $32,000, all done, none overdue | pass | n/a |  |
+| F-SAMPLE-1.report | Sample report headline: loss $238,440, verified saving $238,440, action cost $32,000, payback 1.6 months, plus maintenance plan and rollout sections | pass | n/a |  |
+| F-SAMPLE-1.quality | Sample passes the quality check (All clear) including the new rules | pass | n/a |  |
+| F-SAMPLE-1.assets | Register of a fresh demo browser has the 5 sample assets | pass | n/a |  |
+| F-SAMPLE-1.dashboard | Dashboard totals for the sample: verified savings $238,440 with cash $57,000 + opportunity $181,440 | pass | n/a |  |
+| F-SAMPLE-2.fixture | The v1 fixture is an old sample (action 1 cost $28,000, no asset fields) | pass | n/a |  |
+| F-SAMPLE-2.unedited | Unedited v1 sample stored in the browser is replaced by the current sample (cost $32,000, saving $238,440, asset tag P-101, quality All clear), same id, nothing else lost | pass | n/a |  |
+| F-SAMPLE-2.edited-title | A v1 sample whose title was edited (even one character) is left alone: still old numbers | pass | n/a |  |
+| F-SAMPLE-2.edited-action | A v1 sample with one action cost changed is left alone | pass | n/a |  |
+| F-SAMPLE-2.edited-note | A v1 sample with an evidence note changed is left alone | pass | n/a |  |
+| F-SAMPLE-2.collapsed-only | A v1 sample where only a tree node was collapsed (UI state, not an edit) is still upgraded | pass | n/a |  |
+| F-SAMPLE-2.reset-restores | Reset sample data on an edited old sample restores the current sample (asks for confirmation) | pass | n/a |  |
+| F-SAMPLE-3.unedited | Writing the unedited v1 sample into the account row, then loading the dashboard: row is upgraded to the current sample | pass | n/a |  |
+| F-SAMPLE-3.edited | An edited v1 sample row stays as the user left it (old $60,000 total, edited title kept) | pass | n/a |  |
+| F-SEC-1.hdr_ | Security headers present on / | pass | n/a |  |
+| F-SEC-1.hdr_login | Security headers present on /login | pass | n/a |  |
+| F-SEC-1.hdr_signup | Security headers present on /signup | pass | n/a |  |
+| F-SEC-1.hdr_forgot_password | Security headers present on /forgot-password | pass | n/a |  |
+| F-SEC-1.hdr_reset_password | Security headers present on /reset-password | pass | n/a |  |
+| F-SEC-1.hdr_app | Security headers present on /app | pass | n/a |  |
+| F-SEC-1.hdr_app_assets | Security headers present on /app/assets | pass | n/a |  |
+| F-SEC-1.hdr_app_account | Security headers present on /app/account | pass | n/a |  |
+| F-SEC-1.hdr_app_investigations_sample_p101 | Security headers present on /app/investigations/sample-p101 | pass | n/a |  |
+| F-SEC-1.hdr_nope | Security headers present on /nope | pass | n/a |  |
+| F-SEC-1.csp-content | CSP forbids framing, objects, off-site forms, base-uri tricks and allows only own origin + the Supabase host for connections | pass | n/a |  |
+| F-SEC-1.hsts | HSTS header is sent when served over HTTPS (not applicable on plain http://localhost) | pass | n/a |  |
+| F-SEC-1.inline-script-blocked | An injected inline <script> is not blocked by CSP (script-src allows inline): record behaviour | pass | n/a |  |
+| F-SEC-1.external-blocked | A script or image from another origin is blocked by CSP | pass | n/a |  |
+| F-SEC-1.frame-blocked | The app cannot be framed (X-Frame-Options/frame-ancestors): an <iframe> of the page in a data: page stays empty | pass | n/a |  |
+| F-SEC-1.walk | Walking every page and step (demo) produces no CSP violations or console errors | pass | n/a |  |
+| F-SEC-2.image-types | Evidence photo: JPEG and PNG accepted; SVG, GIF, WebP, BMP and a renamed text file are refused with a message | pass | n/a |  |
+| F-SEC-2.malformed-row | A malformed stored row shows "This investigation could not be read" with a Delete control and does not break the rest of the dashboard | pass | n/a |  |
+| F-SEC-2.malformed-open | Opening an unreadable investigation by URL shows "Investigation not found"/unreadable message instead of crashing | pass | n/a |  |
+| F-SEC-2.partial-row | A row missing optional new fields or with wrong types in them still opens (tolerant parsing), without losing the readable parts | pass | n/a |  |
+| F-SEC-2.password-rule-hint | Sign-up and Change password show the rule "At least 8 characters. Not a very common password, and not your email address." | pass | n/a |  |
+| F-SEC-2.password-rule | Sign-up form refuses common passwords (password123, 12345678, Password1, rootloop1) and password = email, accepts a strong one client-side (nothing is submitted) | pass | n/a |  |
+| F-SEC-2.password-rule-reset | Reset-password and the weak-length rule: 7 characters refused | pass | n/a |  |
+| F-ACCT-1.demo-page | Demo mode /app/account explains demo mode, offers Download my data and Clear browser data, and has no password/delete controls | pass | n/a |  |
+| F-ACCT-1.demo-download | Demo "Download my data" produces a JSON file with the sample investigation and the register (valid JSON, no secrets) | pass | n/a |  |
+| F-ACCT-1.demo-clear | Clear browser data: cancel keeps data, confirm removes everything and a fresh sample comes back | pass | n/a |  |
+| F-ACCT-1.acct-sections | Signed in: account page shows the email, Download my data, Change password and Delete my account sections | pass | n/a |  |
+| F-ACCT-1.acct-menu-link | The account menu links to the account page | pass | n/a |  |
+| F-ACCT-1.acct-download | Signed-in download: valid JSON with the account's investigations and assets, the account email, and no credentials | pass | n/a |  |
+| F-ACCT-1.pw-validation | Change password: empty, mismatch, too short, common password and "same as email" are refused; nothing is sent; the real password is NOT changed | pass | n/a |  |
+| F-ACCT-1.delete-gate | Delete my account: button disabled until the exact phrase is typed; wrong phrases keep it disabled; NO deletion is performed | pass | n/a |  |
+| F-ACCT-1.acct-signed-out | Signed out, Change password / Delete are not offered and /app/account does not expose account data | pass | n/a |  |
+| F-ACCT-1.global-signout | Sign out ends the session in ALL tabs/devices: after signing out in tab 1, tab 2 loses its session on next use | pass | n/a |  |
+| F-SEC-3.png-shown | A valid PNG data URL is shown | pass | n/a |  |
+| F-SEC-3.block-svg | Stored image "svg" is not rendered as an <img src> | pass | n/a |  |
+| F-SEC-3.block-js | Stored image "js" is not rendered as an <img src> | pass | n/a |  |
+| F-SEC-3.block-http | Stored image "http" is not rendered as an <img src> | pass | n/a |  |
+| F-SEC-3.block-html | Stored image "html" is not rendered as an <img src> | pass | n/a |  |
+| F-SEC-3.no-exec | Nothing executed (no window.__x) | pass | n/a |  |
+| F-UI-1-demo-desk.page_app_assets | /app/assets: labelled controls, no overflow, one h1, one main | pass | n/a |  |
+| F-UI-1-demo-desk.page_app_account | /app/account: labelled controls, no overflow, one h1, one main | pass | n/a |  |
+| F-UI-1-demo-desk.sample-steps | Sample investigation: every step incl. Actions with plan/spares and Verify with rollout: labelled controls and no overflow | pass | n/a |  |
+| F-UI-1-demo-desk.keyboard | Actions step reachable by keyboard: Tab reaches an action row button and Enter expands it | pass | n/a |  |
+| F-UI-1-demo-desk.tap-size | Actions rows and key buttons are at least 40px tall on touch layouts | pass | n/a |  |
+| F-UI-1-demo-desk.console | No console errors, failed requests or CSP violations on these pages | pass | n/a |  |
+| F-UI-1-demo-mob.page_app_assets | /app/assets: labelled controls, no overflow, one h1, one main | pass | n/a |  |
+| F-UI-1-demo-mob.page_app_account | /app/account: labelled controls, no overflow, one h1, one main | pass | n/a |  |
+| F-UI-1-demo-mob.sample-steps | Sample investigation: every step incl. Actions with plan/spares and Verify with rollout: labelled controls and no overflow | pass | n/a |  |
+| F-UI-1-demo-mob.keyboard | Actions step reachable by keyboard: Tab reaches an action row button and Enter expands it | pass | n/a |  |
+| F-UI-1-demo-mob.tap-size | Actions rows and key buttons are at least 40px tall on touch layouts | pass | n/a |  |
+| F-UI-1-demo-mob.console | No console errors, failed requests or CSP violations on these pages | pass | n/a |  |
+| F-UI-1-acct-desk.page_app_assets | /app/assets: labelled controls, no overflow, one h1, one main | pass | n/a |  |
+| F-UI-1-acct-desk.page_app_account | /app/account: labelled controls, no overflow, one h1, one main | pass | n/a |  |
+| F-UI-1-acct-desk.sample-steps | Sample investigation: every step incl. Actions with plan/spares and Verify with rollout: labelled controls and no overflow | pass | n/a |  |
+| F-UI-1-acct-desk.keyboard | Actions step reachable by keyboard: Tab reaches an action row button and Enter expands it | pass | n/a |  |
+| F-UI-1-acct-desk.tap-size | Actions rows and key buttons are at least 40px tall on touch layouts | pass | n/a |  |
+| F-UI-1-acct-desk.console | No console errors, failed requests or CSP violations on these pages | pass | n/a |  |
+| F-ZZ-CLEANUP.clean-A | Account A: only the sample investigation and the 5 sample assets remain | pass | n/a |  |
+| F-ZZ-CLEANUP.clean-B | Account B: only the sample investigation and the 5 sample assets remain | pass | n/a |  |
+| F-LIMIT-1.too-large | Saving a ~6 MB investigation shows "this investigation is too large" with Try again, keeps the app usable, and nothing oversized is stored | pass | n/a |  |
+| F-LIMIT-1.next-0 | login ?next=//evil.example never leaves this site (a request to evil.example is intercepted and counted) | pass | n/a |  |
+| F-LIMIT-1.next-1 | login ?next=https://evil.example/x never leaves this site (a request to evil.example is intercepted and counted) | pass | n/a |  |
+| F-LIMIT-1.next-2 | login ?next=/\evil.example never leaves this site (a request to evil.example is intercepted and counted) | pass | n/a |  |
+| F-LIMIT-1.next-3 | login ?next=javascript:alert(1) never leaves this site (a request to evil.example is intercepted and counted) | pass | n/a |  |
+| F-LIMIT-1.next-4 | login ?next=/%2F%2Fevil.example never leaves this site (a request to evil.example is intercepted and counted) | pass | n/a |  |
+| F-LIMIT-1.next-5 | login ?next=/app/../..//evil.example never leaves this site (a request to evil.example is intercepted and counted) | **FAIL** | n/a | OPEN REDIRECT: after sign-in the browser went to http://evil.example/ |
+| F-LIMIT-1.next-6 | login ?next=/%5Cevil.example never leaves this site (a request to evil.example is intercepted and counted) | pass | n/a |  |
+| F-LIMIT-1.next-7 | login ?next=data:text/html,hi never leaves this site (a request to evil.example is intercepted and counted) | pass | n/a |  |
+| F-LIMIT-1.next-8 | login ?next=/app%0d%0aLocation:%20https://evil.example never leaves this site (a request to evil.example is intercepted and counted) | pass | n/a |  |
+| F-LIMIT-1.next-dots-921 | login ?next=/app/..//evil.example (dot segments that normalise to //evil.example) stays on this site | **FAIL** | n/a | OPEN REDIRECT: after sign-in the browser went to http://evil.example/ |
+| F-LIMIT-1.next-dots-925 | login ?next=/app/%2e%2e//evil.example (dot segments that normalise to //evil.example) stays on this site | **FAIL** | n/a | OPEN REDIRECT: after sign-in the browser went to http://evil.example/ |
+| F-LIMIT-1.next-dots-917 | login ?next=/..//evil.example (dot segments that normalise to //evil.example) stays on this site | **FAIL** | n/a | OPEN REDIRECT: after sign-in the browser went to http://evil.example/ |
+| F-LIMIT-1.next-dots-923 | login ?next=/a/../../evil.example/x (dot segments that normalise to //evil.example) stays on this site | **FAIL** | n/a | CSP violations during test: Applying inline style violates the following Content Security Policy directive 'style-src 'self''. Either the 'u |
 | A-00 | Setup: sign in as user A and user B (also: wrong-password test counts as A-AUTH) | pass | pass |  |
 | A-AUTH-1.login-empty | Login: empty submit shows "Enter your email address." and "Enter your password." | pass | pass |  |
 | A-AUTH-1.login-malformed | Login: malformed emails ("abc", "a@b", "a b@c.com", "a@b.c") are rejected client-side | pass | pass |  |
@@ -362,11 +665,11 @@ Every interactive control found by `inventory.js` (raw lists in results/inventor
 | A-SESS-1.no-banner | No demo banner when signed in | pass | pass |  |
 | A-SESS-1.reload | Session survives reload and a fresh navigation (still user A, same data) | pass | pass |  |
 | A-SESS-1.login-redirect | Visiting /login or /signup while signed in redirects to /app | pass | pass |  |
-| A-SESS-1.sample-seeded | Account has its own seeded sample with the same hand-calculated totals as demo ($198,700 saved) | pass | pass |  |
+| A-SESS-1.sample-seeded | Account has its own seeded sample with the same hand-calculated totals as demo ($238,440 saved, round 3 sample) | pass | pass |  |
 | A-SESS-1.landing-sample-link | Landing "Open the sample investigation" maps to the account sample when signed in | pass | pass |  |
 | A-SESS-1.demo-separate | Demo-mode data is separate: signing out shows demo store, not account data | pass | pass |  |
 | A-SESS-1.signed-out-no-cache | After sign out, reloading does not show account data (token removed) | pass | pass |  |
-| A-PERF-1.budget | Dashboard shows data within 3000 ms (median 1071 ms) | pass | pass |  |
+| A-PERF-1.budget | Dashboard shows data within 3000 ms (median 1063 ms) | pass | pass |  |
 | A-E2E-1.problem | Problem step accepts all 8 fields | pass | pass |  |
 | A-E2E-1.loss-calc | Loss live calc equals hand calc (lost units, lost margin, cost/event, annual loss) | pass | pass |  |
 | A-E2E-1.evidence | Evidence: 3 items listed, types and "Not linked" shown | pass | pass |  |
@@ -375,7 +678,7 @@ Every interactive control found by `inventory.js` (raw lists in results/inventor
 | A-E2E-1.actions-tiles | Actions tiles: total cost, 0 of 2 done, 1 overdue, 0 roots unlinked | pass | pass |  |
 | A-E2E-1.verify-calc | Verify step money equals hand calc (before, after, saving, cost, payback) | pass | pass |  |
 | A-E2E-1.reload-report | After full reload the account data gives the hand-calculated report | pass | pass |  |
-| A-E2E-1.dash | Dashboard (account): loss $0, open 0, overdue 0, saved $209,050 (198,700 + 10,350), new row Closed | pass | pass |  |
+| A-E2E-1.dash | Dashboard (account): loss $0, open 0, overdue 0, saved 238,440 + 10,350 = $248,790, new row Closed | pass | pass |  |
 | A-E2E-1.print | Print emulation of the account report hides app chrome (account menu, header) | pass | pass |  |
 | A-E2E-1.autosave-xss | Special characters round-trip through the database as text | pass | pass |  |
 | A-ISO-1.b-list | User B dashboard does not list user A's investigation (B sees only own sample) | pass | pass |  |
@@ -421,8 +724,8 @@ Every interactive control found by `inventory.js` (raw lists in results/inventor
 | A-LOSS-1.close-dashboard | After closing S3 the verified tile rises by exactly $12,641 (cash +$8,801, opportunity +$3,840) and the loss tile drops by $20,462 | pass | pass |  |
 | A-EMPTY-1.no-dialog | Click "Load the sample investigation": no dialog, sample appears, exactly one | pass | pass |  |
 | A-EMPTY-1.double-load | Double-clicking "Load the sample" does not create two samples | pass | pass |  |
-| A-ZZ-CLEANUP.clean-A | Account A left with only the seeded sample | pass | pass |  |
-| A-ZZ-CLEANUP.clean-B | Account B left with only the seeded sample | pass | pass |  |
+| A-ZZ-CLEANUP.clean-A | Account A left with only the seeded sample (and sample assets) | pass | pass |  |
+| A-ZZ-CLEANUP.clean-B | Account B left with only the seeded sample (and sample assets) | pass | pass |  |
 
 ## 4. Observations recorded during the run (local)
 - (observation) "1,000" -> "7", "1e3" -> "7"
@@ -436,12 +739,31 @@ Every interactive control found by `inventory.js` (raw lists in results/inventor
 - (observation) malformed record verify text: ANNUAL LOSS BEFORE $13,600 Cash $9,600 · Opportunity $4,000 ANNUAL LOSS AFTER $4,533 $2,267 × 2. Cash $3,200 · Opportunity $1,333 EXPECTED SAVING (NOT YET VERIFIED) $9,067 Cash $6,400 · Opportunity $2,667. Counts as verified, and in the dashboard total, only when all actions are done and the review 
 - (observation) Downtime 0 with repair/other costs entered: annual loss shows $13,202
 - (observation) malformed record verify text: ANNUAL LOSS BEFORE $13,600 Cash $9,600 · Opportunity $4,000 ANNUAL LOSS AFTER $4,533 $2,267 × 2. Cash $3,200 · Opportunity $1,333 EXPECTED SAVING (NOT YET VERIFIED) $9,067 Cash $6,400 · Opportunity $2,667. Counts as verified, and in the dashboard total, only when all actions are done and the review 
+- (observation) A task with an interval but no task description is listed in the plan using the action text, yet the quality check still says it needs a task description: true
+- (observation) A task with an interval but no task description is listed in the plan using the action text, yet the quality check still says it needs a task description: true
+- (observation) A task with an interval but no task description is listed in the plan using the action text, yet the quality check still says it needs a task description: true
+- (observation) script-src allows 'unsafe-inline' (needed by the framework bootstrap); style-src is 'self' with style-src-attr 'unsafe-inline'
+- (observation) Strict-Transport-Security not checked on http://localhost; verify on the deployed HTTPS site
+- (observation) dynamically injected inline script executes: true
+- (observation) image upload results: {"a.png":{"img":true,"alert":"New investigation · RootLoop"},"b.jpg":{"img":true,"alert":"New investigation · RootLoop"},"c.gif":{"img":true,"alert":"New investigation · RootLoop"},"d.svg":{"img":true,"alert":"New investigation · RootLoop"},"e.webp":{"img":false,"alert":"That image could not be read. Try a JPEG or PNG.|New investigation · RootLoop"},"f.png":{"img":false,"alert":"That image could not be read. Try a JPEG or PNG.|New investigation · RootLoop"},"g.txt":{"img":false,"alert":"That file is not an image.|New investigation · RootLoop"},"h.bmp":{"img":false,"alert":"That image could not be read. Try a JPEG or PNG.|New investigation · RootLoop"}}
+- (observation) SVG and GIF files are accepted and re-encoded to a JPEG data URL (rasterised, script in the SVG did not run): svg=true gif=true
+- (observation) signup password "password123": refused
+- (observation) signup password "12345678": refused
+- (observation) signup password "Password1": refused
+- (observation) signup password "rootloop1": refused
+- (observation) signup password "QWERTYUI": refused
+- (observation) delete phrase: DELETE
+- (observation) device 2 refresh token after global sign-out: HTTP 400; the page itself stays signed in until its access token expires (<= 1 h)
+- (observation) stored image handling: {"ok1":["data:image/png;base64,iVBORw0K"],"svg":[],"js":[],"http":[],"big":["data:image/png;base64,AAAAAAAA"],"html":[]}
+- (observation) mobile Actions control heights (px): 36,99,119
+- (observation) oversize message: Could not save: this investigation is too large. Remove some photos from the evidence list and try again. Try again
+- (observation) oversize message: Could not save: this investigation is too large. Remove some photos from the evidence list and try again. Try again
 - (observation) Client-side password rule is length only (min 8); strength is left to the server. Not submitted to avoid creating an account.
-- (timing) Signed-in dashboard load ms (7 cold-context runs): 1080, 1044, 1071, 1124, 1096, 1041, 606; median 1071; min 606; max 1124
+- (timing) Signed-in dashboard load ms (7 cold-context runs): 1052, 1042, 1063, 1115, 1276, 919, 1221; median 1063; min 919; max 1276
 - (observation) fast reload: beforeunload prompt shown=true, value after=QA: Gearbox seizure on conveyor C-7
 - (observation) two tabs: conflict banner shown=1; DB after: title="ACC TAB1" asset="Conveyor C-7 gearbox"
-- (timing) Offline: error appears 41 ms after pressing Try again (indicator reads "Saving…" meanwhile)
-- (observation) A-LOSS-1 tiles before closing: ANNUAL LOSS UNDER INVESTIGATION $34,262 Open investigations, per year Cash $21,902 · Opportunity $12,360 | OPEN ACTIONS 2 Not yet done | OVERDUE ACTIONS 0 Past their due date | VERIFIED ANNUAL SAVINGS $209,050 Closed investigations only: failure confirmed stopped Cash $52,900 · Opportunity $156,150
+- (timing) Offline: error appears 40 ms after pressing Try again (indicator reads "Saving…" meanwhile)
+- (observation) A-LOSS-1 tiles before closing: ANNUAL LOSS UNDER INVESTIGATION $34,262 Open investigations, per year Cash $21,902 · Opportunity $12,360 | OPEN ACTIONS 2 Not yet done | OVERDUE ACTIONS 0 Past their due date | VERIFIED ANNUAL SAVINGS $248,790 Closed investigations only: failure confirmed stopped Cash $62,400 · Opportunity $186,390 | ROLLOUT CHECKS 0 Open. Spread a proven fix to similar assets
 
 ## 5. Observations recorded during the run (live)
 - (observation) "1,000" -> "7", "1e3" -> "7"

@@ -775,3 +775,664 @@ PASS A-PERS-1 Signed-in persistence: reload after each kind of edit, autosave st
   pass A-OFF-1.offline-load Opening an investigation while offline does not claim it is missing/deleted
   pass A-OFF-1.offline-open-existing Network failing during investigation open: page says "not found / deleted" misleadingly? (observed)
 PASS A-OFF-1 Network drop while editing signed in: error shown, edits kept, recovery on reconnect
+  pass A-SIGNOUT-1.flush-online Typing then immediately signing out saves the edit first (online)
+  pass A-SIGNOUT-1.offline-signout Offline unsaved edit then Sign out: warns "Some changes could not be saved"; Cancel keeps session; "Sign out anyway" signs out
+PASS A-SIGNOUT-1 Sign out with unsaved edits
+  pass A-MOB-1.dash 375px signed-in dashboard: no overflow, long email truncated
+  pass A-MOB-1.menu 375px account menu fits on screen
+  pass A-MOB-1.ws 375px signed-in workspace: all steps no overflow
+PASS A-MOB-1 Signed in at 375px: dashboard, workspace, account menu layout
+PASS A-ERR-1 Signed in: no console errors or failed requests on dashboard and all steps
+  pass A-RESET-1.atomic A failed reset must not leave the account without its sample
+PASS A-RESET-1 Reset sample data when the network fails half way (delete succeeds, insert fails)
+  pass A-LOSS-1.reload After reload: shares 48/32/20, recovery note, holding cost, two other cost lines and annual loss $20,462
+  pass A-LOSS-1.verify-report Verify and Report show expected saving $12,641 (cash $8,801 + opportunity $3,840), payback 4.7 months
+  [observation] A-LOSS-1 tiles before closing: ANNUAL LOSS UNDER INVESTIGATION $34,262 Open investigations, per year Cash $21,902 · Opportunity $12,360 | OPEN ACTIONS 2 Not yet done | OVERDUE ACTIONS 0 Past their due date | VERIFIED ANNUAL SAVINGS $248,790 Closed investigations only: failure confirmed stopped Cash $62,400 · Opportunity $186,390 | ROLLOUT CHECKS 0 Open. Spread a proven fix to similar assets 
+  pass A-LOSS-1.dashboard Account dashboard: the S3 row is $20,462 with split $14,702 / $5,760; the loss tile rises by exactly that; verified tile does not change until closed
+  pass A-LOSS-1.close-dashboard After closing S3 the verified tile rises by exactly $12,641 (cash +$8,801, opportunity +$3,840) and the loss tile drops by $20,462
+PASS A-LOSS-1 Signed in: the new loss fields persist in the account and carry to Verify, dashboard and Report (hand calc)
+  pass A-EMPTY-1.no-dialog Click "Load the sample investigation": no dialog, sample appears, exactly one
+  pass A-EMPTY-1.double-load Double-clicking "Load the sample" does not create two samples
+PASS A-EMPTY-1 Signed in: empty account -> "Load the sample investigation" needs no confirm (round 2 change b) and restores exactly one sample
+  pass A-ZZ-CLEANUP.clean-A Account A left with only the seeded sample (and sample assets)
+  pass A-ZZ-CLEANUP.clean-B Account B left with only the seeded sample (and sample assets)
+PASS A-ZZ-CLEANUP Cleanup: delete every investigation and asset created by this run; leave each account with only its sample and the 5 sample assets
+
+account: 96/96 passed, 0 failed
+
+=== node inventory.js 
+
+## page / (6)
+a: RootLoop
+a: Open the app
+a: Sign in
+a: Create account
+a: Open the sample investigation
+button: Start a new investigation
+
+## page /login (7)
+a: RootLoop
+a: Try the demo
+input[email]: Email
+input[password]: Password
+button: Sign in
+a: Forgot your password?
+a: Create a free account
+
+## page /signup (7)
+a: RootLoop
+a: Try the demo
+input[email]: Email
+input[password]: Password
+input[password]: Confirm password
+button: Create account
+a: Sign in
+
+## page /forgot-password (5)
+a: RootLoop
+a: Try the demo
+input[email]: Email
+button: Send reset link
+a: Back to sign in
+
+## page /reset-password (3)
+a: RootLoop
+a: Try the demo
+a: Request a new link
+
+## page /app (15)
+a: RootLoop
+a: Investigations
+a: Assets
+a: Home
+a: Account
+a: Sign in
+a: Create account
+a: Create a free account
+a: Sign in
+button: Reset sample data
+button: New investigation
+a: Repeat bearing and mechanical seal failures on slurry pump P-101
+a: Open
+button: Duplicate Repeat bearing and mechanical seal failures on slurry pump P
+button: Delete Repeat bearing and mechanical seal failures on slurry pump P-10
+
+## page /app/assets (23)
+a: RootLoop
+a: Investigations
+a: Assets
+a: Home
+a: Account
+a: Sign in
+a: Create account
+a: Create a free account
+a: Sign in
+button: Paste a list
+button: Add asset
+input[search]: Search assets
+button: Edit P-101
+button: Delete P-101
+a: Repeat bearing and mechanical seal failures on slurry pump P-101
+button: Edit P-102
+button: Delete P-102
+button: Edit P-103
+button: Delete P-103
+button: Edit P-210
+button: Delete P-210
+button: Edit P-215
+button: Delete P-215
+
+## page /app/account (13)
+a: RootLoop
+a: Investigations
+a: Assets
+a: Home
+a: Account
+a: Sign in
+a: Create account
+a: Create a free account
+a: Sign in
+a: Create a free account
+a: sign in
+button: Download my data
+button: Clear browser data
+
+## workspace step Problem (36)
+a: RootLoop
+a: Investigations
+a: Assets
+a: Home
+a: Account
+a: Sign in
+a: Create account
+a: Create a free account
+a: Sign in
+a: All investigations
+button: Problem (complete)
+button: Loss (complete)
+button: Evidence (complete)
+button: Cause tree (complete)
+button: Actions (complete)
+button: Verify (complete)
+button: 7Report
+button: Quality checkAll clearAutomatic checks that update as you type. Tap to
+input[text]: Title
+input[text]: Asset
+input[text]: Site / area
+input[date]: Date of event
+textarea: What happened?
+textarea: Where on the equipment?
+textarea: When did it happen?
+textarea: What was the impact?
+input[text]: Asset tag
+a: asset register
+input[text]{combobox}: Asset type
+input[text]: Make and model
+input[text]: Duty or service
+button{radio}: A: CriticalA failure stops the plant or line, or is a safety or enviro
+button{radio}: B: ImportantA failure slows production or has a workaround that costs 
+button{radio}: C: GeneralA failure has little effect on production and is easy to wor
+input[text]{combobox}: Failure mode
+button: Next: Loss
+
+## workspace step Loss (34)
+a: RootLoop
+a: Investigations
+a: Assets
+a: Home
+a: Account
+a: Sign in
+a: Create account
+a: Create a free account
+a: Sign in
+a: All investigations
+button: Problem (complete)
+button: Loss (complete)
+button: Evidence (complete)
+button: Cause tree (complete)
+button: Actions (complete)
+button: Verify (complete)
+button: 7Report
+button: Quality checkAll clearAutomatic checks that update as you type. Tap to
+input[text]: How many times a year does it happen?
+input[text]: Downtime per event
+input[text]: Production rate
+input[text]: Unit name
+input[text]: Margin per unit
+input[text]: Repair cost per event
+input[text]: Currency symbol
+input[text]: Lost for good percent
+input[range]: Lost for good slider
+input[text]: Made up later percent
+input[range]: Made up later slider
+input[text]: Covered by buffer stock percent
+input[range]: Covered by buffer stock slider
+button: Add a cost
+button: Back: Problem
+button: Next: Evidence
+
+## workspace step Evidence (43)
+a: RootLoop
+a: Investigations
+a: Assets
+a: Home
+a: Account
+a: Sign in
+a: Create account
+a: Create a free account
+a: Sign in
+a: All investigations
+button: Problem (complete)
+button: Loss (complete)
+button: Evidence (complete)
+button: Cause tree (complete)
+button: Actions (complete)
+button: Verify (complete)
+button: 7Report
+button: Quality checkAll clearAutomatic checks that update as you type. Tap to
+button: Add evidence
+button: Edit
+button: Delete evidence A1: DCS flow trend, discharge valve log and pump curve
+button: Edit
+button: Delete evidence A2: Bearing race wear track, soft foot check, maintena
+button: Edit
+button: Delete evidence A3: Oil samples at teardown, housing seal and breather
+button: Edit
+button: Delete evidence B1: Seal face inspection, flush flow reading, strainer
+button: Edit
+button: Delete evidence B3: Rebuild job cards and fitter interview
+button: Edit
+button: Delete evidence Root 1: Throughput change history, impeller size vs cu
+button: Edit
+button: Delete evidence Root 2: Work instructions and training records
+button: Edit
+button: Delete evidence Root 3: Review of the rebuild procedure
+button: Edit
+button: Delete evidence Root 4: Job close-out records
+button: Edit
+button: Delete evidence Root 5: Inspection route and PM list
+button: Edit
+button: Delete evidence Root 6: Maintenance system history
+button: Back: Loss
+button: Next: Cause tree
+
+## workspace step Evidence (item expanded) (48)
+a: RootLoop
+a: Investigations
+a: Assets
+a: Home
+a: Account
+a: Sign in
+a: Create account
+a: Create a free account
+a: Sign in
+a: All investigations
+button: Problem (complete)
+button: Loss (complete)
+button: Evidence (complete)
+button: Cause tree (complete)
+button: Actions (complete)
+button: Verify (complete)
+button: 7Report
+button: Quality checkAll clearAutomatic checks that update as you type. Tap to
+button: Add evidence
+button: Done
+button: Delete evidence A1: DCS flow trend, discharge valve log and pump curve
+input[text]: Title
+select: Type
+input[date]: Date
+textarea: Note
+input[file]: Upload photo
+button: Edit
+button: Delete evidence A2: Bearing race wear track, soft foot check, maintena
+button: Edit
+button: Delete evidence A3: Oil samples at teardown, housing seal and breather
+button: Edit
+button: Delete evidence B1: Seal face inspection, flush flow reading, strainer
+button: Edit
+button: Delete evidence B3: Rebuild job cards and fitter interview
+button: Edit
+button: Delete evidence Root 1: Throughput change history, impeller size vs cu
+button: Edit
+button: Delete evidence Root 2: Work instructions and training records
+button: Edit
+button: Delete evidence Root 3: Review of the rebuild procedure
+button: Edit
+button: Delete evidence Root 4: Job close-out records
+button: Edit
+button: Delete evidence Root 5: Inspection route and PM list
+button: Edit
+button: Delete evidence Root 6: Maintenance system history
+button: Back: Loss
+button: Next: Cause tree
+
+## workspace step Cause tree (77)
+a: RootLoop
+a: Investigations
+a: Assets
+a: Home
+a: Account
+a: Sign in
+a: Create account
+a: Create a free account
+a: Sign in
+a: All investigations
+button: Problem (complete)
+button: Loss (complete)
+button: Evidence (complete)
+button: Cause tree (complete)
+button: Actions (complete)
+button: Verify (complete)
+button: 7Report
+button: Quality checkAll clearAutomatic checks that update as you type. Tap to
+button{tab}: Tree
+button{tab}: 5 Whys
+button{tab}: Fishbone
+button: Expand all
+button: Collapse all
+div: Cause tree. Scrollable.
+button: Select cause: Repeat bearing and mechanical seal failures on P-101
+textarea: Failure event text
+button: Why?
+button: Collapse
+button: Details
+button: Select cause: A. Bearings fail early
+button: A. Bearings fail early
+button: Select cause: A1. Pump runs at about 60% of best efficiency flow, so r
+button: A1. Pump runs at about 60% of best efficiency flow, so radial load on 
+button: Select cause: Operators throttle the discharge valve to match downstre
+button: Operators throttle the discharge valve to match downstream demand
+button: Select cause: ROOT 1: Pump duty was never reviewed after throughput ch
+button: ROOT 1: Pump duty was never reviewed after throughput changed; impelle
+button: Select cause: A2. Coupling misalignment and a soft foot after rebuilds
+button: A2. Coupling misalignment and a soft foot after rebuilds
+button: Select cause: Fitters align by straight edge and feel; soft foot is no
+button: Fitters align by straight edge and feel; soft foot is not checked
+button: Select cause: ROOT 2: No precision alignment standard (method, toleran
+button: ROOT 2: No precision alignment standard (method, tolerance, record), n
+button: Select cause: ROOT 4: No verification after repair (alignment record, 
+button: ROOT 4: No verification after repair (alignment record, vibration read
+button: Select cause: A3. Bearing oil contaminated with water and solids (worn
+button: A3. Bearing oil contaminated with water and solids (worn housing seals
+button: Select cause: Wash-down hose aimed at bearing housings; oil topped up 
+button: Wash-down hose aimed at bearing housings; oil topped up from open cont
+button: Select cause: ROOT 3: Rebuild procedure gaps: reuses worn housing seal
+button: ROOT 3: Rebuild procedure gaps: reuses worn housing seals, no sealed-b
+button: Select cause: ROOT 5b: Oil condition not on any inspection route
+button: ROOT 5b: Oil condition not on any inspection route
+button: Select cause: B. Mechanical seals fail early
+button: B. Mechanical seals fail early
+button: Select cause: B1. Seal faces run dry or hot because flush flow is rest
+button: B1. Seal faces run dry or hot because flush flow is restricted (strain
+button: Select cause: Flush strainer not checked; flush valve position not ver
+button: Flush strainer not checked; flush valve position not verified after ma
+button: Select cause: ROOT 5a: Flush is on no inspection route; no flow indica
+button: ROOT 5a: Flush is on no inspection route; no flow indicator or low-flo
+button: Select cause: B2. Seal faces and sleeve see excess shaft movement
+button: B2. Seal faces and sleeve see excess shaft movement
+button: Select cause: Driven by A1 (off best efficiency point) and A2 (misalig
+button: Driven by A1 (off best efficiency point) and A2 (misalignment); same r
+button: Select cause: B3. Seal set length not controlled on rebuild
+button: B3. Seal set length not controlled on rebuild
+button: Select cause: Seal set by experience, not recorded
+button: Seal set by experience, not recorded
+button: Select cause: ROOT 3 (again): rebuild procedure has no seal setting st
+button: ROOT 3 (again): rebuild procedure has no seal setting step or check
+button: Select cause: C. Cross-cutting: failures are not recorded in a way tha
+button: C. Cross-cutting: failures are not recorded in a way that shows the pa
+button: Select cause: ROOT 6: Failures coded only as "bearing failure" or "sea
+button: ROOT 6: Failures coded only as "bearing failure" or "seal failure" in 
+button: Back: Evidence
+button: Next: Actions
+
+## cause tree view (a cause selected) (77)
+a: RootLoop
+a: Investigations
+a: Assets
+a: Home
+a: Account
+a: Sign in
+a: Create account
+a: Create a free account
+a: Sign in
+a: All investigations
+button: Problem (complete)
+button: Loss (complete)
+button: Evidence (complete)
+button: Cause tree (complete)
+button: Actions (complete)
+button: Verify (complete)
+button: 7Report
+button: Quality checkAll clearAutomatic checks that update as you type. Tap to
+button{tab}: Tree
+button{tab}: 5 Whys
+button{tab}: Fishbone
+button: Expand all
+button: Collapse all
+div: Cause tree. Scrollable.
+button: Select cause: Repeat bearing and mechanical seal failures on P-101
+textarea: Failure event text
+button: Why?
+button: Collapse
+button: Details
+button: Select cause: A. Bearings fail early
+button: A. Bearings fail early
+button: Select cause: A1. Pump runs at about 60% of best efficiency flow, so r
+button: A1. Pump runs at about 60% of best efficiency flow, so radial load on 
+button: Select cause: Operators throttle the discharge valve to match downstre
+button: Operators throttle the discharge valve to match downstream demand
+button: Select cause: ROOT 1: Pump duty was never reviewed after throughput ch
+button: ROOT 1: Pump duty was never reviewed after throughput changed; impelle
+button: Select cause: A2. Coupling misalignment and a soft foot after rebuilds
+button: A2. Coupling misalignment and a soft foot after rebuilds
+button: Select cause: Fitters align by straight edge and feel; soft foot is no
+button: Fitters align by straight edge and feel; soft foot is not checked
+button: Select cause: ROOT 2: No precision alignment standard (method, toleran
+button: ROOT 2: No precision alignment standard (method, tolerance, record), n
+button: Select cause: ROOT 4: No verification after repair (alignment record, 
+button: ROOT 4: No verification after repair (alignment record, vibration read
+button: Select cause: A3. Bearing oil contaminated with water and solids (worn
+button: A3. Bearing oil contaminated with water and solids (worn housing seals
+button: Select cause: Wash-down hose aimed at bearing housings; oil topped up 
+button: Wash-down hose aimed at bearing housings; oil topped up from open cont
+button: Select cause: ROOT 3: Rebuild procedure gaps: reuses worn housing seal
+button: ROOT 3: Rebuild procedure gaps: reuses worn housing seals, no sealed-b
+button: Select cause: ROOT 5b: Oil condition not on any inspection route
+button: ROOT 5b: Oil condition not on any inspection route
+button: Select cause: B. Mechanical seals fail early
+button: B. Mechanical seals fail early
+button: Select cause: B1. Seal faces run dry or hot because flush flow is rest
+button: B1. Seal faces run dry or hot because flush flow is restricted (strain
+button: Select cause: Flush strainer not checked; flush valve position not ver
+button: Flush strainer not checked; flush valve position not verified after ma
+button: Select cause: ROOT 5a: Flush is on no inspection route; no flow indica
+button: ROOT 5a: Flush is on no inspection route; no flow indicator or low-flo
+button: Select cause: B2. Seal faces and sleeve see excess shaft movement
+button: B2. Seal faces and sleeve see excess shaft movement
+button: Select cause: Driven by A1 (off best efficiency point) and A2 (misalig
+button: Driven by A1 (off best efficiency point) and A2 (misalignment); same r
+button: Select cause: B3. Seal set length not controlled on rebuild
+button: B3. Seal set length not controlled on rebuild
+button: Select cause: Seal set by experience, not recorded
+button: Seal set by experience, not recorded
+button: Select cause: ROOT 3 (again): rebuild procedure has no seal setting st
+button: ROOT 3 (again): rebuild procedure has no seal setting step or check
+button: Select cause: C. Cross-cutting: failures are not recorded in a way tha
+button: C. Cross-cutting: failures are not recorded in a way that shows the pa
+button: Select cause: ROOT 6: Failures coded only as "bearing failure" or "sea
+button: ROOT 6: Failures coded only as "bearing failure" or "seal failure" in 
+button: Back: Evidence
+button: Next: Actions
+
+## cause view 5 Whys (32)
+a: RootLoop
+a: Investigations
+a: Assets
+a: Home
+a: Account
+a: Sign in
+a: Create account
+a: Create a free account
+a: Sign in
+a: All investigations
+button: Problem (complete)
+button: Loss (complete)
+button: Evidence (complete)
+button: Cause tree (complete)
+button: Actions (complete)
+button: Verify (complete)
+button: 7Report
+button: Quality checkAll clearAutomatic checks that update as you type. Tap to
+button{tab}: Tree
+button{tab}: 5 Whys
+button{tab}: Fishbone
+button: Select cause: Repeat bearing and mechanical seal failures on P-101
+textarea: Failure event text
+button: Why?
+button: Collapse
+button: Details
+button: A. Bearings fail early
+button: B. Mechanical seals fail early
+button: C. Cross-cutting: failures are not recorded in a way that shows the pa
+button: Add another Why
+button: Back: Evidence
+button: Next: Actions
+
+## cause view Fishbone (69)
+a: RootLoop
+a: Investigations
+a: Assets
+a: Home
+a: Account
+a: Sign in
+a: Create account
+a: Create a free account
+a: Sign in
+a: All investigations
+button: Problem (complete)
+button: Loss (complete)
+button: Evidence (complete)
+button: Cause tree (complete)
+button: Actions (complete)
+button: Verify (complete)
+button: 7Report
+button: Quality checkAll clearAutomatic checks that update as you type. Tap to
+button{tab}: Tree
+button{tab}: 5 Whys
+button{tab}: Fishbone
+button: Select cause: A. Bearings fail early
+button: A. Bearings fail early
+button: Select cause: A1. Pump runs at about 60% of best efficiency flow, so r
+button: A1. Pump runs at about 60% of best efficiency flow, so radial load on 
+button: Select cause: A2. Coupling misalignment and a soft foot after rebuilds
+button: A2. Coupling misalignment and a soft foot after rebuilds
+button: Select cause: A3. Bearing oil contaminated with water and solids (worn
+button: A3. Bearing oil contaminated with water and solids (worn housing seals
+button: Select cause: B. Mechanical seals fail early
+button: B. Mechanical seals fail early
+button: Select cause: B1. Seal faces run dry or hot because flush flow is rest
+button: B1. Seal faces run dry or hot because flush flow is restricted (strain
+button: Select cause: B2. Seal faces and sleeve see excess shaft movement
+button: B2. Seal faces and sleeve see excess shaft movement
+button: Select cause: B3. Seal set length not controlled on rebuild
+button: B3. Seal set length not controlled on rebuild
+button: Select cause: Operators throttle the discharge valve to match downstre
+button: Operators throttle the discharge valve to match downstream demand
+button: Select cause: Fitters align by straight edge and feel; soft foot is no
+button: Fitters align by straight edge and feel; soft foot is not checked
+button: Select cause: Wash-down hose aimed at bearing housings; oil topped up 
+button: Wash-down hose aimed at bearing housings; oil topped up from open cont
+button: Select cause: Flush strainer not checked; flush valve position not ver
+button: Flush strainer not checked; flush valve position not verified after ma
+button: Select cause: Seal set by experience, not recorded
+button: Seal set by experience, not recorded
+button: Select cause: ROOT 1: Pump duty was never reviewed after throughput ch
+button: ROOT 1: Pump duty was never reviewed after throughput changed; impelle
+button: Select cause: ROOT 2: No precision alignment standard (method, toleran
+button: ROOT 2: No precision alignment standard (method, tolerance, record), n
+button: Select cause: ROOT 4: No verification after repair (alignment record, 
+button: ROOT 4: No verification after repair (alignment record, vibration read
+button: Select cause: ROOT 3: Rebuild procedure gaps: reuses worn housing seal
+button: ROOT 3: Rebuild procedure gaps: reuses worn housing seals, no sealed-b
+button: Select cause: ROOT 5b: Oil condition not on any inspection route
+button: ROOT 5b: Oil condition not on any inspection route
+button: Select cause: ROOT 5a: Flush is on no inspection route; no flow indica
+button: ROOT 5a: Flush is on no inspection route; no flow indicator or low-flo
+button: Select cause: Driven by A1 (off best efficiency point) and A2 (misalig
+button: Driven by A1 (off best efficiency point) and A2 (misalignment); same r
+button: Select cause: ROOT 3 (again): rebuild procedure has no seal setting st
+button: ROOT 3 (again): rebuild procedure has no seal setting step or check
+button: Select cause: C. Cross-cutting: failures are not recorded in a way tha
+button: C. Cross-cutting: failures are not recorded in a way that shows the pa
+button: Select cause: ROOT 6: Failures coded only as "bearing failure" or "sea
+button: ROOT 6: Failures coded only as "bearing failure" or "seal failure" in 
+button: Back: Evidence
+button: Next: Actions
+
+## workspace step Actions (49)
+a: RootLoop
+a: Investigations
+a: Assets
+a: Home
+a: Account
+a: Sign in
+a: Create account
+a: Create a free account
+a: Sign in
+a: All investigations
+button: Problem (complete)
+button: Loss (complete)
+button: Evidence (complete)
+button: Cause tree (complete)
+button: Actions (complete)
+button: Verify (complete)
+button: 7Report
+button: Quality checkAll clearAutomatic checks that update as you type. Tap to
+button: Add action
+button: Add corrective action
+button: Edit action 11: Rebuild the pump with new bearings and a new mechanica
+button: Add preventive action
+button: Edit action 1: Slow the pump on its existing variable speed drive so i
+button: Edit action 8: Add pump duty to the management-of-change checklist
+button: Add preventive action
+button: Edit action 3: Write alignment standard, buy laser alignment tool, tra
+button: Add preventive action
+button: Edit action 5: Require alignment record and vibration reading before h
+button: Edit action 12: Take a vibration and bearing temperature reading on P-
+button: Add preventive action
+button: Edit action 4: Fit bearing isolators and breathers to the bearing hous
+button: Edit action 13: Hold one spare seal cartridge and one bearing set for 
+button: Add preventive action
+button: Edit action 6: Add oil condition check to the inspection route (part o
+button: Add preventive action
+button: Edit action 2: Upgrade seal flush: flow indicator, clean strainer, add
+button: Add preventive action
+button: Edit action 9: Add cause and failure-mode fields to repair coding
+button: Edit action 7: Engineering and project time across all actions
+button: Edit action 10: Effectiveness check: report failures, hours and cost a
+button: Copy for the planner
+button{radio}: Yes
+button{radio}: No
+button{radio}: Yes
+button{radio}: No
+input[text]: Supplier lead time
+textarea: How was the gap covered?
+button: Back: Cause tree
+button: Next: Verify
+
+## workspace step Verify (30)
+a: RootLoop
+a: Investigations
+a: Assets
+a: Home
+a: Account
+a: Sign in
+a: Create account
+a: Create a free account
+a: Sign in
+a: All investigations
+button: Problem (complete)
+button: Loss (complete)
+button: Evidence (complete)
+button: Cause tree (complete)
+button: Actions (complete)
+button: Verify (complete)
+button: 7Report
+button: Quality checkAll clearAutomatic checks that update as you type. Tap to
+input[date]: Review date
+select: Has the failure recurred since the actions were completed?
+input[text]: Expected events per year after the fix
+textarea: What did you find?
+input[checkbox]: P-102A: CriticalWarman 8/6 AH · Slurry feed to the concentrator, secon
+input[checkbox]: P-215B: ImportantWarman 8/6 AH · Thickener underflow, slurry transferS
+input[checkbox]: P-103B: ImportantWarman 6/4 AH · Tailings transfer to the tailings dam
+textarea: What to check on each asset
+button: Create rollout checks (disabled)
+button: Add a similar asset that is not listed
+button: Back: Actions
+button: Next: Report
+
+## workspace step Report (20)
+a: RootLoop
+a: Investigations
+a: Assets
+a: Home
+a: Account
+a: Sign in
+a: Create account
+a: Create a free account
+a: Sign in
+a: All investigations
+button: Problem (complete)
+button: Loss (complete)
+button: Evidence (complete)
+button: Cause tree (complete)
+button: Actions (complete)
+button: Verify (complete)
+button: 7Report
+button: Quality checkAll clearAutomatic checks that update as you type. Tap to
+button: Print / Save as PDF
+button: Back: Verify
+
+TOTAL leaf tests: 653  passed: 652  failed: 1
+  FAIL D-PERS-1.concurrent-window Two tabs edit different fields within the same ~350 ms autosave window: neither edit may be silently lost (3 tries)

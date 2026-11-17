@@ -91,6 +91,22 @@ describe("auth validation", () => {
       expect(safeNext(p, "/app", "https://rca-tool-omega.vercel.app"), JSON.stringify(p)).toBe("/app");
     }
   });
+  it("rejects dot segments that normalise to a protocol-relative path (R3-07)", () => {
+    for (const v of [
+      "/app/..//evil.example",
+      "/app/../..//evil.example",
+      "/app/%2e%2e//evil.example",
+      "/..//evil.example",
+      "/app/./..//evil.example/path",
+      "/a/b/../../..//evil.example",
+    ]) {
+      expect(safeNext(v), v).toBe("/app");
+      expect(safeNext(v, "/app", "https://rca-tool-omega.vercel.app"), v).toBe("/app");
+    }
+  });
+  it("still accepts harmless dot segments", () => {
+    expect(safeNext("/app/../app/assets")).toBe("/app/assets");
+  });
   it("uses the given fallback", () => {
     expect(safeNext("//evil.example.com", "/login")).toBe("/login");
   });

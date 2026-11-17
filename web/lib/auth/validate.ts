@@ -134,7 +134,13 @@ export function safeNext(
     const site = new URL(origin).origin;
     const u = new URL(next, site);
     if (u.origin !== site) return fallback;
-    return u.pathname + u.search + u.hash;
+    // Dot segments are resolved by the parser, so "/app/..//host" becomes the
+    // path "//host". Returned as-is, a browser would read that as a
+    // protocol-relative URL to another host. Check the normalised result too.
+    const out = u.pathname + u.search + u.hash;
+    if (!out.startsWith("/") || out.startsWith("//") || FORBIDDEN_RE.test(out)) return fallback;
+    if (new URL(out, site).origin !== site) return fallback;
+    return out;
   } catch {
     return fallback;
   }

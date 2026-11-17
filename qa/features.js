@@ -705,6 +705,27 @@ FT('F-UI-1', 'New pages (assets, account) and new Actions/Verify sections: label
   await sub('console', 'No console errors, failed requests or CSP violations on these pages', async () => { await page.goto(BASE + '/app/assets'); await page.waitForTimeout(800); await page.goto(BASE + '/app/account'); await page.waitForTimeout(800); eq({ errs: page.errs, fails: page.fails }, { errs: [], fails: [] }); });
 });
 
+test('F-LIMIT-1', 'Signed-in size limit: a 6 MB investigation is refused with a readable message and the previous version stays saved; login next= bypass variants all land on this site', async ({ browser, sub }) => {
+  await ensure(browser);
+  await sub('too-large', 'Saving a ~6 MB investigation shows "this investigation is too large" with Try again, keeps the app usable, and nothing oversized is stored', async () => withPage(browser, { storageState: SA }, async (page) => {
+    const id = await newInv(page, { title: 'F-LIMIT big' }); await page.getByLabel('What happened?', { exact: true }).fill('small ok'); await waitSaved(page);
+    await page.getByLabel('What happened?', { exact: true }).fill('x'.repeat(6 * 1024 * 1024)); const alert = page.getByRole('alert').filter({ hasText: /Could not save/ }); await alert.first().waitFor({ timeout: 60000 }); const msg = await alert.first().innerText(); h.note('observation', 'oversize message: ' + msg.replace(/\s+/g, ' ').slice(0, 200));
+    ok(/too large/i.test(msg), msg); await page.getByLabel('What happened?', { exact: true }).fill('back to small'); await page.getByText('All changes saved').waitFor({ timeout: 60000 }); await page.reload(); await page.getByLabel('What happened?', { exact: true }).waitFor(); eq(await page.getByLabel('What happened?', { exact: true }).inputValue(), 'back to small');
+    await cleanAccount(page);
+  }));
+  const safe = ['//evil.example', 'https://evil.example/x', '/\\evil.example', 'javascript:alert(1)', '/%2F%2Fevil.example', '/app/../..//evil.example', '/%5Cevil.example', 'data:text/html,hi', '/app%0d%0aLocation:%20https://evil.example'];
+  for (const n of safe) await sub('next-' + safe.indexOf(n), `login ?next=${n} never leaves this site (a request to evil.example is intercepted and counted)`, async () => withPage(browser, {}, async (p) => {
+    let hit = null; await p.route((u) => new URL(u).hostname === 'evil.example', (r) => { hit = r.request().url(); r.fulfill({ status: 200, contentType: 'text/html', body: '<h1>EVIL SITE</h1>' }); });
+    await p.goto(BASE + '/login?next=' + encodeURIComponent(n)); await p.getByLabel('Email').fill(USER_A); await p.getByLabel('Password').fill(h.PASSWORD); await p.getByRole('button', { name: 'Sign in', exact: true }).click(); await p.waitForTimeout(5000);
+    ok(!hit && new URL(p.url()).origin === new URL(BASE).origin, `OPEN REDIRECT: after sign-in the browser went to ${hit || p.url()}`);
+  }));
+  for (const n of ['/app/..//evil.example', '/app/%2e%2e//evil.example', '/..//evil.example', '/a/../../evil.example/x']) await sub('next-dots-' + safe.length + n.length, `login ?next=${n} (dot segments that normalise to //evil.example) stays on this site`, async () => withPage(browser, {}, async (p) => {
+    let hit = null; await p.route((u) => new URL(u).hostname === 'evil.example', (r) => { hit = r.request().url(); r.fulfill({ status: 200, contentType: 'text/html', body: '<h1>EVIL SITE</h1>' }); });
+    await p.goto(BASE + '/login?next=' + encodeURIComponent(n)); await p.getByLabel('Email').fill(USER_A); await p.getByLabel('Password').fill(h.PASSWORD); await p.getByRole('button', { name: 'Sign in', exact: true }).click(); await p.waitForTimeout(5000);
+    ok(!hit && new URL(p.url()).origin === new URL(BASE).origin, `OPEN REDIRECT: after sign-in the browser went to ${hit || p.url()}`);
+  }));
+});
+
 test('F-ZZ-CLEANUP', 'Cleanup: both accounts end with only the sample investigation and the 5 sample assets', async ({ browser, sub }) => {
   await ensure(browser);
   for (const [who, st] of [['A', SA], ['B', SB]]) await sub('clean-' + who, `Account ${who}: only the sample investigation and the 5 sample assets remain`, async () => withPage(browser, { storageState: st }, async (page) => {
@@ -713,4 +734,4 @@ test('F-ZZ-CLEANUP', 'Cleanup: both accounts end with only the sample investigat
   }));
 });
 
-if (require.main === module) h.run('features', { only: process.argv[2] }).then(f => process.exit(f ? 1 : 0));
+if (require.main === module) h.run(process.env.SUITE_NAME || 'features', { only: process.argv[2] }).then(f => process.exit(f ? 1 : 0));

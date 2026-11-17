@@ -13,7 +13,7 @@ const sum = { pass: 0, fail: 0, failed: [] };
 for (const f of ['demo', 'loss', 'features', 'account']) {
   const p = path.join(dir, 'results', f + '.json'); if (!fs.existsSync(p)) continue;
   const rows = JSON.parse(fs.readFileSync(p)).results;
-  const leaf = rows.filter(r => !rows.some(o => o.id.startsWith(r.id + '.')));
+  const leaf = rows.filter(r => !rows.some(o => o.id.startsWith(r.id + '.')) || r.status === 'fail'); // a failing parent (e.g. a CSP violation seen during the test) counts as its own failed check
   for (const r of leaf) { if (r.status === 'pass') sum.pass++; else { sum.fail++; sum.failed.push(r.id + ' ' + r.title); } }
 }
 console.log(`\nTOTAL leaf tests: ${sum.pass + sum.fail}  passed: ${sum.pass}  failed: ${sum.fail}`);

@@ -1,0 +1,2356 @@
+{
+  "suite": "features",
+  "base": "http://localhost:3555",
+  "at": "2026-11-17T08:14:22.373Z",
+  "results": [
+    {
+      "id": "F-ASSET-1-demo-desk.fields",
+      "title": "Asset details section has tag, type, make/model, duty, criticality A/B/C, failure mode",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-demo-desk.combo-list",
+      "title": "Asset type and Failure mode lists open on focus, filter while typing, and accept your own text",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-demo-desk.criticality",
+      "title": "Criticality: choose A, tap again clears, B replaces A",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-demo-desk.register-status",
+      "title": "A new tag says \"It will be added to your asset register\", then \"In your asset register\" once saved; matching ignores case and spaces",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-demo-desk.persist",
+      "title": "All asset detail fields survive reload",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-demo-desk.register-entry",
+      "title": "The register now has ZZ-501 with the type, make, duty and criticality from the investigation, plus 1 investigation",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-demo-desk.long-text",
+      "title": "A 3000-character make/duty does not overflow the Problem step at this width",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-demo-desk",
+      "title": "Problem step: asset details fields, criticality, combo lists, auto-add to the register [demo-desk]",
+      "status": "pass",
+      "detail": "",
+      "ms": 8294
+    },
+    {
+      "id": "F-ASSET-1-demo-mob.fields",
+      "title": "Asset details section has tag, type, make/model, duty, criticality A/B/C, failure mode",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-demo-mob.combo-list",
+      "title": "Asset type and Failure mode lists open on focus, filter while typing, and accept your own text",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-demo-mob.criticality",
+      "title": "Criticality: choose A, tap again clears, B replaces A",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-demo-mob.register-status",
+      "title": "A new tag says \"It will be added to your asset register\", then \"In your asset register\" once saved; matching ignores case and spaces",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-demo-mob.persist",
+      "title": "All asset detail fields survive reload",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-demo-mob.register-entry",
+      "title": "The register now has ZZ-501 with the type, make, duty and criticality from the investigation, plus 1 investigation",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-demo-mob.long-text",
+      "title": "A 3000-character make/duty does not overflow the Problem step at this width",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-demo-mob",
+      "title": "Problem step: asset details fields, criticality, combo lists, auto-add to the register [demo-mob]",
+      "status": "pass",
+      "detail": "",
+      "ms": 8237
+    },
+    {
+      "id": "F-ASSET-1-acct-desk.fields",
+      "title": "Asset details section has tag, type, make/model, duty, criticality A/B/C, failure mode",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-acct-desk.combo-list",
+      "title": "Asset type and Failure mode lists open on focus, filter while typing, and accept your own text",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-acct-desk.criticality",
+      "title": "Criticality: choose A, tap again clears, B replaces A",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-acct-desk.register-status",
+      "title": "A new tag says \"It will be added to your asset register\", then \"In your asset register\" once saved; matching ignores case and spaces",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-acct-desk.persist",
+      "title": "All asset detail fields survive reload",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-acct-desk.register-entry",
+      "title": "The register now has ZZ-501 with the type, make, duty and criticality from the investigation, plus 1 investigation",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-acct-desk.long-text",
+      "title": "A 3000-character make/duty does not overflow the Problem step at this width",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ASSET-1-acct-desk",
+      "title": "Problem step: asset details fields, criticality, combo lists, auto-add to the register [acct-desk]",
+      "status": "pass",
+      "detail": "",
+      "ms": 21550
+    },
+    {
+      "id": "F-REG-1-demo-desk.sample",
+      "title": "Fresh register shows the 5 sample assets in tag order P-101, P-102, P-103, P-210, P-215, each marked Illustrative sample",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-REG-1-demo-desk.stats",
+      "title": "P-101 stats equal hand calc from the sample: 1 investigation, 6 failures a year, annual loss $238,440",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-REG-1-demo-desk.add-validation",
+      "title": "Add asset: empty tag and duplicate tag (any case) are refused with a clear message",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-REG-1-demo-desk.add",
+      "title": "Add asset with all fields shows it in the list; cancel closes the form without adding",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-REG-1-demo-desk.edit",
+      "title": "Edit: change duty and save; tag clash refused; cancel discards",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-REG-1-demo-desk.search",
+      "title": "Search matches tag, type, make, duty and area; no match message; clearing restores the list",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-REG-1-demo-desk.paste",
+      "title": "Paste a list: counts new / repeated / blank lines exactly, adds only the new ones",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-REG-1-demo-desk.stats-linked",
+      "title": "Stats follow investigations by tag: a 3-events/yr investigation with annual loss $9,000 on QA-1 shows 1 / 3 / $9,000",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-REG-1-demo-desk.delete",
+      "title": "Delete asset: message mentions investigations that use the tag; Cancel keeps it; Delete removes it and keeps the investigation",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-REG-1-demo-desk.layout",
+      "title": "Register page layout: no overflow at this width; long values wrap",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-REG-1-demo-desk",
+      "title": "Asset register page: sample assets, add/edit/delete, search, paste a list, validation, stats [demo-desk]",
+      "status": "pass",
+      "detail": "",
+      "ms": 6357
+    },
+    {
+      "id": "F-REG-1-demo-mob.sample",
+      "title": "Fresh register shows the 5 sample assets in tag order P-101, P-102, P-103, P-210, P-215, each marked Illustrative sample",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-REG-1-demo-mob.stats",
+      "title": "P-101 stats equal hand calc from the sample: 1 investigation, 6 failures a year, annual loss $238,440",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-REG-1-demo-mob.add-validation",
+      "title": "Add asset: empty tag and duplicate tag (any case) are refused with a clear message",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-REG-1-demo-mob.add",
+      "title": "Add asset with all fields shows it in the list; cancel closes the form without adding",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-REG-1-demo-mob.edit",
+      "title": "Edit: change duty and save; tag clash refused; cancel discards",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-REG-1-demo-mob.search",
+      "title": "Search matches tag, type, make, duty and area; no match message; clearing restores the list",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-REG-1-demo-mob.paste",
+      "title": "Paste a list: counts new / repeated / blank lines exactly, adds only the new ones",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-REG-1-demo-mob.stats-linked",
+      "title": "Stats follow investigations by tag: a 3-events/yr investigation with annual loss $9,000 on QA-1 shows 1 / 3 / $9,000",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-REG-1-demo-mob.delete",
+      "title": "Delete asset: message mentions investigations that use the tag; Cancel keeps it; Delete removes it and keeps the investigation",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-REG-1-demo-mob.layout",
+      "title": "Register page layout: no overflow at this width; long values wrap",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-REG-1-demo-mob",
+      "title": "Asset register page: sample assets, add/edit/delete, search, paste a list, validation, stats [demo-mob]",
+      "status": "pass",
+      "detail": "",
+      "ms": 5966
+    },
+    {
+      "id": "F-REG-2-acct-desk.add-persist",
+      "title": "Asset added signed in persists after reload and shows in A's list",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-REG-2-acct-desk.b-sees-own",
+      "title": "User B's register has the 5 sample assets and does not show A's asset",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-REG-2-acct-desk.b-api",
+      "title": "User B cannot read, change or delete A's asset row through the API; anonymous gets nothing",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-REG-2-acct-desk.b-direct-write",
+      "title": "B writing an asset with A's tag does not collide with or change A's asset",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-REG-2-acct-desk.delete",
+      "title": "A deletes the asset: gone after reload",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-REG-2-acct-desk",
+      "title": "Asset register signed in: empty, persistence, A/B isolation, direct API access denied [acct-desk]",
+      "status": "pass",
+      "detail": "",
+      "ms": 16241
+    },
+    {
+      "id": "F-CAPA-1-demo-desk.empty",
+      "title": "Empty Actions step: corrective section with \"No corrective action yet\" prompt, one preventive group per root cause with \"No action yet\"",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-CAPA-1-demo-desk.corrective",
+      "title": "Add corrective action: lands in the Corrective section, is linked to \"The failure event\", editor opens at once",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-CAPA-1-demo-desk.preventive",
+      "title": "Add preventive action under each root cause: appears in that group only; kind is Preventive",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-CAPA-1-demo-desk.one-open",
+      "title": "Rows expand in place one at a time: opening another row closes the first; Close button collapses",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-CAPA-1-demo-desk.tiles",
+      "title": "Tiles: total action cost 800 + 100 + 50 = $950; 0 of 3 done; root causes without action 0",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-CAPA-1-demo-desk.task-fields",
+      "title": "Task fields appear only for Maintenance task / Condition monitoring; changing category away hides them",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-CAPA-1-demo-desk.categories",
+      "title": "Category list offers the 8 categories + Not set",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-CAPA-1-demo-desk.kind-switch",
+      "title": "Corrective -> Preventive moves a failure-event action onto the first root cause; Preventive -> Corrective keeps its root-cause link and the action moves to the Corrective section",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-CAPA-1-demo-desk.delete",
+      "title": "Delete action: dialog, cancel keeps, confirm removes; tiles update",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-CAPA-1-demo-desk.persist",
+      "title": "Actions with kind, category, task survive reload",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-CAPA-1-demo-desk.layout",
+      "title": "Actions step layout at this width: no overflow, rows fit",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-CAPA-1-demo-desk",
+      "title": "Actions step: corrective section, preventive groups, one expanded row at a time, kind, category, task fields [demo-desk]",
+      "status": "pass",
+      "detail": "",
+      "ms": 5029
+    },
+    {
+      "id": "F-CAPA-1-demo-mob.empty",
+      "title": "Empty Actions step: corrective section with \"No corrective action yet\" prompt, one preventive group per root cause with \"No action yet\"",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-CAPA-1-demo-mob.corrective",
+      "title": "Add corrective action: lands in the Corrective section, is linked to \"The failure event\", editor opens at once",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-CAPA-1-demo-mob.preventive",
+      "title": "Add preventive action under each root cause: appears in that group only; kind is Preventive",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-CAPA-1-demo-mob.one-open",
+      "title": "Rows expand in place one at a time: opening another row closes the first; Close button collapses",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-CAPA-1-demo-mob.tiles",
+      "title": "Tiles: total action cost 800 + 100 + 50 = $950; 0 of 3 done; root causes without action 0",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-CAPA-1-demo-mob.task-fields",
+      "title": "Task fields appear only for Maintenance task / Condition monitoring; changing category away hides them",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-CAPA-1-demo-mob.categories",
+      "title": "Category list offers the 8 categories + Not set",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-CAPA-1-demo-mob.kind-switch",
+      "title": "Corrective -> Preventive moves a failure-event action onto the first root cause; Preventive -> Corrective keeps its root-cause link and the action moves to the Corrective section",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-CAPA-1-demo-mob.delete",
+      "title": "Delete action: dialog, cancel keeps, confirm removes; tiles update",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-CAPA-1-demo-mob.persist",
+      "title": "Actions with kind, category, task survive reload",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-CAPA-1-demo-mob.layout",
+      "title": "Actions step layout at this width: no overflow, rows fit",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-CAPA-1-demo-mob",
+      "title": "Actions step: corrective section, preventive groups, one expanded row at a time, kind, category, task fields [demo-mob]",
+      "status": "pass",
+      "detail": "",
+      "ms": 4767
+    },
+    {
+      "id": "F-CAPA-1-acct-desk.empty",
+      "title": "Empty Actions step: corrective section with \"No corrective action yet\" prompt, one preventive group per root cause with \"No action yet\"",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-CAPA-1-acct-desk.corrective",
+      "title": "Add corrective action: lands in the Corrective section, is linked to \"The failure event\", editor opens at once",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-CAPA-1-acct-desk.preventive",
+      "title": "Add preventive action under each root cause: appears in that group only; kind is Preventive",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-CAPA-1-acct-desk.one-open",
+      "title": "Rows expand in place one at a time: opening another row closes the first; Close button collapses",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-CAPA-1-acct-desk.tiles",
+      "title": "Tiles: total action cost 800 + 100 + 50 = $950; 0 of 3 done; root causes without action 0",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-CAPA-1-acct-desk.task-fields",
+      "title": "Task fields appear only for Maintenance task / Condition monitoring; changing category away hides them",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-CAPA-1-acct-desk.categories",
+      "title": "Category list offers the 8 categories + Not set",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-CAPA-1-acct-desk.kind-switch",
+      "title": "Corrective -> Preventive moves a failure-event action onto the first root cause; Preventive -> Corrective keeps its root-cause link and the action moves to the Corrective section",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-CAPA-1-acct-desk.delete",
+      "title": "Delete action: dialog, cancel keeps, confirm removes; tiles update",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-CAPA-1-acct-desk.persist",
+      "title": "Actions with kind, category, task survive reload",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-CAPA-1-acct-desk.layout",
+      "title": "Actions step layout at this width: no overflow, rows fit",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-CAPA-1-acct-desk",
+      "title": "Actions step: corrective section, preventive groups, one expanded row at a time, kind, category, task fields [acct-desk]",
+      "status": "pass",
+      "detail": "",
+      "ms": 10700
+    },
+    {
+      "id": "F-PLAN-1-demo-desk.empty",
+      "title": "No tasks: the plan section explains how tasks appear and has no Copy button",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-PLAN-1-demo-desk.lines",
+      "title": "Plan lists the 4 tasks with: New/Change, interval text (\"every 3 months\", \"every 500 hours run\", \"every week\", \"every 2.5 weeks\"), craft, root cause",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-PLAN-1-demo-desk.fallbacks",
+      "title": "A task with no description uses the action text; no craft shows \"Not set\"",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-PLAN-1-demo-desk.copy",
+      "title": "\"Copy for the planner\" puts tab-separated text with header, 10 columns and one row per task on the clipboard (hand-built expected text)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-PLAN-1-demo-desk.quality-task",
+      "title": "Quality: tasks missing description/interval are flagged (\"a task description and an interval\")",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-PLAN-1-demo-desk.report",
+      "title": "Report has a \"Maintenance plan changes\" section with the same tasks",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-PLAN-1-demo-desk.persist",
+      "title": "Tasks (interval, craft, change) survive reload",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-PLAN-1-demo-desk",
+      "title": "Maintenance plan changes: lines, intervals, planner text copied to the clipboard, report section [demo-desk]",
+      "status": "pass",
+      "detail": "",
+      "ms": 5075
+    },
+    {
+      "id": "F-PLAN-1-demo-mob.empty",
+      "title": "No tasks: the plan section explains how tasks appear and has no Copy button",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-PLAN-1-demo-mob.lines",
+      "title": "Plan lists the 4 tasks with: New/Change, interval text (\"every 3 months\", \"every 500 hours run\", \"every week\", \"every 2.5 weeks\"), craft, root cause",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-PLAN-1-demo-mob.fallbacks",
+      "title": "A task with no description uses the action text; no craft shows \"Not set\"",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-PLAN-1-demo-mob.copy",
+      "title": "\"Copy for the planner\" puts tab-separated text with header, 10 columns and one row per task on the clipboard (hand-built expected text)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-PLAN-1-demo-mob.quality-task",
+      "title": "Quality: tasks missing description/interval are flagged (\"a task description and an interval\")",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-PLAN-1-demo-mob.report",
+      "title": "Report has a \"Maintenance plan changes\" section with the same tasks",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-PLAN-1-demo-mob.persist",
+      "title": "Tasks (interval, craft, change) survive reload",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-PLAN-1-demo-mob",
+      "title": "Maintenance plan changes: lines, intervals, planner text copied to the clipboard, report section [demo-mob]",
+      "status": "pass",
+      "detail": "",
+      "ms": 5074
+    },
+    {
+      "id": "F-PLAN-1-acct-desk.empty",
+      "title": "No tasks: the plan section explains how tasks appear and has no Copy button",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-PLAN-1-acct-desk.lines",
+      "title": "Plan lists the 4 tasks with: New/Change, interval text (\"every 3 months\", \"every 500 hours run\", \"every week\", \"every 2.5 weeks\"), craft, root cause",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-PLAN-1-acct-desk.fallbacks",
+      "title": "A task with no description uses the action text; no craft shows \"Not set\"",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-PLAN-1-acct-desk.copy",
+      "title": "\"Copy for the planner\" puts tab-separated text with header, 10 columns and one row per task on the clipboard (hand-built expected text)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-PLAN-1-acct-desk.quality-task",
+      "title": "Quality: tasks missing description/interval are flagged (\"a task description and an interval\")",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-PLAN-1-acct-desk.report",
+      "title": "Report has a \"Maintenance plan changes\" section with the same tasks",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-PLAN-1-acct-desk.persist",
+      "title": "Tasks (interval, craft, change) survive reload",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-PLAN-1-acct-desk",
+      "title": "Maintenance plan changes: lines, intervals, planner text copied to the clipboard, report section [acct-desk]",
+      "status": "pass",
+      "detail": "",
+      "ms": 9824
+    },
+    {
+      "id": "F-SPARES-1-demo-desk.fields",
+      "title": "Spares check shows only \"Was a spare part needed?\" until Yes is chosen; then stock, lead time, coverage appear",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SPARES-1-demo-desk.lead-13",
+      "title": "Not in stock, lead time 13 days: flag not shown (threshold is 14)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SPARES-1-demo-desk.lead-14",
+      "title": "Not in stock, lead time 14 days: flag shown (threshold is 14)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SPARES-1-demo-desk.lead-60",
+      "title": "Not in stock, lead time 60 days: flag shown (threshold is 14)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SPARES-1-demo-desk.lead-0",
+      "title": "Not in stock, lead time 0 days: flag not shown (threshold is 14)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SPARES-1-demo-desk.in-stock",
+      "title": "In stock = Yes removes the flag even with 60 days lead time",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SPARES-1-demo-desk.one-tap",
+      "title": "\"Add a spares holding action\": adds a preventive Spares holding action for the first root cause with the asset and lead time in the text; flag text says it is on the list; quality rule clears",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SPARES-1-demo-desk.report",
+      "title": "Report shows the Spares check section with the flag line",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SPARES-1-demo-desk.persist",
+      "title": "Spares answers survive reload",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SPARES-1-demo-desk",
+      "title": "Spares check: flag at exactly 14 days, not at 13 or when in stock; one-tap spares action; quality rule; report [demo-desk]",
+      "status": "pass",
+      "detail": "",
+      "ms": 4182
+    },
+    {
+      "id": "F-SPARES-1-demo-mob.fields",
+      "title": "Spares check shows only \"Was a spare part needed?\" until Yes is chosen; then stock, lead time, coverage appear",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SPARES-1-demo-mob.lead-13",
+      "title": "Not in stock, lead time 13 days: flag not shown (threshold is 14)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SPARES-1-demo-mob.lead-14",
+      "title": "Not in stock, lead time 14 days: flag shown (threshold is 14)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SPARES-1-demo-mob.lead-60",
+      "title": "Not in stock, lead time 60 days: flag shown (threshold is 14)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SPARES-1-demo-mob.lead-0",
+      "title": "Not in stock, lead time 0 days: flag not shown (threshold is 14)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SPARES-1-demo-mob.in-stock",
+      "title": "In stock = Yes removes the flag even with 60 days lead time",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SPARES-1-demo-mob.one-tap",
+      "title": "\"Add a spares holding action\": adds a preventive Spares holding action for the first root cause with the asset and lead time in the text; flag text says it is on the list; quality rule clears",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SPARES-1-demo-mob.report",
+      "title": "Report shows the Spares check section with the flag line",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SPARES-1-demo-mob.persist",
+      "title": "Spares answers survive reload",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SPARES-1-demo-mob",
+      "title": "Spares check: flag at exactly 14 days, not at 13 or when in stock; one-tap spares action; quality rule; report [demo-mob]",
+      "status": "pass",
+      "detail": "",
+      "ms": 4170
+    },
+    {
+      "id": "F-SPARES-1-acct-desk.fields",
+      "title": "Spares check shows only \"Was a spare part needed?\" until Yes is chosen; then stock, lead time, coverage appear",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SPARES-1-acct-desk.lead-13",
+      "title": "Not in stock, lead time 13 days: flag not shown (threshold is 14)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SPARES-1-acct-desk.lead-14",
+      "title": "Not in stock, lead time 14 days: flag shown (threshold is 14)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SPARES-1-acct-desk.lead-60",
+      "title": "Not in stock, lead time 60 days: flag shown (threshold is 14)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SPARES-1-acct-desk.lead-0",
+      "title": "Not in stock, lead time 0 days: flag not shown (threshold is 14)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SPARES-1-acct-desk.in-stock",
+      "title": "In stock = Yes removes the flag even with 60 days lead time",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SPARES-1-acct-desk.one-tap",
+      "title": "\"Add a spares holding action\": adds a preventive Spares holding action for the first root cause with the asset and lead time in the text; flag text says it is on the list; quality rule clears",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SPARES-1-acct-desk.report",
+      "title": "Report shows the Spares check section with the flag line",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SPARES-1-acct-desk.persist",
+      "title": "Spares answers survive reload",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SPARES-1-acct-desk",
+      "title": "Spares check: flag at exactly 14 days, not at 13 or when in stock; one-tap spares action; quality rule; report [acct-desk]",
+      "status": "pass",
+      "detail": "",
+      "ms": 9267
+    },
+    {
+      "id": "F-QUAL-1-demo-desk.natural",
+      "title": "natural-deterioration-unmanaged: verified + natural wear with no maintenance task or condition monitoring action is flagged; jump -> Actions; a Condition monitoring action on its branch clears it",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-QUAL-1-demo-desk.forced-no-flag",
+      "title": "The same cause marked Forced (not natural) is not flagged by that rule; toggling the type of wear off clears it",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-QUAL-1-demo-desk.task-incomplete",
+      "title": "task-missing-detail: a maintenance task with no interval is flagged; entering the interval clears it",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-QUAL-1-demo-desk.system-systemic",
+      "title": "system-root-without-systemic-action: a System/Latent root cause whose only (categorised) action is a Repair is flagged; a Procedure action clears it; uncategorised actions are not judged",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-QUAL-1-demo-desk.corrective-only",
+      "title": "corrective-without-preventive: a root cause that has only a corrective action is flagged (high); adding a preventive one clears it; jump -> Actions",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-QUAL-1-demo-desk.unlinked",
+      "title": "action-not-linked: un-flagging the root cause of an action flags it; the action appears under \"Not linked to a root cause\"; re-linking clears it",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-QUAL-1-demo-desk.severity-links",
+      "title": "Every new finding has a \"Go to ...\" button and the panel count matches the number of findings",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-QUAL-1-demo-desk",
+      "title": "New quality rules: each triggers, its jump link lands on the right step, and it clears when fixed [demo-desk]",
+      "status": "pass",
+      "detail": "",
+      "ms": 7279
+    },
+    {
+      "id": "F-QUAL-1-acct-desk.natural",
+      "title": "natural-deterioration-unmanaged: verified + natural wear with no maintenance task or condition monitoring action is flagged; jump -> Actions; a Condition monitoring action on its branch clears it",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-QUAL-1-acct-desk.forced-no-flag",
+      "title": "The same cause marked Forced (not natural) is not flagged by that rule; toggling the type of wear off clears it",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-QUAL-1-acct-desk.task-incomplete",
+      "title": "task-missing-detail: a maintenance task with no interval is flagged; entering the interval clears it",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-QUAL-1-acct-desk.system-systemic",
+      "title": "system-root-without-systemic-action: a System/Latent root cause whose only (categorised) action is a Repair is flagged; a Procedure action clears it; uncategorised actions are not judged",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-QUAL-1-acct-desk.corrective-only",
+      "title": "corrective-without-preventive: a root cause that has only a corrective action is flagged (high); adding a preventive one clears it; jump -> Actions",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-QUAL-1-acct-desk.unlinked",
+      "title": "action-not-linked: un-flagging the root cause of an action flags it; the action appears under \"Not linked to a root cause\"; re-linking clears it",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-QUAL-1-acct-desk.severity-links",
+      "title": "Every new finding has a \"Go to ...\" button and the panel count matches the number of findings",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-QUAL-1-acct-desk",
+      "title": "New quality rules: each triggers, its jump link lands on the right step, and it clears when fixed [acct-desk]",
+      "status": "pass",
+      "detail": "",
+      "ms": 10732
+    },
+    {
+      "id": "F-DET-1-demo-desk.toggle",
+      "title": "Natural, Forced, and tap-again-to-clear behave as radios; default is not decided; help text changes",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-DET-1-demo-desk.persist",
+      "title": "Deterioration survives reload",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-DET-1-demo-desk.panel-top",
+      "title": "The failure event itself has no deterioration control",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-DET-1-demo-desk",
+      "title": "Cause node deterioration: Natural / Forced toggles, persistence, shown in report [demo-desk]",
+      "status": "pass",
+      "detail": "",
+      "ms": 3007
+    },
+    {
+      "id": "F-DET-1-demo-mob.toggle",
+      "title": "Natural, Forced, and tap-again-to-clear behave as radios; default is not decided; help text changes",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-DET-1-demo-mob.persist",
+      "title": "Deterioration survives reload",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-DET-1-demo-mob.panel-top",
+      "title": "The failure event itself has no deterioration control",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-DET-1-demo-mob",
+      "title": "Cause node deterioration: Natural / Forced toggles, persistence, shown in report [demo-mob]",
+      "status": "pass",
+      "detail": "",
+      "ms": 3020
+    },
+    {
+      "id": "F-SIM-1-demo-desk.rank",
+      "title": "Panel lists S1 (score 100), S2 (41), S3 (6, the minimum) in that order; S4 (one shared word = 3) and S5 are not listed",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SIM-1-demo-desk.reasons",
+      "title": "Reasons shown: O1 \"Same asset (X-1)\", \"Same asset type (Gearbox)\", \"Same failure mode (Bearing failure)\"; O2 type+mode but no tag; O3 shared words only",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SIM-1-demo-desk.cause-text",
+      "title": "Each match shows its root causes and \"What fixed it\" text; Open link goes to that investigation",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SIM-1-demo-desk.copy",
+      "title": "\"Copy this cause into my tree\" adds it under the failure event as a Hypothesis (not verified, not a root cause, no evidence); button turns to \"Copied\"; message with link to the tree",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SIM-1-demo-desk.cause-step-panel",
+      "title": "The Cause tree step also shows the Similar past failures panel and a copy there adds under the selected cause",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SIM-1-demo-desk.empty",
+      "title": "An investigation with no similar ones shows \"No similar failures yet\" guidance",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SIM-1-demo-desk.self-excluded",
+      "title": "An investigation is never listed as similar to itself and a copy of it (Duplicate) is listed as similar",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SIM-1-demo-desk",
+      "title": "Similar past failures: ranking by tag > type > failure mode > words, minimum score, reasons, copy cause arrives as Hypothesis [demo-desk]",
+      "status": "pass",
+      "detail": "",
+      "ms": 17400
+    },
+    {
+      "id": "F-SIM-1-demo-mob.rank",
+      "title": "Panel lists S1 (score 100), S2 (41), S3 (6, the minimum) in that order; S4 (one shared word = 3) and S5 are not listed",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SIM-1-demo-mob.reasons",
+      "title": "Reasons shown: O1 \"Same asset (X-1)\", \"Same asset type (Gearbox)\", \"Same failure mode (Bearing failure)\"; O2 type+mode but no tag; O3 shared words only",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SIM-1-demo-mob.cause-text",
+      "title": "Each match shows its root causes and \"What fixed it\" text; Open link goes to that investigation",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SIM-1-demo-mob.copy",
+      "title": "\"Copy this cause into my tree\" adds it under the failure event as a Hypothesis (not verified, not a root cause, no evidence); button turns to \"Copied\"; message with link to the tree",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SIM-1-demo-mob.cause-step-panel",
+      "title": "The Cause tree step also shows the Similar past failures panel and a copy there adds under the selected cause",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SIM-1-demo-mob.empty",
+      "title": "An investigation with no similar ones shows \"No similar failures yet\" guidance",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SIM-1-demo-mob.self-excluded",
+      "title": "An investigation is never listed as similar to itself and a copy of it (Duplicate) is listed as similar",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SIM-1-demo-mob",
+      "title": "Similar past failures: ranking by tag > type > failure mode > words, minimum score, reasons, copy cause arrives as Hypothesis [demo-mob]",
+      "status": "pass",
+      "detail": "",
+      "ms": 17251
+    },
+    {
+      "id": "F-SIM-1-acct-desk.rank",
+      "title": "Panel lists S1 (score 100), S2 (41), S3 (6, the minimum) in that order; S4 (one shared word = 3) and S5 are not listed",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SIM-1-acct-desk.reasons",
+      "title": "Reasons shown: O1 \"Same asset (X-1)\", \"Same asset type (Gearbox)\", \"Same failure mode (Bearing failure)\"; O2 type+mode but no tag; O3 shared words only",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SIM-1-acct-desk.cause-text",
+      "title": "Each match shows its root causes and \"What fixed it\" text; Open link goes to that investigation",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SIM-1-acct-desk.copy",
+      "title": "\"Copy this cause into my tree\" adds it under the failure event as a Hypothesis (not verified, not a root cause, no evidence); button turns to \"Copied\"; message with link to the tree",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SIM-1-acct-desk.cause-step-panel",
+      "title": "The Cause tree step also shows the Similar past failures panel and a copy there adds under the selected cause",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SIM-1-acct-desk.empty",
+      "title": "An investigation with no similar ones shows \"No similar failures yet\" guidance",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SIM-1-acct-desk.self-excluded",
+      "title": "An investigation is never listed as similar to itself and a copy of it (Duplicate) is listed as similar",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SIM-1-acct-desk",
+      "title": "Similar past failures: ranking by tag > type > failure mode > words, minimum score, reasons, copy cause arrives as Hypothesis [acct-desk]",
+      "status": "pass",
+      "detail": "",
+      "ms": 105783
+    },
+    {
+      "id": "F-ROLL-1-demo-desk.encourage",
+      "title": "Before verification the panel says \"Best done once the fix is verified\"",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-demo-desk.rank",
+      "title": "Candidates: P-102, P-215, P-103 in that order; the centrifugal pump P-210 and the asset itself are not listed",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-demo-desk.reasons",
+      "title": "Reasons: P-102 same make+model, similar duty (slurry, feed, concentrator), criticality A; P-103 similar make (warman) and criticality B",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-demo-desk.create",
+      "title": "Tick P-102 and P-215, default text prefilled from root causes and preventive actions, create 2 checks; ticked ones show \"Check created\" and can no longer be picked",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-demo-desk.statuses",
+      "title": "Result options: Open, Checked: no issue, Checked: same problem found, Fixed; progress counts finished ones; \"same problem\" shows the red notice",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-demo-desk.edit-check",
+      "title": "Per-check owner, due date and \"what to check\" can be edited; delete asks for confirmation",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-demo-desk.dashboard",
+      "title": "Dashboard \"Rollout checks\" tile: open count and \"of N created\" (hand: 2 created, 0 open now)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-demo-desk.dashboard-open",
+      "title": "Setting one back to Open and one to same problem: tile shows 1 open and \"1 found the same problem\"",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-demo-desk.report",
+      "title": "Report section \"Rollout to similar assets\" lists the checks with their results",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-demo-desk.verified-message",
+      "title": "When the fix is verified the panel says \"The fix is verified. This is the moment to spread it\"",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-demo-desk.needs-type",
+      "title": "With no asset type set the panel asks for it and offers \"Go to Asset details\"",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-demo-desk.no-candidates",
+      "title": "A type with no other assets shows the empty guidance and the \"add a similar asset\" form",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-demo-desk",
+      "title": "Roll this fix out: candidate ranking (hand scores), reasons, checks, statuses, progress, dashboard count, report [demo-desk]",
+      "status": "pass",
+      "detail": "",
+      "ms": 9117
+    },
+    {
+      "id": "F-ROLL-1-demo-mob.encourage",
+      "title": "Before verification the panel says \"Best done once the fix is verified\"",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-demo-mob.rank",
+      "title": "Candidates: P-102, P-215, P-103 in that order; the centrifugal pump P-210 and the asset itself are not listed",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-demo-mob.reasons",
+      "title": "Reasons: P-102 same make+model, similar duty (slurry, feed, concentrator), criticality A; P-103 similar make (warman) and criticality B",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-demo-mob.create",
+      "title": "Tick P-102 and P-215, default text prefilled from root causes and preventive actions, create 2 checks; ticked ones show \"Check created\" and can no longer be picked",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-demo-mob.statuses",
+      "title": "Result options: Open, Checked: no issue, Checked: same problem found, Fixed; progress counts finished ones; \"same problem\" shows the red notice",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-demo-mob.edit-check",
+      "title": "Per-check owner, due date and \"what to check\" can be edited; delete asks for confirmation",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-demo-mob.dashboard",
+      "title": "Dashboard \"Rollout checks\" tile: open count and \"of N created\" (hand: 2 created, 0 open now)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-demo-mob.dashboard-open",
+      "title": "Setting one back to Open and one to same problem: tile shows 1 open and \"1 found the same problem\"",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-demo-mob.report",
+      "title": "Report section \"Rollout to similar assets\" lists the checks with their results",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-demo-mob.verified-message",
+      "title": "When the fix is verified the panel says \"The fix is verified. This is the moment to spread it\"",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-demo-mob.needs-type",
+      "title": "With no asset type set the panel asks for it and offers \"Go to Asset details\"",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-demo-mob.no-candidates",
+      "title": "A type with no other assets shows the empty guidance and the \"add a similar asset\" form",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-demo-mob",
+      "title": "Roll this fix out: candidate ranking (hand scores), reasons, checks, statuses, progress, dashboard count, report [demo-mob]",
+      "status": "pass",
+      "detail": "",
+      "ms": 8737
+    },
+    {
+      "id": "F-ROLL-1-acct-desk.encourage",
+      "title": "Before verification the panel says \"Best done once the fix is verified\"",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-acct-desk.rank",
+      "title": "Candidates: P-102, P-215, P-103 in that order; the centrifugal pump P-210 and the asset itself are not listed",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-acct-desk.reasons",
+      "title": "Reasons: P-102 same make+model, similar duty (slurry, feed, concentrator), criticality A; P-103 similar make (warman) and criticality B",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-acct-desk.create",
+      "title": "Tick P-102 and P-215, default text prefilled from root causes and preventive actions, create 2 checks; ticked ones show \"Check created\" and can no longer be picked",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-acct-desk.statuses",
+      "title": "Result options: Open, Checked: no issue, Checked: same problem found, Fixed; progress counts finished ones; \"same problem\" shows the red notice",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-acct-desk.edit-check",
+      "title": "Per-check owner, due date and \"what to check\" can be edited; delete asks for confirmation",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-acct-desk.dashboard",
+      "title": "Dashboard \"Rollout checks\" tile: open count and \"of N created\" (hand: 2 created, 0 open now)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-acct-desk.dashboard-open",
+      "title": "Setting one back to Open and one to same problem: tile shows 1 open and \"1 found the same problem\"",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-acct-desk.report",
+      "title": "Report section \"Rollout to similar assets\" lists the checks with their results",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-acct-desk.verified-message",
+      "title": "When the fix is verified the panel says \"The fix is verified. This is the moment to spread it\"",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-acct-desk.needs-type",
+      "title": "With no asset type set the panel asks for it and offers \"Go to Asset details\"",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-acct-desk.no-candidates",
+      "title": "A type with no other assets shows the empty guidance and the \"add a similar asset\" form",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ROLL-1-acct-desk",
+      "title": "Roll this fix out: candidate ranking (hand scores), reasons, checks, statuses, progress, dashboard count, report [acct-desk]",
+      "status": "pass",
+      "detail": "",
+      "ms": 26214
+    },
+    {
+      "id": "F-SAMPLE-1.verify",
+      "title": "Verify step of the sample: before $238,440, after $0, saving $238,440 (verified), action cost $32,000, payback 1.6 months (32,000 / (238,440 / 12) = 1.61)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SAMPLE-1.actions",
+      "title": "Sample actions tile: total cost $32,000, all done, none overdue",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SAMPLE-1.report",
+      "title": "Sample report headline: loss $238,440, verified saving $238,440, action cost $32,000, payback 1.6 months, plus maintenance plan and rollout sections",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SAMPLE-1.quality",
+      "title": "Sample passes the quality check (All clear) including the new rules",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SAMPLE-1.assets",
+      "title": "Register of a fresh demo browser has the 5 sample assets",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SAMPLE-1.dashboard",
+      "title": "Dashboard totals for the sample: verified savings $238,440 with cash $57,000 + opportunity $181,440",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SAMPLE-1",
+      "title": "Sample investigation (round 3 numbers): action cost $32,000, 0 failures after, saving $238,440, payback about 1.6 months, 5 sample assets",
+      "status": "pass",
+      "detail": "",
+      "ms": 1214
+    },
+    {
+      "id": "F-SAMPLE-2.fixture",
+      "title": "The v1 fixture is an old sample (action 1 cost $28,000, no asset fields)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SAMPLE-2.unedited",
+      "title": "Unedited v1 sample stored in the browser is replaced by the current sample (cost $32,000, saving $238,440, asset tag P-101, quality All clear), same id, nothing else lost",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SAMPLE-2.edited-title",
+      "title": "A v1 sample whose title was edited (even one character) is left alone: still old numbers",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SAMPLE-2.edited-action",
+      "title": "A v1 sample with one action cost changed is left alone",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SAMPLE-2.edited-note",
+      "title": "A v1 sample with an evidence note changed is left alone",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SAMPLE-2.collapsed-only",
+      "title": "A v1 sample where only a tree node was collapsed (UI state, not an edit) is still upgraded",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SAMPLE-2.reset-restores",
+      "title": "Reset sample data on an edited old sample restores the current sample (asks for confirmation)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SAMPLE-2",
+      "title": "Sample upgrade: an unedited old sample (v1) is silently upgraded; an edited one is left alone",
+      "status": "pass",
+      "detail": "",
+      "ms": 5297
+    },
+    {
+      "id": "F-SAMPLE-3.unedited",
+      "title": "Writing the unedited v1 sample into the account row, then loading the dashboard: row is upgraded to the current sample",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SAMPLE-3.edited",
+      "title": "An edited v1 sample row stays as the user left it (old $60,000 total, edited title kept)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SAMPLE-3",
+      "title": "Sample upgrade signed in: unedited v1 sample row is upgraded, edited one is left alone (own account only; sample restored afterwards)",
+      "status": "pass",
+      "detail": "",
+      "ms": 18346
+    },
+    {
+      "id": "F-SEC-1.hdr_",
+      "title": "Security headers present on /",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SEC-1.hdr_login",
+      "title": "Security headers present on /login",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SEC-1.hdr_signup",
+      "title": "Security headers present on /signup",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SEC-1.hdr_forgot_password",
+      "title": "Security headers present on /forgot-password",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SEC-1.hdr_reset_password",
+      "title": "Security headers present on /reset-password",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SEC-1.hdr_app",
+      "title": "Security headers present on /app",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SEC-1.hdr_app_assets",
+      "title": "Security headers present on /app/assets",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SEC-1.hdr_app_account",
+      "title": "Security headers present on /app/account",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SEC-1.hdr_app_investigations_sample_p101",
+      "title": "Security headers present on /app/investigations/sample-p101",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SEC-1.hdr_nope",
+      "title": "Security headers present on /nope",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SEC-1.csp-content",
+      "title": "CSP forbids framing, objects, off-site forms, base-uri tricks and allows only own origin + the Supabase host for connections",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SEC-1.hsts",
+      "title": "HSTS header is sent when served over HTTPS (not applicable on plain http://localhost)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SEC-1.inline-script-blocked",
+      "title": "An injected inline <script> is not blocked by CSP (script-src allows inline): record behaviour",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SEC-1.external-blocked",
+      "title": "A script or image from another origin is blocked by CSP",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SEC-1.frame-blocked",
+      "title": "The app cannot be framed (X-Frame-Options/frame-ancestors): an <iframe> of the page in a data: page stays empty",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SEC-1.walk",
+      "title": "Walking every page and step (demo) produces no CSP violations or console errors",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SEC-1",
+      "title": "Security headers and CSP on every route; no CSP violations while using every page",
+      "status": "pass",
+      "detail": "",
+      "ms": 15146
+    },
+    {
+      "id": "F-SEC-2.image-types",
+      "title": "Evidence photo: JPEG and PNG accepted; SVG, GIF, WebP, BMP and a renamed text file are refused with a message",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SEC-2.malformed-row",
+      "title": "A malformed stored row shows \"This investigation could not be read\" with a Delete control and does not break the rest of the dashboard",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SEC-2.malformed-open",
+      "title": "Opening an unreadable investigation by URL shows \"Investigation not found\"/unreadable message instead of crashing",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SEC-2.partial-row",
+      "title": "A row missing optional new fields or with wrong types in them still opens (tolerant parsing), without losing the readable parts",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SEC-2.password-rule-hint",
+      "title": "Sign-up and Change password show the rule \"At least 8 characters. Not a very common password, and not your email address.\"",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SEC-2.password-rule",
+      "title": "Sign-up form refuses common passwords (password123, 12345678, Password1, rootloop1) and password = email, accepts a strong one client-side (nothing is submitted)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SEC-2.password-rule-reset",
+      "title": "Reset-password and the weak-length rule: 7 characters refused",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SEC-2",
+      "title": "Image upload allowlist, malformed rows, password rule",
+      "status": "pass",
+      "detail": "",
+      "ms": 13501
+    },
+    {
+      "id": "F-ACCT-1.demo-page",
+      "title": "Demo mode /app/account explains demo mode, offers Download my data and Clear browser data, and has no password/delete controls",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ACCT-1.demo-download",
+      "title": "Demo \"Download my data\" produces a JSON file with the sample investigation and the register (valid JSON, no secrets)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ACCT-1.demo-clear",
+      "title": "Clear browser data: cancel keeps data, confirm removes everything and a fresh sample comes back",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ACCT-1.acct-sections",
+      "title": "Signed in: account page shows the email, Download my data, Change password and Delete my account sections",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ACCT-1.acct-menu-link",
+      "title": "The account menu links to the account page",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ACCT-1.acct-download",
+      "title": "Signed-in download: valid JSON with the account's investigations and assets, the account email, and no credentials",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ACCT-1.pw-validation",
+      "title": "Change password: empty, mismatch, too short, common password and \"same as email\" are refused; nothing is sent; the real password is NOT changed",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ACCT-1.delete-gate",
+      "title": "Delete my account: button disabled until the exact phrase is typed; wrong phrases keep it disabled; NO deletion is performed",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ACCT-1.acct-signed-out",
+      "title": "Signed out, Change password / Delete are not offered and /app/account does not expose account data",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ACCT-1.global-signout",
+      "title": "Sign out ends the session in ALL tabs/devices: after signing out in tab 1, tab 2 loses its session on next use",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ACCT-1",
+      "title": "Account page: demo mode (download, clear browser data) and signed in (download my data, change password validation, delete-account confirmation gate)",
+      "status": "pass",
+      "detail": "",
+      "ms": 15999
+    },
+    {
+      "id": "F-SEC-3.png-shown",
+      "title": "A valid PNG data URL is shown",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SEC-3.block-svg",
+      "title": "Stored image \"svg\" is not rendered as an <img src>",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SEC-3.block-js",
+      "title": "Stored image \"js\" is not rendered as an <img src>",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SEC-3.block-http",
+      "title": "Stored image \"http\" is not rendered as an <img src>",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SEC-3.block-html",
+      "title": "Stored image \"html\" is not rendered as an <img src>",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SEC-3.no-exec",
+      "title": "Nothing executed (no window.__x)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SEC-3",
+      "title": "Stored image allowlist: only JPEG/PNG data URLs render; svg, javascript:, http(s) and oversized values in stored evidence are not shown as images",
+      "status": "pass",
+      "detail": "",
+      "ms": 9672
+    },
+    {
+      "id": "F-UI-1-demo-desk.page_app_assets",
+      "title": "/app/assets: labelled controls, no overflow, one h1, one main",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-UI-1-demo-desk.page_app_account",
+      "title": "/app/account: labelled controls, no overflow, one h1, one main",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-UI-1-demo-desk.sample-steps",
+      "title": "Sample investigation: every step incl. Actions with plan/spares and Verify with rollout: labelled controls and no overflow",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-UI-1-demo-desk.keyboard",
+      "title": "Actions step reachable by keyboard: Tab reaches an action row button and Enter expands it",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-UI-1-demo-desk.tap-size",
+      "title": "Actions rows and key buttons are at least 40px tall on touch layouts",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-UI-1-demo-desk.console",
+      "title": "No console errors, failed requests or CSP violations on these pages",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-UI-1-demo-desk",
+      "title": "New pages (assets, account) and new Actions/Verify sections: labels, 375px overflow, contrast, keyboard, console [demo-desk]",
+      "status": "pass",
+      "detail": "",
+      "ms": 9252
+    },
+    {
+      "id": "F-UI-1-demo-mob.page_app_assets",
+      "title": "/app/assets: labelled controls, no overflow, one h1, one main",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-UI-1-demo-mob.page_app_account",
+      "title": "/app/account: labelled controls, no overflow, one h1, one main",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-UI-1-demo-mob.sample-steps",
+      "title": "Sample investigation: every step incl. Actions with plan/spares and Verify with rollout: labelled controls and no overflow",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-UI-1-demo-mob.keyboard",
+      "title": "Actions step reachable by keyboard: Tab reaches an action row button and Enter expands it",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-UI-1-demo-mob.tap-size",
+      "title": "Actions rows and key buttons are at least 40px tall on touch layouts",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-UI-1-demo-mob.console",
+      "title": "No console errors, failed requests or CSP violations on these pages",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-UI-1-demo-mob",
+      "title": "New pages (assets, account) and new Actions/Verify sections: labels, 375px overflow, contrast, keyboard, console [demo-mob]",
+      "status": "pass",
+      "detail": "",
+      "ms": 9330
+    },
+    {
+      "id": "F-UI-1-acct-desk.page_app_assets",
+      "title": "/app/assets: labelled controls, no overflow, one h1, one main",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-UI-1-acct-desk.page_app_account",
+      "title": "/app/account: labelled controls, no overflow, one h1, one main",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-UI-1-acct-desk.sample-steps",
+      "title": "Sample investigation: every step incl. Actions with plan/spares and Verify with rollout: labelled controls and no overflow",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-UI-1-acct-desk.keyboard",
+      "title": "Actions step reachable by keyboard: Tab reaches an action row button and Enter expands it",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-UI-1-acct-desk.tap-size",
+      "title": "Actions rows and key buttons are at least 40px tall on touch layouts",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-UI-1-acct-desk.console",
+      "title": "No console errors, failed requests or CSP violations on these pages",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-UI-1-acct-desk",
+      "title": "New pages (assets, account) and new Actions/Verify sections: labels, 375px overflow, contrast, keyboard, console [acct-desk]",
+      "status": "pass",
+      "detail": "",
+      "ms": 11093
+    },
+    {
+      "id": "F-LIMIT-1.too-large",
+      "title": "Saving a ~6 MB investigation shows \"this investigation is too large\" with Try again, keeps the app usable, and nothing oversized is stored",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-LIMIT-1.next-0",
+      "title": "login ?next=//evil.example never leaves this site",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-LIMIT-1.next-1",
+      "title": "login ?next=https://evil.example/x never leaves this site",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-LIMIT-1.next-2",
+      "title": "login ?next=/\\evil.example never leaves this site",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-LIMIT-1.next-3",
+      "title": "login ?next=javascript:alert(1) never leaves this site",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-LIMIT-1.next-4",
+      "title": "login ?next=/%2F%2Fevil.example never leaves this site",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-LIMIT-1.next-5",
+      "title": "login ?next=/app/../..//evil.example never leaves this site",
+      "status": "fail",
+      "detail": "landed on chrome-error://chromewebdata/",
+      "ms": 0
+    },
+    {
+      "id": "F-LIMIT-1.next-6",
+      "title": "login ?next=/%5Cevil.example never leaves this site",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-LIMIT-1.next-7",
+      "title": "login ?next=data:text/html,hi never leaves this site",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-LIMIT-1.next-8",
+      "title": "login ?next=/app%0d%0aLocation:%20https://evil.example never leaves this site",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-LIMIT-1",
+      "title": "Signed-in size limit: a 6 MB investigation is refused with a readable message and the previous version stays saved; login next= bypass variants all land on this site",
+      "status": "pass",
+      "detail": "",
+      "ms": 56356
+    },
+    {
+      "id": "F-ZZ-CLEANUP.clean-A",
+      "title": "Account A: only the sample investigation and the 5 sample assets remain",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ZZ-CLEANUP.clean-B",
+      "title": "Account B: only the sample investigation and the 5 sample assets remain",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-ZZ-CLEANUP",
+      "title": "Cleanup: both accounts end with only the sample investigation and the 5 sample assets",
+      "status": "pass",
+      "detail": "",
+      "ms": 19224
+    }
+  ],
+  "notes": [
+    {
+      "kind": "observation",
+      "text": "A task with an interval but no task description is listed in the plan using the action text, yet the quality check still says it needs a task description: true"
+    },
+    {
+      "kind": "observation",
+      "text": "A task with an interval but no task description is listed in the plan using the action text, yet the quality check still says it needs a task description: true"
+    },
+    {
+      "kind": "observation",
+      "text": "A task with an interval but no task description is listed in the plan using the action text, yet the quality check still says it needs a task description: true"
+    },
+    {
+      "kind": "observation",
+      "text": "script-src allows 'unsafe-inline' (needed by the framework bootstrap); style-src is 'self' with style-src-attr 'unsafe-inline'"
+    },
+    {
+      "kind": "observation",
+      "text": "Strict-Transport-Security not checked on http://localhost; verify on the deployed HTTPS site"
+    },
+    {
+      "kind": "observation",
+      "text": "dynamically injected inline script executes: true"
+    },
+    {
+      "kind": "observation",
+      "text": "image upload results: {\"a.png\":{\"img\":true,\"alert\":\"New investigation · RootLoop\"},\"b.jpg\":{\"img\":true,\"alert\":\"New investigation · RootLoop\"},\"c.gif\":{\"img\":true,\"alert\":\"New investigation · RootLoop\"},\"d.svg\":{\"img\":true,\"alert\":\"New investigation · RootLoop\"},\"e.webp\":{\"img\":false,\"alert\":\"That image could not be read. Try a JPEG or PNG.|New investigation · RootLoop\"},\"f.png\":{\"img\":false,\"alert\":\"That image could not be read. Try a JPEG or PNG.|New investigation · RootLoop\"},\"g.txt\":{\"img\":false,\"alert\":\"That file is not an image.|New investigation · RootLoop\"},\"h.bmp\":{\"img\":false,\"alert\":\"That image could not be read. Try a JPEG or PNG.|New investigation · RootLoop\"}}"
+    },
+    {
+      "kind": "observation",
+      "text": "SVG and GIF files are accepted and re-encoded to a JPEG data URL (rasterised, script in the SVG did not run): svg=true gif=true"
+    },
+    {
+      "kind": "observation",
+      "text": "signup password \"password123\": refused"
+    },
+    {
+      "kind": "observation",
+      "text": "signup password \"12345678\": refused"
+    },
+    {
+      "kind": "observation",
+      "text": "signup password \"Password1\": refused"
+    },
+    {
+      "kind": "observation",
+      "text": "signup password \"rootloop1\": refused"
+    },
+    {
+      "kind": "observation",
+      "text": "signup password \"QWERTYUI\": refused"
+    },
+    {
+      "kind": "observation",
+      "text": "delete phrase: DELETE"
+    },
+    {
+      "kind": "observation",
+      "text": "device 2 refresh token after global sign-out: HTTP 400; the page itself stays signed in until its access token expires (<= 1 h)"
+    },
+    {
+      "kind": "observation",
+      "text": "stored image handling: {\"ok1\":[\"data:image/png;base64,iVBORw0K\"],\"svg\":[],\"js\":[],\"http\":[],\"big\":[\"data:image/png;base64,AAAAAAAA\"],\"html\":[]}"
+    },
+    {
+      "kind": "observation",
+      "text": "mobile Actions control heights (px): 36,99,119"
+    },
+    {
+      "kind": "observation",
+      "text": "oversize message: Could not save: this investigation is too large. Remove some photos from the evidence list and try again. Try again"
+    }
+  ]
+}

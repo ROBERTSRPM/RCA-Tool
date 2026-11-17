@@ -2,7 +2,7 @@
 const fs = require('fs');
 const loadFrom = (dir) => (n) => { try { return JSON.parse(fs.readFileSync(__dirname + '/results/' + dir + '/' + n + '.json')); } catch { return { results: [], notes: [] }; } };
 const sets = {};
-for (const dir of ['local', 'live']) { const L = dir === 'local' ? loadFrom('..') : loadFrom('../round2/live'); const parts = (dir === 'local' ? ['demo', 'loss', 'features', 'account'] : ['demo', 'loss', 'account']).map(L); const rows = parts.flatMap(p => p.results); const leaf = rows.filter(r => !rows.some(o => o.id.startsWith(r.id + '.'))); sets[dir] = { parts, rows, leaf, pass: leaf.filter(r => r.status === 'pass').length, notes: parts.flatMap(p => p.notes), base: parts[0].base }; }
+for (const dir of ['local', 'live']) { const L = dir === 'local' ? loadFrom('.') : loadFrom('../round2/live'); const parts = (dir === 'local' ? ['demo', 'loss', 'features', 'account'] : ['demo', 'loss', 'account']).map(L); const rows = parts.flatMap(p => p.results); const leaf = rows.filter(r => !rows.some(o => o.id.startsWith(r.id + '.')) || r.status === "fail"); sets[dir] = { parts, rows, leaf, pass: leaf.filter(r => r.status === 'pass').length, notes: parts.flatMap(p => p.notes), base: parts[0].base }; }
 const L0 = sets.local, L1 = sets.live;
 const demo = { base: L0.base, notes: L0.notes }, acc = { notes: L0.notes };
 const leaf = L0.leaf, pass = L0.pass;
