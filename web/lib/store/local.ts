@@ -1,7 +1,15 @@
 import { blankInvestigation, cloneInvestigation } from "../investigation";
+import { readRow, sanitiseForSave } from "../normalize";
 import { buildSample, SAMPLE_ID } from "../sample";
 import type { Investigation, InvestigationPatch } from "../types";
-import { CONFLICT_MESSAGE, nextTimestamp, StoreError, type InvestigationStore } from "./types";
+import {
+  CONFLICT_MESSAGE,
+  nextTimestamp,
+  StoreError,
+  type InvestigationStore,
+  type ListResult,
+  type RawRow,
+} from "./types";
 
 export const DATA_KEY = "rca.investigations.v1";
 const SEEDED_KEY = "rca.seeded.v1";
@@ -55,12 +63,13 @@ function isQuotaError(e: unknown): boolean {
 export class LocalStorageInvestigationStore implements InvestigationStore {
   constructor(private readonly storage: () => KeyValueStorage = resolveStorage) {}
 
-  private read(): Investigation[] {
+  /** Raw stored entries (anything JSON), seeding the sample on first visit. */
+  private readRaw(): unknown[] {
     const s = this.storage();
     if (s.getItem(SEEDED_KEY) !== "1") {
       // First visit: seed the illustrative sample.
       const seeded = [buildSample()];
-      this.write(seeded);
+      this.write(seeded, []);
       try {
         s.setItem(SEEDED_KEY, "1");
       } catch {
@@ -72,15 +81,50 @@ export class LocalStorageInvestigationStore implements InvestigationStore {
       const raw = s.getItem(DATA_KEY);
       if (!raw) return [];
       const parsed: unknown = JSON.parse(raw);
-      return Array.isArray(parsed) ? (parsed as Investigation[]) : [];
+      return Array.isArray(parsed) ? parsed : [];
     } catch {
       return [];
     }
   }
 
-  private write(all: Investigation[]): void {
+  /** Readable investigations and the ids of entries that could not be read. */
+  private readAll(): ListResult {
+    const items: Investigation[] = [];
+    const unreadable: { id: string }[] = [];
+    for (const raw of this.readRaw()) {
+      const id =
+        typeof raw === "object" && raw !== null && typeof (raw as { id?: unknown }).id === "string"
+          ? (raw as { id: string }).id
+          : "";
+      const r = readRow(id, raw);
+      if (r.ok) items.push(r.inv);
+      else if (id) unreadable.push({ id });
+      // An entry with no id at all cannot be shown or deleted by id; it is dropped on the next write.
+    }
+    return { items, unreadable };
+  }
+
+  private read(): Investigation[] {
+    return this.readAll().items;
+  }
+
+  /** Entries that cannot be read but have an id: kept as they are, so the user can still delete them. */
+  private unreadableRaw(): unknown[] {
+    return this.readRaw().filter((raw) => {
+      const id =
+        typeof raw === "object" && raw !== null && typeof (raw as { id?: unknown }).id === "string"
+          ? (raw as { id: string }).id
+          : "";
+      return id !== "" && !readRow(id, raw).ok;
+    });
+  }
+
+  private write(all: Investigation[], keep: unknown[] = this.unreadableRaw()): void {
     try {
-      this.storage().setItem(DATA_KEY, JSON.stringify(all));
+      this.storage().setItem(
+        DATA_KEY,
+        JSON.stringify([...all.map((i) => sanitiseForSave(i)), ...keep]),
+      );
     } catch (e) {
       if (isQuotaError(e)) {
         throw new StoreError(
@@ -94,6 +138,41 @@ export class LocalStorageInvestigationStore implements InvestigationStore {
 
   async list() {
     return this.read().sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+  }
+
+  async listAll(): Promise<ListResult> {
+    const { items, unreadable } = this.readAll();
+    return { items: items.sort((a, b) => b.updatedAt.localeCompare(a.updatedAt)), unreadable };
+  }
+
+  async exportAll(): Promise<RawRow[]> {
+    return this.readRaw().map((raw) => {
+      const o = (typeof raw === "object" && raw !== null ? raw : {}) as { id?: unknown; updatedAt?: unknown };
+      return {
+        id: typeof o.id === "string" ? o.id : "",
+        updatedAt: typeof o.updatedAt === "string" ? o.updatedAt : null,
+        data: raw,
+      };
+    });
+  }
+
+  /** Removes everything this app keeps in the browser (investigations and flags). */
+  clearAll(): void {
+    const s = this.storage();
+    s.removeItem(DATA_KEY);
+    s.removeItem(SEEDED_KEY);
+    if (typeof window !== "undefined") {
+      try {
+        const keys: string[] = [];
+        for (let i = 0; i < window.localStorage.length; i++) {
+          const k = window.localStorage.key(i);
+          if (k && k.startsWith("rca.")) keys.push(k);
+        }
+        keys.forEach((k) => window.localStorage.removeItem(k));
+      } catch {
+        /* storage blocked: nothing more to clear */
+      }
+    }
   }
 
   async get(id: string) {
@@ -124,7 +203,11 @@ export class LocalStorageInvestigationStore implements InvestigationStore {
   }
 
   async delete(id: string) {
-    this.write(this.read().filter((i) => i.id !== id));
+    const keep = this.unreadableRaw().filter((raw) => (raw as { id: string }).id !== id);
+    this.write(
+      this.read().filter((i) => i.id !== id),
+      keep,
+    );
   }
 
   async duplicate(id: string) {

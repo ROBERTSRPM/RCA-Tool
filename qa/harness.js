@@ -4,7 +4,11 @@ const path = require('path');
 const { chromium } = require('playwright');
 
 const BASE = (process.env.BASE_URL || 'http://localhost:3555').replace(/\/$/, '');
-const PASSWORD = 'Qa-Test-7f3k9x2m';
+const PASSWORD = process.env.QA_PASSWORD;
+if (!PASSWORD) {
+  console.error('QA_PASSWORD is not set. Export the QA test accounts\' password first, e.g.:\n  QA_PASSWORD=\'...\' BASE_URL=http://localhost:3555 node run-all.js');
+  process.exit(1);
+}
 const USER_A = 'qa-user-a@rca-tool.test';
 const USER_B = 'qa-user-b@rca-tool.test';
 const SHOTS = path.join(__dirname, 'shots');

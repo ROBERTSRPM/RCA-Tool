@@ -6,6 +6,7 @@ import {
   validateLoginPassword,
   validateNewPassword,
   validatePasswordMatch,
+  PASSWORD_RULE_HINT,
 } from "./validate";
 
 describe("auth validation", () => {
@@ -31,11 +32,66 @@ describe("auth validation", () => {
     expect(friendlyAuthError({ message: "boom" }, "login")).toMatch(/Something went wrong/);
     expect(friendlyAuthError(null, "login")).toMatch(/Something went wrong/);
   });
-  it("only allows same-site redirect paths", () => {
+  it("rejects very common passwords and the email", () => {
+    expect(validateNewPassword("password")).toMatch(/too common/);
+    expect(validateNewPassword("Password123")).toMatch(/too common/);
+    expect(validateNewPassword("12345678")).toMatch(/too common/);
+    expect(validateNewPassword("QWERTYUIOP")).toMatch(/too common/);
+    expect(validateNewPassword("short")).toMatch(/8 characters/);
+    expect(validateNewPassword("qa-user-a@rca-tool.test", "QA-user-a@rca-tool.test")).toMatch(/email/);
+    expect(validateNewPassword("qa-user-a@rca-tool.test", "other@x.test")).toBeNull();
+    expect(validateNewPassword("tr0ub4dor&3x")).toBeNull();
+    expect(PASSWORD_RULE_HINT).toMatch(/8 characters/);
+  });
+  it("allows same-site relative paths", () => {
     expect(safeNext("/app/investigations/1")).toBe("/app/investigations/1");
-    expect(safeNext("https://evil.test")).toBe("/app");
-    expect(safeNext("//evil.test")).toBe("/app");
+    expect(safeNext("/app/investigations/abc#cause")).toBe("/app/investigations/abc#cause");
+    expect(safeNext("/app?x=1&y=2")).toBe("/app?x=1&y=2");
+    expect(safeNext("/app", "/app", "https://rca-tool-omega.vercel.app")).toBe("/app");
     expect(safeNext(null)).toBe("/app");
-    expect(safeNext("/\\evil")).toBe("/app");
+    expect(safeNext(undefined)).toBe("/app");
+    expect(safeNext("")).toBe("/app");
+    expect(safeNext("/x", "/home")).toBe("/x");
+  });
+  it("rejects every open-redirect payload from the audit", () => {
+    const payloads = [
+      "//evil.example.com",
+      "/\\evil.example.com",
+      "/\tevil.example.com",
+      "https://evil.example.com",
+      "http://evil.example.com/x",
+      "javascript:alert(1)",
+      "JaVaScRiPt:alert(1)",
+      "data:text/html,<script>alert(1)</script>",
+      "/\t/evil.example.com", // literal tab
+      "/\n/evil.example.com", // literal newline
+      "/\r/evil.example.com",
+      "/\u0000/evil.example.com",
+      "/\u001f/evil.example.com",
+      "/\u007f/evil.example.com",
+      "/%09/evil.example.com", // encoded tab
+      "/%0a/evil.example.com",
+      "/%0A/evil.example.com",
+      "/%0d/evil.example.com",
+      "/%2F/evil.example.com", // encoded second slash
+      "/%2f%2fevil.example.com",
+      "%2F%2Fevil.example.com",
+      "/%5Cevil.example.com", // encoded backslash
+      "/%5cevil.example.com",
+      "%2F%09%2Fevil.example.com",
+      "///evil.example.com",
+      "/%",
+      " //evil.example.com",
+      "evil.example.com",
+      "app",
+      "\\evil.example.com",
+    ];
+    for (const p of payloads) {
+      expect(safeNext(p), JSON.stringify(p)).toBe("/app");
+      expect(safeNext(p, "/app", "https://rca-tool-omega.vercel.app"), JSON.stringify(p)).toBe("/app");
+    }
+  });
+  it("uses the given fallback", () => {
+    expect(safeNext("//evil.example.com", "/login")).toBe("/login");
   });
 });

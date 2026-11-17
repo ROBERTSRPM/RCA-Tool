@@ -1,11 +1,27 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { blankInvestigation, cloneInvestigation } from "../investigation";
+import { readRow, sanitiseForSave } from "../normalize";
 import { buildSample, SAMPLE_ID } from "../sample";
 import type { Investigation, InvestigationPatch } from "../types";
-import { CONFLICT_MESSAGE, nextTimestamp, StoreError, type InvestigationStore } from "./types";
+import {
+  CONFLICT_MESSAGE,
+  nextTimestamp,
+  StoreError,
+  type InvestigationStore,
+  type ListResult,
+  type RawRow,
+} from "./types";
 
 const TABLE = "investigations";
 const SEEDED_FLAG = "rca_seeded";
+
+/** Mirrors the database limits (see supabase/migrations). */
+export const MAX_ROW_BYTES = 5 * 1024 * 1024;
+export const MAX_INVESTIGATIONS = 500;
+
+export const TOO_LARGE_MESSAGE =
+  "Could not save: this investigation is too large. Remove some photos from the evidence list and try again.";
+export const LIMIT_MESSAGE = `Could not save: you have reached the limit of ${MAX_INVESTIGATIONS} investigations. Delete some you no longer need, then try again.`;
 
 interface PgError {
   code?: string;
@@ -31,6 +47,18 @@ export function toStoreError(e: unknown, action: string): StoreError {
     msg.includes("abort") ||
     msg.includes("timed out")) {
     return new StoreError(`Could not ${action}: no connection to the server.`, "network");
+  }
+  // Database limits (supabase/migrations): row size check constraint, per-user row cap trigger.
+  if (
+    err.status === 413 ||
+    msg.includes("investigations_data_size") ||
+    msg.includes("payload too large") ||
+    msg.includes("request entity too large")
+  ) {
+    return new StoreError(TOO_LARGE_MESSAGE, "too_large");
+  }
+  if (msg.includes("investigation limit reached")) {
+    return new StoreError(LIMIT_MESSAGE, "limit");
   }
   if (err.code === "42501") {
     return new StoreError(`Could not ${action}: not allowed.`, "auth");
@@ -61,7 +89,18 @@ export class SupabaseInvestigationStore implements InvestigationStore {
     private readonly userId: string,
   ) {}
 
-  private async insertRow(inv: Investigation): Promise<void> {
+  /** Fails before sending when the row is certainly over the database limit. */
+  private assertSize(inv: Investigation): void {
+    // JSON.stringify is a little shorter than the database's jsonb text, so this
+    // only catches the clear cases; the database check is the real limit.
+    if (JSON.stringify(inv).length > MAX_ROW_BYTES) {
+      throw new StoreError(TOO_LARGE_MESSAGE, "too_large");
+    }
+  }
+
+  private async insertRow(raw: Investigation): Promise<void> {
+    const inv = sanitiseForSave(raw);
+    this.assertSize(inv);
     const { error } = await this.db
       .from(TABLE)
       .insert({ id: inv.id, data: inv, updated_at: inv.updatedAt });
@@ -94,22 +133,46 @@ export class SupabaseInvestigationStore implements InvestigationStore {
     return this.seeding;
   }
 
-  private async fetchAll(): Promise<Investigation[]> {
+  private async fetchAll(): Promise<ListResult> {
     const { data, error } = await this.db
       .from(TABLE)
-      .select("data")
+      .select("id, data")
       .order("updated_at", { ascending: false });
     if (error) throw toStoreError(error, "load your investigations");
-    return (data ?? []).map((r) => r.data as Investigation);
+    const items: Investigation[] = [];
+    const unreadable: { id: string }[] = [];
+    for (const r of data ?? []) {
+      const row = readRow(String(r.id), r.data);
+      if (row.ok) items.push(row.inv);
+      else unreadable.push({ id: row.id });
+    }
+    return { items, unreadable };
+  }
+
+  async listAll(): Promise<ListResult> {
+    let res = await this.fetchAll();
+    if (res.items.length + res.unreadable.length === 0) {
+      await this.seedIfNew();
+      res = await this.fetchAll();
+    }
+    return res;
   }
 
   async list() {
-    let rows = await this.fetchAll();
-    if (rows.length === 0) {
-      await this.seedIfNew();
-      rows = await this.fetchAll();
-    }
-    return rows;
+    return (await this.listAll()).items;
+  }
+
+  async exportAll(): Promise<RawRow[]> {
+    const { data, error } = await this.db
+      .from(TABLE)
+      .select("id, data, updated_at")
+      .order("updated_at", { ascending: false });
+    if (error) throw toStoreError(error, "download your data");
+    return (data ?? []).map((r) => ({
+      id: String(r.id),
+      updatedAt: (r.updated_at as string | null) ?? null,
+      data: r.data,
+    }));
   }
 
   async get(id: string) {
@@ -119,10 +182,13 @@ export class SupabaseInvestigationStore implements InvestigationStore {
       .eq("id", id)
       .maybeSingle();
     if (error) throw toStoreError(error, "load the investigation");
-    if (data) return data.data as Investigation;
+    if (data) {
+      const row = readRow(id, data.data);
+      return row.ok ? row.inv : null;
+    }
     // The landing page links to the shared sample id; map it to the account's own sample.
     if (id === SAMPLE_ID) {
-      return (await this.fetchAll()).find((i) => i.isSample) ?? null;
+      return (await this.fetchAll()).items.find((i) => i.isSample) ?? null;
     }
     return null;
   }
@@ -143,15 +209,20 @@ export class SupabaseInvestigationStore implements InvestigationStore {
       .maybeSingle();
     if (readErr) throw toStoreError(readErr, "save");
     if (!cur) throw new StoreError("Investigation not found.", "not_found");
-    const stored = cur.data as Investigation;
+    const storedRow = readRow(id, cur.data);
+    if (!storedRow.ok) {
+      throw new StoreError("Could not save: this investigation could not be read.", "unknown");
+    }
+    const stored = storedRow.inv;
     if (expectedUpdatedAt !== undefined && stored.updatedAt !== expectedUpdatedAt) {
       throw new StoreError(CONFLICT_MESSAGE, "conflict");
     }
-    const next: Investigation = {
+    const next: Investigation = sanitiseForSave({
       ...stored,
       ...patch,
       updatedAt: nextTimestamp(stored.updatedAt),
-    };
+    });
+    this.assertSize(next);
     // Optimistic concurrency: the write only matches if the row's updated_at is
     // still the one we just read, so a save from another tab or device between
     // our read and write is never overwritten.
@@ -195,9 +266,9 @@ export class SupabaseInvestigationStore implements InvestigationStore {
     const fresh = { ...buildSample(), id: sampleId, updatedAt: nextTimestamp() };
     const { error } = await this.db
       .from(TABLE)
-      .upsert({ id: sampleId, data: fresh, updated_at: fresh.updatedAt }, { onConflict: "id" });
+      .upsert({ id: sampleId, data: sanitiseForSave(fresh), updated_at: fresh.updatedAt }, { onConflict: "id" });
     if (error) throw toStoreError(error, "reset the sample");
-    const others = (await this.fetchAll()).filter((i) => i.isSample && i.id !== sampleId);
+    const others = (await this.fetchAll()).items.filter((i) => i.isSample && i.id !== sampleId);
     for (const s of others) await this.delete(s.id);
   }
 

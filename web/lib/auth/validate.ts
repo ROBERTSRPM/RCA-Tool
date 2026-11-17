@@ -15,11 +15,42 @@ export function validateLoginPassword(password: string): string | null {
   return password ? null : "Enter your password.";
 }
 
-/** For choosing a password (sign-up and reset). */
-export function validateNewPassword(password: string): string | null {
+/** The rule, in one sentence, shown next to every "choose a password" field. */
+export const PASSWORD_RULE_HINT =
+  "At least 8 characters. Not a very common password, and not your email address.";
+
+/**
+ * A short list of very common passwords (all lower case, at least 8 characters
+ * so they pass the length rule on their own). This is a convenience check in
+ * the browser; the real minimum and any breached-password check are enforced by
+ * the Supabase Auth settings.
+ */
+export const COMMON_PASSWORDS: ReadonlySet<string> = new Set([
+  "password", "password1", "password12", "password123", "passw0rd", "p@ssw0rd", "p@ssword",
+  "12345678", "123456789", "1234567890", "123123123", "11111111", "00000000", "87654321",
+  "qwertyui", "qwerty123", "qwertyuiop", "qwerty12", "1q2w3e4r", "1qaz2wsx", "q1w2e3r4",
+  "abcd1234", "abc12345", "abcdefgh", "asdfghjk", "asdf1234", "zxcvbnm1",
+  "iloveyou", "welcome1", "welcome123", "letmein1", "letmein123", "admin123", "administrator",
+  "changeme", "changeme123", "trustno1", "football", "baseball", "monkey123", "dragon123",
+  "sunshine", "princess", "superman", "master123", "starwars", "whatever", "shadow123",
+  "rootloop", "rootloop1", "rootloop123",
+]);
+
+/**
+ * For choosing a password (sign-up, reset, change). Pass the account email to
+ * also reject a password equal to it.
+ */
+export function validateNewPassword(password: string, email?: string | null): string | null {
   if (!password) return "Choose a password.";
   if (password.length < MIN_PASSWORD_LENGTH) {
     return `Use at least ${MIN_PASSWORD_LENGTH} characters.`;
+  }
+  const lower = password.toLowerCase();
+  if (email && lower === email.trim().toLowerCase()) {
+    return "The password must not be the same as your email address.";
+  }
+  if (COMMON_PASSWORDS.has(lower)) {
+    return "That password is too common. Choose something harder to guess.";
   }
   return null;
 }
@@ -70,10 +101,41 @@ export function friendlyAuthError(
   return "Something went wrong. Please try again.";
 }
 
-/** Only same-site relative paths are allowed as a post-login destination. */
-export function safeNext(next: string | null | undefined, fallback = "/app"): string {
-  if (!next || !next.startsWith("/") || next.startsWith("//") || next.includes("\\")) {
+/** Characters never allowed in a redirect target: C0 controls, DEL, backslash. */
+const FORBIDDEN_RE = /[\u0000-\u001f\u007f\\]/;
+
+/** Stands in for the site origin where none is supplied (tests, server rendering). */
+const PLACEHOLDER_ORIGIN = "https://site.invalid";
+
+/**
+ * Only same-origin relative paths are allowed as a post-login destination.
+ * The value is rejected when it contains control characters (a tab or newline
+ * is stripped by browsers, which turns "/<TAB>/host" into "//host") or
+ * backslashes, when it does not start with a single "/", or when it parses to
+ * another origin. The same checks run on the percent-decoded value. The result
+ * is rebuilt from the parsed URL, never the raw input.
+ */
+export function safeNext(
+  next: string | null | undefined,
+  fallback = "/app",
+  origin: string = PLACEHOLDER_ORIGIN,
+): string {
+  if (typeof next !== "string" || !next) return fallback;
+  if (FORBIDDEN_RE.test(next)) return fallback;
+  if (!next.startsWith("/") || next.startsWith("//")) return fallback;
+  let decoded: string;
+  try {
+    decoded = decodeURIComponent(next);
+  } catch {
     return fallback;
   }
-  return next;
+  if (FORBIDDEN_RE.test(decoded) || decoded.startsWith("//")) return fallback;
+  try {
+    const site = new URL(origin).origin;
+    const u = new URL(next, site);
+    if (u.origin !== site) return fallback;
+    return u.pathname + u.search + u.hash;
+  } catch {
+    return fallback;
+  }
 }

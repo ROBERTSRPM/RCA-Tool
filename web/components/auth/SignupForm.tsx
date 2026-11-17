@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   friendlyAuthError,
+  PASSWORD_RULE_HINT,
   validateEmail,
   validateNewPassword,
   validatePasswordMatch,
@@ -29,13 +30,13 @@ export function SignupForm() {
   }, [state.status, router, sentTo]);
 
   const emailErr = touched.email ? validateEmail(email) : null;
-  const pwErr = touched.password ? validateNewPassword(password) : null;
+  const pwErr = touched.password ? validateNewPassword(password, email) : null;
   const confirmErr = touched.confirm ? validatePasswordMatch(password, confirm) : null;
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     setTouched({ email: true, password: true, confirm: true });
-    if (validateEmail(email) || validateNewPassword(password) || validatePasswordMatch(password, confirm)) {
+    if (validateEmail(email) || validateNewPassword(password, email) || validatePasswordMatch(password, confirm)) {
       return;
     }
     const db = getSupabase();
@@ -105,7 +106,7 @@ export function SignupForm() {
           name="password"
           type="password"
           autoComplete="new-password"
-          hint="At least 8 characters."
+          hint={PASSWORD_RULE_HINT}
           value={password}
           onChange={setPassword}
           onBlur={() => setTouched((t) => ({ ...t, password: true }))}

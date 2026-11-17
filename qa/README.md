@@ -1,23 +1,24 @@
 # RootLoop QA suite
 
-Black-box Playwright tests (plain Node scripts, no test runner needed). They only read
-`BASE_URL` (default `http://localhost:3555`); nothing under `web/` or `video/` is touched.
+Black-box Playwright tests (plain Node scripts, no test runner needed). They read
+`BASE_URL` (default `http://localhost:3555`) and `QA_PASSWORD` (required); nothing under `web/` or `video/` is touched.
 
 ## Prerequisites
 - Node 22 with the globally installed `playwright` (`require('playwright')` must resolve; do not install it).
 - The app reachable at `BASE_URL`. Local: `cd web && npm run build && npm start -- -p 3555`.
-- The two existing test accounts (password `Qa-Test-7f3k9x2m`): `qa-user-a@rca-tool.test`, `qa-user-b@rca-tool.test`.
+- The two existing test accounts: `qa-user-a@rca-tool.test`, `qa-user-b@rca-tool.test`. Their password is not stored in the repository: set it in the environment variable `QA_PASSWORD` (the scripts exit with a clear message if it is unset). Ask the project owner for it.
   The suite never signs up and never submits forgot-password with a real address.
 
 ## Run everything (against any URL)
 ```bash
 cd /home/user/rca-platform/qa
-BASE_URL=https://your-deployed-site.example node run-all.js     # default http://localhost:3555
+QA_PASSWORD='<test password>' BASE_URL=https://your-deployed-site.example node run-all.js     # default http://localhost:3555
 ```
 `run-all.js` = account cleanup -> demo suite -> loss feature suite (`loss.js`) -> signed-in suite -> control inventory, then prints totals.
 Takes roughly 10-15 minutes.
 
 ## Run parts
+(`QA_PASSWORD` must be set for these too.)
 ```bash
 BASE_URL=... node demo.js              # demo mode (signed out), 375px and 1440px
 BASE_URL=... node demo.js D-TREE       # only tests whose id starts with D-TREE

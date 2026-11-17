@@ -51,6 +51,8 @@ export function getLocalStore(): LocalStorageInvestigationStore {
  */
 const routed: InvestigationStore = {
   list: async () => (await ready, currentStore().list()),
+  listAll: async () => (await ready, currentStore().listAll()),
+  exportAll: async () => (await ready, currentStore().exportAll()),
   get: async (id) => (await ready, currentStore().get(id)),
   create: async (seed) => (await ready, currentStore().create(seed)),
   update: async (id, patch, expected) =>

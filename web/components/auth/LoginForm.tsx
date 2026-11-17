@@ -11,7 +11,11 @@ import { useAuth } from "./AuthProvider";
 export function LoginForm() {
   const router = useRouter();
   const params = useSearchParams();
-  const next = safeNext(params.get("next"));
+  const next = safeNext(
+    params.get("next"),
+    "/app",
+    typeof window === "undefined" ? undefined : window.location.origin,
+  );
   const { state } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

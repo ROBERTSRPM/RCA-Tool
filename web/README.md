@@ -20,7 +20,7 @@ npm test             # vitest unit tests
 
 ## Structure
 
-- `app/` routes: `/` landing, `/app` dashboard, `/app/investigations/[id]` workspace, `/login`, `/signup`, `/forgot-password`, `/reset-password`.
+- `app/` routes: `/` landing, `/app` dashboard, `/app/account` account page (data export, change password, delete account), `/app/investigations/[id]` workspace, `/login`, `/signup`, `/forgot-password`, `/reset-password`.
 - `components/auth/` auth provider, header account menu, auth forms, the `/app` shell (demo banner, one-time import of browser data into a new account). `lib/auth/validate.ts` pure validation and error messages.
 - `components/workspace/` the 7-step workspace; `cause/` holds the Tree, 5 Whys and Fishbone views over one tree.
 - `lib/types.ts` all domain types (one module).
@@ -30,3 +30,6 @@ npm test             # vitest unit tests
 - `lib/tree.ts` pure immutable cause-tree operations (tested).
 - `lib/sample.ts` the illustrative sample investigation (seeded on first visit).
 - `lib/status.ts` investigation status is derived from the data, not stored.
+- `lib/normalize.ts` tolerant reader for stored rows (partial or malformed `data` never crashes the app; unreadable rows show a Delete card) and the evidence-image rule (only base64 jpeg/png/webp data URLs).
+- `next.config.ts` security headers (CSP, frame, nosniff, referrer, permissions policies) for all routes.
+- `supabase/migrations/` plain SQL for the owner to review and apply by hand: row size and per-user row limits, `data` must be an object, `sample-` id rule, and `delete_own_account()`. The app works before they are applied; "Delete my account" shows a clear error until `delete_own_account()` exists.

@@ -62,7 +62,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const signOut = useCallback(async () => {
-    await getSupabase()?.auth.signOut();
+    // Global scope: revoke every session of this account, not just this browser.
+    const db = getSupabase();
+    if (!db) return;
+    const { error } = await db.auth.signOut({ scope: "global" });
+    // If the server refuses (expired session, deleted user) still end it here.
+    if (error) await db.auth.signOut({ scope: "local" });
   }, []);
 
   const value = useMemo(

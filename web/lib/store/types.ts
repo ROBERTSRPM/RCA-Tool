@@ -1,4 +1,20 @@
+import type { UnreadableRow } from "../normalize";
 import type { Investigation, InvestigationPatch } from "../types";
+
+export type { UnreadableRow };
+
+/** What the dashboard shows: readable investigations plus rows that could not be read. */
+export interface ListResult {
+  items: Investigation[];
+  unreadable: UnreadableRow[];
+}
+
+/** One stored row exactly as kept, for the "Download my data" export. */
+export interface RawRow {
+  id: string;
+  updatedAt: string | null;
+  data: unknown;
+}
 
 /**
  * Persistence boundary. Implemented over localStorage (demo mode) and over
@@ -7,6 +23,10 @@ import type { Investigation, InvestigationPatch } from "../types";
 export interface InvestigationStore {
   /** All investigations, most recently updated first. */
   list(): Promise<Investigation[]>;
+  /** Like list(), but also reports rows whose data could not be read (so they can be deleted). */
+  listAll(): Promise<ListResult>;
+  /** Every stored row, unmodified, for export. */
+  exportAll(): Promise<RawRow[]>;
   get(id: string): Promise<Investigation | null>;
   /** Creates a blank investigation, optionally pre-filled. */
   create(seed?: InvestigationPatch): Promise<Investigation>;
@@ -32,7 +52,15 @@ export interface InvestigationStore {
 export class StoreError extends Error {
   constructor(
     message: string,
-    readonly code: "quota" | "not_found" | "network" | "auth" | "conflict" | "unknown",
+    readonly code:
+      | "quota"
+      | "not_found"
+      | "network"
+      | "auth"
+      | "conflict"
+      | "too_large"
+      | "limit"
+      | "unknown",
   ) {
     super(message);
     this.name = "StoreError";

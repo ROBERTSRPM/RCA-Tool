@@ -34,13 +34,16 @@ export function Dashboard() {
   const { state: auth } = useAuth();
   const where = auth.status === "in" ? "your account" : "this browser";
   const [items, setItems] = useState<Investigation[] | null>(null);
+  const [unreadable, setUnreadable] = useState<{ id: string }[]>([]);
   const [error, setError] = useState<string | null>(null);
   const today = todayISO();
   const duplicating = useRef(false);
 
   const refresh = useCallback(async () => {
     try {
-      setItems(await getStore().list());
+      const res = await getStore().listAll();
+      setItems(res.items);
+      setUnreadable(res.unreadable);
     } catch {
       setError(`Could not read saved investigations from ${where}.`);
       setItems([]);
@@ -50,8 +53,12 @@ export function Dashboard() {
   useEffect(() => {
     let live = true;
     getStore()
-      .list()
-      .then((l) => live && setItems(l))
+      .listAll()
+      .then((l) => {
+        if (!live) return;
+        setItems(l.items);
+        setUnreadable(l.unreadable);
+      })
       .catch((e) => {
         if (!live) return;
         setError(
@@ -135,6 +142,20 @@ export function Dashboard() {
     if (!ok) return;
     await attempt(async () => {
       await getStore().delete(inv.id);
+      await refresh();
+    });
+  }
+
+  async function removeUnreadable(id: string) {
+    const ok = await confirm({
+      title: "Delete this investigation?",
+      message: `This investigation could not be read, so it cannot be opened. It will be permanently deleted from ${where}.`,
+      confirmLabel: "Delete",
+      danger: true,
+    });
+    if (!ok) return;
+    await attempt(async () => {
+      await getStore().delete(id);
       await refresh();
     });
   }
@@ -225,7 +246,7 @@ export function Dashboard() {
               <div key={i} className="h-24 animate-pulse rounded-xl bg-slate-200" />
             ))}
           </div>
-        ) : rows.length === 0 ? (
+        ) : rows.length === 0 && unreadable.length === 0 ? (
           <EmptyState
             title="No investigations yet"
             action={
@@ -251,6 +272,29 @@ export function Dashboard() {
               <span className="w-[136px]" />
             </div>
             <ul className="divide-y divide-slate-200">
+              {unreadable.map((u) => (
+                <li
+                  key={u.id}
+                  data-testid="unreadable-row"
+                  className="flex flex-wrap items-center justify-between gap-3 bg-red-50/60 px-4 py-4 sm:px-5"
+                >
+                  <div className="min-w-0">
+                    <p className="font-semibold text-red-900">This investigation could not be read</p>
+                    <p className="text-sm text-slate-600">
+                      Its saved data is damaged or incomplete. You can delete it.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    className="btn btn-danger btn-sm"
+                    aria-label="Delete the investigation that could not be read"
+                    onClick={() => removeUnreadable(u.id)}
+                  >
+                    <Icon name="trash" size={16} />
+                    Delete
+                  </button>
+                </li>
+              ))}
               {rows.map(({ inv, sum, annual, cash, opportunity }) => (
                 <li
                   key={inv.id}

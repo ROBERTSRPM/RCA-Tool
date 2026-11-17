@@ -1,115 +1,113 @@
 {
   "suite": "demo",
-  "base": "https://rca-tool-omega.vercel.app",
-  "at": "2026-11-16T13:44:55.092Z",
+  "base": "http://localhost:3601",
+  "at": "2026-11-16T22:00:18.846Z",
   "results": [
     {
-      "id": "D-EDGE-NAV.bad-id",
-      "title": "Invalid investigation id shows \"Investigation not found\" with a working link back",
+      "id": "D-PERS-1.autosave-states",
+      "title": "Autosave indicator: \"Saving...\" after typing, then \"All changes saved\"",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "D-EDGE-NAV.weird-ids",
-      "title": "Ids with special characters (%00, <script>, very long, ../) do not crash the page",
+      "id": "D-PERS-1.problem",
+      "title": "Problem fields survive reload (all 8)",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "D-EDGE-NAV.unknown-route",
-      "title": "Unknown route /nope and /app/investigations/ return a 404 page",
+      "id": "D-PERS-1.url-hash",
+      "title": "Reload keeps the current step via the #hash",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "D-EDGE-NAV.bad-hash",
-      "title": "Unknown #hash falls back to the Problem step",
+      "id": "D-PERS-1.loss",
+      "title": "Loss inputs, unit and currency survive reload",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "D-EDGE-NAV.deep-link",
-      "title": "Deep links #report and #cause open those steps",
+      "id": "D-PERS-1.evidence",
+      "title": "Evidence add / edit / delete survive reload",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "D-EDGE-NAV.back-fwd",
-      "title": "Browser back/forward: dashboard -> workspace -> steps -> back returns to dashboard, forward returns to workspace",
+      "id": "D-PERS-1.tree",
+      "title": "Tree structure, text, category, status, root flag, evidence link, collapse survive reload",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "D-EDGE-NAV.bfcache-edit",
-      "title": "Back to the dashboard after editing shows the edited title",
+      "id": "D-PERS-1.tree-move-delete",
+      "title": "Tree move and delete survive reload",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "D-EDGE-NAV.dblclick-dashboard",
-      "title": "Double-clicking \"New investigation\" creates exactly one investigation",
+      "id": "D-PERS-1.actions",
+      "title": "Actions add / edit / status / delete survive reload",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "D-EDGE-NAV.dblclick-dashboard-human",
-      "title": "Human-speed double click (2 clicks 120 ms apart) on \"New investigation\" creates exactly one",
+      "id": "D-PERS-1.verify",
+      "title": "Verification fields survive reload",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "D-EDGE-NAV.hashchange",
-      "title": "Changing only the #hash in the address bar of an open investigation switches the step",
+      "id": "D-PERS-1.fast-reload",
+      "title": "Edit then reload within 100 ms (before the 350 ms debounce) does not lose the edit",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "D-EDGE-NAV.dblclick-landing",
-      "title": "Double-clicking \"Start a new investigation\" on the landing page creates exactly one",
+      "id": "D-PERS-1.nav-away",
+      "title": "Edit then click \"All investigations\" immediately keeps the edit",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "D-EDGE-NAV.dblclick-dup",
-      "title": "Double-clicking Duplicate creates exactly one copy",
+      "id": "D-PERS-1.title-doc",
+      "title": "Browser tab title follows the investigation title",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "D-EDGE-NAV.rapid-new-nav",
-      "title": "Pressing \"New investigation\" then browser Back immediately leaves no half-created junk beyond one blank",
+      "id": "D-PERS-1.two-tabs",
+      "title": "Two tabs editing different fields of one investigation do not overwrite each other",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "D-EDGE-NAV",
-      "title": "Invalid id, unknown routes, back/forward, double-click create",
+      "id": "D-PERS-1.concurrent-window",
+      "title": "Two tabs edit different fields within the same ~350 ms autosave window: neither edit may be silently lost (3 tries)",
+      "status": "fail",
+      "detail": "values differ: expected [] but got [\"try 0: site=\\\"Packing hall B\\\" (typed \\\"S01794866409853\\\") when=\\\"W01794866409853\\\" (typed \\\"W01794866409853\\\") notices=1\",\"try 1: site=\\\"S11794866412949\\\" (typed \\\"S11794866412949\\\") when=\\\"W01794866409853\\\" (typed \\\"W11794866412949\\\") notices=0\",\"try 2: site=\\\"S11794866412949\\\" (typed \\\"S21794866416037\\\") when=\\\"W21794866416037\\\" (typed \\\"W21794866416037\\\") notices=0\"]",
+      "ms": 0
+    },
+    {
+      "id": "D-PERS-1",
+      "title": "Persistence: reload after each kind of edit (demo)",
       "status": "pass",
       "detail": "",
-      "ms": 15411
+      "ms": 25277
     }
   ],
-  "notes": [
-    {
-      "kind": "observation",
-      "text": "Step changes use history.replaceState, so Back leaves the investigation instead of going to the previous step; after Forward the step shown is Report"
-    },
-    {
-      "kind": "observation",
-      "text": "Blank \"Untitled investigation\" rows remain if user creates and abandons: 5"
-    }
-  ]
+  "notes": []
 }

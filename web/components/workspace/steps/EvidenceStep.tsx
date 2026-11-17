@@ -4,6 +4,7 @@ import { useState } from "react";
 import { formatDate } from "@/lib/dates";
 import { uid } from "@/lib/id";
 import { downscaleImage } from "@/lib/image";
+import { safeImage } from "@/lib/normalize";
 import { flatten, unlinkEvidence } from "@/lib/tree";
 import type { EvidenceItem, EvidenceType } from "@/lib/types";
 import { Icon } from "../../icons";
@@ -98,10 +99,10 @@ export function EvidenceStep({ inv, update }: StepProps) {
             return (
               <li key={e.id} className="rounded-xl border border-slate-200 bg-slate-50/50">
                 <div className="flex flex-wrap items-center gap-3 p-3">
-                  {e.image ? (
+                  {safeImage(e.image) ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
-                      src={e.image}
+                      src={safeImage(e.image) ?? undefined}
                       alt=""
                       className="h-14 w-14 flex-none rounded-lg object-cover"
                     />
@@ -206,9 +207,9 @@ function ImageField({
     <div className="sm:col-span-2">
       <span className="label">Photo (optional)</span>
       <div className="flex flex-wrap items-center gap-3">
-        {image && (
+        {safeImage(image) && (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={image} alt="Evidence preview" className="max-h-40 rounded-lg border border-slate-200" />
+          <img src={safeImage(image) ?? undefined} alt="Evidence preview" className="max-h-40 rounded-lg border border-slate-200" />
         )}
         <label className="btn btn-secondary cursor-pointer">
           <Icon name="camera" />

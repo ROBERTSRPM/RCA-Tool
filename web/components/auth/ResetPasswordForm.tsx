@@ -3,7 +3,12 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { friendlyAuthError, validateNewPassword, validatePasswordMatch } from "@/lib/auth/validate";
+import {
+  friendlyAuthError,
+  PASSWORD_RULE_HINT,
+  validateNewPassword,
+  validatePasswordMatch,
+} from "@/lib/auth/validate";
 import { getSupabase } from "@/lib/supabase/client";
 import { AuthFrame, FormError, FormField } from "./AuthFrame";
 import { useAuth } from "./AuthProvider";
@@ -29,23 +34,27 @@ export function ResetPasswordForm() {
     return () => clearTimeout(t);
   }, []);
 
-  const pwErr = touched.password ? validateNewPassword(password) : null;
+  const accountEmail = state.status === "in" ? state.user.email : null;
+  const pwErr = touched.password ? validateNewPassword(password, accountEmail) : null;
   const confirmErr = touched.confirm ? validatePasswordMatch(password, confirm) : null;
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     setTouched({ password: true, confirm: true });
-    if (validateNewPassword(password) || validatePasswordMatch(password, confirm)) return;
+    if (validateNewPassword(password, accountEmail) || validatePasswordMatch(password, confirm)) return;
     const db = getSupabase();
     if (!db) return;
     setBusy(true);
     setFormError(null);
     const { error } = await db.auth.updateUser({ password });
-    setBusy(false);
     if (error) {
+      setBusy(false);
       setFormError(friendlyAuthError(error, "reset"));
       return;
     }
+    // Sign out every other session: whoever held the old password is cut off.
+    await db.auth.signOut({ scope: "others" });
+    setBusy(false);
     setDone(true);
     setTimeout(() => router.replace("/app"), 1500);
   }
@@ -90,7 +99,7 @@ export function ResetPasswordForm() {
           name="password"
           type="password"
           autoComplete="new-password"
-          hint="At least 8 characters."
+          hint={PASSWORD_RULE_HINT}
           value={password}
           onChange={setPassword}
           onBlur={() => setTouched((t) => ({ ...t, password: true }))}

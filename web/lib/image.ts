@@ -1,3 +1,5 @@
+import { isSafeImage } from "./normalize";
+
 const MAX_SIDE = 800;
 
 /** Reads an image file and returns a JPEG data URL no larger than ~800px. */
@@ -25,7 +27,10 @@ export function downscaleImage(file: File, maxSide = MAX_SIDE): Promise<string> 
       ctx.fillStyle = "#ffffff";
       ctx.fillRect(0, 0, w, h);
       ctx.drawImage(img, 0, 0, w, h);
-      resolve(canvas.toDataURL("image/jpeg", 0.78));
+      const out = canvas.toDataURL("image/jpeg", 0.78);
+      // Defence in depth: only ever hand back a data URL the store will accept.
+      if (isSafeImage(out)) resolve(out);
+      else reject(new Error("That image could not be processed. Try a JPEG or PNG."));
     };
     img.onerror = () => {
       URL.revokeObjectURL(url);

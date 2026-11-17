@@ -11,6 +11,7 @@ import {
   wholeShares,
 } from "@/lib/finance";
 import { OTHER_COST_CATEGORIES } from "@/lib/types";
+import { safeImage } from "@/lib/normalize";
 import { failureText } from "@/lib/investigation";
 import { SAMPLE_NOTE } from "@/lib/sample";
 import { deriveStatus, isOverdue, STATUS_LABELS } from "@/lib/status";
@@ -198,9 +199,9 @@ export function ReportStep({ inv }: StepProps) {
                       {e.date && `, ${formatDate(e.date)}`})
                     </span>
                     {e.note && <> {e.note}</>}
-                    {e.image && (
+                    {safeImage(e.image) && (
                       // eslint-disable-next-line @next/next/no-img-element
-                      <img src={e.image} alt="" className="mt-1 max-h-32 rounded border border-slate-200" />
+                      <img src={safeImage(e.image) ?? undefined} alt="" className="mt-1 max-h-32 rounded border border-slate-200" />
                     )}
                   </span>
                 </li>

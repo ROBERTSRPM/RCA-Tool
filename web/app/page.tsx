@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import { Icon, type IconName } from "@/components/icons";
 import { AccountMenu } from "@/components/auth/AccountMenu";
+import { DeletedNotice } from "@/components/auth/DeletedNotice";
 import { Logo } from "@/components/Logo";
 import { StartNewButton } from "@/components/StartNewButton";
 import { SAMPLE_ID } from "@/lib/sample";
@@ -35,6 +37,12 @@ export default function Home() {
           <AccountMenu />
         </div>
       </header>
+
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <Suspense fallback={null}>
+          <DeletedNotice />
+        </Suspense>
+      </div>
 
       <main>
         <section className="mx-auto max-w-6xl px-4 pb-14 pt-8 sm:px-6 sm:pt-14 lg:pb-20">

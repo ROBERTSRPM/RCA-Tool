@@ -110,6 +110,14 @@ export function AccountMenu({ tone = "dark" }: { tone?: "dark" | "light" }) {
           >
             My investigations
           </Link>
+          <Link
+            role="menuitem"
+            href="/app/account"
+            onClick={() => setOpen(false)}
+            className="flex min-h-11 items-center rounded-lg px-3 text-sm font-medium hover:bg-slate-100"
+          >
+            Account
+          </Link>
           <button
             role="menuitem"
             type="button"
