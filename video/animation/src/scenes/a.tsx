@@ -85,7 +85,7 @@ export const S01: React.FC = () => {
 
 /* ---------------- S2: presenter story (fallback card): the bucket conveyor ---------------- */
 // Presenter is full screen for this scene; this animation is only a fallback. It follows the story order:
-// conveyor feeds packaging -> failed 4 times in a year -> no spares -> salvaged buckets -> made to order, air freighted -> running is not fixing.
+// conveyor feeds packaging -> failed 4 times in a year -> not enough spares -> salvaged buckets -> made to order, air freighted -> running is not fixing.
 const BCX = 560, BTOP = 330, BBOT = 800, BR = 80; // bucket elevator geometry
 const BH = BBOT - BTOP, BL = 2 * BH + 2 * Math.PI * BR;
 const beltPoint = (s: number): [number, number, number] => {
@@ -163,7 +163,7 @@ const StoryCard: React.FC = () => {
         <g opacity={r(0.34, 0.40)}>
           <line x1={120} y1={800} x2={330} y2={800} stroke={C.mute} strokeWidth={6} />
           {[0, 1, 2].map((i) => <path key={i} d={`M${140 + i * 62} 760 H${190 + i * 62} L${182 + i * 62} 796 H${140 + i * 62} Z`} fill="none" stroke={C.mute} strokeWidth={3} strokeDasharray="7 6" />)}
-          <text x={225} y={850} textAnchor="middle" fontSize={34} fontWeight={700} fill={C.mute} fontFamily={FONT}>Spares: none</text>
+          <text x={225} y={850} textAnchor="middle" fontSize={34} fontWeight={700} fill={C.mute} fontFamily={FONT}>Spares: not enough</text>
         </g>
         {/* air freight */}
         <g opacity={r(0.64, 0.68) * (1 - r(0.84, 0.88))} transform={`translate(${lerp(880, 1900, plane)} ${lerp(150, 100, plane)})`}>
@@ -175,7 +175,7 @@ const StoryCard: React.FC = () => {
       <Abs x={1180} y={190} w={680}>
         {[
           {a: 0.12, big: "4", t: "failures in 12 months", col: C.red, dots: true},
-          {a: 0.36, big: "", t: "No spares on site", col: C.amber},
+          {a: 0.36, big: "", t: "Not enough spares on site", col: C.amber},
           {a: 0.62, big: "", t: "Made to order, air freighted", col: C.steel},
         ].map((c, i) => (
           <div key={i} style={{opacity: cardIn(c.a), transform: `translateX(${(1 - cardIn(c.a)) * 50}px)`, marginBottom: 28}}>

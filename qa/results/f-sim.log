@@ -1,0 +1,26 @@
+  pass F-SIM-1-demo-desk.rank Panel lists S1 (score 100), S2 (41), S3 (6, the minimum) in that order; S4 (one shared word = 3) and S5 are not listed
+  pass F-SIM-1-demo-desk.reasons Reasons shown: O1 "Same asset (X-1)", "Same asset type (Gearbox)", "Same failure mode (Bearing failure)"; O2 type+mode but no tag; O3 shared words only
+  pass F-SIM-1-demo-desk.cause-text Each match shows its root causes and "What fixed it" text; Open link goes to that investigation
+  pass F-SIM-1-demo-desk.copy "Copy this cause into my tree" adds it under the failure event as a Hypothesis (not verified, not a root cause, no evidence); button turns to "Copied"; message with link to the tree
+  pass F-SIM-1-demo-desk.cause-step-panel The Cause tree step also shows the Similar past failures panel and a copy there adds under the selected cause
+  pass F-SIM-1-demo-desk.empty An investigation with no similar ones shows "No similar failures yet" guidance
+  pass F-SIM-1-demo-desk.self-excluded An investigation is never listed as similar to itself and a copy of it (Duplicate) is listed as similar
+PASS F-SIM-1-demo-desk Similar past failures: ranking by tag > type > failure mode > words, minimum score, reasons, copy cause arrives as Hypothesis [demo-desk]
+  pass F-SIM-1-demo-mob.rank Panel lists S1 (score 100), S2 (41), S3 (6, the minimum) in that order; S4 (one shared word = 3) and S5 are not listed
+  pass F-SIM-1-demo-mob.reasons Reasons shown: O1 "Same asset (X-1)", "Same asset type (Gearbox)", "Same failure mode (Bearing failure)"; O2 type+mode but no tag; O3 shared words only
+  pass F-SIM-1-demo-mob.cause-text Each match shows its root causes and "What fixed it" text; Open link goes to that investigation
+  pass F-SIM-1-demo-mob.copy "Copy this cause into my tree" adds it under the failure event as a Hypothesis (not verified, not a root cause, no evidence); button turns to "Copied"; message with link to the tree
+  pass F-SIM-1-demo-mob.cause-step-panel The Cause tree step also shows the Similar past failures panel and a copy there adds under the selected cause
+  pass F-SIM-1-demo-mob.empty An investigation with no similar ones shows "No similar failures yet" guidance
+  pass F-SIM-1-demo-mob.self-excluded An investigation is never listed as similar to itself and a copy of it (Duplicate) is listed as similar
+PASS F-SIM-1-demo-mob Similar past failures: ranking by tag > type > failure mode > words, minimum score, reasons, copy cause arrives as Hypothesis [demo-mob]
+  pass F-SIM-1-acct-desk.rank Panel lists S1 (score 100), S2 (41), S3 (6, the minimum) in that order; S4 (one shared word = 3) and S5 are not listed
+  pass F-SIM-1-acct-desk.reasons Reasons shown: O1 "Same asset (X-1)", "Same asset type (Gearbox)", "Same failure mode (Bearing failure)"; O2 type+mode but no tag; O3 shared words only
+  pass F-SIM-1-acct-desk.cause-text Each match shows its root causes and "What fixed it" text; Open link goes to that investigation
+  pass F-SIM-1-acct-desk.copy "Copy this cause into my tree" adds it under the failure event as a Hypothesis (not verified, not a root cause, no evidence); button turns to "Copied"; message with link to the tree
+  pass F-SIM-1-acct-desk.cause-step-panel The Cause tree step also shows the Similar past failures panel and a copy there adds under the selected cause
+  pass F-SIM-1-acct-desk.empty An investigation with no similar ones shows "No similar failures yet" guidance
+  pass F-SIM-1-acct-desk.self-excluded An investigation is never listed as similar to itself and a copy of it (Duplicate) is listed as similar
+PASS F-SIM-1-acct-desk Similar past failures: ranking by tag > type > failure mode > words, minimum score, reasons, copy cause arrives as Hypothesis [acct-desk]
+
+features: 24/24 passed, 0 failed

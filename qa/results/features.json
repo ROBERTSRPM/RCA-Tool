@@ -1,175 +1,175 @@
 {
   "suite": "features",
   "base": "http://localhost:3555",
-  "at": "2026-11-17T06:08:33.367Z",
+  "at": "2026-11-17T07:46:58.087Z",
   "results": [
     {
-      "id": "F-ASSET-1-demo-desk.fields",
-      "title": "Asset details section has tag, type, make/model, duty, criticality A/B/C, failure mode",
+      "id": "F-SIM-1-demo-desk.rank",
+      "title": "Panel lists S1 (score 100), S2 (41), S3 (6, the minimum) in that order; S4 (one shared word = 3) and S5 are not listed",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "F-ASSET-1-demo-desk.combo-list",
-      "title": "Asset type and Failure mode lists open on focus, filter while typing, and accept your own text",
+      "id": "F-SIM-1-demo-desk.reasons",
+      "title": "Reasons shown: O1 \"Same asset (X-1)\", \"Same asset type (Gearbox)\", \"Same failure mode (Bearing failure)\"; O2 type+mode but no tag; O3 shared words only",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "F-ASSET-1-demo-desk.criticality",
-      "title": "Criticality: choose A, tap again clears, B replaces A",
+      "id": "F-SIM-1-demo-desk.cause-text",
+      "title": "Each match shows its root causes and \"What fixed it\" text; Open link goes to that investigation",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "F-ASSET-1-demo-desk.register-status",
-      "title": "A new tag says \"It will be added to your asset register\", then \"In your asset register\" once saved; matching ignores case and spaces",
+      "id": "F-SIM-1-demo-desk.copy",
+      "title": "\"Copy this cause into my tree\" adds it under the failure event as a Hypothesis (not verified, not a root cause, no evidence); button turns to \"Copied\"; message with link to the tree",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "F-ASSET-1-demo-desk.persist",
-      "title": "All asset detail fields survive reload",
+      "id": "F-SIM-1-demo-desk.cause-step-panel",
+      "title": "The Cause tree step also shows the Similar past failures panel and a copy there adds under the selected cause",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "F-ASSET-1-demo-desk.register-entry",
-      "title": "The register now has ZZ-501 with the type, make, duty and criticality from the investigation, plus 1 investigation",
+      "id": "F-SIM-1-demo-desk.empty",
+      "title": "An investigation with no similar ones shows \"No similar failures yet\" guidance",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "F-ASSET-1-demo-desk.long-text",
-      "title": "A 3000-character make/duty does not overflow the Problem step at this width",
+      "id": "F-SIM-1-demo-desk.self-excluded",
+      "title": "An investigation is never listed as similar to itself and a copy of it (Duplicate) is listed as similar",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "F-ASSET-1-demo-desk",
-      "title": "Problem step: asset details fields, criticality, combo lists, auto-add to the register [demo-desk]",
+      "id": "F-SIM-1-demo-desk",
+      "title": "Similar past failures: ranking by tag > type > failure mode > words, minimum score, reasons, copy cause arrives as Hypothesis [demo-desk]",
       "status": "pass",
       "detail": "",
-      "ms": 8098
+      "ms": 17967
     },
     {
-      "id": "F-ASSET-1-demo-mob.fields",
-      "title": "Asset details section has tag, type, make/model, duty, criticality A/B/C, failure mode",
-      "status": "pass",
-      "detail": "",
-      "ms": 0
-    },
-    {
-      "id": "F-ASSET-1-demo-mob.combo-list",
-      "title": "Asset type and Failure mode lists open on focus, filter while typing, and accept your own text",
+      "id": "F-SIM-1-demo-mob.rank",
+      "title": "Panel lists S1 (score 100), S2 (41), S3 (6, the minimum) in that order; S4 (one shared word = 3) and S5 are not listed",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "F-ASSET-1-demo-mob.criticality",
-      "title": "Criticality: choose A, tap again clears, B replaces A",
+      "id": "F-SIM-1-demo-mob.reasons",
+      "title": "Reasons shown: O1 \"Same asset (X-1)\", \"Same asset type (Gearbox)\", \"Same failure mode (Bearing failure)\"; O2 type+mode but no tag; O3 shared words only",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "F-ASSET-1-demo-mob.register-status",
-      "title": "A new tag says \"It will be added to your asset register\", then \"In your asset register\" once saved; matching ignores case and spaces",
+      "id": "F-SIM-1-demo-mob.cause-text",
+      "title": "Each match shows its root causes and \"What fixed it\" text; Open link goes to that investigation",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "F-ASSET-1-demo-mob.persist",
-      "title": "All asset detail fields survive reload",
+      "id": "F-SIM-1-demo-mob.copy",
+      "title": "\"Copy this cause into my tree\" adds it under the failure event as a Hypothesis (not verified, not a root cause, no evidence); button turns to \"Copied\"; message with link to the tree",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "F-ASSET-1-demo-mob.register-entry",
-      "title": "The register now has ZZ-501 with the type, make, duty and criticality from the investigation, plus 1 investigation",
+      "id": "F-SIM-1-demo-mob.cause-step-panel",
+      "title": "The Cause tree step also shows the Similar past failures panel and a copy there adds under the selected cause",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "F-ASSET-1-demo-mob.long-text",
-      "title": "A 3000-character make/duty does not overflow the Problem step at this width",
+      "id": "F-SIM-1-demo-mob.empty",
+      "title": "An investigation with no similar ones shows \"No similar failures yet\" guidance",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "F-ASSET-1-demo-mob",
-      "title": "Problem step: asset details fields, criticality, combo lists, auto-add to the register [demo-mob]",
-      "status": "pass",
-      "detail": "",
-      "ms": 7801
-    },
-    {
-      "id": "F-ASSET-1-acct-desk.fields",
-      "title": "Asset details section has tag, type, make/model, duty, criticality A/B/C, failure mode",
+      "id": "F-SIM-1-demo-mob.self-excluded",
+      "title": "An investigation is never listed as similar to itself and a copy of it (Duplicate) is listed as similar",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "F-ASSET-1-acct-desk.combo-list",
-      "title": "Asset type and Failure mode lists open on focus, filter while typing, and accept your own text",
+      "id": "F-SIM-1-demo-mob",
+      "title": "Similar past failures: ranking by tag > type > failure mode > words, minimum score, reasons, copy cause arrives as Hypothesis [demo-mob]",
+      "status": "pass",
+      "detail": "",
+      "ms": 17588
+    },
+    {
+      "id": "F-SIM-1-acct-desk.rank",
+      "title": "Panel lists S1 (score 100), S2 (41), S3 (6, the minimum) in that order; S4 (one shared word = 3) and S5 are not listed",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "F-ASSET-1-acct-desk.criticality",
-      "title": "Criticality: choose A, tap again clears, B replaces A",
+      "id": "F-SIM-1-acct-desk.reasons",
+      "title": "Reasons shown: O1 \"Same asset (X-1)\", \"Same asset type (Gearbox)\", \"Same failure mode (Bearing failure)\"; O2 type+mode but no tag; O3 shared words only",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "F-ASSET-1-acct-desk.register-status",
-      "title": "A new tag says \"It will be added to your asset register\", then \"In your asset register\" once saved; matching ignores case and spaces",
-      "status": "fail",
-      "detail": "after save: It will be added to your asset register.",
-      "ms": 0
-    },
-    {
-      "id": "F-ASSET-1-acct-desk.persist",
-      "title": "All asset detail fields survive reload",
+      "id": "F-SIM-1-acct-desk.cause-text",
+      "title": "Each match shows its root causes and \"What fixed it\" text; Open link goes to that investigation",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "F-ASSET-1-acct-desk.register-entry",
-      "title": "The register now has ZZ-501 with the type, make, duty and criticality from the investigation, plus 1 investigation",
+      "id": "F-SIM-1-acct-desk.copy",
+      "title": "\"Copy this cause into my tree\" adds it under the failure event as a Hypothesis (not verified, not a root cause, no evidence); button turns to \"Copied\"; message with link to the tree",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "F-ASSET-1-acct-desk.long-text",
-      "title": "A 3000-character make/duty does not overflow the Problem step at this width",
+      "id": "F-SIM-1-acct-desk.cause-step-panel",
+      "title": "The Cause tree step also shows the Similar past failures panel and a copy there adds under the selected cause",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "F-ASSET-1-acct-desk",
-      "title": "Problem step: asset details fields, criticality, combo lists, auto-add to the register [acct-desk]",
+      "id": "F-SIM-1-acct-desk.empty",
+      "title": "An investigation with no similar ones shows \"No similar failures yet\" guidance",
       "status": "pass",
       "detail": "",
-      "ms": 20530
+      "ms": 0
+    },
+    {
+      "id": "F-SIM-1-acct-desk.self-excluded",
+      "title": "An investigation is never listed as similar to itself and a copy of it (Duplicate) is listed as similar",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "F-SIM-1-acct-desk",
+      "title": "Similar past failures: ranking by tag > type > failure mode > words, minimum score, reasons, copy cause arrives as Hypothesis [acct-desk]",
+      "status": "pass",
+      "detail": "",
+      "ms": 97559
     }
   ],
   "notes": []

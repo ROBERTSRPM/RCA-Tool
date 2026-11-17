@@ -18,7 +18,7 @@ async function list(page, scope) {
   const b = await chromium.launch();
   const inv = {};
   const p = await h.newPage(b);
-  for (const u of ['/', '/login', '/signup', '/forgot-password', '/reset-password', '/app']) {
+  for (const u of ['/', '/login', '/signup', '/forgot-password', '/reset-password', '/app', '/app/assets', '/app/account']) {
     await p.goto(h.BASE + u); await p.waitForTimeout(3000);
     inv['page ' + u] = await list(p);
   }

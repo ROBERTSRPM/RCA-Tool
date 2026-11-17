@@ -1,0 +1,32 @@
+  pass F-SPARES-1-demo-desk.fields Spares check shows only "Was a spare part needed?" until Yes is chosen; then stock, lead time, coverage appear
+  pass F-SPARES-1-demo-desk.lead-13 Not in stock, lead time 13 days: flag not shown (threshold is 14)
+  pass F-SPARES-1-demo-desk.lead-14 Not in stock, lead time 14 days: flag shown (threshold is 14)
+  pass F-SPARES-1-demo-desk.lead-60 Not in stock, lead time 60 days: flag shown (threshold is 14)
+  pass F-SPARES-1-demo-desk.lead-0 Not in stock, lead time 0 days: flag not shown (threshold is 14)
+  pass F-SPARES-1-demo-desk.in-stock In stock = Yes removes the flag even with 60 days lead time
+  pass F-SPARES-1-demo-desk.one-tap "Add a spares holding action": adds a preventive Spares holding action for the first root cause with the asset and lead time in the text; flag text says it is on the list; quality rule clears
+  pass F-SPARES-1-demo-desk.report Report shows the Spares check section with the flag line
+  pass F-SPARES-1-demo-desk.persist Spares answers survive reload
+PASS F-SPARES-1-demo-desk Spares check: flag at exactly 14 days, not at 13 or when in stock; one-tap spares action; quality rule; report [demo-desk]
+  pass F-SPARES-1-demo-mob.fields Spares check shows only "Was a spare part needed?" until Yes is chosen; then stock, lead time, coverage appear
+  pass F-SPARES-1-demo-mob.lead-13 Not in stock, lead time 13 days: flag not shown (threshold is 14)
+  pass F-SPARES-1-demo-mob.lead-14 Not in stock, lead time 14 days: flag shown (threshold is 14)
+  pass F-SPARES-1-demo-mob.lead-60 Not in stock, lead time 60 days: flag shown (threshold is 14)
+  pass F-SPARES-1-demo-mob.lead-0 Not in stock, lead time 0 days: flag not shown (threshold is 14)
+  pass F-SPARES-1-demo-mob.in-stock In stock = Yes removes the flag even with 60 days lead time
+  pass F-SPARES-1-demo-mob.one-tap "Add a spares holding action": adds a preventive Spares holding action for the first root cause with the asset and lead time in the text; flag text says it is on the list; quality rule clears
+  pass F-SPARES-1-demo-mob.report Report shows the Spares check section with the flag line
+  pass F-SPARES-1-demo-mob.persist Spares answers survive reload
+PASS F-SPARES-1-demo-mob Spares check: flag at exactly 14 days, not at 13 or when in stock; one-tap spares action; quality rule; report [demo-mob]
+  pass F-SPARES-1-acct-desk.fields Spares check shows only "Was a spare part needed?" until Yes is chosen; then stock, lead time, coverage appear
+  pass F-SPARES-1-acct-desk.lead-13 Not in stock, lead time 13 days: flag not shown (threshold is 14)
+  pass F-SPARES-1-acct-desk.lead-14 Not in stock, lead time 14 days: flag shown (threshold is 14)
+  pass F-SPARES-1-acct-desk.lead-60 Not in stock, lead time 60 days: flag shown (threshold is 14)
+  pass F-SPARES-1-acct-desk.lead-0 Not in stock, lead time 0 days: flag not shown (threshold is 14)
+  pass F-SPARES-1-acct-desk.in-stock In stock = Yes removes the flag even with 60 days lead time
+  pass F-SPARES-1-acct-desk.one-tap "Add a spares holding action": adds a preventive Spares holding action for the first root cause with the asset and lead time in the text; flag text says it is on the list; quality rule clears
+  pass F-SPARES-1-acct-desk.report Report shows the Spares check section with the flag line
+  pass F-SPARES-1-acct-desk.persist Spares answers survive reload
+PASS F-SPARES-1-acct-desk Spares check: flag at exactly 14 days, not at 13 or when in stock; one-tap spares action; quality rule; report [acct-desk]
+
+features: 30/30 passed, 0 failed

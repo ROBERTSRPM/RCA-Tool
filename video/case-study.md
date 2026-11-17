@@ -129,7 +129,7 @@ Bearings and seals still wear after the fix. That is natural deterioration and n
 
 ## 8. Presenter story (scene 2, not part of the case data)
 
-The presenter tells a real experience: a bucket conveyor feeding the packaging lines failed about 4 times in one year, each time stopping production and packaging. There were no spare buckets on site, so the least worn buckets were stripped out of damaged sets to get running. New buckets had to be made to order and air freighted, adding cost and waiting, and the lines ran on salvaged parts and were exposed to the next failure. No dollar figures are given for the story, so none appear on screen. The animation card shows only: "4 failures in 12 months", "No spares on site", "Made to order, air freighted".
+The presenter tells a real experience: a bucket conveyor feeding the packaging lines failed about 4 times in one year, each time stopping production and packaging. There were not enough spare buckets on site, so the least worn buckets were stripped out of damaged sets to get running. New buckets had to be made to order and air freighted, adding cost and waiting, and the lines ran on salvaged parts and were exposed to the next failure. No dollar figures are given for the story, so none appear on screen. The animation card shows only: "4 failures in 12 months", "No spares on site", "Made to order, air freighted".
 
 ## 9. Final numbers at a glance
 

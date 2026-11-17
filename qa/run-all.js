@@ -3,14 +3,14 @@ const { spawnSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const dir = __dirname;
-const suites = [['account.js', 'A-ZZ-CLEANUP'], ['demo.js'], ['loss.js'], ['account.js'], ['inventory.js']];
+const suites = [['account.js', 'A-ZZ-CLEANUP'], ['demo.js'], ['loss.js'], ['features.js'], ['account.js'], ['inventory.js']];
 for (const [file, only] of suites) {
   console.log(`\n=== node ${file} ${only || ''}`);
   const r = spawnSync('node', [path.join(dir, file), ...(only ? [only] : [])], { stdio: 'inherit', env: process.env });
   if (r.status && file === 'inventory.js') console.log('inventory exited', r.status);
 }
 const sum = { pass: 0, fail: 0, failed: [] };
-for (const f of ['demo', 'loss', 'account']) {
+for (const f of ['demo', 'loss', 'features', 'account']) {
   const p = path.join(dir, 'results', f + '.json'); if (!fs.existsSync(p)) continue;
   const rows = JSON.parse(fs.readFileSync(p)).results;
   const leaf = rows.filter(r => !rows.some(o => o.id.startsWith(r.id + '.')));

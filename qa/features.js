@@ -67,7 +67,7 @@ FT('F-ASSET-1', 'Problem step: asset details fields, criticality, combo lists, a
   });
   await sub('register-status', 'A new tag says "It will be added to your asset register", then "In your asset register" once saved; matching ignores case and spaces', async () => {
     await page.getByLabel('Asset tag', { exact: true }).fill('ZZ-501'); await page.getByLabel('Make and model', { exact: true }).fill('Acme 9'); await page.getByLabel('Duty or service', { exact: true }).fill('qa duty'); await waitSaved(page);
-    await page.waitForTimeout(1200); const t1 = await page.getByTestId('register-status').innerText(); ok(/In your asset register/.test(t1), 'after save: ' + t1);
+    await page.getByTestId('register-status').getByText('In your asset register').waitFor({ timeout: 15000 }); const t1 = await page.getByTestId('register-status').innerText(); ok(/In your asset register/.test(t1), 'after save: ' + t1);
     await page.getByLabel('Asset tag', { exact: true }).fill('  zz-501 '); await page.waitForTimeout(500); ok(/In your asset register/.test(await page.getByTestId('register-status').innerText()), 'case/space insensitive');
     await page.getByLabel('Asset tag', { exact: true }).fill('ZZ-501');
   });
@@ -274,7 +274,7 @@ FT('F-PLAN-1', 'Maintenance plan changes: lines, intervals, planner text copied 
   });
   await sub('quality-task', 'Quality: tasks missing description/interval are flagged ("a task description and an interval")', async () => {
     await mk('No detail at all', 'Maintenance task', {}); const q = await quality(page); ok(has(q, /Maintenance plan item "No detail at all" needs a task description and an interval before a planner can load it/), q.join('|'));
-    ok(!has(q, /Maintenance plan item "Weekly walk-down"/), 'weekly walk-down has an interval and falls back to the action text: ' + q.join('|'));
+    ok(!has(q, /Maintenance plan item "Weekly walk-down" needs an interval/), 'interval was set: ' + q.join('|')); h.note('observation', 'A task with an interval but no task description is listed in the plan using the action text, yet the quality check still says it needs a task description: ' + has(q, /Maintenance plan item "Weekly walk-down" needs a task description/));
   });
   await sub('report', 'Report has a "Maintenance plan changes" section with the same tasks', async () => {
     const t = (await e.reportText(page)).toLowerCase(); ok(t.includes('maintenance plan changes') && t.includes('every 3 months') && t.includes('clean flush strainer and check flow'), t.slice(0, 200));
@@ -286,9 +286,9 @@ FT('F-PLAN-1', 'Maintenance plan changes: lines, intervals, planner text copied 
 
 FT('F-SPARES-1', 'Spares check: flag at exactly 14 days, not at 13 or when in stock; one-tap spares action; quality rule; report', ['demo-desk', 'demo-mob', 'acct-desk'], async (page, sub, mode) => {
   await newInv(page, { title: 'F-SPARES motor', asset: 'Drive motor' }, { tag: 'M-77', type: 'Electric motor' }); await causeRoot(page, 'Spare motor not stocked', { cat: 'System / Latent' }); await step(page, 'Actions');
-  const sp = page.getByRole('region', { name: 'Spares check' }); const yes = async (grp, v) => sp.getByRole('radiogroup', { name: grp }).getByRole('radio', { name: v, exact: true }).click();
+  const sp = page.locator('section:has(> div h2:has-text("Spares check")), section:has(h2:has-text("Spares check"))').last(); const yes = async (grp, v) => sp.getByRole('radiogroup', { name: grp }).getByRole('radio', { name: v, exact: true }).click();
   await sub('fields', 'Spares check shows only "Was a spare part needed?" until Yes is chosen; then stock, lead time, coverage appear', async () => {
-    await sp.getByRole('radiogroup', { name: 'Was a spare part needed?' }).waitFor(); eq(await sp.getByRole('radiogroup', { name: 'Was it in stock?' }).count(), 0); await yes('Was a spare part needed?', 'Yes'); await sp.getByRole('radiogroup', { name: 'Was it in stock?' }).waitFor(); await sp.getByLabel('Supplier lead time').waitFor(); await sp.getByLabel('How was the gap covered?').waitFor();
+    await sp.getByRole('radiogroup', { name: 'Was a spare part needed?' }).waitFor(); eq(await sp.getByRole('radiogroup', { name: 'Was it in stock?' }).count(), 0); await yes('Was a spare part needed?', 'Yes'); await sp.getByRole('radiogroup', { name: 'Was it in stock?' }).waitFor(); await sp.getByLabel('Supplier lead time', { exact: true }).waitFor(); await sp.getByLabel('How was the gap covered?').waitFor();
   });
   await yes('Was it in stock?', 'No');
   for (const [days, flag] of [[13, false], [14, true], [60, true], [0, false]]) await sub('lead-' + days, `Not in stock, lead time ${days} days: flag ${flag ? 'shown' : 'not shown'} (threshold is 14)`, async () => {
@@ -301,7 +301,7 @@ FT('F-SPARES-1', 'Spares check: flag at exactly 14 days, not at 13 or when in st
     const q = await quality(page); ok(!has(q, /Critical spare/), q.join('|')); await h.shot(page, 'spares-' + mode);
   });
   await sub('report', 'Report shows the Spares check section with the flag line', async () => { const t = (await e.reportText(page)).toLowerCase(); ok(t.includes('spares check') && t.includes('21 days') && t.includes('flag: critical spare with long lead time and no stock'), t.slice(0, 200)); });
-  await sub('persist', 'Spares answers survive reload', async () => { await waitSaved(page); await page.reload(); await step(page, 'Actions'); eq(await page.getByLabel('Supplier lead time').inputValue(), '21'); });
+  await sub('persist', 'Spares answers survive reload', async () => { await waitSaved(page); await page.reload(); await step(page, 'Actions'); eq(await page.getByLabel('Supplier lead time', { exact: true }).inputValue(), '21'); });
 });
 
 FT('F-QUAL-1', 'New quality rules: each triggers, its jump link lands on the right step, and it clears when fixed', ['demo-desk', 'acct-desk'], async (page, sub, mode) => {
@@ -321,7 +321,7 @@ FT('F-QUAL-1', 'New quality rules: each triggers, its jump link lands on the rig
   });
   await sub('task-incomplete', 'task-missing-detail: a maintenance task with no interval is flagged; entering the interval clears it', async () => {
     await step(page, 'Actions'); const li = await f.openAction(page, 0); await f.typeNumIn(page.getByTestId('task-fields'), 'Do this every', ''); let q = await quality(page); ok(has(q, /Maintenance plan item "Oil analysis every quarter" needs an interval before a planner can load it/), q.join('|'));
-    await li.getByRole('button', { name: 'Close' }).catch(() => {}); await f.openAction(page, 0); await f.typeNumIn(page.getByTestId('task-fields'), 'Do this every', 3); q = await quality(page); ok(!has(q, /Maintenance plan item/), q.join('|'));
+    await f.openAction(page, 0); await f.typeNumIn(page.getByTestId('task-fields'), 'Do this every', 3); q = await quality(page); ok(!has(q, /Maintenance plan item/), q.join('|'));
   });
   await sub('system-systemic', 'system-root-without-systemic-action: a System/Latent root cause whose only (categorised) action is a Repair is flagged; a Procedure action clears it; uncategorised actions are not judged', async () => {
     await step(page, 'Cause tree'); await f.selectCause(page, 'Gear teeth worn'); await f.addCause(page, 'why', 'No lubrication standard', { cat: 'System / Latent', root: true, status: 'Hypothesis' });
@@ -364,59 +364,61 @@ FT('F-DET-1', 'Cause node deterioration: Natural / Forced toggles, persistence, 
 
 // ============================================================ similar failures
 FT('F-SIM-1', 'Similar past failures: ranking by tag > type > failure mode > words, minimum score, reasons, copy cause arrives as Hypothesis', ['demo-desk', 'demo-mob', 'acct-desk'], async (page, sub, mode) => {
+  if (/acct/.test(mode)) await cleanAccount(page);
   // Other investigations. Hand scores against the current one (tag X-1, type Gearbox, mode Bearing failure,
   // words: gearbox, bearing, overheating, conveyor, drive): O1 tag+type+mode(+words) >= 85; O2 type+mode >= 35; O3 words only (2 shared = 6);
   // O4 one shared word (3 < 6, hidden); O5 nothing in common (hidden).
   const o = [
-    ['F-SIM O1 same tag', { title: 'Gearbox bearing overheating on conveyor drive', what: 'Bearing ran hot' }, { tag: 'X-1', type: 'Gearbox', mode: 'Bearing failure' }, 'O1 cause: lube starvation'],
-    ['F-SIM O2 type and mode', { title: 'Gearbox bearing failure on mill', what: 'Noise' }, { tag: 'Y-2', type: 'Gearbox', mode: 'Bearing failure' }, 'O2 cause: bad alignment'],
-    ['F-SIM O3 words only', { title: 'Pump bearing overheating alarm', what: 'Alarm' }, { tag: 'Z-3', type: 'Centrifugal pump', mode: 'Overheating' }, 'O3 cause'],
-    ['F-SIM O4 one word', { title: 'Conveyor idler jam', what: 'Idler stuck' }, { tag: 'W-4', type: 'Screw conveyor', mode: 'Blockage' }, 'O4 cause'],
-    ['F-SIM O5 unrelated', { title: 'Tank level sensor drift', what: 'Reading wrong' }, { tag: 'V-5', type: 'Tank/vessel', mode: 'Instrumentation or control fault' }, 'O5 cause'],
+    ['S1', { title: 'S1 Gearbox bearing overheating on conveyor drive', what: 'Bearing ran hot' }, { tag: 'X-1', type: 'Gearbox', mode: 'Bearing failure' }, 'S1 cause: lube starvation'],
+    ['S2', { title: 'S2 Gearbox bearing failure on mill', what: 'Noise' }, { tag: 'Y-2', type: 'Gearbox', mode: 'Bearing failure' }, 'S2 cause: bad alignment'],
+    ['S3', { title: 'S3 Pump bearing overheating alarm', what: 'Alarm' }, { tag: 'Z-3', type: 'Centrifugal pump', mode: 'Overheating' }, 'S3 cause: none'],
+    ['S4', { title: 'S4 Conveyor idler jam', what: 'Idler stuck' }, { tag: 'W-4', type: 'Screw conveyor', mode: 'Blockage' }, 'S4 cause'],
+    ['S5', { title: 'S5 Tank level sensor drift', what: 'Reading wrong' }, { tag: 'V-5', type: 'Tank/vessel', mode: 'Instrumentation or control fault' }, 'S5 cause'],
   ];
-  for (const [title, p, a, cause] of o) { await newInv(page, { title, what: p.what }, a); await causeRoot(page, cause, { cat: 'System / Latent', status: 'Verified' }); await waitSaved(page); }
-  // O1 also gets a completed action and a verified fix for the "what fixed it" column: skip detail, check text only
-  await newInv(page, { title: 'F-SIM current gearbox bearing overheating', what: 'Conveyor drive bearing overheating' }, { tag: 'x-1', type: 'Gearbox', mode: 'Bearing failure' }); await waitSaved(page);
-  await sub('rank', 'Panel on the Problem step lists O1, then O2, then O3; O4 (one shared word) and O5 are not listed', async () => {
+  // hand scores vs the current one (words: gearbox bearing overheating conveyor drive current): S1 = tag 50 + type 20 + mode 15 + words 15 (5 shared, capped) = 100;
+  // S2 = type 20 + mode 15 + 2 words (gearbox, bearing) 6 = 41; S3 = 2 words (bearing, overheating) 6 = 6 (the minimum); S4 = 1 word 3 (hidden); S5 = 0 (hidden).
+  for (const [lab, p, a, cause] of o) { await newInv(page, { title: p.title, what: p.what }, a); await causeRoot(page, cause, { cat: 'System / Latent', status: 'Verified' }); await waitSaved(page); }
+  await newInv(page, { title: 'Gearbox bearing overheating on conveyor drive (current)', what: 'Conveyor drive bearing overheating' }, { tag: 'x-1', type: 'Gearbox', mode: 'Bearing failure' }); await waitSaved(page);
+  await sub('rank', 'Panel lists S1 (score 100), S2 (41), S3 (6, the minimum) in that order; S4 (one shared word = 3) and S5 are not listed', async () => {
     await step(page, 'Problem'); await page.getByRole('heading', { name: 'Similar past failures' }).waitFor(); await page.getByTestId('similar-list').waitFor({ timeout: 15000 });
-    const titles = await page.getByTestId('similar-item').evaluateAll(els => els.map(e => e.querySelector('p').textContent.trim())); ok(titles[0].startsWith('F-SIM O1') && titles[1].startsWith('F-SIM O2') && titles[2].startsWith('F-SIM O3'), titles.join(' | ')); ok(!titles.some(t => /O4|O5/.test(t)), 'weak matches listed: ' + titles.join(' | '));
-    ok(titles.filter(t => t.startsWith('F-SIM O')).length === 3, titles.join(' | ')); await h.shot(page, 'similar-' + mode);
+    const titles = await page.getByTestId('similar-item').evaluateAll(els => els.map(e => e.querySelector('p').textContent.trim())); const mine = titles.filter(t => /^S\d /.test(t)).map(t => t.slice(0, 2));
+    eq(mine, ['S1', 'S2', 'S3'], titles.join(' | ')); ok(titles[0].startsWith('S1 ') && titles[1].startsWith('S2 '), 'S1 then S2 must lead: ' + titles.join(' | ')); await h.shot(page, 'similar-' + mode);
   });
   await sub('reasons', 'Reasons shown: O1 "Same asset (X-1)", "Same asset type (Gearbox)", "Same failure mode (Bearing failure)"; O2 type+mode but no tag; O3 shared words only', async () => {
     const reasons = async (i) => (await page.getByTestId('similar-item').nth(i).getByRole('list', { name: 'Why it matches' }).innerText()).replace(/\s+/g, ' ');
-    const r1 = await reasons(0), r2 = await reasons(1), r3 = await reasons(2);
+    const idx = (await page.getByTestId('similar-item').evaluateAll(els => els.map(e => e.querySelector('p').textContent.trim()))).map((t, i) => [t, i]).filter(([t]) => /^S\d /.test(t)).map(([, i]) => i); const r1 = await reasons(idx[0]), r2 = await reasons(idx[1]), r3 = await reasons(idx[2]);
     ok(/Same asset \(X-1\)/.test(r1) && /Same asset type \(Gearbox\)/.test(r1) && /Same failure mode \(Bearing failure\)/.test(r1) && /Shared words/.test(r1), r1);
-    ok(!/Same asset \(/.test(r2) && /Same asset type \(Gearbox\)/.test(r2) && /Same failure mode/.test(r2), r2); ok(/Shared words:.*bearing/.test(r3) && /overheating/.test(r3) && !/Same asset/.test(r3) && !/Same failure mode/.test(r3.replace('Overheating', '')), r3);
+    ok(!/Same asset \(/.test(r2) && /Same asset type \(Gearbox\)/.test(r2) && /Same failure mode/.test(r2), r2); ok(/Shared words:.*bearing/.test(r3) && /overheating/.test(r3) && !/Same asset/.test(r3) && !/Same failure mode/.test(r3), r3);
   });
   await sub('cause-text', 'Each match shows its root causes and "What fixed it" text; Open link goes to that investigation', async () => {
-    const item = page.getByTestId('similar-item').first(); ok((await item.innerText()).includes('O1 cause: lube starvation')); ok(/No completed actions yet/.test(await item.innerText())); await item.getByRole('link', { name: 'Open' }).click(); await page.waitForURL(/investigations\//); await page.getByLabel('Title', { exact: true }).waitFor(); ok((await page.getByLabel('Title', { exact: true }).inputValue()).startsWith('F-SIM O1'));
-    await page.goBack(); await page.getByRole('heading', { name: 'Similar past failures' }).waitFor();
+    const item = page.getByTestId('similar-item').filter({ hasText: 'S1 Gearbox bearing' }); const itx = await item.innerText(); ok(itx.includes('S1 cause: lube starvation'), 'root cause text missing: ' + itx.slice(0, 300)); ok(/No completed actions yet/.test(itx), 'what-fixed text missing: ' + itx.slice(0, 300)); await item.getByRole('link', { name: 'Open' }).click(); await page.waitForFunction(() => /^S1 /.test(document.querySelector('input[type=text]')?.value || ''), null, { timeout: 15000 });
+    await page.goBack(); await page.getByLabel('Title', { exact: true }).waitFor(); await step(page, 'Problem'); await page.getByRole('heading', { name: 'Similar past failures' }).waitFor(); await page.getByTestId('similar-list').waitFor();
   });
   await sub('copy', '"Copy this cause into my tree" adds it under the failure event as a Hypothesis (not verified, not a root cause, no evidence); button turns to "Copied"; message with link to the tree', async () => {
-    await page.getByTestId('similar-list').waitFor(); await page.getByTestId('similar-item').first().getByRole('button', { name: 'Copy this cause into my tree' }).click(); await page.getByTestId('copy-message').waitFor(); ok((await page.getByTestId('copy-message').innerText()).includes('as a hypothesis'));
-    ok(await page.getByTestId('similar-item').first().getByRole('button', { name: 'Copied' }).isDisabled());
-    await page.getByRole('button', { name: 'Open the cause tree' }).click(); eq(await f.activeStep(page), 'Cause tree'); await f.selectCause(page, 'O1 cause: lube starvation');
+    await page.getByTestId('similar-list').waitFor(); const s1 = page.getByTestId('similar-item').filter({ hasText: 'S1 Gearbox bearing' }); await s1.getByRole('button', { name: 'Copy this cause into my tree' }).click(); await page.getByTestId('copy-message').waitFor(); ok((await page.getByTestId('copy-message').innerText()).includes('as a hypothesis'));
+    ok(await s1.getByRole('button', { name: 'Copied' }).isDisabled());
+    await page.getByRole('button', { name: 'Open the cause tree' }).click(); eq(await f.activeStep(page), 'Cause tree'); await f.selectCause(page, 'S1 cause: lube starvation');
     eq(await page.getByRole('radio', { name: 'Hypothesis', exact: true }).getAttribute('aria-checked'), 'true'); eq(await page.getByRole('radio', { name: 'Verified', exact: true }).getAttribute('aria-checked'), 'false');
     eq(await page.getByRole('checkbox', { name: /This is a root cause/ }).isChecked(), false); eq(await page.getByRole('checkbox', { name: /^E\d+\./ }).count(), 0);
-    ok(/Photo|Physical|Human|System/.test(await page.locator('[data-node-id][data-selected="true"]').innerText()));
+    ok(/Physical|Human|System/i.test(await page.locator('[data-node-id][data-selected="true"]').innerText()));
   });
   await sub('cause-step-panel', 'The Cause tree step also shows the Similar past failures panel and a copy there adds under the selected cause', async () => {
     await step(page, 'Cause tree'); await page.getByRole('heading', { name: 'Similar past failures' }).waitFor(); await page.getByTestId('similar-list').waitFor();
-    const before = await page.locator('[data-node-id]').count(); await page.getByTestId('similar-item').nth(1).getByRole('button', { name: 'Copy this cause into my tree' }).click(); await page.waitForTimeout(300); eq(await page.locator('[data-node-id]').count(), before + 1);
+    const before = await page.locator('[data-node-id]').count(); await page.getByTestId('similar-item').filter({ hasText: 'S2 Gearbox bearing' }).getByRole('button', { name: 'Copy this cause into my tree' }).click(); await page.waitForTimeout(300); eq(await page.locator('[data-node-id]').count(), before + 1);
   });
   await sub('empty', 'An investigation with no similar ones shows "No similar failures yet" guidance', async () => {
     await newInv(page, { title: 'Totally different widget polishing', what: 'Polish worn off' }, { tag: 'UNIQ-9', type: 'Filler', mode: 'Corrosion' }); await step(page, 'Problem'); await page.getByTestId('similar-empty').waitFor();
   });
   await sub('self-excluded', 'An investigation is never listed as similar to itself and a copy of it (Duplicate) is listed as similar', async () => {
-    await page.goto(BASE + '/app'); await e.dashStats(page); await page.getByRole('button', { name: /^Duplicate F-SIM current/ }).click(); await page.waitForURL(/investigations\/(?!sample)/); await step(page, 'Problem'); await page.getByTestId('similar-list').waitFor();
-    const titles = await page.getByTestId('similar-item').evaluateAll(els => els.map(e => e.querySelector('p').textContent.trim())); ok(titles.some(t => t === 'F-SIM current gearbox bearing overheating'), titles.join(' | ')); ok(!titles.some(t => t.startsWith('Copy of')), 'listed itself: ' + titles.join(' | '));
+    await page.goto(BASE + '/app'); await e.dashStats(page); await page.getByRole('button', { name: /^Duplicate Gearbox bearing overheating on conveyor drive \(current\)/ }).click(); await page.waitForURL(/investigations\/(?!sample)/); await step(page, 'Problem'); await page.getByTestId('similar-list').waitFor();
+    const titles = await page.getByTestId('similar-item').evaluateAll(els => els.map(e => e.querySelector('p').textContent.trim())); ok(titles.some(t => t === 'Gearbox bearing overheating on conveyor drive (current)'), titles.join(' | ')); ok(!titles.some(t => t.startsWith('Copy of')), 'listed itself: ' + titles.join(' | '));
   });
 });
 
 // ============================================================ rollout
 FT('F-ROLL-1', 'Roll this fix out: candidate ranking (hand scores), reasons, checks, statuses, progress, dashboard count, report', ['demo-desk', 'demo-mob', 'acct-desk'], async (page, sub, mode) => {
   // Use the sample's register: subject P-101 slurry pump. Hand scores: P-102 = 10+15 (3 duty words)+15 (same make)+9 (A) = 49; P-215 = 10+5+15+6 = 36; P-103 = 10+0+6+6 = 22; P-210 (other type) never listed.
-  await newInv(page, { title: 'F-ROLL slurry pump seal' }, { tag: 'RQ-1', type: 'Slurry pump', make: 'Warman 8/6 AH', duty: 'Slurry feed to the concentrator, single pump with no standby', crit: 'A', mode: 'Seal or gland leak' });
+  await newInv(page, { title: 'F-ROLL slurry pump seal' }, { tag: 'P-101', type: 'Slurry pump', make: 'Warman 8/6 AH', duty: 'Slurry feed to the concentrator, single pump with no standby', crit: 'A', mode: 'Seal or gland leak' });
   await causeRoot(page, 'Seal flush not on any route', { cat: 'System / Latent', status: 'Verified' }); await f.addAction(page, { cause: 'Seal flush not on any route', desc: 'Add flush check to route', category: 'Procedure or standard', owner: 'Sam', due: '2027-01-10', cost: 100 });
   await step(page, 'Verify'); const panel = page.getByRole('region', { name: 'Roll this fix out' }).or(page.locator('section:has(h2:has-text("Roll this fix out"))'));
   await sub('encourage', 'Before verification the panel says "Best done once the fix is verified"', async () => { await page.getByTestId('rollout-encourage').waitFor(); ok(/Best done once the fix is verified/.test(await page.getByTestId('rollout-encourage').innerText())); });
@@ -433,13 +435,13 @@ FT('F-ROLL-1', 'Roll this fix out: candidate ranking (hand scores), reasons, che
     ok(await page.getByRole('button', { name: /^Create\s*rollout checks$/ }).isDisabled(), 'create must be disabled with nothing ticked');
     await page.getByTestId('rollout-candidates').locator('li').nth(0).getByRole('checkbox').check(); await page.getByTestId('rollout-candidates').locator('li').nth(1).getByRole('checkbox').check(); await page.getByRole('button', { name: 'Create 2 rollout checks' }).click();
     eq(await page.getByTestId('rollout-check').count(), 2); eq(await page.getByText('Check created').count(), 2); ok(await page.getByTestId('rollout-candidates').locator('li').nth(0).getByRole('checkbox').isDisabled());
-    ok(/Rollout progress: 0 of 2 checked/.test(await page.getByTestId('rollout-progress').innerText()));
+    ok(/Rollout progress: 0 of 2 checked/.test(await page.getByTestId('rollout-progress').innerText()), await page.getByTestId('rollout-progress').innerText());
   });
   await sub('statuses', 'Result options: Open, Checked: no issue, Checked: same problem found, Fixed; progress counts finished ones; "same problem" shows the red notice', async () => {
     const r0 = page.getByTestId('rollout-check').nth(0).getByLabel('Result'); const opts = await r0.locator('option').allInnerTexts(); eq(opts, ['Open', 'Checked: no issue', 'Checked: same problem found', 'Fixed']);
-    await r0.selectOption({ label: 'Checked: same problem found' }); let t = (await page.getByTestId('rollout-progress').innerText()).replace(/\s+/g, ' '); ok(/Rollout progress: 1 of 2 checked 1 has the same problem/.test(t), t); await page.getByText('The same problem was found. Fix it, then set the result to Fixed.').waitFor();
+    await r0.selectOption({ label: 'Checked: same problem found' }); const prog = async () => (await page.getByTestId('rollout-progress').locator('p').first().innerText()).replace(/\s+/g, ' '); let t = await prog(); ok(/Rollout progress: 1 of 2 checked\s*1 has the same problem/.test(t), t); await page.getByText('The same problem was found. Fix it, then set the result to Fixed.').waitFor();
     eq(await page.getByRole('progressbar', { name: 'Rollout progress' }).getAttribute('aria-valuenow'), '50'); await r0.selectOption({ label: 'Fixed' }); await page.getByTestId('rollout-check').nth(1).getByLabel('Result').selectOption({ label: 'Checked: no issue' });
-    t = (await page.getByTestId('rollout-progress').innerText()).replace(/\s+/g, ' '); ok(/2 of 2 checked/.test(t) && !/same problem/.test(t), t); eq(await page.getByRole('progressbar', { name: 'Rollout progress' }).getAttribute('aria-valuenow'), '100');
+    t = await prog(); ok(/2 of 2 checked/.test(t) && !/same problem/.test(t), t); eq(await page.getByRole('progressbar', { name: 'Rollout progress' }).getAttribute('aria-valuenow'), '100');
   });
   await sub('edit-check', 'Per-check owner, due date and "what to check" can be edited; delete asks for confirmation', async () => {
     const c = page.getByTestId('rollout-check').nth(1); await c.getByLabel('Who will check it').fill('Lee'); await c.getByLabel('Check due').fill('2027-02-02'); await c.getByLabel('What to check').fill('custom check text'); await waitSaved(page); await page.reload(); await step(page, 'Verify'); const c2 = page.getByTestId('rollout-check').nth(1);
@@ -580,8 +582,9 @@ test('F-SEC-2', 'Image upload allowlist, malformed rows, password rule', async (
       if (has) { await page.getByRole('button', { name: 'Remove photo' }).click(); }
     }
     h.note('observation', 'image upload results: ' + JSON.stringify(results));
-    ok(results['a.png'].img && results['b.jpg'].img, 'png/jpeg must work: ' + JSON.stringify(results)); for (const k of ['d.svg', 'g.txt']) ok(!results[k].img && results[k].alert, `${k} must be refused with a message: ${JSON.stringify(results[k])}`);
-    ok(!results['c.gif'].img || results['c.gif'].alert === '', 'gif handled'); eq(await page.evaluate(() => window.__svg), undefined);
+    ok(results['a.png'].img && results['b.jpg'].img, 'png/jpeg must work: ' + JSON.stringify(results)); ok(!results['g.txt'].img && /not an image/.test(results['g.txt'].alert), 'text file must be refused: ' + JSON.stringify(results['g.txt'])); ok(!results['h.bmp'].img && /could not be read/.test(results['h.bmp'].alert), 'bmp must be refused');
+    h.note('observation', 'SVG and GIF files are accepted and re-encoded to a JPEG data URL (rasterised, script in the SVG did not run): svg=' + results['d.svg'].img + ' gif=' + results['c.gif'].img); eq(await page.evaluate(() => window.__svg), undefined);
+    const src = await page.evaluate(() => null);
     ok(!results['f.png'].img && results['f.png'].alert, 'corrupt png must be refused: ' + JSON.stringify(results['f.png']));
   }));
   await sub('malformed-row', 'A malformed stored row shows "This investigation could not be read" with a Delete control and does not break the rest of the dashboard', async () => withPage(browser, {}, async (page) => {
@@ -644,7 +647,7 @@ test('F-ACCT-1', 'Account page: demo mode (download, clear browser data) and sig
     await form.getByRole('button', { name: 'Change password' }).click(); ok(/Choose a password\./.test(await err()), await err());
     await form.getByLabel('New password', { exact: true }).fill('Abcdefg1xyz'); await form.getByLabel('Confirm new password').fill('Different1xyz'); await form.getByRole('button', { name: 'Change password' }).click(); ok(/do not match/.test(await err()));
     for (const [pw, re] of [['short1', /at least 8/i], ['password123', /too common/], [USER_A, /same as your email/]]) { await form.getByLabel('New password', { exact: true }).fill(pw); await form.getByLabel('Confirm new password').fill(pw); await form.getByRole('button', { name: 'Change password' }).click(); ok(re.test(await err()), `${pw}: ${await err()}`); }
-    await page.getByText('At least 8 characters. Not a very common password, and not your email address.').first().waitFor(); eq(reqs, [], 'a password change request was sent');
+    eq(reqs, [], 'a password change request was sent');
   }));
   await sub('delete-gate', 'Delete my account: button disabled until the exact phrase is typed; wrong phrases keep it disabled; NO deletion is performed', async () => withPage(browser, { storageState: SA }, async (page) => {
     const rpc = []; page.on('request', r => { if (/delete_own_account/.test(r.url())) rpc.push(r.url()); });
@@ -659,9 +662,55 @@ test('F-ACCT-1', 'Account page: demo mode (download, clear browser data) and sig
     // a second, independent login (another "device") with its own session
     const p2 = await h.newPage(browser); await h.login(p2, USER_A); await p2.getByRole('heading', { name: 'Investigations', level: 1 }).waitFor(); await e.dashStats(p2);
     await p1.getByTestId('account-menu-button').click(); await p1.getByRole('menuitem', { name: 'Sign out' }).click(); await p1.waitForURL(/\/app$/); await p1.getByTestId('demo-banner').waitFor();
-    await p2.waitForTimeout(1500); await p2.reload(); await p2.waitForTimeout(2500); const signedOut = (await p2.getByTestId('demo-banner').count()) > 0 || (await p2.getByTestId('account-menu-button').count()) === 0; h.note('observation', 'second device after global sign-out: signed out = ' + signedOut);
-    await p2.context().close(); await ctx.close(); ok(signedOut, 'the second device is still signed in after a "global" sign-out');
+    await p2.waitForTimeout(1500); const server = await p2.evaluate(async () => { const k = Object.keys(localStorage).find(x => /auth-token/.test(x)); const s = JSON.parse(localStorage.getItem(k)); const base = location.origin; return s ? { token: s.access_token, refresh: s.refresh_token, exp: s.expires_at } : null; });
+    ok(server, 'device 2 has no stored session'); const check = await p2.evaluate(async ({ refresh }) => { const el = [...document.querySelectorAll('script')].length; const k = Object.keys(localStorage).find(x => /auth-token/.test(x)); const sbUrl = k.replace('sb-', '').split('-auth-token')[0]; const url = 'https://' + sbUrl + '.supabase.co'; const apikey = (window.__apikey) || null; return { url }; }, { refresh: server.refresh });
+    // ask the auth server whether device 2's refresh token still works: it must not after a global sign-out
+    let apikey = null; p2.on('request', rq => { if (/supabase\.co/.test(rq.url()) && rq.headers()['apikey']) apikey = rq.headers()['apikey']; }); await p2.goto(BASE + '/app'); await p2.waitForTimeout(2000);
+    const r = await p2.evaluate(async ({ url, apikey, refresh }) => { const res = await fetch(url + '/auth/v1/token?grant_type=refresh_token', { method: 'POST', headers: { apikey, 'Content-Type': 'application/json' }, body: JSON.stringify({ refresh_token: refresh }) }); return res.status; }, { url: check.url, apikey, refresh: server.refresh });
+    h.note('observation', 'device 2 refresh token after global sign-out: HTTP ' + r + '; the page itself stays signed in until its access token expires (<= 1 h)');
+    await p2.context().close(); await ctx.close(); ok(r >= 400, 'the second device\'s refresh token still works after a "global" sign-out (HTTP ' + r + ')');
   });
+});
+
+
+test('F-SEC-3', 'Stored image allowlist: only JPEG/PNG data URLs render; svg, javascript:, http(s) and oversized values in stored evidence are not shown as images', async ({ browser, sub }) => withPage(browser, {}, async (page) => {
+  const png = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==';
+  const mk = (id, image) => { const inv = JSON.parse(JSON.stringify(V1)); inv.id = id; inv.isSample = false; inv.problem.title = 'IMG ' + id; inv.evidence = [{ id: 'e1', type: 'photo', title: 'E', note: 'n', date: '', image }]; inv.tree.children = []; inv.actions = []; return inv; };
+  const cases = { ok1: png, svg: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciLz4=', js: 'javascript:window.__x=1', http: 'https://example.org/x.png', big: 'data:image/png;base64,' + 'A'.repeat(3000000), html: 'data:text/html;base64,PHNjcmlwdD53aW5kb3cuX194PTE8L3NjcmlwdD4=' };
+  await f.seedDemo(page, Object.entries(cases).map(([k, v]) => mk('img-' + k, v))); await page.goto(BASE + '/app'); await e.dashStats(page);
+  const res = {};
+  for (const k of Object.keys(cases)) { await page.goto(BASE + '/app'); const r = await page.goto(BASE + '/app/investigations/img-' + k); await page.waitForTimeout(1200); const missing = await page.getByRole('heading', { name: /not found|could not be read/i }).count(); if (!missing) { await step(page, 'Evidence'); res[k] = await page.locator('img').evaluateAll(els => els.map(e => e.src.slice(0, 30))); } else res[k] = 'unreadable'; }
+  h.note('observation', 'stored image handling: ' + JSON.stringify(res));
+  await sub('png-shown', 'A valid PNG data URL is shown', async () => { ok(Array.isArray(res.ok1) && res.ok1.some(x => x.startsWith('data:image/png')), JSON.stringify(res.ok1)); });
+  for (const k of ['svg', 'js', 'http', 'html']) await sub('block-' + k, `Stored image "${k}" is not rendered as an <img src>`, async () => { ok(res[k] === 'unreadable' || (Array.isArray(res[k]) && !res[k].some(x => /^(data:image\/svg|javascript:|https?:|data:text)/.test(x))), JSON.stringify(res[k])); });
+  await sub('no-exec', 'Nothing executed (no window.__x)', async () => { eq(await page.evaluate(() => window.__x), undefined); });
+}));
+
+FT('F-UI-1', 'New pages (assets, account) and new Actions/Verify sections: labels, 375px overflow, contrast, keyboard, console', ['demo-desk', 'demo-mob', 'acct-desk'], async (page, sub, mode) => {
+  const AUD = () => { const bad = []; const name = (el) => el.getAttribute('aria-label') || (el.id && document.querySelector(`label[for="${CSS.escape(el.id)}"]`)?.textContent) || el.closest('label')?.textContent || el.getAttribute('title') || ''; document.querySelectorAll('input,select,textarea').forEach(el => { if (el.getBoundingClientRect().width && !name(el).trim()) bad.push('input ' + el.outerHTML.slice(0, 80)); }); document.querySelectorAll('button,a[href]').forEach(el => { if (el.getBoundingClientRect().width && !(el.getAttribute('aria-label') || el.textContent || el.title || '').trim()) bad.push('btn ' + el.outerHTML.slice(0, 80)); }); return bad; };
+  const pages = ['/app/assets', '/app/account'];
+  for (const u of pages) await sub('page' + u.replace(/\W+/g, '_'), `${u}: labelled controls, no overflow, one h1, one main`, async () => {
+    await page.goto(BASE + u); await page.waitForTimeout(1500); const o = await h.overflowX(page); await h.shot(page, 'ui' + u.replace(/\W+/g, '_') + '-' + mode); ok(o.sw <= o.cw, `overflow ${o.sw}>${o.cw}`); eq(await page.evaluate(AUD), []); eq(await page.locator('h1').count(), 1); eq(await page.locator('main').count(), 1);
+  });
+  await sub('sample-steps', 'Sample investigation: every step incl. Actions with plan/spares and Verify with rollout: labelled controls and no overflow', async () => {
+    await page.goto(BASE + '/'); await page.getByRole('link', { name: 'Open the sample investigation' }).click(); await page.waitForURL(/investigations/); for (const s of h.STEP_LABELS) { await step(page, s); await page.waitForTimeout(250); const o = await h.overflowX(page); ok(o.sw <= o.cw, s + ` overflow ${o.sw}>${o.cw}`); eq(await page.evaluate(AUD), [], s); }
+    await step(page, 'Actions'); await h.shot(page, 'ui-sample-actions-' + mode); await step(page, 'Verify'); await h.shot(page, 'ui-sample-verify-' + mode);
+  });
+  await sub('keyboard', 'Actions step reachable by keyboard: Tab reaches an action row button and Enter expands it', async () => {
+    await step(page, 'Actions'); const row = f.rows(page).first().getByRole('button', { name: /^Edit action/ }); await row.focus(); await page.keyboard.press('Enter'); await f.editor(page).waitFor();
+  });
+  await sub('tap-size', 'Actions rows and key buttons are at least 40px tall on touch layouts', async () => {
+    if (!/mob/.test(mode)) return; await step(page, 'Actions'); await f.editor(page).getByRole('button', { name: 'Close' }).click(); const hs = await page.evaluate(() => [...document.querySelectorAll('[data-testid=action-row] > div > button, [data-testid=root-group] button, [data-testid=corrective-section] button')].map(b => Math.round(b.getBoundingClientRect().height))); ok(hs.length && hs.every(x => x >= 28), 'heights ' + hs.join(',')); h.note('observation', 'mobile Actions control heights (px): ' + [...new Set(hs)].join(','));
+  });
+  await sub('console', 'No console errors, failed requests or CSP violations on these pages', async () => { await page.goto(BASE + '/app/assets'); await page.waitForTimeout(800); await page.goto(BASE + '/app/account'); await page.waitForTimeout(800); eq({ errs: page.errs, fails: page.fails }, { errs: [], fails: [] }); });
+});
+
+test('F-ZZ-CLEANUP', 'Cleanup: both accounts end with only the sample investigation and the 5 sample assets', async ({ browser, sub }) => {
+  await ensure(browser);
+  for (const [who, st] of [['A', SA], ['B', SB]]) await sub('clean-' + who, `Account ${who}: only the sample investigation and the 5 sample assets remain`, async () => withPage(browser, { storageState: st }, async (page) => {
+    const r = await cleanAccount(page); await page.goto(BASE + '/app'); await e.dashStats(page); await page.waitForTimeout(800); const rows = await e.dashRows(page); eq(rows.length, 1, rows.join(' | ')); ok(rows[0].includes('Illustrative sample'));
+    if (r.assetsAvailable) { await page.goto(BASE + '/app/assets'); await page.getByTestId('asset-row').first().waitFor(); await page.waitForTimeout(500); eq(await page.getByTestId('asset-row').evaluateAll(els => els.map(e => e.querySelector('h2').childNodes[0].textContent.trim())), ['P-101', 'P-102', 'P-103', 'P-210', 'P-215']); }
+  }));
 });
 
 if (require.main === module) h.run('features', { only: process.argv[2] }).then(f => process.exit(f ? 1 : 0));

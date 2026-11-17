@@ -1,0 +1,41 @@
+  pass F-ROLL-1-demo-desk.encourage Before verification the panel says "Best done once the fix is verified"
+  pass F-ROLL-1-demo-desk.rank Candidates: P-102, P-215, P-103 in that order; the centrifugal pump P-210 and the asset itself are not listed
+  pass F-ROLL-1-demo-desk.reasons Reasons: P-102 same make+model, similar duty (slurry, feed, concentrator), criticality A; P-103 similar make (warman) and criticality B
+  pass F-ROLL-1-demo-desk.create Tick P-102 and P-215, default text prefilled from root causes and preventive actions, create 2 checks; ticked ones show "Check created" and can no longer be picked
+  pass F-ROLL-1-demo-desk.statuses Result options: Open, Checked: no issue, Checked: same problem found, Fixed; progress counts finished ones; "same problem" shows the red notice
+  pass F-ROLL-1-demo-desk.edit-check Per-check owner, due date and "what to check" can be edited; delete asks for confirmation
+  pass F-ROLL-1-demo-desk.dashboard Dashboard "Rollout checks" tile: open count and "of N created" (hand: 2 created, 0 open now)
+  pass F-ROLL-1-demo-desk.dashboard-open Setting one back to Open and one to same problem: tile shows 1 open and "1 found the same problem"
+  pass F-ROLL-1-demo-desk.report Report section "Rollout to similar assets" lists the checks with their results
+  pass F-ROLL-1-demo-desk.verified-message When the fix is verified the panel says "The fix is verified. This is the moment to spread it"
+  pass F-ROLL-1-demo-desk.needs-type With no asset type set the panel asks for it and offers "Go to Asset details"
+  pass F-ROLL-1-demo-desk.no-candidates A type with no other assets shows the empty guidance and the "add a similar asset" form
+PASS F-ROLL-1-demo-desk Roll this fix out: candidate ranking (hand scores), reasons, checks, statuses, progress, dashboard count, report [demo-desk]
+  pass F-ROLL-1-demo-mob.encourage Before verification the panel says "Best done once the fix is verified"
+  pass F-ROLL-1-demo-mob.rank Candidates: P-102, P-215, P-103 in that order; the centrifugal pump P-210 and the asset itself are not listed
+  pass F-ROLL-1-demo-mob.reasons Reasons: P-102 same make+model, similar duty (slurry, feed, concentrator), criticality A; P-103 similar make (warman) and criticality B
+  pass F-ROLL-1-demo-mob.create Tick P-102 and P-215, default text prefilled from root causes and preventive actions, create 2 checks; ticked ones show "Check created" and can no longer be picked
+  pass F-ROLL-1-demo-mob.statuses Result options: Open, Checked: no issue, Checked: same problem found, Fixed; progress counts finished ones; "same problem" shows the red notice
+  pass F-ROLL-1-demo-mob.edit-check Per-check owner, due date and "what to check" can be edited; delete asks for confirmation
+  pass F-ROLL-1-demo-mob.dashboard Dashboard "Rollout checks" tile: open count and "of N created" (hand: 2 created, 0 open now)
+  pass F-ROLL-1-demo-mob.dashboard-open Setting one back to Open and one to same problem: tile shows 1 open and "1 found the same problem"
+  pass F-ROLL-1-demo-mob.report Report section "Rollout to similar assets" lists the checks with their results
+  pass F-ROLL-1-demo-mob.verified-message When the fix is verified the panel says "The fix is verified. This is the moment to spread it"
+  pass F-ROLL-1-demo-mob.needs-type With no asset type set the panel asks for it and offers "Go to Asset details"
+  pass F-ROLL-1-demo-mob.no-candidates A type with no other assets shows the empty guidance and the "add a similar asset" form
+PASS F-ROLL-1-demo-mob Roll this fix out: candidate ranking (hand scores), reasons, checks, statuses, progress, dashboard count, report [demo-mob]
+  pass F-ROLL-1-acct-desk.encourage Before verification the panel says "Best done once the fix is verified"
+  pass F-ROLL-1-acct-desk.rank Candidates: P-102, P-215, P-103 in that order; the centrifugal pump P-210 and the asset itself are not listed
+  pass F-ROLL-1-acct-desk.reasons Reasons: P-102 same make+model, similar duty (slurry, feed, concentrator), criticality A; P-103 similar make (warman) and criticality B
+  pass F-ROLL-1-acct-desk.create Tick P-102 and P-215, default text prefilled from root causes and preventive actions, create 2 checks; ticked ones show "Check created" and can no longer be picked
+  pass F-ROLL-1-acct-desk.statuses Result options: Open, Checked: no issue, Checked: same problem found, Fixed; progress counts finished ones; "same problem" shows the red notice
+  pass F-ROLL-1-acct-desk.edit-check Per-check owner, due date and "what to check" can be edited; delete asks for confirmation
+  pass F-ROLL-1-acct-desk.dashboard Dashboard "Rollout checks" tile: open count and "of N created" (hand: 2 created, 0 open now)
+  pass F-ROLL-1-acct-desk.dashboard-open Setting one back to Open and one to same problem: tile shows 1 open and "1 found the same problem"
+  pass F-ROLL-1-acct-desk.report Report section "Rollout to similar assets" lists the checks with their results
+  pass F-ROLL-1-acct-desk.verified-message When the fix is verified the panel says "The fix is verified. This is the moment to spread it"
+  pass F-ROLL-1-acct-desk.needs-type With no asset type set the panel asks for it and offers "Go to Asset details"
+  pass F-ROLL-1-acct-desk.no-candidates A type with no other assets shows the empty guidance and the "add a similar asset" form
+PASS F-ROLL-1-acct-desk Roll this fix out: candidate ranking (hand scores), reasons, checks, statuses, progress, dashboard count, report [acct-desk]
+
+features: 39/39 passed, 0 failed

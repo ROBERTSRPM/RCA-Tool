@@ -1,7 +1,7 @@
 {
   "suite": "demo",
   "base": "http://localhost:3555",
-  "at": "2026-11-17T06:05:55.643Z",
+  "at": "2026-11-17T07:25:24.588Z",
   "results": [
     {
       "id": "D-LAND-1.hdr",
@@ -64,7 +64,7 @@
       "title": "Landing page: every link and button works",
       "status": "pass",
       "detail": "",
-      "ms": 926
+      "ms": 838
     },
     {
       "id": "D-DASH-1.totals",
@@ -85,7 +85,7 @@
       "title": "Dashboard (sample only): totals equal hand calculation",
       "status": "pass",
       "detail": "",
-      "ms": 260
+      "ms": 299
     },
     {
       "id": "D-DASH-2.dup",
@@ -155,7 +155,7 @@
       "title": "Dashboard buttons: duplicate, delete cancel/confirm, reset sample, empty state",
       "status": "pass",
       "detail": "",
-      "ms": 4677
+      "ms": 4693
     },
     {
       "id": "D-E2E-1.problem",
@@ -274,7 +274,7 @@
       "title": "Full flow: new investigation, 7 steps, hand-checked numbers, dashboard, report, reload",
       "status": "pass",
       "detail": "",
-      "ms": 7073
+      "ms": 6833
     },
     {
       "id": "D-TREE-1.empty",
@@ -356,8 +356,8 @@
     {
       "id": "D-TREE-1.del-linked-action",
       "title": "Deleting a root cause that has an action warns and unlinks the action",
-      "status": "fail",
-      "detail": "locator.inputValue: Timeout 30000ms exceeded. | Call log: | \u001b[2m  - waiting for getByTestId('unlinked-actions').getByLabel('Re-link to a root cause')\u001b[22m | ",
+      "status": "pass",
+      "detail": "",
       "ms": 0
     },
     {
@@ -372,7 +372,7 @@
       "title": "Cause tree operations: add child/sibling, edit, delete, collapse/expand, move, status",
       "status": "pass",
       "detail": "",
-      "ms": 33291
+      "ms": 3101
     },
     {
       "id": "D-TREE-2.tree-count",
@@ -428,7 +428,7 @@
       "title": "Switching Tree / 5 Whys / Fishbone keeps data; every view control works",
       "status": "pass",
       "detail": "",
-      "ms": 1053
+      "ms": 1135
     },
     {
       "id": "D-QC-1.blank",
@@ -582,7 +582,7 @@
       "title": "Quality check: each rule triggers, jump link lands on the right step, clears when fixed",
       "status": "pass",
       "detail": "",
-      "ms": 8060
+      "ms": 8547
     },
     {
       "id": "D-PERS-1.autosave-states",
@@ -679,7 +679,7 @@
       "id": "D-PERS-1.concurrent-window",
       "title": "Two tabs edit different fields within the same ~350 ms autosave window: neither edit may be silently lost (3 tries)",
       "status": "fail",
-      "detail": "values differ: expected [] but got [\"try 0: site=\\\"S01794895420511\\\" (typed \\\"S01794895420511\\\") when=\\\"Night shift, full speed\\\" (typed \\\"W01794895420511\\\") notices=0\",\"try 1: site=\\\"S11794895423529\\\" (typed \\\"S11794895423529\\\") when=\\\"Night shift, full speed\\\" (typed \\\"W11794895423529\\\") notices=0\",\"try 2: site=\\\"S21794895426636\\\" (typed \\\"S21794895426636\\\") when=\\\"Night shift, full speed\\\" (typed \\\"W21794895426636\\\") notices=0\"]",
+      "detail": "values differ: expected [] but got [\"try 0: site=\\\"S01794900189014\\\" (typed \\\"S01794900189014\\\") when=\\\"Night shift, full speed\\\" (typed \\\"W01794900189014\\\") notices=0\",\"try 1: site=\\\"S11794900192089\\\" (typed \\\"S11794900192089\\\") when=\\\"Night shift, full speed\\\" (typed \\\"W11794900192089\\\") notices=0\",\"try 2: site=\\\"S21794900195213\\\" (typed \\\"S21794900195213\\\") when=\\\"Night shift, full speed\\\" (typed \\\"W21794900195213\\\") notices=1\"]",
       "ms": 0
     },
     {
@@ -687,7 +687,7 @@
       "title": "Persistence: reload after each kind of edit (demo)",
       "status": "pass",
       "detail": "",
-      "ms": 25093
+      "ms": 26149
     },
     {
       "id": "D-EDGE-NUM.letters",
@@ -792,7 +792,7 @@
       "title": "Number fields: zero, negative, non-numeric, decimals, huge; payback edge cases",
       "status": "pass",
       "detail": "",
-      "ms": 4246
+      "ms": 4322
     },
     {
       "id": "D-EDGE-TEXT.overflow-problem",
@@ -890,7 +890,7 @@
       "title": "Very long text, HTML/script text and special characters render as text and do not break layout",
       "status": "pass",
       "detail": "",
-      "ms": 23798
+      "ms": 23146
     },
     {
       "id": "D-EDGE-DATE.past-future-event",
@@ -932,7 +932,7 @@
       "title": "Dates in the past and future",
       "status": "pass",
       "detail": "",
-      "ms": 4763
+      "ms": 4736
     },
     {
       "id": "D-EDGE-NAV.bad-id",
@@ -1030,7 +1030,7 @@
       "title": "Invalid id, unknown routes, back/forward, double-click create",
       "status": "fail",
       "detail": "CSP violations during test: Applying inline style violates the following Content Security Policy directive 'style-src 'self''. Either the 'unsafe-inline' keyword, a hash ('sha256-Z5XTK23DFuEMs0PwnyZDO9SWxemQ5HxcpVaBNuUJyWY='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked. || CSP violation: style-src-elem blocked inline at http://localhost:3555/nope:1 || Applying inline style violates the following Content Security Policy directive 'style-src 'self''. Either the 'unsafe-inline' keyword, a hash ('sha256-Z5XTK23DFuEMs0PwnyZDO9SWxemQ5HxcpVaBNuUJyWY='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked.",
-      "ms": 11296
+      "ms": 11234
     },
     {
       "id": "D-EDGE-ACT.hidden-after-unflag",
@@ -1051,7 +1051,7 @@
       "title": "Actions whose root cause is unflagged or deleted",
       "status": "pass",
       "detail": "",
-      "ms": 1870
+      "ms": 1842
     },
     {
       "id": "D-EDGE-EVID.upload",
@@ -1100,7 +1100,7 @@
       "title": "Evidence: link/unlink, delete confirm, photo upload, non-image file",
       "status": "pass",
       "detail": "",
-      "ms": 5328
+      "ms": 5430
     },
     {
       "id": "D-EDGE-STORE.corrupt",
@@ -1128,7 +1128,7 @@
       "title": "Browser storage faults: corrupt JSON, blocked storage",
       "status": "pass",
       "detail": "",
-      "ms": 2795
+      "ms": 2939
     },
     {
       "id": "D-ERR-1.pages-desktop",
@@ -1163,7 +1163,7 @@
       "title": "No console errors or failed requests on any page (desktop and 375px, every step and cause view)",
       "status": "pass",
       "detail": "",
-      "ms": 27205
+      "ms": 26990
     },
     {
       "id": "D-A11Y-1.names",
@@ -1275,7 +1275,7 @@
       "title": "Accessibility: names, labels, headings, language, titles, focus visibility, keyboard reach, contrast",
       "status": "pass",
       "detail": "",
-      "ms": 23968
+      "ms": 24137
     },
     {
       "id": "D-MOB-1.page_",
@@ -1408,7 +1408,7 @@
       "title": "375px layout: no horizontal overflow, clipped or off-screen content on every page and step (sample + filled)",
       "status": "pass",
       "detail": "",
-      "ms": 16495
+      "ms": 17068
     },
     {
       "id": "D-MOB-E2E.problem",
@@ -1478,7 +1478,7 @@
       "title": "375px: the full end-to-end flow (all 7 steps, 7-cause tree, actions, verify) works with touch-sized layout",
       "status": "pass",
       "detail": "",
-      "ms": 4405
+      "ms": 4702
     }
   ],
   "notes": [

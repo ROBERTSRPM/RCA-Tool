@@ -461,17 +461,11 @@ test('A-EMPTY-1', 'Signed in: empty account -> "Load the sample investigation" n
 }));
 
 // ---------------------------------------------------------------- cleanup (must run last)
-test('A-ZZ-CLEANUP', 'Cleanup: delete every investigation created by this run; leave each account with only its sample', async ({ browser, sub }) => {
-  for (const who of ['A', 'B']) await sub('clean-' + who, `Account ${who} left with only the seeded sample`, async () => asUser(browser, who, async (page) => {
-    await page.goto(BASE + '/app'); await e.dashStats(page);
-    for (let guard = 0; guard < 40; guard++) {
-      const rows = await page.locator('section[aria-label="Investigations list"] ul > li').all(); let target = null;
-      for (const li of rows) { if (!(await li.innerText()).includes('Illustrative sample')) { target = li; break; } }
-      if (!target) break; await target.getByRole('button', { name: /^Delete / }).click(); await page.getByRole('alertdialog').getByRole('button', { name: 'Delete' }).click(); await page.waitForTimeout(600);
-    }
-    // restore sample to pristine in case a test edited it
-    await page.getByRole('button', { name: 'Reset sample data' }).click(); await page.getByRole('alertdialog').getByRole('button', { name: 'Reset sample' }).click(); await page.waitForTimeout(2500);
-    await page.reload(); await e.dashStats(page); await page.locator('section[aria-label="Investigations list"] ul > li').first().waitFor(); const rows = await e.dashRows(page); eq(rows.length, 1, rows.join(' | ')); ok(rows[0].includes('Illustrative sample'));
+test('A-ZZ-CLEANUP', 'Cleanup: delete every investigation and asset created by this run; leave each account with only its sample and the 5 sample assets', async ({ browser, sub }) => {
+  const { cleanAccount } = require('./cleanup');
+  for (const who of ['A', 'B']) await sub('clean-' + who, `Account ${who} left with only the seeded sample (and sample assets)`, async () => asUser(browser, who, async (page) => {
+    await cleanAccount(page); await page.goto(BASE + '/app'); await e.dashStats(page); await page.locator('section[aria-label="Investigations list"] ul > li').first().waitFor(); await page.waitForTimeout(500);
+    const rows = await e.dashRows(page); eq(rows.length, 1, rows.join(' | ')); ok(rows[0].includes('Illustrative sample'));
   }));
 });
 
