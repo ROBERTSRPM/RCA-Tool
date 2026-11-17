@@ -2,20 +2,20 @@
   "fps": 30,
   "audio": null,
   "scenes": [
-    {"id": "s01", "title": "Hook: same failure, again", "duration": 38, "presenter": "full", "presenterVideo": null, "audio": null},
-    {"id": "s03", "title": "What RCA is", "duration": 33, "presenter": "corner", "presenterVideo": null, "audio": null},
-    {"id": "s04", "title": "What RCA is not", "duration": 34, "presenter": "corner", "presenterVideo": null, "audio": null},
-    {"id": "s05", "title": "Why it matters", "duration": 33, "presenter": "corner", "presenterVideo": null, "audio": null},
-    {"id": "s06", "title": "The hidden plant", "duration": 33, "presenter": "corner", "presenterVideo": null, "audio": null},
-    {"id": "s08", "title": "Six parts: 1 to 3", "duration": 32, "presenter": "corner", "presenterVideo": null, "audio": null},
-    {"id": "s09", "title": "Six parts: 3 to 6", "duration": 35, "presenter": "corner", "presenterVideo": null, "audio": null},
-    {"id": "s10", "title": "Worked example: the pump", "duration": 33, "presenter": "corner", "presenterVideo": null, "audio": null},
+    {"id": "s01", "title": "Hook: same failure, again", "duration": 38, "presenter": "none", "presenterVideo": null, "audio": null},
+    {"id": "s03", "title": "What RCA is", "duration": 33, "presenter": "none", "presenterVideo": null, "audio": null},
+    {"id": "s04", "title": "What RCA is not", "duration": 34, "presenter": "none", "presenterVideo": null, "audio": null},
+    {"id": "s05", "title": "Why it matters", "duration": 33, "presenter": "none", "presenterVideo": null, "audio": null},
+    {"id": "s06", "title": "The hidden plant", "duration": 33, "presenter": "none", "presenterVideo": null, "audio": null},
+    {"id": "s08", "title": "Six parts: 1 to 3", "duration": 32, "presenter": "none", "presenterVideo": null, "audio": null},
+    {"id": "s09", "title": "Six parts: 3 to 6", "duration": 35, "presenter": "none", "presenterVideo": null, "audio": null},
+    {"id": "s10", "title": "Worked example: the pump", "duration": 33, "presenter": "none", "presenterVideo": null, "audio": null},
     {"id": "s11", "title": "Worked example: the loss", "duration": 33, "presenter": "none", "presenterVideo": null, "audio": null},
     {"id": "s12", "title": "Worked example: evidence", "duration": 32, "presenter": "none", "presenterVideo": null, "audio": null},
     {"id": "s13", "title": "Worked example: physical and human causes", "duration": 43, "presenter": "none", "presenterVideo": null, "audio": null},
     {"id": "s14", "title": "Worked example: system causes", "duration": 30, "presenter": "none", "presenterVideo": null, "audio": null},
     {"id": "s15", "title": "Worked example: verify and act", "duration": 43, "presenter": "none", "presenterVideo": null, "audio": null},
     {"id": "s16", "title": "Worked example: results", "duration": 48, "presenter": "none", "presenterVideo": null, "audio": null},
-    {"id": "s17", "title": "Close: the system", "duration": 51, "presenter": "full", "presenterVideo": null, "audio": null}
+    {"id": "s17", "title": "Close: the system", "duration": 51, "presenter": "none", "presenterVideo": null, "audio": null}
   ]
 }

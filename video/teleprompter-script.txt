@@ -10,7 +10,7 @@ How to use this
 
 ============================================================
 SCENE 1: THE HOOK
-[ON CAMERA, FULL SCREEN]  about 38 seconds
+[VOICE ONLY]  about 38 seconds
 ============================================================
 
 Think about the last breakdown that made you drop everything.
@@ -33,7 +33,7 @@ Find the real cause, fix it, and prove it stays fixed.
 
 ============================================================
 SCENE 3: WHAT RCA IS
-[ON CAMERA, SHOWN IN CORNER]  about 33 seconds
+[VOICE ONLY]  about 33 seconds
 ============================================================
 
 Root cause analysis, or RCA, is a structured way to answer one question.
@@ -51,7 +51,7 @@ It was only discussed.
 
 ============================================================
 SCENE 4: WHAT RCA IS NOT
-[ON CAMERA, SHOWN IN CORNER]  about 34 seconds
+[VOICE ONLY]  about 34 seconds
 ============================================================
 
 So let me say what RCA is not.
@@ -69,7 +69,7 @@ The conditions that killed the old one are still there, waiting for the new one.
 
 ============================================================
 SCENE 5: WHY IT MATTERS
-[ON CAMERA, SHOWN IN CORNER]  about 33 seconds
+[VOICE ONLY]  about 33 seconds
 ============================================================
 
 Why does this matter for the plant?
@@ -87,7 +87,7 @@ No major project.
 
 ============================================================
 SCENE 6: THE HIDDEN PLANT
-[ON CAMERA, SHOWN IN CORNER]  about 33 seconds
+[VOICE ONLY]  about 33 seconds
 ============================================================
 
 I call this the hidden plant.
@@ -105,7 +105,7 @@ That is capacity without large capital spending, or CAPEX, which simply means mo
 
 ============================================================
 SCENE 8: SIX PARTS, ONE TO THREE
-[ON CAMERA, SHOWN IN CORNER]  about 32 seconds
+[VOICE ONLY]  about 32 seconds
 ============================================================
 
 So what does an effective RCA look like?
@@ -125,7 +125,7 @@ In branches, not one straight line.
 
 ============================================================
 SCENE 9: SIX PARTS, FOUR TO SIX
-[ON CAMERA, SHOWN IN CORNER]  about 35 seconds
+[VOICE ONLY]  about 35 seconds
 ============================================================
 
 The tree goes down through three layers.
@@ -144,7 +144,7 @@ Now let me show you how this works on a typical problem.
 
 ============================================================
 SCENE 10: WORKED EXAMPLE: THE PUMP
-[ON CAMERA, SHOWN IN CORNER]  about 33 seconds
+[VOICE ONLY]  about 33 seconds
 ============================================================
 
 This worked example uses illustrative numbers.
@@ -163,7 +163,7 @@ Each failure stops the line for fourteen hours.
 
 ============================================================
 SCENE 11: WORKED EXAMPLE: THE LOSS
-[VOICE ONLY (still film yourself, only the audio is used)]  about 34 seconds
+[VOICE ONLY]  about 34 seconds
 ============================================================
 
 Now put the loss in numbers.
@@ -179,7 +179,7 @@ Six failures is two hundred and thirty-eight thousand, four hundred and forty do
 
 ============================================================
 SCENE 12: WORKED EXAMPLE: EVIDENCE
-[VOICE ONLY (still film yourself, only the audio is used)]  about 33 seconds
+[VOICE ONLY]  about 33 seconds
 ============================================================
 
 Next, evidence, before opinions.
@@ -195,7 +195,7 @@ And the maintenance system shows no pump alignment records for four of the six r
 
 ============================================================
 SCENE 13: WORKED EXAMPLE: PHYSICAL AND HUMAN CAUSES
-[VOICE ONLY (still film yourself, only the audio is used)]  about 43 seconds
+[VOICE ONLY]  about 43 seconds
 ============================================================
 
 Now we build the tree, level by level.
@@ -218,7 +218,7 @@ Nobody checks the flush strainer.
 
 ============================================================
 SCENE 14: WORKED EXAMPLE: SYSTEM CAUSES
-[VOICE ONLY (still film yourself, only the audio is used)]  about 30 seconds
+[VOICE ONLY]  about 30 seconds
 ============================================================
 
 Now ask why again.
@@ -236,7 +236,7 @@ Fix these, and people are no longer set up to fail.
 
 ============================================================
 SCENE 15: WORKED EXAMPLE: VERIFY AND ACT
-[VOICE ONLY (still film yourself, only the audio is used)]  about 51 seconds
+[VOICE ONLY]  about 51 seconds
 ============================================================
 
 Before we act, we test each cause against the evidence.
@@ -262,7 +262,7 @@ Total cost, thirty-two thousand dollars.
 
 ============================================================
 SCENE 16: WORKED EXAMPLE: RESULTS
-[VOICE ONLY (still film yourself, only the audio is used)]  about 48 seconds
+[VOICE ONLY]  about 48 seconds
 ============================================================
 
 Twelve months later, the pump has not had a single breakdown.
@@ -282,7 +282,7 @@ The natural wear is now watched with vibration, oil and flush checks, and the pa
 
 ============================================================
 SCENE 17: THE CLOSE
-[ON CAMERA, FULL SCREEN]  about 51 seconds
+[VOICE ONLY]  about 51 seconds
 ============================================================
 
 Here is what I want you to take from this.
