@@ -30,6 +30,14 @@ Read this first, then `BLUEPRINT.md` and `AI-ROADMAP.md` (the owner-approved AI 
 - Security: OWASP audit in `security/owasp-audit.md`; fixes applied; strict headers.
 - Product name is "RCA Pilot by Intelbeyond", chosen by the owner; domain rcapilot.com to be bought by the owner on Vercel; preliminary name check done (verdict: use with caution, no existing RCA Pilot product found but RCA is a registered mark incl. software; `web/lib/brand.ts`).
 
+## AI layer (built on branch `claude/new-session-tdmk2t`)
+- Features: Cause coach and Challenge mode on the Cause tree step (Challenge also on Actions), CAPA recommender per root cause on Actions, write-up drafting (problem statement on Problem; report and one-page management summary on Report). Every result is a suggestion with Accept / Dismiss; accepted items are ordinary editable data flagged `aiSuggested` (never verified).
+- Code: `web/lib/ai/` (context slimming and caps, prompts with the owner's method as a cached system prompt, JSON schemas, output validation, limits, Anthropic call, dev mock, shared handler), routes `web/app/api/ai/{coach,challenge,capa,draft}/route.ts`, UI in `web/components/workspace/ai/`. SDK: `@anthropic-ai/sdk`, structured outputs (`output_config.format`).
+- Env vars (Vercel, server-side, no NEXT_PUBLIC_): `ANTHROPIC_API_KEY` (required to switch AI on; without it the UI says AI is not switched on), `ANTHROPIC_MODEL` (optional, default `claude-sonnet-5-5`), `AI_DAILY_LIMIT` (default 30) and `AI_BURST_LIMIT` (default 5), optional `AI_EFFORT`. Supabase variables are already needed.
+- Database: migration `20261118000100_ai_usage_limits.sql` (applied): table `ai_usage` (owner-only select, no direct writes) and function `ai_consume()` (SECURITY DEFINER, authenticated only; the Supabase advisor "signed-in users can execute SECURITY DEFINER function" is expected for it, as for `delete_own_account`).
+- Local testing without a key: `AI_MOCK=1 npm run dev` returns canned answers (`AI_MOCK=fail` simulates an outage). It is ignored when NODE_ENV is production, so it cannot run on Vercel. Node `fetch` in the container needs `NODE_USE_ENV_PROXY=1 NODE_EXTRA_CA_CERTS=/root/.ccr/ca-bundle.crt` to reach Supabase.
+- Not done: real-API quality tuning of prompts (no key was reachable from the build container), photos in the write-up (text only; TODO in `DraftReport.tsx`).
+
 ## Open items
 - Minor defects in `qa/defects.md`: 404 page breaks the CSP; CSP still allows inline scripts; asset status slow (~4 s) signed in; existing accounts lack the sample assets until "Reset sample data"; demo-mode two-tab race (NEW-01); long Problem step and Actions below the fold on phones.
 - Some QA header checks fail only because Node `fetch` can't use the proxy in the container; verify headers with curl.
@@ -42,7 +50,7 @@ Read this first, then `BLUEPRINT.md` and `AI-ROADMAP.md` (the owner-approved AI 
 - YouTube title options, description, chapters and thumbnails: `video/youtube-metadata.md`.
 
 ## Next steps (owner decisions pending)
-1. AI layer (cause suggestions, CAPA recommendations, smarter similar-failure matching). Needs the owner's Anthropic API key, requested with request_credential and set as a Vercel environment variable. Add per-user usage limits.
+1. AI layer: Core features built (see "AI layer" below); needs ANTHROPIC_API_KEY in Vercel, a real-API quality pass on a preview deployment, and independent QA before `main`. Next AI items are in `AI-ROADMAP.md`.
 2. Teams/organisations (shared investigations per site, invitations, roles). Owner has not yet approved.
 3. Billing (Stripe), own email sending service, terms and privacy pages.
 4. Product name and custom domain (Vercel → Settings → Domains; then update Supabase Site URL and Redirect URLs).

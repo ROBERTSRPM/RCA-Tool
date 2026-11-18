@@ -60,7 +60,7 @@ Proposed stack: Next.js + TypeScript on Vercel, Supabase (Postgres, login, row-l
 | 3.1 Product spec and data model from Phase 1 findings | DONE |
 | 3.2 App skeleton, demo mode on browser storage, Supabase login and per-user cloud storage (organisation and site structure: later) | DONE |
 | 3.3 Core RCA workflow: 7 steps, cause tree with Tree / 5 Whys / Fishbone views on one model, rule-based quality check | DONE |
-| 3.4 AI assistance: challenge weak causes, suggest missing branches, draft report (needs owner's Anthropic API key) | NOT STARTED |
+| 3.4 AI assistance (Core, AI-ROADMAP 1 to 4): Cause coach, Challenge mode, CAPA recommender, write-up drafting (problem statement, report, management summary). Built on branch `claude/new-session-tdmk2t`, unit-tested, UI exercised against a local mock. Real-API quality check still to do on a Vercel preview once ANTHROPIC_API_KEY is set; independent QA before `main` | IN PROGRESS |
 | 3.5 Actions: owners, due dates, close-out, recurrence check; savings count as verified only when actions are done and failure has not recurred | DONE |
 | 3.6 Financial impact: lost / made up / buffer split, optional cost lines, cash versus opportunity loss, saving and payback | DONE |
 | 3.7 Report: print / save as PDF (share link: later) | PARTLY DONE |
@@ -85,7 +85,7 @@ Proposed stack: Next.js + TypeScript on Vercel, Supabase (Postgres, login, row-l
 ## What the owner needs to provide (running list)
 - A GitHub repository (empty is fine) and its name
 - A Vercel account connected to that repository
-- An Anthropic API key for the in-app AI features (entered through a secure form, never pasted in chat)
+- An Anthropic API key for the in-app AI features: add it in Vercel as ANTHROPIC_API_KEY (Production and Preview), server-side only; never in chat or the repo
 - Optional: a voice service key if an AI voiceover is chosen
 - Later: Stripe account, domain name
 
@@ -100,3 +100,6 @@ Proposed stack: Next.js + TypeScript on Vercel, Supabase (Postgres, login, row-l
 | 2026-11-16 | Video example ends with zero failures; natural deterioration managed by condition monitoring | Owner's review |
 | 2026-11-18 | RCA Pilot by Intelbeyond, chosen by the owner; domain rcapilot.com to be bought by the owner on Vercel; preliminary name check done (verdict: use with caution; held in `web/lib/brand.ts`) | Decided |
 | 2026-11-16 | Watchdog scheduled task every 2 hours restarts work stopped by usage limits | Owner's request |
+| 2026-11-18 | AI layer: all calls in Next.js route handlers (`/api/ai/*`) with the Supabase session verified server-side; AI suggests, user accepts or dismisses; nothing becomes verified because of AI; model from `ANTHROPIC_MODEL` (default `claude-sonnet-5-5`); limits 30 calls per rolling 24 h and 5 per rolling minute per user (`public.ai_usage`, `ai_consume()`); demo mode has no AI; the rule-based quality check and similarity scoring remain the fallback | Owner's AI roadmap; cost and abuse control |
+| 2026-11-18 | Photos in the write-up deferred: this release takes text notes only (TODO in `DraftReport.tsx`) | Keeps the first AI release small and the privacy surface low |
+| 2026-11-18 | `AI_MOCK` (canned answers) honoured only when NODE_ENV is not production, so it cannot run on Vercel builds | Lets the UI be tested without a key, safely |
