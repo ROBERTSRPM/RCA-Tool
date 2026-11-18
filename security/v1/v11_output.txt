@@ -1,0 +1,14 @@
+"//evil.example.com"               -> final url: <site>/app | attacker-host navigation attempted: no
+"/\\evil.example.com"              -> final url: <site>/app | attacker-host navigation attempted: no
+"https://evil.example.com"         -> final url: <site>/app | attacker-host navigation attempted: no
+"/%09/evil.example.com"            -> final url: <site>/app | attacker-host navigation attempted: no
+"/\t/evil.example.com"             -> final url: <site>/app | attacker-host navigation attempted: no
+"/\n/evil.example.com"             -> final url: <site>/app | attacker-host navigation attempted: no
+"/%2f/evil.example.com"            -> final url: <site>/app | attacker-host navigation attempted: no
+"/app"                             -> final url: <site>/app | attacker-host navigation attempted: no
+"/app/..//evil.example.com"        -> final url: <site>/app | attacker-host navigation attempted: no
+"/app/../evil.example.com"         -> final url: <site>/evil.example.com | attacker-host navigation attempted: no
+"/%5cevil.example.com"             -> final url: <site>/app | attacker-host navigation attempted: no
+"/.//evil.example.com"             -> final url: <site>/app | attacker-host navigation attempted: no
+"/app?x=1"                         -> final url: <site>/app?x=1 | attacker-host navigation attempted: no
+"/app/account"                     -> final url: <site>/app/account | attacker-host navigation attempted: no

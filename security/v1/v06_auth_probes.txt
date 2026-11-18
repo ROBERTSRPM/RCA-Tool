@@ -1,0 +1,14 @@
+redirect_to=https://evil.example.com -> location: https://www.rcapilot.com [..error_code=otp_expired]
+redirect_to=https://rca-tool-omega.vercel.app.evil.example.com -> location: https://www.rcapilot.com [..error_code=otp_expired]
+redirect_to=//evil.example.com -> location: https://www.rcapilot.com [..error_code=otp_expired]
+redirect_to=https://www.rcapilot.com/reset-password -> location: https://www.rcapilot.com/reset-password [..error_code=otp_expired]
+redirect_to=http://localhost:3000/x -> location: https://www.rcapilot.com [..error_code=otp_expired]
+redirect_to=https://rca-tool-git-claude-new-sessio-2587e4-roberts-projects-738847e0.vercel.app/reset-password -> location: https://www.rcapilot.com [..error_code=otp_expired]
+== recover as unknown email (enumeration/rate)
+{"code":400,"error_code":"email_address_invalid","msg":"Email address \"qa-user-a@rca-tool.test\" is invalid"} [HTTP 400]
+{} [HTTP 200]
+== login enumeration
+{"code":400,"error_code":"invalid_credentials","msg":"Invalid login credentials"} [HTTP 400]
+{"code":400,"error_code":"invalid_credentials","msg":"Invalid login credentials"} [HTTP 400]
+== rapid wrong-password burst x12 (modest)
+400 400 400 400 400 400 400 400 400 400 400 400 

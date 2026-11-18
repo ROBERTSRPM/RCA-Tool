@@ -1,0 +1,25 @@
+insert crafted row: 201 string fields mutated: 120
+storage keys: {"ls":["rca.seeded.v1","sb-ccigtztlrvgkzyppjmxt-auth-token","rca.investigations.v1"],"ss":[]}
+cookies set by site: []
+token entry fields: [
+  'access_token',
+  'token_type',
+  'expires_in',
+  'expires_at',
+  'refresh_token',
+  'user',
+  'weak_password'
+] expires_in 3600 (refresh_token present: true)
+document.title = "\"><img src=x onerror=\"window.__xss='0'\"><script>window.__xss='0s'</script>'';alert(0)//</title><svg onload=\"window.__xss='0v'\">{{7*7}} · RCA Pilot"
+step problem: __xss=null dialogs=0
+step loss: __xss=null dialogs=0
+step evidence: __xss=null dialogs=0
+step cause: __xss=null dialogs=0
+step actions: __xss=null dialogs=0
+step verify: __xss=null dialogs=0
+step report: __xss=null dialogs=0
+rendered <img> srcs: []
+final window.__xss = null | dialogs: []
+third-party requests (non-site, non-supabase): []
+injected <script> elements from data: 0 | injected onerror imgs: 0
+cleanup delete: 204

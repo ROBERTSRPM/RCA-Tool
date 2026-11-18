@@ -1,0 +1,60 @@
+== /
+HTTP/2 200 
+access-control-allow-origin: *
+cache-control: public, max-age=0, must-revalidate
+content-security-policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self'; style-src-attr 'unsafe-inline'; connect-src 'self' https://ccigtztlrvgkzyppjmxt.supabase.co wss://ccigtztlrvgkzyppjmxt.supabase.co; img-src 'self' data: blob:; font-src 'self'; frame-ancestors 'none'; b
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), bluetooth=(), serial=(), hid=(), midi=(), magnetometer=(), gyroscope=(), accelerometer=(), display-capture=(), browsing-topics=(), interest-cohort=()
+referrer-policy: strict-origin-when-cross-origin
+strict-transport-security: max-age=63072000; includeSubDomains; preload
+x-content-type-options: nosniff
+x-frame-options: DENY
+== /login
+HTTP/2 200 
+access-control-allow-origin: *
+cache-control: public, max-age=0, must-revalidate
+content-security-policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self'; style-src-attr 'unsafe-inline'; connect-src 'self' https://ccigtztlrvgkzyppjmxt.supabase.co wss://ccigtztlrvgkzyppjmxt.supabase.co; img-src 'self' data: blob:; font-src 'self'; frame-ancestors 'none'; b
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), bluetooth=(), serial=(), hid=(), midi=(), magnetometer=(), gyroscope=(), accelerometer=(), display-capture=(), browsing-topics=(), interest-cohort=()
+referrer-policy: strict-origin-when-cross-origin
+strict-transport-security: max-age=63072000; includeSubDomains; preload
+x-content-type-options: nosniff
+x-frame-options: DENY
+== /app
+HTTP/2 200 
+access-control-allow-origin: *
+cache-control: public, max-age=0, must-revalidate
+content-security-policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self'; style-src-attr 'unsafe-inline'; connect-src 'self' https://ccigtztlrvgkzyppjmxt.supabase.co wss://ccigtztlrvgkzyppjmxt.supabase.co; img-src 'self' data: blob:; font-src 'self'; frame-ancestors 'none'; b
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), bluetooth=(), serial=(), hid=(), midi=(), magnetometer=(), gyroscope=(), accelerometer=(), display-capture=(), browsing-topics=(), interest-cohort=()
+referrer-policy: strict-origin-when-cross-origin
+strict-transport-security: max-age=63072000; includeSubDomains; preload
+x-content-type-options: nosniff
+x-frame-options: DENY
+== /nonexistent
+HTTP/2 404 
+access-control-allow-origin: *
+cache-control: public, max-age=0, must-revalidate
+content-security-policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self'; style-src-attr 'unsafe-inline'; connect-src 'self' https://ccigtztlrvgkzyppjmxt.supabase.co wss://ccigtztlrvgkzyppjmxt.supabase.co; img-src 'self' data: blob:; font-src 'self'; frame-ancestors 'none'; b
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), bluetooth=(), serial=(), hid=(), midi=(), magnetometer=(), gyroscope=(), accelerometer=(), display-capture=(), browsing-topics=(), interest-cohort=()
+referrer-policy: strict-origin-when-cross-origin
+strict-transport-security: max-age=63072000; includeSubDomains; preload
+x-content-type-options: nosniff
+x-frame-options: DENY
+== /privacy
+HTTP/2 200 
+access-control-allow-origin: *
+cache-control: public, max-age=0, must-revalidate
+content-security-policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self'; style-src-attr 'unsafe-inline'; connect-src 'self' https://ccigtztlrvgkzyppjmxt.supabase.co wss://ccigtztlrvgkzyppjmxt.supabase.co; img-src 'self' data: blob:; font-src 'self'; frame-ancestors 'none'; b
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), bluetooth=(), serial=(), hid=(), midi=(), magnetometer=(), gyroscope=(), accelerometer=(), display-capture=(), browsing-topics=(), interest-cohort=()
+referrer-policy: strict-origin-when-cross-origin
+strict-transport-security: max-age=63072000; includeSubDomains; preload
+x-content-type-options: nosniff
+x-frame-options: DENY
+== /api/ai/coach
+HTTP/2 405 
+cache-control: public, max-age=0, must-revalidate
+content-security-policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self'; style-src-attr 'unsafe-inline'; connect-src 'self' https://ccigtztlrvgkzyppjmxt.supabase.co wss://ccigtztlrvgkzyppjmxt.supabase.co; img-src 'self' data: blob:; font-src 'self'; frame-ancestors 'none'; b
+permissions-policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), bluetooth=(), serial=(), hid=(), midi=(), magnetometer=(), gyroscope=(), accelerometer=(), display-capture=(), browsing-topics=(), interest-cohort=()
+referrer-policy: strict-origin-when-cross-origin
+strict-transport-security: max-age=63072000; includeSubDomains; preload
+x-content-type-options: nosniff
+x-frame-options: DENY
+== 404 body inline <style>/<script> count

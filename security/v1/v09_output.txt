@@ -1,0 +1,16 @@
+non-refunded rows now: 10
+1 direct consume with huge limits (a 'successful call'):
+{"ok": true, "usage_id": 100, "remaining_today": 989}
+2 consume with p_daily=11 (cap now reached):
+{"ok": false, "reason": "daily", "retry_after_seconds": 86205}
+3 refund the successful call 100:
+true
+4 consume again with the same cap (bypass if ok=true):
+{"ok": true, "usage_id": 101, "remaining_today": 0}
+5 refund cap: 6 more consume+refund cycles (expect 4 more true then false; 5 per 24 h total)
+cycle 1 id=102 refund=true
+cycle 2 id=103 refund=true
+cycle 3 id=104 refund=true
+cycle 4 id=105 refund=false
+cycle 5 id=106 refund=false
+cycle 6 id=107 refund=false

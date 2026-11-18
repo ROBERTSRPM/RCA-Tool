@@ -1,0 +1,2 @@
+{"error":{"code":"unusable","message":"The AI gave an answer that could not be used. Try again."}}
+[HTTP 502]

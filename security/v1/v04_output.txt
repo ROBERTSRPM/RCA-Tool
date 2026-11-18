@@ -1,0 +1,47 @@
+== A's own ai_usage ids (as A)
+[{"id":80}, 
+ {"id":79}]
+
+== B select ai_usage (own only)
+[]
+HTTP 200
+== B select ai_usage filtered to A
+[]
+HTTP 200
+== B select ai_usage id=A's id
+[]
+HTTP 200
+== B insert ai_usage directly
+{"code":"42501","details":null,"hint":"Grant the required privileges to the current role with: GRANT INSERT ON public.ai_usage TO authenticated;","message":"permission denied for table ai_usage"}
+HTTP 403
+== B insert ai_usage as A
+{"code":"42501","details":null,"hint":"Grant the required privileges to the current role with: GRANT INSERT ON public.ai_usage TO authenticated;","message":"permission denied for table ai_usage"}
+HTTP 403
+== B update A's ai_usage (refunded=true)
+{"code":"42501","details":null,"hint":"Grant the required privileges to the current role with: GRANT UPDATE ON public.ai_usage TO authenticated;","message":"permission denied for table ai_usage"}
+HTTP 403
+== B delete A's ai_usage
+{"code":"42501","details":null,"hint":"Grant the required privileges to the current role with: GRANT DELETE ON public.ai_usage TO authenticated;","message":"permission denied for table ai_usage"}
+HTTP 403
+== B refunds A's usage id via ai_refund
+false [HTTP 200]
+== anon ai_consume
+{"code":"42501","details":null,"hint":null,"message":"permission denied for function ai_consume"} [HTTP 401]
+== anon ai_refund
+{"code":"42501","details":null,"hint":null,"message":"permission denied for function ai_refund"} [HTTP 401]
+== anon delete_own_account
+{"code":"42501","details":null,"hint":null,"message":"permission denied for function delete_own_account"} [HTTP 401]
+== anon select ai_usage / investigations / assets
+{"code":"42501","details":null,"hint":"Grant the required privileges to the current role with: GRANT SELECT ON public.ai_usage TO anon;","message":"permission denied for table ai_usage"}
+HTTP 401
+{"code":"42501","details":null,"hint":"Grant the required privileges to the current role with: GRANT SELECT ON public.investigations TO anon;","message":"permission denied for table investigations"}
+HTTP 401
+{"code":"42501","details":null,"hint":"Grant the required privileges to the current role with: GRANT SELECT ON public.assets TO anon;","message":"permission denied for table assets"}
+HTTP 401
+== B refund of a nonexistent id
+false [HTTP 200]
+== other RPC/relations probe
+{"code":"PGRST202","details":"Searched for the function public.nonexistent_fn without parameters or with a single unnamed json/jsonb parameter, but no matches were found in the schema cache.","hint":null,"message":"Could not find the function public.nonexistent_fn without parameters in the schema ca
+openapi paths: []
+== graphql endpoint
+{"errors": [{"message": "pg_graphql extension is not enabled."}]} [HTTP 200]

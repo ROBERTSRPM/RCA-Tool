@@ -1,0 +1,6 @@
+refresh #1 with RT: 200
+refresh #2 reuse of same RT after 25 s: 200
+logout (default scope = global: ends ALL sessions of the user): 204
+access token after logout, GET investigations: 200
+auth/v1/user after logout: 403
+refresh after logout: 400

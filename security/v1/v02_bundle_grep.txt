@@ -1,0 +1,11 @@
+sk-ant: 0
+ANTHROPIC_API_KEY: 0
+x-api-key: 0
+api.anthropic.com: 0
+service_role: 0
+sb_secret: 1
+SYSTEM_PROMPT: 0
+THE HOUSE METHOD: 0
+house method: 0
+@anthropic-ai: 0
+AI_MOCK: 0

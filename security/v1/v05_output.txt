@@ -1,0 +1,148 @@
+UA=461cf7e5-279f-4af3-b7c5-6f1495d257de UB=b6e455b6-dcf4-4557-bc90-ce7c1797d162
+
+### 1 B select A's row by id
+[]
+HTTP 200
+
+### 2 B select with user_id filter
+[]
+HTTP 200
+
+### 3 B update A's row
+[]
+HTTP 200
+
+### 4 B delete A's row
+[]
+HTTP 200
+
+### 5 B insert row with user_id=A
+{"code":"42501","details":null,"hint":null,"message":"new row violates row-level security policy for table \"investigations\""}
+HTTP 403
+
+### 6 B insert own row (control)
+[{"id":"t-b-own-1","user_id":"b6e455b6-dcf4-4557-bc90-ce7c1797d162","data":{"x": 1},"created_at":"2026-11-18T11:04:54.216541+00:00","updated_at":"2026-11-18T11:04:54.216541+00:00"}]
+HTTP 201
+
+### 7 B change own row user_id to A
+{"code":"42501","details":null,"hint":null,"message":"new row violates row-level security policy for table \"investigations\""}
+HTTP 403
+
+### 8 B upsert onto A's id (merge-duplicates)
+{"code":"23514","details":null,"hint":null,"message":"new row for relation \"investigations\" violates check constraint \"investigations_sample_id_check\""}
+HTTP 400
+
+### 9 B plain insert colliding A's id
+{"code":"23514","details":null,"hint":null,"message":"new row for relation \"investigations\" violates check constraint \"investigations_sample_id_check\""}
+HTTP 400
+
+### 10 B insert with ignore-duplicates on A's id
+{"code":"23514","details":null,"hint":null,"message":"new row for relation \"investigations\" violates check constraint \"investigations_sample_id_check\""}
+HTTP 400
+
+### 11 A creates row id=t-collide; B inserts same id (existence oracle?)
+
+HTTP 201
+
+### 11b B inserts t-collide
+{"code":"23505","details":null,"hint":null,"message":"duplicate key value violates unique constraint \"investigations_pkey\""}
+HTTP 409
+
+### 12 B insert, null user_id explicit
+{"code":"42501","details":null,"hint":null,"message":"new row violates row-level security policy for table \"investigations\""}
+HTTP 403
+
+### 13 B select all (should be only own)
+[{"id":"sample-b6e455b6-dcf4-4557-bc90-ce7c1797d162","user_id":"b6e455b6-dcf4-4557-bc90-ce7c1797d162"}, 
+ {"id":"t-b-own-1","user_id":"b6e455b6-dcf4-4557-bc90-ce7c1797d162"}]
+HTTP 200
+
+### 14 anon insert
+{"code":"42501","details":null,"hint":"Grant the required privileges to the current role with: GRANT INSERT ON public.investigations TO anon;","message":"permission denied for table investigations"}
+HTTP 401
+
+HTTP 000
+
+### 15 anon with publishable key as Bearer
+{"code":"42501","details":null,"hint":"Grant the required privileges to the current role with: GRANT SELECT ON public.investigations TO anon;","message":"permission denied for table investigations"}
+HTTP 401
+
+### 16 B RPC / other tables listing (OpenAPI)
+HTTP 401
+
+### 17 B access auth.users via REST
+{"code":"PGRST205","details":null,"hint":null,"message":"Could not find the table 'public.users' in the schema cache"}
+HTTP 404
+
+### 18 B storage buckets list
+[]
+HTTP 200
+
+### 19 A view of own row unchanged
+[{"title":null,"updated_at":"2026-11-18T11:00:47.265+00:00"}]
+HTTP 200
+
+### 20 assets: B select A's asset id=sample-asset-461cf7e5-279f-4af3-b7c5-6f1495d257de-p101
+[]
+HTTP 200
+
+### 21 assets: B update A's asset
+[]
+HTTP 200
+
+### 22 assets: B delete A's asset
+[]
+HTTP 200
+
+### 23 assets: B insert as user_id=A
+{"code":"42501","details":null,"hint":null,"message":"new row violates row-level security policy for table \"assets\""}
+HTTP 403
+
+### 24 assets: B upsert onto A's asset id
+{"code":"42501","details":null,"hint":null,"message":"new row violates row-level security policy (USING expression) for table \"assets\""}
+HTTP 403
+
+### 25 assets: B select all (own only)
+[{"id":"sample-asset-b6e455b6-dcf4-4557-bc90-ce7c1797d162-p101","user_id":"b6e455b6-dcf4-4557-bc90-ce7c1797d162"}, 
+ {"id":"sample-asset-b6e455b6-dcf4-4557-bc90-ce7c1797d162-p102","user_id":"b6e455b6-dcf4-4557-bc90-ce7c1797d162"}, 
+ {"id":"sample-asset-b6e455b6-dcf4-4557-bc90-ce7c1797d162-p103","user_id":"b6e455b6-dcf4-4557-bc90-ce7c1797d162"}, 
+ {"id":"sample-asset-b6e455b6-dcf4-4557-bc90-ce7c1797d162-p215","user_id":"b6e455b6-dcf4-4557-bc90-ce7c1797d162"}, 
+ {"id":"sample-asset-b6e455b6-dcf4-4557-bc90-ce7c1797d162-p210","user_id":"b6e455b6-dcf4-4557-bc90-ce7c1797d162"}]
+HTTP 200
+
+### 26 assets: oversize (70 KB) as B
+{"code":"23514","details":null,"hint":null,"message":"new row for relation \"assets\" violates check constraint \"assets_data_size_check\""} HTTP 400
+
+### 27 investigations: 6 MiB row as B (cap 5 MiB)
+{"code":"23514","details":null,"hint":null,"message":"new row for relation \"investigations\" violates check constraint \"investigations_data_size_check\""} HTTP 400
+
+### 28 investigations: data not an object
+{"code":"23514","details":null,"hint":null,"message":"new row for relation \"investigations\" violates check constraint \"investigations_data_is_object_check\""}
+HTTP 400
+
+### 29 investigations: forge sample- id of A
+{"code":"23514","details":null,"hint":null,"message":"new row for relation \"investigations\" violates check constraint \"investigations_sample_id_check\""}
+HTTP 400
+
+### cleanup
+
+HTTP 204
+
+HTTP 000
+
+HTTP 204
+
+HTTP 204
+
+HTTP 204
+
+HTTP 204
+
+HTTP 204
+
+HTTP 000
+--- final
+[{"id":"sample-461cf7e5-279f-4af3-b7c5-6f1495d257de"}]
+HTTP 200
+[{"id":"sample-b6e455b6-dcf4-4557-bc90-ce7c1797d162"}]
+HTTP 200
