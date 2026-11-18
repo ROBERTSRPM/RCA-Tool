@@ -1,17 +1,61 @@
 @import "tailwindcss";
 
+/*
+ * Design tokens. The app uses Tailwind's slate / emerald / red / amber / sky
+ * utilities throughout, so the palette is tuned here once instead of per
+ * component. See design/design-review.md.
+ *
+ * Neutrals: cool grey, 9 steps. Text on white: slate-900 16:1, slate-700 9:1,
+ * slate-500 5.9:1 (muted text, AA). Accent: signal orange, white on
+ * accent 5.2:1. Semantic: emerald = done / good, amber = warning / due,
+ * red = overdue / destructive, sky = information.
+ */
 @theme {
-  --color-accent: #f59e0b;
-  --color-accent-strong: #d97706;
-  --color-accent-soft: #fef3c7;
-  --color-ink: #0f172a;
-  /* Muted text: darker than the Tailwind default so it stays at 4.5:1 or better
-     on white, slate-50, slate-100 and slate-200 surfaces. On dark surfaces use
-     slate-400 (7:1 on slate-900). */
-  --color-slate-500: #566377;
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
+  --color-accent: #c2410c;
+  --color-accent-strong: #9a3412;
+  --color-accent-soft: #fff1e8;
+  --color-ink: #12161c;
+
+  --color-slate-50: #f8f9fb;
+  --color-slate-100: #f1f3f6;
+  --color-slate-200: #e2e5ea;
+  --color-slate-300: #cbd0d8;
+  --color-slate-400: #98a0ac;
+  --color-slate-500: #586170;
+  --color-slate-600: #444c59;
+  --color-slate-700: #333a46;
+  --color-slate-800: #222831;
+  --color-slate-900: #161a21;
+  --color-slate-950: #0f1217;
+
+  /* Cause-level chips only: a muted slate-blue replaces violet. */
+  --color-violet-50: #f2f4fb;
+  --color-violet-100: #e5e9f6;
+  --color-violet-200: #ccd3ec;
+  --color-violet-500: #5d67b0;
+  --color-violet-600: #4a5598;
+  --color-violet-700: #3e4883;
+  --color-violet-800: #343c6d;
+  --color-violet-900: #2a3057;
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* Radius: 4 / 6 / 8. Nothing is pill-shaped except small status dots. */
+  --radius-sm: 3px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+  --radius-xl: 8px;
+  --radius-2xl: 8px;
+
+  /* Borders do the separating. Shadows are only for things that float. */
+  --shadow-xs: none;
+  --shadow-sm: none;
+  --shadow: none;
+  --shadow-md: 0 1px 2px rgb(15 18 23 / 0.06);
+  --shadow-lg: 0 6px 16px -4px rgb(15 18 23 / 0.14), 0 0 0 1px rgb(15 18 23 / 0.04);
+  --shadow-2xl: 0 12px 32px -8px rgb(15 18 23 / 0.25), 0 0 0 1px rgb(15 18 23 / 0.05);
 }
 
 html {
@@ -20,32 +64,35 @@ html {
 
 body {
   overflow-wrap: anywhere;
-  background: #f1f5f9;
-  color: #0f172a;
+  background: var(--color-slate-50);
+  color: var(--color-slate-900);
   font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
 }
 
 :focus-visible {
-  outline: 3px solid #f59e0b;
+  outline: 2px solid var(--color-accent);
   outline-offset: 2px;
 }
 
 @layer components {
   .btn {
-    @apply inline-flex min-h-11 select-none items-center justify-center gap-2 rounded-lg px-4 text-sm font-semibold whitespace-nowrap transition-colors disabled:cursor-not-allowed disabled:opacity-50;
+    @apply inline-flex min-h-10 select-none items-center justify-center gap-2 rounded-lg px-3.5 text-sm font-medium whitespace-nowrap transition-colors disabled:cursor-not-allowed disabled:opacity-50;
   }
   .btn-sm {
     @apply min-h-9 px-3 text-sm;
   }
   .btn-primary {
-    @apply bg-accent text-slate-950 shadow-sm hover:bg-amber-400 active:bg-amber-500;
+    @apply bg-accent text-white hover:bg-accent-strong active:bg-accent-strong;
   }
   .btn-dark {
     @apply bg-slate-900 text-white hover:bg-slate-700;
   }
   .btn-secondary {
-    @apply border border-slate-300 bg-white text-slate-800 shadow-sm hover:bg-slate-50;
+    @apply border border-slate-300 bg-white text-slate-800 hover:bg-slate-50 hover:border-slate-400;
   }
   .btn-ghost {
     @apply text-slate-700 hover:bg-slate-200/70;
@@ -54,25 +101,29 @@ body {
     @apply border border-red-200 bg-white text-red-700 hover:bg-red-50;
   }
   .btn-danger-solid {
-    @apply bg-red-600 text-white hover:bg-red-700;
+    @apply bg-red-700 text-white hover:bg-red-800;
   }
   .input {
-    @apply w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-base text-slate-900 shadow-sm placeholder:text-slate-500 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-300;
+    @apply w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-base text-slate-900 placeholder:text-slate-500 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25 sm:text-sm;
   }
   .label {
-    @apply mb-1 block text-sm font-semibold text-slate-800;
+    @apply mb-1 block text-sm font-medium text-slate-800;
   }
   .help {
-    @apply mt-1 text-sm text-slate-500;
+    @apply mt-1 text-xs text-slate-500;
   }
   .card {
-    @apply rounded-xl border border-slate-200 bg-white shadow-sm;
+    @apply rounded-xl border border-slate-200 bg-white;
   }
   .chip {
-    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold;
+    @apply inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-xs font-medium;
   }
   .h-page {
-    @apply text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl;
+    @apply text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl;
+  }
+  /* Small caps-style label for table headers and stat labels. */
+  .eyebrow {
+    @apply text-xs font-medium uppercase tracking-wide text-slate-500;
   }
 }
 
@@ -105,7 +156,7 @@ body {
   top: 24px;
   width: 18px;
   height: 2px;
-  background: #94a3b8;
+  background: var(--color-slate-400);
 }
 .t-children > .t-li::before {
   content: "";
@@ -114,7 +165,7 @@ body {
   top: 0;
   bottom: 0;
   width: 2px;
-  background: #94a3b8;
+  background: var(--color-slate-400);
 }
 .t-children > .t-li:first-child::before {
   top: 29px;
@@ -134,7 +185,7 @@ body {
   top: 28px;
   width: 18px;
   height: 2px;
-  background: #94a3b8;
+  background: var(--color-slate-400);
 }
 
 /* ---------- Print ---------- */

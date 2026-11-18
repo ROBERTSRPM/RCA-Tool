@@ -24,7 +24,7 @@ export function FishboneView() {
           <div className="h-1.5 flex-1 rounded-l bg-slate-900" />
         </div>
         <div className="relative max-w-md rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white">
-          <span className="block text-[11px] font-bold uppercase tracking-wide text-amber-300">
+          <span className="block text-[11px] font-semibold uppercase tracking-wide text-amber-300">
             Failure event
           </span>
           {failureText(cx.inv) || "Describe the failure event in the Tree view"}
@@ -43,7 +43,7 @@ export function FishboneView() {
               aria-label={CATEGORY_LABEL[cat]}
               className={`min-w-0 rounded-xl border-t-4 bg-white p-3 shadow-sm ring-1 ring-slate-200 ${CAT_STYLE[cat].head}`}
             >
-              <h3 className={`text-sm font-bold uppercase tracking-wide ${CAT_STYLE[cat].text}`}>
+              <h3 className={`text-sm font-semibold uppercase tracking-wide ${CAT_STYLE[cat].text}`}>
                 {CATEGORY_LABEL[cat]}{" "}
                 <span className="font-semibold text-slate-500">({groups[cat].length})</span>
               </h3>

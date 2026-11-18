@@ -21,19 +21,19 @@ export function AuthFrame({
   const { configured } = useAuth();
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="border-b border-slate-800 bg-slate-900">
+      <header className="border-b border-slate-200 bg-white">
         <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4 sm:px-6">
           <Logo />
-          <Link href="/app" className="btn btn-sm text-slate-200 hover:bg-slate-800">
+          <Link href="/app" className="btn btn-sm btn-ghost">
             Try the demo
           </Link>
         </div>
       </header>
-      <main className="mx-auto w-full max-w-md flex-1 px-4 py-10 sm:py-14">
-        <div className="card p-5 sm:p-7">
+      <main className="mx-auto w-full max-w-sm flex-1 px-4 py-10 sm:py-16">
+        <div>
           <h1 className="h-page">{title}</h1>
           {subtitle && <p className="mt-1.5 text-sm text-slate-600">{subtitle}</p>}
-          <div className="mt-6">
+          <div className="mt-6 border-t border-slate-200 pt-6">
             {configured ? (
               children
             ) : (

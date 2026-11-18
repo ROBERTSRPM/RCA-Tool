@@ -104,7 +104,7 @@ export function DraftReport({
               <div key={i} className="mt-3">
                 <input
                   aria-label={`Section ${i + 1} heading`}
-                  className="input font-bold"
+                  className="input font-semibold"
                   value={s.heading}
                   onChange={(e) =>
                     setDoc({ ...doc, sections: doc.sections.map((x, j) => (j === i ? { ...x, heading: e.target.value } : x)) })
@@ -155,11 +155,11 @@ export function DraftReport({
       {/* Printed version of the edited draft: plain paragraphs, so long text is never cut off. Only present while printing it. */}
       {doc && printing && (
         <article className="print-sheet hidden text-sm leading-relaxed text-slate-900 print:block" data-testid="draft-print-view">
-          {doc.title && <h1 className="text-2xl font-extrabold">{doc.title}</h1>}
+          {doc.title && <h1 className="text-2xl font-semibold">{doc.title}</h1>}
           <p className="text-xs uppercase tracking-widest text-slate-500">AI draft, edited by the author. Facts to be checked before use.</p>
           {doc.sections.map((s, i) => (
             <section key={i} className="avoid-break mt-3">
-              <h2 className="text-base font-bold">{s.heading}</h2>
+              <h2 className="text-base font-semibold">{s.heading}</h2>
               <p className="whitespace-pre-wrap">{s.body}</p>
             </section>
           ))}

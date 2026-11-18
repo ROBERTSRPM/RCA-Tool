@@ -127,7 +127,7 @@ export function RolloutPanel({ inv, update, go }: StepProps) {
             {checks.map((c) => (
               <li key={c.id} className="rounded-xl border border-slate-200 bg-slate-50/50 p-4" data-testid="rollout-check">
                 <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-                  <p className="flex flex-wrap items-center gap-2 text-sm font-bold text-slate-800">
+                  <p className="flex flex-wrap items-center gap-2 text-sm font-semibold text-slate-800">
                     {c.assetLabel || c.assetTag || "Asset"}
                     <StatusChip status={c.status} />
                   </p>
@@ -201,7 +201,7 @@ export function RolloutPanel({ inv, update, go }: StepProps) {
             </div>
           ) : (
             <div>
-              <h3 className="text-base font-bold text-slate-900">Assets that could fail the same way</h3>
+              <h3 className="text-base font-semibold text-slate-900">Assets that could fail the same way</h3>
               <p className="mb-3 text-sm text-slate-600">
                 Same type ({subject.type}), best match first. Tick the ones to check.
               </p>
@@ -223,7 +223,7 @@ export function RolloutPanel({ inv, update, go }: StepProps) {
                           onChange={() => toggle(asset.id)}
                         />
                         <span className="min-w-0 flex-1">
-                          <span className="flex flex-wrap items-center gap-2 text-sm font-bold text-slate-900">
+                          <span className="flex flex-wrap items-center gap-2 text-sm font-semibold text-slate-900">
                             {asset.tag}
                             {asset.criticality && (
                               <span className="chip bg-slate-200 text-slate-800">{criticalityLabel(asset.criticality)}</span>
@@ -338,7 +338,7 @@ function AddSimilarAsset({
 
   return (
     <form onSubmit={add} noValidate aria-label="Add a similar asset" className="rounded-xl border border-slate-200 bg-slate-50/60 p-4">
-      <h3 className="text-base font-bold text-slate-900">Add a similar asset</h3>
+      <h3 className="text-base font-semibold text-slate-900">Add a similar asset</h3>
       <p className="mb-3 text-sm text-slate-600">
         It is saved in your asset register as a {type || "similar asset"}
         {inv.problem.makeModel ? `, ${inv.problem.makeModel}` : ""}. Change the details later on the Assets page.

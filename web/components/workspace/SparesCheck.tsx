@@ -64,7 +64,7 @@ export function SparesCheck({ inv, update }: Pick<StepProps, "inv" | "update">) 
           data-testid="spares-flag"
           className="mt-3 rounded-xl border border-amber-300 bg-amber-50 p-3"
         >
-          <p className="flex items-start gap-2 font-bold text-amber-950">
+          <p className="flex items-start gap-2 font-semibold text-amber-950">
             <Icon name="alert" size={18} className="mt-0.5 flex-none" />
             {SPARES_FLAG_TEXT}
           </p>

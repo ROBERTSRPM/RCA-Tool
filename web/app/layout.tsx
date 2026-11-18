@@ -1,13 +1,21 @@
 import type { Metadata, Viewport } from "next";
+import localFont from "next/font/local";
 import "./globals.css";
 import { ConfirmProvider } from "@/components/ui";
 import { AuthProvider } from "@/components/auth/AuthProvider";
 import { BRAND_NAME, BRAND_TITLE } from "@/lib/brand";
 
+const inter = localFont({
+  src: "./fonts/inter-latin-wght-normal.woff2",
+  variable: "--font-inter",
+  weight: "100 900",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: { default: BRAND_TITLE, template: `%s · ${BRAND_NAME}` },
   description:
-    "Investigate failures quickly with guidance, track every action to done, and prove the failure stopped, with the money quantified.",
+    "Root cause analysis for maintenance and plant teams: find the cause, put a cost on it, track every action to done, and check the failure has stopped.",
 };
 
 export const viewport: Viewport = {
@@ -17,7 +25,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className={inter.variable}>
       <body>
         <AuthProvider>
           <ConfirmProvider>{children}</ConfirmProvider>

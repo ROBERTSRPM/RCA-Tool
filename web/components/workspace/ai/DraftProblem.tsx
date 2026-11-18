@@ -45,6 +45,7 @@ export function DraftProblem({ inv, update }: { inv: Investigation; update: Upda
 
   return (
     <AiCard
+      collapseOnMobile
       title="Draft problem statement from notes"
       intro="Type rough notes about the failure, in your own words. The AI turns them into a clear problem statement using only what you wrote."
     >

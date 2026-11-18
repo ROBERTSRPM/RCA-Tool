@@ -235,7 +235,7 @@ function AssetCard({
     <div>
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="min-w-0 flex-1 basis-60">
-          <h2 className="flex flex-wrap items-center gap-2 text-lg font-bold text-slate-900">
+          <h2 className="flex flex-wrap items-center gap-2 text-lg font-semibold text-slate-900">
             {a.tag}
             {a.type && <span className="chip bg-slate-100 text-slate-800">{a.type}</span>}
             {a.criticality && (
@@ -267,16 +267,16 @@ function AssetCard({
 
       <dl className="mt-3 grid gap-2 text-sm sm:grid-cols-3 sm:gap-3">
         <div className="flex items-baseline justify-between gap-3 rounded-lg bg-slate-100 p-2.5 sm:block">
-          <dt className="text-xs font-semibold uppercase tracking-wide text-slate-500">Investigations</dt>
-          <dd className="mt-0.5 text-lg font-bold tabular-nums text-slate-900">{loaded ? st.investigations.length : "…"}</dd>
+          <dt className="eyebrow">Investigations</dt>
+          <dd className="mt-0.5 text-lg font-semibold tabular-nums text-slate-900">{loaded ? st.investigations.length : "…"}</dd>
         </div>
         <div className="flex items-baseline justify-between gap-3 rounded-lg bg-slate-100 p-2.5 sm:block">
-          <dt className="text-xs font-semibold uppercase tracking-wide text-slate-500">Failures a year</dt>
-          <dd className="mt-0.5 text-lg font-bold tabular-nums text-slate-900">{loaded ? formatNumber(st.failuresPerYear, 1) : "…"}</dd>
+          <dt className="eyebrow">Failures a year</dt>
+          <dd className="mt-0.5 text-lg font-semibold tabular-nums text-slate-900">{loaded ? formatNumber(st.failuresPerYear, 1) : "…"}</dd>
         </div>
         <div className="flex items-baseline justify-between gap-3 rounded-lg bg-slate-100 p-2.5 sm:block">
-          <dt className="text-xs font-semibold uppercase tracking-wide text-slate-500">Annual loss</dt>
-          <dd className="mt-0.5 break-words text-lg font-bold tabular-nums text-slate-900">
+          <dt className="eyebrow">Annual loss</dt>
+          <dd className="mt-0.5 break-words text-lg font-semibold tabular-nums text-slate-900">
             {loaded ? formatMoney(st.annualLoss, st.currency) : "…"}
           </dd>
         </div>
@@ -289,7 +289,7 @@ function AssetCard({
         <ul className="mt-3 space-y-1" aria-label={`Investigations on ${a.tag}`}>
           {st.investigations.map((i) => (
             <li key={i.id} className="text-sm">
-              <Link href={`/app/investigations/${i.id}`} className="font-semibold text-slate-900 underline decoration-slate-400 hover:text-amber-700">
+              <Link href={`/app/investigations/${i.id}`} className="font-semibold text-slate-900 underline decoration-slate-400 hover:text-accent">
                 {i.problem.title || "Untitled investigation"}
               </Link>
               {i.problem.eventDate && <span className="text-slate-600"> · {formatDate(i.problem.eventDate)}</span>}
@@ -345,7 +345,7 @@ function AssetForm({
 
   return (
     <form onSubmit={submit} noValidate aria-label={title} className="card space-y-4 p-4 sm:p-5">
-      <h2 className="text-lg font-bold text-slate-900">{title}</h2>
+      <h2 className="text-lg font-semibold text-slate-900">{title}</h2>
       <div className="grid gap-4 sm:grid-cols-2">
         <TextField label="Asset tag" placeholder="e.g. P-101" value={a.tag} onChange={(v) => set("tag", v)} />
         <ComboField label="Asset type" options={ASSET_TYPES} value={a.type} onChange={(v) => set("type", v)} />
@@ -406,7 +406,7 @@ function PasteList({ assets, onClose }: { assets: Asset[]; onClose: () => void }
 
   return (
     <section aria-label="Paste a list of assets" className="card space-y-3 p-4 sm:p-5">
-      <h2 className="text-lg font-bold text-slate-900">Paste a list of assets</h2>
+      <h2 className="text-lg font-semibold text-slate-900">Paste a list of assets</h2>
       <TextAreaField
         label="One asset per line: tag, type, duty"
         help="Separate the parts with commas or tabs, so a column copied from a spreadsheet works. Type and duty are optional."

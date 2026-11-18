@@ -65,7 +65,7 @@ export function ReportStep({ inv }: StepProps) {
     <div>
       <div className="no-print mb-4 flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h2 className="text-lg font-bold text-slate-900">7. Report</h2>
+          <h2 className="text-lg font-semibold text-slate-900">7. Report</h2>
           <p className="text-sm text-slate-500">
             A one-page summary for your manager or the next shift. Use the button to print it or
             save it as a PDF.
@@ -80,10 +80,10 @@ export function ReportStep({ inv }: StepProps) {
 
       <article className={`${draftPrinting ? "no-print " : ""}print-sheet card p-5 text-sm leading-relaxed text-slate-800 sm:p-8`}>
         <header className="avoid-break border-b-2 border-slate-900 pb-3">
-          <p className="text-xs font-bold uppercase tracking-widest text-slate-500">
+          <p className="text-xs font-semibold uppercase tracking-widest text-slate-500">
             Root cause analysis report
           </p>
-          <h1 className="mt-1 text-2xl font-extrabold leading-tight text-slate-900">
+          <h1 className="mt-1 text-2xl font-semibold leading-tight text-slate-900">
             {p.title || "Untitled investigation"}
           </h1>
           <p className="mt-1 text-slate-600">
@@ -184,12 +184,12 @@ export function ReportStep({ inv }: StepProps) {
                     <td className="py-1 text-right tabular-nums">{formatMoney(c.bufferHoldingPerYear, cur)}</td>
                   </tr>
                 )}
-                <tr className="border-b border-slate-200 font-bold">
+                <tr className="border-b border-slate-200 font-semibold">
                   <td className="py-1 pr-2">Cash costs</td>
                   <td className="py-1 pr-2 text-right tabular-nums">{formatMoney(c.cashPerEvent, cur)}</td>
                   <td className="py-1 text-right tabular-nums">{formatMoney(c.annualCash, cur)}</td>
                 </tr>
-                <tr className="border-b border-slate-200 font-bold">
+                <tr className="border-b border-slate-200 font-semibold">
                   <td className="py-1 pr-2">
                     Opportunity loss ({formatNumber(c.unitsLostForGoodPerEvent, 1)} {unit} lost for good × {cur}
                     {formatNumber(inv.loss.marginPerUnit ?? 0, 2)})
@@ -197,7 +197,7 @@ export function ReportStep({ inv }: StepProps) {
                   <td className="py-1 pr-2 text-right tabular-nums">{formatMoney(c.opportunityPerEvent, cur)}</td>
                   <td className="py-1 text-right tabular-nums">{formatMoney(c.annualOpportunity, cur)}</td>
                 </tr>
-                <tr className="border-b-2 border-slate-900 font-bold">
+                <tr className="border-b-2 border-slate-900 font-semibold">
                   <td className="py-1 pr-2">Total</td>
                   <td className="py-1 pr-2 text-right tabular-nums">{formatMoney(c.costPerEvent, cur)}</td>
                   <td className="py-1 text-right tabular-nums">{formatMoney(c.annualLoss, cur)}</td>
@@ -219,7 +219,7 @@ export function ReportStep({ inv }: StepProps) {
             <ol className="space-y-1.5">
               {inv.evidence.map((e, i) => (
                 <li key={e.id} className="avoid-break flex gap-2">
-                  <span className="w-7 flex-none font-bold">E{i + 1}</span>
+                  <span className="w-7 flex-none font-semibold">E{i + 1}</span>
                   <span className="min-w-0 flex-1">
                     <strong>{e.title || "Untitled"}</strong>{" "}
                     <span className="text-slate-500">
@@ -248,13 +248,13 @@ export function ReportStep({ inv }: StepProps) {
                   className="avoid-break flex gap-1.5"
                   style={{ paddingLeft: `${depth * 18}px` }}
                 >
-                  <span className="w-4 flex-none text-center font-bold">
+                  <span className="w-4 flex-none text-center font-semibold">
                     {top ? "▣" : node.status === "verified" ? "✓" : node.status === "ruled_out" ? "✕" : "?"}
                   </span>
                   <span
                     className={`min-w-0 flex-1 ${
                       node.status === "ruled_out" && !top ? "text-slate-500 line-through" : ""
-                    } ${node.isRootCause ? "font-bold text-slate-900" : ""}`}
+                    } ${node.isRootCause ? "font-semibold text-slate-900" : ""}`}
                   >
                     {top ? failureText(inv) || "Failure event" : node.text || "(no text)"}
                     {!top && (
@@ -270,7 +270,7 @@ export function ReportStep({ inv }: StepProps) {
                       </span>
                     )}
                     {node.isRootCause && !top && (
-                      <span className="ml-1 rounded bg-slate-900 px-1.5 py-px text-[10px] font-bold uppercase text-white">
+                      <span className="ml-1 rounded bg-slate-900 px-1.5 py-px text-[10px] font-semibold uppercase text-white">
                         Root cause
                       </span>
                     )}
@@ -328,7 +328,7 @@ export function ReportStep({ inv }: StepProps) {
                           {cause ? cause.text.slice(0, 60) + (cause.text.length > 60 ? "…" : "") : "Not linked"}
                         </td>
                         <td className="py-1 pr-2">{a.owner || "Unassigned"}</td>
-                        <td className={`py-1 pr-2 whitespace-nowrap ${isOverdue(a) ? "font-bold text-red-700" : ""}`}>
+                        <td className={`py-1 pr-2 whitespace-nowrap ${isOverdue(a) ? "font-semibold text-red-700" : ""}`}>
                           {a.dueDate ? formatDate(a.dueDate) : "None"}
                           {isOverdue(a) && " (overdue)"}
                         </td>
@@ -342,10 +342,10 @@ export function ReportStep({ inv }: StepProps) {
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colSpan={6} className="pt-1 pr-2 text-right font-bold">
+                    <td colSpan={6} className="pt-1 pr-2 text-right font-semibold">
                       Total
                     </td>
-                    <td className="pt-1 text-right font-bold tabular-nums">
+                    <td className="pt-1 text-right font-semibold tabular-nums">
                       {formatMoney(v.totalActionCost, cur)}
                     </td>
                   </tr>
@@ -382,7 +382,7 @@ export function ReportStep({ inv }: StepProps) {
               ]}
             />
             {criticalSpareFlag(spares) && (
-              <p className="mt-1 font-bold text-amber-900">Flag: {SPARES_FLAG_TEXT}.</p>
+              <p className="mt-1 font-semibold text-amber-900">Flag: {SPARES_FLAG_TEXT}.</p>
             )}
           </Section>
         )}
@@ -425,7 +425,7 @@ export function ReportStep({ inv }: StepProps) {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="mt-4">
-      <h2 className="mb-1.5 border-b border-slate-300 pb-0.5 text-xs font-bold uppercase tracking-wider text-slate-500">
+      <h2 className="mb-1.5 border-b border-slate-300 pb-0.5 text-xs font-semibold uppercase tracking-wider text-slate-500">
         {title}
       </h2>
       {children}
@@ -440,8 +440,8 @@ function Muted({ children }: { children: React.ReactNode }) {
 function Kpi({ label, value }: { label: string; value: string }) {
   return (
     <div className="avoid-break rounded border border-slate-300 p-2">
-      <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">{label}</p>
-      <p className="text-lg font-extrabold tabular-nums text-slate-900">{value}</p>
+      <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">{label}</p>
+      <p className="text-lg font-semibold tabular-nums text-slate-900">{value}</p>
     </div>
   );
 }
@@ -451,7 +451,7 @@ function Facts({ rows }: { rows: [string, string][] }) {
     <dl className="space-y-1">
       {rows.map(([k, val]) => (
         <div key={k} className="avoid-break flex gap-2">
-          <dt className="w-32 flex-none font-bold text-slate-700">{k}</dt>
+          <dt className="w-32 flex-none font-semibold text-slate-700">{k}</dt>
           <dd className="min-w-0 flex-1">{val || <span className="text-slate-500">Not recorded</span>}</dd>
         </div>
       ))}

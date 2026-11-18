@@ -47,7 +47,7 @@ export function StartNewButton({
       {label}
     </button>
     {error && (
-      <span role="alert" className="text-sm font-medium text-red-600">
+      <span role="alert" className="text-sm font-medium text-red-700">
         {error}
       </span>
     )}

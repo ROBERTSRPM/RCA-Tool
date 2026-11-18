@@ -282,7 +282,7 @@ export function LossStep({ inv, update }: StepProps) {
             Live calculation
           </h2>
 
-          <h3 className="mt-3 text-xs font-bold uppercase tracking-wide text-slate-300">
+          <h3 className="mt-3 text-xs font-semibold uppercase tracking-wide text-slate-300">
             Production lost
           </h3>
           <dl className="mt-1 space-y-3">
@@ -298,7 +298,7 @@ export function LossStep({ inv, update }: StepProps) {
             />
           </dl>
 
-          <h3 className="mt-4 text-xs font-bold uppercase tracking-wide text-slate-300">
+          <h3 className="mt-4 text-xs font-semibold uppercase tracking-wide text-slate-300">
             Cost per event
           </h3>
           <dl className="mt-1 space-y-3">
@@ -319,7 +319,7 @@ export function LossStep({ inv, update }: StepProps) {
             />
           </dl>
 
-          <h3 className="mt-4 text-xs font-bold uppercase tracking-wide text-slate-300">
+          <h3 className="mt-4 text-xs font-semibold uppercase tracking-wide text-slate-300">
             Per year
           </h3>
           <dl className="mt-1 space-y-3">
@@ -349,10 +349,10 @@ export function LossStep({ inv, update }: StepProps) {
             />
           </dl>
 
-          <div className="mt-4 rounded-lg bg-accent p-4 text-slate-950">
+          <div className="mt-4 rounded-lg bg-slate-900 p-4 text-white">
             <p className="text-sm font-semibold">Annual loss</p>
             <p
-              className="break-words text-3xl font-extrabold tabular-nums tracking-tight"
+              className="break-words text-3xl font-semibold tabular-nums tracking-tight"
               data-testid="annual-loss"
             >
               {formatMoney(c.annualLoss, cur)}
@@ -446,7 +446,7 @@ function Row({ label, value, formula }: { label: string; value: string; formula:
     <div>
       <div className="flex items-baseline justify-between gap-3">
         <dt className="text-sm text-slate-300">{label}</dt>
-        <dd className="min-w-0 break-words text-right text-lg font-bold tabular-nums text-white">
+        <dd className="min-w-0 break-words text-right text-lg font-semibold tabular-nums text-white">
           {value}
         </dd>
       </div>

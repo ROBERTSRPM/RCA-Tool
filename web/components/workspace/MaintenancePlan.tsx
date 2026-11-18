@@ -121,11 +121,11 @@ export function PlanTable({ lines }: { lines: PlanLine[] }) {
         {lines.map((l) => (
           <tr key={l.actionId} className="avoid-break border-b border-slate-200 align-top">
             <td className="min-w-[16rem] py-1 pr-2">
-              <span className="mr-1 font-bold">{l.change}:</span>
+              <span className="mr-1 font-semibold">{l.change}:</span>
               {l.task || "(no task text)"}
               <span className="text-slate-600"> ({l.category})</span>
             </td>
-            <td className={`py-1 pr-2 whitespace-nowrap ${l.interval ? "" : "font-bold text-red-700"}`}>
+            <td className={`py-1 pr-2 whitespace-nowrap ${l.interval ? "" : "font-semibold text-red-700"}`}>
               {l.interval || "Not set"}
             </td>
             <td className="min-w-[8rem] py-1 pr-2">{l.craft || <span className="text-slate-600">Not set</span>}</td>

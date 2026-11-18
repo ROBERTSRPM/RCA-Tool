@@ -98,7 +98,7 @@ export function ActionsStep({ inv, update, go }: StepProps) {
         <div className={`flex flex-wrap items-center gap-x-3 gap-y-1 ${open ? "mb-3 justify-between" : ""}`}>
           {open ? (
             <>
-              <p className="flex flex-wrap items-center gap-2 text-sm font-bold text-slate-700">
+              <p className="flex flex-wrap items-center gap-2 text-sm font-semibold text-slate-700">
                 Action {idx + 1}
                 {late && <span className="chip bg-red-600 text-white">Overdue since {formatDate(a.dueDate)}</span>}
                 {a.status === "done" && <span className="chip bg-emerald-100 text-emerald-800">Done</span>}
@@ -130,7 +130,7 @@ export function ActionsStep({ inv, update, go }: StepProps) {
                 {!a.kind && <span className="chip bg-amber-100 text-amber-900">Corrective or preventive?</span>}
                 {a.aiSuggested && AI_BADGE}
                 <span className={`max-w-[10rem] truncate ${a.owner ? "" : "text-slate-600"}`} title={a.owner}>{a.owner || "No owner"}</span>
-                <span className={late ? "font-bold text-red-700" : a.dueDate ? "" : "text-slate-600"}>
+                <span className={late ? "font-semibold text-red-700" : a.dueDate ? "" : "text-slate-600"}>
                   {a.dueDate ? formatDate(a.dueDate) : "No date"}
                 </span>
                 <span
@@ -210,7 +210,7 @@ export function ActionsStep({ inv, update, go }: StepProps) {
                 className="grid gap-4 rounded-lg border border-slate-300 bg-white p-3 sm:col-span-2 sm:grid-cols-2 lg:col-span-3 lg:grid-cols-4"
                 data-testid="task-fields"
               >
-                <legend className="px-1 text-sm font-bold text-slate-800">Task for the maintenance plan</legend>
+                <legend className="px-1 text-sm font-semibold text-slate-800">Task for the maintenance plan</legend>
                 <TextAreaField
                   className="sm:col-span-2 lg:col-span-4"
                   label="Task description"
@@ -281,7 +281,7 @@ export function ActionsStep({ inv, update, go }: StepProps) {
 
         <section className="mt-3" aria-labelledby="corrective-heading" data-testid="corrective-section">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h3 id="corrective-heading" className="text-base font-bold text-slate-900">
+            <h3 id="corrective-heading" className="text-base font-semibold text-slate-900">
               Corrective actions <span className="text-sm font-normal text-slate-600">Fix this failure and its damage.</span>
             </h3>
             <button type="button" className="btn btn-secondary btn-sm" onClick={() => add(inv.tree.id, "corrective")}>
@@ -298,7 +298,7 @@ export function ActionsStep({ inv, update, go }: StepProps) {
         </section>
 
         <section className="mt-4" aria-labelledby="preventive-heading" data-testid="preventive-section">
-          <h3 id="preventive-heading" className="text-base font-bold text-slate-900">
+          <h3 id="preventive-heading" className="text-base font-semibold text-slate-900">
             Preventive actions <span className="text-sm font-normal text-slate-600">Stop it happening again, by root cause.</span>
           </h3>
           {roots.length === 0 ? (
@@ -325,8 +325,8 @@ export function ActionsStep({ inv, update, go }: StepProps) {
                   className="rounded-xl border border-slate-200 bg-white p-2"
                 >
                   <div className="flex flex-wrap items-start justify-between gap-2">
-                    <h4 title={g.root.text} className="min-w-0 flex-1 basis-72 line-clamp-2 text-sm font-bold leading-snug lg:line-clamp-1 text-slate-900">
-                      <span className="mr-2 rounded bg-slate-900 px-1.5 py-px align-middle text-[10px] font-bold uppercase text-white">
+                    <h4 title={g.root.text} className="min-w-0 flex-1 basis-72 line-clamp-2 text-sm font-semibold leading-snug lg:line-clamp-1 text-slate-900">
+                      <span className="mr-2 rounded bg-slate-900 px-1.5 py-px align-middle text-[10px] font-semibold uppercase text-white">
                         Root cause
                       </span>
                       {g.root.text || "(no text)"}
@@ -349,7 +349,7 @@ export function ActionsStep({ inv, update, go }: StepProps) {
 
         {unlinked.length > 0 && (
           <section className="mt-4" aria-labelledby="unlinked-heading" data-testid="unlinked-actions">
-            <h3 id="unlinked-heading" className="mb-2 text-base font-bold text-slate-900">
+            <h3 id="unlinked-heading" className="mb-2 text-base font-semibold text-slate-900">
               Not linked to a root cause{" "}
               <span className="text-sm font-normal text-slate-600">
                 {roots.length === 0
@@ -374,8 +374,8 @@ export function ActionsStep({ inv, update, go }: StepProps) {
 function Tile({ label, value, bad }: { label: string; value: string; bad?: boolean }) {
   return (
     <div className="rounded-lg bg-slate-100 px-3 py-2">
-      <dt className="text-xs font-semibold uppercase tracking-wide text-slate-500">{label}</dt>
-      <dd className={`text-lg font-bold tabular-nums ${bad ? "text-red-600" : "text-slate-900"}`}>
+      <dt className="eyebrow">{label}</dt>
+      <dd className={`text-lg font-semibold tabular-nums ${bad ? "text-red-700" : "text-slate-900"}`}>
         {value}
       </dd>
     </div>

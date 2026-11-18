@@ -23,6 +23,7 @@ export function AssetDetails({ problem, update }: { problem: Problem; update: Up
 
   return (
     <SectionCard
+      collapseOnMobile
       title="Asset details"
       help="These link this failure to the asset register and to similar failures on other assets. Fill in what you know; all of it is optional."
     >

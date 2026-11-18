@@ -45,27 +45,47 @@ export function AiCard({
   intro,
   children,
   className = "",
+  collapseOnMobile = false,
 }: {
   title: string;
   intro?: string;
   children: ReactNode;
   className?: string;
+  /** Phones: body starts closed, the title row toggles it. */
+  collapseOnMobile?: boolean;
 }) {
   const { ready, loading } = useAiAccess();
+  const [open, setOpen] = useState(!collapseOnMobile);
+  const hide = collapseOnMobile && !open ? "hidden sm:block" : "";
   return (
-    <section className={`card border-violet-200 p-4 sm:p-5 ${className}`} aria-label={title} data-testid="ai-card">
-      <div className="flex flex-wrap items-start gap-x-3 gap-y-1">
-        <span className="chip bg-violet-100 text-violet-800">
-          <Icon name="sparkle" size={14} /> AI
-        </span>
-        <h3 className="text-base font-bold text-slate-900">{title}</h3>
-      </div>
-      <p className="mt-1 max-w-prose text-sm text-slate-600">
+    <section className={`card p-4 ${className}`} aria-label={title} data-testid="ai-card">
+      {collapseOnMobile ? (
+        <button
+          type="button"
+          aria-expanded={open}
+          onClick={() => setOpen((o) => !o)}
+          className="flex w-full items-baseline justify-between gap-2 text-left sm:pointer-events-none"
+        >
+          <span className="flex flex-wrap items-baseline gap-x-2">
+            <span className="text-sm font-semibold text-slate-900">{title}</span>
+            <span className="eyebrow">Suggestions</span>
+          </span>
+          <span className="text-slate-500 sm:hidden" aria-hidden="true">
+            <Icon name={open ? "up" : "down"} size={16} />
+          </span>
+        </button>
+      ) : (
+        <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+          <h3 className="text-sm font-semibold text-slate-900">{title}</h3>
+          <span className="eyebrow">Suggestions</span>
+        </div>
+      )}
+      <p className={`mt-1 max-w-prose text-sm text-slate-600 ${hide}`}>
         {intro ? `${intro} ` : ""}
-        These are suggestions only. You decide what goes in, and nothing is marked verified because of AI.
+        You decide what goes in. Nothing is marked verified because of a suggestion.
       </p>
       {!ready && !loading && (
-        <p className="mt-3 rounded-lg border border-slate-300 bg-slate-50 p-3 text-sm text-slate-800" data-testid="ai-signin">
+        <p className={`mt-3 rounded-lg border border-slate-300 bg-slate-50 p-3 text-sm text-slate-800 ${hide}`} data-testid="ai-signin">
           <strong>Sign in to use AI.</strong> AI suggestions are not available in demo mode.{" "}
           <Link href="/login" className="font-semibold underline">
             Sign in
@@ -77,7 +97,7 @@ export function AiCard({
           . The quality check and similar-failure matching work without it.
         </p>
       )}
-      <div className="mt-3">{children}</div>
+      <div className={`mt-3 ${hide}`}>{children}</div>
     </section>
   );
 }
@@ -109,9 +129,7 @@ export function AiButton({
     >
       {running ? (
         <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" aria-hidden />
-      ) : (
-        <Icon name="sparkle" size={16} />
-      )}
+      ) : null}
       {children}
     </button>
   );
@@ -163,7 +181,7 @@ export const LEVEL_CHIP: Record<string, string> = {
 };
 
 export const AI_BADGE = (
-  <span className="chip bg-violet-100 text-violet-800" title="Suggested by AI, accepted by you. Edit it like any other entry.">
-    <Icon name="sparkle" size={12} /> AI-suggested
+  <span className="chip bg-slate-100 text-slate-700 ring-1 ring-inset ring-slate-200" title="Suggested by AI, accepted by you. Edit it like any other entry.">
+    Suggested
   </span>
 );

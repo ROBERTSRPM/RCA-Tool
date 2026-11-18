@@ -86,7 +86,7 @@ export function VerifyStep({ inv, update, go }: StepProps) {
 
         {v.recurred === "yes" && (
           <div role="alert" className="mt-5 rounded-xl border border-red-300 bg-red-50 p-4">
-            <p className="font-bold text-red-900">The failure came back. The analysis is not finished.</p>
+            <p className="font-semibold text-red-900">The failure came back. The analysis is not finished.</p>
             <p className="mt-1 text-sm text-red-800">
               Reopen the cause tree: look for a cause you ruled out too early, a hypothesis you
               never proved, or a branch that stopped before reaching a System / Latent cause.
@@ -166,8 +166,8 @@ function Metric({
 }) {
   return (
     <div className="rounded-lg bg-slate-100 p-3">
-      <dt className="text-xs font-semibold uppercase tracking-wide text-slate-500">{label}</dt>
-      <dd className={`mt-0.5 break-words text-xl font-bold tabular-nums ${good ? "text-emerald-700" : "text-slate-900"}`}>
+      <dt className="eyebrow">{label}</dt>
+      <dd className={`mt-0.5 break-words text-xl font-semibold tabular-nums ${good ? "text-emerald-700" : "text-slate-900"}`}>
         {value}
       </dd>
       {sub && <p className="mt-0.5 text-xs text-slate-500">{sub}</p>}

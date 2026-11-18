@@ -53,7 +53,8 @@ export function CapaSuggest({ inv, update, root }: { inv: Investigation; update:
   return (
     <div className="mt-2" data-testid="capa-suggest">
       <AiCard
-        title="CAPA recommender"
+        collapseOnMobile
+        title="Suggested actions"
         intro="Suggests corrective and preventive actions for this root cause, and says whether the wear is natural or forced."
         className="p-3 sm:p-4"
       >
@@ -72,7 +73,7 @@ export function CapaSuggest({ inv, update, root }: { inv: Investigation; update:
         {result && (
           <div className="mt-4 space-y-3" data-testid="capa-results">
             <div className="rounded-xl border border-slate-200 bg-slate-50/60 p-3" data-testid="capa-deterioration">
-              <p className="text-sm font-bold text-slate-900">
+              <p className="text-sm font-semibold text-slate-900">
                 {result.deterioration === "natural"
                   ? "Looks like natural deterioration (normal wear)"
                   : result.deterioration === "forced"
@@ -121,7 +122,7 @@ export function CapaSuggest({ inv, update, root }: { inv: Investigation; update:
               </ul>
             )}
             {result.horizontalExpansion && (
-              <p className="rounded-lg bg-violet-50 p-3 text-sm text-slate-800">
+              <p className="rounded-lg bg-slate-100 p-3 text-sm text-slate-800">
                 <strong>Roll it out:</strong> {result.horizontalExpansion} Track this under &ldquo;Roll this fix out&rdquo; on the Verify step.
               </p>
             )}

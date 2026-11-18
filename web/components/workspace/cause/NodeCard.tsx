@@ -62,7 +62,7 @@ export function StatusMark({ status, size = 18 }: { status: CauseNode["status"];
   return (
     <span
       title="Hypothesis"
-      className="inline-flex flex-none items-center justify-center rounded-full border-2 border-dashed border-slate-400 bg-white text-[11px] font-bold text-slate-500"
+      className="inline-flex flex-none items-center justify-center rounded-full border-2 border-dashed border-slate-400 bg-white text-[11px] font-semibold text-slate-500"
       style={{ width: size, height: size }}
     >
       ?<span className="sr-only">Hypothesis</span>
@@ -106,7 +106,7 @@ function AutoTextarea({
       value={value}
       placeholder={placeholder}
       onChange={(e) => onChange(e.target.value)}
-      className="block w-full resize-none rounded-md border border-slate-300 bg-white px-2 py-1.5 text-base leading-snug text-slate-900 placeholder:text-slate-500 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-300 sm:text-sm"
+      className="block w-full resize-none rounded-md border border-slate-300 bg-white px-2 py-1.5 text-base leading-snug text-slate-900 placeholder:text-slate-500 focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25 sm:text-sm"
     />
   );
 }
@@ -163,7 +163,7 @@ export function NodeCard({
       >
         <span className="flex items-center justify-between gap-2">
           <span
-            className={`text-[11px] font-bold uppercase tracking-wide ${
+            className={`text-[11px] font-semibold uppercase tracking-wide ${
               isTop ? "text-amber-300" : cat.text
             }`}
           >
@@ -208,13 +208,13 @@ export function NodeCard({
         {(node.isRootCause || node.evidenceIds.length > 0 || hidden > 0 || node.aiSuggested) && (
           <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
             {node.isRootCause && !isTop && (
-              <span className="chip bg-amber-500 text-slate-950">
+              <span className="chip bg-slate-900 text-white">
                 <Icon name="flag" size={12} /> Root cause
               </span>
             )}
             {node.aiSuggested && !isTop && (
-              <span className="chip bg-violet-100 text-violet-800" title="Suggested by AI, accepted by you. Edit it like any other cause.">
-                <Icon name="sparkle" size={12} /> AI-suggested
+              <span className="chip bg-slate-100 text-slate-700 ring-1 ring-inset ring-slate-200" title="Suggested by AI, accepted by you. Edit it like any other cause.">
+                Suggested
               </span>
             )}
             {node.evidenceIds.length > 0 && !isTop && (
