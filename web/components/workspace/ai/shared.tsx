@@ -101,7 +101,7 @@ export function AiButton({
   return (
     <button
       type="button"
-      className={`btn ${secondary ? "btn-secondary" : "btn-dark"}`}
+      className={`btn max-w-full whitespace-normal py-2 text-left ${secondary ? "btn-secondary" : "btn-dark"}`}
       disabled={!ready || running || disabled}
       aria-busy={running}
       data-testid={testId}
@@ -112,7 +112,7 @@ export function AiButton({
       ) : (
         <Icon name="sparkle" size={16} />
       )}
-      {children}
+      <span className="min-w-0 [overflow-wrap:anywhere]">{children}</span>
     </button>
   );
 }

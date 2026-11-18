@@ -140,7 +140,7 @@ test('D-TREE-2', 'Switching Tree / 5 Whys / Fishbone keeps data; every view cont
   });
   await sub('fish-sum', 'Fishbone column counts sum to the number of causes (excl. failure event)', async () => {
     await page.getByRole('tab', { name: 'Fishbone' }).click();
-    const heads = await page.locator('section[aria-label] h3').allInnerTexts();
+    const heads = (await page.locator('section[aria-label] h3').allInnerTexts()).filter(t => /\(\d+\)/.test(t)); // skip AI card headings
     const n = heads.map(t => Number(/\((\d+)\)/.exec(t)[1])).reduce((a, b) => a + b, 0); eq(n, 24);
   });
   await sub('fish-empty', 'Fishbone with no causes shows empty guidance', async () => {
