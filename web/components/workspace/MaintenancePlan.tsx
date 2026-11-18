@@ -107,7 +107,7 @@ export function MaintenancePlan({ inv }: { inv: PlanInv }) {
 
 export function PlanTable({ lines }: { lines: PlanLine[] }) {
   return (
-    <table className="w-full border-collapse text-left text-xs sm:text-sm">
+    <table className="w-full border-collapse text-left text-xs">
       <thead>
         <tr className="border-b-2 border-slate-900">
           <th className="py-1 pr-2">Task</th>

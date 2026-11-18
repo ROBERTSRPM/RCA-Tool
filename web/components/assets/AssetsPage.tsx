@@ -187,9 +187,9 @@ export function AssetsPage() {
         ) : usable && shown.length === 0 ? (
           <p className="rounded-lg bg-slate-100 p-3 text-sm text-slate-700">No asset matches “{query}”.</p>
         ) : (
-          <ul className="space-y-3">
+          <ul className="grid gap-3 lg:grid-cols-2">
             {shown.map((a) => (
-              <li key={a.id} data-testid="asset-row" className="card p-4 sm:p-5">
+              <li key={a.id} data-testid="asset-row" className={`card p-4 sm:p-5 ${editing === a.id ? "lg:col-span-2" : ""}`}>
                 {editing === a.id ? (
                   <AssetForm
                     title={`Edit ${a.tag}`}
@@ -237,17 +237,17 @@ function AssetCard({
         <div className="min-w-0 flex-1 basis-60">
           <h2 className="flex flex-wrap items-center gap-2 text-lg font-semibold text-slate-900">
             {a.tag}
-            {a.type && <span className="chip bg-slate-100 text-slate-800">{a.type}</span>}
+            {a.type && <span className="chip bg-slate-100 text-slate-700 ring-1 ring-inset ring-slate-200">{a.type}</span>}
             {a.criticality && (
               <span
                 className={`chip ${
-                  a.criticality === "A" ? "bg-red-100 text-red-800" : a.criticality === "B" ? "bg-amber-100 text-amber-900" : "bg-slate-200 text-slate-800"
+                  a.criticality === "A" ? "bg-red-50 text-red-800 ring-1 ring-inset ring-red-200" : a.criticality === "B" ? "bg-amber-50 text-amber-900 ring-1 ring-inset ring-amber-200" : "bg-slate-100 text-slate-700 ring-1 ring-inset ring-slate-200"
                 }`}
               >
                 {criticalityLabel(a.criticality)}
               </span>
             )}
-            {a.isSample && <span className="chip bg-amber-100 text-amber-900">Illustrative sample</span>}
+            {a.isSample && <span className="chip bg-slate-100 text-slate-700 ring-1 ring-inset ring-slate-200">Illustrative sample</span>}
           </h2>
           <p className="mt-0.5 text-sm text-slate-700">
             {[a.makeModel, a.duty].filter(Boolean).join(" · ") || "No make or duty recorded"}
@@ -266,15 +266,15 @@ function AssetCard({
       </div>
 
       <dl className="mt-3 grid gap-2 text-sm sm:grid-cols-3 sm:gap-3">
-        <div className="flex items-baseline justify-between gap-3 rounded-lg bg-slate-100 p-2.5 sm:block">
+        <div className="flex items-baseline justify-between gap-3 border-l-2 border-slate-200 py-0.5 pl-3 sm:block">
           <dt className="eyebrow">Investigations</dt>
           <dd className="mt-0.5 text-lg font-semibold tabular-nums text-slate-900">{loaded ? st.investigations.length : "…"}</dd>
         </div>
-        <div className="flex items-baseline justify-between gap-3 rounded-lg bg-slate-100 p-2.5 sm:block">
+        <div className="flex items-baseline justify-between gap-3 border-l-2 border-slate-200 py-0.5 pl-3 sm:block">
           <dt className="eyebrow">Failures a year</dt>
           <dd className="mt-0.5 text-lg font-semibold tabular-nums text-slate-900">{loaded ? formatNumber(st.failuresPerYear, 1) : "…"}</dd>
         </div>
-        <div className="flex items-baseline justify-between gap-3 rounded-lg bg-slate-100 p-2.5 sm:block">
+        <div className="flex items-baseline justify-between gap-3 border-l-2 border-slate-200 py-0.5 pl-3 sm:block">
           <dt className="eyebrow">Annual loss</dt>
           <dd className="mt-0.5 break-words text-lg font-semibold tabular-nums text-slate-900">
             {loaded ? formatMoney(st.annualLoss, st.currency) : "…"}

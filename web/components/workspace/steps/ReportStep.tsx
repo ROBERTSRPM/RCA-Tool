@@ -311,8 +311,8 @@ export function ReportStep({ inv }: StepProps) {
                     <th className="py-1 pr-2">Fixes</th>
                     <th className="py-1 pr-2">Owner</th>
                     <th className="py-1 pr-2">Due</th>
-                    <th className="py-1 pr-2">Status</th>
-                    <th className="py-1 text-right">Cost</th>
+                    <th className="py-1 pr-2 whitespace-nowrap">Status</th>
+                    <th className="py-1 text-right whitespace-nowrap">Cost</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -335,7 +335,7 @@ export function ReportStep({ inv }: StepProps) {
                         <td className="py-1 pr-2 whitespace-nowrap">
                           {ACTION_STATUS.find((s) => s.value === a.status)?.label}
                         </td>
-                        <td className="py-1 text-right tabular-nums">{formatMoney(a.cost ?? 0, cur)}</td>
+                        <td className="py-1 text-right tabular-nums whitespace-nowrap">{formatMoney(a.cost ?? 0, cur)}</td>
                       </tr>
                     );
                   })}

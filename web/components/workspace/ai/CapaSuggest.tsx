@@ -55,7 +55,7 @@ export function CapaSuggest({ inv, update, root }: { inv: Investigation; update:
       <AiCard
         collapseOnMobile
         title="Suggested actions"
-        intro="Suggests corrective and preventive actions for this root cause, and says whether the wear is natural or forced."
+        intro="Corrective and preventive actions for this root cause."
         className="p-3 sm:p-4"
       >
         <AiButton
