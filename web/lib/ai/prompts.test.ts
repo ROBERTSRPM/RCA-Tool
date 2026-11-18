@@ -110,3 +110,52 @@ describe("defang (prompt-injection hardening)", () => {
     expect(p).not.toContain(evil);
   });
 });
+
+describe("recorded action details reach the model (AI-01)", () => {
+  const withActions = (() => {
+    const c = JSON.parse(JSON.stringify(context));
+    c.actions = [
+      { id: "x1", causeId: c.nodes[1].id, description: "Fit flush gauge", kind: "preventive", category: "maintenance_task", interval: "every 2 weeks", owner: "Sam Patel", dueDate: "2026-03-05", status: "done", craft: "Fitter" },
+      { id: "x2", causeId: "", description: "No details", kind: "", category: "", interval: "", owner: "", dueDate: "", status: "open", craft: "" },
+    ];
+    return c;
+  })();
+  const text = renderInvestigation(withActions, makeAliases(withActions));
+  it("shows owner, due date, status and craft, with dates in plain form", () => {
+    expect(text).toContain("owner: Sam Patel; due: 5 Mar 2026; status: done; craft: Fitter");
+    expect(text).not.toContain("2026-03-05");
+    expect(text).not.toContain("2025-02-11");
+  });
+  it("shows 'not set' only for fields that are empty", () => {
+    expect(text).toContain("owner: not set; due: not set; status: open; craft: not set");
+  });
+  it("tells the model to state absence only when the field is not set", () => {
+    expect(SYSTEM_PROMPT).toMatch(/ONLY if the data shows it as "not set"/);
+    expect(buildPrompt(ok("draft", { kind: "report" }), aliases).instructions).toMatch(/only where the action shows "not set"/);
+  });
+});
+
+describe("prompt rules from QA round 1", () => {
+  it("AI-02: labels only in reference fields", () => {
+    expect(SYSTEM_PROMPT).toMatch(/Never write N#, A# or E# inside any other text/);
+  });
+  it("AI-05 / challenge: no evidence demand on the failure event, one issue per cause", () => {
+    const p = buildPrompt(ok("challenge", {}), aliases).instructions;
+    expect(p).toMatch(/never raise "no evidence"[^.]*N1/);
+    expect(p).toMatch(/at most one issue per cause/i);
+  });
+  it("AI-07: the problem draft may not add facts or change what was swapped", () => {
+    const p = buildPrompt(ok("draft", { kind: "problem", notes: "bearing swapped, grease dirty" }), aliases).instructions;
+    expect(p).toMatch(/Do not add any fact that is not in the notes/);
+    expect(p).toMatch(/a bearing is not a pump/);
+  });
+  it("coach and CAPA improvements", () => {
+    expect(buildPrompt(ok("coach", { scope: "tree" }), aliases).instructions).toMatch(/human-level cause behind each physical/);
+    const rootId = context.nodes.find((n) => n.isRootCause)!.id;
+    expect(buildPrompt(ok("capa", { rootCauseId: rootId }), aliases).instructions).toMatch(/one spares action and one condition_monitoring task/);
+  });
+  it("aliases carry readable titles for every item", () => {
+    expect(aliases.titleByAlias.get("N1")).toBe("the failure event");
+    expect(aliases.titleByAlias.get("N2")!.length).toBeGreaterThan(3);
+  });
+});

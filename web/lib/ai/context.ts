@@ -83,6 +83,11 @@ export interface AiAction {
   category: (typeof CATEGORIES)[number];
   /** e.g. "every 3 months"; empty when none. */
   interval: string;
+  /** Recorded fields the report needs. Empty string means truly not set. */
+  owner: string;
+  dueDate: string;
+  status: "open" | "in_progress" | "done";
+  craft: string;
 }
 
 export interface AiContext {
@@ -178,6 +183,10 @@ export function buildAiContext(inv: Investigation): AiContext {
       kind: a.kind ?? "",
       category: a.category ?? "",
       interval: a.task ? intervalText(a.task.intervalValue, a.task.intervalUnit) : "",
+      owner: a.owner,
+      dueDate: a.dueDate,
+      status: a.status,
+      craft: a.task?.craft ?? "",
     })),
     spares,
   });
@@ -243,6 +252,10 @@ function parseAiContextLoose(raw: unknown): AiContext {
       kind: oneOf(a.kind, KINDS, ""),
       category: oneOf(a.category, CATEGORIES, ""),
       interval: clip(a.interval, 60),
+      owner: clip(a.owner, 80),
+      dueDate: /^\d{4}-\d{2}-\d{2}$/.test(clip(a.dueDate, 10)) ? clip(a.dueDate, 10) : "",
+      status: oneOf(a.status, ["open", "in_progress", "done"] as const, "open"),
+      craft: clip(a.craft, 80),
     }))
     .filter((a) => a.id);
   return {

@@ -95,6 +95,38 @@ const oneOf = <T extends string>(v: unknown, allowed: readonly T[]): T | null =>
   typeof v === "string" && (allowed as readonly string[]).includes(v) ? (v as T) : null;
 const list = (v: unknown): unknown[] => (Array.isArray(v) ? v : []);
 
+/**
+ * The user never sees the N#/A#/E# labels used in prompts. If the model writes one in prose anyway,
+ * drop a bracketed reference "(N4)" and turn a bare one into the item's own words.
+ */
+export function stripRefs(s: string, a: Aliases): string {
+  const known = (ref: string) => a.titleByAlias.has(ref);
+  return s
+    .replace(/\s*[([]\s*[NAE]\d{1,3}(?:\s*(?:,|;|\/|&|and|to|-)\s*[NAE]\d{1,3})*\s*[)\]]/g, "")
+    .replace(/\b([NAE]\d{1,3})\b/g, (m) => {
+      if (!known(m)) return m;
+      const t = a.titleByAlias.get(m) ?? "";
+      return t ? `"${t}"` : "";
+    })
+    .replace(/\s{2,}/g, " ")
+    .replace(/ ([.,;:])/g, "$1")
+    .trim();
+}
+
+const ID_KEYS = new Set(["parentId", "nodeId", "actionId"]);
+
+/** Applies stripRefs to every text field of a validated result (ids are left alone). */
+export function cleanResult<T>(value: T, a: Aliases): T {
+  if (typeof value === "string") return stripRefs(value, a) as T;
+  if (Array.isArray(value)) return value.map((v) => cleanResult(v, a)) as T;
+  if (isObj(value)) {
+    const out: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(value)) out[k] = ID_KEYS.has(k) ? v : cleanResult(v, a);
+    return out as T;
+  }
+  return value;
+}
+
 export function validateCoach(raw: unknown, a: Aliases, scope: "node" | "tree", nodeId: string): CoachResult | null {
   if (!isObj(raw)) return null;
   const out: CoachSuggestion[] = [];
@@ -126,10 +158,13 @@ export function validateChallenge(raw: unknown, a: Aliases): ChallengeResult | n
     const message = text(i.message, OUT_LIMITS.text);
     if (!message) continue;
     const ref = typeof i.ref === "string" ? i.ref.trim().toUpperCase() : "";
+    const type = oneOf(i.type, ISSUE_TYPES) ?? "other";
+    // The failure event at the top does not carry evidence; evidence belongs on the causes beneath it.
+    if (type === "no_evidence" && ref === "N1") continue;
     issues.push({
       nodeId: a.nodeByAlias.get(ref) ?? "",
       actionId: a.actionByAlias.get(ref) ?? "",
-      type: oneOf(i.type, ISSUE_TYPES) ?? "other",
+      type,
       severity: oneOf(i.severity, ["high", "medium", "low"] as const) ?? "medium",
       message,
       question: text(i.question, OUT_LIMITS.text),

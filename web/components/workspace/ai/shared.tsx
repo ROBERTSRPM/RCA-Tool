@@ -84,6 +84,13 @@ export function AiCard({
         {intro ? `${intro} ` : ""}
         You decide what goes in. Nothing is marked verified because of a suggestion.
       </p>
+      <p className={`mt-1 max-w-prose text-xs text-slate-500 ${hide}`} data-testid="ai-notice">
+        Sends this investigation&rsquo;s text (and any notes you type here) to our AI provider, Anthropic, to answer this request.
+        Anthropic&rsquo;s commercial terms do not allow training models on it.{" "}
+        <Link href="/privacy" className="underline">
+          Privacy
+        </Link>
+      </p>
       {!ready && !loading && (
         <p className={`mt-3 rounded-lg border border-slate-300 bg-slate-50 p-3 text-sm text-slate-800 ${hide}`} data-testid="ai-signin">
           <strong>Sign in to use AI.</strong> AI suggestions are not available in demo mode.{" "}

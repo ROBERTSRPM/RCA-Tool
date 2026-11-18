@@ -18,7 +18,10 @@ function deps(over: Partial<Deps> = {}): Deps & { calls: string[] } {
     verifyUser: vi.fn(async () => ({ id: "u1" })),
     consume: vi.fn(async () => {
       calls.push("consume");
-      return { allowed: true as const, remainingToday: 7 };
+      return { allowed: true as const, remainingToday: 7, usageId: 99 };
+    }),
+    refund: vi.fn(async () => {
+      calls.push("refund");
     }),
     callModel: vi.fn(async () => {
       calls.push("model");
@@ -144,6 +147,41 @@ describe("handleAiRequest", () => {
     const r = await handleAiRequest("coach", post(body), d);
     expect(r.status).toBe(502);
     expect((await errOf(r)).code).toBe("unusable");
+  });
+
+  it("failed calls are refunded (burst still counts in the database); successes are not", async () => {
+    for (const err of [new AiError("timeout"), new AiError("unusable", "json"), new Error("boom")]) {
+      d = deps({ callModel: vi.fn(async () => { throw err; }) });
+      await handleAiRequest("coach", post(body), d);
+      expect(d.refund).toHaveBeenCalledWith(TOKEN, 99);
+    }
+    d = deps({ callModel: vi.fn(async () => ({ suggestions: "lots" })) });
+    await handleAiRequest("coach", post(body), d);
+    expect(d.refund).toHaveBeenCalledTimes(1);
+    d = deps();
+    await handleAiRequest("coach", post(body), d);
+    expect(d.refund).not.toHaveBeenCalled();
+    d = deps({ consume: vi.fn(async () => ({ allowed: false as const, reason: "burst" as const, retryAfterSeconds: 5 })) });
+    await handleAiRequest("coach", post(body), d);
+    expect(d.refund).not.toHaveBeenCalled();
+  });
+
+  it("no usage id (older database function) means nothing to refund, and nothing breaks", async () => {
+    d = deps({
+      consume: vi.fn(async () => ({ allowed: true as const, remainingToday: 1, usageId: null })),
+      callModel: vi.fn(async () => { throw new AiError("timeout"); }),
+    });
+    expect((await handleAiRequest("coach", post(body), d)).status).toBe(504);
+    expect(d.refund).not.toHaveBeenCalled();
+  });
+
+  it("strips leaked N#/A# labels from text in the answer", async () => {
+    const leaky = { suggestions: [{ ...validCoach.suggestions[0], text: "Seal flush too low (N2)", why: "See N2 and A1 for detail" }] };
+    d = deps({ callModel: vi.fn(async () => leaky) });
+    const j = await (await handleAiRequest("coach", post(body), d)).json();
+    const t = JSON.stringify(j.result);
+    expect(t).not.toMatch(/\b[NAE]\d+\b/);
+    expect(j.result.suggestions[0].text).toBe("Seal flush too low");
   });
 
   it("builds the right prompt and schema per feature", async () => {

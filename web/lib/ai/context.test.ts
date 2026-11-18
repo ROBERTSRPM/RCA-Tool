@@ -21,6 +21,17 @@ describe("buildAiContext", () => {
     expect(ctx.evidence[0]).not.toHaveProperty("image");
   });
 
+  it("carries owner, due date, status and craft for actions", () => {
+    const withOwner = buildSample();
+    withOwner.actions[0].owner = "Sam Patel";
+    withOwner.actions[0].dueDate = "2026-03-05";
+    withOwner.actions[0].status = "done";
+    const a0 = buildAiContext(withOwner).actions[0];
+    expect(a0).toMatchObject({ owner: "Sam Patel", dueDate: "2026-03-05", status: "done" });
+    const parsed = parseAiContext(buildAiContext(withOwner));
+    expect(parsed.ok && parsed.value.actions[0].owner).toBe("Sam Patel");
+  });
+
   it("describes the loss in one line when quantified", () => {
     expect(ctx.loss).toMatch(/events per year/);
   });
@@ -70,7 +81,7 @@ describe("parseAiContext", () => {
         { ...c.nodes[0], category: "weird" },
         { ...c.nodes[1], parentId: "ghost", status: "proven", evidenceIds: ["nope"] },
       ],
-      actions: [{ id: "a1", causeId: "ghost", description: "d", kind: "bogus", category: "x", interval: "" }],
+      actions: [{ id: "a1", causeId: "ghost", description: "d", kind: "bogus", category: "x", interval: "", dueDate: "tomorrow", status: "weird" }],
     });
     expect(r.ok).toBe(true);
     if (r.ok) {
@@ -78,7 +89,7 @@ describe("parseAiContext", () => {
       expect(r.value.nodes[1].parentId).toBeNull();
       expect(r.value.nodes[1].status).toBe("hypothesis");
       expect(r.value.nodes[1].evidenceIds).toEqual([]);
-      expect(r.value.actions[0]).toMatchObject({ causeId: "", kind: "", category: "" });
+      expect(r.value.actions[0]).toMatchObject({ causeId: "", kind: "", category: "", dueDate: "", status: "open" });
     }
   });
 });

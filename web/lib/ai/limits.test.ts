@@ -16,8 +16,8 @@ describe("readLimits", () => {
 
 describe("interpretConsume", () => {
   it("allowed", () => {
-    expect(interpretConsume({ ok: true, remaining_today: 12 })).toEqual({ allowed: true, remainingToday: 12 });
-    expect(interpretConsume({ ok: true, remaining_today: -3 })).toEqual({ allowed: true, remainingToday: 0 });
+    expect(interpretConsume({ ok: true, remaining_today: 12, usage_id: 5 })).toEqual({ allowed: true, remainingToday: 12, usageId: 5 });
+    expect(interpretConsume({ ok: true, remaining_today: -3 })).toEqual({ allowed: true, remainingToday: 0, usageId: null });
   });
   it("refused: daily and burst", () => {
     expect(interpretConsume({ ok: false, reason: "daily", retry_after_seconds: 3600.2 })).toEqual({ allowed: false, reason: "daily", retryAfterSeconds: 3601 });
@@ -38,5 +38,11 @@ describe("limitMessage", () => {
     expect(daily).toContain("keeps working");
     expect(limitMessage({ allowed: false, reason: "burst", retryAfterSeconds: 20 }, DEFAULT_LIMITS)).toContain("20 seconds");
     expect(limitMessage({ allowed: false, reason: "daily", retryAfterSeconds: 100 }, DEFAULT_LIMITS)).toContain("1 hour.");
+  });
+  it("uses the right singular and plural", () => {
+    const one = limitMessage({ allowed: false, reason: "daily", retryAfterSeconds: 100 }, { daily: 1, burst: 5 });
+    expect(one).toContain("your AI suggestion for today");
+    expect(one).not.toContain("suggestions");
+    expect(limitMessage({ allowed: false, reason: "daily", retryAfterSeconds: 100 }, { daily: 30, burst: 5 })).toContain("all 30 AI suggestions");
   });
 });

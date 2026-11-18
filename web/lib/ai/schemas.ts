@@ -21,7 +21,7 @@ export const COACH_SCHEMA = obj({
       why: str,
       confirmWith: str,
       ruleOutWith: str,
-      deterioration: { type: "string", enum: ["natural", "forced", "not_applicable"] },
+      deterioration: { type: "string", enum: ["natural", "forced", "unclear", "not_applicable"] },
     }),
   },
 });

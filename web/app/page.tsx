@@ -84,7 +84,12 @@ export default function Home() {
       </main>
 
       <footer className="border-t border-slate-200 px-4 py-5 text-sm text-slate-500">
-        <p className="mx-auto max-w-6xl sm:px-6">Sample figures are illustrative.</p>
+        <p className="mx-auto max-w-6xl sm:px-6">
+          Sample figures are illustrative.{" "}
+          <Link href="/privacy" className="underline">
+            Privacy
+          </Link>
+        </p>
       </footer>
     </div>
   );

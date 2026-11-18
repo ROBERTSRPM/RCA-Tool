@@ -2,7 +2,9 @@ import { describe, expect, it } from "vitest";
 import { buildSample } from "../sample";
 import { buildAiContext } from "./context";
 import {
+  cleanResult,
   OUT_LIMITS,
+  stripRefs,
   validateCapa,
   validateChallenge,
   validateCoach,
@@ -101,5 +103,38 @@ describe("validateProblem / validateDocument", () => {
     const big = { title: "t", sections: Array.from({ length: 10 }, () => ({ heading: "H", body: "x".repeat(2900) })) };
     expect(validateDocument(big, "report")).toBeNull();
     expect(validateDocument({ title: "t", sections: [{ heading: "H", body: "x".repeat(3000) }, { heading: "H2", body: "y".repeat(1000) }] }, "summary")).toBeNull();
+  });
+});
+
+describe("stripRefs / cleanResult (no internal labels reach the user)", () => {
+  const titled = { ...a, titleByAlias: new Map([["N2", "Seal flush too low"], ["A1", "Fit flush gauge"], ["E1", "Grease sample"]]) };
+  it("removes bracketed references and replaces bare ones with the item's words", () => {
+    expect(stripRefs("Fix the flush (N2).", titled)).toBe("Fix the flush.");
+    expect(stripRefs("Fix the flush [N2, A1]", titled)).toBe("Fix the flush");
+    expect(stripRefs("Because of N2, do A1.", titled)).toBe('Because of "Seal flush too low", do "Fit flush gauge".');
+    expect(stripRefs("See E1", titled)).toBe('See "Grease sample"');
+  });
+  it("leaves unknown labels and ordinary words alone", () => {
+    expect(stripRefs("Nitrogen N2 purge on model A99 and plan B", titled)).toContain("model A99");
+  });
+  it("cleans every text field but never touches ids", () => {
+    const out = cleanResult({ nodeId: "N2", issues: [{ message: "Check N2", parentId: "A1" }] }, titled);
+    expect(out.nodeId).toBe("N2");
+    expect(out.issues[0].parentId).toBe("A1");
+    expect(out.issues[0].message).toBe('Check "Seal flush too low"');
+  });
+});
+
+describe("challenge: the failure event carries no evidence", () => {
+  it("drops 'no evidence' issues about N1 but keeps them for causes", () => {
+    const r = validateChallenge(
+      { summary: "s", issues: [
+        { ref: "N1", type: "no_evidence", severity: "medium", message: "Top event has no evidence", question: "" },
+        { ref: "N3", type: "no_evidence", severity: "medium", message: "This cause has no evidence", question: "" },
+        { ref: "N1", type: "weak_logic", severity: "low", message: "Event wording is vague", question: "" },
+      ] },
+      a,
+    )!;
+    expect(r.issues.map((i) => i.message)).toEqual(["This cause has no evidence", "Event wording is vague"]);
   });
 });

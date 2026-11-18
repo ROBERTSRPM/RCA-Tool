@@ -29,7 +29,7 @@ export function readLimits(env: NodeJS.ProcessEnv = process.env): Limits {
 }
 
 export type ConsumeDecision =
-  | { allowed: true; remainingToday: number }
+  | { allowed: true; remainingToday: number; usageId: number | null }
   | { allowed: false; reason: "daily" | "burst"; retryAfterSeconds: number };
 
 /** Reads the jsonb the database function returns. Anything unexpected is an error, never "allowed". */
@@ -38,7 +38,8 @@ export function interpretConsume(raw: unknown): ConsumeDecision {
   const r = raw as Record<string, unknown>;
   if (r.ok === true) {
     const rem = typeof r.remaining_today === "number" && Number.isFinite(r.remaining_today) ? r.remaining_today : 0;
-    return { allowed: true, remainingToday: Math.max(0, Math.floor(rem)) };
+    const id = typeof r.usage_id === "number" && Number.isInteger(r.usage_id) ? r.usage_id : null;
+    return { allowed: true, remainingToday: Math.max(0, Math.floor(rem)), usageId: id };
   }
   if (r.ok === false && (r.reason === "daily" || r.reason === "burst")) {
     const s = typeof r.retry_after_seconds === "number" && Number.isFinite(r.retry_after_seconds) ? r.retry_after_seconds : 60;
@@ -52,5 +53,5 @@ export function limitMessage(d: Extract<ConsumeDecision, { allowed: false }>, li
     return `You are going a bit fast. Wait about ${Math.max(5, d.retryAfterSeconds)} seconds and try again.`;
   }
   const hours = Math.ceil(d.retryAfterSeconds / 3600);
-  return `You have used your ${limits.daily} AI suggestions for today. You can use AI again in about ${hours} ${hours === 1 ? "hour" : "hours"}. Everything else in ${BRAND_NAME} keeps working.`;
+  return `You have used ${limits.daily === 1 ? "your" : `all ${limits.daily}`} AI ${limits.daily === 1 ? "suggestion" : "suggestions"} for today. You can use AI again in about ${hours} ${hours === 1 ? "hour" : "hours"}. Everything else in ${BRAND_NAME} keeps working.`;
 }

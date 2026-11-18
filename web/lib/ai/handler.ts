@@ -14,19 +14,22 @@ import { buildPrompt, makeAliases } from "./prompts";
 import {
   validateCapa,
   validateChallenge,
+  cleanResult,
   validateCoach,
   validateDocument,
   validateProblem,
 } from "./output";
 import { parseRequest, type AiFeature, type AiRequest } from "./requests";
 import { CAPA_SCHEMA, CHALLENGE_SCHEMA, COACH_SCHEMA, DOCUMENT_SCHEMA, PROBLEM_SCHEMA } from "./schemas";
-import { consumeCall, verifyUser } from "./supabase-server";
+import { consumeCall, refundCall, verifyUser } from "./supabase-server";
 
 export const MAX_BODY_BYTES = 120_000;
 
 export interface Deps {
   verifyUser(token: string): Promise<{ id: string } | null>;
   consume(token: string, feature: string, limits: Limits): Promise<ConsumeDecision>;
+  /** Gives back a counted call that failed (daily allowance only; burst still counts). */
+  refund(token: string, usageId: number): Promise<void>;
   callModel(call: ModelCall, req: AiRequest): Promise<unknown>;
   hasKey(): boolean;
   limits(): Limits;
@@ -35,6 +38,7 @@ export interface Deps {
 export const defaultDeps: Deps = {
   verifyUser,
   consume: consumeCall,
+  refund: refundCall,
   callModel: (call, req) => (isMockEnabled() ? mockModel(req) : callModel(call)),
   hasKey: () => isMockEnabled() || hasApiKey(),
   limits: () => readLimits(),
@@ -91,6 +95,11 @@ function bearer(req: Request): string | null {
 
 function modelCall(req: AiRequest): { call: ModelCall; validate: (raw: unknown) => unknown } {
   const aliases = makeAliases(req.context);
+  const m = modelCallRaw(req, aliases);
+  return { call: m.call, validate: (raw) => cleanResult(m.validate(raw), aliases) };
+}
+
+function modelCallRaw(req: AiRequest, aliases: ReturnType<typeof makeAliases>): { call: ModelCall; validate: (raw: unknown) => unknown } {
   const p = buildPrompt(req, aliases);
   const base = { instructions: p.instructions, user: p.user, maxTokens: p.maxTokens };
   switch (req.feature) {
@@ -167,10 +176,12 @@ export async function handleAiRequest(feature: AiFeature, request: Request, deps
   } catch (err) {
     const e = err instanceof AiError ? err : new AiError("unavailable", "error");
     console.error("[ai]", feature, e.code, e.detail);
+    if (decision.usageId !== null) await deps.refund(token, decision.usageId);
     return fail(e.code === "not_configured" ? "not_configured" : (e.code as ErrorCode));
   }
   if (result === null) {
     console.error("[ai]", feature, "unusable", "shape");
+    if (decision.usageId !== null) await deps.refund(token, decision.usageId);
     return fail("unusable");
   }
   return Response.json(
