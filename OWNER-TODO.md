@@ -21,6 +21,8 @@ Kept up to date by the PM. Nothing here blocks the agents right now unless it is
 - [ ] Authentication → Passwords: minimum length 8, leaked-password protection on
 - [ ] Authentication → Attack protection: CAPTCHA (Cloudflare Turnstile; agents will give the steps)
 
+- [ ] **Before the first customer:** narrow `.claude/settings.json` from all Supabase tools (`mcp__Supabase`, added 2026-11-18) to read-only tools, so agents must ask again before changing the live database. The PM will remind you.
+
 ## Paid plans (before taking money)
 - [ ] Vercel → upgrade to Pro (the Hobby plan is non-commercial only)
 - [ ] Supabase → upgrade to Pro (daily backups, no pausing)
