@@ -20,6 +20,14 @@ Kept up to date by the PM. Nothing here blocks the agents right now unless it is
 ## Supabase settings (before the first customer)
 - [ ] Authentication → Passwords: minimum length 8, leaked-password protection on
 - [ ] Authentication → Attack protection: CAPTCHA (Cloudflare Turnstile; agents will give the steps)
+- [ ] Authentication → Sessions: refresh-token reuse detection on; access token (JWT) expiry 30 minutes (from security audit v1)
+- [ ] Note: leaked-password protection may need Supabase Pro
+
+## Vercel and Anthropic security (from security audit v1)
+- [ ] Vercel → Environment Variables: mark `ANTHROPIC_API_KEY` as Sensitive
+- [ ] Optional: a separate low-limit Anthropic key for Preview only
+- [ ] Vercel → rotate or turn off the preview share link after testing
+- [ ] Anthropic Console → monthly spend limit and an email alert
 
 - [ ] **Before the first customer:** narrow `.claude/settings.json` from all Supabase tools (`mcp__Supabase`, added 2026-11-18) to read-only tools, so agents must ask again before changing the live database. The PM will remind you.
 
