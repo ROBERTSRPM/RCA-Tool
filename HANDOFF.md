@@ -1,6 +1,6 @@
 # Handoff for a new session
 
-Read this first, then `BLUEPRINT.md`. This file replaces the long history of the first session.
+Read this first, then `BLUEPRINT.md` and `AI-ROADMAP.md` (the owner-approved AI feature plan). This file replaces the long history of the first session.
 
 ## How to work (owner's standing instructions)
 - You are the project manager. Delegate building, fixing, testing and media work to sub-agents on Sonnet; keep your own checks light (one look per deliverable). The owner is on a usage-limited plan.
