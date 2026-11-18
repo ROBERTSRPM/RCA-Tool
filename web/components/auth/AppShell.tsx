@@ -39,7 +39,7 @@ function DemoBanner() {
     <div
       role="note"
       data-testid="demo-banner"
-      className="no-print border-b border-amber-200 bg-amber-50 px-4 py-1.5 text-center text-sm text-amber-900"
+      className="no-print border-b border-slate-200 bg-slate-100 px-4 py-2 text-center text-sm text-slate-700"
     >
       <p>
       You are in demo mode: work is saved only in this browser.{" "}
@@ -123,10 +123,10 @@ function ImportOffer({ userId, onImported }: { userId: string; onImported: () =>
       role="region"
       aria-label="Copy browser data to your account"
       data-testid="import-offer"
-      className="no-print border-b border-sky-200 bg-sky-50 px-4 py-3 sm:px-6"
+      className="no-print border-b border-slate-200 bg-slate-100 px-4 py-3 sm:px-6"
     >
       <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3">
-        <p className="min-w-0 flex-1 text-sm text-sky-950">
+        <p className="min-w-0 flex-1 text-sm text-slate-800">
           <strong>
             This browser has {n} {n === 1 ? "investigation" : "investigations"} from demo mode.
           </strong>{" "}

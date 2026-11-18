@@ -30,7 +30,7 @@ export function NodePanel({
   if (isTop) {
     return (
       <div className="card p-4" data-testid="node-panel">
-        <h3 className="text-base font-bold text-slate-900">The failure event</h3>
+        <h3 className="text-base font-semibold text-slate-900">The failure event</h3>
         <p className="mt-1 text-sm text-slate-600">
           This is the top of the tree: what went wrong. Edit its wording in the box, then press{" "}
           <strong>Why?</strong> to add the first cause beneath it.
@@ -42,7 +42,7 @@ export function NodePanel({
   return (
     <div className="card space-y-5 p-4 lg:grid lg:grid-cols-3 lg:gap-x-8 lg:gap-y-4 lg:space-y-0 lg:p-5" data-testid="node-panel">
       <div className="lg:col-span-3">
-        <h3 className="text-base font-bold text-slate-900">Selected cause</h3>
+        <h3 className="text-base font-semibold text-slate-900">Selected cause</h3>
         <p className="mt-0.5 line-clamp-2 text-sm text-slate-500">
           {node.text || "(no text yet, type in the box)"}
         </p>
@@ -58,7 +58,7 @@ export function NodePanel({
               role="radio"
               aria-checked={node.category === c}
               onClick={() => patch({ category: c })}
-              className={`min-h-11 rounded-lg border-2 px-1.5 text-xs font-bold leading-tight sm:text-sm ${
+              className={`min-h-11 rounded-lg border-2 px-1.5 text-xs font-semibold leading-tight sm:text-sm ${
                 node.category === c
                   ? `border-slate-900 bg-slate-900 text-white`
                   : `border-slate-200 bg-white ${CAT_STYLE[c].text} hover:bg-slate-50`
@@ -80,7 +80,7 @@ export function NodePanel({
               role="radio"
               aria-checked={node.status === s}
               onClick={() => patch({ status: s })}
-              className={`min-h-11 rounded-lg border-2 px-1.5 text-xs font-bold leading-tight sm:text-sm ${
+              className={`min-h-11 rounded-lg border-2 px-1.5 text-xs font-semibold leading-tight sm:text-sm ${
                 node.status === s
                   ? "border-slate-900 bg-slate-900 text-white"
                   : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
@@ -94,8 +94,8 @@ export function NodePanel({
       </fieldset>
 
       {node.aiSuggested && node.aiTest && (
-        <div className="rounded-lg border border-violet-200 bg-violet-50 p-3 text-sm text-slate-800" data-testid="ai-test-note">
-          <p className="font-bold text-violet-900">AI-suggested: how to test it</p>
+        <div className="rounded-lg border border-slate-200 bg-slate-50 p-3 text-sm text-slate-800" data-testid="ai-test-note">
+          <p className="font-semibold text-slate-900">Suggested: how to test it</p>
           <p className="mt-1 whitespace-pre-wrap">{node.aiTest}</p>
           <p className="mt-1 text-xs text-slate-600">This is still a hypothesis until you have evidence and mark it so.</p>
         </div>
@@ -115,7 +115,7 @@ export function NodePanel({
                 role="radio"
                 aria-checked={on}
                 onClick={() => patch({ deterioration: on ? "" : d.value })}
-                className={`min-h-11 rounded-lg border-2 px-1.5 text-xs font-bold leading-tight sm:text-sm ${
+                className={`min-h-11 rounded-lg border-2 px-1.5 text-xs font-semibold leading-tight sm:text-sm ${
                   on
                     ? "border-slate-900 bg-slate-900 text-white"
                     : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
@@ -144,7 +144,7 @@ export function NodePanel({
           onChange={(e) => patch({ isRootCause: e.target.checked })}
         />
         <span>
-          <span className="block text-sm font-bold text-slate-900">This is a root cause</span>
+          <span className="block text-sm font-semibold text-slate-900">This is a root cause</span>
           <span className="block text-sm text-slate-500">
             The deepest gap you will fix so it cannot happen again. Actions attach to root causes.
           </span>

@@ -84,7 +84,7 @@ export function CauseCoachPanel({
             if (group.length === 0) return null;
             return (
               <div key={lv}>
-                <h4 className="mb-2 text-sm font-bold text-slate-900">{CATEGORY_LABEL[lv]} causes</h4>
+                <h4 className="mb-2 text-sm font-semibold text-slate-900">{CATEGORY_LABEL[lv]} causes</h4>
                 <ul className="space-y-3">
                   {group.map((s) => {
                     const parent = findNode(inv.tree, s.parentId);
@@ -109,13 +109,13 @@ export function CauseCoachPanel({
                         <dl className="mt-2 grid gap-2 text-sm sm:grid-cols-2">
                           {s.confirmWith && (
                             <div className="rounded-lg bg-emerald-50 p-2">
-                              <dt className="text-xs font-bold uppercase text-emerald-800">Would confirm it</dt>
+                              <dt className="text-xs font-semibold uppercase text-emerald-800">Would confirm it</dt>
                               <dd className="text-slate-800">{s.confirmWith}</dd>
                             </div>
                           )}
                           {s.ruleOutWith && (
                             <div className="rounded-lg bg-slate-100 p-2">
-                              <dt className="text-xs font-bold uppercase text-slate-600">Would rule it out</dt>
+                              <dt className="text-xs font-semibold uppercase text-slate-600">Would rule it out</dt>
                               <dd className="text-slate-800">{s.ruleOutWith}</dd>
                             </div>
                           )}

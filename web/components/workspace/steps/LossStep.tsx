@@ -27,8 +27,8 @@ const SHARE_INFO: {
     title: "Lost for good",
     sentence:
       "The production was never made up, so you lose the profit on every unit (units × margin per unit).",
-    bar: "bg-rose-500",
-    accent: "accent-rose-600",
+    bar: "bg-red-600",
+    accent: "accent-red-600",
   },
   {
     key: "madeUp",
@@ -43,7 +43,7 @@ const SHARE_INFO: {
     title: "Covered by buffer stock",
     sentence:
       "Customers were served from stock you already held, so nothing was lost per event; you may still carry a yearly cost for holding that stock.",
-    bar: "bg-sky-500",
+    bar: "bg-sky-600",
     accent: "accent-sky-600",
   },
 ];
@@ -277,12 +277,12 @@ export function LossStep({ inv, update }: StepProps) {
       </div>
 
       <aside aria-label="Live calculation" className="min-w-0 lg:sticky lg:top-20 lg:self-start">
-        <div className="rounded-xl bg-slate-900 p-5 text-slate-100 shadow-lg">
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-400">
+        <div className="rounded-xl border border-slate-200 bg-white p-5 text-slate-800">
+          <h2 className="eyebrow">
             Live calculation
           </h2>
 
-          <h3 className="mt-3 text-xs font-bold uppercase tracking-wide text-slate-300">
+          <h3 className="mt-3 eyebrow">
             Production lost
           </h3>
           <dl className="mt-1 space-y-3">
@@ -298,7 +298,7 @@ export function LossStep({ inv, update }: StepProps) {
             />
           </dl>
 
-          <h3 className="mt-4 text-xs font-bold uppercase tracking-wide text-slate-300">
+          <h3 className="mt-4 eyebrow">
             Cost per event
           </h3>
           <dl className="mt-1 space-y-3">
@@ -319,7 +319,7 @@ export function LossStep({ inv, update }: StepProps) {
             />
           </dl>
 
-          <h3 className="mt-4 text-xs font-bold uppercase tracking-wide text-slate-300">
+          <h3 className="mt-4 eyebrow">
             Per year
           </h3>
           <dl className="mt-1 space-y-3">
@@ -349,10 +349,10 @@ export function LossStep({ inv, update }: StepProps) {
             />
           </dl>
 
-          <div className="mt-4 rounded-lg bg-accent p-4 text-slate-950">
+          <div className="mt-4 rounded-lg bg-slate-900 p-4 text-white">
             <p className="text-sm font-semibold">Annual loss</p>
             <p
-              className="break-words text-3xl font-extrabold tabular-nums tracking-tight"
+              className="break-words text-3xl font-semibold tabular-nums tracking-tight"
               data-testid="annual-loss"
             >
               {formatMoney(c.annualLoss, cur)}
@@ -366,8 +366,8 @@ export function LossStep({ inv, update }: StepProps) {
               {c.bufferHoldingPerYear > 0 ? " + buffer holding" : ""}
             </p>
           </div>
-          <p className="mt-4 text-sm leading-relaxed text-slate-300">
-            <strong className="text-white">The formula, in words:</strong> hours of downtime times
+          <p className="mt-4 text-sm leading-relaxed text-slate-600">
+            <strong className="text-slate-900">The formula, in words:</strong> hours of downtime times
             the units you make per hour gives the production lost. The share lost for good,
             times the margin on each unit, is the <em>opportunity loss</em>: profit you will never
             get back. Cash costs are what you actually pay out: the repair cost, the recovery cost
@@ -445,12 +445,12 @@ function Row({ label, value, formula }: { label: string; value: string; formula:
   return (
     <div>
       <div className="flex items-baseline justify-between gap-3">
-        <dt className="text-sm text-slate-300">{label}</dt>
-        <dd className="min-w-0 break-words text-right text-lg font-bold tabular-nums text-white">
+        <dt className="text-sm text-slate-700">{label}</dt>
+        <dd className="min-w-0 break-words text-right text-base font-semibold tabular-nums text-slate-900">
           {value}
         </dd>
       </div>
-      <p className="break-words text-xs text-slate-400">{formula}</p>
+      <p className="break-words text-xs text-slate-500">{formula}</p>
     </div>
   );
 }

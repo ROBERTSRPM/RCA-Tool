@@ -28,14 +28,14 @@ export function FiveWhysView() {
           return (
             <li key={node.id}>
               {i > 0 && (
-                <div className="flex items-center gap-2 py-1.5 pl-3 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                <div className="flex items-center gap-2 py-1.5 pl-3 eyebrow">
                   <Icon name="down" size={16} /> because
                 </div>
               )}
               <div className="flex items-start gap-3">
                 <span
-                  className={`mt-2 flex h-8 w-8 flex-none items-center justify-center rounded-full text-sm font-bold ${
-                    i === 0 ? "bg-slate-900 text-white" : "bg-accent text-slate-950"
+                  className={`mt-2 flex h-8 w-8 flex-none items-center justify-center rounded-full text-sm font-semibold ${
+                    i === 0 ? "bg-slate-900 text-white" : "bg-accent text-white"
                   }`}
                   aria-hidden="true"
                 >
@@ -74,7 +74,7 @@ export function FiveWhysView() {
               {last.children.map((c) => (
                 <button
                   key={c.id}
-                  className="flex items-center justify-between gap-3 rounded-lg border border-slate-300 bg-slate-50 px-3 py-2.5 text-left text-sm hover:border-amber-500 hover:bg-amber-50"
+                  className="flex items-center justify-between gap-3 rounded-lg border border-slate-300 bg-slate-50 px-3 py-2.5 text-left text-sm hover:border-accent hover:bg-amber-50"
                   onClick={() => cx.select(c.id)}
                 >
                   <span className="min-w-0">{c.text || "(no text)"}</span>

@@ -107,7 +107,7 @@ export function EvidenceStep({ inv, update }: StepProps) {
                       className="h-14 w-14 flex-none rounded-lg object-cover"
                     />
                   ) : (
-                    <span className="flex h-14 w-14 flex-none items-center justify-center rounded-lg bg-slate-200 text-sm font-bold text-slate-600">
+                    <span className="flex h-14 w-14 flex-none items-center justify-center rounded-lg bg-slate-200 text-sm font-semibold text-slate-600">
                       E{idx + 1}
                     </span>
                   )}

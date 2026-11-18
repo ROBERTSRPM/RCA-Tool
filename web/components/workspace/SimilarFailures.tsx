@@ -67,6 +67,7 @@ export function SimilarFailures({
 
   return (
     <SectionCard
+      collapseOnMobile
       title="Similar past failures"
       help="Your other investigations that look like this one, best match first. Matches use the asset tag, asset type, failure mode and the words in the title and description."
     >
@@ -118,7 +119,7 @@ export function SimilarFailures({
 
               <div className="mt-3 grid gap-4 lg:grid-cols-2">
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-wide text-slate-500">Root causes</p>
+                  <p className="eyebrow">Root causes</p>
                   {rootCauses.length === 0 ? (
                     <p className="mt-1 text-sm text-slate-600">No root cause flagged.</p>
                   ) : (
@@ -155,7 +156,7 @@ export function SimilarFailures({
                   )}
                 </div>
                 <div>
-                  <p className="flex flex-wrap items-center gap-2 text-xs font-bold uppercase tracking-wide text-slate-500">
+                  <p className="flex flex-wrap items-center gap-2 eyebrow">
                     What fixed it
                     {doneActions.length > 0 &&
                       (fixVerified ? (

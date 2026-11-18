@@ -26,7 +26,7 @@ import { useAuth } from "./AuthProvider";
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section aria-label={title} className="card p-5 sm:p-6">
-      <h2 className="text-lg font-bold text-slate-900">{title}</h2>
+      <h2 className="text-lg font-semibold text-slate-900">{title}</h2>
       <div className="mt-3 space-y-3 text-sm text-slate-700">{children}</div>
     </section>
   );

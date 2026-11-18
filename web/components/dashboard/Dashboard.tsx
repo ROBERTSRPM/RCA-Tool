@@ -199,9 +199,9 @@ export function Dashboard() {
         </div>
       </div>
 
-      <section aria-label="Totals" className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-5">
+      <section aria-label="Totals" className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-slate-200 bg-slate-200 lg:grid-cols-5">
         <Stat
-          label="Annual loss under investigation"
+          label="Open annual loss"
           value={items ? formatMoney(totals.loss, currency) : "…"}
           hint="Open investigations, per year"
           split={
@@ -263,7 +263,7 @@ export function Dashboard() {
         {items === null ? (
           <div className="space-y-3">
             {[0, 1].map((i) => (
-              <div key={i} className="h-24 animate-pulse rounded-xl bg-slate-200" />
+              <div key={i} className="h-20 animate-pulse rounded-lg bg-slate-200" />
             ))}
           </div>
         ) : rows.length === 0 && unreadable.length === 0 ? (
@@ -283,7 +283,7 @@ export function Dashboard() {
           </EmptyState>
         ) : (
           <div className="card overflow-hidden">
-            <div className="hidden grid-cols-[minmax(0,2.4fr)_minmax(0,1.2fr)_minmax(0,1.1fr)_70px_80px_auto] items-center gap-4 border-b border-slate-200 bg-slate-50 px-5 py-2.5 text-xs font-semibold uppercase tracking-wide text-slate-500 lg:grid">
+            <div className="hidden grid-cols-[minmax(0,2.4fr)_minmax(0,1.2fr)_minmax(0,1.1fr)_70px_80px_auto] items-center gap-4 border-b border-slate-200 bg-slate-50 px-5 py-2.5 eyebrow lg:grid">
               <span>Investigation</span>
               <span>Status</span>
               <span className="text-right">Annual loss</span>
@@ -323,7 +323,7 @@ export function Dashboard() {
                   <div className="col-span-2 min-w-0 lg:col-span-1">
                     <Link
                       href={`/app/investigations/${inv.id}`}
-                      className="block text-base font-semibold leading-snug text-slate-900 hover:text-amber-700 hover:underline"
+                      className="block text-sm font-semibold leading-snug text-slate-900 hover:text-accent hover:underline"
                     >
                       {inv.problem.title || "Untitled investigation"}
                     </Link>
@@ -332,19 +332,19 @@ export function Dashboard() {
                       {inv.problem.eventDate && ` · ${formatDate(inv.problem.eventDate)}`}
                     </p>
                     {inv.isSample && (
-                      <span className="chip mt-1.5 bg-amber-100 text-amber-900">
+                      <span className="chip mt-1.5 bg-slate-100 text-slate-700 ring-1 ring-inset ring-slate-200">
                         Illustrative sample
                       </span>
                     )}
                   </div>
                   <div>
-                    <p className="mb-1 text-xs font-semibold uppercase text-slate-500 lg:hidden">
+                    <p className="mb-1 eyebrow lg:hidden">
                       Status
                     </p>
                     <StatusBadge status={sum.status} />
                   </div>
                   <div className="lg:text-right">
-                    <p className="mb-1 text-xs font-semibold uppercase text-slate-500 lg:hidden">
+                    <p className="mb-1 eyebrow lg:hidden">
                       Annual loss
                     </p>
                     <p className="font-semibold tabular-nums text-slate-900">
@@ -358,18 +358,18 @@ export function Dashboard() {
                     )}
                   </div>
                   <div className="lg:text-right">
-                    <p className="mb-1 text-xs font-semibold uppercase text-slate-500 lg:hidden">
+                    <p className="mb-1 eyebrow lg:hidden">
                       Open actions
                     </p>
                     <p className="font-semibold tabular-nums">{sum.openActions}</p>
                   </div>
                   <div className="lg:text-right">
-                    <p className="mb-1 text-xs font-semibold uppercase text-slate-500 lg:hidden">
+                    <p className="mb-1 eyebrow lg:hidden">
                       Overdue
                     </p>
                     <p
                       className={`font-semibold tabular-nums ${
-                        sum.overdueActions > 0 ? "text-red-600" : ""
+                        sum.overdueActions > 0 ? "text-red-700" : ""
                       }`}
                     >
                       {sum.overdueActions}
@@ -378,7 +378,7 @@ export function Dashboard() {
                   <div className="col-span-2 flex items-center gap-2 lg:col-span-1 lg:justify-end">
                     <Link
                       href={`/app/investigations/${inv.id}`}
-                      className="btn btn-dark btn-sm flex-1 lg:flex-none"
+                      className="btn btn-secondary btn-sm flex-1 lg:flex-none"
                     >
                       Open
                     </Link>
@@ -411,11 +411,11 @@ function Stat({
   tone?: "neutral" | "good" | "bad";
 }) {
   const color =
-    tone === "good" ? "text-emerald-600" : tone === "bad" ? "text-red-600" : "text-slate-900";
+    tone === "good" ? "text-emerald-700" : tone === "bad" ? "text-red-700" : "text-slate-900";
   return (
-    <div className={`card p-4 ${className}`}>
-      <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{label}</p>
-      <p className={`mt-1.5 text-2xl font-bold tabular-nums tracking-tight sm:text-3xl ${color}`}>
+    <div className={`bg-white p-4 ${className}`}>
+      <p className="eyebrow">{label}</p>
+      <p className={`mt-1.5 text-xl font-semibold tabular-nums tracking-tight sm:text-2xl ${color}`}>
         {value}
       </p>
       <p className="mt-0.5 text-xs text-slate-500">{hint}</p>

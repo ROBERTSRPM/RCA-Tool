@@ -7,7 +7,7 @@ import type { StepId } from "@/lib/types";
 import { Icon } from "../icons";
 
 const SEV: Record<Severity, { label: string; dot: string; chip: string }> = {
-  high: { label: "Fix first", dot: "bg-red-500", chip: "bg-red-50 text-red-700 ring-red-200" },
+  high: { label: "Fix first", dot: "bg-red-600", chip: "bg-red-50 text-red-800 ring-red-200" },
   medium: { label: "Should fix", dot: "bg-amber-500", chip: "bg-amber-50 text-amber-800 ring-amber-200" },
   low: { label: "Tip", dot: "bg-slate-400", chip: "bg-slate-100 text-slate-700 ring-slate-200" },
 };
@@ -28,27 +28,24 @@ export function QualityPanel({
   return (
     <section
       aria-label="Quality check"
-      className={`mt-3 overflow-hidden rounded-xl border ${
-        findings.length === 0 ? "border-emerald-200 bg-emerald-50" : "border-slate-200 bg-white"
-      }`}
+      className="mt-3 overflow-hidden rounded-xl border border-slate-200 bg-white"
     >
       <button
-        className="flex min-h-12 w-full items-center gap-3 px-4 py-2 text-left"
+        className="flex min-h-11 w-full items-center gap-3 px-4 py-2 text-left"
         aria-expanded={open}
         aria-controls="quality-list"
         onClick={() => setOpen((o) => !o)}
       >
         <span
-          className={`flex h-7 w-7 flex-none items-center justify-center rounded-full ${
-            findings.length === 0 ? "bg-emerald-500 text-white" : "bg-slate-900 text-white"
+          aria-hidden="true"
+          className={`h-2 w-2 flex-none rounded-full ${
+            findings.length === 0 ? "bg-emerald-600" : high ? "bg-red-600" : "bg-amber-500"
           }`}
-        >
-          <Icon name={findings.length === 0 ? "check" : "shield"} size={15} />
-        </span>
+        />
         <span className="min-w-0 flex-1">
-          <span className="block text-sm font-bold text-slate-900">
+          <span className="block text-sm font-semibold text-slate-900">
             Quality check
-            <span className="ml-2 font-medium text-slate-600">
+            <span className="ml-2 font-normal text-slate-600">
               {findings.length === 0
                 ? "All clear"
                 : `${findings.length} ${findings.length === 1 ? "finding" : "findings"}${
@@ -67,7 +64,7 @@ export function QualityPanel({
       {open && (
         <div id="quality-list" className="border-t border-slate-200">
           {findings.length === 0 ? (
-            <p className="px-4 py-3 text-sm text-emerald-900">
+            <p className="px-4 py-3 text-sm text-slate-700">
               Nothing to flag. The problem, loss, evidence, causes, actions and review all pass the
               checks.
             </p>
