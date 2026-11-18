@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { Problem } from "@/lib/types";
 import { SectionCard, TextAreaField, TextField } from "../../ui";
 import { AssetDetails } from "../AssetDetails";
+import { DraftProblem } from "../ai/DraftProblem";
 import { SimilarFailures } from "../SimilarFailures";
 import type { StepProps } from "../types";
 
@@ -15,6 +16,7 @@ export function ProblemStep({ inv, update, go }: StepProps) {
   const [added, setAdded] = useState<string | undefined>(undefined);
   return (
     <div className="space-y-5">
+      <DraftProblem inv={inv} update={update} />
       <SectionCard
         title="1. Describe the problem"
         help="Write what you know now. Plain facts, no guessing at causes yet. Everything saves as you type."

@@ -93,6 +93,14 @@ export function NodePanel({
         <p className="help">{STATUS_HELP[node.status]}</p>
       </fieldset>
 
+      {node.aiSuggested && node.aiTest && (
+        <div className="rounded-lg border border-violet-200 bg-violet-50 p-3 text-sm text-slate-800" data-testid="ai-test-note">
+          <p className="font-bold text-violet-900">AI-suggested: how to test it</p>
+          <p className="mt-1 whitespace-pre-wrap">{node.aiTest}</p>
+          <p className="mt-1 text-xs text-slate-600">This is still a hypothesis until you have evidence and mark it so.</p>
+        </div>
+      )}
+
       <fieldset>
         <legend className="label">
           Type of wear <span className="font-normal text-slate-600">(optional)</span>

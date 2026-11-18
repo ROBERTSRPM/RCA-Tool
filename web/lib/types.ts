@@ -137,6 +137,10 @@ export interface CauseNode {
   children: CauseNode[];
   /** Optional, added later; missing means not decided. */
   deterioration?: Deterioration;
+  /** True when the text came from an AI suggestion the user accepted. Still an ordinary editable cause. */
+  aiSuggested?: boolean;
+  /** For AI-suggested causes: the evidence that would confirm or rule the cause out. */
+  aiTest?: string;
 }
 
 /** Corrective: fix this failure and its damage. Preventive: stop it happening again. */
@@ -178,6 +182,8 @@ export interface ActionItem {
   kind?: ActionKind;
   category?: ActionCategory;
   task?: MaintenanceTask;
+  /** True when the action came from an AI suggestion the user accepted. Still an ordinary editable action. */
+  aiSuggested?: boolean;
 }
 
 export type YesNoUnknown = "" | "yes" | "no";

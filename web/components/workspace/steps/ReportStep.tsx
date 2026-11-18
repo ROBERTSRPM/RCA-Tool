@@ -18,7 +18,9 @@ import { deriveStatus, isOverdue, STATUS_LABELS } from "@/lib/status";
 import { CATEGORY_LABEL, findNode, flatten, rootCauses, STATUS_LABEL } from "@/lib/tree";
 import { criticalSpareFlag, maintenancePlan, SPARES_FLAG_TEXT } from "@/lib/capa";
 import { categoryLabel, criticalityLabel, DETERIORATION_OPTIONS, kindLabel } from "@/lib/options";
+import { useState } from "react";
 import { Icon } from "../../icons";
+import { DraftReport } from "../ai/DraftReport";
 import { PlanTable } from "../MaintenancePlan";
 import { RolloutReport } from "../RolloutPanel";
 import { evidenceTypeLabel } from "./EvidenceStep";
@@ -32,6 +34,8 @@ const RECURRENCE = {
 } as const;
 
 export function ReportStep({ inv }: StepProps) {
+  // While an AI draft is being printed, the standard report is left out of the printout.
+  const [draftPrinting, setDraftPrinting] = useState(false);
   const cur = inv.loss.currency || "$";
   const unit = inv.loss.unitName || "units";
   const c = calcLoss(inv.loss);
@@ -72,7 +76,9 @@ export function ReportStep({ inv }: StepProps) {
         </button>
       </div>
 
-      <article className="print-sheet card p-5 text-sm leading-relaxed text-slate-800 sm:p-8">
+      <DraftReport inv={inv} onPrintingChange={setDraftPrinting} />
+
+      <article className={`${draftPrinting ? "no-print " : ""}print-sheet card p-5 text-sm leading-relaxed text-slate-800 sm:p-8`}>
         <header className="avoid-break border-b-2 border-slate-900 pb-3">
           <p className="text-xs font-bold uppercase tracking-widest text-slate-500">
             Root cause analysis report

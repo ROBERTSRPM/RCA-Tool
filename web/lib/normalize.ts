@@ -129,6 +129,8 @@ function normaliseNode(raw: unknown, depth: number, budget: { n: number }): Caus
     ...(oneOf(get(o, "deterioration"), DETERIORATIONS, "") !== ""
       ? { deterioration: oneOf(get(o, "deterioration"), DETERIORATIONS, "") }
       : {}),
+    ...(bool(get(o, "aiSuggested")) ? { aiSuggested: true } : {}),
+    ...(str(get(o, "aiTest")).trim() ? { aiTest: str(get(o, "aiTest")).slice(0, 600) } : {}),
   };
 }
 
@@ -147,6 +149,7 @@ function normaliseAction(raw: unknown): ActionItem | null {
       ? { category: oneOf(get(raw, "category"), ACTION_CATEGORIES_ALL, "") }
       : {}),
     ...(isObj(get(raw, "task")) ? { task: normaliseTask(get(raw, "task") as Obj) } : {}),
+    ...(bool(get(raw, "aiSuggested")) ? { aiSuggested: true } : {}),
   };
 }
 

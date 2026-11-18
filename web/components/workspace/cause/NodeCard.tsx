@@ -205,11 +205,16 @@ export function NodeCard({
         )}
         {context && <p className="mt-1 text-xs text-slate-500">{context}</p>}
 
-        {(node.isRootCause || node.evidenceIds.length > 0 || hidden > 0) && (
+        {(node.isRootCause || node.evidenceIds.length > 0 || hidden > 0 || node.aiSuggested) && (
           <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
             {node.isRootCause && !isTop && (
               <span className="chip bg-amber-500 text-slate-950">
                 <Icon name="flag" size={12} /> Root cause
+              </span>
+            )}
+            {node.aiSuggested && !isTop && (
+              <span className="chip bg-violet-100 text-violet-800" title="Suggested by AI, accepted by you. Edit it like any other cause.">
+                <Icon name="sparkle" size={12} /> AI-suggested
               </span>
             )}
             {node.evidenceIds.length > 0 && !isTop && (

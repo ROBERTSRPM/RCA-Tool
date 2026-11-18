@@ -16,6 +16,8 @@ import {
 } from "@/lib/tree";
 import type { CauseNode } from "@/lib/types";
 import { SimilarFailures } from "../SimilarFailures";
+import { CauseCoachPanel } from "../ai/CauseCoachPanel";
+import { ChallengePanel } from "../ai/ChallengePanel";
 import { Icon } from "../../icons";
 import { SectionCard, useConfirm } from "../../ui";
 import { CauseContext, type CauseCtx } from "../cause/context";
@@ -188,6 +190,8 @@ export function CauseStep({
           <NodePanel update={update} go={go} />
         </div>
       </SectionCard>
+      <CauseCoachPanel inv={inv} update={update} selectedId={effectiveId} />
+      <ChallengePanel inv={inv} focus="cause" go={go} selectNode={select} />
       <SimilarFailures
         inv={inv}
         update={update}

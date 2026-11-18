@@ -20,6 +20,9 @@ import {
   useConfirm,
 } from "../../ui";
 import { MaintenancePlan } from "../MaintenancePlan";
+import { CapaSuggest } from "../ai/CapaSuggest";
+import { ChallengePanel } from "../ai/ChallengePanel";
+import { AI_BADGE } from "../ai/shared";
 import { SparesCheck } from "../SparesCheck";
 import type { StepProps } from "../types";
 
@@ -125,6 +128,7 @@ export function ActionsStep({ inv, update, go }: StepProps) {
                   {cat || "No category"}
                 </span>
                 {!a.kind && <span className="chip bg-amber-100 text-amber-900">Corrective or preventive?</span>}
+                {a.aiSuggested && AI_BADGE}
                 <span className={`max-w-[10rem] truncate ${a.owner ? "" : "text-slate-600"}`} title={a.owner}>{a.owner || "No owner"}</span>
                 <span className={late ? "font-bold text-red-700" : a.dueDate ? "" : "text-slate-600"}>
                   {a.dueDate ? formatDate(a.dueDate) : "No date"}
@@ -336,6 +340,7 @@ export function ActionsStep({ inv, update, go }: StepProps) {
                   ) : (
                     <ul className="mt-1 space-y-1">{g.actions.map(renderRow)}</ul>
                   )}
+                  <CapaSuggest inv={inv} update={update} root={g.root} />
                 </section>
               ))}
             </div>
@@ -356,6 +361,8 @@ export function ActionsStep({ inv, update, go }: StepProps) {
           </section>
         )}
       </SectionCard>
+
+      <ChallengePanel inv={inv} focus="actions" go={go} />
 
       <MaintenancePlan inv={inv} />
 
