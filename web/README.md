@@ -1,4 +1,4 @@
-# RootLoop (phase B)
+# StayFixed (phase B)
 
 Root cause analysis for maintenance and reliability teams: investigate, track actions to done, and prove the failure stopped with the money quantified. The product name lives in one constant, `lib/brand.ts`.
 

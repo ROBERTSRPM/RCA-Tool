@@ -28,7 +28,7 @@ Read this first, then `BLUEPRINT.md`. This file replaces the long history of the
 - 7-step investigation: Problem (with asset details), Loss (lost / made up / buffer split, cash vs opportunity), Evidence, Cause tree (Tree / 5 Whys / Fishbone views, natural vs forced deterioration), Actions (CAPA, maintenance plan changes, spares check), Verify (savings counted only when verified; "Roll this fix out" to similar assets), Report.
 - Asset register, similar past failures, rule-based quality check.
 - Security: OWASP audit in `security/owasp-audit.md`; fixes applied; strict headers.
-- Product name "RootLoop" is a placeholder in `web/lib/brand.ts`.
+- Product name is "StayFixed by Intelbeyond", chosen by the owner; preliminary name check done (`web/lib/brand.ts`).
 
 ## Open items
 - Minor defects in `qa/defects.md`: 404 page breaks the CSP; CSP still allows inline scripts; asset status slow (~4 s) signed in; existing accounts lack the sample assets until "Reset sample data"; demo-mode two-tab race (NEW-01); long Problem step and Actions below the fold on phones.

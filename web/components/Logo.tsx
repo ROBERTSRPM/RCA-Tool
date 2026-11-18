@@ -1,4 +1,4 @@
-import { BRAND_NAME } from "@/lib/brand";
+import { BRAND_BYLINE, BRAND_NAME } from "@/lib/brand";
 import Link from "next/link";
 
 export function LogoMark({ size = 28 }: { size?: number }) {
@@ -21,7 +21,10 @@ export function Logo({ href = "/", light = true }: { href?: string; light?: bool
   return (
     <Link href={href} className="inline-flex items-center gap-2.5 font-bold tracking-tight">
       <LogoMark />
-      <span className={light ? "text-white" : "text-slate-900"}>{BRAND_NAME}</span>
+      <span className={light ? "text-white" : "text-slate-900"}>
+        {BRAND_NAME}{" "}
+        <span className={`text-xs font-normal ${light ? "text-slate-400" : "text-slate-500"}`}>{BRAND_BYLINE}</span>
+      </span>
     </Link>
   );
 }

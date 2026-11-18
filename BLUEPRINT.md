@@ -98,5 +98,5 @@ Proposed stack: Next.js + TypeScript on Vercel, Supabase (Postgres, login, row-l
 | 2026-11-16 | Demo mode without an account, on browser storage | Self-serve trial with no sign-up friction |
 | 2026-11-16 | Lost margin applies only to production lost for good; made-up production is costed as recovery cost | Avoids double counting; credible to finance |
 | 2026-11-16 | Video example ends with zero failures; natural deterioration managed by condition monitoring | Owner's review |
-| 2026-11-16 | "RootLoop" is a placeholder name held in `web/lib/brand.ts` | Owner to decide |
+| 2026-11-16 | StayFixed by Intelbeyond, chosen by the owner; preliminary name check done (held in `web/lib/brand.ts`) | Decided |
 | 2026-11-16 | Watchdog scheduled task every 2 hours restarts work stopped by usage limits | Owner's request |
