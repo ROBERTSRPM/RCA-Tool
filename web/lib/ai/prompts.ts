@@ -77,7 +77,9 @@ export function makeAliases(ctx: AiContext): Aliases {
   return a;
 }
 
-const oneLine = (s: string) => s.replace(/\s+/g, " ").trim();
+/** User text goes into tagged blocks; swap angle brackets so typed text cannot close or fake a tag. */
+export const defang = (s: string) => s.replace(/</g, "\u2039").replace(/>/g, "\u203a");
+const oneLine = (s: string) => defang(s.replace(/\s+/g, " ").trim());
 
 export function renderInvestigation(ctx: AiContext, a: Aliases): string {
   const p = ctx.problem;
@@ -268,13 +270,13 @@ export function buildPrompt(req: AiRequest, a: Aliases): BuiltPrompt {
       if (req.kind === "problem") {
         return {
           instructions: PROBLEM,
-          user: `${inv}\n\n<notes>\n${req.notes}\n</notes>\n\n<request>\nWrite the problem statement fields from the notes.\n</request>`,
+          user: `${inv}\n\n<notes>\n${defang(req.notes)}\n</notes>\n\n<request>\nWrite the problem statement fields from the notes.\n</request>`,
           maxTokens: 4000,
         };
       }
       return {
         instructions: req.kind === "report" ? REPORT : SUMMARY,
-        user: `${inv}\n\n${req.notes ? `<notes>\n${req.notes}\n</notes>\n\n` : ""}<request>\n${
+        user: `${inv}\n\n${req.notes ? `<notes>\n${defang(req.notes)}\n</notes>\n\n` : ""}<request>\n${
           req.kind === "report" ? "Draft the report." : "Draft the one-page management summary."
         }\n</request>`,
         maxTokens: req.kind === "report" ? 8000 : 4000,
