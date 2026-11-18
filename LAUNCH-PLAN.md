@@ -84,6 +84,26 @@ Fifty users is small for the technology. Vercel and Supabase handle thousands wi
 
 **DECIDE** pricing. A starting point to test with design partners: per site per month (for example A$99 to 199 per site with 5 users, AI included within limits), with an annual discount. Avoid per-investigation pricing, which discourages use.
 
+## 4a. Pricing and first-customer setup (owner direction 2026-11-18: mini SaaS, low friction, owner as forward-deployed engineer)
+
+Draft for the owner to test on the first calls. All prices are in A$ and exclude GST.
+
+| Offer | Price | What they get |
+|---|---|---|
+| Site pilot (90 days) | A$2,500 one-off | Set-up: their asset register loaded, terminology and templates adjusted. One training session. The owner co-leads their first 1 to 2 real RCAs. Credited against the first year if they continue. |
+| Site subscription | A$450 a month per site, or A$4,500 a year (2 months free) | Up to 10 users, AI included within fair-use limits, a monthly check-in, and small changes on request. |
+| Starter, later and self-serve | A$149 a month, 3 users | No set-up, no check-ins. Add it once the self-serve billing is built. |
+
+- **Why these levels:**
+  - One avoided breakdown on a critical asset usually costs a site far more than a year's fee.
+  - A one-off fee under a manager's own approval limit avoids procurement.
+  - The pilot fee gets commitment, so the customer actually uses it.
+- **Billing with no code:**
+  - Stripe invoices: a one-off item for the pilot fee, then a recurring Stripe subscription that is invoiced or paid by card.
+  - Industrial customers often pay by invoice and bank transfer on 30-day terms, which Stripe supports.
+  - The owner switches an account to paid by hand, through an agent. Automated Stripe billing in the app comes later.
+- **Sign-up:** customers create their own accounts at www.rcapilot.com. Shared team workspaces come next, before pilots end. Until then each user has their own account.
+
 ## 5. Owner to-do (short list)
 1. Pick the email provider and create the account (Resend recommended).
 2. Upgrade Vercel to Pro and Supabase to Pro before the first paying customer.
