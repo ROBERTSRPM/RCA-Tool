@@ -28,7 +28,7 @@ Chapters
 5:12 Worked example: slurry pump
 11:18 Close: RCA as a system
 
-A tool to make this easy is coming soon. More to share later.
+Try RCA Pilot, the tool that takes you through these steps: https://www.rcapilot.com
 
 Subscribe for more practical reliability and operations content.
 
