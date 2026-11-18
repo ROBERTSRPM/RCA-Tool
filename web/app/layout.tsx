@@ -15,7 +15,7 @@ const inter = localFont({
 export const metadata: Metadata = {
   title: { default: BRAND_TITLE, template: `%s · ${BRAND_NAME}` },
   description:
-    "Root cause analysis for maintenance and plant teams: find the cause, put a cost on it, track every action to done, and check the failure has stopped.",
+    "Root Cause Analysis for Maintenance, Operations and Plant Teams. Find the cause, put a cost on it, and check the fix held.",
 };
 
 export const viewport: Viewport = {
