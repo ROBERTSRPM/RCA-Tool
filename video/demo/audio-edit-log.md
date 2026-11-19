@@ -41,3 +41,15 @@ Checks: each edited scene was re-transcribed and matches the script (see differe
 - Scene 8 was cut at 208.0 s, but "dot com" was spoken at 208.05 to 208.45 s (a 0.4 s gap after "pilot" had hidden it). The cut now ends at 208.62 s and the scene has 0.8 s of room tone after the last word (was 0.45 s). The end card now starts when "Try it at" begins and runs to the end of the scene (6.5 s).
 - Scene 4 had a doubled "and" at the join ("missed, and and Challenge..."): the third take's lead-in "and" (106.84 to 107.2) was kept as well. Take 3 now starts at 107.38 s, at "Challenge".
 - Word-by-word check of the final mix (Whisper on the final audio) against `voiceover-to-read.txt`: every scene starts and ends on its script words; no clipped first or last words. Differences are recogniser noise or the owner's wording ("an owner and a due date" is heard as "an owner and due date").
+
+## Owner feedback (2026-11-19) and rule for the next video
+The owner prefers the explainer's voice: this demo's voice "blasts off". Likely causes, measured above:
+- The final mix added +5.5 dB on top and limited twice, reaching -14.1 LUFS. The explainer was -16 LUFS with one limiter.
+- The phone recording was quiet (-30.9 LUFS raw), so about +20 dB of total gain also lifted room noise and harshness.
+
+For the walkthrough and later videos:
+- Follow the explainer chain in `video/animation/public/audio/edit-log.md`.
+- Target -16 LUFS, with no extra gain in the final mix and a single limiter.
+- Use the de-esser only if measured harshness calls for it, and gently.
+- Before rendering, compare 20 s of the new voice with the explainer (loudness and spectrum) and match them.
+- Ask the owner to record closer to the phone (10–15 cm) in a soft room so less gain is needed.
