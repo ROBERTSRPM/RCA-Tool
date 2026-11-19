@@ -239,8 +239,18 @@ export default function Home() {
             </p>
             <ul className="flex flex-wrap items-center gap-x-6 gap-y-2">
               <li>
+                <Link href="/help" className="underline-offset-4 hover:underline">
+                  Help
+                </Link>
+              </li>
+              <li>
                 <Link href="/privacy" className="underline-offset-4 hover:underline">
                   Privacy
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="underline-offset-4 hover:underline">
+                  Terms
                 </Link>
               </li>
               <li>
