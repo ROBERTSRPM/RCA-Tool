@@ -22,9 +22,9 @@ import { SectionCard, SelectField, TextAreaField, TextField, useConfirm } from "
 import type { StepProps } from "./types";
 
 /**
- * "Roll this fix out": other assets in the register that could fail the same
+ * "Roll out this countermeasure": other assets in the register that could fail the same
  * way, ranked; tick the ones to check and create a tracked rollout check for
- * each. Encouraged once the fix is verified, allowed earlier.
+ * each. Encouraged once the countermeasure is verified, allowed earlier.
  */
 export function RolloutPanel({ inv, update, go }: StepProps) {
   const confirm = useConfirm();
@@ -81,7 +81,7 @@ export function RolloutPanel({ inv, update, go }: StepProps) {
 
   return (
     <SectionCard
-      title="Roll this fix out"
+      title="Roll out this countermeasure"
       help="Other assets of the same type could fail the same way. Check them now, before they do."
     >
       <div
@@ -92,12 +92,12 @@ export function RolloutPanel({ inv, update, go }: StepProps) {
       >
         {verified ? (
           <>
-            <strong>The fix is verified.</strong> This is the moment to spread it: check the similar
+            <strong>The countermeasure is verified.</strong> This is the moment to spread it: check the similar
             assets below so the same failure does not happen on them.
           </>
         ) : (
           <>
-            Best done once the fix is verified, but you can start now: a check costs little and a
+            Best done once the countermeasure is verified, but you can start now: a check costs little and a
             repeat failure on a sister asset costs a lot.
           </>
         )}
@@ -159,7 +159,7 @@ export function RolloutPanel({ inv, update, go }: StepProps) {
                 </div>
                 {c.status === "same_problem" && (
                   <p className="mt-3 rounded-lg border border-red-200 bg-red-50 p-2 text-sm text-red-900">
-                    The same problem was found. Fix it, then set the result to Fixed.
+                    The same problem was found. Put the countermeasure in place, then set the result to Countermeasure in place.
                   </p>
                 )}
               </li>
@@ -384,7 +384,7 @@ export function RolloutReport({ inv }: { inv: Investigation }) {
               {progress.done} of {progress.total}
             </strong>{" "}
             rollout checks done: {progress.noIssue} no issue, {progress.sameProblem} same problem found,{" "}
-            {progress.fixed} fixed, {progress.open} open.
+            {progress.fixed} countermeasure in place, {progress.open} open.
           </p>
           <div className="mt-2 overflow-x-auto">
             <table className="w-full border-collapse text-left text-xs">

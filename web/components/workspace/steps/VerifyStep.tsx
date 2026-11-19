@@ -69,8 +69,8 @@ export function VerifyStep({ inv, update, go }: StepProps) {
             </select>
           </div>
           <NumberField
-            label="Expected events per year after the fix"
-            help={`Before the fix: ${inv.loss.eventsPerYear ?? 0} per year. Use 0 if none are expected, or a cautious number such as 1.`}
+            label="Expected events per year after the countermeasure"
+            help={`Before the countermeasure: ${inv.loss.eventsPerYear ?? 0} per year. Use 0 if none are expected, or a cautious number such as 1.`}
             value={v.eventsPerYearAfter}
             onChange={(x) => setV({ eventsPerYearAfter: x })}
             suffix="per year"
@@ -78,7 +78,7 @@ export function VerifyStep({ inv, update, go }: StepProps) {
           <TextAreaField
             className="sm:col-span-2"
             label="What did you find?"
-            help="Failure history since the fix, alarms that fired, anything unexpected."
+            help="Failure history since the countermeasure, alarms that fired, anything unexpected."
             rows={4}
             value={v.notes}
             onChange={(x) => setV({ notes: x })}
@@ -106,7 +106,7 @@ export function VerifyStep({ inv, update, go }: StepProps) {
             ? undefined
             : !calc.lossCosted
               ? "The loss is not costed yet, so no saving can be shown. Add a rough figure in the Loss step."
-              : "Enter the expected events per year after the fix to see the saving."
+              : "Enter the expected events per year after the countermeasure to see the saving."
         }
       >
         <dl className="grid grid-cols-2 gap-3 lg:grid-cols-5">

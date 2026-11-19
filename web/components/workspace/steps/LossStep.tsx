@@ -237,7 +237,7 @@ export function LossStep({ inv, update }: StepProps) {
                 <NumberField
                   className="sm:col-span-2"
                   label="Yearly cost of holding the buffer stock (optional)"
-                  help="Only the part of the stock holding cost you attribute to this failure, per year. It is not multiplied by the number of events and it does not go away if the failure is fixed."
+                  help="Only the part of the stock holding cost you attribute to this failure, per year. It is not multiplied by the number of events and it does not go away if the failure is dealt with."
                   value={l.bufferHoldingCostPerYear ?? null}
                   onChange={(v) => set("bufferHoldingCostPerYear", v)}
                   prefix={cur}

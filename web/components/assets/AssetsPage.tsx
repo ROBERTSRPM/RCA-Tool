@@ -78,7 +78,7 @@ export function AssetsPage() {
           <h1 className="h-page">Assets</h1>
           <p className="mt-1 max-w-xl text-sm text-slate-600">
             Your equipment register. See which assets fail most, what they cost, and which are
-            similar enough to share a fix.
+            similar enough to share a countermeasure.
           </p>
         </div>
         <div className="flex flex-wrap gap-2">

@@ -42,9 +42,9 @@ test('P-DEMO-1', 'Demo mode: one quiet AI note per step; new investigation has n
     eq(await page.getByLabel('Rough notes').count(), 0);
     ok(/Sign in\s+to get AI suggestions/.test(await page.getByTestId('ai-demo-note').innerText()));
   });
-  await sub('no-red', 'Fresh investigation: quality check is neutral (no "to fix first", no red dot)', async () => {
+  await sub('no-red', 'Fresh investigation: quality check is neutral (no "to address first", no red dot)', async () => {
     const t = await page.locator('section[aria-label="Quality check"]').innerText();
-    ok(!/to fix first/.test(t), t); ok(/things to do as you go/.test(t), t);
+    ok(!/to address first/.test(t), t); ok(/things to do as you go/.test(t), t);
   });
   for (const s of ['Cause tree', 'Actions', 'Report']) {
     await sub('note-' + s, s + ': exactly one AI note, no AI panels', async () => {
@@ -80,7 +80,7 @@ test('P-LOSS-1', 'Loss without dollar figures: Not known yet, partial, rough est
     await step(page, 'Report'); ok(/150,000/.test(await page.locator('article.print-sheet').innerText()));
   });
   await sub('no-saving-claim', 'Estimate with no events on record: no saving figure is claimed on Verify', async () => {
-    await step(page, 'Verify'); await f.typeNum(page, 'Expected events per year after the fix', 0);
+    await step(page, 'Verify'); await f.typeNum(page, 'Expected events per year after the countermeasure', 0);
     const t = await page.locator('main').innerText(); ok(!/NaN/.test(t)); ok(/Not entered|not costed/i.test(t), t.slice(0, 500));
   });
   await sub('persist', 'Not known yet survives a reload', async () => {

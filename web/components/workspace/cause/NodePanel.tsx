@@ -177,7 +177,7 @@ export function NodePanel({
         <span>
           <span className="block text-sm font-semibold text-slate-900">This is a root cause</span>
           <span className="block text-sm text-slate-500">
-            The deepest gap you will fix so it cannot happen again. Actions attach to root causes.
+            The deepest gap your countermeasure will close so it cannot happen again. Actions attach to root causes.
           </span>
         </span>
       </label>

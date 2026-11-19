@@ -151,7 +151,7 @@ export function ActionsStep({ inv, update, go }: StepProps) {
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <SelectField
               className="sm:col-span-2 lg:col-span-3"
-              label={isCorrective ? "Linked to" : isLinked ? "Fixes this root cause" : "Re-link to a root cause"}
+              label={isCorrective ? "Linked to" : isLinked ? "Countermeasure for this root cause" : "Re-link to a root cause"}
               help={
                 isCorrective
                   ? "Corrective actions repair this failure, so they answer to the failure event."
@@ -263,8 +263,8 @@ export function ActionsStep({ inv, update, go }: StepProps) {
   return (
     <div className="space-y-5">
       <SectionCard
-        title="5. Fix it and track every action"
-        help="Corrective actions fix this failure; preventive actions stop it happening again. Tap an action to edit it."
+        title="5. Countermeasures: track every action"
+        help="Corrective actions deal with this failure; preventive actions stop it happening again. Tap an action to edit it."
         right={
           roots.length > 0 && (
             <button className="btn btn-primary" onClick={() => add()}>
@@ -283,7 +283,7 @@ export function ActionsStep({ inv, update, go }: StepProps) {
         <section className="mt-3" aria-labelledby="corrective-heading" data-testid="corrective-section">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <h3 id="corrective-heading" className="text-base font-semibold text-slate-900">
-              Corrective actions <span className="text-sm font-normal text-slate-600">Fix this failure and its damage.</span>
+              Corrective actions <span className="text-sm font-normal text-slate-600">Deal with this failure and its damage.</span>
             </h3>
             <button type="button" className="btn btn-secondary btn-sm" onClick={() => add(inv.tree.id, "corrective")}>
               <Icon name="plus" size={14} /> Add corrective action
@@ -312,8 +312,8 @@ export function ActionsStep({ inv, update, go }: StepProps) {
                   </button>
                 }
               >
-                Preventive actions are linked to root causes so every fix has a reason. In the cause tree, tick
-                “This is a root cause” on the cause you will fix.
+                Preventive actions are linked to root causes so every countermeasure has a reason. In the cause tree, tick
+                “This is a root cause” on the cause your countermeasure addresses.
               </EmptyState>
             </div>
           ) : (

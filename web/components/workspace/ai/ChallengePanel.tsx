@@ -23,8 +23,8 @@ const TYPE_LABEL: Record<IssueType, string> = {
 };
 
 const SEV: Record<ChallengeIssue["severity"], { label: string; chip: string }> = {
-  high: { label: "Fix first", chip: "bg-red-50 text-red-700 ring-1 ring-red-200" },
-  medium: { label: "Should fix", chip: "bg-amber-50 text-amber-800 ring-1 ring-amber-200" },
+  high: { label: "Address first", chip: "bg-red-50 text-red-700 ring-1 ring-red-200" },
+  medium: { label: "Should address", chip: "bg-amber-50 text-amber-800 ring-1 ring-amber-200" },
   low: { label: "Worth a look", chip: "bg-slate-100 text-slate-700 ring-1 ring-slate-200" },
 };
 
@@ -59,7 +59,7 @@ export function ChallengePanel({
       intro={
         focus === "cause"
           ? "Questions the logic of your cause tree the way an experienced reviewer would."
-          : "Questions your actions and whether each root cause has the right fix."
+          : "Questions your actions and whether each root cause has the right countermeasure."
       }
     >
       <AiButton

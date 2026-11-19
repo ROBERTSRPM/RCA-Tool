@@ -173,7 +173,7 @@ test('D-QC-1', 'Quality check: each rule triggers, jump link lands on the right 
     ok(has(t, /No causes have been added yet/), t.join('|'));
     // A brand-new investigation never opens red: findings are neutral guidance until a step is visited or edited.
     const head = await page.locator('section[aria-label="Quality check"]').innerText();
-    ok(/3 things to do as you go/.test(head) && !/to fix first/.test(head), head);
+    ok(/3 things to do as you go/.test(head) && !/to address first/.test(head), head);
   });
   await sub('jump-problem', 'Rule problem-missing: "Go to Problem" opens Problem step', async () => {
     await step(page, 'Report'); await clickJump(page, /Problem statement is missing/); eq(await f.activeStep(page), 'Problem');
@@ -239,13 +239,13 @@ test('D-QC-1', 'Quality check: each rule triggers, jump link lands on the right 
     ok(!has(t, /Fitter skipped step/) && !has(t, /No cause is flagged/), t.join('|'));
   });
   await sub('root-no-action', 'Rule root-cause-without-action: appears, jump -> Actions', async () => {
-    const t = await R(page); ok(has(t, /Root cause "No rebuild checklist" has no action to fix it/), t.join('|'));
-    await step(page, 'Report'); await clickJump(page, /has no action to fix it/); eq(await f.activeStep(page), 'Actions');
+    const t = await R(page); ok(has(t, /Root cause "No rebuild checklist" has no action to address it/), t.join('|'));
+    await step(page, 'Report'); await clickJump(page, /has no action to address it/); eq(await f.activeStep(page), 'Actions');
   });
   await sub('action-incomplete', 'Rule action-missing-owner-or-date: both missing, then owner only, then clears', async () => {
     await f.addAction(page, { cause: 'No rebuild checklist', desc: 'Write checklist', category: 'Procedure or standard' });
     let t = await R(page); ok(has(t, /Action "Write checklist" needs an owner and a due date/), t.join('|'));
-    ok(!has(t, /has no action to fix it/), 'root-no-action should clear once linked');
+    ok(!has(t, /has no action to address it/), 'root-no-action should clear once linked');
     let li = await f.openAction(page, 0);
     await li.getByLabel('Due date').fill('2027-02-02');
     t = await R(page); ok(has(t, /needs an owner\./), t.join('|'));
@@ -292,7 +292,7 @@ test('D-QC-1', 'Quality check: each rule triggers, jump link lands on the right 
   await sub('sort', 'Findings are sorted High first, then Medium', async () => {
     await h.demoNew(page);
     const chips = await page.locator('section[aria-label="Quality check"] ul li .chip').allInnerTexts();
-    const rank = { 'Fix first': 0, 'Should fix': 1, Tip: 2 }; const r = chips.map(c => rank[c.trim()]);
+    const rank = { 'Address first': 0, 'Should address': 1, Tip: 2 }; const r = chips.map(c => rank[c.trim()]);
     eq(JSON.stringify(r), JSON.stringify([...r].sort()), chips.join(','));
   });
   await sub('toggle', 'Quality panel header toggles open/closed (aria-expanded)', async () => {

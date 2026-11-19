@@ -39,7 +39,7 @@ Every interactive control found by \`inventory.js\` (raw lists in results/invent
 | /app/account (new) | Download my data, Change password form, Delete my account (typed confirmation, NOT executed), Clear browser data (demo), account menu link | F-ACCT-1 | pass |
 | 4 Cause tree (new) | Type of wear: Natural / Forced deterioration | F-DET-1 | pass |
 | 5 Actions (new) | Add corrective action, Add preventive action (per root cause), compact row expand/Close/Delete, Corrective or preventive?, Category (8), task fields (description, Do this every, Interval unit, Craft or trade, New task or change), Re-link, Maintenance plan changes + Copy for the planner, Spares check (needed, in stock, lead time, coverage, Add a spares holding action) | F-CAPA-1, F-PLAN-1, F-SPARES-1, F-QUAL-1 | pass |
-| 6 Verify (new) | Roll this fix out: candidate tick boxes, What to check, Create N rollout checks, per-check What/Who/Due/Result/Delete, Go to Asset details, Add a similar asset | F-ROLL-1 | pass |
+| 6 Verify (new) | Roll out this countermeasure: candidate tick boxes, What to check, Create N rollout checks, per-check What/Who/Due/Result/Delete, Go to Asset details, Add a similar asset | F-ROLL-1 | pass |
 | 7 Report (new) | Maintenance plan changes, Spares check, Rollout to similar assets sections | F-PLAN-1, F-SPARES-1, F-ROLL-1 | pass |
 | Dashboard (new) | Rollout checks tile (open / created / same problem), unreadable-row Delete | F-ROLL-1, F-SEC-2 | pass |
 | Security (new) | CSP + 4 other headers on every route, image allowlist, malformed rows, password rule, global sign-out, next-redirect | F-SEC-1..3, F-ACCT-1, A-AUTH-1 | see defects |
@@ -47,7 +47,7 @@ Every interactive control found by \`inventory.js\` (raw lists in results/invent
 | 4 Cause tree | Tabs Tree/5 Whys/Fishbone, Expand all, Collapse all, Ask the first Why?, box select, text box, toolbar Why?/Sibling/Move up/Move down/Collapse/Expand/Delete/Details, +N hidden chip, category radios (3), status radios (3), root-cause checkbox, evidence checkboxes, Go to Evidence | D-TREE-1, D-TREE-2, D-E2E-1, D-QC-1 | pass |
 | 5 Whys view | chain boxes, sibling chips, Dig-deeper buttons, Add another Why | D-TREE-2.whys, whys-add | pass |
 | Fishbone view | 3 columns, node cards | D-TREE-2.fish, fish-sum | pass |
-| 5 Actions | Add action (both), Fixes this root cause / Re-link to a root cause (Not linked group), What will be done?, Owner, Due date, Status, Cost, Delete (+confirm), per-root Add action, Go to the cause tree | D-E2E-1, D-PERS-1, D-EDGE-ACT | pass |
+| 5 Actions | Add action (both), Countermeasure for this root cause / Re-link to a root cause (Not linked group), What will be done?, Owner, Due date, Status, Cost, Delete (+confirm), per-root Add action, Go to the cause tree | D-E2E-1, D-PERS-1, D-EDGE-ACT | pass |
 | 6 Verify | Review date, Has it recurred?, Events after, Findings, Reopen the cause tree | D-E2E-1, D-EDGE-NUM, D-QC-1.recurred | pass |
 | 7 Report | Print / Save as PDF button (window.print: verified through print media emulation and page.pdf, the native dialog itself NOT TESTED) | D-E2E-1.print | pass |
 

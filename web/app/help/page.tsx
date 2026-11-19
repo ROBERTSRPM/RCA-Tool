@@ -10,7 +10,7 @@ const STEP_LINES: [string, string][] = [
   ["Loss", "Put a money value on it: downtime, lost production, repair cost. Rough or partial figures are fine, or choose “Not known yet”."],
   ["Evidence", "Add the facts you collected: photos, readings, history, interviews. Link each one to the cause it supports."],
   ["Cause tree", "Ask why, again and again, until you reach causes you can act on. View it as a tree, 5 Whys or fishbone."],
-  ["Actions", "Write the fixes, say who does them and by when, and add maintenance plan changes where they apply."],
+  ["Actions", "Write the countermeasures, say who does them and by when, and add maintenance plan changes where they apply."],
   ["Verify", "Once actions are done, check the problem has not come back. Savings only count once they are verified."],
   ["Report", "Print or save a one-page summary and a full report for your manager or customer."],
 ];

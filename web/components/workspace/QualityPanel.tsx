@@ -7,8 +7,8 @@ import type { StepId } from "@/lib/types";
 import { Icon } from "../icons";
 
 const SEV: Record<Severity, { label: string; dot: string; chip: string }> = {
-  high: { label: "Fix first", dot: "bg-red-600", chip: "bg-red-50 text-red-800 ring-red-200" },
-  medium: { label: "Should fix", dot: "bg-amber-500", chip: "bg-amber-50 text-amber-800 ring-amber-200" },
+  high: { label: "Address first", dot: "bg-red-600", chip: "bg-red-50 text-red-800 ring-red-200" },
+  medium: { label: "Should address", dot: "bg-amber-500", chip: "bg-amber-50 text-amber-800 ring-amber-200" },
   low: { label: "Tip", dot: "bg-slate-400", chip: "bg-slate-100 text-slate-700 ring-slate-200" },
 };
 
@@ -58,7 +58,7 @@ export function QualityPanel({
                 ? "All clear"
                 : active === 0
                   ? `${guide} ${guide === 1 ? "thing" : "things"} to do as you go`
-                  : `${active} ${active === 1 ? "finding" : "findings"}${high ? `, ${high} to fix first` : ""}${
+                  : `${active} ${active === 1 ? "finding" : "findings"}${high ? `, ${high} to address first` : ""}${
                       guide ? `, plus ${guide} to do as you go` : ""
                     }`}
             </span>

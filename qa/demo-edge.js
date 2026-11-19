@@ -78,7 +78,7 @@ test('D-PERS-1', 'Persistence: reload after each kind of edit (demo)', async ({ 
   await sub('verify', 'Verification fields survive reload', async () => {
     await f.fillVerify(page, { date: '2026-11-11', recurred: 'Yes, it happened again', after: 2, notes: 'abc' }); await reload(); await step(page, 'Verify');
     eq(await page.getByLabel('Review date').inputValue(), '2026-11-11'); eq(await page.getByLabel(/Has the failure recurred/).inputValue(), 'yes');
-    eq(await page.getByLabel('Expected events per year after the fix').inputValue(), '2'); eq(await page.getByLabel('What did you find?').inputValue(), 'abc');
+    eq(await page.getByLabel('Expected events per year after the countermeasure').inputValue(), '2'); eq(await page.getByLabel('What did you find?').inputValue(), 'abc');
   });
   await sub('fast-reload', 'Edit then reload within 100 ms (before the 350 ms debounce) does not lose the edit', async () => {
     await step(page, 'Problem');

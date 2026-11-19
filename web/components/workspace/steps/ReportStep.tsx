@@ -346,7 +346,7 @@ export function ReportStep({ inv, update }: StepProps) {
                   <tr className="border-b-2 border-slate-900">
                     <th className="py-1 pr-2">Action</th>
                     <th className="py-1 pr-2">Type</th>
-                    <th className="py-1 pr-2 print-hide">Fixes</th>
+                    <th className="py-1 pr-2 print-hide">Countermeasures</th>
                     <th className="py-1 pr-2">Owner</th>
                     <th className="py-1 pr-2">Due</th>
                     <th className="py-1 pr-2 whitespace-nowrap">Status</th>
@@ -453,7 +453,7 @@ export function ReportStep({ inv, update }: StepProps) {
           ) : (
             <Muted>
               {costed
-                ? "Savings cannot be calculated until the expected events per year after the fix are entered."
+                ? "Savings cannot be calculated until the expected events per year after the countermeasure are entered."
                 : `Savings cannot be calculated while the loss is not costed. ${LOSS_NOT_COSTED}.`}
             </Muted>
           )}

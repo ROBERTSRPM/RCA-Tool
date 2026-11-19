@@ -48,7 +48,7 @@ test('D-DASH-1', 'Dashboard (sample only): totals equal hand calculation', async
   await page.goto(BASE + '/app');
   const s = await e.dashStats(page);
   // Hand calc of the sample: 14h*120t/h=1680t; *$18=30240; +9500=39740/event; x6=238,440/yr; after 1/yr=39,740; saving 198,700; status closed.
-  const annual = (14 * 120 * 18 + 9500) * 6, saved = annual - 0; // round 3 sample: 0 failures after the fix, so the saving is the whole annual loss
+  const annual = (14 * 120 * 18 + 9500) * 6, saved = annual - 0; // round 3 sample: 0 failures after the countermeasure, so the saving is the whole annual loss
   await sub('totals', 'Totals: loss under investigation $0 (sample is closed), 0 open, 0 overdue, saved $238,440 (round 3 sample)', async () => {
     eq(s['Open annual loss'], money(0));
     eq(s['Open actions'], '0'); eq(s['Overdue actions'], '0');

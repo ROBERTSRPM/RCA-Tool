@@ -44,7 +44,7 @@ const STEPS = [
   },
   {
     n: "03",
-    title: "Prove the fix held",
+    title: "Prove the countermeasure held",
     body: "Savings count only once every action is done and the failure has not come back.",
     src: "/landing/step-verify.webp",
     width: 1330,

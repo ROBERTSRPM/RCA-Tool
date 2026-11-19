@@ -86,8 +86,8 @@ export function FiveWhysView() {
         ) : (
           <p className="text-sm text-slate-700">
             {last.category === "system" && findParent(root, last.id)
-              ? "This chain ends on a System / Latent cause. If it is the gap you will fix, tick “This is a root cause”."
-              : whys >= 0 && "No deeper cause recorded yet. Ask why again, or tick “This is a root cause” if it is the one to fix."}
+              ? "This chain ends on a System / Latent cause. If it is the gap your countermeasure will close, tick “This is a root cause”."
+              : whys >= 0 && "No deeper cause recorded yet. Ask why again, or tick “This is a root cause” if it is the one your countermeasure will address."}
           </p>
         )}
         <button className="btn btn-primary btn-sm mt-3" onClick={() => cx.addChild(last.id)}>

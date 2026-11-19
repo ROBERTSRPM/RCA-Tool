@@ -251,7 +251,7 @@ export function Dashboard() {
           hint={
             items
               ? totals.rolloutTotal === 0
-                ? "Open. Spread a proven fix to similar assets"
+                ? "Open. Spread a proven countermeasure to similar assets"
                 : `Open, of ${totals.rolloutTotal} created`
               : "Open"
           }
@@ -291,7 +291,7 @@ export function Dashboard() {
             }
           >
             Start one when something fails. You will be guided from the first description to
-            proof that the fix worked.
+            proof that the countermeasure worked.
           </EmptyState>
         ) : (
           <div className="card overflow-hidden">

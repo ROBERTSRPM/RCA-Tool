@@ -132,7 +132,7 @@ export function CauseStep({
       <div className="space-y-5">
       <SectionCard
         title="4. Find the cause: keep asking Why?"
-        help="Start at the failure and ask why it happened. Add each answer as a cause. Keep going until you reach a System / Latent cause: a gap in procedure, training or planning. Flag the ones you will fix as root causes."
+        help="Start at the failure and ask why it happened. Add each answer as a cause. Keep going until you reach a System / Latent cause: a gap in procedure, training or planning. Flag the ones you will address as root causes."
       >
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
           <div

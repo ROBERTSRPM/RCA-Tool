@@ -64,7 +64,7 @@ export const CRITICALITY_OPTIONS: { value: Exclude<Criticality, "">; label: stri
 ];
 
 export const ACTION_KINDS: { value: Exclude<ActionKind, "">; label: string; help: string }[] = [
-  { value: "corrective", label: "Corrective", help: "Fix this failure and its damage." },
+  { value: "corrective", label: "Corrective", help: "Deal with this failure and its damage." },
   { value: "preventive", label: "Preventive", help: "Stop it happening again." },
 ];
 
@@ -97,7 +97,7 @@ export const DETERIORATION_OPTIONS: { value: Exclude<Deterioration, "">; label: 
 ];
 
 export const DETERIORATION_GUIDANCE =
-  "Forced deterioration is removed by fixing its cause. Natural deterioration is managed by inspection, condition monitoring and planned replacement.";
+  "Forced deterioration is removed by dealing with its cause. Natural deterioration is managed by inspection, condition monitoring and planned replacement.";
 
 /** Quick-add cash cost lines for process and quality losses. The user fills the amount. */
 export const COST_PRESETS: { label: string; category: OtherCostCategory }[] = [
@@ -142,7 +142,7 @@ export const ROLLOUT_STATUS: { value: RolloutStatus; label: string }[] = [
   { value: "open", label: "Open" },
   { value: "no_issue", label: "Checked: no issue" },
   { value: "same_problem", label: "Checked: same problem found" },
-  { value: "fixed", label: "Fixed" },
+  { value: "fixed", label: "Countermeasure in place" },
 ];
 
 export const categoryLabel = (c: ActionCategory | undefined): string =>

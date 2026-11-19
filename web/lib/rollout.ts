@@ -1,5 +1,5 @@
 /**
- * Horizontal expansion: "Roll this fix out". Ranks the other assets in the
+ * Horizontal expansion: "Roll out this countermeasure". Ranks the other assets in the
  * register that could fail the same way, and builds the rollout checks.
  *
  * Rules (all shown to the user as reasons):
@@ -103,7 +103,7 @@ export function defaultRolloutCheckText(inv: Investigation): string {
     roots.forEach((r) => lines.push(`- ${clip(r, 160)}`));
   }
   if (preventive.length) {
-    lines.push("Check that this fix is in place:");
+    lines.push("Check that this countermeasure is in place:");
     preventive.forEach((r) => lines.push(`- ${clip(r, 160)}`));
   }
   return lines.join("\n");

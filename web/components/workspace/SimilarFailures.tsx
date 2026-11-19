@@ -157,12 +157,12 @@ export function SimilarFailures({
                 </div>
                 <div>
                   <p className="flex flex-wrap items-center gap-2 eyebrow">
-                    What fixed it
+                    Countermeasure taken
                     {doneActions.length > 0 &&
                       (fixVerified ? (
-                        <span className="chip bg-emerald-100 normal-case tracking-normal text-emerald-800">Fix verified</span>
+                        <span className="chip bg-emerald-100 normal-case tracking-normal text-emerald-800">Countermeasure verified</span>
                       ) : (
-                        <span className="chip bg-slate-200 normal-case tracking-normal text-slate-700">Fix not yet verified</span>
+                        <span className="chip bg-slate-200 normal-case tracking-normal text-slate-700">Countermeasure not yet verified</span>
                       ))}
                   </p>
                   {doneActions.length === 0 ? (

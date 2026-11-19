@@ -224,7 +224,7 @@ FT('F-CAPA-1', 'Actions step: corrective section, preventive groups, one expande
     const opts = await f.editor(page).getByLabel('Category', { exact: true }).locator('option').allInnerTexts(); eq(opts, ['Not set', 'Repair or restore', 'Design or equipment change', 'Maintenance task', 'Condition monitoring', 'Spares holding', 'Procedure or standard', 'Training', 'Operating practice']);
   });
   await sub('kind-switch', 'Corrective -> Preventive moves a failure-event action onto the first root cause; Preventive -> Corrective keeps its root-cause link and the action moves to the Corrective section', async () => {
-    const li = await f.openAction(page, 0); await li.getByLabel('Corrective or preventive?').selectOption({ label: 'Preventive' }); const linked = await li.getByLabel(/Fixes this root cause|Re-link to a root cause/).inputValue(); ok(linked !== '', 'preventive action left unlinked');
+    const li = await f.openAction(page, 0); await li.getByLabel('Corrective or preventive?').selectOption({ label: 'Preventive' }); const linked = await li.getByLabel(/Countermeasure for this root cause|Re-link to a root cause/).inputValue(); ok(linked !== '', 'preventive action left unlinked');
     eq(await page.getByTestId('corrective-section').getByTestId('action-row').count(), 0); await li.getByLabel('Corrective or preventive?').selectOption({ label: 'Corrective' }); eq(await page.getByTestId('corrective-section').getByTestId('action-row').count(), 1);
     await page.getByRole('button', { name: 'Close' }).click();
   });
@@ -337,7 +337,7 @@ FT('F-QUAL-1', 'New quality rules: each triggers, its jump link lands on the rig
     await step(page, 'Cause tree'); await f.selectCause(page, 'No lubrication standard'); await f.addCause(page, 'sibling', 'Operator skipped the greasing round', { cat: 'Human', root: true });
     await f.addAction(page, { kind: 'corrective', desc: 'Re-grease the gearbox', owner: 'Kim', due: '2027-06-01', cost: 5 }); const li = f.editor(page); await li.getByLabel('Linked to').selectOption({ label: 'Operator skipped the greasing round' });
     let q = await quality(page); ok(has(q, /Root cause "Operator skipped the greasing round" has corrective actions but no preventive action/), q.join('|'));
-    ok(await f.findings(page).filter({ hasText: 'has corrective actions but no preventive action' }).locator('.chip').first().innerText().then(t => /Fix first/.test(t)), 'should be High');
+    ok(await f.findings(page).filter({ hasText: 'has corrective actions but no preventive action' }).locator('.chip').first().innerText().then(t => /Address first/.test(t)), 'should be High');
     await step(page, 'Report'); await f.openQuality(page); await f.findings(page).filter({ hasText: 'has corrective actions but no preventive' }).getByRole('button', { name: /^Go to/ }).click(); eq(await f.activeStep(page), 'Actions');
     await f.addAction(page, { cause: 'Operator skipped the greasing round', desc: 'Add greasing to the shift checklist', category: 'Procedure or standard', owner: 'Lee', due: '2027-06-10', cost: 0 }); q = await quality(page); ok(!has(q, /has corrective actions but no preventive/), q.join('|'));
   });
@@ -390,7 +390,7 @@ FT('F-SIM-1', 'Similar past failures: ranking by tag > type > failure mode > wor
     ok(/Same asset \(X-1\)/.test(r1) && /Same asset type \(Gearbox\)/.test(r1) && /Same failure mode \(Bearing failure\)/.test(r1) && /Shared words/.test(r1), r1);
     ok(!/Same asset \(/.test(r2) && /Same asset type \(Gearbox\)/.test(r2) && /Same failure mode/.test(r2), r2); ok(/Shared words:.*bearing/.test(r3) && /overheating/.test(r3) && !/Same asset/.test(r3) && !/Same failure mode/.test(r3), r3);
   });
-  await sub('cause-text', 'Each match shows its root causes and "What fixed it" text; Open link goes to that investigation', async () => {
+  await sub('cause-text', 'Each match shows its root causes and "Countermeasure taken" text; Open link goes to that investigation', async () => {
     const item = page.getByTestId('similar-item').filter({ hasText: 'S1 Gearbox bearing' }); const itx = await item.innerText(); ok(itx.includes('S1 cause: lube starvation'), 'root cause text missing: ' + itx.slice(0, 300)); ok(/No completed actions yet/.test(itx), 'what-fixed text missing: ' + itx.slice(0, 300)); await item.getByRole('link', { name: 'Open' }).click(); await page.waitForFunction(() => /^S1 /.test(document.querySelector('input[type=text]')?.value || ''), null, { timeout: 15000 });
     await page.goBack(); await page.getByLabel('Title', { exact: true }).waitFor(); await step(page, 'Problem'); await page.getByRole('heading', { name: 'Similar past failures' }).waitFor(); await page.getByTestId('similar-list').waitFor();
   });
@@ -416,12 +416,12 @@ FT('F-SIM-1', 'Similar past failures: ranking by tag > type > failure mode > wor
 });
 
 // ============================================================ rollout
-FT('F-ROLL-1', 'Roll this fix out: candidate ranking (hand scores), reasons, checks, statuses, progress, dashboard count, report', ['demo-desk', 'demo-mob', 'acct-desk'], async (page, sub, mode) => {
+FT('F-ROLL-1', 'Roll out this countermeasure: candidate ranking (hand scores), reasons, checks, statuses, progress, dashboard count, report', ['demo-desk', 'demo-mob', 'acct-desk'], async (page, sub, mode) => {
   // Use the sample's register: subject P-101 slurry pump. Hand scores: P-102 = 10+15 (3 duty words)+15 (same make)+9 (A) = 49; P-215 = 10+5+15+6 = 36; P-103 = 10+0+6+6 = 22; P-210 (other type) never listed.
   await newInv(page, { title: 'F-ROLL slurry pump seal' }, { tag: 'P-101', type: 'Slurry pump', make: 'Warman 8/6 AH', duty: 'Slurry feed to the concentrator, single pump with no standby', crit: 'A', mode: 'Seal or gland leak' });
   await causeRoot(page, 'Seal flush not on any route', { cat: 'System / Latent', status: 'Verified' }); await f.addAction(page, { cause: 'Seal flush not on any route', desc: 'Add flush check to route', category: 'Procedure or standard', owner: 'Sam', due: '2027-01-10', cost: 100 });
-  await step(page, 'Verify'); const panel = page.getByRole('region', { name: 'Roll this fix out' }).or(page.locator('section:has(h2:has-text("Roll this fix out"))'));
-  await sub('encourage', 'Before verification the panel says "Best done once the fix is verified"', async () => { await page.getByTestId('rollout-encourage').waitFor(); ok(/Best done once the fix is verified/.test(await page.getByTestId('rollout-encourage').innerText())); });
+  await step(page, 'Verify'); const panel = page.getByRole('region', { name: 'Roll out this countermeasure' }).or(page.locator('section:has(h2:has-text("Roll out this countermeasure"))'));
+  await sub('encourage', 'Before verification the panel says "Best done once the countermeasure is verified"', async () => { await page.getByTestId('rollout-encourage').waitFor(); ok(/Best done once the countermeasure is verified/.test(await page.getByTestId('rollout-encourage').innerText())); });
   await sub('rank', 'Candidates: P-102, P-215, P-103 in that order; the centrifugal pump P-210 and the asset itself are not listed', async () => {
     await page.getByTestId('rollout-candidates').waitFor({ timeout: 15000 }); const tags = await page.getByTestId('rollout-candidates').locator('li').evaluateAll(els => els.map(e => e.querySelector('label span span').childNodes[0].textContent.trim())); eq(tags, ['P-102', 'P-215', 'P-103'], tags.join(','));
     await h.shot(page, 'rollout-candidates-' + mode);
@@ -438,9 +438,9 @@ FT('F-ROLL-1', 'Roll this fix out: candidate ranking (hand scores), reasons, che
     ok(/Rollout progress: 0 of 2 checked/.test(await page.getByTestId('rollout-progress').innerText()), await page.getByTestId('rollout-progress').innerText());
   });
   await sub('statuses', 'Result options: Open, Checked: no issue, Checked: same problem found, Fixed; progress counts finished ones; "same problem" shows the red notice', async () => {
-    const r0 = page.getByTestId('rollout-check').nth(0).getByLabel('Result'); const opts = await r0.locator('option').allInnerTexts(); eq(opts, ['Open', 'Checked: no issue', 'Checked: same problem found', 'Fixed']);
-    await r0.selectOption({ label: 'Checked: same problem found' }); const prog = async () => (await page.getByTestId('rollout-progress').locator('p').first().innerText()).replace(/\s+/g, ' '); let t = await prog(); ok(/Rollout progress: 1 of 2 checked\s*1 has the same problem/.test(t), t); await page.getByText('The same problem was found. Fix it, then set the result to Fixed.').waitFor();
-    eq(await page.getByRole('progressbar', { name: 'Rollout progress' }).getAttribute('aria-valuenow'), '50'); await r0.selectOption({ label: 'Fixed' }); await page.getByTestId('rollout-check').nth(1).getByLabel('Result').selectOption({ label: 'Checked: no issue' });
+    const r0 = page.getByTestId('rollout-check').nth(0).getByLabel('Result'); const opts = await r0.locator('option').allInnerTexts(); eq(opts, ['Open', 'Checked: no issue', 'Checked: same problem found', 'Countermeasure in place']);
+    await r0.selectOption({ label: 'Checked: same problem found' }); const prog = async () => (await page.getByTestId('rollout-progress').locator('p').first().innerText()).replace(/\s+/g, ' '); let t = await prog(); ok(/Rollout progress: 1 of 2 checked\s*1 has the same problem/.test(t), t); await page.getByText('The same problem was found. Put the countermeasure in place, then set the result to Countermeasure in place.').waitFor();
+    eq(await page.getByRole('progressbar', { name: 'Rollout progress' }).getAttribute('aria-valuenow'), '50'); await r0.selectOption({ label: 'Countermeasure in place' }); await page.getByTestId('rollout-check').nth(1).getByLabel('Result').selectOption({ label: 'Checked: no issue' });
     t = await prog(); ok(/2 of 2 checked/.test(t) && !/same problem/.test(t), t); eq(await page.getByRole('progressbar', { name: 'Rollout progress' }).getAttribute('aria-valuenow'), '100');
   });
   await sub('edit-check', 'Per-check owner, due date and "what to check" can be edited; delete asks for confirmation', async () => {
@@ -458,8 +458,8 @@ FT('F-ROLL-1', 'Roll this fix out: candidate ranking (hand scores), reasons, che
   await sub('report', 'Report section "Rollout to similar assets" lists the checks with their results', async () => {
     await page.getByRole('link', { name: /F-ROLL slurry pump seal/ }).first().click(); await page.getByLabel('Title', { exact: true }).waitFor(); const t = (await e.reportText(page)).toLowerCase(); ok(t.includes('rollout to similar assets') && t.includes('p-102') && t.includes('p-215') && t.includes('same problem'), t.slice(t.indexOf('rollout') - 20, t.indexOf('rollout') + 400));
   });
-  await sub('verified-message', 'When the fix is verified the panel says "The fix is verified. This is the moment to spread it"', async () => {
-    await step(page, 'Actions'); await f.setActionStatus(page, 0, 'Done'); await f.fillVerify(page, { date: '2026-11-10', recurred: 'No, it has not recurred', after: 0 }); await page.getByText('The fix is verified.').waitFor();
+  await sub('verified-message', 'When the countermeasure is verified the panel says "The countermeasure is verified. This is the moment to spread it"', async () => {
+    await step(page, 'Actions'); await f.setActionStatus(page, 0, 'Done'); await f.fillVerify(page, { date: '2026-11-10', recurred: 'No, it has not recurred', after: 0 }); await page.getByText('The countermeasure is verified.').waitFor();
   });
   await sub('needs-type', 'With no asset type set the panel asks for it and offers "Go to Asset details"', async () => {
     await newInv(page, { title: 'F-ROLL no type' }); await step(page, 'Verify'); await page.getByTestId('rollout-needs-type').waitFor(); await page.getByRole('button', { name: 'Go to Asset details' }).click(); eq(await f.activeStep(page), 'Problem');

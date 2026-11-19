@@ -131,7 +131,7 @@ export function runQualityCheck(
         id: `root-no-action-${rc.id}`,
         rule: "root-cause-without-action",
         severity: "high",
-        message: `Root cause "${clip(rc.text)}" has no action to fix it.`,
+        message: `Root cause "${clip(rc.text)}" has no action to address it.`,
         step: "actions",
         nodeId: rc.id,
       });
@@ -223,7 +223,7 @@ export function runQualityCheck(
         id: `root-no-preventive-${rc.id}`,
         rule: "corrective-without-preventive",
         severity: "high",
-        message: `Root cause "${clip(rc.text)}" has corrective actions but no preventive action. Fixing the damage will not stop it happening again.`,
+        message: `Root cause "${clip(rc.text)}" has corrective actions but no preventive action. Dealing with the damage will not stop it happening again.`,
         step: "actions",
         nodeId: rc.id,
       });

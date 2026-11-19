@@ -88,7 +88,7 @@ async function fillVerify(page, v) {
   await step(page, 'Verify');
   if (v.date !== undefined) await page.getByLabel('Review date').fill(v.date);
   if (v.recurred) await page.getByLabel(/Has the failure recurred/).selectOption({ label: v.recurred });
-  if (v.after !== undefined) await typeNum(page, 'Expected events per year after the fix', v.after);
+  if (v.after !== undefined) await typeNum(page, 'Expected events per year after the countermeasure', v.after);
   if (v.notes !== undefined) await page.getByLabel('What did you find?').fill(v.notes);
 }
 const findings = (page) => page.locator('section[aria-label="Quality check"] ul li');

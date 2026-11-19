@@ -1,35 +1,203 @@
 {
   "suite": "prelaunch-fixes",
   "base": "http://localhost:3555",
-  "at": "2026-11-19T03:02:04.087Z",
+  "at": "2026-11-19T11:35:43.370Z",
   "results": [
     {
-      "id": "P-AUTH-1.photo-help",
-      "title": "Evidence photo help says \"kept in your account\"",
+      "id": "P-PAGES-1.help",
+      "title": "/help has 7 steps, AI notice, loss optional, contact",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "P-AUTH-1.ghost-asset",
-      "title": "Renaming the tag leaves no ghost asset in the register",
+      "id": "P-PAGES-1.terms",
+      "title": "/terms is marked Draft - under review",
       "status": "pass",
       "detail": "",
       "ms": 0
     },
     {
-      "id": "P-AUTH-1.session-lost",
-      "title": "After the session is lost, a sticky toast says \"You've been signed out...\" with a sign-in link and the text stays",
+      "id": "P-PAGES-1.privacy",
+      "title": "/privacy keeps its draft note and says Sydney and United States",
       "status": "pass",
       "detail": "",
       "ms": 0
+    },
+    {
+      "id": "P-PAGES-1.footer",
+      "title": "App footer links Help, Privacy, Terms and shows the support email",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "P-PAGES-1.auth",
+      "title": "Login and signup show \"Need help?\" with email and links",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "P-PAGES-1.no-free",
+      "title": "Signup has no \"Free\" claim",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "P-PAGES-1.404",
+      "title": "404 page shows the support email",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "P-PAGES-1",
+      "title": "Help and Terms pages exist; footer, auth pages and 404 carry support email",
+      "status": "pass",
+      "detail": "",
+      "ms": 793
+    },
+    {
+      "id": "P-DEMO-1.problem-note",
+      "title": "Problem step: no notes box or greyed AI button, one \"Sign in to get AI suggestions\" note",
+      "status": "fail",
+      "detail": "values differ: expected 1 but got 0",
+      "ms": 0
+    },
+    {
+      "id": "P-DEMO-1.no-red",
+      "title": "Fresh investigation: quality check is neutral (no \"to address first\", no red dot)",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "P-DEMO-1.note-Cause tree",
+      "title": "Cause tree: exactly one AI note, no AI panels",
+      "status": "fail",
+      "detail": "values differ: expected 1 but got 0",
+      "ms": 0
+    },
+    {
+      "id": "P-DEMO-1.note-Actions",
+      "title": "Actions: exactly one AI note, no AI panels",
+      "status": "fail",
+      "detail": "values differ: expected 1 but got 0",
+      "ms": 0
+    },
+    {
+      "id": "P-DEMO-1.note-Report",
+      "title": "Report: exactly one AI note, no AI panels",
+      "status": "fail",
+      "detail": "values differ: expected 1 but got 0",
+      "ms": 0
+    },
+    {
+      "id": "P-DEMO-1",
+      "title": "Demo mode: one quiet AI note per step; new investigation has no red findings",
+      "status": "pass",
+      "detail": "",
+      "ms": 913
+    },
+    {
+      "id": "P-LOSS-1.not-known",
+      "title": "\"Not known yet\" hides figures and shows \"Loss not costed yet\"",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "P-LOSS-1.report-not-costed",
+      "title": "Report says \"Loss not costed yet\" and never $0 annual loss",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "P-LOSS-1.gentle",
+      "title": "Quality check shows the gentle low reminder",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "P-LOSS-1.partial",
+      "title": "Downtime hours only: still \"not costed\", no NaN",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "P-LOSS-1.estimate",
+      "title": "A single rough yearly estimate is accepted and used",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "P-LOSS-1.no-saving-claim",
+      "title": "Estimate with no events on record: no saving figure is claimed on Verify",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "P-LOSS-1.persist",
+      "title": "Not known yet survives a reload",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "P-LOSS-1",
+      "title": "Loss without dollar figures: Not known yet, partial, rough estimate, report wording",
+      "status": "pass",
+      "detail": "",
+      "ms": 2963
+    },
+    {
+      "id": "P-SIM-1.no-sample",
+      "title": "Gearbox investigation sees no sample match",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "P-SIM-1",
+      "title": "Similar failures: the sample is never offered to a new unrelated investigation",
+      "status": "pass",
+      "detail": "",
+      "ms": 1575
+    },
+    {
+      "id": "P-REPORT-1.plan-cols",
+      "title": "Every column of every report table fits inside the page width",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "P-REPORT-1.no-split",
+      "title": "No table header is broken mid-word",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "P-REPORT-1",
+      "title": "Print layout: maintenance plan columns are not clipped and words do not split",
+      "status": "pass",
+      "detail": "",
+      "ms": 569
     },
     {
       "id": "P-AUTH-1",
       "title": "Signed in: photo help, ghost asset on tag rename, session-lost toast, sample not offered",
-      "status": "pass",
-      "detail": "",
-      "ms": 28341
+      "status": "fail",
+      "detail": "locator.fill: Timeout 30000ms exceeded. | Call log: | \u001b[2m  - waiting for getByLabel('Email')\u001b[22m | ",
+      "ms": 30157
     }
   ],
   "notes": []

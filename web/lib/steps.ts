@@ -13,7 +13,7 @@ export const STEPS: StepDef[] = [
   { id: "loss", label: "Loss", hint: "Put a money value on it" },
   { id: "evidence", label: "Evidence", hint: "Collect the facts" },
   { id: "cause", label: "Cause tree", hint: "Ask why, repeatedly" },
-  { id: "actions", label: "Actions", hint: "Assign and track fixes" },
+  { id: "actions", label: "Actions", hint: "Assign and track countermeasures" },
   { id: "verify", label: "Verify", hint: "Prove it stopped" },
   { id: "report", label: "Report", hint: "Print or save as PDF" },
 ];

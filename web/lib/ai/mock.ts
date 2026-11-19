@@ -104,7 +104,7 @@ export async function mockModel(req: AiRequest, env: NodeJS.ProcessEnv = process
             type: "no_preventive",
             severity: "low",
             message: "Check that every flagged root cause has a preventive action, not only a repair.",
-            question: "What stops this happening again, not just fixes it this time?",
+            question: "What stops this happening again, not just deals with it this time?",
           },
         ],
       };

@@ -125,7 +125,7 @@ export function CapaSuggest({ inv, update, root }: { inv: Investigation; update:
             )}
             {result.horizontalExpansion && (
               <p className="rounded-lg bg-slate-100 p-3 text-sm text-slate-800">
-                <strong>Roll it out:</strong> {result.horizontalExpansion} Track this under &ldquo;Roll this fix out&rdquo; on the Verify step.
+                <strong>Roll it out:</strong> {result.horizontalExpansion} Track this under &ldquo;Roll out this countermeasure&rdquo; on the Verify step.
               </p>
             )}
             <p className="text-xs text-slate-500">
