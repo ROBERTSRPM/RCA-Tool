@@ -2,18 +2,19 @@
 
 One example, kept consistent across the voice, the screen and the maths. All figures are illustrative. Labels below are the exact labels in the live app (https://www.rcapilot.com). Type the values exactly as shown so the recording matches the voiceover.
 
-Scenario: Line 3 tray sealer at a chilled ready-meal plant (chicken and rice, 480 g tray, modified-atmosphere pack). A process or quality failure: weak seals, leaking and ballooning packs found at dispatch. 6 events in 12 months.
+Scenario: Line 3 tray sealer at a chilled ready-meal plant (chicken and rice, 480 g tray, modified-atmosphere pack). A process or quality failure: weak seals, leaking packs found at the operator's end-of-line seal check (3 packs every 2 hours, leak tester). 6 events in 12 months.
 
 ## The numbers (computed the way `web/lib/finance.ts` does)
 
 | Item | Value |
 |---|---|
 | Events per year | 6 |
-| Downtime per event | 8 hours |
+| Downtime per event | 8 hours (line stopped, held product sorted, jaws checked and reset, line restarted) |
 | Production rate | 3,000 packs/hour |
 | Margin per unit | $0.45 per pack |
 | Repair cost per event (maintenance call-out and parts) | $1,200 |
-| Other costs per event | Scrapped product $14,500; Product on hold $3,200; Customer claims and credits $6,800; Retailer penalties $5,000; Rework $2,400 (total $31,900) |
+| Other costs per event | Scrapped product $14,500 (about 4,800 packs); Product on hold $3,200 (sorting and testing 6,000 packs);  Customer claims and credits $6,800 (slack packs that slipped through between checks); Retailer penalties $5,000; Rework $2,400 (about 1,200 packs repacked) (total $31,900) |
+| Packs on hold per event | About 6,000 (2 hours at 3,000 an hour since the last good check): about 4,800 scrapped, about 1,200 reworked (repacked) |
 | Shares | 100% lost for good, 0% made up, 0% buffer (the line runs at capacity) |
 | Lost production per event | 8 x 3,000 = 24,000 packs |
 | Opportunity loss per event | 24,000 x $0.45 = $10,800 |
@@ -40,10 +41,10 @@ Check of the split: cash saving = $198,600 - $33,100 = $165,500. Opportunity sav
 First, under "Type of failure", click "Process or quality failure" (the other choice is "Equipment failure"). Card "Draft problem statement from notes", field "Rough notes". Type:
 
 ```
-Thurs 5:10am dispatch found domed, leaking chicken and rice trays, Line 3. 42 packs on one pallet, more on the next. Seals look weak along one side of the flange. Pallet and whole night shift output on hold. Retailer rejected a load at 9. 6th time this year. New film batch started Tues. Changeover Wed night.
+Thurs 4:00am end-of-line seal check Line 3, chicken and rice trays. Took 3 packs to leak tester, 2 bubbling from the flange. Last good check was 2:00am so about 6,000 packs on hold. Seals look weak along one side. Retailer complained about slack packs last month. 6th time this year. New film batch started Tues. Changeover Wed night.
 ```
 
-Click "Draft problem statement from notes". The draft varies each run. Expect it to list "Not in your notes. Worth finding out:" items (for example the seal temperature log, the retained sample results, the earlier five events). If the draft is poor, edit the fields in the draft box to these values, then click "Use this draft".
+Click "Draft problem statement from notes". The draft varies each run. Expect it to list "Not in your notes. Worth finding out:" items (for example the seal temperature log, the check results since 2:00 am, the earlier five events). If the draft is poor, edit the fields in the draft box to these values, then click "Use this draft".
 
 | Field | Final value |
 |---|---|
@@ -51,10 +52,10 @@ Click "Draft problem statement from notes". The draft varies each run. Expect it
 | Asset | Line 3 tray sealer |
 | Site / area | Chilled ready-meals, Packing hall, Line 3 |
 | Date of event | 2026-10-15 |
-| What happened? | 42 packs of chicken and rice found leaking and domed at dispatch at 5:10 am. Weak seals along the tray flange. Product on hold and a retailer load rejected. This is the 6th event in twelve months. |
+| What happened? | At the 4:00 am end-of-line seal check, 2 of 3 chicken and rice packs leaked in the leak tester. Weak seals along the tray flange. About 6,000 packs packed since the last good check at 2:00 am put on hold. This is the 6th event in twelve months. |
 | Where on the equipment? | Heat seal of the lidding film to the tray flange on the Line 3 tray sealer. |
-| When did it happen? | Produced on night shift, found at 5:10 am on Thursday 15 October 2026. 6th time in twelve months. |
-| What was the impact? | Pallet and shift output on hold, retailer load rejected, line stopped for investigation. Money is added in the next step. |
+| When did it happen? | Made on night shift since 2:00 am, found at the 4:00 am seal check on Thursday 15 October 2026. 6th time in twelve months. |
+| What was the impact? | About 6,000 packs on hold, line stopped for investigation, and a retailer complaint about slack packs last month. Money is added in the next step. |
 
 ## Scene 5: Line / process details and quality reference
 
@@ -100,18 +101,18 @@ Keep "Lost for good" at 100%. Slide it briefly to show the other two, then retur
 
 | # | Title | Type | Date | Note |
 |---|---|---|---|---|
-| E1 | Leaking pack, seal cut open | Photo | 2026-10-15 | Unsealed channel about 6 mm wide along the tray flange; no seal pattern on one side. |
+| E1 | Leaking pack, seal cut open | Photo | 2026-10-15 | Bubbles from the flange in the leak tester; cut open, unsealed channel about 6 mm wide, no seal pattern on one side. |
 | E2 | Sealing jaw temperature log, Line 3 | Data / Trend | 2026-10-15 | Jaw surface reads 158 degrees against a setpoint of 175. Drifted down over 3 weeks. |
 | E3 | Sealing jaw and seal plate inspection | Inspection | 2026-10-15 | Silicone insert cut and flattened, uneven pressure; marks on the seal plate. |
 | E4 | PLC settings and changeover record | Document | 2026-10-16 | After Wednesday changeover, dwell cut from 1.2 to 0.9 seconds and speed raised to 34 cycles a minute. Settings not locked. |
-| E5 | Film specification, maintenance and QA records | Document | 2026-10-16 | New film batch has a different seal layer, no change notice. Silicone last replaced 14 months ago. PM has no jaw temperature check. Seal check: one visual check per shift. |
-| E6 | Operator and QA interviews | Interview | 2026-10-16 | Behind on the order, so speed was raised. Seal check is by eye. Nobody was told the film had changed. |
+| E5 | Film specification, maintenance and QA records | Document | 2026-10-16 | New film batch has a different seal layer, no change notice. Silicone last replaced 14 months ago. PM has no jaw temperature check. Seal check: 3 packs every 2 hours. |
+| E6 | Operator and QA interviews | Interview | 2026-10-16 | Behind on the order, so speed was raised. Seal check is only 3 packs every 2 hours. Nobody was told the film had changed. |
 
 For E1 optionally click "Add a photo" and upload any image (do not use a real customer photo).
 
 ## Scene 8: Cause tree
 
-Top box (failure event) text if empty: `Line 3 tray sealer produced leaking packs that reached dispatch`
+Top box (failure event) text if empty: `Line 3 tray sealer produced leaking packs, found at the end-of-line seal check`
 
 Click "Why?" under the box shown. New boxes inherit the parent's type, so set "Type of cause" on each.
 
@@ -126,8 +127,8 @@ Click "Why?" under the box shown. New boxes inherit the parent's type, so set "T
 | C1 | Failure event | Physical | New film batch has a different seal layer that needs more heat | Verified | E5 |
 | C2 | C1 | Human | The new film batch was accepted without telling QA or production | Hypothesis | E6 |
 | C3 | C2 | System / Latent | No change control for film supplier or specification | Hypothesis | none yet (link E5 during the Challenge step) |
-| D1 | Failure event | Human | Weak seals were not found until dispatch; seal check is once a shift, by eye | Verified | E5, E6 |
-| D2 | D1 | System / Latent | Seal check method is visual only, with no leak test and no frequency based on risk | Verified | E5, E6 |
+| D1 | Failure event | Human | Seal check is 3 packs every 2 hours, so leakers made between checks reach customers and the whole 2 hours goes on hold | Verified | E5, E6 |
+| D2 | D1 | System / Latent | Check frequency and sample size are not based on risk, with no check at changeover or after a jaw or film change, and no in-line detection | Verified | E5, E6 |
 
 Tick "This is a root cause" on A3, B3, C3 and D2 (the four roots).
 
@@ -167,8 +168,8 @@ Preventive (use "Add preventive action" under each root cause):
 | P1 | A3 | Check jaw temperature with a probe and inspect the silicone; replace the silicone every 3 months | Maintenance task | Probe jaw surface temperature against setpoint 175, inspect silicone and seal plate | 1 | weeks | Maintenance fitter | New task | Sam Ortiz | 2026-11-06 | 1500 |
 | P2 | B3 | Lock sealing settings by product recipe with recall at changeover, set speed and dwell limits, and change the shift target to good packs | Design or equipment change | (none) | | | | | Priya Rao | 2026-12-04 | 6500 |
 | P3 | C3 | Introduce change control for film supplier and specification, with an incoming seal-layer check and QA sign-off | Procedure or standard | (none) | | | | | Lee Tran | 2026-11-20 | 2000 |
-| P4 | D2 | Leak test one pack per lane every hour and record the result | Procedure or standard | (none) | | | | | Lee Tran | 2026-11-06 | 1000 |
-| P5 | D2 | Buy a bench leak tester for Line 3 | Design or equipment change | (none) | | | | | Priya Rao | 2026-12-11 | 9200 |
+| P4 | D2 | Seal check every hour on 3 packs, plus a check at start-up, after changeover and after any jaw or film change, with records | Procedure or standard | (none) | | | | | Lee Tran | 2026-11-06 | 1000 |
+| P5 | D2 | Buy a faster bench leak tester for Line 3 (shorter check time, so checks can be more frequent) | Design or equipment change | (none) | | | | | Priya Rao | 2026-12-11 | 9200 |
 
 Total action cost: $20,200. Six actions.
 
@@ -187,11 +188,11 @@ First set Status to Done on every action (Actions step).
 | Review date | 2027-05-18 |
 | Has the failure recurred since the actions were completed? | No, it has not recurred |
 | Expected events per year after the fix | 1 |
-| What did you find? | No leaking packs from Line 3 since the actions were completed. Jaw temperature within 3 degrees of setpoint at each weekly check. Hourly leak tests all passed. Settings locked by recipe. No film change without QA sign-off. |
+| What did you find? | No leaking packs from Line 3 since the actions were completed. Jaw temperature within 3 degrees of setpoint at each weekly check. Hourly seal checks and changeover checks all passed. Settings locked by recipe. No film change without QA sign-off. |
 
 Expected on screen: Annual loss before $263,400 (cash $198,600, opportunity $64,800); Annual loss after $43,900; "Annual saving (verified)" $219,500; Total action cost $20,200; Payback period about 1.1 months (1.10).
 
-"Roll this fix out" (Add a similar asset): tag `L1-TS` (Line 1 tray sealer) and `L2-TS` (Line 2 tray sealer), duty `Tray sealing`, "Add to the register". Create the checks. What to check: `Check jaw temperature, silicone, locked settings and hourly leak test`. Who will check it: `Sam Ortiz`. Check due: `2027-06-30`.
+"Roll this fix out" (Add a similar asset): tag `L1-TS` (Line 1 tray sealer) and `L2-TS` (Line 2 tray sealer), duty `Tray sealing`, "Add to the register". Create the checks. What to check: `Check jaw temperature, silicone, locked settings, hourly seal check and changeover check`. Who will check it: `Sam Ortiz`. Check due: `2027-06-30`.
 
 ## Scene 14: Report step
 

@@ -8,36 +8,36 @@ Note for the recording: the AI buttons need a signed-in account. Do not use the 
 
 | # | Scene | Words | Target |
 |---|---|---|---|
-| 1 | The situation | 96 | 0:00-0:43 |
-| 2 | What we are trying to achieve | 87 | 0:43-1:22 |
-| 3 | Sign in and start | 65 | 1:22-1:52 |
-| 4 | Problem: draft from notes | 97 | 1:52-2:36 |
-| 5 | Problem: line details and quality reference | 40 | 2:36-2:55 |
-| 6 | Loss | 122 | 2:55-3:49 |
-| 7 | Evidence | 88 | 3:49-4:29 |
-| 8 | Cause tree: by hand | 123 | 4:29-5:24 |
-| 9 | Natural and forced deterioration, views | 74 | 5:24-5:58 |
-| 10 | Cause coach and Challenge | 102 | 5:58-6:44 |
-| 11 | Actions | 80 | 6:44-7:20 |
-| 12 | CAPA suggestions and quality check | 48 | 7:20-7:43 |
-| 13 | Verify | 93 | 7:43-8:25 |
-| 14 | Report | 50 | 8:25-8:48 |
-| 15 | Close | 51 | 8:48-9:12 |
-| | Total | 1216 | 9:12 |
+| 1 | The situation | 107 | 0:00-0:48 |
+| 2 | What we are trying to achieve | 87 | 0:48-1:27 |
+| 3 | Sign in and start | 65 | 1:27-1:57 |
+| 4 | Problem: draft from notes | 97 | 1:57-2:41 |
+| 5 | Problem: line details and quality reference | 40 | 2:41-3:00 |
+| 6 | Loss | 122 | 3:00-3:54 |
+| 7 | Evidence | 88 | 3:54-4:34 |
+| 8 | Cause tree: by hand | 135 | 4:34-5:34 |
+| 9 | Natural and forced deterioration, views | 74 | 5:34-6:08 |
+| 10 | Cause coach and Challenge | 102 | 6:08-6:54 |
+| 11 | Actions | 83 | 6:54-7:32 |
+| 12 | CAPA suggestions and quality check | 48 | 7:32-7:55 |
+| 13 | Verify | 93 | 7:55-8:37 |
+| 14 | Report | 50 | 8:37-9:00 |
+| 15 | Close | 51 | 9:00-9:24 |
+| | Total | 1242 | 9:24 |
 
 Target durations are authoritative (spoken time at 140 wpm plus a 2 s pause); the screen clips are retimed to the voice.
 
 ---
 
-## Scene 1: The situation (43 s, 96 words)
+## Scene 1: The situation (48 s, 107 words)
 
-**Say:** "5:10 on a Thursday morning, the end of night shift. At dispatch, an operator lifts a tray of chicken and rice off the pallet. The lid is domed, and it hisses. He checks the rest. 42 packs, all from Line 3, all leaking. The pallet goes on hold. The phone rings at the production manager's house. Then the QA manager's. By 9, a retailer has rejected a load. And it is the 6th time this year. At the meeting, the general manager asks two questions. Why does this keep happening? And what is it costing us?"
+**Say:** "4:00 on a Thursday morning, night shift. At the end of Line 3, it is the 2-hourly seal check. The operator takes 3 packs of chicken and rice and drops them in the leak tester. Bubbles stream from the flange on 2 of them. Everything packed since the last good check goes on hold. About 6,000 packs. The phone rings at the production manager's house. Then the QA manager's. A retailer has already complained about slack packs last month. And it is the 6th time this year. At the meeting, the general manager asks two questions. Why does this keep happening? And what is it costing us?"
 
-[SFX] Open on the steady hum and rhythmic thump of a tray sealer on a food line, with the clink of trays and a fan. Under the first line, a pack hissing as it deflates.
+[SFX] Open on the steady hum and rhythmic thump of a tray sealer on a food line, with the clink of trays and a fan. Under the second line, a faint bubbling from the leak tester.
 
 [MUSIC] Quiet, tense, low pad. Starts at 0:03, no drums.
 
-[VISUAL] Plain title card, then slow stills or simple graphics: a night shift tray sealer under bright light, a domed leaking pack on a pallet, red product-hold tags going on a pallet, a bedside phone lighting up at night, then a meeting room. Caption: "Line 3 tray sealer, chilled ready meals. Illustrative example." Last 5 s: text "Why does this keep happening? What is it costing us?"
+[VISUAL] Plain title card, then slow stills or simple graphics: a night shift tray sealer under bright light, end-of-line check table, an operator at the end of the line pressing a pack under water in a leak tester with bubbles rising from the flange, a slack pack with a loose lid, red product-hold tags going on pallets, a bedside phone lighting up at night, then a meeting room. Caption: "Line 3 tray sealer, chilled ready meals. Illustrative example." Last 5 s: text "Why does this keep happening? What is it costing us?"
 
 [SFX] Phone ringing at night on "The phone rings", a second ring tone on "Then the QA manager's". Cut all sound on the final question, then silence for one beat.
 
@@ -83,9 +83,9 @@ Target durations are authoritative (spoken time at 140 wpm plus a 2 s pause); th
 
 [VISUAL] Click the Evidence step, then "Add evidence" six times, filling each from example-data.md (Title, Type, Date, Note). For the first item click "Add a photo" and upload any photo (or skip). Scroll the list so all six titles show with "Not linked to a cause yet" under each. Caption: "Evidence before opinions".
 
-## Scene 8: Cause tree: by hand (55 s, 123 words)
+## Scene 8: Cause tree: by hand (60 s, 135 words)
 
-**Say:** "Step 4, the Cause tree. The top box is the failure event. I click Why? and type the answer in plain words. Why were the packs leaking? The seals were weak along the flange. Why? The jaw ran 17 degrees low, with worn silicone. That is physical. Why was it not caught? Nothing in the maintenance plan checks jaw temperature or replaces the silicone. That is the system level, and I tick This is a root cause. Three more branches the same way. Wrong settings, where operators raised speed and cut dwell to keep up. A new film batch. And a seal check once a shift, by eye. For each cause I tick the supporting evidence and mark it Verified or Ruled out."
+**Say:** "Step 4, the Cause tree. The top box is the failure event. I click Why? and type the answer in plain words. Why were the packs leaking? The seals were weak along the flange. Why? The jaw ran 17 degrees low, with worn silicone. That is physical. Why was it not caught? Nothing in the maintenance plan checks jaw temperature or replaces the silicone. That is the system level, and I tick This is a root cause. Three more branches the same way. Wrong settings, where operators raised speed and cut dwell to keep up. A new film batch. And a seal check of only 3 packs every 2 hours, so a bad seal runs for hours before anyone knows. For each cause I tick the supporting evidence and mark it Verified or Ruled out."
 
 [VISUAL] Cause tree step, view "Tree". Click the top box and type the failure event from example-data.md. Click "Why?" and type each cause as listed, building branch A fully, then B, C and D more quickly (cut or speed up in the edit). Use the "Type of cause" buttons: Physical, Human, System / Latent. On the four system boxes tick "This is a root cause". Under "Evidence that supports it" tick the matching items; set "How sure are you?" to Verified where evidence supports it. Captions: "Why? Why? Why?", "Physical, human, system / latent", "Tick the evidence".
 
@@ -101,9 +101,9 @@ Target durations are authoritative (spoken time at 140 wpm plus a 2 s pause); th
 
 [VISUAL] Scroll to the "Cause coach" card. Click "Suggest causes for" the selected cause (or "Review the whole tree"). Cut while it works ("The coach is thinking."). Show the suggestion cards with the chips and "Would confirm it" / "Would rule it out". Click "Add to tree" on one that is genuinely new; click Dismiss on another. The exact suggestions vary each run; adapt the spoken line (see example-data.md). Then scroll to "Challenge my analysis", run it, cut while it works. Show the chips (for example "No evidence", "Fix first"). Select the film root cause, tick the evidence, mark Verified, then show the point clear. Captions: "Suggestions: add or dismiss", "Challenge my analysis".
 
-## Scene 11: Actions (36 s, 80 words)
+## Scene 11: Actions (38 s, 83 words)
 
-**Say:** "Step 5, Actions. Corrective actions fix this failure. Preventive actions stop it happening again, one for each root cause, with an owner, due date and cost. For the jaw, a Maintenance task: check jaw temperature with a probe every week, and replace the silicone every 3 months. For settings, a Design or equipment change: lock them by recipe. For film, a Procedure or standard: supplier change control. For seal checks, a procedure, and a bench leak tester. Total cost, $20,200."
+**Say:** "Step 5, Actions. Corrective actions fix this failure. Preventive actions stop it happening again, one for each root cause, with an owner, due date and cost. For the jaw, a Maintenance task: check jaw temperature with a probe every week, and replace the silicone every 3 months. For settings, a Design or equipment change: lock them by recipe. For film, a Procedure or standard: supplier change control. For seal checks, more frequent checks with records, and a faster leak tester. Total cost, $20,200."
 
 [VISUAL] Actions step. Click "Add corrective action", then "Add preventive action" under each root cause, filling the six actions from example-data.md (one corrective, five preventive) (What will be done?, Corrective or preventive?, Category, Task description, Do this every, Interval unit, Craft or trade, New task or a change?, Owner, Due date, Cost). Show "Maintenance plan changes" listing the weekly jaw task. Show tiles: Total action cost $20,200, Actions 0 of 6 done. Captions: "Corrective and preventive", "Owner, due date, cost".
 

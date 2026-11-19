@@ -1,9 +1,9 @@
-RCA Pilot full walkthrough: voiceover to read (about 9.2 minutes)
+RCA Pilot full walkthrough: voiceover to read (about 9.4 minutes)
 
 Read at your normal slow pace. Say the scene number, read the lines, pause 2 seconds, then the next scene. If you stumble, repeat the line.
 
-Scene 1: The situation (43 s)
-5:10 on a Thursday morning, the end of night shift. At dispatch, an operator lifts a tray of chicken and rice off the pallet. The lid is domed, and it hisses. He checks the rest. 42 packs, all from Line 3, all leaking. The pallet goes on hold. The phone rings at the production manager's house. Then the QA manager's. By 9, a retailer has rejected a load. And it is the 6th time this year. At the meeting, the general manager asks two questions. Why does this keep happening? And what is it costing us?
+Scene 1: The situation (48 s)
+4:00 on a Thursday morning, night shift. At the end of Line 3, it is the 2-hourly seal check. The operator takes 3 packs of chicken and rice and drops them in the leak tester. Bubbles stream from the flange on 2 of them. Everything packed since the last good check goes on hold. About 6,000 packs. The phone rings at the production manager's house. Then the QA manager's. A retailer has already complained about slack packs last month. And it is the 6th time this year. At the meeting, the general manager asks two questions. Why does this keep happening? And what is it costing us?
 
 Scene 2: What we are trying to achieve (39 s)
 We want four things. Find the real cause, not just the faulty pack. Put a dollar figure on the loss, so the fix can compete for budget. Fix it so it stays fixed. And prove it, months later, with evidence. I will do it in RCA Pilot, from a blank page. The numbers are illustrative, made up to show the method. 6 events a year, 8 hours of line stoppage each, 3,000 packs an hour, 45 cents margin a pack, and $33,100 of cash cost each time.
@@ -23,8 +23,8 @@ Step 2, Loss. If you have no figures yet, choose Not known yet, or enter one rou
 Scene 7: Evidence (40 s)
 Step 3, Evidence. Click Add evidence. Each item has a title, a type, a date, and a note on what it shows. A photo of a leaking pack, with the channel in the seal. The sealing temperature log. The inspection of the jaws. The settings and changeover record. The film specification, maintenance and QA records. And the interviews. Evidence before opinions. Keep the retained packs and the worn parts, and photograph them before anything is cleaned or replaced. Later I link each item to the cause it supports.
 
-Scene 8: Cause tree: by hand (55 s)
-Step 4, the Cause tree. The top box is the failure event. I click Why? and type the answer in plain words. Why were the packs leaking? The seals were weak along the flange. Why? The jaw ran 17 degrees low, with worn silicone. That is physical. Why was it not caught? Nothing in the maintenance plan checks jaw temperature or replaces the silicone. That is the system level, and I tick This is a root cause. Three more branches the same way. Wrong settings, where operators raised speed and cut dwell to keep up. A new film batch. And a seal check once a shift, by eye. For each cause I tick the supporting evidence and mark it Verified or Ruled out.
+Scene 8: Cause tree: by hand (60 s)
+Step 4, the Cause tree. The top box is the failure event. I click Why? and type the answer in plain words. Why were the packs leaking? The seals were weak along the flange. Why? The jaw ran 17 degrees low, with worn silicone. That is physical. Why was it not caught? Nothing in the maintenance plan checks jaw temperature or replaces the silicone. That is the system level, and I tick This is a root cause. Three more branches the same way. Wrong settings, where operators raised speed and cut dwell to keep up. A new film batch. And a seal check of only 3 packs every 2 hours, so a bad seal runs for hours before anyone knows. For each cause I tick the supporting evidence and mark it Verified or Ruled out.
 
 Scene 9: Natural and forced deterioration, views (34 s)
 One question I always ask where equipment is involved. Is this wear natural, or forced? Silicone on a sealing jaw wears out eventually. That is natural. But running it a year past its life, because nothing prompted anyone, is forced: wear we allowed. I set that under Type of wear. For the recipe settings, wear does not apply, so I choose Not applicable. The same tree also shows as 5 Whys, or a Fishbone.
@@ -32,8 +32,8 @@ One question I always ask where equipment is involved. Is this wear natural, or 
 Scene 10: Cause coach and Challenge (46 s)
 Now the AI help. The Cause coach suggests causes I may have missed, each as a hypothesis, with what would confirm it and what would rule it out. I click Suggest causes, read each one, and choose Add to tree or Dismiss. I add one that is new to me, product contaminating the flange. I dismiss gas mix, because the oxygen readings were in spec. Then Challenge my analysis. It questions the tree like an experienced reviewer. It says the film root cause has no evidence linked, so I link the film specification and mark it Verified. The AI suggests. I decide.
 
-Scene 11: Actions (36 s)
-Step 5, Actions. Corrective actions fix this failure. Preventive actions stop it happening again, one for each root cause, with an owner, due date and cost. For the jaw, a Maintenance task: check jaw temperature with a probe every week, and replace the silicone every 3 months. For settings, a Design or equipment change: lock them by recipe. For film, a Procedure or standard: supplier change control. For seal checks, a procedure, and a bench leak tester. Total cost, $20,200.
+Scene 11: Actions (38 s)
+Step 5, Actions. Corrective actions fix this failure. Preventive actions stop it happening again, one for each root cause, with an owner, due date and cost. For the jaw, a Maintenance task: check jaw temperature with a probe every week, and replace the silicone every 3 months. For settings, a Design or equipment change: lock them by recipe. For film, a Procedure or standard: supplier change control. For seal checks, more frequent checks with records, and a faster leak tester. Total cost, $20,200.
 
 Scene 12: CAPA suggestions and quality check (23 s)
 For each root cause there is also a Suggested actions button. It proposes corrective and preventive actions, says whether the wear looks natural or forced, and nothing is added until I click Add to actions. The Quality check lists any gaps, like a root cause without an action.
