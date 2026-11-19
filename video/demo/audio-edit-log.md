@@ -1,6 +1,6 @@
 # Demo voiceover edit log
 
-Source: `recordings/voiceover-original.m4a` (AAC mono 44.1 kHz, 3:33.4, phone recording, owner reading `voiceover-to-read.txt`).
+Source: `recordings/voiceover-original.m4a` (AAC mono 44.1 kHz, 3:33.4, phone recording, owner reading `voiceover-for-demo.txt`).
 Output: `s1.wav` to `s8.wav` (48 kHz mono 16-bit, one per scene; not in git, rebuild with `audio/process.py`) and the joined, normalised track used in the final video.
 Method follows `../animation/public/audio/edit-log.md`. I cannot listen, so every choice rests on a Whisper transcript (faster-whisper small.en, run on the original and again on each edited scene) and measurements.
 
@@ -40,7 +40,7 @@ Checks: each edited scene was re-transcribed and matches the script (see differe
 ## Correction (owner report: "the .com is missed")
 - Scene 8 was cut at 208.0 s, but "dot com" was spoken at 208.05 to 208.45 s (a 0.4 s gap after "pilot" had hidden it). The cut now ends at 208.62 s and the scene has 0.8 s of room tone after the last word (was 0.45 s). The end card now starts when "Try it at" begins and runs to the end of the scene (6.5 s).
 - Scene 4 had a doubled "and" at the join ("missed, and and Challenge..."): the third take's lead-in "and" (106.84 to 107.2) was kept as well. Take 3 now starts at 107.38 s, at "Challenge".
-- Word-by-word check of the final mix (Whisper on the final audio) against `voiceover-to-read.txt`: every scene starts and ends on its script words; no clipped first or last words. Differences are recogniser noise or the owner's wording ("an owner and a due date" is heard as "an owner and due date").
+- Word-by-word check of the final mix (Whisper on the final audio) against `voiceover-for-demo.txt`: every scene starts and ends on its script words; no clipped first or last words. Differences are recogniser noise or the owner's wording ("an owner and a due date" is heard as "an owner and due date").
 
 ## Owner feedback (2026-11-19) and rule for the next video
 The owner prefers the explainer's voice: this demo's voice "blasts off". Likely causes, measured above:
