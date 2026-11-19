@@ -7,6 +7,7 @@ import { handleAiRequest, MAX_BODY_BYTES, type Deps } from "./handler";
 const context = buildAiContext(buildSample());
 const TOKEN = "a".repeat(40);
 
+const TICKET = "11111111-2222-3333-4444-555555555555";
 const validCoach = {
   suggestions: [{ parent: "N1", level: "system", text: "No alignment check in the rebuild procedure", why: "w", confirmWith: "c", ruleOutWith: "r", deterioration: "not_applicable" }],
 };
@@ -18,7 +19,7 @@ function deps(over: Partial<Deps> = {}): Deps & { calls: string[] } {
     verifyUser: vi.fn(async () => ({ id: "u1" })),
     consume: vi.fn(async () => {
       calls.push("consume");
-      return { allowed: true as const, remainingToday: 7, usageId: 99 };
+      return { allowed: true as const, remainingToday: 7, usageId: 99, refundTicket: TICKET };
     }),
     refund: vi.fn(async () => {
       calls.push("refund");
@@ -28,7 +29,7 @@ function deps(over: Partial<Deps> = {}): Deps & { calls: string[] } {
       return validCoach;
     }),
     hasKey: () => true,
-    limits: () => ({ daily: 30, burst: 5 }),
+    limits: () => ({ daily: 30, burst: 5, global: 300 }),
     ...over,
   };
 }
@@ -153,7 +154,7 @@ describe("handleAiRequest", () => {
     for (const err of [new AiError("timeout"), new AiError("unusable", "json"), new Error("boom")]) {
       d = deps({ callModel: vi.fn(async () => { throw err; }) });
       await handleAiRequest("coach", post(body), d);
-      expect(d.refund).toHaveBeenCalledWith(TOKEN, 99);
+      expect(d.refund).toHaveBeenCalledWith(TOKEN, 99, TICKET);
     }
     d = deps({ callModel: vi.fn(async () => ({ suggestions: "lots" })) });
     await handleAiRequest("coach", post(body), d);
@@ -168,10 +169,31 @@ describe("handleAiRequest", () => {
 
   it("no usage id (older database function) means nothing to refund, and nothing breaks", async () => {
     d = deps({
-      consume: vi.fn(async () => ({ allowed: true as const, remainingToday: 1, usageId: null })),
+      consume: vi.fn(async () => ({ allowed: true as const, remainingToday: 1, usageId: null, refundTicket: null })),
       callModel: vi.fn(async () => { throw new AiError("timeout"); }),
     });
     expect((await handleAiRequest("coach", post(body), d)).status).toBe(504);
+    expect(d.refund).not.toHaveBeenCalled();
+  });
+
+  it("global daily cap: 429 with a friendly message, model not called, nothing refunded", async () => {
+    d = deps({ consume: vi.fn(async () => ({ allowed: false as const, reason: "global" as const, retryAfterSeconds: 7200 })) });
+    const r = await handleAiRequest("coach", post(body), d);
+    expect(r.status).toBe(429);
+    const e = await errOf(r);
+    expect(e.code).toBe("global_limit");
+    expect(e.message).toContain("very busy today");
+    expect(e.message).toContain("keeps working");
+    expect(d.callModel).not.toHaveBeenCalled();
+    expect(d.refund).not.toHaveBeenCalled();
+  });
+
+  it("a usage id without a ticket is never refunded", async () => {
+    d = deps({
+      consume: vi.fn(async () => ({ allowed: true as const, remainingToday: 1, usageId: 5, refundTicket: null })),
+      callModel: vi.fn(async () => { throw new AiError("timeout"); }),
+    });
+    await handleAiRequest("coach", post(body), d);
     expect(d.refund).not.toHaveBeenCalled();
   });
 

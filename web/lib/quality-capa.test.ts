@@ -118,6 +118,14 @@ describe("maintenance plan items a planner can load", () => {
     };
     const f = runQualityCheck(i, TODAY).filter((x) => x.rule === "task-missing-detail");
     expect(f).toHaveLength(1);
+    // The plan falls back to the action description, so only the interval is missing here.
+    expect(f[0].message).toContain("needs an interval before");
+    expect(f[0].message).not.toContain("task description");
+  });
+
+  it("asks for task text only when the action description is empty too", () => {
+    const i = { ...base(), actions: [action({ id: "e", causeId: "rc", category: "maintenance_task", description: "" })] };
+    const f = runQualityCheck(i, TODAY).filter((x) => x.rule === "task-missing-detail");
     expect(f[0].message).toContain("task description and an interval");
   });
 });

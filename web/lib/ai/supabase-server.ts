@@ -29,16 +29,17 @@ export async function consumeCall(token: string, feature: string, limits: Limits
     p_feature: feature,
     p_daily: limits.daily,
     p_burst: limits.burst,
+    p_global: limits.global,
   });
   if (error) throw new Error("limit check failed");
   return interpretConsume(data);
 }
 
-/** Gives back a call that failed on our side. Best effort: never throws. */
-export async function refundCall(token: string, usageId: number): Promise<void> {
+/** Gives back a call that failed on our side, using the ticket the server got from ai_consume. Best effort: never throws. */
+export async function refundCall(token: string, usageId: number, ticket: string): Promise<void> {
   try {
     const db = clientFor(token);
-    if (db) await db.rpc("ai_refund", { p_id: usageId });
+    if (db) await db.rpc("ai_refund", { p_id: usageId, p_ticket: ticket });
   } catch {
     // Not refunding is the safe failure.
   }

@@ -30,6 +30,9 @@ interface PgError {
   status?: number;
 }
 
+export const STORAGE_MESSAGE =
+  "Could not save: your account has reached its 50 MB storage limit. Delete investigations or photos you no longer need, then try again.";
+
 export const SIGNED_OUT_MESSAGE =
   "You've been signed out. Sign in again to keep saving; your changes are still on this page.";
 
@@ -60,6 +63,9 @@ export function toStoreError(e: unknown, action: string): StoreError {
     msg.includes("request entity too large")
   ) {
     return new StoreError(TOO_LARGE_MESSAGE, "too_large");
+  }
+  if (msg.includes("storage limit reached")) {
+    return new StoreError(STORAGE_MESSAGE, "limit");
   }
   if (msg.includes("investigation limit reached")) {
     return new StoreError(LIMIT_MESSAGE, "limit");

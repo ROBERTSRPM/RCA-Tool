@@ -3,7 +3,7 @@ import { findAssetByTag, sortAssets } from "../assets";
 import { normaliseAsset } from "../normalize";
 import { buildSampleAssets } from "../sample";
 import type { Asset } from "../types";
-import { toStoreError } from "./supabase";
+import { STORAGE_MESSAGE, toStoreError } from "./supabase";
 import {
   MAX_ASSETS,
   StoreError,
@@ -47,6 +47,7 @@ export function toAssetError(e: unknown, action: string): StoreError {
   if (msg.includes("assets_data_size") || (e as PgError | null)?.status === 413) {
     return new StoreError(ASSET_TOO_LARGE_MESSAGE, "too_large");
   }
+  if (msg.includes("storage limit reached")) return new StoreError(STORAGE_MESSAGE, "limit");
   if (msg.includes("asset limit reached")) return new StoreError(ASSET_LIMIT_MESSAGE, "limit");
   return toStoreError(e, action);
 }

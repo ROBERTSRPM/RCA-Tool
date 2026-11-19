@@ -29,7 +29,7 @@ export interface Deps {
   verifyUser(token: string): Promise<{ id: string } | null>;
   consume(token: string, feature: string, limits: Limits): Promise<ConsumeDecision>;
   /** Gives back a counted call that failed (daily allowance only; burst still counts). */
-  refund(token: string, usageId: number): Promise<void>;
+  refund(token: string, usageId: number, ticket: string): Promise<void>;
   callModel(call: ModelCall, req: AiRequest): Promise<unknown>;
   hasKey(): boolean;
   limits(): Limits;
@@ -51,6 +51,7 @@ export type ErrorCode =
   | "not_configured"
   | "daily_limit"
   | "burst_limit"
+  | "global_limit"
   | "timeout"
   | "busy"
   | "unavailable"
@@ -63,13 +64,14 @@ const STATUS: Record<ErrorCode, number> = {
   not_configured: 503,
   daily_limit: 429,
   burst_limit: 429,
+  global_limit: 429,
   timeout: 504,
   busy: 503,
   unavailable: 502,
   unusable: 502,
 };
 
-const MESSAGES: Record<Exclude<ErrorCode, "bad_request" | "daily_limit" | "burst_limit">, string> = {
+const MESSAGES: Record<Exclude<ErrorCode, "bad_request" | "daily_limit" | "burst_limit" | "global_limit">, string> = {
   too_large: "That is too much to send to the AI. Shorten some long notes and try again.",
   signin: "Sign in to use AI.",
   not_configured: `AI is not switched on for this site yet. Everything else in ${BRAND_NAME} still works.`,
@@ -163,7 +165,8 @@ export async function handleAiRequest(feature: AiFeature, request: Request, deps
     return fail("unavailable");
   }
   if (!decision.allowed) {
-    return fail(decision.reason === "daily" ? "daily_limit" : "burst_limit", limitMessage(decision, limits), {
+    const code = decision.reason === "daily" ? "daily_limit" : decision.reason === "global" ? "global_limit" : "burst_limit";
+    return fail(code, limitMessage(decision, limits), {
       "Retry-After": String(decision.retryAfterSeconds),
     });
   }
@@ -176,12 +179,12 @@ export async function handleAiRequest(feature: AiFeature, request: Request, deps
   } catch (err) {
     const e = err instanceof AiError ? err : new AiError("unavailable", "error");
     console.error("[ai]", feature, e.code, e.detail);
-    if (decision.usageId !== null) await deps.refund(token, decision.usageId);
+    if (decision.usageId !== null && decision.refundTicket) await deps.refund(token, decision.usageId, decision.refundTicket);
     return fail(e.code === "not_configured" ? "not_configured" : (e.code as ErrorCode));
   }
   if (result === null) {
     console.error("[ai]", feature, "unusable", "shape");
-    if (decision.usageId !== null) await deps.refund(token, decision.usageId);
+    if (decision.usageId !== null && decision.refundTicket) await deps.refund(token, decision.usageId, decision.refundTicket);
     return fail("unusable");
   }
   return Response.json(

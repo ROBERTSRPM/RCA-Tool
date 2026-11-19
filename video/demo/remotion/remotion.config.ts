@@ -1,0 +1,10 @@
+import {Config} from "@remotion/cli/config";
+import fs from "fs";
+const exe = [process.env.CHROMIUM_PATH, "/opt/pw-browsers/chromium", "/opt/pw-browsers/chromium-1243/chrome-linux64/chrome"].filter(Boolean).find((p) => fs.existsSync(p as string));
+if (exe) Config.setBrowserExecutable(exe as string);
+Config.setVideoImageFormat("jpeg");
+Config.setJpegQuality(94);
+Config.setCodec("h264");
+Config.setPixelFormat("yuv420p");
+Config.setCrf(18);
+Config.setOverwriteOutput(true);

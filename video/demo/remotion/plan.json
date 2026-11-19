@@ -1,0 +1,240 @@
+{
+ "scenes": [
+  {
+   "id": "s1",
+   "target": 14,
+   "title": true,
+   "offset": 5,
+   "clip": "scene1.mp4",
+   "clipLen": 10.9,
+   "from": 0,
+   "len": 9,
+   "rate": 1.211,
+   "captions": [
+    {
+     "text": "Sample investigation: slurry pump P-101",
+     "at": 1.65,
+     "dur": 4.54
+    }
+   ],
+   "highlights": [],
+   "zooms": []
+  },
+  {
+   "id": "s2",
+   "target": 15,
+   "offset": 0,
+   "clip": "scene2.mp4",
+   "clipLen": 18.47,
+   "from": 0,
+   "len": 15,
+   "rate": 1.231,
+   "captions": [
+    {
+     "text": "Problem",
+     "at": 0.81,
+     "dur": 3.25
+    },
+    {
+     "text": "Loss in dollars",
+     "at": 14.6,
+     "dur": 0.4
+    }
+   ],
+   "highlights": [
+    {
+     "at": 12.16,
+     "dur": 3.66,
+     "x": 1216,
+     "y": 925,
+     "w": 452,
+     "h": 155
+    }
+   ],
+   "zooms": [
+    {
+     "at": 12.16,
+     "dur": 3.66,
+     "cx": 1440,
+     "cy": 1080,
+     "scale": 1.3
+    }
+   ]
+  },
+  {
+   "id": "s3",
+   "target": 11,
+   "offset": 0,
+   "clip": "scene3.mp4",
+   "clipLen": 15.67,
+   "from": 0,
+   "len": 11,
+   "rate": 1.424,
+   "captions": [
+    {
+     "text": "Evidence before opinions",
+     "at": 0.7,
+     "dur": 4.91
+    }
+   ],
+   "highlights": [],
+   "zooms": []
+  },
+  {
+   "id": "s4",
+   "target": 25,
+   "offset": 0,
+   "clip": "scene4.mp4",
+   "clipLen": 35.73,
+   "from": 0,
+   "len": 25,
+   "rate": 1.429,
+   "captions": [
+    {
+     "text": "Physical, human and system causes",
+     "at": 1.05,
+     "dur": 5.6
+    },
+    {
+     "text": "Suggestions: cause coach",
+     "at": 9.44,
+     "dur": 4.55
+    },
+    {
+     "text": "The AI suggests. You accept or dismiss.",
+     "at": 14.34,
+     "dur": 4.9
+    },
+    {
+     "text": "Challenge my analysis",
+     "at": 19.59,
+     "dur": 4.9
+    }
+   ],
+   "highlights": [],
+   "zooms": [
+    {
+     "at": 5.53,
+     "dur": 2.52,
+     "cx": 1500,
+     "cy": 420,
+     "scale": 1.2
+    }
+   ]
+  },
+  {
+   "id": "s5",
+   "target": 20,
+   "offset": 0,
+   "clip": "scene5.mp4",
+   "clipLen": 27.5,
+   "from": 0,
+   "len": 20,
+   "rate": 1.375,
+   "captions": [
+    {
+     "text": "Corrective and preventive actions",
+     "at": 1.82,
+     "dur": 4.36
+    },
+    {
+     "text": "Suggested actions: accept or dismiss",
+     "at": 8,
+     "dur": 5.09
+    },
+    {
+     "text": "Maintenance plan: tasks and intervals",
+     "at": 14.18,
+     "dur": 3.64
+    },
+    {
+     "text": "Spares check",
+     "at": 18.04,
+     "dur": 1.89
+    }
+   ],
+   "highlights": [],
+   "zooms": [
+    {
+     "at": 14.55,
+     "dur": 2.91,
+     "cx": 1440,
+     "cy": 300,
+     "scale": 1.3
+    }
+   ]
+  },
+  {
+   "id": "s6",
+   "target": 15,
+   "offset": 0,
+   "clip": "scene6.mp4",
+   "clipLen": 19.4,
+   "from": 0,
+   "len": 15,
+   "rate": 1.293,
+   "captions": [
+    {
+     "text": "Savings count once verified",
+     "at": 4.25,
+     "dur": 4.25
+    },
+    {
+     "text": "Roll out to similar assets",
+     "at": 8.89,
+     "dur": 5.41
+    }
+   ],
+   "highlights": [
+    {
+     "at": 5.26,
+     "dur": 2.94,
+     "x": 826,
+     "y": 610,
+     "w": 268,
+     "h": 180
+    }
+   ],
+   "zooms": []
+  },
+  {
+   "id": "s7",
+   "target": 10,
+   "offset": 0,
+   "clip": "scene7.mp4",
+   "clipLen": 15.63,
+   "from": 0,
+   "len": 10,
+   "rate": 1.563,
+   "captions": [
+    {
+     "text": "One-page management summary",
+     "at": 4.43,
+     "dur": 4.48
+    }
+   ],
+   "highlights": [],
+   "zooms": []
+  },
+  {
+   "id": "s8",
+   "target": 10,
+   "endcard": true,
+   "offset": 0,
+   "clip": "scene8.mp4",
+   "clipLen": 8.17,
+   "from": 4,
+   "len": 4.5,
+   "rate": 0.926,
+   "captions": [
+    {
+     "text": "The AI suggests. Your people decide.",
+     "at": 0.54,
+     "dur": 3.96
+    }
+   ],
+   "highlights": [],
+   "zooms": []
+  }
+ ]
+}

@@ -270,7 +270,8 @@ export function runQualityCheck(
     if (!isTaskCategory(a.category)) continue;
     const t = a.task;
     const missing: string[] = [];
-    if (!(t?.description ?? "").trim()) missing.push("a task description");
+    // The maintenance plan falls back to the action description, so the check must too.
+    if (!(t?.description ?? "").trim() && !a.description.trim()) missing.push("a task description");
     if (!t || t.intervalValue === null || !(t.intervalValue > 0)) missing.push("an interval");
     if (missing.length) {
       out.push({

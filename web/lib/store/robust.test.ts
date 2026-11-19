@@ -71,3 +71,20 @@ describe("database limit errors", () => {
     expect(e.message).toMatch(/500/);
   });
 });
+
+import { STORAGE_MESSAGE, SIGNED_OUT_MESSAGE } from "./supabase";
+describe("storage cap and signed-out messages", () => {
+  it("maps the database storage message to a clear one", () => {
+    const e = toStoreError({ message: "Storage limit reached: an account can hold at most 50 MB" }, "save");
+    expect(e.message).toBe(STORAGE_MESSAGE);
+    expect(e.message).toContain("50 MB");
+  });
+  it("signed out saves read in plain words", () => {
+    for (const err of [{ status: 401 }, { code: "PGRST301" }, { code: "42501" }, { message: "JWT expired" }]) {
+      const e = toStoreError(err, "save");
+      expect(e.message).toBe(SIGNED_OUT_MESSAGE);
+      expect(e.code).toBe("auth");
+    }
+    expect(SIGNED_OUT_MESSAGE).toBe("You've been signed out. Sign in again to keep saving; your changes are still on this page.");
+  });
+});

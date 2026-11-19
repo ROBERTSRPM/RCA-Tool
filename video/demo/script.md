@@ -57,9 +57,9 @@ Target durations below are authoritative (they include a short pause at the end 
 
 ## Scene 7: Report (10 s)
 
-**Say:** "When you are ready, print or save the report, a one-page summary for your manager: the problem, the loss, the causes, the actions and the verified result."
+**Say:** "When you are ready, let the AI draft a one-page management summary. You edit it, then print or save it as a PDF."
 
-**On screen:** Report step: the one-page summary, slow scroll. Caption: "One-page report for your manager".
+**On screen:** Report step: click "Management summary (1 page)" under Write-up drafting, show the drafted summary (problem, loss, causes, actions, how we will know), then the Print / Save as PDF button. Caption: "One-page management summary".
 
 ## Scene 8: Close (10 s)
 
