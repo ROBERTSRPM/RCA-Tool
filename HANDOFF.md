@@ -17,7 +17,7 @@ Read this first, then `BLUEPRINT.md` and `AI-ROADMAP.md` (the owner-approved AI 
 ## Live systems
 | What | Where |
 |---|---|
-| Live site | https://rca-tool-omega.vercel.app (Vercel project `rca-tool`, root directory `web`) |
+| Live site | https://www.rcapilot.com (also rca-tool-omega.vercel.app; Vercel project `rca-tool`, root directory `web`). AI layer, restyle and pre-launch fixes went live 2026-11-19 (main = f95916b), owner-approved after QA, security audit v1 and release retest GO |
 | Repo | github.com/ROBERTSRPM/RCA-Tool |
 | Database and login | Supabase project `rca-saas`, id `ccigtztlrvgkzyppjmxt`, Sydney. Tables `investigations` and `assets`, both with owner-only row level security, size checks and per-user limits. Function `delete_own_account()`. Migrations in `web/supabase/migrations/` (all applied). |
 | Cloud environment | `rca-tool`: allows the Supabase host, the live site, and Hugging Face hosts (for speech-to-text). |

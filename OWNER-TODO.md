@@ -22,7 +22,7 @@ Kept up to date by the PM. Nothing here blocks the agents right now unless it is
 
 ## Approvals
 - [ ] New look: approve the design (screenshots in `design/screens/`) and the orange brand colour
-- [ ] Going live: approve once QA and the security audit pass
+- [x] Going live: approved and live 2026-11-19
 
 ## Supabase settings (before the first customer)
 - [ ] Authentication → Passwords: minimum length 8, leaked-password protection on
