@@ -1,4 +1,4 @@
-# RootLoop QA suite
+# RCA Pilot QA suite
 
 Black-box Playwright tests (plain Node scripts, no test runner needed). They read
 `BASE_URL` (default `http://localhost:3555`) and `QA_PASSWORD` (required); nothing under `web/` or `video/` is touched.

@@ -19,7 +19,7 @@ Every interactive control found by \`inventory.js\` (raw lists in results/invent
 |---|---|---|---|
 | Landing | Logo link, Open the app, Sign in, Create account, Open the sample investigation, Start a new investigation | D-LAND-1 | pass |
 | Landing | footer text | D-LAND-1.footer | pass (round 2) |
-| /login | Email, Password, Sign in, Forgot your password?, Create a free account, Try the demo, logo | A-AUTH-1 | pass |
+| /login | Email, Password, Sign in, Forgot your password?, Create an account, Try the demo, logo | A-AUTH-1 | pass |
 | /login | "Send the confirmation email again" (only after unconfirmed-email error) | NOT TESTED: needs an unconfirmed account; no account may be created | n/a |
 | /signup | Email, Password, Confirm password, Create account (invalid input only), Sign in, Try the demo | A-AUTH-1 | pass (valid submit NOT TESTED by rule) |
 | /forgot-password | Email, Send reset link (validation only), Back to sign in | A-AUTH-1 | pass (real submit NOT TESTED: would email a fake address) |
@@ -27,7 +27,7 @@ Every interactive control found by \`inventory.js\` (raw lists in results/invent
 | /app dashboard | Reset sample data, New investigation, Open, Duplicate, Delete, confirm dialog (Cancel/Delete/Escape/backdrop), Load the sample investigation, empty state | D-DASH-2, A-PERS-1, A-ISO-1 | pass |
 | /app dashboard | 4 totals tiles, row figures, status badges | D-DASH-1, D-E2E-1, A-E2E-1 | pass |
 | Header | Logo, Investigations, Home, Sign in, Create account, account menu (My investigations, Sign out) | D-LAND-1, A-SESS-1, A-SIGNOUT-1 | pass |
-| Demo banner | Create a free account, Sign in links | A-AUTH-1.signed-out-app | pass |
+| Demo banner | Create an account, Sign in links | A-AUTH-1.signed-out-app | pass |
 | Import offer banner (Copy to my account / No thanks) | NOT TESTED: appears only for an account with browser demo data on first sign-in and stores a one-time flag; the pre-existing accounts have been used before | n/a |
 | Workspace | All investigations link, 7 stepper buttons, Back/Next buttons, save indicator, Try again, Quality panel toggle + every Go to link, conflict banner (Load the latest version / Keep mine and overwrite) | D-E2E-1, D-QC-1, A-OFF-1, A-PERS-1 | pass |
 | 1 Problem | Title, Asset, Site/area, Date of event, What happened?, Where, When, Impact | D-E2E-1.problem, D-PERS-1.problem, D-EDGE-DATE | pass |

@@ -110,13 +110,21 @@ export function Workspace({ initial }: { initial: Investigation }) {
     return () => clearTimeout(t);
   }, [assetSig, invId]);
   useEffect(() => {
+    let t: ReturnType<typeof setTimeout> | undefined;
     const onBlur = () => {
-      if (!(problemRef.current.assetTag ?? "").trim()) return;
-      ensurePending.current = false;
-      void ensureAssetFor(problemRef.current, invId);
+      // Wait a moment so the latest typed value has reached problemRef.
+      clearTimeout(t);
+      t = setTimeout(() => {
+        if (!(problemRef.current.assetTag ?? "").trim()) return;
+        ensurePending.current = false;
+        void ensureAssetFor(problemRef.current, invId);
+      }, 80);
     };
     window.addEventListener(ASSET_TAG_BLUR, onBlur);
-    return () => window.removeEventListener(ASSET_TAG_BLUR, onBlur);
+    return () => {
+      window.removeEventListener(ASSET_TAG_BLUR, onBlur);
+      clearTimeout(t);
+    };
   }, [invId]);
   useEffect(
     () => () => {

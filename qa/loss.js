@@ -198,7 +198,7 @@ function suite(tag, viewport) {
     await sub('dash-open', 'Dashboard (open investigation): row $20,462 with cash/opportunity split; loss tile = same; verified tile unchanged at $238,440', async () => {
       await page.goto(BASE + '/app'); const s = await cards(page); const rows = await e.dashRows(page); const r = rows.find(z => z.includes('LOSS-S3'));
       ok(r.includes($(x.total)) && r.includes(`Cash ${$(x.cashYr)} · Opportunity ${$(x.oppYr)}`), r);
-      ok(s['Annual loss under investigation'].includes($(x.total)), JSON.stringify(s)); ok(s['Annual loss under investigation'].includes(`Cash ${$(x.cashYr)} · Opportunity ${$(x.oppYr)}`), JSON.stringify(s));
+      ok(s['Open annual loss'].includes($(x.total)), JSON.stringify(s)); ok(s['Open annual loss'].includes(`Cash ${$(x.cashYr)} · Opportunity ${$(x.oppYr)}`), JSON.stringify(s));
       ok(s['Verified annual savings'].includes('$238,440'), JSON.stringify(s)); ok(s['Verified annual savings'].includes('Cash $57,000 · Opportunity $181,440'), JSON.stringify(s));
     });
     await sub('report-open', 'Report: loss table rows, split, totals and "expected saving ... not yet verified" wording equal hand calc', async () => {
@@ -217,7 +217,7 @@ function suite(tag, viewport) {
       const rep = (await e.reportText(page)).toLowerCase(); ok(rep.includes('annual saving (verified) $12,641') && rep.includes('a saving of $12,641 per year') && !rep.includes('not yet verified'), rep.slice(0, 400)); ok(rep.includes('status: closed'));
     });
     await sub('dash-closed', 'Dashboard after closing: loss tile $0, verified tile $251,081 (238,440 + 12,641) with cash $65,801 + opportunity $185,280', async () => {
-      await page.goto(BASE + '/app'); const s = await cards(page); ok(/\$0 /.test(s['Annual loss under investigation']), JSON.stringify(s));
+      await page.goto(BASE + '/app'); const s = await cards(page); ok(/\$0 /.test(s['Open annual loss']), JSON.stringify(s));
       ok(s['Verified annual savings'].includes('$251,081'), JSON.stringify(s)); ok(s['Verified annual savings'].includes('Cash $65,801 · Opportunity $185,280'), JSON.stringify(s));
     });
     await sub('not-verified-states', 'Each missing condition keeps the saving "not yet verified" and out of the dashboard: action open / recurred yes / unreviewed / no review date', async () => {

@@ -75,7 +75,7 @@ test('A-AUTH-1', 'Auth forms: validation, wrong password, links, signed-out acce
     await page.goto(BASE + '/reset-password#access_token=garbage&refresh_token=garbage&type=recovery'); await page.getByText('Reset link not valid').waitFor({ timeout: 10000 });
   });
   await sub('auth-links', 'Auth page links: login<->signup, login->forgot, forgot->login, "Try the demo"->/app, logo', async () => {
-    await page.goto(BASE + '/login'); await page.getByRole('link', { name: 'Create a free account' }).click(); await page.waitForURL(/signup/);
+    await page.goto(BASE + '/login'); await page.getByRole('link', { name: 'Create an account' }).click(); await page.waitForURL(/signup/);
     await page.getByRole('link', { name: 'Sign in', exact: true }).click(); await page.waitForURL(/login/);
     await page.getByRole('link', { name: 'Forgot your password?' }).click(); await page.waitForURL(/forgot/);
     await page.getByRole('link', { name: 'Back to sign in' }).click(); await page.waitForURL(/login/);
@@ -158,7 +158,7 @@ test('A-E2E-1', 'Signed-in full flow as user A: create, fill 7 steps, hand-check
     for (const s of ['annual loss $13,800', 'annual saving (verified) $10,350', 'action cost $2,151', 'payback 2.5 months', 'status: closed']) ok(t.includes(s), 'missing ' + s);
   });
   await sub('dash', 'Dashboard (account): loss $0, open 0, overdue 0, saved 238,440 + 10,350 = $248,790, new row Closed', async () => {
-    await page.goto(BASE + '/app'); const s = await e.dashStats(page); eq(s['Verified annual savings'], money(238440 + calc.saving)); eq(s['Open actions'], '0'); eq(s['Overdue actions'], '0'); eq(s['Annual loss under investigation'], '$0');
+    await page.goto(BASE + '/app'); const s = await e.dashStats(page); eq(s['Verified annual savings'], money(238440 + calc.saving)); eq(s['Open actions'], '0'); eq(s['Overdue actions'], '0'); eq(s['Open annual loss'], '$0');
     ok((await e.dashRows(page)).some(r => r.includes('QA: Gearbox') && r.includes('Closed') && r.includes('$13,800')));
   });
   await sub('print', 'Print emulation of the account report hides app chrome (account menu, header)', async () => {

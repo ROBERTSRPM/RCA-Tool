@@ -54,7 +54,6 @@ const securityHeaders = [
       "geolocation=()",
       "payment=()",
       "usb=()",
-      "bluetooth=()",
       "serial=()",
       "hid=()",
       "midi=()",

@@ -1,20 +1,20 @@
 {
   "suite": "demo",
-  "base": "https://rca-tool-omega.vercel.app",
-  "at": "2026-11-17T08:28:44.295Z",
+  "base": "http://localhost:3555",
+  "at": "2026-11-19T02:58:47.797Z",
   "results": [
     {
       "id": "D-LAND-1.hdr",
       "title": "Landing shows headline, 3 benefit cards, video placeholder",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "assertion failed",
       "ms": 0
     },
     {
       "id": "D-LAND-1.logo",
       "title": "Logo link goes to the landing page / app",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "locator.getAttribute: Timeout 30000ms exceeded. | Call log: | \u001b[2m  - waiting for getByRole('link', { name: 'RootLoop' }).first()\u001b[22m | ",
       "ms": 0
     },
     {
@@ -41,15 +41,15 @@
     {
       "id": "D-LAND-1.sample",
       "title": "\"Open the sample investigation\" opens the sample workspace",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "locator.click: Error: strict mode violation: getByRole('link', { name: 'Try the sample investigation' }) resolved to 2 elements: |     1) <a href=\"/app/investigations/sample-p101\" class=\"btn btn-primary min-h-12 px-6 text-base\">Try the sample investigation</a> aka getByRole('main').getByRole('link', { name: 'Try the sample investigation' }) |     2) <a href=\"/app/investigations/sample-p101\" class=\"btn btn-primary min-h-12 px-6 text-base\">Try the sample investigation</a> aka getByRole('link', { name: 'Try the sample investigation' }).nth(1) |  | Call log: | \u001b[2m  - waiting for getByRole('link', { name: 'Try the sample investigation' })\u001b[22m",
       "ms": 0
     },
     {
       "id": "D-LAND-1.start-new",
       "title": "\"Start a new investigation\" creates one and opens it",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "locator.click: Timeout 30000ms exceeded. | Call log: | \u001b[2m  - waiting for getByRole('button', { name: 'Start a new investigation' })\u001b[22m | ",
       "ms": 0
     },
     {
@@ -64,13 +64,13 @@
       "title": "Landing page: every link and button works",
       "status": "pass",
       "detail": "",
-      "ms": 2768
+      "ms": 61082
     },
     {
       "id": "D-DASH-1.totals",
       "title": "Totals: loss under investigation $0 (sample is closed), 0 open, 0 overdue, saved $238,440 (round 3 sample)",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "values differ: expected \"$0\" but got undefined",
       "ms": 0
     },
     {
@@ -85,7 +85,7 @@
       "title": "Dashboard (sample only): totals equal hand calculation",
       "status": "pass",
       "detail": "",
-      "ms": 1079
+      "ms": 256
     },
     {
       "id": "D-DASH-2.dup",
@@ -139,8 +139,8 @@
     {
       "id": "D-DASH-2.empty",
       "title": "Delete everything -> empty state, then \"Load the sample investigation\" restores it",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "values differ: expected \"$0\" but got undefined",
       "ms": 0
     },
     {
@@ -155,7 +155,7 @@
       "title": "Dashboard buttons: duplicate, delete cancel/confirm, reset sample, empty state",
       "status": "pass",
       "detail": "",
-      "ms": 6506
+      "ms": 4472
     },
     {
       "id": "D-E2E-1.problem",
@@ -209,8 +209,8 @@
     {
       "id": "D-E2E-1.dash-1",
       "title": "Dashboard totals (open work, unverified): loss $13,800, open 2, overdue 1, saved $238,440",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "values differ: expected \"$13,800\" but got undefined",
       "ms": 0
     },
     {
@@ -237,8 +237,8 @@
     {
       "id": "D-E2E-1.dash-3",
       "title": "Dashboard after closing: loss $0, open 0, overdue 0, saved $248,790; row says Closed",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "values differ: expected \"$0\" but got undefined",
       "ms": 0
     },
     {
@@ -274,7 +274,7 @@
       "title": "Full flow: new investigation, 7 steps, hand-checked numbers, dashboard, report, reload",
       "status": "pass",
       "detail": "",
-      "ms": 8463
+      "ms": 7575
     },
     {
       "id": "D-TREE-1.empty",
@@ -372,7 +372,7 @@
       "title": "Cause tree operations: add child/sibling, edit, delete, collapse/expand, move, status",
       "status": "pass",
       "detail": "",
-      "ms": 4004
+      "ms": 3584
     },
     {
       "id": "D-TREE-2.tree-count",
@@ -428,13 +428,13 @@
       "title": "Switching Tree / 5 Whys / Fishbone keeps data; every view control works",
       "status": "pass",
       "detail": "",
-      "ms": 1747
+      "ms": 1354
     },
     {
       "id": "D-QC-1.blank",
       "title": "Blank investigation: problem-missing, loss-not-quantified, no-causes findings; panel opens on desktop",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "To do No causes have been added yet. Ask \"Why?\" under the failure event to start. Go to Cause tree|To do Problem statement is missing: title, asset, site or area, date of event, what happened, where, when, impact. Go to Problem|To do Add a rough figure when you can. Managers act on dollars. Go to Loss",
       "ms": 0
     },
     {
@@ -461,22 +461,22 @@
     {
       "id": "D-QC-1.jump-loss",
       "title": "Rule loss-not-quantified: \"Go to Loss\" opens Loss step",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "locator.click: Timeout 30000ms exceeded. | Call log: | \u001b[2m  - waiting for locator('section[aria-label=\"Quality check\"] ul li').filter({ hasText: /The loss is not quantified/ }).first().getByRole('button', { name: /^Go to/ })\u001b[22m | ",
       "ms": 0
     },
     {
       "id": "D-QC-1.loss-partial",
       "title": "Loss finding shrinks as inputs are entered, then clears",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "locator.fill: Timeout 30000ms exceeded. | Call log: | \u001b[2m  - waiting for getByLabel('How many times a year does it happen?', { exact: true })\u001b[22m | ",
       "ms": 0
     },
     {
       "id": "D-QC-1.loss-zero",
       "title": "Loss inputs of 0 still count as \"not quantified\"",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "locator.fill: Timeout 30000ms exceeded. | Call log: | \u001b[2m  - waiting for getByLabel('Downtime per event', { exact: true })\u001b[22m | ",
       "ms": 0
     },
     {
@@ -559,8 +559,8 @@
     {
       "id": "D-QC-1.all-clear",
       "title": "With everything fixed the panel shows \"All clear\"",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "Quality check1 thing to do as you go | To do |  | Add a rough figure when you can. Managers act on dollars. |  | Go to Loss",
       "ms": 0
     },
     {
@@ -582,7 +582,7 @@
       "title": "Quality check: each rule triggers, jump link lands on the right step, clears when fixed",
       "status": "pass",
       "detail": "",
-      "ms": 9404
+      "ms": 97785
     },
     {
       "id": "D-PERS-1.autosave-states",
@@ -679,7 +679,7 @@
       "id": "D-PERS-1.concurrent-window",
       "title": "Two tabs edit different fields within the same ~350 ms autosave window: neither edit may be silently lost (3 tries)",
       "status": "fail",
-      "detail": "values differ: expected [] but got [\"try 0: site=\\\"Packing hall B\\\" (typed \\\"S01794903965225\\\") when=\\\"W01794903965225\\\" (typed \\\"W01794903965225\\\") notices=0\",\"try 1: site=\\\"Packing hall B\\\" (typed \\\"S11794903968647\\\") when=\\\"W11794903968647\\\" (typed \\\"W11794903968647\\\") notices=0\",\"try 2: site=\\\"S21794903972342\\\" (typed \\\"S21794903972342\\\") when=\\\"W11794903968647\\\" (typed \\\"W21794903972342\\\") notices=0\"]",
+      "detail": "values differ: expected [] but got [\"try 0: site=\\\"S01795056973120\\\" (typed \\\"S01795056973120\\\") when=\\\"Night shift, full speed\\\" (typed \\\"W01795056973120\\\") notices=0\",\"try 1: site=\\\"S11795056976125\\\" (typed \\\"S11795056976125\\\") when=\\\"Night shift, full speed\\\" (typed \\\"W11795056976125\\\") notices=0\",\"try 2: site=\\\"S21795056979121\\\" (typed \\\"S21795056979121\\\") when=\\\"Night shift, full speed\\\" (typed \\\"W21795056979121\\\") notices=1\"]",
       "ms": 0
     },
     {
@@ -687,7 +687,7 @@
       "title": "Persistence: reload after each kind of edit (demo)",
       "status": "pass",
       "detail": "",
-      "ms": 29816
+      "ms": 25126
     },
     {
       "id": "D-EDGE-NUM.letters",
@@ -720,8 +720,8 @@
     {
       "id": "D-EDGE-NUM.zero-loss",
       "title": "All zeros: annual loss $0, no NaN/Infinity anywhere",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "values differ: expected \"$0\" but got \"Loss not costed yet\"",
       "ms": 0
     },
     {
@@ -792,7 +792,7 @@
       "title": "Number fields: zero, negative, non-numeric, decimals, huge; payback edge cases",
       "status": "pass",
       "detail": "",
-      "ms": 5052
+      "ms": 3811
     },
     {
       "id": "D-EDGE-TEXT.overflow-problem",
@@ -890,7 +890,7 @@
       "title": "Very long text, HTML/script text and special characters render as text and do not break layout",
       "status": "pass",
       "detail": "",
-      "ms": 26242
+      "ms": 16390
     },
     {
       "id": "D-EDGE-DATE.past-future-event",
@@ -932,7 +932,7 @@
       "title": "Dates in the past and future",
       "status": "pass",
       "detail": "",
-      "ms": 6013
+      "ms": 4489
     },
     {
       "id": "D-EDGE-NAV.bad-id",
@@ -1007,8 +1007,8 @@
     {
       "id": "D-EDGE-NAV.dblclick-landing",
       "title": "Double-clicking \"Start a new investigation\" on the landing page creates exactly one",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "locator.dblclick: Timeout 30000ms exceeded. | Call log: | \u001b[2m  - waiting for getByRole('button', { name: 'Start a new investigation' })\u001b[22m | ",
       "ms": 0
     },
     {
@@ -1028,9 +1028,9 @@
     {
       "id": "D-EDGE-NAV",
       "title": "Invalid id, unknown routes, back/forward, double-click create",
-      "status": "fail",
-      "detail": "CSP violations during test: Applying inline style violates the following Content Security Policy directive 'style-src 'self''. Either the 'unsafe-inline' keyword, a hash ('sha256-Z5XTK23DFuEMs0PwnyZDO9SWxemQ5HxcpVaBNuUJyWY='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked. || CSP violation: style-src-elem blocked inline at https://rca-tool-omega.vercel.app/nope:1 || Applying inline style violates the following Content Security Policy directive 'style-src 'self''. Either the 'unsafe-inline' keyword, a hash ('sha256-Z5XTK23DFuEMs0PwnyZDO9SWxemQ5HxcpVaBNuUJyWY='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked.",
-      "ms": 14650
+      "status": "pass",
+      "detail": "",
+      "ms": 40283
     },
     {
       "id": "D-EDGE-ACT.hidden-after-unflag",
@@ -1051,7 +1051,7 @@
       "title": "Actions whose root cause is unflagged or deleted",
       "status": "pass",
       "detail": "",
-      "ms": 2514
+      "ms": 1858
     },
     {
       "id": "D-EDGE-EVID.upload",
@@ -1100,7 +1100,7 @@
       "title": "Evidence: link/unlink, delete confirm, photo upload, non-image file",
       "status": "pass",
       "detail": "",
-      "ms": 6050
+      "ms": 5076
     },
     {
       "id": "D-EDGE-STORE.corrupt",
@@ -1128,7 +1128,7 @@
       "title": "Browser storage faults: corrupt JSON, blocked storage",
       "status": "pass",
       "detail": "",
-      "ms": 4869
+      "ms": 2603
     },
     {
       "id": "D-ERR-1.pages-desktop",
@@ -1163,7 +1163,7 @@
       "title": "No console errors or failed requests on any page (desktop and 375px, every step and cause view)",
       "status": "pass",
       "detail": "",
-      "ms": 30878
+      "ms": 27065
     },
     {
       "id": "D-A11Y-1.names",
@@ -1217,8 +1217,8 @@
     {
       "id": "D-A11Y-1.small-targets",
       "title": "Interactive controls are at least 24x24 CSS px (WCAG 2.2 min) on every step",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "Problem: expected [] but got [\"Help 31x20\",\"Privacy 49x20\",\"Terms 41x20\"]",
       "ms": 0
     },
     {
@@ -1275,7 +1275,7 @@
       "title": "Accessibility: names, labels, headings, language, titles, focus visibility, keyboard reach, contrast",
       "status": "pass",
       "detail": "",
-      "ms": 27857
+      "ms": 23667
     },
     {
       "id": "D-MOB-1.page_",
@@ -1385,8 +1385,8 @@
     {
       "id": "D-MOB-1.tap-targets",
       "title": "375px: primary controls are at least 40px tall (touch)",
-      "status": "pass",
-      "detail": "",
+      "status": "fail",
+      "detail": "values differ: expected [] but got [\"Help 20px\",\"Privacy 20px\",\"Terms 20px\",\"roberts@intelbeyond.com 17px\"]",
       "ms": 0
     },
     {
@@ -1408,7 +1408,7 @@
       "title": "375px layout: no horizontal overflow, clipped or off-screen content on every page and step (sample + filled)",
       "status": "pass",
       "detail": "",
-      "ms": 19502
+      "ms": 16238
     },
     {
       "id": "D-MOB-E2E.problem",
@@ -1478,7 +1478,7 @@
       "title": "375px: the full end-to-end flow (all 7 steps, 7-cause tree, actions, verify) works with touch-sized layout",
       "status": "pass",
       "detail": "",
-      "ms": 5431
+      "ms": 4436
     }
   ],
   "notes": [
@@ -1500,11 +1500,11 @@
     },
     {
       "kind": "observation",
-      "text": "Blank \"Untitled investigation\" rows remain if user creates and abandons: 5"
+      "text": "Blank \"Untitled investigation\" rows remain if user creates and abandons: 4"
     },
     {
       "kind": "observation",
-      "text": "Quality: Fix first The loss is not quantified yet. Still needed: events per year, downtime hours per event, production rate, margin per unit. Go to Loss | Fix first No cause is flagged as a root cause yet. Go to Cause tree | Should fix Problem statement is missing: title, asset, site or area, date of event, what happened, where, when, impact. Go to Problem | Should fix This branch stops at a Physical cause: \"Only root\". Ask \"why?\" again to find the System / Latent cause beneath. Go to Cause tree | Should fix Action \"Action X\" is not linked to a root cause (its cause was removed or is no longer flagged as a root cause). Link it to a root cause or delete it. Go to Actions ; report has action text: true"
+      "text": "Quality: Fix first No cause is flagged as a root cause yet. Go to Cause tree | To do Problem statement is missing: title, asset, site or area, date of event, what happened, where, when, impact. Go to Problem | Should fix This branch stops at a Physical cause: \"Only root\". Ask \"why?\" again to find the System / Latent cause beneath. Go to Cause tree | Should fix Action \"Action X\" is not linked to a root cause (its cause was removed or is no longer flagged as a root cause). Link it to a root cause or delete it. Go to Actions | To do Add a rough figure when you can. Managers act on dollars. Go to Loss ; report has action text: true"
     },
     {
       "kind": "observation",

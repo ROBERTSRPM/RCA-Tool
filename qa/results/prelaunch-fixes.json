@@ -1,0 +1,36 @@
+{
+  "suite": "prelaunch-fixes",
+  "base": "http://localhost:3555",
+  "at": "2026-11-19T02:57:41.923Z",
+  "results": [
+    {
+      "id": "P-AUTH-1.photo-help",
+      "title": "Evidence photo help says \"kept in your account\"",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "P-AUTH-1.ghost-asset",
+      "title": "Renaming the tag leaves no ghost asset in the register",
+      "status": "fail",
+      "detail": "ghost tag still in register",
+      "ms": 0
+    },
+    {
+      "id": "P-AUTH-1.session-lost",
+      "title": "After the session is lost, a sticky toast says \"You've been signed out...\" with a sign-in link and the text stays",
+      "status": "pass",
+      "detail": "",
+      "ms": 0
+    },
+    {
+      "id": "P-AUTH-1",
+      "title": "Signed in: photo help, ghost asset on tag rename, session-lost toast, sample not offered",
+      "status": "pass",
+      "detail": "",
+      "ms": 29273
+    }
+  ],
+  "notes": []
+}

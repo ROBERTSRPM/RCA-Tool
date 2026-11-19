@@ -144,9 +144,9 @@ test('D-EDGE-NUM', 'Number fields: zero, negative, non-numeric, decimals, huge; 
     await el.fill(''); await el.pressSequentially('5.'); eq(await val(), '5.');
     await el.fill(''); await el.pressSequentially('0.001'); eq(await val(), '0.001');
   });
-  await sub('zero-loss', 'All zeros: annual loss $0, no NaN/Infinity anywhere', async () => {
+  await sub('zero-loss', 'All zeros: "Loss not costed yet" (never $0), no NaN/Infinity anywhere', async () => {
     for (const l of ['How many times a year does it happen?', L, 'Production rate', 'Margin per unit', 'Repair cost per event']) await f.typeNum(page, l, 0);
-    eq(await page.getByTestId('annual-loss').innerText(), '$0');
+    eq(await page.getByTestId('annual-loss').innerText(), 'Loss not costed yet');
     const t = await page.locator('body').innerText(); ok(!/NaN|Infinity|undefined|null/.test(t), 'bad token in: ' + t.match(/.{20}(NaN|Infinity|undefined|null).{20}/)?.[0]);
   });
   await sub('huge', 'Huge values (1e20) format without NaN/scientific and without horizontal overflow', async () => {
@@ -328,9 +328,9 @@ test('D-EDGE-NAV', 'Invalid id, unknown routes, back/forward, double-click creat
     await page.goto(BASE + '/app'); await page.goto(BASE + '/app/investigations/sample-p101#loss'); await page.getByRole('navigation', { name: 'Investigation steps' }).waitFor();
     await page.evaluate(() => { location.hash = '#report'; }); await page.waitForTimeout(500); eq(await f.activeStep(page), 'Report', 'hashchange ignored; still on ' + await f.activeStep(page));
   });
-  await sub('dblclick-landing', 'Double-clicking "Start a new investigation" on the landing page creates exactly one', async () => {
-    await page.goto(BASE + '/'); const before = await page.evaluate(() => JSON.parse(localStorage.getItem('rca.investigations.v1') || '[]').length);
-    await page.getByRole('button', { name: 'Start a new investigation' }).dblclick(); await page.waitForURL(/investigations\//); await page.waitForTimeout(800);
+  await sub('dblclick-landing', 'Double-clicking "New investigation" on a fresh dashboard creates exactly one', async () => {
+    await page.goto(BASE + '/app'); await e.dashStats(page); const before = await page.evaluate(() => JSON.parse(localStorage.getItem('rca.investigations.v1') || '[]').length);
+    await page.getByRole('button', { name: 'New investigation' }).first().dblclick(); await page.waitForURL(/investigations\//); await page.waitForTimeout(800);
     const after = await page.evaluate(() => JSON.parse(localStorage.getItem('rca.investigations.v1')).length); eq(after - before, 1, 'created ' + (after - before));
   });
   await sub('dblclick-dup', 'Double-clicking Duplicate creates exactly one copy', async () => {

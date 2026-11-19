@@ -169,9 +169,11 @@ test('D-QC-1', 'Quality check: each rule triggers, jump link lands on the right 
   await sub('blank', 'Blank investigation: problem-missing, loss-not-quantified, no-causes findings; panel opens on desktop', async () => {
     const t = await R(page);
     ok(has(t, /Problem statement is missing: title, asset, site or area, date of event, what happened, where, when, impact/), t.join('|'));
-    ok(has(t, /The loss is not quantified yet\. Still needed: events per year, downtime hours per event, production rate, margin per unit/), t.join('|'));
+    ok(has(t, /Add a rough figure when you can\. Managers act on dollars/), t.join('|'));
     ok(has(t, /No causes have been added yet/), t.join('|'));
-    ok(/3 findings, 2 to fix first/.test(await page.locator('section[aria-label="Quality check"]').innerText()));
+    // A brand-new investigation never opens red: findings are neutral guidance until a step is visited or edited.
+    const head = await page.locator('section[aria-label="Quality check"]').innerText();
+    ok(/3 things to do as you go/.test(head) && !/to fix first/.test(head), head);
   });
   await sub('jump-problem', 'Rule problem-missing: "Go to Problem" opens Problem step', async () => {
     await step(page, 'Report'); await clickJump(page, /Problem statement is missing/); eq(await f.activeStep(page), 'Problem');
@@ -186,17 +188,17 @@ test('D-QC-1', 'Quality check: each rule triggers, jump link lands on the right 
     await page.getByLabel('What was the impact?').fill('Down');
   });
   await sub('jump-loss', 'Rule loss-not-quantified: "Go to Loss" opens Loss step', async () => {
-    await clickJump(page, /The loss is not quantified/); eq(await f.activeStep(page), 'Loss');
+    await clickJump(page, /Add a rough figure when you can/); eq(await f.activeStep(page), 'Loss');
   });
   await sub('loss-partial', 'Loss finding shrinks as inputs are entered, then clears', async () => {
     await f.typeNum(page, 'How many times a year does it happen?', 2);
-    let t = await R(page); ok(has(t, /Still needed: downtime hours per event, production rate, margin per unit/) && !has(t, /events per year,/), t.join('|'));
+    let t = await R(page); ok(has(t, /Add a rough figure when you can/), 'partial inputs still get the gentle reminder: ' + t.join('|'));
     await f.typeNum(page, 'Downtime per event', 3); await f.typeNum(page, 'Production rate', 10); await f.typeNum(page, 'Margin per unit', 4);
-    t = await R(page); ok(!has(t, /not quantified/), t.join('|'));
+    t = await R(page); ok(!has(t, /Add a rough figure/), t.join('|'));
   });
   await sub('loss-zero', 'Loss inputs of 0 still count as "not quantified"', async () => {
     await f.typeNum(page, 'Downtime per event', 0);
-    const t = await R(page); ok(has(t, /Still needed: downtime hours per event/), t.join('|'));
+    const t = await R(page); ok(has(t, /Add a rough figure when you can/), t.join('|'));
     await f.typeNum(page, 'Downtime per event', 3);
   });
   await sub('no-root', 'Rule no-root-cause (tree started): "No cause is flagged as a root cause yet" and jump -> Cause tree', async () => {

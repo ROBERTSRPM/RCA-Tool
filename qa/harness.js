@@ -61,6 +61,13 @@ async function newPage(browser, { viewport = DESKTOP, storageState, offline } = 
   const context = await browser.newContext({ viewport, storageState, acceptDownloads: true });
   const page = await context.newPage();
   page.errs = [];
+  // QA_LOCAL_SIGNOUT=1: turn the app's global sign-out into a local one, so a test run never revokes
+  // the sessions of the shared QA accounts (someone else may be using them).
+  if (process.env.QA_LOCAL_SIGNOUT) {
+    await context.route('**/auth/v1/logout*', (route) => {
+      const u = new URL(route.request().url()); u.searchParams.set('scope', 'local'); route.continue({ url: u.toString() });
+    });
+  }
   // round 3: every Content-Security-Policy violation is logged as a console error, so it counts as a failure everywhere errs is asserted
   await page.addInitScript(() => { document.addEventListener('securitypolicyviolation', (e) => console.error('CSP violation: ' + e.violatedDirective + ' blocked ' + e.blockedURI + ' at ' + (e.sourceFile || '') + ':' + (e.lineNumber || ''))); });
   page.fails = [];
