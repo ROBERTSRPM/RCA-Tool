@@ -51,6 +51,6 @@ Kept up to date by the PM. Nothing here blocks the agents right now unless it is
 - [ ] Trading entity and ABN for invoices; support inbox (e.g. support@rcapilot.com)
 
 ## Small things
-- [ ] YouTube: paste the new description line, "Try RCA Pilot, the tool that takes you through these steps: https://www.rcapilot.com"
+- [x] YouTube: paste the new description line, "Try RCA Pilot, the tool that takes you through these steps: https://www.rcapilot.com"
 - [ ] Anthropic key: if it has an expiry date, tell the PM so a reminder can be set
 - [ ] Line up 5 design partners from your network

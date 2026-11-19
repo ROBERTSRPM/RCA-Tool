@@ -45,6 +45,7 @@ Read this first, then `BLUEPRINT.md` and `AI-ROADMAP.md` (the owner-approved AI 
 - Owner to do in Supabase: minimum password length 8, leaked-password protection, CAPTCHA before public promotion.
 
 ## Video
+- Published on YouTube: explainer https://youtu.be/b_pNSfn9jjI , product demo (2:55, owner's voice) https://youtu.be/3_s0V_pwHdE . Demo sources in `video/demo/` (script, recording, captions, upload pack `youtube-upload.md`, A/B thumbnails).
 - Final: `video/out/rca-explainer-final.mp4` (12:23, 1080p, voiceover). Not in git (too large); rebuild with the commands in `video/animation/README.md`. The owner has a copy.
 - Script: `video/voiceover.txt` is final (owner-approved). Scenes 1, 3 to 6, 8 to 17; scenes 2 and 7 were removed.
 - Original recording: `video/recordings/voiceover-original.m4a`. Edit and enhancement log: `video/animation/public/audio/edit-log.md`. Per-scene WAVs are not in git; rebuild them from the original following that log.
