@@ -693,7 +693,7 @@ FT('F-UI-1', 'New pages (assets, account) and new Actions/Verify sections: label
     await page.goto(BASE + u); await page.waitForTimeout(1500); const o = await h.overflowX(page); await h.shot(page, 'ui' + u.replace(/\W+/g, '_') + '-' + mode); ok(o.sw <= o.cw, `overflow ${o.sw}>${o.cw}`); eq(await page.evaluate(AUD), []); eq(await page.locator('h1').count(), 1); eq(await page.locator('main').count(), 1);
   });
   await sub('sample-steps', 'Sample investigation: every step incl. Actions with plan/spares and Verify with rollout: labelled controls and no overflow', async () => {
-    await page.goto(BASE + '/'); await page.getByRole('link', { name: 'Open the sample investigation' }).click(); await page.waitForURL(/investigations/); for (const s of h.STEP_LABELS) { await step(page, s); await page.waitForTimeout(250); const o = await h.overflowX(page); ok(o.sw <= o.cw, s + ` overflow ${o.sw}>${o.cw}`); eq(await page.evaluate(AUD), [], s); }
+    await page.goto(BASE + '/'); await page.getByRole('link', { name: 'Try the sample investigation' }).click(); await page.waitForURL(/investigations/); for (const s of h.STEP_LABELS) { await step(page, s); await page.waitForTimeout(250); const o = await h.overflowX(page); ok(o.sw <= o.cw, s + ` overflow ${o.sw}>${o.cw}`); eq(await page.evaluate(AUD), [], s); }
     await step(page, 'Actions'); await h.shot(page, 'ui-sample-actions-' + mode); await step(page, 'Verify'); await h.shot(page, 'ui-sample-verify-' + mode);
   });
   await sub('keyboard', 'Actions step reachable by keyboard: Tab reaches an action row button and Enter expands it', async () => {

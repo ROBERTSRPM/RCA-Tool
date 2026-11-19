@@ -28,7 +28,7 @@ test('D-LAND-1', 'Landing page: every link and button works', async ({ browser, 
     await page.goto(BASE + '/'); await page.getByRole('link', { name: 'Create account' }).click(); await page.waitForURL(/\/signup/);
   });
   await sub('sample', '"Open the sample investigation" opens the sample workspace', async () => {
-    await page.goto(BASE + '/'); await page.getByRole('link', { name: 'Open the sample investigation' }).click();
+    await page.goto(BASE + '/'); await page.getByRole('link', { name: 'Try the sample investigation' }).click();
     await page.waitForURL(/\/app\/investigations\//);
     await page.getByRole('heading', { name: /Repeat bearing and mechanical seal failures/, level: 1 }).waitFor();
   });

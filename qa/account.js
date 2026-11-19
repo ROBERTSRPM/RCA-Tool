@@ -118,7 +118,7 @@ test('A-SESS-1', 'Signed in: session survives reload, account menu, signed-in /l
     const rows = await e.dashRows(page); ok(rows.some(r => r.includes('Illustrative sample') && r.includes('$238,440')), rows.join('|'));
   });
   await sub('landing-sample-link', 'Landing "Open the sample investigation" maps to the account sample when signed in', async () => {
-    await page.goto(BASE + '/'); await page.getByRole('link', { name: 'Open the sample investigation' }).click(); await page.waitForURL(/investigations/);
+    await page.goto(BASE + '/'); await page.getByRole('link', { name: 'Try the sample investigation' }).click(); await page.waitForURL(/investigations/);
     await page.getByRole('heading', { name: /Repeat bearing and mechanical seal failures/, level: 1 }).waitFor();
   });
   await sub('demo-separate', 'Demo-mode data is separate: signing out shows demo store, not account data', async () => {
@@ -311,7 +311,7 @@ test('A-PERS-1', 'Signed-in persistence: reload after each kind of edit, autosav
     await page.reload(); await e.dashStats(page); eq((await e.dashRows(page)).length, before);
   });
   await sub('reset-sample', 'Reset sample data in account: edit sample, reset, original restored, own data untouched', async () => {
-    await page.goto(BASE + '/'); await page.getByRole('link', { name: 'Open the sample investigation' }).click(); await page.getByLabel('Title', { exact: true }).waitFor(); await page.getByLabel('Title', { exact: true }).fill('SAMPLE EDIT ACC'); await waitSaved(page);
+    await page.goto(BASE + '/'); await page.getByRole('link', { name: 'Try the sample investigation' }).click(); await page.getByLabel('Title', { exact: true }).waitFor(); await page.getByLabel('Title', { exact: true }).fill('SAMPLE EDIT ACC'); await waitSaved(page);
     await page.goto(BASE + '/app'); await e.dashStats(page); ok((await e.dashRows(page)).some(r => r.includes('SAMPLE EDIT ACC')));
     await page.getByRole('button', { name: 'Reset sample data' }).click(); await page.getByRole('alertdialog').getByRole('button', { name: 'Reset sample' }).click();
     await page.waitForFunction(() => !document.body.innerText.includes('SAMPLE EDIT ACC')); const rows = await e.dashRows(page); ok(rows.some(r => r.includes('Repeat bearing')) && rows.some(r => r.includes('ACC TAB1')), rows.join('|'));
@@ -393,13 +393,13 @@ test('A-MOB-1', 'Signed in at 375px: dashboard, workspace, account menu layout',
   });
   await sub('ws', '375px signed-in workspace: all steps no overflow', async () => {
     await page.keyboard.press('Escape'); await page.goto(BASE + '/app/investigations/' + (await page.evaluate(() => null) || 'x')).catch(() => {});
-    await page.goto(BASE + '/'); await page.getByRole('link', { name: 'Open the sample investigation' }).click(); await page.waitForURL(/investigations/);
+    await page.goto(BASE + '/'); await page.getByRole('link', { name: 'Try the sample investigation' }).click(); await page.waitForURL(/investigations/);
     for (const s of h.STEP_LABELS) { await step(page, s); const o = await h.overflowX(page); ok(o.sw <= o.cw, s + ' overflow ' + o.sw); }
   });
 }, { viewport: MOBILE }));
 
 test('A-ERR-1', 'Signed in: no console errors or failed requests on dashboard and all steps', async ({ browser, sub }) => asUser(browser, 'A', async (page) => {
-  await page.goto(BASE + '/app'); await e.dashStats(page); await page.goto(BASE + '/'); await page.getByRole('link', { name: 'Open the sample investigation' }).click(); await page.waitForURL(/investigations/);
+  await page.goto(BASE + '/app'); await e.dashStats(page); await page.goto(BASE + '/'); await page.getByRole('link', { name: 'Try the sample investigation' }).click(); await page.waitForURL(/investigations/);
   for (const s of h.STEP_LABELS) { await step(page, s); await page.waitForTimeout(200); }
   await page.goto(BASE + '/app'); await e.dashStats(page);
   eq({ errs: page.errs, fails: page.fails }, { errs: [], fails: [] });
