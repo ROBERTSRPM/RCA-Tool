@@ -12,11 +12,11 @@ Unlike the earlier recording, this one is not digitally silent between words: th
 | 1 | 3.15 to 22.45 | spoken "Scene 2" at 22.8 |
 | 2 | 25.05 to 55.30 | spoken "Scene 2" (22.8 to 24.1), "Scene 3" at 57.4 |
 | 3 | 58.9 to 73.5 | spoken "Scene 3" and "Scene 4" (75.5) |
-| 4 | 76.5 to 95.76, 106.8 to 111.5, 112.4 to 121.4 | the two failed takes of "Challenge my analysis points out weak links" (93.8 to 106.0). The first take supplies "...you may have missed, and", the third (106.8 to 111.5) supplies "Challenge my analysis points out weak links" |
+| 4 | 76.5 to 95.76, 107.38 to 111.5, 112.4 to 121.4 | the two failed takes of "Challenge my analysis points out weak links" (93.8 to 106.0). The first take supplies "...you may have missed, and", the third (107.38 to 111.5) supplies "Challenge my analysis points out weak links" |
 | 5 | 127.35 to 153.8 | "Now, scene 5" (123.2 to 127.0); the "Now" that opens "Now, actions" is kept |
 | 6 | 155.3 to 173.8 | spoken "Scene 6" |
 | 7 | 176.65 to 188.6 | spoken "Scene 7" |
-| 8 | 193.3 to 208.0 | spoken "Scene 8" |
+| 8 | 193.3 to 208.62 | spoken "Scene 8" |
 
 Joins inside scene 4 use 0.18 s of silence. No pause was longer than 1.3 s inside a kept segment, so none were shortened (the script checks and would shorten to 1.0 s). Each scene file has 0.25 s lead and 0.45 s tail.
 
@@ -36,3 +36,8 @@ Checks: each edited scene was re-transcribed and matches the script (see differe
 - Scene 4: "The AI suggests. You decide." is spoken with a very short pause, so captions show it as two cues.
 - Scene 8: "decide" is transcribed "design" in the plain pass; the prompted pass gives "decide".
 - Please check by ear: the join in scene 4 after "you may have missed, and", the start of scene 5 ("Now, actions"), and scene 2's "illustrative".
+
+## Correction (owner report: "the .com is missed")
+- Scene 8 was cut at 208.0 s, but "dot com" was spoken at 208.05 to 208.45 s (a 0.4 s gap after "pilot" had hidden it). The cut now ends at 208.62 s and the scene has 0.8 s of room tone after the last word (was 0.45 s). The end card now starts when "Try it at" begins and runs to the end of the scene (6.5 s).
+- Scene 4 had a doubled "and" at the join ("missed, and and Challenge..."): the third take's lead-in "and" (106.84 to 107.2) was kept as well. Take 3 now starts at 107.38 s, at "Challenge".
+- Word-by-word check of the final mix (Whisper on the final audio) against `voiceover-to-read.txt`: every scene starts and ends on its script words; no clipped first or last words. Differences are recogniser noise or the owner's wording ("an owner and a due date" is heard as "an owner and due date").

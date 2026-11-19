@@ -211,7 +211,7 @@
   {
    "id": "s4",
    "start": 65.74,
-   "dur": 34.3,
+   "dur": 33.72,
    "clip": "scene4.mp4",
    "segs": [
     {
@@ -276,51 +276,51 @@
     },
     {
      "at": 19,
-     "dur": 2.8,
+     "dur": 2.3,
      "clipStart": 25.03,
      "rate": 1
     },
     {
-     "at": 21.8,
+     "at": 21.3,
      "dur": 1.2,
      "clipStart": 28.9,
      "rate": 1
     },
     {
-     "at": 23,
-     "dur": 1.6,
+     "at": 22.5,
+     "dur": 1.5,
      "clipStart": 30.1,
      "rate": 3
     },
     {
-     "at": 24.6,
+     "at": 24,
      "dur": 1.4,
      "clipStart": 35.1,
      "rate": 1
     },
     {
-     "at": 26,
+     "at": 25.4,
      "dur": 0.6,
      "clipStart": 36.5,
      "rate": 2.5
     },
     {
-     "at": 26.6,
+     "at": 26,
      "dur": 1.8,
      "clipStart": 38,
      "rate": 1
     },
     {
-     "at": 28.4,
+     "at": 27.8,
      "dur": 1.2,
      "clipStart": 43.07,
      "rate": 1
     },
     {
-     "at": 29.6,
-     "dur": 4.7,
+     "at": 29,
+     "dur": 4.72,
      "clipStart": 44.27,
-     "rate": 0.992
+     "rate": 0.988
     }
    ],
    "captions": [
@@ -341,12 +341,12 @@
     },
     {
      "text": "You accept or dismiss each one",
-     "at": 25.2,
+     "at": 24.6,
      "dur": 4.6
     },
     {
      "text": "The AI suggests. You decide.",
-     "at": 30,
+     "at": 29.4,
      "dur": 4
     }
    ],
@@ -363,7 +363,7 @@
   },
   {
    "id": "s5",
-   "start": 100.04,
+   "start": 99.46,
    "dur": 27.18,
    "clip": "scene5.mp4",
    "segs": [
@@ -481,7 +481,7 @@
   },
   {
    "id": "s6",
-   "start": 127.22,
+   "start": 126.64,
    "dur": 19.3,
    "clip": "scene6.mp4",
    "segs": [
@@ -560,7 +560,7 @@
   },
   {
    "id": "s7",
-   "start": 146.52,
+   "start": 145.94,
    "dur": 12.74,
    "clip": "scene7.mp4",
    "segs": [
@@ -619,9 +619,9 @@
   },
   {
    "id": "s8",
-   "start": 159.26,
-   "dur": 15.36,
-   "endcardLen": 5.4,
+   "start": 158.68,
+   "dur": 16.51,
+   "endcardLen": 6.5,
    "clip": "scene8.mp4",
    "segs": [
     {
@@ -644,9 +644,9 @@
     },
     {
      "at": 6,
-     "dur": 3.96,
+     "dur": 4.01,
      "clipStart": 6.57,
-     "rate": 2.701
+     "rate": 2.667
     }
    ],
    "captions": [

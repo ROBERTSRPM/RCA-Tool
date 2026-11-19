@@ -29,9 +29,9 @@ Chapters
 0:20 Problem and loss in dollars
 0:50 Evidence
 1:06 Cause tree and AI suggestions
-1:40 Actions, maintenance plan and spares
+1:39 Actions, maintenance plan and spares
 2:07 Verify and roll out
-2:27 One-page management summary
+2:26 One-page management summary
 2:39 Try it
 
 ## Tags (15)

@@ -14,9 +14,9 @@
      "captions": [{"text": "Evidence before opinions", "at": 1.6, "dur": 8.5}]},
     {"id": "s4",
      "cues": [{"mark": "tab", "at": 0.0, "move": 1.2}, {"mark": "levels", "at": 3.2, "move": 4.7}, {"mark": "coach", "at": 11.8, "move": 1.8}, {"mark": "coach-run", "at": 14.2, "move": 1.2}, {"mark": "coach-results", "at": 15.8, "move": 1.2},
-              {"mark": "challenge", "at": 19.0, "move": 3.0}, {"mark": "challenge-results", "at": 21.8, "move": 1.2}, {"mark": "back", "at": 24.6, "move": 1.4}, {"mark": "accept", "at": 26.6, "move": 2.4}, {"mark": "dismiss", "at": 28.4, "move": 1.2}],
+              {"mark": "challenge", "at": 19.0, "move": 3.0}, {"mark": "challenge-results", "at": 21.3, "move": 1.2}, {"mark": "back", "at": 24.0, "move": 1.4}, {"mark": "accept", "at": 26.0, "move": 2.4}, {"mark": "dismiss", "at": 27.8, "move": 1.2}],
      "captions": [{"text": "Physical, human and system causes", "at": 3.2, "dur": 8.0}, {"text": "Suggestions: cause coach", "at": 12.8, "dur": 5.6},
-                  {"text": "Challenge my analysis", "at": 19.2, "dur": 5.0}, {"text": "You accept or dismiss each one", "at": 25.2, "dur": 4.6}, {"text": "The AI suggests. You decide.", "at": 30.0, "dur": 4.0}],
+                  {"text": "Challenge my analysis", "at": 19.2, "dur": 5.0}, {"text": "You accept or dismiss each one", "at": 24.6, "dur": 4.6}, {"text": "The AI suggests. You decide.", "at": 29.4, "dur": 4.0}],
      "zooms": [{"at": 5.5, "dur": 4.5, "cx": 1500, "cy": 420, "scale": 1.2}]},
     {"id": "s5",
      "cues": [{"mark": "tab", "at": 0.3, "move": 1.2}, {"mark": "first", "at": 3.8, "move": 2.6}, {"mark": "plan", "at": 11.0, "move": 3.0}, {"mark": "spares", "at": 15.8, "move": 1.8}, {"mark": "suggest", "at": 18.0, "move": 3.3},
@@ -30,7 +30,7 @@
     {"id": "s7",
      "cues": [{"mark": "tab", "at": 0.1, "move": 1.2}, {"mark": "ai", "at": 2.8, "move": 2.9}, {"mark": "draft", "at": 5.4, "move": 1.4}, {"mark": "print", "at": 8.8, "move": 3.2}],
      "captions": [{"text": "One-page management summary", "at": 3.4, "dur": 8.4}]},
-    {"id": "s8", "endcardLen": 5.4,
+    {"id": "s8", "endcardLen": 6.5,
      "cues": [{"mark": "tab", "at": 0.0, "move": 1.2}, {"mark": "tree", "at": 3.0, "move": 3.0}],
      "captions": [{"text": "The AI suggests. Your people decide.", "at": 5.6, "dur": 4.2}]}
   ]

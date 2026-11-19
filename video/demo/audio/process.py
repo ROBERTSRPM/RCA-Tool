@@ -12,11 +12,11 @@ CUTS = {
  1: [(3.15, 22.45)],
  2: [(25.05, 55.30)],
  3: [(58.90, 73.50)],
- 4: [(76.50, 95.76), (106.80, 111.50), (112.40, 121.40)],
+ 4: [(76.50, 95.76), (107.38, 111.50), (112.40, 121.40)],
  5: [(127.35, 153.80)],
  6: [(155.30, 173.80)],
  7: [(176.65, 188.60)],
- 8: [(193.30, 208.00)],
+ 8: [(193.30, 208.62)],  # runs past 'dot com' (spoken 208.05 to 208.45); the first cut at 208.0 had clipped it
 }
 # explicit snap windows for cuts that sit next to speech (start/end search ranges, source seconds)
 x, sr = sf.read(sys.argv[1], dtype="float64")
@@ -69,7 +69,7 @@ for sc, cuts in CUTS.items():
     gap = np.zeros(int(0.18 * SR))
     body = parts[0]
     for p in parts[1:]: body = np.concatenate([body, gap, p])
-    y = np.concatenate([np.zeros(int(0.25 * SR)), body, np.zeros(int(0.45 * SR))])
+    y = np.concatenate([np.zeros(int(0.25 * SR)), body, np.zeros(int((0.8 if sc == 8 else 0.45) * SR))])
     y = sosfiltfilt(sos, y)
     y = nr.reduce_noise(y=y, sr=SR, y_noise=quiet, stationary=True, prop_decrease=0.85, n_fft=2048, freq_mask_smooth_hz=400, time_mask_smooth_ms=60)
     # downward expander in the gaps
