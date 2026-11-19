@@ -14,7 +14,7 @@ export const Thumb = () => (
       <LogoMark size={56} />
       <div style={{fontSize: 40, fontWeight: 600, color: C.text}}>RCA Pilot</div>
     </div>
-    <div style={{position: "absolute", left: 64, top: 160, width: 820, fontSize: 104, fontWeight: 700, lineHeight: 1.0, letterSpacing: -3, color: C.text}}>Stop fixing the same failure twice</div>
+    <div style={{position: "absolute", left: 64, top: 160, width: 820, fontSize: 104, fontWeight: 700, lineHeight: 1.0, letterSpacing: -3, color: C.text}}>Out of firefighting mode</div>
     <div style={{position: "absolute", left: 64, bottom: 64, display: "flex", alignItems: "center", gap: 28}}>
       <div style={{width: 8, height: 92, background: C.accent, borderRadius: 4}} />
       <div>
