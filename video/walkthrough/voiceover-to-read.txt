@@ -12,7 +12,7 @@ Scene 3: Sign in and start (27 s)
 Go to w w w dot r c a pilot dot com. Demo mode needs no account. I will create an account with an email and password, so my work is kept safely and is there on any device. The AI buttons I use today need you signed in. This is the dashboard, empty. I click New investigation.
 
 Scene 4: Problem: draft from notes (50 s)
-Step one is Problem. At the top is a box called Draft problem statement from notes. Last time the fields were already filled, which was confusing. Today everything is empty. A technician would jot rough notes like these. Now I click Draft problem statement from notes. The AI turns the notes into a clear statement, using only what I wrote. It does not guess a cause, and it lists what the notes left out, under Not in your notes, worth finding out. I can edit the draft, then I press Use this draft. It fills the Describe the problem fields below, and I can undo it. Then I read it and correct anything.
+Step one is Problem. At the top is a box called Draft problem statement from notes. Today everything is empty. A technician would jot rough notes like these. Now I click Draft problem statement from notes. The AI turns the notes into a clear statement, using only what I wrote. It does not guess a cause, and it lists what the notes left out, under Not in your notes, worth finding out. I can edit the draft, then I press Use this draft. It fills the Describe the problem fields below, and I can undo it. Then I read it and correct anything.
 
 Scene 5: Problem: asset details (18 s)
 Below that, Asset details. Tag, type, make and model, duty, criticality, and the failure mode in one phrase. The tag goes into your asset register, and the failure mode links this to similar failures on other assets.
