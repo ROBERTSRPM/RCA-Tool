@@ -3,7 +3,7 @@ Voiceover for Walkthrough: RCA Pilot (about 10.5 minutes)
 Read it like you're telling the story to a colleague, at your normal easy pace. Say the scene number, read the lines, pause 2 seconds, then the next scene. If you stumble, repeat the line.
 
 Scene 1: The situation (59 s)
-It's 4 o'clock in the morning on a Thursday, and the night shift on Line 3 is doing its 2-hourly seal check. The operator takes 3 packs of chicken and rice off the end of the line and drops them in the leak tester, and 2 of them leak along the seal. That means everything we've packed since the last good check, about 6,000 packs, goes on hold.
+It's 4 o'clock in the morning on a Thursday, and the night shift on Line 3 is doing its 2-hourly seal check. The operator takes 3 packs off the end of the line and drops them in the leak tester, and 2 of them leak along the seal. That means everything we've packed since the last good check, about 6,000 packs, goes on hold.
 Then the phones start, the production manager's at home and then the QA manager's. A retailer already complained about slack packs last month, and this is the 6th time this year.
 When I ran a plant, this was the call nobody wanted, because I knew the general manager would ask two questions. Why does this keep happening, and what is it actually costing us?
 
