@@ -2,19 +2,60 @@
  "scenes": [
   {
    "id": "s1",
-   "target": 14,
-   "title": true,
-   "offset": 5,
+   "start": 0,
+   "dur": 19.78,
+   "titleLen": 7,
    "clip": "scene1.mp4",
-   "clipLen": 10.9,
-   "from": 0,
-   "len": 9,
-   "rate": 1.211,
+   "segs": [
+    {
+     "at": 7,
+     "dur": 1.6,
+     "clipStart": 0,
+     "rate": 1
+    },
+    {
+     "at": 8.6,
+     "dur": 2.8,
+     "clipStart": 1.6,
+     "rate": 0.5
+    },
+    {
+     "at": 11.4,
+     "dur": 3.4,
+     "clipStart": 2.96,
+     "rate": 1,
+     "freeze": true
+    },
+    {
+     "at": 14.8,
+     "dur": 2.1,
+     "clipStart": 3,
+     "rate": 1
+    },
+    {
+     "at": 16.9,
+     "dur": 0.9,
+     "clipStart": 5.1,
+     "rate": 3
+    },
+    {
+     "at": 17.8,
+     "dur": 1.4,
+     "clipStart": 8.5,
+     "rate": 1
+    },
+    {
+     "at": 19.2,
+     "dur": 0.58,
+     "clipStart": 9.9,
+     "rate": 3
+    }
+   ],
    "captions": [
     {
      "text": "Sample investigation: slurry pump P-101",
-     "at": 1.65,
-     "dur": 4.54
+     "at": 14.4,
+     "dur": 5
     }
    ],
    "highlights": [],
@@ -22,29 +63,82 @@
   },
   {
    "id": "s2",
-   "target": 15,
-   "offset": 0,
+   "start": 19.78,
+   "dur": 30.72,
    "clip": "scene2.mp4",
-   "clipLen": 18.47,
-   "from": 0,
-   "len": 15,
-   "rate": 1.231,
+   "segs": [
+    {
+     "at": 0,
+     "dur": 1,
+     "clipStart": 0,
+     "rate": 1
+    },
+    {
+     "at": 1,
+     "dur": 3,
+     "clipStart": 1,
+     "rate": 0.833
+    },
+    {
+     "at": 4,
+     "dur": 2,
+     "clipStart": 3.5,
+     "rate": 1
+    },
+    {
+     "at": 6,
+     "dur": 7.2,
+     "clipStart": 5.5,
+     "rate": 0.875
+    },
+    {
+     "at": 13.2,
+     "dur": 1.4,
+     "clipStart": 11.8,
+     "rate": 1
+    },
+    {
+     "at": 14.6,
+     "dur": 3.74,
+     "clipStart": 13.2,
+     "rate": 0.5
+    },
+    {
+     "at": 18.34,
+     "dur": 1.06,
+     "clipStart": 15.03,
+     "rate": 1,
+     "freeze": true
+    },
+    {
+     "at": 19.4,
+     "dur": 2.7,
+     "clipStart": 15.07,
+     "rate": 1
+    },
+    {
+     "at": 22.1,
+     "dur": 8.62,
+     "clipStart": 17.77,
+     "rate": 1.032
+    }
+   ],
    "captions": [
     {
      "text": "Problem",
-     "at": 0.81,
-     "dur": 3.25
+     "at": 0.8,
+     "dur": 3.6
     },
     {
      "text": "Loss in dollars",
-     "at": 14.6,
-     "dur": 0.4
+     "at": 19.8,
+     "dur": 8.5
     }
    ],
    "highlights": [
     {
-     "at": 12.16,
-     "dur": 3.66,
+     "at": 22.2,
+     "dur": 5.6,
      "x": 1216,
      "y": 925,
      "w": 452,
@@ -53,8 +147,8 @@
    ],
    "zooms": [
     {
-     "at": 12.16,
-     "dur": 3.66,
+     "at": 22,
+     "dur": 6.4,
      "cx": 1440,
      "cy": 1080,
      "scale": 1.3
@@ -63,18 +157,52 @@
   },
   {
    "id": "s3",
-   "target": 11,
-   "offset": 0,
+   "start": 50.5,
+   "dur": 15.24,
    "clip": "scene3.mp4",
-   "clipLen": 15.67,
-   "from": 0,
-   "len": 11,
-   "rate": 1.424,
+   "segs": [
+    {
+     "at": 0.1,
+     "dur": 1.2,
+     "clipStart": 0,
+     "rate": 1
+    },
+    {
+     "at": 1.3,
+     "dur": 2.4,
+     "clipStart": 1.2,
+     "rate": 1.196
+    },
+    {
+     "at": 3.7,
+     "dur": 3.2,
+     "clipStart": 4.07,
+     "rate": 1
+    },
+    {
+     "at": 6.9,
+     "dur": 1.9,
+     "clipStart": 7.27,
+     "rate": 1.632
+    },
+    {
+     "at": 8.8,
+     "dur": 2.5,
+     "clipStart": 10.37,
+     "rate": 1
+    },
+    {
+     "at": 11.3,
+     "dur": 3.94,
+     "clipStart": 12.87,
+     "rate": 1.141
+    }
+   ],
    "captions": [
     {
      "text": "Evidence before opinions",
-     "at": 0.7,
-     "dur": 4.91
+     "at": 1.6,
+     "dur": 8.5
     }
    ],
    "highlights": [],
@@ -82,40 +210,151 @@
   },
   {
    "id": "s4",
-   "target": 25,
-   "offset": 0,
+   "start": 65.74,
+   "dur": 34.3,
    "clip": "scene4.mp4",
-   "clipLen": 35.73,
-   "from": 0,
-   "len": 25,
-   "rate": 1.429,
+   "segs": [
+    {
+     "at": 0,
+     "dur": 1.2,
+     "clipStart": 0,
+     "rate": 1
+    },
+    {
+     "at": 1.2,
+     "dur": 2,
+     "clipStart": 1.2,
+     "rate": 0.935
+    },
+    {
+     "at": 3.2,
+     "dur": 4.7,
+     "clipStart": 3.07,
+     "rate": 1
+    },
+    {
+     "at": 7.9,
+     "dur": 3.9,
+     "clipStart": 7.77,
+     "rate": 1.59
+    },
+    {
+     "at": 11.8,
+     "dur": 1.8,
+     "clipStart": 13.97,
+     "rate": 1
+    },
+    {
+     "at": 13.6,
+     "dur": 0.6,
+     "clipStart": 15.77,
+     "rate": 2.5
+    },
+    {
+     "at": 14.2,
+     "dur": 1.2,
+     "clipStart": 17.27,
+     "rate": 1
+    },
+    {
+     "at": 15.4,
+     "dur": 0.4,
+     "clipStart": 18.47,
+     "rate": 0.9
+    },
+    {
+     "at": 15.8,
+     "dur": 1.2,
+     "clipStart": 18.83,
+     "rate": 1
+    },
+    {
+     "at": 17,
+     "dur": 2,
+     "clipStart": 20.03,
+     "rate": 2.5
+    },
+    {
+     "at": 19,
+     "dur": 2.8,
+     "clipStart": 25.03,
+     "rate": 1
+    },
+    {
+     "at": 21.8,
+     "dur": 1.2,
+     "clipStart": 28.9,
+     "rate": 1
+    },
+    {
+     "at": 23,
+     "dur": 1.6,
+     "clipStart": 30.1,
+     "rate": 3
+    },
+    {
+     "at": 24.6,
+     "dur": 1.4,
+     "clipStart": 35.1,
+     "rate": 1
+    },
+    {
+     "at": 26,
+     "dur": 0.6,
+     "clipStart": 36.5,
+     "rate": 2.5
+    },
+    {
+     "at": 26.6,
+     "dur": 1.8,
+     "clipStart": 38,
+     "rate": 1
+    },
+    {
+     "at": 28.4,
+     "dur": 1.2,
+     "clipStart": 43.07,
+     "rate": 1
+    },
+    {
+     "at": 29.6,
+     "dur": 4.7,
+     "clipStart": 44.27,
+     "rate": 0.992
+    }
+   ],
    "captions": [
     {
      "text": "Physical, human and system causes",
-     "at": 1.05,
-     "dur": 5.6
+     "at": 3.2,
+     "dur": 8
     },
     {
      "text": "Suggestions: cause coach",
-     "at": 9.44,
-     "dur": 4.55
-    },
-    {
-     "text": "The AI suggests. You accept or dismiss.",
-     "at": 14.34,
-     "dur": 4.9
+     "at": 12.8,
+     "dur": 5.6
     },
     {
      "text": "Challenge my analysis",
-     "at": 19.59,
-     "dur": 4.9
+     "at": 19.2,
+     "dur": 5
+    },
+    {
+     "text": "You accept or dismiss each one",
+     "at": 25.2,
+     "dur": 4.6
+    },
+    {
+     "text": "The AI suggests. You decide.",
+     "at": 30,
+     "dur": 4
     }
    ],
    "highlights": [],
    "zooms": [
     {
-     "at": 5.53,
-     "dur": 2.52,
+     "at": 5.5,
+     "dur": 4.5,
      "cx": 1500,
      "cy": 420,
      "scale": 1.2
@@ -124,40 +363,116 @@
   },
   {
    "id": "s5",
-   "target": 20,
-   "offset": 0,
+   "start": 100.04,
+   "dur": 27.18,
    "clip": "scene5.mp4",
-   "clipLen": 27.5,
-   "from": 0,
-   "len": 20,
-   "rate": 1.375,
+   "segs": [
+    {
+     "at": 0.3,
+     "dur": 1.2,
+     "clipStart": 0,
+     "rate": 1
+    },
+    {
+     "at": 1.5,
+     "dur": 2.3,
+     "clipStart": 1.2,
+     "rate": 0.813
+    },
+    {
+     "at": 3.8,
+     "dur": 2.6,
+     "clipStart": 3.07,
+     "rate": 1
+    },
+    {
+     "at": 6.4,
+     "dur": 4.6,
+     "clipStart": 5.67,
+     "rate": 1.304
+    },
+    {
+     "at": 11,
+     "dur": 3,
+     "clipStart": 11.67,
+     "rate": 1
+    },
+    {
+     "at": 14,
+     "dur": 1.8,
+     "clipStart": 14.67,
+     "rate": 1.5
+    },
+    {
+     "at": 15.8,
+     "dur": 1.8,
+     "clipStart": 17.37,
+     "rate": 1
+    },
+    {
+     "at": 17.6,
+     "dur": 0.4,
+     "clipStart": 19.17,
+     "rate": 3
+    },
+    {
+     "at": 18,
+     "dur": 3.2,
+     "clipStart": 22.67,
+     "rate": 1
+    },
+    {
+     "at": 21.2,
+     "dur": 1,
+     "clipStart": 26.63,
+     "rate": 1
+    },
+    {
+     "at": 22.2,
+     "dur": 1.2,
+     "clipStart": 27.63,
+     "rate": 3
+    },
+    {
+     "at": 23.4,
+     "dur": 2.2,
+     "clipStart": 32.63,
+     "rate": 1
+    },
+    {
+     "at": 25.6,
+     "dur": 1.58,
+     "clipStart": 34.83,
+     "rate": 2.133
+    }
+   ],
    "captions": [
     {
      "text": "Corrective and preventive actions",
-     "at": 1.82,
-     "dur": 4.36
-    },
-    {
-     "text": "Suggested actions: accept or dismiss",
-     "at": 8,
-     "dur": 5.09
+     "at": 4,
+     "dur": 6
     },
     {
      "text": "Maintenance plan: tasks and intervals",
-     "at": 14.18,
-     "dur": 3.64
+     "at": 11.6,
+     "dur": 4
     },
     {
      "text": "Spares check",
-     "at": 18.04,
-     "dur": 1.89
+     "at": 16.2,
+     "dur": 1.6
+    },
+    {
+     "text": "Suggested actions: you accept or dismiss",
+     "at": 19,
+     "dur": 7.6
     }
    ],
    "highlights": [],
    "zooms": [
     {
-     "at": 14.55,
-     "dur": 2.91,
+     "at": 12.4,
+     "dur": 3,
      "cx": 1440,
      "cy": 300,
      "scale": 1.3
@@ -166,29 +481,75 @@
   },
   {
    "id": "s6",
-   "target": 15,
-   "offset": 0,
+   "start": 127.22,
+   "dur": 19.3,
    "clip": "scene6.mp4",
-   "clipLen": 19.4,
-   "from": 0,
-   "len": 15,
-   "rate": 1.293,
+   "segs": [
+    {
+     "at": 0.2,
+     "dur": 1.2,
+     "clipStart": 0,
+     "rate": 1
+    },
+    {
+     "at": 1.4,
+     "dur": 2.8,
+     "clipStart": 1.2,
+     "rate": 0.846
+    },
+    {
+     "at": 4.2,
+     "dur": 2.8,
+     "clipStart": 3.57,
+     "rate": 1
+    },
+    {
+     "at": 7,
+     "dur": 4.8,
+     "clipStart": 6.37,
+     "rate": 1.458
+    },
+    {
+     "at": 11.8,
+     "dur": 2,
+     "clipStart": 13.37,
+     "rate": 1
+    },
+    {
+     "at": 13.8,
+     "dur": 1,
+     "clipStart": 15.37,
+     "rate": 2
+    },
+    {
+     "at": 14.8,
+     "dur": 2.2,
+     "clipStart": 17.37,
+     "rate": 1
+    },
+    {
+     "at": 17,
+     "dur": 2.3,
+     "clipStart": 19.57,
+     "rate": 2.709
+    }
+   ],
    "captions": [
     {
      "text": "Savings count once verified",
-     "at": 4.25,
-     "dur": 4.25
+     "at": 4.8,
+     "dur": 6.4
     },
     {
      "text": "Roll out to similar assets",
-     "at": 8.89,
-     "dur": 5.41
+     "at": 12.2,
+     "dur": 6
     }
    ],
    "highlights": [
     {
-     "at": 5.26,
-     "dur": 1.86,
+     "at": 6.6,
+     "dur": 4.2,
      "x": 826,
      "y": 610,
      "w": 268,
@@ -199,18 +560,58 @@
   },
   {
    "id": "s7",
-   "target": 10,
-   "offset": 0,
+   "start": 146.52,
+   "dur": 12.74,
    "clip": "scene7.mp4",
-   "clipLen": 15.63,
-   "from": 0,
-   "len": 10,
-   "rate": 1.563,
+   "segs": [
+    {
+     "at": 0.1,
+     "dur": 1.2,
+     "clipStart": 0,
+     "rate": 1
+    },
+    {
+     "at": 1.3,
+     "dur": 1.5,
+     "clipStart": 1.2,
+     "rate": 1.58
+    },
+    {
+     "at": 2.8,
+     "dur": 2.6,
+     "clipStart": 3.57,
+     "rate": 1
+    },
+    {
+     "at": 5.4,
+     "dur": 1.4,
+     "clipStart": 7.13,
+     "rate": 1
+    },
+    {
+     "at": 6.8,
+     "dur": 2,
+     "clipStart": 8.53,
+     "rate": 2.5
+    },
+    {
+     "at": 8.8,
+     "dur": 3.2,
+     "clipStart": 13.53,
+     "rate": 1
+    },
+    {
+     "at": 12,
+     "dur": 0.74,
+     "clipStart": 16.73,
+     "rate": 3
+    }
+   ],
    "captions": [
     {
      "text": "One-page management summary",
-     "at": 4.43,
-     "dur": 4.48
+     "at": 3.4,
+     "dur": 8.4
     }
    ],
    "highlights": [],
@@ -218,19 +619,41 @@
   },
   {
    "id": "s8",
-   "target": 10,
-   "endcard": true,
-   "offset": 0,
+   "start": 159.26,
+   "dur": 15.36,
+   "endcardLen": 5.4,
    "clip": "scene8.mp4",
-   "clipLen": 8.17,
-   "from": 4,
-   "len": 4.5,
-   "rate": 0.926,
+   "segs": [
+    {
+     "at": 0,
+     "dur": 1.2,
+     "clipStart": 0,
+     "rate": 1
+    },
+    {
+     "at": 1.2,
+     "dur": 1.8,
+     "clipStart": 1.2,
+     "rate": 1.317
+    },
+    {
+     "at": 3,
+     "dur": 3,
+     "clipStart": 3.57,
+     "rate": 1
+    },
+    {
+     "at": 6,
+     "dur": 3.96,
+     "clipStart": 6.57,
+     "rate": 2.701
+    }
+   ],
    "captions": [
     {
      "text": "The AI suggests. Your people decide.",
-     "at": 0.54,
-     "dur": 3.96
+     "at": 5.6,
+     "dur": 4.2
     }
    ],
    "highlights": [],

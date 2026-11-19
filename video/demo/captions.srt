@@ -1,108 +1,108 @@
 1
-00:00:00,300 --> 00:00:04,359
+00:00:00,960 --> 00:00:06,870
 Every repair feels like progress, until the same pump fails again.
 
 2
-00:00:04,409 --> 00:00:10,335
+00:00:07,360 --> 00:00:14,690
 RCA Pilot helps your team find the real cause, fix it, and prove it stays fixed.
 
 3
-00:00:10,385 --> 00:00:12,950
+00:00:15,580 --> 00:00:17,940
 Here it is, on a slurry pump.
 
 4
-00:00:14,300 --> 00:00:15,392
+00:00:19,780 --> 00:00:22,150
 Start with the problem.
 
 5
-00:00:15,442 --> 00:00:20,529
+00:00:23,380 --> 00:00:32,430
 Pump P-101 has failed six times in twelve months, and each failure stops the line for fourteen hours.
 
 6
-00:00:20,579 --> 00:00:26,808
+00:00:33,400 --> 00:00:47,470
 Add the downtime, margin and repair cost, and RCA Pilot shows the loss: about two hundred and thirty-eight thousand dollars a year.
 
 7
-00:00:26,858 --> 00:00:27,950
+00:00:48,100 --> 00:00:50,020
 These figures are illustrative.
 
 8
-00:00:29,300 --> 00:00:30,705
+00:00:50,500 --> 00:00:53,250
 Next, the evidence.
 
 9
-00:00:30,755 --> 00:00:38,950
+00:00:54,460 --> 00:01:05,060
 Add photos, trend data, inspections and records, so every cause can be checked against facts, not opinions.
 
 10
-00:00:40,300 --> 00:00:42,185
+00:01:05,740 --> 00:01:08,050
 Then the cause tree.
 
 11
-00:00:42,235 --> 00:00:47,505
+00:01:09,380 --> 00:01:17,150
 Physical, human and system causes, marked as natural or forced deterioration.
 
 12
-00:00:47,555 --> 00:00:56,695
+00:01:18,500 --> 00:01:30,130
 Under Suggestions, the cause coach proposes causes you may have missed, and Challenge my analysis points out weak links.
 
 13
-00:00:56,745 --> 00:01:01,532
+00:01:30,780 --> 00:01:35,080
 You read each one, then accept it or dismiss it.
 
 14
-00:01:01,582 --> 00:01:02,983
+00:01:35,120 --> 00:01:37,160
 The AI suggests.
 
 15
-00:01:03,033 --> 00:01:03,950
+00:01:37,200 --> 00:01:39,300
 You decide.
 
 16
-00:01:05,300 --> 00:01:06,100
+00:01:41,100 --> 00:01:43,270
 Now actions.
 
 17
-00:01:06,150 --> 00:01:12,900
+00:01:44,160 --> 00:01:51,050
 Each root cause gets a corrective or preventive action, with an owner and a due date.
 
 18
-00:01:12,950 --> 00:01:18,425
+00:01:51,560 --> 00:01:58,240
 Change the maintenance plan, with the new inspection interval, and list the spares.
 
 19
-00:01:18,475 --> 00:01:23,950
+00:01:58,280 --> 00:02:05,140
 AI can suggest actions too, but nothing is added until you accept it.
 
 20
-00:01:25,300 --> 00:01:26,772
+00:02:08,000 --> 00:02:10,710
 After the fix, verify.
 
 21
-00:01:26,822 --> 00:01:32,100
+00:02:11,860 --> 00:02:18,190
 Savings only count once someone has checked that the failure has stopped coming back.
 
 22
-00:01:32,150 --> 00:01:38,950
+00:02:18,660 --> 00:02:25,800
 Then roll the fix out to similar assets, so the next pump does not fail the same way.
 
 23
-00:01:40,300 --> 00:01:44,789
+00:02:27,340 --> 00:02:33,010
 When you are ready, let the AI draft a one-page management summary.
 
 24
-00:01:44,839 --> 00:01:48,950
+00:02:33,640 --> 00:02:38,480
 You edit it, then print or save it as a PDF.
 
 25
-00:01:50,300 --> 00:01:52,950
+00:02:39,260 --> 00:02:44,550
 RCA Pilot keeps the whole investigation in one place.
 
 26
-00:01:53,000 --> 00:01:55,050
+00:02:45,100 --> 00:02:48,590
 The AI suggests, and your people decide.
 
 27
-00:01:55,100 --> 00:01:58,950
+00:02:49,820 --> 00:02:55,000
 Try it at www.rcapilot.com.
 

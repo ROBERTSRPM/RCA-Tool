@@ -1,4 +1,4 @@
-import {AbsoluteFill, Sequence, OffthreadVideo, staticFile, interpolate, useCurrentFrame, useVideoConfig, Easing, Audio} from "remotion";
+import {AbsoluteFill, Sequence, OffthreadVideo, staticFile, interpolate, useCurrentFrame, useVideoConfig, Easing, Freeze} from "remotion";
 import plan from "../plan.json";
 
 // Design tokens from web/app/globals.css (see design/design-review.md)
@@ -10,7 +10,8 @@ const ease = Easing.inOut(Easing.cubic);
 type Zoom = {at: number; dur: number; cx: number; cy: number; scale: number; hold?: number};
 type Cap = {text: string; at: number; dur: number};
 type Hi = {at: number; dur: number; x: number; y: number; w: number; h: number};
-type Scene = {id: string; target: number; clip?: string; clipLen?: number; from?: number; len?: number; offset?: number; zooms?: Zoom[]; captions?: Cap[]; highlights?: Hi[]; title?: boolean; endcard?: boolean; audio?: string};
+type Seg = {at: number; dur: number; clipStart: number; rate: number; freeze?: boolean};
+type Scene = {id: string; start: number; dur: number; clip?: string; segs?: Seg[]; zooms?: Zoom[]; captions?: Cap[]; highlights?: Hi[]; titleLen?: number; endcardLen?: number};
 
 export const LogoMark = ({size = 64}: {size?: number}) => (
   <svg width={size} height={size} viewBox="0 0 32 32">
@@ -92,12 +93,6 @@ const ClipScene = ({s}: {s: Scene}) => {
   const f = useCurrentFrame();
   const {fps} = useVideoConfig();
   const t = f / fps;
-  const from = s.from ?? 0;
-  const len = s.len ?? s.target - (s.offset ?? 0);
-  const clipLen = s.clipLen ?? len;
-  const avail = clipLen - from;
-  const rate = Math.min(1.6, Math.max(0.8, avail / len));
-  // zoom keyframes: interpolate between identity and each zoom
   let scale = 1, ox = 960, oy = 540;
   for (const z of s.zooms ?? []) {
     const hold = z.hold ?? z.dur;
@@ -108,7 +103,14 @@ const ClipScene = ({s}: {s: Scene}) => {
   return (
     <AbsoluteFill style={{background: C.page}}>
       <AbsoluteFill style={{transform: `scale(${scale})`, transformOrigin: `${ox}px ${oy}px`}}>
-        <OffthreadVideo src={staticFile(`clips/${s.clip}`)} startFrom={Math.round(from * fps)} playbackRate={rate} muted style={{width: 1920, height: 1080}} />
+        {(s.segs ?? []).map((g, i) => {
+          const v = <OffthreadVideo src={staticFile(`clips/${s.clip}`)} startFrom={Math.round(g.clipStart * fps)} playbackRate={g.rate} muted style={{width: 1920, height: 1080}} />;
+          return (
+            <Sequence key={i} from={Math.round(g.at * fps)} durationInFrames={Math.max(1, Math.round(g.dur * fps))}>
+              {g.freeze ? <Freeze frame={0}>{v}</Freeze> : v}
+            </Sequence>
+          );
+        })}
         {(s.highlights ?? []).map((h, i) => (
           <Sequence key={i} from={Math.round(h.at * fps)} durationInFrames={Math.round(h.dur * fps)}><Highlight h={h} dur={Math.round(h.dur * fps)} /></Sequence>
         ))}
@@ -122,21 +124,19 @@ const ClipScene = ({s}: {s: Scene}) => {
 
 export const Demo = () => {
   const {fps} = useVideoConfig();
-  let start = 0;
   const parts: JSX.Element[] = [];
   (plan.scenes as Scene[]).forEach((s) => {
-    const sf = Math.round(start * fps), df = Math.round(s.target * fps);
-    const off = Math.round((s.offset ?? 0) * fps);
-    const endcardAt = s.endcard ? Math.round((s.target - 5.5) * fps) : df;
+    const sf = Math.round(s.start * fps);
+    const df = Math.round((s.start + s.dur) * fps) - sf;
+    const tl = Math.round((s.titleLen ?? 0) * fps);
+    const el = Math.round((s.endcardLen ?? 0) * fps);
     parts.push(
       <Sequence key={s.id} from={sf} durationInFrames={df}>
-        {s.title && <Sequence from={0} durationInFrames={off}><TitleCard dur={off} /></Sequence>}
-        {s.clip && <Sequence from={off} durationInFrames={endcardAt - off}><ClipScene s={{...s, target: (endcardAt - off) / fps, offset: 0}} /></Sequence>}
-        {s.endcard && <Sequence from={endcardAt} durationInFrames={df - endcardAt}><EndCard dur={df - endcardAt} /></Sequence>}
-        {s.audio && <Audio src={staticFile(s.audio)} />}
+        {tl > 0 && <Sequence from={0} durationInFrames={tl}><TitleCard dur={tl} /></Sequence>}
+        {s.clip && <Sequence from={tl} durationInFrames={df - tl - el}><ClipScene s={{...s, segs: s.segs?.map((g) => ({...g, at: g.at - (s.titleLen ?? 0)})), captions: s.captions?.map((c) => ({...c, at: c.at - (s.titleLen ?? 0)})), highlights: s.highlights?.map((c) => ({...c, at: c.at - (s.titleLen ?? 0)})), zooms: s.zooms?.map((c) => ({...c, at: c.at - (s.titleLen ?? 0)}))}} /></Sequence>}
+        {el > 0 && <Sequence from={df - el} durationInFrames={el}><EndCard dur={el} /></Sequence>}
       </Sequence>,
     );
-    start += s.target;
   });
   return <AbsoluteFill style={{background: C.page}}><style>{fontFace}</style>{parts}</AbsoluteFill>;
 };
