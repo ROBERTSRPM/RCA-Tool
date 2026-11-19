@@ -2,8 +2,8 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { notifyAssetsChanged, onAssetsChanged } from "./assets-events";
-import { planEnsureAsset } from "./assets";
-import { getAssetStore, StoreError } from "./store";
+import { findAssetByTag, planEnsureAsset, tagKey } from "./assets";
+import { getAssetStore, getStore, StoreError } from "./store";
 import type { Asset, Problem } from "./types";
 
 export type AssetsState =
@@ -45,6 +45,28 @@ export function useAssets(): { state: AssetsState; reload: () => void } {
   return { state, reload };
 }
 
+/** Fired when the asset tag field is left, so the register entry is made at once (not after a pause). */
+export const ASSET_TAG_BLUR = "rca:asset-tag-blur";
+
+/** Tags this page created for an investigation, so a typo that was corrected does not stay behind. */
+const createdFor = new Map<string, string>();
+
+async function discardAbandoned(oldTag: string, invId: string) {
+  try {
+    const all = await getStore().list();
+    const key = tagKey(oldTag);
+    if (all.some((o) => o.id !== invId && tagKey(o.problem.assetTag) === key)) return;
+    const store = getAssetStore();
+    const old = findAssetByTag(await store.list(), oldTag);
+    if (old) {
+      await store.delete(old.id);
+      notifyAssetsChanged();
+    }
+  } catch {
+    /* leaving one extra asset is harmless */
+  }
+}
+
 let registerUnavailable = false;
 let chain: Promise<unknown> = Promise.resolve();
 
@@ -53,23 +75,34 @@ let chain: Promise<unknown> = Promise.resolve();
  * asset, or filling blanks on the existing one). Runs one at a time, never
  * throws, and stops trying once the server says it has no assets table.
  */
-export function ensureAssetFor(problem: Partial<Problem>): Promise<"created" | "updated" | "none"> {
+export function ensureAssetFor(
+  problem: Partial<Problem>,
+  invId?: string,
+): Promise<"created" | "updated" | "none"> {
   const run = async (): Promise<"created" | "updated" | "none"> => {
     if (registerUnavailable) return "none";
     try {
       const store = getAssetStore();
       const plan = planEnsureAsset(await store.list(), problem);
+      const before = invId ? createdFor.get(invId) : undefined;
+      const moved = !!before && tagKey(before) !== tagKey(problem.assetTag);
+      let outcome: "created" | "updated" | "none" = "none";
       if (plan.action === "create") {
         await store.create(plan.asset);
         notifyAssetsChanged();
-        return "created";
-      }
-      if (plan.action === "update") {
+        outcome = "created";
+        if (invId) createdFor.set(invId, (problem.assetTag ?? "").trim());
+      } else if (plan.action === "update") {
         const { id, ...rest } = plan.asset;
         await store.update(id, rest);
         notifyAssetsChanged();
-        return "updated";
+        outcome = "updated";
       }
+      if (moved && before && invId) {
+        if (outcome !== "created") createdFor.delete(invId);
+        await discardAbandoned(before, invId);
+      }
+      return outcome;
     } catch (e) {
       if (e instanceof StoreError && e.code === "unavailable") registerUnavailable = true;
     }

@@ -211,6 +211,28 @@ body {
   .avoid-break {
     break-inside: avoid;
   }
+  /* Tables: never clip on the right, never split a word in the middle. */
+  .print-sheet .overflow-x-auto {
+    overflow: visible !important;
+  }
+  .print-sheet table {
+    width: 100% !important;
+    table-layout: auto;
+    font-size: 9.5px;
+  }
+  .print-sheet th,
+  .print-sheet td {
+    min-width: 0 !important;
+    overflow-wrap: break-word;
+    word-break: normal;
+    hyphens: manual;
+  }
+  .print-sheet th {
+    white-space: nowrap;
+  }
+  .print-sheet .print-hide {
+    display: none !important;
+  }
 }
 
 /* Long unbroken strings (URLs, 20-digit numbers) must wrap, not widen the page. */

@@ -46,6 +46,7 @@ export function TextField({
   placeholder,
   className,
   type = "text",
+  onBlur,
 }: {
   label: string;
   help?: string;
@@ -54,6 +55,7 @@ export function TextField({
   placeholder?: string;
   className?: string;
   type?: "text" | "date";
+  onBlur?: () => void;
 }) {
   const id = useId();
   return (
@@ -65,6 +67,7 @@ export function TextField({
         value={value}
         placeholder={placeholder}
         onChange={(e) => onChange(e.target.value)}
+        onBlur={onBlur}
       />
     </Field>
   );

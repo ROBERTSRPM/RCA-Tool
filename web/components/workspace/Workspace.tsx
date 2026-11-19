@@ -8,7 +8,7 @@ import { runQualityCheck } from "@/lib/quality";
 import { SAMPLE_NOTE } from "@/lib/sample";
 import { rolloutProgress } from "@/lib/rollout";
 import { isStepComplete, STEPS } from "@/lib/steps";
-import { ensureAssetFor } from "@/lib/use-assets";
+import { ASSET_TAG_BLUR, ensureAssetFor } from "@/lib/use-assets";
 import type { Investigation, StepId } from "@/lib/types";
 import { Icon } from "../icons";
 import { QualityPanel } from "./QualityPanel";
@@ -96,21 +96,33 @@ export function Workspace({ initial }: { initial: Investigation }) {
   }, [inv.problem]);
   const ensurePending = useRef(false);
   const pr = inv.problem;
+  const invId = inv.id;
   const assetSig = [pr.assetTag, pr.assetType, pr.makeModel, pr.duty, pr.criticality, pr.site].join("\u0001");
   useEffect(() => {
     if (!(problemRef.current.assetTag ?? "").trim()) return;
     ensurePending.current = true;
+    // A longer pause than a typing gap, so a half-typed or mistyped tag is not added;
+    // leaving the field adds it at once (see the blur listener below).
     const t = setTimeout(() => {
       ensurePending.current = false;
-      void ensureAssetFor(problemRef.current);
-    }, 1500);
+      void ensureAssetFor(problemRef.current, invId);
+    }, 5000);
     return () => clearTimeout(t);
-  }, [assetSig]);
+  }, [assetSig, invId]);
+  useEffect(() => {
+    const onBlur = () => {
+      if (!(problemRef.current.assetTag ?? "").trim()) return;
+      ensurePending.current = false;
+      void ensureAssetFor(problemRef.current, invId);
+    };
+    window.addEventListener(ASSET_TAG_BLUR, onBlur);
+    return () => window.removeEventListener(ASSET_TAG_BLUR, onBlur);
+  }, [invId]);
   useEffect(
     () => () => {
-      if (ensurePending.current) void ensureAssetFor(problemRef.current);
+      if (ensurePending.current) void ensureAssetFor(problemRef.current, invId);
     },
-    [],
+    [invId],
   );
 
   const rollout = rolloutProgress(inv.rollouts);
@@ -127,8 +139,9 @@ export function Workspace({ initial }: { initial: Investigation }) {
           >
             <Icon name="left" size={16} /> All investigations
           </Link>
-          <SaveIndicator save={save} retry={retry} />
+          <SaveIndicator save={save} />
         </div>
+        <SaveToast save={save} retry={retry} />
         {save.status === "conflict" && (
           <div
             role="alert"
@@ -272,21 +285,12 @@ export function Workspace({ initial }: { initial: Investigation }) {
   );
 }
 
-function SaveIndicator({
-  save,
-  retry,
-}: {
-  save: ReturnType<typeof useAutosavedInvestigation>["save"];
-  retry: () => Promise<boolean>;
-}) {
+function SaveIndicator({ save }: { save: ReturnType<typeof useAutosavedInvestigation>["save"] }) {
   if (save.status === "error") {
     return (
-      <span role="alert" className="flex items-center gap-2 text-sm font-medium text-red-700">
+      <span className="flex items-center gap-1.5 text-sm font-medium text-red-700">
         <Icon name="alert" size={16} />
-        {/^could not/i.test(save.message) ? save.message : `Could not save. ${save.message}`}
-        <button className="btn btn-secondary btn-sm" onClick={() => void retry()}>
-          Try again
-        </button>
+        Not saved
       </span>
     );
   }
@@ -307,5 +311,42 @@ function SaveIndicator({
       />
       {text}
     </span>
+  );
+}
+
+/**
+ * A save problem is shown where the user is, not only at the top of a long form:
+ * a sticky toast at the bottom of the screen. A signed-out session gets a sign-in link
+ * that opens in a new tab so the unsaved text on this page is not lost.
+ */
+function SaveToast({
+  save,
+  retry,
+}: {
+  save: ReturnType<typeof useAutosavedInvestigation>["save"];
+  retry: () => Promise<boolean>;
+}) {
+  if (save.status !== "error") return null;
+  const signedOut = save.code === "auth";
+  return (
+    <div
+      role="alert"
+      data-testid="save-error-toast"
+      className="fixed bottom-4 left-4 right-4 z-50 mx-auto max-w-md rounded-xl border border-red-300 bg-red-50 p-4 text-sm text-red-900 shadow-lg"
+    >
+      <p className="font-semibold">
+        {/^(could not|you've been signed out)/i.test(save.message) ? save.message : `Could not save. ${save.message}`}
+      </p>
+      <div className="mt-3 flex flex-wrap gap-2">
+        {signedOut && (
+          <a href="/login" target="_blank" rel="noopener" className="btn btn-primary btn-sm">
+            Sign in (opens in a new tab)
+          </a>
+        )}
+        <button className="btn btn-secondary btn-sm" onClick={() => void retry()}>
+          Try again
+        </button>
+      </div>
+    </div>
   );
 }

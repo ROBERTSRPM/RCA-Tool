@@ -7,6 +7,7 @@ import { downscaleImage } from "@/lib/image";
 import { safeImage } from "@/lib/normalize";
 import { flatten, unlinkEvidence } from "@/lib/tree";
 import type { EvidenceItem, EvidenceType } from "@/lib/types";
+import { useAuth } from "../../auth/AuthProvider";
 import { Icon } from "../../icons";
 import { EmptyState, SectionCard, SelectField, TextAreaField, TextField, useConfirm } from "../../ui";
 import type { StepProps } from "../types";
@@ -22,6 +23,13 @@ export const EVIDENCE_TYPES: { value: EvidenceType; label: string }[] = [
 
 export const evidenceTypeLabel = (t: EvidenceType) =>
   EVIDENCE_TYPES.find((e) => e.value === t)?.label ?? t;
+
+/** Where photos live depends on whether the user is signed in. */
+export function photoHelp(signedIn: boolean): string {
+  return signedIn
+    ? "Photos are shrunk to fit and kept in your account, with the investigation."
+    : "Photos are shrunk to fit and kept in this browser only. Create an account to keep them safe and on any device.";
+}
 
 export function EvidenceStep({ inv, update }: StepProps) {
   const confirm = useConfirm();
@@ -203,6 +211,7 @@ function ImageField({
 }) {
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const signedIn = useAuth().state.status === "in";
   return (
     <div className="sm:col-span-2">
       <span className="label">Photo (optional)</span>
@@ -241,7 +250,7 @@ function ImageField({
           </button>
         )}
       </div>
-      <p className="help">Photos are shrunk to fit and kept in this browser only.</p>
+      <p className="help" data-testid="photo-help">{photoHelp(signedIn)}</p>
       {error && (
         <p role="alert" className="mt-1 text-sm text-red-700">
           {error}

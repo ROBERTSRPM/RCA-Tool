@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { findAssetByTag } from "@/lib/assets";
-import { useAssets } from "@/lib/use-assets";
+import { ASSET_TAG_BLUR, useAssets } from "@/lib/use-assets";
 import { CRITICALITY_OPTIONS, ASSET_TYPES, FAILURE_MODES } from "@/lib/options";
 import type { Criticality, Problem } from "@/lib/types";
 import { ChoiceGroup, ComboField, SectionCard, TextField } from "../ui";
@@ -35,6 +35,7 @@ export function AssetDetails({ problem, update }: { problem: Problem; update: Up
             placeholder="e.g. P-101"
             value={problem.assetTag ?? ""}
             onChange={(v) => set("assetTag", v)}
+            onBlur={() => window.dispatchEvent(new Event(ASSET_TAG_BLUR))}
           />
           {tag && state.status === "ready" && (
             <p className="mt-1 text-sm text-slate-600" data-testid="register-status">

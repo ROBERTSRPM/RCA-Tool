@@ -37,7 +37,7 @@ const RECURRENCE = {
   yes: "Yes, it happened again",
 } as const;
 
-export function ReportStep({ inv }: StepProps) {
+export function ReportStep({ inv, update }: StepProps) {
   // While an AI draft is being printed, the standard report is left out of the printout.
   const [draftPrinting, setDraftPrinting] = useState(false);
   const cur = inv.loss.currency || "$";
@@ -81,7 +81,7 @@ export function ReportStep({ inv }: StepProps) {
         </button>
       </div>
 
-      <DraftReport inv={inv} onPrintingChange={setDraftPrinting} />
+      <DraftReport inv={inv} update={update} onPrintingChange={setDraftPrinting} />
       <DemoAiNote className="no-print" />
 
       <article className={`${draftPrinting ? "no-print " : ""}print-sheet card p-5 text-sm leading-relaxed text-slate-800 sm:p-8`}>
@@ -332,7 +332,7 @@ export function ReportStep({ inv }: StepProps) {
                   <tr className="border-b-2 border-slate-900">
                     <th className="py-1 pr-2">Action</th>
                     <th className="py-1 pr-2">Type</th>
-                    <th className="py-1 pr-2">Fixes</th>
+                    <th className="py-1 pr-2 print-hide">Fixes</th>
                     <th className="py-1 pr-2">Owner</th>
                     <th className="py-1 pr-2">Due</th>
                     <th className="py-1 pr-2 whitespace-nowrap">Status</th>
@@ -348,7 +348,7 @@ export function ReportStep({ inv }: StepProps) {
                         <td className="py-1 pr-2 text-slate-700">
                           {[kindLabel(a.kind), categoryLabel(a.category)].filter(Boolean).join(": ") || "Not set"}
                         </td>
-                        <td className="py-1 pr-2 text-slate-600">
+                        <td className="py-1 pr-2 text-slate-600 print-hide">
                           {cause ? cause.text.slice(0, 60) + (cause.text.length > 60 ? "…" : "") : "Not linked"}
                         </td>
                         <td className="py-1 pr-2">{a.owner || "Unassigned"}</td>
@@ -366,7 +366,9 @@ export function ReportStep({ inv }: StepProps) {
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colSpan={6} className="pt-1 pr-2 text-right font-semibold">
+                    <td colSpan={2} className="pt-1 pr-2 text-right font-semibold" />
+                    <td className="pt-1 pr-2 print-hide" />
+                    <td colSpan={3} className="pt-1 pr-2 text-right font-semibold">
                       Total
                     </td>
                     <td className="pt-1 text-right font-semibold tabular-nums">

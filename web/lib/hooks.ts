@@ -12,7 +12,7 @@ export type SaveState =
   | { status: "saving" }
   /** Someone else saved a newer version; our edits are held back, not written. */
   | { status: "conflict" }
-  | { status: "error"; message: string };
+  | { status: "error"; message: string; code?: string };
 
 const DEBOUNCE_MS = 350;
 
@@ -64,6 +64,7 @@ export function useAutosavedInvestigation(initial: Investigation) {
         verification: cur.verification,
         spares: cur.spares,
         rollouts: cur.rollouts ?? [],
+        reportDrafts: cur.reportDrafts,
       };
       setSave({ status: "saving" });
       try {
@@ -80,6 +81,7 @@ export function useAutosavedInvestigation(initial: Investigation) {
         setSave({
           status: "error",
           message: e instanceof StoreError ? e.message : "Could not save your changes.",
+          code: e instanceof StoreError ? e.code : undefined,
         });
         if (retryTimer.current) clearTimeout(retryTimer.current);
         if (!unmounted.current) {

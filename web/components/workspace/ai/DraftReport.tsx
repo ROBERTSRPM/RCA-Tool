@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { AI_LIMITS, buildAiContext } from "@/lib/ai/context";
 import type { DocumentDraft } from "@/lib/ai/output";
 import type { Investigation } from "@/lib/types";
+import type { Updater } from "../types";
 import { Icon } from "../../icons";
 import { AiButton, AiCard, RunStatus, useAiRun } from "./shared";
 
@@ -18,22 +19,33 @@ type Kind = "report" | "summary";
  */
 export function DraftReport({
   inv,
+  update,
   onPrintingChange,
 }: {
   inv: Investigation;
+  update: Updater;
   /** Tells the report page to hide itself while the draft is printed. */
   onPrintingChange: (printing: boolean) => void;
 }) {
   const { state, run, running, reset } = useAiRun<DocumentDraft>("draft");
-  const [kind, setKind] = useState<Kind>("report");
+  const [kind, setKind] = useState<Kind>(() => (inv.reportDrafts?.report ? "report" : inv.reportDrafts?.summary ? "summary" : "report"));
   const [notes, setNotes] = useState("");
-  const [doc, setDoc] = useState<DocumentDraft | null>(null);
+  // A kept draft (edited or accepted by the user) comes back when the user returns to this step.
+  const [doc, setDocState] = useState<DocumentDraft | null>(() => inv.reportDrafts?.report ?? null);
   const [last, setLast] = useState<DocumentDraft | null>(null);
   const [copied, setCopied] = useState(false);
   const [printing, setPrinting] = useState(false);
+  /** Shows the draft; with keep, also stores it in the investigation (saved with everything else). */
+  const setDoc = (d: DocumentDraft | null, keep = false) => {
+    setDocState(d);
+    if (keep && d) {
+      const saved = { title: d.title, sections: d.sections, savedAt: new Date().toISOString() };
+      update((i) => ({ ...i, reportDrafts: { ...i.reportDrafts, [kind]: saved } }));
+    }
+  };
   if (state.status === "done" && state.result !== last) {
     setLast(state.result);
-    setDoc(state.result);
+    setDocState(state.result);
   }
 
   useEffect(() => {
@@ -47,11 +59,12 @@ export function DraftReport({
 
   function ask(k: Kind) {
     setKind(k);
-    setDoc(null);
+    setDocState(null);
     void run({ context: buildAiContext(inv), kind: k, notes });
   }
 
   function printDraft() {
+    if (doc) setDoc(doc, true);
     flushSync(() => {
       setPrinting(true);
       onPrintingChange(true);
@@ -94,12 +107,12 @@ export function DraftReport({
         <div className="mt-4" data-testid="draft-doc">
           <div className="rounded-xl border border-slate-200 bg-slate-50/60 p-3 sm:p-4">
             <p className="text-sm font-semibold text-slate-800">
-              {kind === "summary" ? "Management summary draft" : "Report draft"}. Edit the text below. Check every fact before you share it.
+              {kind === "summary" ? "Management summary draft" : "Report draft"}. Edit the text below; your edits are kept with this investigation. Check every fact before you share it.
             </p>
             <label className="label mt-3" htmlFor="draft-title">
               Title
             </label>
-            <input id="draft-title" className="input" value={doc.title} onChange={(e) => setDoc({ ...doc, title: e.target.value })} />
+            <input id="draft-title" className="input" value={doc.title} onChange={(e) => setDoc({ ...doc, title: e.target.value }, true)} />
             {doc.sections.map((s, i) => (
               <div key={i} className="mt-3">
                 <input
@@ -107,7 +120,7 @@ export function DraftReport({
                   className="input font-semibold"
                   value={s.heading}
                   onChange={(e) =>
-                    setDoc({ ...doc, sections: doc.sections.map((x, j) => (j === i ? { ...x, heading: e.target.value } : x)) })
+                    setDoc({ ...doc, sections: doc.sections.map((x, j) => (j === i ? { ...x, heading: e.target.value } : x)) }, true)
                   }
                 />
                 <textarea
@@ -116,7 +129,7 @@ export function DraftReport({
                   rows={Math.min(12, Math.max(3, Math.ceil(s.body.length / 70)))}
                   value={s.body}
                   onChange={(e) =>
-                    setDoc({ ...doc, sections: doc.sections.map((x, j) => (j === i ? { ...x, body: e.target.value } : x)) })
+                    setDoc({ ...doc, sections: doc.sections.map((x, j) => (j === i ? { ...x, body: e.target.value } : x)) }, true)
                   }
                 />
               </div>
@@ -129,6 +142,7 @@ export function DraftReport({
                 type="button"
                 className="btn btn-secondary btn-sm"
                 onClick={() => {
+                  setDoc(doc, true);
                   void navigator.clipboard?.writeText(asText(doc)).then(() => setCopied(true));
                 }}
               >
@@ -139,10 +153,15 @@ export function DraftReport({
                 className="btn btn-secondary btn-sm"
                 data-testid="ai-dismiss"
                 onClick={() => {
-                  setDoc(null);
+                  setDocState(null);
                   setLast(null);
                   setCopied(false);
                   reset();
+                  update((i) => {
+                    const { [kind]: _drop, ...rest } = i.reportDrafts ?? {};
+                    void _drop;
+                    return { ...i, reportDrafts: Object.keys(rest).length ? rest : undefined };
+                  });
                 }}
               >
                 Dismiss

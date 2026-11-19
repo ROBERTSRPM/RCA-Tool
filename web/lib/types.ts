@@ -86,6 +86,12 @@ export interface OtherCost {
   amount: number | null;
 }
 
+export interface SavedDraft {
+  title: string;
+  sections: { heading: string; body: string }[];
+  savedAt: string;
+}
+
 export interface Loss {
   eventsPerYear: number | null;
   downtimeHours: number | null;
@@ -254,6 +260,8 @@ export interface Investigation {
   spares?: SparesCheck;
   /** Added later; missing means none. */
   rollouts?: RolloutCheck[];
+  /** AI write-up drafts the user edited and kept. Missing means none saved. */
+  reportDrafts?: Partial<Record<"report" | "summary", SavedDraft>>;
 }
 
 export type InvestigationPatch = Partial<

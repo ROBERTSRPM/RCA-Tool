@@ -111,8 +111,8 @@ export function PlanTable({ lines }: { lines: PlanLine[] }) {
       <thead>
         <tr className="border-b-2 border-slate-900">
           <th className="py-1 pr-2">Task</th>
-          <th className="py-1 pr-2">Interval</th>
-          <th className="py-1 pr-2">Craft</th>
+          <th className="py-1 pr-2 whitespace-nowrap">Interval</th>
+          <th className="py-1 pr-2 whitespace-nowrap">Craft</th>
           <th className="py-1 pr-2">Prevents</th>
           <th className="py-1 whitespace-nowrap">Owner and due</th>
         </tr>

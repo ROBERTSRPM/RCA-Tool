@@ -170,3 +170,30 @@ describe("normaliseInvestigation", () => {
     expect(normaliseInvestigation({ ...b, id: "inside" }, "row")?.id).toBe("row");
   });
 });
+
+describe("fields added for loss-without-figures and kept drafts", () => {
+  it("keeps notKnown and annualEstimate on the loss", () => {
+    const inv = normaliseInvestigation({ problem: {}, loss: { notKnown: true, annualEstimate: 90000 } }, "x")!;
+    expect(inv.loss.notKnown).toBe(true);
+    expect(inv.loss.annualEstimate).toBe(90000);
+    const plain = normaliseInvestigation({ problem: {}, loss: {} }, "y")!;
+    expect(plain.loss.notKnown).toBeUndefined();
+    expect(plain.loss.annualEstimate).toBeUndefined();
+  });
+  it("keeps saved report drafts and drops junk", () => {
+    const inv = normaliseInvestigation(
+      {
+        problem: {},
+        reportDrafts: {
+          report: { title: "T", sections: [{ heading: "H", body: "B" }, 5], savedAt: "2026-01-01" },
+          summary: { title: "x", sections: [] },
+          other: { title: "no" },
+        },
+      },
+      "z",
+    )!;
+    expect(inv.reportDrafts?.report?.sections).toEqual([{ heading: "H", body: "B" }]);
+    expect(inv.reportDrafts?.summary).toBeUndefined();
+    expect(normaliseInvestigation({ problem: {}, reportDrafts: "bad" }, "w")!.reportDrafts).toBeUndefined();
+  });
+});

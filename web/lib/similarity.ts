@@ -9,7 +9,7 @@
  *
  * Words come from the title, the description and the failure event text, with
  * stop-words removed (see lib/text.ts). A result needs at least MIN_SCORE
- * points, so one common word alone is not enough.
+ * points, so one common word alone is not enough. See isRelevant() for the extra rule.
  */
 import { failureText } from "./investigation";
 import { isVerifiedClosed } from "./finance";
@@ -97,6 +97,16 @@ export interface SimilarFailure {
   fixVerified: boolean;
 }
 
+/**
+ * Words alone never make a match. It needs the same asset or asset type, or the same
+ * failure mode backed by at least two shared words.
+ */
+export function isRelevant(s: Similarity): boolean {
+  const has = (c: SimilarityReason["code"]) => s.reasons.some((r) => r.code === c);
+  if (has("tag") || has("type")) return true;
+  return has("failure_mode") && s.sharedWords.length >= 2;
+}
+
 /** Other investigations ranked by similarity (highest first, newest first on ties). */
 export function rankSimilar(
   current: Investigation,
@@ -106,8 +116,11 @@ export function rankSimilar(
   const out: SimilarFailure[] = [];
   for (const o of others) {
     if (o.id === current.id) continue;
+    // The illustrative sample is only ever offered to the sample itself.
+    if (o.isSample && !current.isSample) continue;
     const similarity = scoreSimilarity(current, o);
     if (similarity.score < MIN_SCORE) continue;
+    if (!isRelevant(similarity)) continue;
     out.push({
       inv: o,
       similarity,

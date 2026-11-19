@@ -136,3 +136,28 @@ describe("copyOfCause", () => {
     });
   });
 });
+
+describe("relevance rule", () => {
+  const gearbox = inv("g", {
+    title: "Bearing failure on conveyor gearbox",
+    assetTag: "CV-204",
+    assetType: "Gearbox",
+    failureMode: "Bearing failure",
+  });
+  it("never offers the sample to a real investigation", () => {
+    const sample = { ...inv("s", { title: "Bearing failure on slurry pump", assetType: "Gearbox", failureMode: "Bearing failure" }), isSample: true };
+    expect(rankSimilar(gearbox, [sample])).toEqual([]);
+  });
+  it("does not match on words alone", () => {
+    const other = inv("o", { title: "Bearing failure on conveyor drive", assetType: "Pump" });
+    expect(rankSimilar(gearbox, [other])).toEqual([]);
+  });
+  it("does not match on failure mode alone with one shared word", () => {
+    const other = inv("o2", { title: "Seized roller", assetType: "Pump", failureMode: "Bearing failure" });
+    expect(rankSimilar(gearbox, [other])).toEqual([]);
+  });
+  it("matches the same asset type", () => {
+    const other = inv("o3", { title: "Oil leak", assetType: "gearbox" });
+    expect(rankSimilar(gearbox, [other])).toHaveLength(1);
+  });
+});

@@ -218,6 +218,22 @@ function normaliseOtherCost(raw: unknown): OtherCost | null {
   };
 }
 
+function normaliseDrafts(raw: unknown): Investigation["reportDrafts"] | undefined {
+  if (!isObj(raw)) return undefined;
+  const out: NonNullable<Investigation["reportDrafts"]> = {};
+  for (const k of ["report", "summary"] as const) {
+    const d = get(raw, k);
+    if (!isObj(d)) continue;
+    const sections = arr(get(d, "sections"))
+      .filter(isObj)
+      .slice(0, 20)
+      .map((s) => ({ heading: str(get(s, "heading")).slice(0, 200), body: str(get(s, "body")).slice(0, 8000) }));
+    if (!sections.length) continue;
+    out[k] = { title: str(get(d, "title")).slice(0, 300), sections, savedAt: str(get(d, "savedAt")) };
+  }
+  return out.report || out.summary ? out : undefined;
+}
+
 function normaliseLoss(raw: unknown, base: Loss): Loss {
   const o = isObj(raw) ? raw : {};
   const loss: Loss = {
@@ -234,7 +250,8 @@ function normaliseLoss(raw: unknown, base: Loss): Loss {
     const v = num(get(o, k));
     if (v !== null) loss[k] = v;
   }
-  for (const k of ["recoveryCost", "bufferHoldingCostPerYear"] as const) {
+  if (get(o, "notKnown") === true) loss.notKnown = true;
+  for (const k of ["recoveryCost", "bufferHoldingCostPerYear", "annualEstimate"] as const) {
     const v = num(get(o, k));
     if (v !== null) loss[k] = v;
   }
@@ -297,6 +314,7 @@ export function normaliseInvestigation(raw: unknown, rowId?: string): Investigat
       notes: str(get(v, "notes")),
     },
     ...(normaliseSpares(get(raw, "spares")) ? { spares: normaliseSpares(get(raw, "spares")) } : {}),
+    ...(normaliseDrafts(get(raw, "reportDrafts")) ? { reportDrafts: normaliseDrafts(get(raw, "reportDrafts")) } : {}),
     rollouts: arr(get(raw, "rollouts"))
       .slice(0, 500)
       .map(normaliseRollout)

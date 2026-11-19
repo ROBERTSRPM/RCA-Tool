@@ -30,6 +30,9 @@ interface PgError {
   status?: number;
 }
 
+export const SIGNED_OUT_MESSAGE =
+  "You've been signed out. Sign in again to keep saving; your changes are still on this page.";
+
 /** Turns a Supabase / fetch failure into a StoreError with a plain message. */
 export function toStoreError(e: unknown, action: string): StoreError {
   if (e instanceof StoreError) return e;
@@ -42,7 +45,7 @@ export function toStoreError(e: unknown, action: string): StoreError {
     msg.includes("jwt") ||
     msg.includes("not authenticated")
   ) {
-    return new StoreError("Your session has expired. Sign in again to save.", "auth");
+    return new StoreError(SIGNED_OUT_MESSAGE, "auth");
   }
   if (msg.includes("failed to fetch") || msg.includes("network") || msg.includes("load failed") ||
     msg.includes("abort") ||
@@ -62,7 +65,7 @@ export function toStoreError(e: unknown, action: string): StoreError {
     return new StoreError(LIMIT_MESSAGE, "limit");
   }
   if (err.code === "42501") {
-    return new StoreError(`Could not ${action}: not allowed.`, "auth");
+    return new StoreError(SIGNED_OUT_MESSAGE, "auth");
   }
   return new StoreError(`Could not ${action}. ${err.message ?? ""}`.trim(), "unknown");
 }
