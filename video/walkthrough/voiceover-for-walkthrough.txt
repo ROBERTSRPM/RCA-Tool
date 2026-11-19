@@ -8,7 +8,7 @@ Then the phones start, the production manager's at home and then the QA manager'
 When I ran the operation, this was the call nobody wanted, because I knew the general manager would ask two questions. Why does this keep happening, and what is it actually costing us?
 
 Scene 2: What we are trying to achieve (42 s)
-So what do we want? We want to find the real cause and not just the faulty pack, understand the financial impact to the business, fix it so it stays fixed, and prove that months later.
+So what do we want? We want to find the real cause and not just the faulty pack, understand the financial impact to the business, put in a countermeasure that holds, and prove that months later.
 I'll do it in RCA Pilot, from a blank page, and the numbers are illustrative, made up to show the method. We have 6 events a year, 8 hours of line stoppage each, 3,000 packs an hour, 45 cents margin a pack, and on average about $33,100 of cash cost each time it happens.
 
 Scene 3: Sign in and start (21 s)
@@ -50,11 +50,11 @@ If you get stuck for ideas, each root cause has a Suggested actions button, but 
 
 Scene 13: Verify (48 s)
 Now for the part almost nobody does, which is Step 6, proving it stopped. Savings only count once every action is Done, the review date is in and the failure hasn't come back, so months later I mark them Done, and I stay cautious and expect 1 event a year, not zero.
-That brings the loss down to $43,900 a year, so the saving is $219,500, verified. The payback on the $20,200 is about 1.1 months, and we got 40 hours of line time back. Then I ask where else this could happen, and Roll this fix out gives Lines 1 and 2 each a check with an owner and a date.
+That brings the loss down to $43,900 a year, so the saving is $219,500, verified. The payback on the $20,200 is about 1.1 months, and we got 40 hours of line time back. Then I ask where else this could happen, and Roll out this countermeasure gives Lines 1 and 2 each a check with an owner and a date.
 
 Scene 14: Report (26 s)
 The last step is the Report, and this is where you answer the general manager's two questions. Draft report writes it from everything I've entered, the Management summary is the one page the general manager will actually read, and I check every fact because my name goes on it before I Print or Save as PDF.
 
 Scene 15: Close (41 s)
-So let's go back to that Thursday morning and that meeting. Why does this keep happening? Because nothing in our system checked the jaw, locked the settings, controlled the film or caught a bad seal early, so it was never one unlucky operator. What is it costing us? $263,400 a year, and the proof it's fixed is $219,500 saved, verified, and 40 hours of line time back.
+So let's go back to that Thursday morning and that meeting. Why does this keep happening? Because nothing in our system checked the jaw, locked the settings, controlled the film or caught a bad seal early, so it was never one unlucky operator. What is it costing us? $263,400 a year, and the proof the countermeasure works is $219,500 saved, verified, and 40 hours of line time back.
 And this is the dashboard, where you see it all on one screen: what failures are costing you, what you've saved and verified, and the actions still open. That's the method, and you can try it at w w w dot r c a pilot dot com. The link is in the description.
