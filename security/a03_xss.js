@@ -16,7 +16,7 @@ async function fetch(url, o = {}) {
 const BASE = 'https://rca-tool-omega.vercel.app';
 const API = 'https://ccigtztlrvgkzyppjmxt.supabase.co';
 const KEY = 'sb_publishable_QkpZg53OX_eAMLJj4Ezjjw_SHOgUZ3D';
-const EMAIL = 'qa-user-b@rca-tool.test', PW = 'Qa-Test-7f3k9x2m';
+const EMAIL = 'qa-user-b@rca-tool.test', PW = require('fs').readFileSync(process.env.QA_PW_FILE || (()=>{throw new Error('set QA_PW_FILE')})(), 'utf8').trim();
 const ID = 't-xss-1';
 
 const P = (n) => `"><img src=x onerror="window.__xss='${n}'"><script>window.__xss='${n}s'</script>'';alert(${n})//</title><svg onload="window.__xss='${n}v'">{{7*7}}`;

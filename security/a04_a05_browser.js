@@ -2,7 +2,7 @@
 const { chromium } = require('playwright');
 const { execFileSync } = require('child_process');
 const BASE = 'https://rca-tool-omega.vercel.app', API = 'https://ccigtztlrvgkzyppjmxt.supabase.co';
-const KEY = 'sb_publishable_QkpZg53OX_eAMLJj4Ezjjw_SHOgUZ3D', EMAIL = 'qa-user-b@rca-tool.test', PW = 'Qa-Test-7f3k9x2m';
+const KEY = 'sb_publishable_QkpZg53OX_eAMLJj4Ezjjw_SHOgUZ3D', EMAIL = 'qa-user-b@rca-tool.test', PW = require('fs').readFileSync(process.env.QA_PW_FILE || (()=>{throw new Error('set QA_PW_FILE')})(), 'utf8').trim();
 function curl(method, url, headers, body) {
   const a = ['-s', '-w', '\n%{http_code}', '-X', method];
   for (const [k, v] of Object.entries(headers)) a.push('-H', `${k}: ${v}`);

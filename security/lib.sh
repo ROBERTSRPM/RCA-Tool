@@ -1,7 +1,7 @@
 # shared helpers: source this. Tokens are kept in env only, never printed.
 API=https://ccigtztlrvgkzyppjmxt.supabase.co
 KEY=sb_publishable_QkpZg53OX_eAMLJj4Ezjjw_SHOgUZ3D
-PW='Qa-Test-7f3k9x2m'
+PW=$(cat "${QA_PW_FILE:?set QA_PW_FILE}")
 login() { curl -s -X POST "$API/auth/v1/token?grant_type=password" -H "apikey: $KEY" -H 'Content-Type: application/json' -d "{\"email\":\"$1\",\"password\":\"$PW\"}"; }
 tok() { login "$1" | python3 -c 'import json,sys;print(json.load(sys.stdin)["access_token"])'; }
 rest() { # rest TOKEN METHOD PATH [json body] [extra headers...]
