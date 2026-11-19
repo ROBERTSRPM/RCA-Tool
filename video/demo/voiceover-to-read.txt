@@ -1,0 +1,28 @@
+RCA Pilot demo: voiceover to read (about 2 minutes)
+
+Say the scene number, read the lines, pause 2 seconds, then the next scene. If you stumble, just repeat the line.
+
+Scene 1: Introduction (14 s)
+Every repair feels like progress, until the same pump fails again. RCA Pilot helps your team find the real cause, fix it, and prove it stays fixed. Here it is, on a slurry pump.
+
+Scene 2: Problem and loss (15 s)
+Start with the problem. Pump P-101 has failed six times in twelve months, and each failure stops the line for fourteen hours. Add the downtime, margin and repair cost, and RCA Pilot shows the loss: about two hundred and thirty-eight thousand dollars a year. These figures are illustrative.
+
+Scene 3: Evidence (11 s)
+Next, the evidence. Add photos, trend data, inspections and records, so every cause can be checked against facts, not opinions.
+
+Scene 4: Cause tree and Suggestions (25 s)
+Then the cause tree. Physical, human and system causes, marked as natural or forced deterioration. Under Suggestions, the cause coach proposes causes you may have missed, and Challenge my analysis points out weak links. You read each one, then accept it or dismiss it. The AI suggests. You decide.
+
+Scene 5: Actions (20 s)
+Now actions. Each root cause gets a corrective or preventive action, with an owner and a due date. Change the maintenance plan, with the new inspection interval, and list the spares. AI can suggest actions too, but nothing is added until you accept it.
+
+Scene 6: Verify (15 s)
+After the fix, verify. Savings only count once someone has checked that the failure has stopped coming back. Then roll the fix out to similar assets, so the next pump does not fail the same way.
+
+Scene 7: Report (10 s)
+When you are ready, let the AI draft a one-page management summary. You edit it, then print or save it as a PDF.
+
+Scene 8: Close (10 s)
+RCA Pilot keeps the whole investigation in one place. The AI suggests, and your people decide. Try it at w w w dot r c a pilot dot com.
+
