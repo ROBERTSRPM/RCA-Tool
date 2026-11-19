@@ -1,7 +1,7 @@
 {
   "suite": "prelaunch-fixes",
   "base": "http://localhost:3555",
-  "at": "2026-11-19T02:57:41.923Z",
+  "at": "2026-11-19T03:02:04.087Z",
   "results": [
     {
       "id": "P-AUTH-1.photo-help",
@@ -13,8 +13,8 @@
     {
       "id": "P-AUTH-1.ghost-asset",
       "title": "Renaming the tag leaves no ghost asset in the register",
-      "status": "fail",
-      "detail": "ghost tag still in register",
+      "status": "pass",
+      "detail": "",
       "ms": 0
     },
     {
@@ -29,7 +29,7 @@
       "title": "Signed in: photo help, ghost asset on tag rename, session-lost toast, sample not offered",
       "status": "pass",
       "detail": "",
-      "ms": 29273
+      "ms": 28341
     }
   ],
   "notes": []

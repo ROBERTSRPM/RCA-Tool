@@ -56,3 +56,12 @@ Migration `web/supabase/migrations/20261119000100_ai_global_cap_refund_storage_c
 |---|---|---|
 | Plan vs quality-check task text mismatch | Fixed | The check now accepts the action description as the task text, as the plan does. |
 | Asset status lag (about 4 s) | Fixed | The register entry is made when the tag field is left, not after a pause. |
+
+## Test results (local production build, `npm run build` and `npm start -p 3555`, QA accounts, local sign-out scope)
+
+- `npm run build`, `npm run lint`, `npm test` (311 unit tests): green.
+- `qa/demo.js`: 210 of 211. The one failure is `D-PERS-1.concurrent-window`, the known demo-mode two-tab race (NEW-01), not part of this round.
+- `qa/loss.js`: green after updating the loss-wording expectations (LOSS-2 re-run 26 of 26).
+- `qa/prelaunch-fixes.js` (new): 31 of 31, including the signed-in checks (photo help, ghost asset, session-lost toast) run as qa-user-b and cleaned up afterwards.
+- Not re-run: `qa/account.js` and `qa/features.js` (signed in, two accounts). They sign out globally and clean up qa-user-a's data, which would disturb the demo recording; `QA_LOCAL_SIGNOUT=1` now makes the harness use local sign-out. The landing page was not touched by this round and its Help/Terms footer links are for the designer.
+- AI calls: none made (no real or mock AI run). The one-time AI notice and the kept report drafts are covered by unit tests and structure checks only; they need one signed-in manual check with a real AI call.

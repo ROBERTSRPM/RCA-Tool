@@ -146,12 +146,12 @@ function suite(tag, viewport) {
     });
     await sub('zero-margin', 'With 0% lost for good, a blank margin is not reported as missing and the loss is quantified', async () => {
       await setShareUI(page, 'madeUp', 100); await f.typeNum(page, 'Margin per unit', ''); const q = await f.qualityTexts(page);
-      ok(!q.some(t => /margin per unit/.test(t)), q.join('|')); ok(!q.some(t => /loss is not quantified/.test(t)), q.join('|'));
-      await setShareUI(page, 'lost', 50); const q2 = await f.qualityTexts(page); ok(q2.some(t => /Still needed: margin per unit/.test(t)), 'margin required again once some production is lost for good: ' + q2.join('|'));
+      ok(!q.some(t => /margin per unit/.test(t)), q.join('|')); ok(!q.some(t => /Add a rough figure when you can/.test(t)), q.join('|'));
+      await setShareUI(page, 'lost', 50); const q2 = await f.qualityTexts(page); ok(!q2.some(t => /Add a rough figure when you can/.test(t)), 'cash costs still cost the loss, so no reminder even without a margin: ' + q2.join('|'));
     });
     await sub('hours-rate-needed', 'Zero downtime hours: annual loss 0 only if no cash costs; repair + other still count? (cash per event x events)', async () => {
       await f.typeNum(page, 'Downtime per event', 0); const a = await page.getByTestId('annual-loss').innerText(); h.note('observation', 'Downtime 0 with repair/other costs entered: annual loss shows ' + a);
-      const q = await f.qualityTexts(page); ok(q.some(t => /downtime hours per event/.test(t)), q.join('|'));
+      const q = await f.qualityTexts(page); ok(!q.some(t => /downtime hours per event/.test(t)) && !/not costed/.test(a), 'repair and other costs still cost the loss: ' + a + ' | ' + q.join('|'));
     });
   });
 
