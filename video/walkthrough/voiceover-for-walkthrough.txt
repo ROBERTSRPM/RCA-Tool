@@ -2,82 +2,59 @@ Voiceover for Walkthrough: RCA Pilot (about 10.5 minutes)
 
 Read it like you're telling the story to a colleague, at your normal easy pace. Say the scene number, read the lines, pause 2 seconds, then the next scene. If you stumble, repeat the line.
 
-Scene 1: The situation (51 s)
-4 o'clock in the morning on a Thursday. Night shift.
-End of Line 3. It's the 2-hourly seal check. The operator takes 3 packs of chicken and rice and drops them in the leak tester. And 2 of them leak along the seal.
-Everything packed since the last good check goes on hold. About 6,000 packs. Then the phones start. The production manager's, at home. Then the QA manager's. A retailer complained about slack packs just last month. And this is the 6th time this year.
-When I ran a plant, this was the call nobody wanted. The general manager asks two questions. Why does this keep happening? And what is it actually costing us?
+Scene 1: The situation (59 s)
+It's 4 o'clock in the morning on a Thursday, and the night shift on Line 3 is doing its 2-hourly seal check. The operator takes 3 packs of chicken and rice off the end of the line and drops them in the leak tester, and 2 of them leak along the seal. That means everything we've packed since the last good check, about 6,000 packs, goes on hold.
+Then the phones start, the production manager's at home and then the QA manager's. A retailer already complained about slack packs last month, and this is the 6th time this year.
+When I ran a plant, this was the call nobody wanted, because I knew the general manager would ask two questions. Why does this keep happening, and what is it actually costing us?
 
-Scene 2: What we are trying to achieve (41 s)
-So what do we want? Four things.
-Find the real cause, not just the faulty pack. Understand the financial impact to the business, so we know what it really costs and how to prioritise it. Fix it so it stays fixed. And prove it, months later.
-I'll do it in RCA Pilot, from a blank page. The numbers are illustrative, made up to show the method. 6 events a year. 8 hours of line stoppage each. 3,000 packs an hour. 45 cents margin a pack. $33,100 of cash cost each time.
+Scene 2: What we are trying to achieve (42 s)
+So what do we want? We want to find the real cause and not just the faulty pack, understand the financial impact to the business so we know how to prioritise it, fix it so it stays fixed, and prove that months later.
+I'll do it in RCA Pilot, from a blank page, and the numbers are illustrative, made up to show the method. We have 6 events a year, 8 hours of line stoppage each, 3,000 packs an hour, 45 cents margin a pack, and $33,100 of cash cost every time it happens.
 
-Scene 3: Sign in and start (25 s)
-So where do you start? At w w w dot r c a pilot dot com. I'd make an account, with an email and password. Your work is kept safely, on any device, and the AI buttons need you signed in.
-Here's one I prepared earlier. Let's start Line 3 with New investigation.
+Scene 3: Sign in and start (21 s)
+So where do you start? You go to w w w dot r c a pilot dot com and make an account with an email and a password, which the AI buttons need. I've got one prepared earlier, so I'll start with New investigation.
 
-Scene 4: Problem: draft from notes (50 s)
-Step 1 is the Problem. This is where a lot of investigations go wrong. Somebody writes "seals bad" and everyone moves on.
-First, the Type of failure. A leaking pack is a Process or quality failure.
-Now, nobody at 4 o'clock in the morning writes a perfect problem statement. A supervisor jots rough notes. So there's a box called Draft problem statement from notes. The AI turns them into a clear statement, using only what I wrote. It doesn't guess a cause. And it tells me what's missing, under Not in your notes, worth finding out. That's your first round of questions.
-I press Use this draft, then read it and correct anything.
+Scene 4: Problem: draft from notes (51 s)
+Step 1 is the Problem, where a lot of investigations go wrong because somebody writes "seals bad" and everyone moves on. First I set the Type of failure, and a leaking pack is a Process or quality failure.
+Now, nobody at 4 o'clock in the morning writes a perfect problem statement, so a supervisor just jots rough notes, and that's what Draft problem statement from notes is for. The AI turns them into a clear statement using only what I wrote, it doesn't guess a cause, and it lists what's missing under Not in your notes, worth finding out, which is your first round of questions. Then I press Use this draft and correct anything.
 
-Scene 5: Problem: line details and quality reference (22 s)
-Two small things that matter later. If this started as a non-conformance, put the number in Quality reference. Here, NCR-2291. Then the analysis can feed your site's QA and CAPA system. And the Line / process details. Boring, I know. But it's how you find this again.
+Scene 5: Problem: line details and quality reference (21 s)
+Two small things matter later. If this started as a non-conformance, put the number in Quality reference, NCR-2291 for us, so the analysis can feed your QA and CAPA system, and fill in the Line / process details, because that's how you find it again.
 
-Scene 6: Loss (59 s)
-Step 2 is the one that gets the general manager's attention. The loss.
-No figures yet? Choose Not known yet, or put in one rough yearly estimate. A rough number beats none.
-Here, 6 events a year. 8 hours each. 3,000 packs an hour, 45 cents margin a pack. So 8 hours at 3,000 is 24,000 packs we didn't make. At 45 cents, that's $10,800 of lost margin. The opportunity.
-Then the cash. The call-out is $1,200. And everything else that quietly adds up, under Other costs. Scrapped product, $14,500. Product on hold, $3,200. Customer claims and credits, $6,800. Retailer penalties, $5,000. Rework, $2,400.
-Cash comes to $33,100. One event costs $43,900. And 6 a year? $263,400.
-Sit with that. The line runs at capacity, so that lost output is gone for good.
+Scene 6: Loss (63 s)
+Step 2 is the loss, and it's the one the general manager cares about. If you don't have figures, choose Not known yet or put in a rough yearly estimate, because a rough number beats none.
+Here we have 6 events a year, 8 hours each, 3,000 packs an hour and 45 cents margin a pack, so 8 hours at 3,000 is 24,000 packs we didn't make, which at 45 cents is $10,800 of lost margin.
+Then there's the cash, which is the $1,200 call-out plus everything that quietly adds up under Other costs. Scrapped product is $14,500, product on hold $3,200, customer claims and credits $6,800, retailer penalties $5,000 and rework $2,400. That makes $33,100 of cash, so one event costs $43,900 and 6 a year comes to $263,400, and because the line runs at capacity, that output is gone for good.
 
-Scene 7: Evidence (38 s)
-Step 3 is Evidence. And I'll say it the way I would in a plant meeting. Evidence before opinions.
-Everyone has a theory about those seals. So each piece of evidence gets a title, a type, a date, and a note on what it shows. A photo of a leaking pack. The sealing temperature log. The jaw inspection. The settings and changeover record. The film specification. The interviews.
-One tip. Keep the retained packs and worn parts, and photograph them before anything's cleaned.
+Scene 7: Evidence (35 s)
+Step 3 is Evidence, and in any plant meeting that means evidence before opinions, because everyone has a theory about those seals. Each piece gets a title, a type, a date and a note, and here we have a photo of a leaking pack, the sealing temperature log, the jaw inspection, the settings and changeover record, the film specification and the interviews. Keep the retained packs and worn parts, and photograph them before anything gets cleaned up.
 
-Scene 8: Cause tree: by hand (68 s)
-Now Step 4, the Cause tree. This is where the thinking happens.
-The top box is the failure event. Then we keep asking Why? in plain words. Why were the packs leaking? The seals were weak along the flange. Why? The jaw ran 17 degrees low, with worn silicone. That's physical.
-But stop there and you'll be back soon. Why wasn't it caught? Nothing in the maintenance plan checks jaw temperature, or replaces that silicone. That's the system level. That's the root. I mark it with This is a root cause.
-Then the other branches. Wrong settings, because operators raised speed and cut dwell to keep up. A new film batch. And a seal check of only 3 packs every 2 hours, so a bad seal can run for hours.
-For each cause, I tick the evidence and mark it Verified or Ruled out. If I can't prove it, it stays a theory.
+Scene 8: Cause tree: by hand (73 s)
+Now we get to Step 4, the Cause tree, where the real thinking happens. The top box is the failure event, and we just keep asking Why? in plain words. Why were the packs leaking? Because the seals were weak along the flange. Why? Because the jaw ran 17 degrees low, with worn silicone, and that's the physical cause.
+If we stopped there we'd be back in a few weeks, so we ask why it wasn't caught, and nothing in the maintenance plan checks jaw temperature or replaces that silicone. That's the system level and the real root, so I mark it with This is a root cause.
+The other branches work the same way: wrong settings because operators raised speed and cut dwell to keep up, a new film batch, and a seal check of only 3 packs every 2 hours. For each cause I tick the evidence and mark it Verified or Ruled out, because if I can't prove it, it stays a theory.
 
-Scene 9: Natural and forced deterioration, views (37 s)
-Here's a question I always ask when equipment's involved. Is this wear natural, or forced?
-Silicone on a sealing jaw wears out eventually. That's natural. But running it a year past its life, because nothing prompted anyone to change it? That's forced. Wear we allowed. I record that under Type of wear. For the recipe settings, I pick Not applicable.
-The same tree also shows as 5 Whys, or a Fishbone grouped by the Cause area I tagged. Same facts, different angle.
+Scene 9: Natural and forced deterioration, views (34 s)
+One question I always ask about equipment is whether the wear is natural or forced. Silicone on a sealing jaw wears out eventually and that's natural, but running it a year past its life because nothing prompted anyone to change it is forced, which is wear we allowed, so I record that under Type of wear. The same tree also shows as 5 Whys, or a Fishbone grouped by the Cause area I tagged.
 
-Scene 10: Cause coach and Challenge (45 s)
-Now, the AI help. It's a second pair of eyes, not the boss.
-The Cause coach suggests causes I may have missed, each a hypothesis, with what would confirm it and rule it out. I either Add to tree, or Dismiss. Product contaminating the flange? Hadn't thought of that. In it goes. Gas mix I dismiss, because the oxygen readings were in spec.
-Then Challenge my analysis. It questions the tree like an experienced reviewer. It says the film root cause has no evidence linked. Fair. So I link the film specification and mark it Verified.
-The AI suggests. You decide.
+Scene 10: Cause coach and Challenge (48 s)
+Now the AI help, which I treat as a second pair of eyes, not the boss. The Cause coach suggests causes I may have missed, each with what would confirm or rule it out, and I either Add to tree or Dismiss. It suggests product contaminating the flange, which I hadn't thought of, so that goes in, and I dismiss gas mix because the oxygen readings were in spec.
+Then Challenge my analysis questions the tree like an experienced reviewer, and it points out that the film root cause has no evidence linked, which is fair, so I link the film specification. The AI suggests, but you decide.
 
 Scene 11: Actions (47 s)
-Step 5, Actions. This is where a lot of RCAs quietly die. Great analysis, then a list of "we should". So every action gets an owner, a due date and a cost. Corrective actions fix this failure. Preventive actions stop it coming back.
-For the jaw, a Maintenance task. Check temperature with a probe every week, and replace the silicone every 3 months. For the settings, a Design or equipment change. Lock them by recipe. For the film, a Procedure or standard. Supplier change control. For seal checks, more frequent checks with records, and a faster leak tester.
-Total cost? $20,200. Hold that number.
+Step 5 is Actions, where a lot of RCAs quietly die in a list of "we should". So every action gets an owner, a due date and a cost, with corrective actions fixing this failure and preventive actions stopping it coming back.
+For the jaw that's a Maintenance task to check temperature every week and replace the silicone every 3 months, for the settings it's a Design or equipment change to lock them by recipe, for the film it's a Procedure or standard with supplier change control, and for seal checks it's more frequent checks and a faster leak tester. The total cost is $20,200.
 
-Scene 12: CAPA suggestions and quality check (21 s)
-If you're stuck for ideas, each root cause has a Suggested actions button. Nothing goes in until I click Add to actions.
-And there's the Quality check. It lists any gaps. Like a root cause with no action against it. That one bites later.
+Scene 12: CAPA suggestions and quality check (19 s)
+If you get stuck for ideas, each root cause has a Suggested actions button, but nothing goes in until I click Add to actions, and the Quality check lists any gaps, like a root cause with no action against it.
 
-Scene 13: Verify (47 s)
-Now, the part almost nobody does. Step 6. Prove it stopped.
-Savings only count once every action is Done, the review date is in, and the failure hasn't come back. Months later, actions Done. Has it recurred? No. And I stay cautious. 1 event a year after the fix, not zero.
-The loss falls to $43,900. The saving is $219,500, verified. Payback on that $20,200 is about 1.1 months. And 40 hours of line time came back.
-One more question. Where else could this happen? That's Roll this fix out. Lines 1 and 2 each get a check, with an owner and a date.
+Scene 13: Verify (48 s)
+Now for the part almost nobody does, which is Step 6, proving it stopped. Savings only count once every action is Done, the review date is in and the failure hasn't come back, so months later I mark them Done, and I stay cautious and expect 1 event a year, not zero.
+That brings the loss down to $43,900, so the saving is $219,500, verified, payback on the $20,200 is about 1.1 months, and 40 hours of line time came back. Then I ask where else this could happen, and Roll this fix out gives Lines 1 and 2 each a check with an owner and a date.
 
-Scene 14: Report (25 s)
-Last one. Step 7, the Report. Remember the general manager's two questions? This is where you answer them.
-Draft report writes it from everything I've entered. The Management summary, one page, is what the general manager actually reads. Then I check every fact, because my name goes on it. Print or Save as PDF.
+Scene 14: Report (26 s)
+The last step is the Report, and this is where you answer the general manager's two questions. Draft report writes it from everything I've entered, the Management summary is the one page the general manager will actually read, and I check every fact because my name goes on it before I Print or Save as PDF.
 
-Scene 15: Close (45 s)
-So, back to that Thursday morning, and that meeting.
-Why does this keep happening? Because nothing in our system checked the jaw, locked the settings, controlled the film, or caught a bad seal early. Not one unlucky operator. What is it costing us? $263,400 a year. The proof it's fixed? $219,500 saved, verified, and 40 hours of line time back.
-That's the method. Size the loss. Gather evidence. Ask why, down to the system. Fix it, with owners. Prove it stopped.
-Try it at w w w dot r c a pilot dot com. The link is in the description.
+Scene 15: Close (41 s)
+So let's go back to that Thursday morning and that meeting. Why does this keep happening? Because nothing in our system checked the jaw, locked the settings, controlled the film or caught a bad seal early, so it was never one unlucky operator. What is it costing us? $263,400 a year, and the proof it's fixed is $219,500 saved, verified, and 40 hours of line time back.
+That's the method, and you can try it at w w w dot r c a pilot dot com. The link is in the description.
