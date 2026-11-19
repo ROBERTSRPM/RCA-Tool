@@ -24,7 +24,7 @@ Two small things matter later. If this started as a non-conformance, put the num
 Scene 6: Loss (63 s)
 Step 2 is the loss, and it's the one the general manager cares about. If you don't have figures, choose Not known yet or put in a rough yearly estimate, because a rough number beats none.
 Here we have 6 events a year, 8 hours each, 3,000 packs an hour and 45 cents margin a pack, so 8 hours at 3,000 is 24,000 packs we didn't make, which at 45 cents is $10,800 of lost margin.
-Then there's the cash, which is the $1,200 call-out plus everything that quietly adds up under Other costs. Scrapped product is $14,500, product on hold $3,200, customer claims and credits $6,800, retailer penalties $5,000 and rework $2,400. That makes $33,100 of cash, so one event costs $43,900 and 6 a year comes to $263,400, and because the line runs at capacity, that output is gone for good.
+Then there's the cash, which is the $1,200 call-out plus everything that quietly adds up under Other costs. Scrapped product is $14,500, product on hold $3,200, customer claims and credits $6,800, retailer penalties $5,000 and rework $2,400. That makes $33,100 of cash, so one event costs $43,900, and 6 a year comes to $263,400. And because the line runs at capacity, that output is gone for good.
 
 Scene 7: Evidence (35 s)
 Step 3 is Evidence, and in any plant meeting that means evidence before opinions, because everyone has a theory about those seals. Each piece gets a title, a type, a date and a note, and here we have a photo of a leaking pack, the sealing temperature log, the jaw inspection, the settings and changeover record, the film specification and the interviews. Keep the retained packs and worn parts, and photograph them before anything gets cleaned up.
@@ -50,7 +50,7 @@ If you get stuck for ideas, each root cause has a Suggested actions button, but 
 
 Scene 13: Verify (48 s)
 Now for the part almost nobody does, which is Step 6, proving it stopped. Savings only count once every action is Done, the review date is in and the failure hasn't come back, so months later I mark them Done, and I stay cautious and expect 1 event a year, not zero.
-That brings the loss down to $43,900, so the saving is $219,500, verified, payback on the $20,200 is about 1.1 months, and 40 hours of line time came back. Then I ask where else this could happen, and Roll this fix out gives Lines 1 and 2 each a check with an owner and a date.
+That brings the loss down to $43,900 a year, so the saving is $219,500, verified. The payback on the $20,200 is about 1.1 months, and we got 40 hours of line time back. Then I ask where else this could happen, and Roll this fix out gives Lines 1 and 2 each a check with an owner and a date.
 
 Scene 14: Report (26 s)
 The last step is the Report, and this is where you answer the general manager's two questions. Draft report writes it from everything I've entered, the Management summary is the one page the general manager will actually read, and I check every fact because my name goes on it before I Print or Save as PDF.
