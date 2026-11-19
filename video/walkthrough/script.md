@@ -45,7 +45,7 @@ Target durations are authoritative (spoken time at 140 wpm plus a 2 s pause); th
 
 ## Scene 2: What we are trying to achieve (42 s, 94 words)
 
-**Say:** "So what do we want? We want to find the real cause and not just the faulty pack, understand the financial impact to the business so we know how to prioritise it, fix it so it stays fixed, and prove that months later. I'll do it in RCA Pilot, from a blank page, and the numbers are illustrative, made up to show the method. We have 6 events a year, 8 hours of line stoppage each, 3,000 packs an hour, 45 cents margin a pack, and on average about $33,100 of cash cost each time it happens."
+**Say:** "So what do we want? We want to find the real cause and not just the faulty pack, understand the financial impact to the business, fix it so it stays fixed, and prove that months later. I'll do it in RCA Pilot, from a blank page, and the numbers are illustrative, made up to show the method. We have 6 events a year, 8 hours of line stoppage each, 3,000 packs an hour, 45 cents margin a pack, and on average about $33,100 of cash cost each time it happens."
 
 [VISUAL] Four large words appear one by one: "Find the cause", "Understand the financial impact", "Fix it", "Prove it". Then a simple card listing the illustrative inputs: 6 events a year, 8 hours each, 3,000 packs/hour, $0.45 margin per pack, $33,100 cash cost per event. Caption: "Illustrative figures".
 
