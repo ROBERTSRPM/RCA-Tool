@@ -33,9 +33,9 @@ Target durations below are authoritative (they include a short pause at the end 
 
 ## Scene 3: Evidence (11 s)
 
-**Say:** "Next, the evidence. Add photos, trend data and maintenance history, so every cause can be checked against facts, not opinions."
+**Say:** "Next, the evidence. Add photos, trend data, inspections and records, so every cause can be checked against facts, not opinions."
 
-**On screen:** Evidence step: the list of evidence items (seal faces, bearing wear, oil samples, flow trend, missing alignment records). Slow scroll, highlight one item. Caption: "Evidence first".
+**On screen:** Evidence step: the list of evidence items (flow trend, bearing wear track, oil samples, seal face inspection, rebuild records). Slow scroll, highlight one item. Caption: "Evidence first".
 
 ## Scene 4: Cause tree and Suggestions (25 s)
 
@@ -47,19 +47,19 @@ Target durations below are authoritative (they include a short pause at the end 
 
 **Say:** "Now actions. Each root cause gets a corrective or preventive action, with an owner and a due date. Change the maintenance plan, with the new inspection interval, and list the spares. AI can suggest actions too, but nothing is added until you accept it."
 
-**On screen:** Actions step. Show an action with owner and due date. Show a maintenance plan change with the interval (for example inspect the seal flush every month) and a spares item. Click the AI "Suggested actions", highlight one, accept it. Captions: "Corrective and preventive actions", "Maintenance plan and spares".
+**On screen:** Actions step. Show an action with owner and due date. Show a maintenance plan change with the interval (the seal flush check every week; the sample also has a monthly vibration reading) and a spares item. Click the AI "Suggested actions", highlight one, accept it. Captions: "Corrective and preventive actions", "Maintenance plan and spares".
 
 ## Scene 6: Verify (15 s)
 
 **Say:** "After the fix, verify. Savings only count once someone has checked that the failure has stopped coming back. Then roll the fix out to similar assets, so the next pump does not fail the same way."
 
-**On screen:** Verify step: verification checks and the verified savings figure; a note that unverified savings are not counted. Then the "similar assets" list for the roll-out. Captions: "Savings count once verified", "Roll out to similar assets".
+**On screen:** Verify step: the review date, "has it recurred" answer and the verified savings figure; the note that a saving counts only once actions are done and the review confirms no recurrence. Then the "similar assets" list for the roll-out. Captions: "Savings count once verified", "Roll out to similar assets".
 
 ## Scene 7: Report (10 s)
 
-**Say:** "When you are ready, produce the report and a one-page management summary: the problem, the loss, the causes, the actions and the verified result."
+**Say:** "When you are ready, print or save the report, a one-page summary for your manager: the problem, the loss, the causes, the actions and the verified result."
 
-**On screen:** Report page, then the management summary at the top, slow scroll. Caption: "Report and management summary".
+**On screen:** Report step: the one-page summary, slow scroll. Caption: "One-page report for your manager".
 
 ## Scene 8: Close (10 s)
 
