@@ -49,17 +49,19 @@ Click "Draft problem statement from notes". The draft varies each run. Expect it
 | Field | Final value |
 |---|---|
 | Title | Repeat leaking packs from Line 3 tray sealer |
-| Asset | Line 3 tray sealer |
+| Line or process (labelled "Line or process" for a process failure) | Line 3 tray sealer |
 | Site / area | Chilled ready-meals, Packing hall, Line 3 |
 | Date of event | 2026-10-15 |
 | What happened? | At the 4:00 am end-of-line seal check, 2 of 3 chicken and rice packs leaked in the leak tester. Weak seals along the tray flange. About 6,000 packs packed since the last good check at 2:00 am put on hold. This is the 6th event in twelve months. |
-| Where on the equipment? | Heat seal of the lidding film to the tray flange on the Line 3 tray sealer. |
+| Where in the process? | Heat seal of the lidding film to the tray flange on the Line 3 tray sealer. |
 | When did it happen? | Made on night shift since 2:00 am, found at the 4:00 am seal check on Thursday 15 October 2026. 6th time in twelve months. |
 | What was the impact? | About 6,000 packs on hold, line stopped for investigation, and a retailer complaint about slack packs last month. Money is added in the next step. |
 
-## Scene 5: Line / process details and quality reference
+## Scene 5: Quality reference and Line / process details
 
-For a process failure the app shows "Line / process details" (instead of the equipment asset fields). Fill (use the fields the app shows; values below):
+In the "1. Describe the problem" card, directly under "Type of failure", is the optional "Quality reference (NCR / CAPA number)" (placeholder "e.g. NCR-2291"): type `NCR-2291`. Spoken: the RCA can feed the site's QA / CAPA system through this reference.
+
+Then scroll to the card "Line / process details" (it replaces "Asset details" for a process failure). Fill:
 
 | Field | Value |
 |---|---|
@@ -67,9 +69,10 @@ For a process failure the app shows "Line / process details" (instead of the equ
 | Product | Chicken and rice, 480 g tray |
 | Pack type | Modified-atmosphere tray, lidding film |
 | Process step | Tray sealing (heat seal) |
-| Failure mode | Seal failure (leaking pack) |
+| Asset tag (optional) | leave empty |
+| Failure mode | Seal failure (leaking pack) (pick it from the list; you can also type your own) |
 
-Then "Quality reference (NCR / CAPA number)" (optional): `NCR-2291`. Spoken: the RCA can feed the site's QA / CAPA system through this reference.
+The card also has Asset type, Make and model, Duty or service and Criticality. They are optional: leave them empty.
 
 ## Scene 6: Loss step
 
@@ -114,29 +117,29 @@ For E1 optionally click "Add a photo" and upload any image (do not use a real cu
 
 Top box (failure event) text if empty: `Line 3 tray sealer produced leaking packs, found at the end-of-line seal check`
 
-Click "Why?" under the box shown. New boxes inherit the parent's type, so set "Type of cause" on each.
+Click "Why?" under the box shown. New boxes inherit the parent's type, so set "Type of cause" on each. Also tap one "Cause area" button on each cause (optional: Equipment, Materials, Method, Measurement, People or Environment; tap again to clear). The area shows on the card as, for example, "Physical · Materials", and the Fishbone tab can group by it.
 
-| Box | Under | Type of cause | Text | How sure are you? | Evidence that supports it |
-|---|---|---|---|---|---|
-| A1 | Failure event | Physical | Seals were weak or incomplete along the tray flange | Verified | E1 |
-| A2 | A1 | Physical | Sealing jaw ran 17 degrees below setpoint, with worn silicone | Verified | E2, E3 |
-| A3 | A2 | System / Latent | The maintenance plan has no jaw temperature check and no silicone replacement interval | Verified | E3, E5 |
-| B1 | Failure event | Physical | Seal temperature and dwell were below the recipe for this film | Verified | E4 |
-| B2 | B1 | Human | Operators raised speed and cut dwell to keep up with the order | Verified | E4, E6 |
-| B3 | B2 | System / Latent | Sealing settings are not locked, and the shift target counts packs per hour only | Verified | E4, E6 |
-| C1 | Failure event | Physical | New film batch has a different seal layer that needs more heat | Verified | E5 |
-| C2 | C1 | Human | The new film batch was accepted without telling QA or production | Hypothesis | E6 |
-| C3 | C2 | System / Latent | No change control for film supplier or specification | Hypothesis | none yet (link E5 during the Challenge step) |
-| D1 | Failure event | Human | Seal check is 3 packs every 2 hours, so leakers made between checks reach customers and the whole 2 hours goes on hold | Verified | E5, E6 |
-| D2 | D1 | System / Latent | Check frequency and sample size are not based on risk, with no check at changeover or after a jaw or film change, and no in-line detection | Verified | E5, E6 |
+| Box | Under | Type of cause | Cause area | Text | How sure are you? | Evidence that supports it |
+|---|---|---|---|---|---|---|
+| A1 | Failure event | Physical | Equipment | Seals were weak or incomplete along the tray flange | Verified | E1 |
+| A2 | A1 | Physical | Equipment | Sealing jaw ran 17 degrees below setpoint, with worn silicone | Verified | E2, E3 |
+| A3 | A2 | System / Latent | Method | The maintenance plan has no jaw temperature check and no silicone replacement interval | Verified | E3, E5 |
+| B1 | Failure event | Physical | Method | Seal temperature and dwell were below the recipe for this film | Verified | E4 |
+| B2 | B1 | Human | People | Operators raised speed and cut dwell to keep up with the order | Verified | E4, E6 |
+| B3 | B2 | System / Latent | Method | Sealing settings are not locked, and the shift target counts packs per hour only | Verified | E4, E6 |
+| C1 | Failure event | Physical | Materials | New film batch has a different seal layer that needs more heat | Verified | E5 |
+| C2 | C1 | Human | Method | The new film batch was accepted without telling QA or production | Hypothesis | E6 |
+| C3 | C2 | System / Latent | Method | No change control for film supplier or specification | Hypothesis | none yet (link E5 during the Challenge step) |
+| D1 | Failure event | Human | Measurement | Seal check is 3 packs every 2 hours, so leakers made between checks reach customers and the whole 2 hours goes on hold | Verified | E5, E6 |
+| D2 | D1 | System / Latent | Measurement | Check frequency and sample size are not based on risk, with no check at changeover or after a jaw or film change, and no in-line detection | Verified | E5, E6 |
 
 Tick "This is a root cause" on A3, B3, C3 and D2 (the four roots).
 
 ## Scene 9: natural, forced and not applicable
 
-- A2 (jaw and silicone): choose "Forced". Spoken reason: silicone wear is natural, but running it 14 months past a sensible life with no prompt is wear we allowed. Show "Natural" as the alternative. Do not set it.
+- A2 (jaw and silicone): under "Type of wear" choose "Forced deterioration". Spoken reason: silicone wear is natural, but running it 14 months past a sensible life with no prompt is wear we allowed. Show "Natural deterioration" as the alternative. Do not set it.
 - B1 (recipe settings below spec): choose "Not applicable" (a process cause, no wear).
-- Click the "5 Whys" and "Fishbone" tabs, then back to "Tree".
+- Click the "5 Whys" and "Fishbone" tabs. The Fishbone has "Group by: Level / Cause area" and opens by Cause area for a process failure (columns Equipment, Materials, Method, Measurement, People, Environment). Show it by Cause area, click "Level" to show Physical / Human / System, then back to "Tree".
 
 ## Scene 10: Cause coach and Challenge my analysis
 
@@ -192,8 +195,8 @@ First set Status to Done on every action (Actions step).
 
 Expected on screen: Annual loss before $263,400 (cash $198,600, opportunity $64,800); Annual loss after $43,900; "Annual saving (verified)" $219,500; Total action cost $20,200; Payback period about 1.1 months (1.10).
 
-"Roll this fix out" (Add a similar asset): tag `L1-TS` (Line 1 tray sealer) and `L2-TS` (Line 2 tray sealer), duty `Tray sealing`, "Add to the register". Create the checks. What to check: `Check jaw temperature, silicone, locked settings, hourly seal check and changeover check`. Who will check it: `Sam Ortiz`. Check due: `2027-06-30`.
+"Roll this fix out" (click "Add a similar asset that is not listed", then the "Add a similar asset" form): tag `L1-TS` (Line 1 tray sealer) and `L2-TS` (Line 2 tray sealer), duty `Tray sealing`, "Add to the register". Then click "Create 2 rollout checks". What to check: `Check jaw temperature, silicone, locked settings, hourly seal check and changeover check`. Who will check it: `Sam Ortiz`. Check due: `2027-06-30`.
 
 ## Scene 14: Report step
 
-Write-up drafting box, audience note: `The audience is the general manager. Keep it short.` Click "Management summary (1 page)". Edit one sentence. Click "Print / Save as PDF".
+In the "Write-up drafting" card, the audience note box (placeholder "e.g. The audience is the site manager. Keep it short."): type `The audience is the general manager. Keep it short.` Click "Management summary (1 page)". Edit one sentence. Click "Print / Save as PDF".

@@ -1,4 +1,4 @@
-RCA Pilot full walkthrough: voiceover to read (about 9.4 minutes)
+RCA Pilot full walkthrough: voiceover to read (about 9.5 minutes)
 
 Read at your normal slow pace. Say the scene number, read the lines, pause 2 seconds, then the next scene. If you stumble, repeat the line.
 
@@ -15,7 +15,7 @@ Scene 4: Problem: draft from notes (44 s)
 Step 1 is Problem. First, Type of failure: Equipment failure, or Process or quality failure. This one is a process or quality failure. Then the box called Draft problem statement from notes. A supervisor would jot rough notes like these. I click Draft problem statement from notes. The AI turns them into a clear statement, using only what I wrote. It does not guess a cause, and it lists what the notes left out, under Not in your notes, worth finding out. I edit the draft, press Use this draft, and then read it and correct anything.
 
 Scene 5: Problem: line details and quality reference (19 s)
-Below that, Line / process details: the line, product, pack type, film and the process step. And an optional Quality reference, the NCR or CAPA number. Put in NCR-2291, and this analysis can feed your site's QA and CAPA system.
+Under Type of failure, an optional Quality reference: the NCR or CAPA number. Put in NCR-2291, and this analysis can feed your site's QA and CAPA system. Further down, Line / process details: line, product, pack type and process step.
 
 Scene 6: Loss (54 s)
 Step 2, Loss. If you have no figures yet, choose Not known yet, or enter one rough yearly estimate. A rough number beats none. I enter 6 events a year, 8 hours each, 3,000 packs an hour, and 45 cents margin a pack. 8 hours at 3,000 is 24,000 packs not made. At 45 cents, that is $10,800 of lost margin, which is opportunity. Then the cash costs. The call-out is $1,200. Under Other costs I use the quick-add presets: Scrapped product $14,500. Product on hold $3,200. Customer claims and credits $6,800. Retailer penalties $5,000. Rework $2,400. Cash is $33,100. One event costs $43,900. 6 a year is $263,400. The line runs at capacity, so the lost output is lost for good.
@@ -26,8 +26,8 @@ Step 3, Evidence. Click Add evidence. Each item has a title, a type, a date, and
 Scene 8: Cause tree: by hand (60 s)
 Step 4, the Cause tree. The top box is the failure event. I click Why? and type the answer in plain words. Why were the packs leaking? The seals were weak along the flange. Why? The jaw ran 17 degrees low, with worn silicone. That is physical. Why was it not caught? Nothing in the maintenance plan checks jaw temperature or replaces the silicone. That is the system level, and I tick This is a root cause. Three more branches the same way. Wrong settings, where operators raised speed and cut dwell to keep up. A new film batch. And a seal check of only 3 packs every 2 hours, so a bad seal runs for hours before anyone knows. For each cause I tick the supporting evidence and mark it Verified or Ruled out.
 
-Scene 9: Natural and forced deterioration, views (34 s)
-One question I always ask where equipment is involved. Is this wear natural, or forced? Silicone on a sealing jaw wears out eventually. That is natural. But running it a year past its life, because nothing prompted anyone, is forced: wear we allowed. I set that under Type of wear. For the recipe settings, wear does not apply, so I choose Not applicable. The same tree also shows as 5 Whys, or a Fishbone.
+Scene 9: Natural and forced deterioration, views (37 s)
+One question I always ask where equipment is involved. Is this wear natural, or forced? Silicone on a sealing jaw wears out eventually. That is natural. But running it a year past its life, because nothing prompted anyone, is forced: wear we allowed. I set that under Type of wear. For the recipe settings, wear does not apply, so I choose Not applicable. The same tree also shows as 5 Whys, or a Fishbone grouped by the Cause area I tagged.
 
 Scene 10: Cause coach and Challenge (46 s)
 Now the AI help. The Cause coach suggests causes I may have missed, each as a hypothesis, with what would confirm it and what would rule it out. I click Suggest causes, read each one, and choose Add to tree or Dismiss. I add one that is new to me, product contaminating the flange. I dismiss gas mix, because the oxygen readings were in spec. Then Challenge my analysis. It questions the tree like an experienced reviewer. It says the film root cause has no evidence linked, so I link the film specification and mark it Verified. The AI suggests. I decide.

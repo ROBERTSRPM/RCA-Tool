@@ -127,12 +127,13 @@ export const FAILURE_TYPES: { value: FailureType; label: string; help: string }[
 
 /** Failure modes that suit a process or quality failure. */
 export const PROCESS_FAILURE_MODES: string[] = [
-  "Seal leak",
-  "Foreign matter",
-  "Wrong weight or fill",
-  "Labelling or coding error",
-  "Out of specification",
+  "Seal failure (leaking pack)",
+  "Underweight / overfill",
+  "Foreign body",
+  "Labelling error",
+  "Temperature excursion",
   "Contamination",
+  "Out of specification",
   "Changeover error",
   "Other",
 ];

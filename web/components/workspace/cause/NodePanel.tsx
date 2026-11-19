@@ -105,7 +105,7 @@ export function NodePanel({
         <legend className="label">
           Cause area <span className="font-normal text-slate-600">(optional)</span>
         </legend>
-        <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3" role="radiogroup" aria-label="Cause area">
+        <div className="grid grid-cols-2 gap-1.5" role="radiogroup" aria-label="Cause area">
           {CAUSE_AREAS.map((a) => {
             const on = node.area === a.value;
             return (

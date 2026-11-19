@@ -7,6 +7,7 @@
 import { uid } from "./id";
 import { blankInvestigation } from "./investigation";
 import type {
+  Problem,
   Asset,
   ActionCategory,
   ActionItem,
@@ -303,6 +304,10 @@ export function normaliseInvestigation(raw: unknown, rowId?: string): Investigat
       failureMode: str(get(p, "failureMode")),
       // Optional: absent for equipment failures and old investigations.
       ...(get(p, "failureType") === "process" ? { failureType: "process" as const } : {}),
+      ...(["line", "product", "packType", "processStep"] as const).reduce(
+        (acc, k) => (str(get(p, k)).trim() ? { ...acc, [k]: str(get(p, k)).slice(0, 200) } : acc),
+        {} as Partial<Pick<Problem, "line" | "product" | "packType" | "processStep">>,
+      ),
       ...(str(get(p, "qualityRef")).trim() ? { qualityRef: str(get(p, "qualityRef")).slice(0, 80) } : {}),
     },
     loss: normaliseLoss(get(raw, "loss"), base.loss),

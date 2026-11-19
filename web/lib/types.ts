@@ -60,6 +60,11 @@ export interface Problem {
   failureType?: FailureType;
   /** NCR / CAPA number in the site's quality system. Optional, free text. */
   qualityRef?: string;
+  /** Process or quality failures only; all optional, free text. */
+  line?: string;
+  product?: string;
+  packType?: string;
+  processStep?: string;
 }
 
 export type FailureType = "equipment" | "process";

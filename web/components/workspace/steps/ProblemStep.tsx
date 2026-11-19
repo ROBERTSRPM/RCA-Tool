@@ -82,10 +82,10 @@ export function ProblemStep({ inv, update, go }: StepProps) {
             onChange={(v) => set("whatHappened", v)}
           />
           <TextAreaField
-            label="Where on the equipment?"
-            help="Which part or location failed."
+            label={isProcess ? "Where in the process?" : "Where on the equipment?"}
+            help={isProcess ? "Which step, station or part of the pack or product is affected." : "Which part or location failed."}
             rows={3}
-            placeholder="e.g. Drive-end bearing housing and gland seal."
+            placeholder={isProcess ? "e.g. Seal flange on the tray, left side, after the sealing station." : "e.g. Drive-end bearing housing and gland seal."}
             value={p.where}
             onChange={(v) => set("where", v)}
           />

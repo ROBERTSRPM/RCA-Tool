@@ -5,7 +5,7 @@
  * re-checked, clipped and capped. No images, no money values, no dates of
  * edits: only what the AI needs to reason about the failure.
  */
-import { calcLoss, formatMoney, isLossQuantified, isVerifiedClosed } from "../finance";
+import { calcLoss, calcVerification, formatMoney, formatNumber, isLossQuantified, isVerifiedClosed } from "../finance";
 import { flatten } from "../tree";
 import type { Investigation } from "../types";
 
@@ -58,6 +58,11 @@ export interface AiProblem {
   /** "process" for a process or quality failure; "equipment" otherwise. */
   failureType: "equipment" | "process";
   qualityRef: string;
+  /** Process failures only: where it happened. Empty otherwise. */
+  line: string;
+  product: string;
+  packType: string;
+  processStep: string;
 }
 
 export interface AiEvidence {
@@ -140,14 +145,24 @@ export function buildAiContext(inv: Investigation): AiContext {
         .join(", ")
     : "";
   const cur = inv.loss.currency || "$";
+  const lc = calcLoss(inv.loss);
   const loss = isLossQuantified(inv.loss)
-    ? calcLoss(inv.loss).usesEstimate
-      ? `rough estimate of ${formatMoney(calcLoss(inv.loss).annualLoss, cur)} lost per year (not broken down)`
-      : `${inv.loss.eventsPerYear ?? "?"} events per year, ${inv.loss.downtimeHours ?? "?"} hours down per event, about ${formatMoney(calcLoss(inv.loss).annualLoss, cur)} lost per year`
+    ? lc.usesEstimate
+      ? `rough estimate of ${formatMoney(lc.annualLoss, cur)} lost per year (not broken down)`
+      : `${inv.loss.eventsPerYear ?? "?"} events per year, ${inv.loss.downtimeHours ?? "?"} hours down per event, ` +
+        `${formatMoney(lc.costPerEvent, cur)} per event (${formatMoney(lc.cashPerEvent, cur)} cash, ${formatMoney(lc.opportunityPerEvent, cur)} lost margin), ` +
+        `about ${formatMoney(lc.annualLoss, cur)} lost per year`
     : "loss not costed yet";
   const v = inv.verification;
+  const vc = calcVerification(inv);
   const verification = isVerifiedClosed(inv)
-    ? "actions done and the failure has not recurred (verified)"
+    ? `actions done and the failure has not recurred (verified)${
+        vc.hasAfterFigure && vc.annualSaving > 0
+          ? `; verified saving ${formatMoney(vc.annualSaving, cur)} per year, actions cost ${formatMoney(vc.totalActionCost, cur)}${
+              vc.paybackMonths !== null ? `, payback ${formatNumber(vc.paybackMonths, 1)} months` : ""
+            }`
+          : ""
+      }`
     : v.recurred === "yes"
       ? "the failure recurred after the actions"
       : "not yet verified";
@@ -171,6 +186,10 @@ export function buildAiContext(inv: Investigation): AiContext {
       failureMode: p.failureMode ?? "",
       failureType: p.failureType === "process" ? "process" : "equipment",
       qualityRef: p.qualityRef ?? "",
+      line: p.line ?? "",
+      product: p.product ?? "",
+      packType: p.packType ?? "",
+      processStep: p.processStep ?? "",
     },
     evidence: inv.evidence.map((e) => ({ id: e.id, type: e.type, title: e.title, note: e.note })),
     nodes: flat.map((f) => ({
@@ -222,6 +241,10 @@ function parseAiContextLoose(raw: unknown): AiContext {
     failureMode: clip(pr.failureMode, 120),
     failureType: oneOf(pr.failureType, ["equipment", "process"] as const, "equipment"),
     qualityRef: clip(pr.qualityRef, 80),
+    line: clip(pr.line, 120),
+    product: clip(pr.product, 120),
+    packType: clip(pr.packType, 120),
+    processStep: clip(pr.processStep, 120),
   };
   const evidence: AiEvidence[] = (Array.isArray(o.evidence) ? o.evidence : [])
     .filter(isObj)
@@ -273,8 +296,8 @@ function parseAiContextLoose(raw: unknown): AiContext {
     nodes: nodes.map((n) => ({ ...n, parentId: n.parentId && nodeIds.has(n.parentId) ? n.parentId : null })),
     actions,
     spares: clip(o.spares, AI_LIMITS.short),
-    loss: clip(o.loss, 300),
-    verification: clip(o.verification, 200),
+    loss: clip(o.loss, 450),
+    verification: clip(o.verification, 350),
   };
 }
 

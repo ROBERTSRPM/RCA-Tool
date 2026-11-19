@@ -33,6 +33,34 @@ export function AssetDetails({ problem, update }: { problem: Problem; update: Up
       }
     >
       <div className="grid gap-4 sm:grid-cols-2">
+        {isProcess && (
+          <>
+            <TextField
+              label="Line"
+              placeholder="e.g. Line 3"
+              value={problem.line ?? ""}
+              onChange={(v) => set("line", v)}
+            />
+            <TextField
+              label="Product"
+              placeholder="e.g. Chilled ready meal, chicken tikka"
+              value={problem.product ?? ""}
+              onChange={(v) => set("product", v)}
+            />
+            <TextField
+              label="Pack type"
+              placeholder="e.g. 400 g sealed tray with film lid"
+              value={problem.packType ?? ""}
+              onChange={(v) => set("packType", v)}
+            />
+            <TextField
+              label="Process step"
+              placeholder="e.g. Tray sealing"
+              value={problem.processStep ?? ""}
+              onChange={(v) => set("processStep", v)}
+            />
+          </>
+        )}
         <div>
           <TextField
             label={isProcess ? "Asset tag (optional)" : "Asset tag"}

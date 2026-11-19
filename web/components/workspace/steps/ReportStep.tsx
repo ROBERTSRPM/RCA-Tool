@@ -60,6 +60,14 @@ export function ReportStep({ inv, update }: StepProps) {
   const assetFacts: [string, string][] = [
     ["Type of failure", isProcess ? "Process or quality failure" : "Equipment failure"],
     ["Quality reference (NCR / CAPA number)", (p.qualityRef ?? "").trim()],
+    ...(isProcess
+      ? ([
+          ["Line", (p.line ?? "").trim()],
+          ["Product", (p.product ?? "").trim()],
+          ["Pack type", (p.packType ?? "").trim()],
+          ["Process step", (p.processStep ?? "").trim()],
+        ] as [string, string][])
+      : []),
     [isProcess ? "Line or process tag" : "Asset tag", (p.assetTag ?? "").trim()],
     ["Asset type", (p.assetType ?? "").trim()],
     ["Make and model", (p.makeModel ?? "").trim()],

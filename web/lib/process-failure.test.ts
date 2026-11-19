@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { blankInvestigation } from "./investigation";
 import { normaliseInvestigation } from "./normalize";
-import { COST_PRESETS, DETERIORATION_OPTIONS, CAUSE_AREAS, FAILURE_TYPES } from "./options";
+import { COST_PRESETS, PROCESS_FAILURE_MODES, DETERIORATION_OPTIONS, CAUSE_AREAS, FAILURE_TYPES } from "./options";
 import { runQualityCheck } from "./quality";
 import { calcLoss } from "./finance";
 import { buildSample } from "./sample";
@@ -114,5 +114,47 @@ describe("process / quality failures", () => {
       ctx.nodes[0].id,
     );
     expect(r?.suggestions[0].deterioration).toBe("not_applicable");
+  });
+
+  it("process fields round-trip and old data has none", () => {
+    const inv = blankInvestigation();
+    const back = normaliseInvestigation({
+      ...inv,
+      problem: { ...inv.problem, failureType: "process", line: "Line 3", product: "Tikka", packType: "400 g tray", processStep: "Sealing" },
+    })!;
+    expect(back.problem).toMatchObject({ line: "Line 3", product: "Tikka", packType: "400 g tray", processStep: "Sealing" });
+    expect(normaliseInvestigation(blankInvestigation())!.problem.line).toBeUndefined();
+    const ctx = buildAiContext(back);
+    expect(renderInvestigation(ctx, makeAliases(ctx))).toContain("Pack type: 400 g tray");
+  });
+
+  it("process failure modes include the leaking pack option", () => {
+    expect(PROCESS_FAILURE_MODES).toEqual(
+      expect.arrayContaining(["Seal failure (leaking pack)", "Underweight / overfill", "Foreign body", "Labelling error", "Temperature excursion", "Contamination"]),
+    );
+  });
+
+  it("AI context carries cost per event and the verified saving", () => {
+    const inv = buildSample();
+    const ctx = buildAiContext(inv);
+    expect(ctx.loss).toMatch(/per event/);
+    inv.actions = inv.actions.map((a) => ({ ...a, status: "done" as const }));
+    inv.verification = { ...inv.verification, recurred: "no", reviewDate: "2026-06-01", eventsPerYearAfter: 0 };
+    const v = buildAiContext(inv).verification;
+    expect(v).toMatch(/verified saving/);
+    const notDone = buildSample();
+    notDone.verification = { ...notDone.verification, recurred: "unreviewed" };
+    const open = buildAiContext(notDone).verification;
+    expect(open).not.toMatch(/saving/);
+  });
+
+  it("coach and summary prompts: contamination is not wear; summary uses event cost and saving", () => {
+    const ctx = buildAiContext(buildSample());
+    const a = makeAliases(ctx);
+    const coach = buildPrompt({ feature: "coach", scope: "tree", context: ctx } as never, a).instructions;
+    expect(coach).toMatch(/Contamination, materials, methods and settings are not wear/);
+    const summary = buildPrompt({ feature: "draft", kind: "summary", notes: "", context: ctx } as never, a).instructions;
+    expect(summary).toMatch(/cost of one event/);
+    expect(summary).toMatch(/verified saving/);
   });
 });

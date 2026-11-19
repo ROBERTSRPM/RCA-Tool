@@ -42,7 +42,7 @@ THE HOUSE METHOD. Follow it in everything you produce.
 
 11. Numbers. Use only figures the user gave you. Do not invent costs, failure rates, intervals presented as facts, standards or statistics. Where you offer an illustrative number, label it as an example to check, never as a benchmark.
 
-12. Process and quality failures. Some investigations are not about a broken machine but a process or quality failure, for example leaking packs on a food packing line. The request shows "Type of failure: Process or quality failure" for these. Method is the same: causes at three levels, evidence before opinions, no blame. Look across equipment (the machine and its condition), materials (for example a film batch or supplier lot), method and settings (changeover, sealing temperature, dwell, pressure, line speed), people and training (as a system gap, never blame), measurement (seal checks, leak testing, calibration, check frequency), environment, and system causes (control plan, specification, supplier approval, change control). Wear is often not the issue: natural or forced deterioration applies only when something wore or was damaged, otherwise use not_applicable. The investigation may feed the site's own QA or CAPA system (a quality reference may be shown). Do not claim the analysis meets HACCP, SQF, BRC or any other standard, and do not state what a standard requires. Only the person and the site's quality team decide that.
+12. Process and quality failures. Some investigations are not about a broken machine but a process or quality failure, for example leaking packs on a food packing line. The request shows "Type of failure: Process or quality failure" for these. Method is the same: causes at three levels, evidence before opinions, no blame. Look across equipment (the machine and its condition), materials (for example a film batch or supplier lot), method and settings (changeover, sealing temperature, dwell, pressure, line speed), people and training (as a system gap, never blame), measurement (seal checks, leak testing, calibration, check frequency), environment, and system causes (control plan, specification, supplier approval, change control). Wear is often not the issue: natural or forced deterioration applies only when a part wore or was damaged. Contamination, a wrong material or batch, a method, a setting, a check or a missing control are not wear: always use not_applicable for them, never "forced". The investigation may feed the site's own QA or CAPA system (a quality reference may be shown). Do not claim the analysis meets HACCP, SQF, BRC or any other standard, and do not state what a standard requires. Only the person and the site's quality team decide that.
 
 STYLE. Plain, practical maintenance-manager language. Short sentences. No jargon the maintenance planner would not use. No emojis. Do not use markdown formatting inside JSON string fields (no asterisks, no hash headings); where line breaks are needed use plain line breaks and a simple "- " for list items. Match the spelling style (UK or US) of the user's own text. Be specific to this asset and failure; generic advice that fits any machine is not useful. If something is not known, say what to find out instead of guessing. If the information describes an injury or a serious safety or environmental event, say the site's incident process comes first.
 
@@ -116,6 +116,10 @@ export function renderInvestigation(ctx: AiContext, a: Aliases): string {
     ["Criticality", p.criticality],
     ["Failure mode", p.failureMode],
     ["Site or area", p.site],
+    ["Line", p.line],
+    ["Product", p.product],
+    ["Pack type", p.packType],
+    ["Process step", p.processStep],
     ["Date of event", p.eventDate ? formatDate(p.eventDate) : ""],
     ["What happened", p.whatHappened],
     [p.failureType === "process" ? "Where in the process" : "Where on the equipment", p.where],
@@ -187,7 +191,7 @@ The user is building a cause tree and has selected one cause. Suggest 3 to 6 pos
 - Each suggestion is a short cause statement (under 25 words), written as a fact about the asset, the task or the system, never as blame.
 - "why": one sentence on why this is plausible for this asset type and failure mode.
 - "confirmWith": the specific evidence or check that would support it. "ruleOutWith": what would rule it out.
-- "deterioration": for every physical cause about wear or damage say natural or forced, or unclear when the data does not decide; otherwise not_applicable.
+- "deterioration": for every physical cause about wear or damage to a part say natural or forced, or unclear when the data does not decide; otherwise not_applicable. Contamination, materials, methods and settings are not wear: use not_applicable, never forced.
 - Include at least one human-level cause behind each physical cause you suggest, written as what the system lacked, not as blame.
 - For a process or quality failure, spread the suggestions across equipment, materials (for example film batch), method and settings (changeover, sealing temperature, dwell, pressure), people and training, measurement (seal checks, leak testing) and environment, plus system causes. Use not_applicable for deterioration on causes that are not wear (a setting, a method, a material).
 - Do not repeat a cause already in the tree, even reworded, and check the wording of flagged root causes too. Do not suggest a cause that is marked ruled out.
@@ -199,7 +203,7 @@ Look at the whole cause tree and suggest 4 to 8 causes that are missing: branche
 - Each suggestion is a short cause statement (under 25 words), written as a fact, never as blame.
 - "why": one sentence on why it is plausible here and why the tree is weaker without it.
 - "confirmWith" and "ruleOutWith": the specific evidence or check that would support or rule it out.
-- "deterioration": for every physical wear or damage cause say natural or forced, or unclear when the data does not decide; otherwise not_applicable.
+- "deterioration": for every physical wear or damage cause on a part say natural or forced, or unclear when the data does not decide; otherwise not_applicable. Contamination, materials, methods and settings are not wear: use not_applicable, never forced.
 - Include at least one human-level cause behind each physical cause you suggest, written as what the system lacked, not as blame.
 - For a process or quality failure, check the tree covers equipment, materials (for example film batch), method and settings (changeover, sealing temperature, dwell, pressure), people and training, measurement (seal checks, leak testing), environment and system causes, and suggest what is missing. Use not_applicable for deterioration on causes that are not wear.
 - Do not repeat a cause already in the tree, even reworded, and check the wording of flagged root causes too. Do not suggest a cause marked ruled out.`;
@@ -262,7 +266,7 @@ Write a clear report a plant manager and the next shift can both use, from the i
 - "sections": use these headings in this order, skipping a section only if there is truly nothing to say: Summary; What happened; Impact; Evidence reviewed; How the failure developed (the causes by level: physical, human, system / latent); Root causes; Actions (corrective, then preventive, with owner, due date and status where given); Maintenance plan changes (task, interval, craft); Spares; Rolling the fix out to similar assets; Still to confirm.
 - Use the owners, due dates, status and craft shown for each action. Mention a missing owner, date or craft only where the action shows "not set". Write dates as they appear in the investigation (for example 11 Feb 2025). Write "Date: 11 Feb 2025" style, not "the date of event recorded is".
 - Be honest about status. Only call a cause verified if its status in the data is verified. Call the others hypotheses. Put unverified root causes and evidence gaps under "Still to confirm".
-- Do not invent facts, evidence, owners, dates, costs or results. Use the cost figure only as given. If the data is thin, say so rather than filling it.
+- Do not invent facts, evidence, owners, dates, costs or results. Use the cost figures only as given, including the cost of one event, and the verified saving and payback when the data shows them (only then). If the data is thin, say so rather than filling it.
 - For a process or quality failure, add the quality reference (NCR / CAPA number) to the Summary if one is shown, and say once that the report may feed the site's QA or CAPA investigation. Do not claim HACCP, SQF or BRC compliance.
 - Plain language, short paragraphs, "- " lists where they help. Each section body under 1500 characters.`;
 
@@ -270,6 +274,7 @@ const SUMMARY = `TASK: Draft a one-page management summary.
 Write for a busy manager who will read it in two minutes and may have to approve something. Total length under 300 words, from the investigation data only.
 - "title": one line.
 - "sections": use these headings: What happened; What it cost (only if a cost figure is given, otherwise say the cost is not yet quantified); Why it happened (the root causes in plain language, at system level, no blame); What we are doing (the key corrective and preventive actions); What we need from you (decisions, approvals, budget or spares, only if the data points to them, otherwise say none identified); How we will know it worked (the verification status and the check).
+- "What it cost": give the cost of one event and the yearly cost exactly as shown in the data. In "How we will know it worked", when the data shows a verified saving (and payback), state it; if it shows "not yet verified", do not claim a saving.
 - Be honest: say which causes are verified and which are still hypotheses. Do not invent numbers, dates or commitments.`;
 
 export function buildPrompt(req: AiRequest, a: Aliases): BuiltPrompt {

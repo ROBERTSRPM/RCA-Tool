@@ -16,14 +16,14 @@ Note for the recording: the AI buttons need a signed-in account. Do not use the 
 | 6 | Loss | 122 | 3:00-3:54 |
 | 7 | Evidence | 88 | 3:54-4:34 |
 | 8 | Cause tree: by hand | 135 | 4:34-5:34 |
-| 9 | Natural and forced deterioration, views | 74 | 5:34-6:08 |
-| 10 | Cause coach and Challenge | 102 | 6:08-6:54 |
-| 11 | Actions | 83 | 6:54-7:32 |
-| 12 | CAPA suggestions and quality check | 48 | 7:32-7:55 |
-| 13 | Verify | 93 | 7:55-8:37 |
-| 14 | Report | 50 | 8:37-9:00 |
-| 15 | Close | 51 | 9:00-9:24 |
-| | Total | 1242 | 9:24 |
+| 9 | Natural and forced deterioration, views | 81 | 5:34-6:11 |
+| 10 | Cause coach and Challenge | 102 | 6:11-6:57 |
+| 11 | Actions | 83 | 6:57-7:35 |
+| 12 | CAPA suggestions and quality check | 48 | 7:35-7:58 |
+| 13 | Verify | 93 | 7:58-8:40 |
+| 14 | Report | 50 | 8:40-9:03 |
+| 15 | Close | 51 | 9:03-9:27 |
+| | Total | 1249 | 9:27 |
 
 Target durations are authoritative (spoken time at 140 wpm plus a 2 s pause); the screen clips are retimed to the voice.
 
@@ -61,13 +61,13 @@ Target durations are authoritative (spoken time at 140 wpm plus a 2 s pause); th
 
 **Say:** "Step 1 is Problem. First, Type of failure: Equipment failure, or Process or quality failure. This one is a process or quality failure. Then the box called Draft problem statement from notes. A supervisor would jot rough notes like these. I click Draft problem statement from notes. The AI turns them into a clear statement, using only what I wrote. It does not guess a cause, and it lists what the notes left out, under Not in your notes, worth finding out. I edit the draft, press Use this draft, and then read it and correct anything."
 
-[VISUAL] Problem step, all fields empty. Under "Type of failure" click "Process or quality failure". The card "Draft problem statement from notes" is open. Click into "Rough notes" and type the shift notes from example-data.md (readable speed, or paste). Click "Draft problem statement from notes". Cut while it works ("Writing the draft."). Show the draft box: Title, What happened?, Where on the equipment?, When did it happen?, What was the impact?, and the amber "Not in your notes. Worth finding out:" list. Edit one field by hand. Click "Use this draft". Scroll to the "1. Describe the problem" card now filled; point at the Undo link. Fix the Title and add Asset, Site / area and Date of event (see example-data.md). Captions: "1. Rough notes", "2. AI draft", "3. Use this draft, then edit".
+[VISUAL] Problem step, all fields empty. Under "Type of failure" click "Process or quality failure". The card "Draft problem statement from notes" is open. Click into "Rough notes" and type the shift notes from example-data.md (readable speed, or paste). Click "Draft problem statement from notes". Cut while it works ("Writing the draft."). Show the draft box: Title, What happened?, Where in the process?, When did it happen?, What was the impact?, and the amber "Not in your notes. Worth finding out:" list. Edit one field by hand. Click "Use this draft". Scroll to the "1. Describe the problem" card now filled; point at the Undo link. Fix the Title and add Line or process, Site / area and Date of event (see example-data.md). Captions: "1. Rough notes", "2. AI draft", "3. Use this draft, then edit".
 
 ## Scene 5: Problem: line details and quality reference (19 s, 40 words)
 
-**Say:** "Below that, Line / process details: the line, product, pack type, film and the process step. And an optional Quality reference, the NCR or CAPA number. Put in NCR-2291, and this analysis can feed your site's QA and CAPA system."
+**Say:** "Under Type of failure, an optional Quality reference: the NCR or CAPA number. Put in NCR-2291, and this analysis can feed your site's QA and CAPA system. Further down, Line / process details: line, product, pack type and process step."
 
-[VISUAL] Scroll to "Line / process details" and fill the fields listed in example-data.md. Then the optional "Quality reference (NCR / CAPA number)": type NCR-2291. Caption: "Line / process details, NCR-2291".
+[VISUAL] In the "1. Describe the problem" card, under "Type of failure", click the optional "Quality reference (NCR / CAPA number)" and type NCR-2291. Then scroll to the "Line / process details" card and fill Line, Product, Pack type, Process step and Failure mode (values in example-data.md; the Asset tag stays empty, it is optional). Caption: "Quality reference NCR-2291, Line / process details".
 
 ## Scene 6: Loss (54 s, 122 words)
 
@@ -87,13 +87,13 @@ Target durations are authoritative (spoken time at 140 wpm plus a 2 s pause); th
 
 **Say:** "Step 4, the Cause tree. The top box is the failure event. I click Why? and type the answer in plain words. Why were the packs leaking? The seals were weak along the flange. Why? The jaw ran 17 degrees low, with worn silicone. That is physical. Why was it not caught? Nothing in the maintenance plan checks jaw temperature or replaces the silicone. That is the system level, and I tick This is a root cause. Three more branches the same way. Wrong settings, where operators raised speed and cut dwell to keep up. A new film batch. And a seal check of only 3 packs every 2 hours, so a bad seal runs for hours before anyone knows. For each cause I tick the supporting evidence and mark it Verified or Ruled out."
 
-[VISUAL] Cause tree step, view "Tree". Click the top box and type the failure event from example-data.md. Click "Why?" and type each cause as listed, building branch A fully, then B, C and D more quickly (cut or speed up in the edit). Use the "Type of cause" buttons: Physical, Human, System / Latent. On the four system boxes tick "This is a root cause". Under "Evidence that supports it" tick the matching items; set "How sure are you?" to Verified where evidence supports it. Captions: "Why? Why? Why?", "Physical, human, system / latent", "Tick the evidence".
+[VISUAL] Cause tree step, view "Tree". Click the top box and type the failure event from example-data.md. Click "Why?" and type each cause as listed, building branch A fully, then B, C and D more quickly (cut or speed up in the edit). Use the "Type of cause" buttons: Physical, Human, System / Latent. Also tap one "Cause area" button (Equipment, Materials, Method, Measurement, People, Environment) on each cause, as listed in example-data.md; it shows on the card and groups the Fishbone. On the four system boxes tick "This is a root cause". Under "Evidence that supports it" tick the matching items; set "How sure are you?" to Verified where evidence supports it. Captions: "Why? Why? Why?", "Physical, human, system / latent", "Cause area", "Tick the evidence".
 
-## Scene 9: Natural and forced deterioration, views (34 s, 74 words)
+## Scene 9: Natural and forced deterioration, views (37 s, 81 words)
 
-**Say:** "One question I always ask where equipment is involved. Is this wear natural, or forced? Silicone on a sealing jaw wears out eventually. That is natural. But running it a year past its life, because nothing prompted anyone, is forced: wear we allowed. I set that under Type of wear. For the recipe settings, wear does not apply, so I choose Not applicable. The same tree also shows as 5 Whys, or a Fishbone."
+**Say:** "One question I always ask where equipment is involved. Is this wear natural, or forced? Silicone on a sealing jaw wears out eventually. That is natural. But running it a year past its life, because nothing prompted anyone, is forced: wear we allowed. I set that under Type of wear. For the recipe settings, wear does not apply, so I choose Not applicable. The same tree also shows as 5 Whys, or a Fishbone grouped by the Cause area I tagged."
 
-[VISUAL] Select the jaw box (A2). Under the deterioration choice tap "Forced"; show the help line and "Natural" as the alternative (do not set it). Select the settings box (B1) and tap "Not applicable". Click the tabs "5 Whys" then "Fishbone" for about 3 s each, then back to "Tree". Captions: "Natural, Forced, Not applicable", "Tree, 5 Whys, Fishbone".
+[VISUAL] Select the jaw box (A2). Under "Type of wear" tap "Forced deterioration"; show the help line and "Natural deterioration" as the alternative (do not set it). Select the settings box (B1) and tap "Not applicable". Click the tabs "5 Whys" then "Fishbone". The Fishbone shows its "Group by: Level / Cause area" choice and opens by Cause area for a process failure: pause 3 s on it, then click "Level" for 3 s, then back to "Tree". Captions: "Natural, Forced, Not applicable", "Fishbone by Cause area".
 
 ## Scene 10: Cause coach and Challenge (46 s, 102 words)
 
@@ -117,13 +117,13 @@ Target durations are authoritative (spoken time at 140 wpm plus a 2 s pause); th
 
 **Say:** "Step 6, Prove it stopped. Savings only count once every action is Done, the review date is entered, and the failure has not recurred. Months later I mark the actions Done and enter the review date. Recurred? No. Expected events per year after the fix? 1, a cautious number. The loss falls to $43,900. The saving is $219,500, verified. Payback on $20,200 is about 1.1 months, and 40 hours of line time came back. Then Roll this fix out: Lines 1 and 2 each get a check, with an owner and a date."
 
-[VISUAL] Go back to Actions and set Status to "Done" on every action. Verify step: Review date 2027-05-18; "Has the failure recurred since the actions were completed?" choose "No, it has not recurred"; Expected events per year after the fix 1; What did you find? (text in example-data.md). Show results: Annual loss before $263,400, after $43,900, "Annual saving (verified)" $219,500, Total action cost $20,200, Payback about 1.1 months. Scroll to "Roll this fix out": "Add a similar asset" (tags L1-TS, L2-TS), "Add to the register", then create the checks. Captions: "Savings count once verified", "Roll this fix out".
+[VISUAL] Go back to Actions and set Status to "Done" on every action. Verify step: Review date 2027-05-18; "Has the failure recurred since the actions were completed?" choose "No, it has not recurred"; Expected events per year after the fix 1; What did you find? (text in example-data.md). Show results: Annual loss before $263,400, after $43,900, "Annual saving (verified)" $219,500, Total action cost $20,200, Payback about 1.1 months. Scroll to "Roll this fix out": click "Add a similar asset that is not listed", fill the "Add a similar asset" form (tags L1-TS, L2-TS), "Add to the register", then click "Create 2 rollout checks". Captions: "Savings count once verified", "Roll this fix out".
 
 ## Scene 14: Report (23 s, 50 words)
 
 **Say:** "Step 7, Report. Draft report writes the full report from everything I have entered. Management summary, one page, is what the general manager reads. I can tell it who the audience is. Then I edit the text and check every fact. When it is right, Print or Save as PDF."
 
-[VISUAL] Report step. In the Write-up drafting box type the audience note "The audience is the general manager. Keep it short." Click "Management summary (1 page)", cut while it works, show the draft sections, edit one sentence. Click "Print / Save as PDF" and show the print preview briefly. Captions: "Draft report", "Management summary (1 page)", "Print / Save as PDF".
+[VISUAL] Report step. In the "Write-up drafting" card, click into the audience note box (placeholder "e.g. The audience is the site manager. Keep it short.") and type "The audience is the general manager. Keep it short." Click "Management summary (1 page)", cut while it works, show the draft sections, edit one sentence. Click "Print / Save as PDF" and show the print preview briefly. Captions: "Draft report", "Management summary (1 page)", "Print / Save as PDF".
 
 ## Scene 15: Close (24 s, 51 words)
 
