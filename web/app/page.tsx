@@ -12,7 +12,7 @@ import { SAMPLE_ID } from "@/lib/sample";
  *   "Find the real cause. Fix it once."
  *   "Root cause analysis your team will actually finish."
  */
-const HEADLINE = "Stop fixing the same failure twice.";
+const HEADLINE = "Get your plant out of firefighting mode.";
 const SUB =
   `${BRAND_NAME} takes your team from breakdown to verified fix, with an AI reviewer that suggests causes and actions while your people decide.`;
 const CREDIBILITY =
