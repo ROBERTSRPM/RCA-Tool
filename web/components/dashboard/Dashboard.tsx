@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { calcLoss, formatMoney, LOSS_NOT_COSTED } from "@/lib/finance";
+import { calcLoss, formatMoney, isLossQuantified, LOSS_NOT_COSTED } from "@/lib/finance";
 import { formatDate, todayISO } from "@/lib/dates";
 import { rolloutProgress } from "@/lib/rollout";
 import { getAssetStore, getStore } from "@/lib/store";
@@ -101,6 +101,8 @@ export function Dashboard() {
     rolloutOpen: rows.reduce((s, r) => s + rolloutProgress(r.inv.rollouts).open, 0),
     rolloutTotal: rows.reduce((s, r) => s + rolloutProgress(r.inv.rollouts).total, 0),
     rolloutSame: rows.reduce((s, r) => s + rolloutProgress(r.inv.rollouts).sameProblem, 0),
+    openCount: rows.filter((r) => r.sum.status !== "closed").length,
+    notCosted: rows.filter((r) => r.sum.status !== "closed" && !isLossQuantified(r.inv.loss)).length,
     saved: counted.reduce((s, r) => s + r.sum.verifiedSaving, 0),
     savedCash: counted.reduce((s, r) => s + r.sum.verifiedCash, 0),
     savedOpportunity: counted.reduce((s, r) => s + r.sum.verifiedOpportunity, 0),
@@ -202,10 +204,20 @@ export function Dashboard() {
       <section aria-label="Totals" className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-slate-200 bg-slate-200 lg:grid-cols-5">
         <Stat
           label="Open annual loss"
-          value={items ? formatMoney(totals.loss, currency) : "…"}
-          hint="Open investigations, per year"
+          value={
+            !items
+              ? "…"
+              : totals.openCount > 0 && totals.notCosted === totals.openCount
+                ? "Not costed yet"
+                : formatMoney(totals.loss, currency)
+          }
+          hint={
+            items && totals.notCosted > 0 && totals.notCosted < totals.openCount
+              ? `Open investigations, per year. ${totals.notCosted} not costed yet`
+              : "Open investigations, per year"
+          }
           split={
-            items
+            items && !(totals.openCount > 0 && totals.notCosted === totals.openCount)
               ? `Cash ${formatMoney(totals.lossCash, currency)} · Opportunity ${formatMoney(totals.lossOpportunity, currency)}`
               : undefined
           }

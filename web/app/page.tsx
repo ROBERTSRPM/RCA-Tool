@@ -99,7 +99,7 @@ export default function Home() {
                 Try the sample investigation
               </Link>
               <Link href="/signup" className="btn btn-secondary min-h-12 px-6 text-base">
-                Create free account
+                Create account
               </Link>
             </div>
             <p className="mt-4 text-sm text-slate-500">No account needed to try it.</p>
@@ -228,7 +228,7 @@ export default function Home() {
               href="/signup"
               className="btn min-h-12 border border-slate-500 px-6 text-base text-white hover:border-slate-300 hover:bg-white/10"
             >
-              Create free account
+              Create account
             </Link>
           </div>
         </section>
