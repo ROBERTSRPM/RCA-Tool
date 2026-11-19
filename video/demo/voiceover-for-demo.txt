@@ -1,4 +1,4 @@
-RCA Pilot demo: voiceover to read (about 2 minutes)
+Voiceover for Demo: RCA Pilot (about 2 minutes)
 
 Say the scene number, read the lines, pause 2 seconds, then the next scene. If you stumble, just repeat the line.
 
