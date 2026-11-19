@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { calcLoss, formatMoney } from "@/lib/finance";
+import { calcLoss, formatMoney, LOSS_NOT_COSTED } from "@/lib/finance";
 import { formatDate, todayISO } from "@/lib/dates";
 import { rolloutProgress } from "@/lib/rollout";
 import { getAssetStore, getStore } from "@/lib/store";
@@ -348,7 +348,7 @@ export function Dashboard() {
                       Annual loss
                     </p>
                     <p className="font-semibold tabular-nums text-slate-900">
-                      {annual > 0 ? formatMoney(annual, inv.loss.currency) : "Not quantified"}
+                      {annual > 0 ? formatMoney(annual, inv.loss.currency) : LOSS_NOT_COSTED}
                     </p>
                     {annual > 0 && (
                       <p className="text-xs text-slate-500">

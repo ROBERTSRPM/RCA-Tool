@@ -2,6 +2,7 @@
 
 import {
   calcLoss,
+  LOSS_NOT_COSTED,
   calcVerification,
   formatMoney,
   formatMonths,
@@ -103,18 +104,20 @@ export function VerifyStep({ inv, update, go }: StepProps) {
         help={
           calc.hasAfterFigure
             ? undefined
-            : "Enter the expected events per year after the fix to see the saving."
+            : !calc.lossCosted
+              ? "The loss is not costed yet, so no saving can be shown. Add a rough figure in the Loss step."
+              : "Enter the expected events per year after the fix to see the saving."
         }
       >
         <dl className="grid grid-cols-2 gap-3 lg:grid-cols-5">
           <Metric
             label="Annual loss before"
-            value={formatMoney(calc.annualLossBefore, cur)}
-            sub={split(calc.cashBefore, calc.opportunityBefore)}
+            value={calc.lossCosted ? formatMoney(calc.annualLossBefore, cur) : LOSS_NOT_COSTED}
+            sub={calc.lossCosted ? split(calc.cashBefore, calc.opportunityBefore) : "Add a rough figure in the Loss step to see a saving."}
           />
           <Metric
             label="Annual loss after"
-            value={calc.hasAfterFigure ? formatMoney(calc.annualLossAfter, cur) : "Not entered"}
+            value={calc.hasAfterFigure ? formatMoney(calc.annualLossAfter, cur) : calc.lossCosted ? "Not entered" : LOSS_NOT_COSTED}
             sub={
               calc.hasAfterFigure
                 ? `${formatMoney(calcLoss(inv.loss).costPerEvent, cur)} × ${v.eventsPerYearAfter}` +
@@ -127,7 +130,7 @@ export function VerifyStep({ inv, update, go }: StepProps) {
           />
           <Metric
             label={verified ? "Annual saving (verified)" : "Expected saving (not yet verified)"}
-            value={calc.hasAfterFigure ? formatMoney(calc.annualSaving, cur) : "Not entered"}
+            value={calc.hasAfterFigure ? formatMoney(calc.annualSaving, cur) : calc.lossCosted ? "Not entered" : LOSS_NOT_COSTED}
             good={calc.annualSaving > 0}
             sub={
               calc.hasAfterFigure

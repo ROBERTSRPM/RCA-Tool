@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import { useCallback, useRef, useState, type ReactNode } from "react";
 import { callAi } from "@/lib/ai/api";
 import type { AiFeature } from "@/lib/ai/requests";
 import { useAuth } from "../../auth/AuthProvider";

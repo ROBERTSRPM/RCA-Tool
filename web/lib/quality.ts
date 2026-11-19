@@ -1,4 +1,4 @@
-import { missingLossInputs } from "./finance";
+import { lossStatus } from "./finance";
 import { isOverdue } from "./status";
 import { CATEGORY_LABEL, findNode, flatten, pathTo, rootCauses } from "./tree";
 import { criticalSpareFlag, hasSparesAction, isTaskCategory, SPARES_FLAG_TEXT } from "./capa";
@@ -64,13 +64,13 @@ export function runQualityCheck(
   }
 
   // 2. Loss
-  const missingLoss = missingLossInputs(inv.loss);
-  if (missingLoss.length) {
+  // Missing loss is only a gentle reminder: many teams cannot cost a failure on day one.
+  if (lossStatus(inv.loss) !== "costed") {
     out.push({
       id: "loss-missing",
       rule: "loss-not-quantified",
-      severity: "high",
-      message: `The loss is not quantified yet. Still needed: ${missingLoss.join(", ")}.`,
+      severity: "low",
+      message: "Add a rough figure when you can. Managers act on dollars.",
       step: "loss",
     });
   }

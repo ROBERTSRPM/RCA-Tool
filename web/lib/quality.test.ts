@@ -127,3 +127,16 @@ describe("runQualityCheck", () => {
     expect(rules(unflagged)).toContain("action-not-linked");
   });
 });
+
+describe("missing loss is a gentle reminder", () => {
+  it("is low severity with the friendly wording", () => {
+    const f = runQualityCheck(blankInvestigation(), TODAY).find((x) => x.rule === "loss-not-quantified")!;
+    expect(f.severity).toBe("low");
+    expect(f.message).toBe("Add a rough figure when you can. Managers act on dollars.");
+  });
+  it("clears when a rough estimate is given", () => {
+    const inv = blankInvestigation();
+    inv.loss.annualEstimate = 50000;
+    expect(rules(inv)).not.toContain("loss-not-quantified");
+  });
+});

@@ -111,11 +111,30 @@ export interface LossCalc {
   annualCash: number;
   /** annual opportunity loss = opportunity per event x events */
   annualOpportunity: number;
-  /** annual loss = annual cash + annual opportunity */
+  /** annual loss = annual cash + annual opportunity (or the rough yearly estimate when nothing else costs a year) */
   annualLoss: number;
+  /** true when annualLoss is the user's single rough yearly estimate, not built from the detailed figures */
+  usesEstimate: boolean;
 }
 
-export function calcLoss(loss: Loss, eventsPerYear?: number | null): LossCalc {
+/** The loss with every figure blanked, used when the user chose "Not known yet". */
+function blankFigures(loss: Loss): Loss {
+  return {
+    ...loss,
+    eventsPerYear: null,
+    downtimeHours: null,
+    ratePerHour: null,
+    marginPerUnit: null,
+    repairCost: null,
+    annualEstimate: null,
+    recoveryCost: null,
+    bufferHoldingCostPerYear: null,
+    otherCosts: [],
+  };
+}
+
+export function calcLoss(rawLoss: Loss, eventsPerYear?: number | null): LossCalc {
+  const loss = rawLoss.notKnown ? blankFigures(rawLoss) : rawLoss;
   const events = n(eventsPerYear === undefined ? loss.eventsPerYear : eventsPerYear);
   const shares = resolveShares(loss);
 
@@ -134,8 +153,21 @@ export function calcLoss(loss: Loss, eventsPerYear?: number | null): LossCalc {
 
   const bufferHoldingPerYear = shares.buffer > 0 ? n(loss.bufferHoldingCostPerYear) : 0;
 
-  const annualCash = cashPerEvent * events + bufferHoldingPerYear;
+  const detailedCash = cashPerEvent * events + bufferHoldingPerYear;
   const annualOpportunity = lostMarginPerEvent * events;
+
+  // A single rough yearly figure stands in only when the detailed figures cost nothing for a year.
+  // With "events per year after the fix" it scales with the number of events; with no events
+  // on record it cannot be scaled, so it stays as entered.
+  const estimate = n(loss.annualEstimate);
+  const usesEstimate = estimate > 0 && detailedCash + annualOpportunity <= 0;
+  let estimateAmount = 0;
+  if (usesEstimate) {
+    const base = n(loss.eventsPerYear);
+    estimateAmount =
+      eventsPerYear !== undefined && base > 0 ? (estimate * events) / base : estimate;
+  }
+  const annualCash = detailedCash + estimateAmount;
 
   return {
     hoursLostPerYear: n(loss.downtimeHours) * events,
@@ -156,7 +188,38 @@ export function calcLoss(loss: Loss, eventsPerYear?: number | null): LossCalc {
     annualCash,
     annualOpportunity,
     annualLoss: annualCash + annualOpportunity,
+    usesEstimate,
   };
+}
+
+export type LossStatus = "costed" | "partial" | "unknown";
+
+/**
+ * "costed": there is a yearly money figure. "partial": some figures are entered but
+ * they do not give a yearly cost yet (for example hours only). "unknown": nothing
+ * usable, or the user chose "Not known yet".
+ */
+export function lossStatus(loss: Loss): LossStatus {
+  if (loss.notKnown) return "unknown";
+  if (calcLoss(loss).annualLoss > 0) return "costed";
+  const anyFigure =
+    n(loss.eventsPerYear) > 0 ||
+    n(loss.downtimeHours) > 0 ||
+    n(loss.ratePerHour) > 0 ||
+    n(loss.marginPerUnit) > 0 ||
+    n(loss.repairCost) > 0 ||
+    n(loss.annualEstimate) > 0 ||
+    (loss.otherCosts ?? []).some((c) => n(c.amount) > 0);
+  return anyFigure ? "partial" : "unknown";
+}
+
+export const LOSS_NOT_COSTED = "Loss not costed yet";
+
+/** Annual loss for display: the money figure, or "Loss not costed yet". Never "$0" for a missing figure. */
+export function formatAnnualLoss(loss: Loss): string {
+  return lossStatus(loss) === "costed"
+    ? formatMoney(calcLoss(loss).annualLoss, loss.currency || "$")
+    : LOSS_NOT_COSTED;
 }
 
 /** Names of the loss inputs that are still empty or zero. */
@@ -171,7 +234,7 @@ export function missingLossInputs(loss: Loss): string[] {
 }
 
 export function isLossQuantified(loss: Loss): boolean {
-  return calcLoss(loss).annualLoss > 0;
+  return lossStatus(loss) === "costed";
 }
 
 export function totalActionCost(actions: ActionItem[]): number {
@@ -196,15 +259,22 @@ export interface VerifyCalc {
   totalActionCost: number;
   /** months to repay the action cost from the saving; null if no saving */
   paybackMonths: number | null;
-  /** true once the user has entered events per year after the fix */
+  /** true once the user has entered events per year after the fix and the loss can be compared */
   hasAfterFigure: boolean;
+  /** false while the loss is not costed (so no saving can be claimed) */
+  lossCosted: boolean;
 }
 
 export function calcVerification(
   inv: Pick<Investigation, "loss" | "actions" | "verification">,
 ): VerifyCalc {
   const beforeCalc = calcLoss(inv.loss);
-  const hasAfterFigure = inv.verification.eventsPerYearAfter !== null;
+  // Savings need a costed loss. A single rough yearly estimate can only be compared
+  // after the fix if the number of events per year now is known.
+  const lossOk =
+    isLossQuantified(inv.loss) &&
+    (!beforeCalc.usesEstimate || n(inv.loss.notKnown ? null : inv.loss.eventsPerYear) > 0);
+  const hasAfterFigure = inv.verification.eventsPerYearAfter !== null && lossOk;
   const afterCalc = hasAfterFigure
     ? calcLoss(inv.loss, inv.verification.eventsPerYearAfter)
     : beforeCalc;
@@ -228,6 +298,7 @@ export function calcVerification(
     totalActionCost: cost,
     paybackMonths,
     hasAfterFigure,
+    lossCosted: isLossQuantified(inv.loss),
   };
 }
 

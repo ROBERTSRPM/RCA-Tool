@@ -95,6 +95,10 @@ export interface Loss {
   /** Simple default cash cost per event (parts, labour, contractors). */
   repairCost: number | null;
   currency: string;
+  /** The user chose "Not known yet": no figures are used or shown until they add some. */
+  notKnown?: boolean;
+  /** A single rough yearly cost, used when no detailed figures give an annual cost. */
+  annualEstimate?: number | null;
   /*
    * Fields below were added later. Old investigations do not have them, so
    * every reader must treat "missing" as: 100% lost for good, no extra costs.

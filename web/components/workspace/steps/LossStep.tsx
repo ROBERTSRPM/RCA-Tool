@@ -4,6 +4,8 @@ import { useId, useState } from "react";
 import {
   calcLoss,
   formatMoney,
+  LOSS_NOT_COSTED,
+  lossStatus,
   formatNumber,
   setShare,
   wholeShares,
@@ -58,6 +60,8 @@ export function LossStep({ inv, update }: StepProps) {
   const n = (v: number | null | undefined) => formatNumber(v ?? 0, 2);
   const shares = wholeShares(l);
   const others = l.otherCosts ?? [];
+  const status = lossStatus(l);
+  const known = !l.notKnown;
 
   const changeShare = (key: ShareKey, value: number | null) => {
     update((i) => {
@@ -77,9 +81,35 @@ export function LossStep({ inv, update }: StepProps) {
       <div className="min-w-0 space-y-5">
         <SectionCard
           title="2. What does it cost?"
-          help="Rough numbers are fine. You can refine them later and the totals update straight away."
+          help="Rough numbers are fine, and so is a partial answer: for example only the downtime, or one estimated yearly cost. If you do not know yet, say so and come back later."
         >
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div role="group" aria-label="Do you know the cost yet?" className="mb-4 flex flex-wrap gap-2">
+            <button
+              type="button"
+              aria-pressed={known}
+              data-testid="loss-have-figures"
+              className={`btn btn-sm ${known ? "btn-dark" : "btn-secondary"}`}
+              onClick={() => set("notKnown", false)}
+            >
+              I have figures (rough is fine)
+            </button>
+            <button
+              type="button"
+              aria-pressed={!known}
+              data-testid="loss-not-known"
+              className={`btn btn-sm ${!known ? "btn-dark" : "btn-secondary"}`}
+              onClick={() => set("notKnown", true)}
+            >
+              Not known yet
+            </button>
+          </div>
+          {!known && (
+            <p role="note" className="rounded-lg bg-slate-100 p-3 text-sm text-slate-700" data-testid="loss-not-known-note">
+              That is fine. The report will say &ldquo;{LOSS_NOT_COSTED}&rdquo; and the quality check will remind you
+              gently. Anything you entered earlier is kept if you switch back.
+            </p>
+          )}
+          {known && <div className="grid gap-4 sm:grid-cols-2">
             <NumberField
               label="How many times a year does it happen?"
               help="Count failures over the last 12 months."
@@ -134,9 +164,20 @@ export function LossStep({ inv, update }: StepProps) {
               onChange={(v) => set("currency", v.slice(0, 4))}
               placeholder="$"
             />
-          </div>
+            <NumberField
+              className="sm:col-span-2"
+              label="Or one rough cost per year"
+              help="Only know a ballpark for the whole year? Enter it here. It is used when the figures above do not add up to a yearly cost."
+              value={l.annualEstimate ?? null}
+              onChange={(v) => set("annualEstimate", v)}
+              prefix={cur}
+              placeholder="150000"
+            />
+          </div>}
         </SectionCard>
 
+        {known && (
+          <>
         <SectionCard
           title="What happened to the production you lost?"
           help="Not every lost hour is lost money. Split the production you did not make during the downtime into the three groups below. The three always add up to 100%: change one and the others adjust."
@@ -274,6 +315,8 @@ export function LossStep({ inv, update }: StepProps) {
             </ul>
           )}
         </SectionCard>
+          </>
+        )}
       </div>
 
       <aside aria-label="Live calculation" className="min-w-0 lg:sticky lg:top-20 lg:self-start">
@@ -298,6 +341,20 @@ export function LossStep({ inv, update }: StepProps) {
             />
           </dl>
 
+          {status !== "costed" ? (
+            <div className="mt-4 rounded-lg bg-slate-900 p-4 text-white" data-testid="loss-not-costed">
+              <p className="text-sm font-semibold">Annual loss</p>
+              <p className="text-2xl font-semibold tracking-tight" data-testid="annual-loss">
+                {LOSS_NOT_COSTED}
+              </p>
+              <p className="mt-1 text-sm">
+                {status === "partial"
+                  ? "You have some figures. Add events per year with a cost, or one rough yearly cost, to see the total."
+                  : "Add a rough figure when you can. Managers act on dollars."}
+              </p>
+            </div>
+          ) : (
+          <>
           <h3 className="mt-4 eyebrow">
             Cost per event
           </h3>
@@ -319,6 +376,12 @@ export function LossStep({ inv, update }: StepProps) {
             />
           </dl>
 
+          {c.usesEstimate ? (
+            <p className="mt-4 text-sm text-slate-700">
+              Based on your rough yearly estimate of {formatMoney(c.annualLoss, cur)}.
+            </p>
+          ) : (
+          <>
           <h3 className="mt-4 eyebrow">
             Per year
           </h3>
@@ -349,6 +412,9 @@ export function LossStep({ inv, update }: StepProps) {
             />
           </dl>
 
+          </>
+          )}
+
           <div className="mt-4 rounded-lg bg-slate-900 p-4 text-white">
             <p className="text-sm font-semibold">Annual loss</p>
             <p
@@ -357,15 +423,23 @@ export function LossStep({ inv, update }: StepProps) {
             >
               {formatMoney(c.annualLoss, cur)}
             </p>
-            <p className="mt-1 text-sm">
-              {formatMoney(c.annualCash, cur)} cash costs + {formatMoney(c.annualOpportunity, cur)}{" "}
-              opportunity loss
-            </p>
-            <p className="text-sm">
-              {formatMoney(c.costPerEvent, cur)} per event × {n(l.eventsPerYear)} events per year
-              {c.bufferHoldingPerYear > 0 ? " + buffer holding" : ""}
-            </p>
+            {c.usesEstimate ? (
+              <p className="mt-1 text-sm">Your rough yearly estimate</p>
+            ) : (
+              <>
+                <p className="mt-1 text-sm">
+                  {formatMoney(c.annualCash, cur)} cash costs + {formatMoney(c.annualOpportunity, cur)}{" "}
+                  opportunity loss
+                </p>
+                <p className="text-sm">
+                  {formatMoney(c.costPerEvent, cur)} per event × {n(l.eventsPerYear)} events per year
+                  {c.bufferHoldingPerYear > 0 ? " + buffer holding" : ""}
+                </p>
+              </>
+            )}
           </div>
+          </>
+          )}
           <p className="mt-4 text-sm leading-relaxed text-slate-600">
             <strong className="text-slate-900">The formula, in words:</strong> hours of downtime times
             the units you make per hour gives the production lost. The share lost for good,

@@ -138,8 +138,10 @@ export function buildAiContext(inv: Investigation): AiContext {
     : "";
   const cur = inv.loss.currency || "$";
   const loss = isLossQuantified(inv.loss)
-    ? `${inv.loss.eventsPerYear ?? "?"} events per year, ${inv.loss.downtimeHours ?? "?"} hours down per event, about ${formatMoney(calcLoss(inv.loss).annualLoss, cur)} lost per year`
-    : "";
+    ? calcLoss(inv.loss).usesEstimate
+      ? `rough estimate of ${formatMoney(calcLoss(inv.loss).annualLoss, cur)} lost per year (not broken down)`
+      : `${inv.loss.eventsPerYear ?? "?"} events per year, ${inv.loss.downtimeHours ?? "?"} hours down per event, about ${formatMoney(calcLoss(inv.loss).annualLoss, cur)} lost per year`
+    : "loss not costed yet";
   const v = inv.verification;
   const verification = isVerifiedClosed(inv)
     ? "actions done and the failure has not recurred (verified)"

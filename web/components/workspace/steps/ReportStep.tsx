@@ -5,7 +5,10 @@ import { formatDate, todayISO } from "@/lib/dates";
 import {
   calcLoss,
   calcVerification,
+  formatAnnualLoss,
   formatMoney,
+  LOSS_NOT_COSTED,
+  lossStatus,
   formatMonths,
   formatNumber,
   isVerifiedClosed,
@@ -42,6 +45,7 @@ export function ReportStep({ inv }: StepProps) {
   const c = calcLoss(inv.loss);
   const v = calcVerification(inv);
   const verified = isVerifiedClosed(inv);
+  const costed = lossStatus(inv.loss) === "costed";
   const shares = wholeShares(inv.loss);
   const others = (inv.loss.otherCosts ?? []).filter((o) => (o.amount ?? 0) > 0);
   const roots = rootCauses(inv.tree);
@@ -104,7 +108,7 @@ export function ReportStep({ inv }: StepProps) {
 
         <Section title="Headline">
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-            <Kpi label="Annual loss" value={formatMoney(c.annualLoss, cur)} />
+            <Kpi label="Annual loss" value={formatAnnualLoss(inv.loss)} />
             <Kpi
               label={verified ? "Annual saving (verified)" : "Expected saving (not yet verified)"}
               value={v.hasAfterFigure ? formatMoney(v.annualSaving, cur) : "Not yet"}
@@ -138,7 +142,23 @@ export function ReportStep({ inv }: StepProps) {
             {unit} are not produced. Of that, {shares.lost}% is lost for good, {shares.madeUp}% is
             made up later and {shares.buffer}% is covered by buffer stock.
           </p>
-          <div className="mt-2 overflow-x-auto">
+          {!costed && (
+            <p className="mt-2 font-semibold" data-testid="report-loss-not-costed">
+              {LOSS_NOT_COSTED}.{" "}
+              <span className="font-normal text-slate-600">
+                {lossStatus(inv.loss) === "partial"
+                  ? "Some figures are recorded above, but they do not give a yearly cost yet."
+                  : "No cost figures have been recorded."}
+              </span>
+            </p>
+          )}
+          {costed && c.usesEstimate && (
+            <p className="mt-2">
+              Rough estimate entered for the year: <strong>{formatMoney(c.annualLoss, cur)} per year</strong>. No
+              per-event breakdown was recorded.
+            </p>
+          )}
+          {costed && !c.usesEstimate && <div className="mt-2 overflow-x-auto">
             <table className="w-full border-collapse text-left text-xs">
               <thead>
                 <tr className="border-b-2 border-slate-900">
@@ -206,12 +226,14 @@ export function ReportStep({ inv }: StepProps) {
                 </tr>
               </tbody>
             </table>
-          </div>
-          <p className="mt-1 text-slate-600">
-            Per year: {formatNumber(c.hoursLostPerYear, 1)} hours lost and {formatNumber(c.unitsLostPerYear, 1)}{" "}
-            {unit} not produced ({formatNumber(c.unitsLostForGoodPerYear, 1)} {unit} lost for good).{" "}
-            <strong>{formatMoney(c.annualLoss, cur)} per year</strong> in total.
-          </p>
+          </div>}
+          {costed && !c.usesEstimate && (
+            <p className="mt-1 text-slate-600">
+              Per year: {formatNumber(c.hoursLostPerYear, 1)} hours lost and {formatNumber(c.unitsLostPerYear, 1)}{" "}
+              {unit} not produced ({formatNumber(c.unitsLostForGoodPerYear, 1)} {unit} lost for good).{" "}
+              <strong>{formatMoney(c.annualLoss, cur)} per year</strong> in total.
+            </p>
+          )}
         </Section>
 
         <Section title="3. Evidence">
@@ -413,7 +435,11 @@ export function ReportStep({ inv }: StepProps) {
                 " This saving is not yet verified: it counts only when all actions are done and the review, with a date, says the failure has not recurred."}
             </p>
           ) : (
-            <Muted>Savings cannot be calculated until the expected events per year after the fix are entered.</Muted>
+            <Muted>
+              {costed
+                ? "Savings cannot be calculated until the expected events per year after the fix are entered."
+                : `Savings cannot be calculated while the loss is not costed. ${LOSS_NOT_COSTED}.`}
+            </Muted>
           )}
         </Section>
         <Section title="Rollout to similar assets">

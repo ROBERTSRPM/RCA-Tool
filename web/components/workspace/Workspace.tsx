@@ -34,18 +34,41 @@ export function Workspace({ initial }: { initial: Investigation }) {
 
   const findings = useMemo(() => runQualityCheck(inv), [inv]);
 
+  // Findings about a step are only guidance (neutral) until that step has been visited or edited,
+  // so a brand-new investigation never opens with red. Saved work counts as visited throughout.
+  const [startedWithWork] = useState(() => !!initial.problem.title.trim() || initial.isSample === true);
+  const [visited, setVisited] = useState<Set<StepId>>(() => new Set());
+  const markVisited = useCallback((s: StepId) => {
+    setVisited((v) => (v.has(s) ? v : new Set(v).add(s)));
+  }, []);
+  const firstInv = useRef(inv);
+  useEffect(() => {
+    // Editing anything counts as having visited the step you are on.
+    if (inv !== firstInv.current) markVisited(step);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inv]);
+  const visitedForPanel = useMemo(
+    () => (startedWithWork ? new Set<StepId>(STEPS.map((s) => s.id)) : visited),
+    [visited, startedWithWork],
+  );
+
   const go = useCallback((s: StepId, nodeId?: string) => {
+    markVisited(s);
     setStep(s);
     if (nodeId) setSelectedNode(nodeId);
     window.history.replaceState(null, "", `#${s}`);
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, []);
+  }, [markVisited]);
 
   useEffect(() => {
-    const onHash = () => setStep(readHash());
+    const onHash = () => {
+      const s = readHash();
+      markVisited(s);
+      setStep(s);
+    };
     window.addEventListener("hashchange", onHash);
     return () => window.removeEventListener("hashchange", onHash);
-  }, []);
+  }, [markVisited]);
 
   useEffect(() => {
     const wanted = `${inv.problem.title || "New investigation"} · ${BRAND_NAME}`;
@@ -212,7 +235,7 @@ export function Workspace({ initial }: { initial: Investigation }) {
           </ol>
         </nav>
 
-        <QualityPanel findings={findings} go={go} />
+        <QualityPanel findings={findings} go={go} visited={visitedForPanel} />
       </div>
 
       <div className="mt-4" key={step}>

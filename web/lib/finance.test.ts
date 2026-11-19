@@ -288,3 +288,88 @@ describe("calcLoss with the new cost model", () => {
     expect(isVerifiedClosed(s)).toBe(true);
   });
 });
+
+import { calcLoss as _calcLoss, calcVerification as _calcVerification, formatAnnualLoss, LOSS_NOT_COSTED, lossStatus, verifiedSaving as _verifiedSaving } from "./finance";
+
+describe("loss without full dollar figures", () => {
+  const blank = () => blankInvestigation();
+
+  it("blank loss is unknown and says not costed, never $0", () => {
+    const inv = blank();
+    expect(lossStatus(inv.loss)).toBe("unknown");
+    expect(formatAnnualLoss(inv.loss)).toBe(LOSS_NOT_COSTED);
+  });
+
+  it("downtime hours only is partial: no money, no NaN", () => {
+    const inv = blank();
+    inv.loss.downtimeHours = 8;
+    expect(lossStatus(inv.loss)).toBe("partial");
+    expect(formatAnnualLoss(inv.loss)).toBe(LOSS_NOT_COSTED);
+    const c = _calcLoss(inv.loss);
+    expect(Number.isNaN(c.annualLoss)).toBe(false);
+    expect(c.annualLoss).toBe(0);
+  });
+
+  it("a single rough yearly estimate counts as costed", () => {
+    const inv = blank();
+    inv.loss.annualEstimate = 120000;
+    expect(lossStatus(inv.loss)).toBe("costed");
+    const c = _calcLoss(inv.loss);
+    expect(c.annualLoss).toBe(120000);
+    expect(c.usesEstimate).toBe(true);
+  });
+
+  it("detailed figures win over the estimate", () => {
+    const inv = blank();
+    inv.loss.annualEstimate = 999;
+    inv.loss.eventsPerYear = 2;
+    inv.loss.repairCost = 1000;
+    const c = _calcLoss(inv.loss);
+    expect(c.annualLoss).toBe(2000);
+    expect(c.usesEstimate).toBe(false);
+  });
+
+  it("Not known yet hides figures but keeps them stored", () => {
+    const inv = blank();
+    inv.loss.eventsPerYear = 2;
+    inv.loss.repairCost = 1000;
+    inv.loss.notKnown = true;
+    expect(lossStatus(inv.loss)).toBe("unknown");
+    expect(_calcLoss(inv.loss).annualLoss).toBe(0);
+    expect(inv.loss.repairCost).toBe(1000);
+    inv.loss.notKnown = false;
+    expect(_calcLoss(inv.loss).annualLoss).toBe(2000);
+  });
+
+  it("never claims a saving while the loss is not costed", () => {
+    const inv = blank();
+    inv.verification.eventsPerYearAfter = 0;
+    inv.verification.recurred = "no";
+    inv.verification.reviewDate = "2026-01-01";
+    inv.actions = [{ id: "a", status: "done", cost: 100 } as never];
+    const v = _calcVerification(inv);
+    expect(v.hasAfterFigure).toBe(false);
+    expect(v.annualSaving).toBe(0);
+    expect(v.paybackMonths).toBeNull();
+    expect(_verifiedSaving(inv)).toBe(0);
+  });
+
+  it("an estimate with no events on record gives no saving claim", () => {
+    const inv = blank();
+    inv.loss.annualEstimate = 100000;
+    inv.verification.eventsPerYearAfter = 0;
+    const v = _calcVerification(inv);
+    expect(v.hasAfterFigure).toBe(false);
+    expect(v.annualSaving).toBe(0);
+  });
+
+  it("an estimate scales with events when events are known", () => {
+    const inv = blank();
+    inv.loss.annualEstimate = 100000;
+    inv.loss.eventsPerYear = 4;
+    inv.verification.eventsPerYearAfter = 1;
+    const v = _calcVerification(inv);
+    expect(v.hasAfterFigure).toBe(true);
+    expect(v.annualSaving).toBe(75000);
+  });
+});

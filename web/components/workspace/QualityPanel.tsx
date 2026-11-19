@@ -12,18 +12,26 @@ const SEV: Record<Severity, { label: string; dot: string; chip: string }> = {
   low: { label: "Tip", dot: "bg-slate-400", chip: "bg-slate-100 text-slate-700 ring-slate-200" },
 };
 
+const GUIDE = { label: "To do", chip: "bg-slate-100 text-slate-700 ring-slate-200" };
+
 export function QualityPanel({
   findings,
   go,
+  visited,
 }: {
   findings: Finding[];
   go: (step: StepId, nodeId?: string) => void;
+  /** Steps the user has visited or edited. Findings on other steps are shown as neutral guidance. */
+  visited?: ReadonlySet<StepId>;
 }) {
+  const isGuide = (f: Finding) => !!visited && !visited.has(f.step);
+  const guide = findings.filter(isGuide).length;
+  const active = findings.length - guide;
   const [open, setOpen] = useState(() =>
-    typeof window !== "undefined" ? window.innerWidth >= 1024 && findings.length > 0 : false,
+    typeof window !== "undefined" ? window.innerWidth >= 1024 && active > 0 : false,
   );
   const stepLabel = (id: StepId) => STEPS.find((s) => s.id === id)?.label ?? id;
-  const high = findings.filter((f) => f.severity === "high").length;
+  const high = findings.filter((f) => f.severity === "high" && !isGuide(f)).length;
 
   return (
     <section
@@ -39,7 +47,7 @@ export function QualityPanel({
         <span
           aria-hidden="true"
           className={`h-2 w-2 flex-none rounded-full ${
-            findings.length === 0 ? "bg-emerald-600" : high ? "bg-red-600" : "bg-amber-500"
+            findings.length === 0 ? "bg-emerald-600" : high ? "bg-red-600" : active ? "bg-amber-500" : "bg-slate-400"
           }`}
         />
         <span className="min-w-0 flex-1">
@@ -48,9 +56,11 @@ export function QualityPanel({
             <span className="ml-2 font-normal text-slate-600">
               {findings.length === 0
                 ? "All clear"
-                : `${findings.length} ${findings.length === 1 ? "finding" : "findings"}${
-                    high ? `, ${high} to fix first` : ""
-                  }`}
+                : active === 0
+                  ? `${guide} ${guide === 1 ? "thing" : "things"} to do as you go`
+                  : `${active} ${active === 1 ? "finding" : "findings"}${high ? `, ${high} to fix first` : ""}${
+                      guide ? `, plus ${guide} to do as you go` : ""
+                    }`}
             </span>
           </span>
           {!open && (
@@ -72,8 +82,8 @@ export function QualityPanel({
             <ul className="max-h-72 divide-y divide-slate-100 overflow-y-auto">
               {findings.map((f) => (
                 <li key={f.id} className="flex flex-wrap items-center gap-x-3 gap-y-2 px-4 py-3">
-                  <span className={`chip ring-1 ring-inset ${SEV[f.severity].chip}`}>
-                    {SEV[f.severity].label}
+                  <span className={`chip ring-1 ring-inset ${isGuide(f) ? GUIDE.chip : SEV[f.severity].chip}`}>
+                    {isGuide(f) ? GUIDE.label : SEV[f.severity].label}
                   </span>
                   <p className="min-w-0 flex-1 basis-60 text-sm text-slate-800">{f.message}</p>
                   <button
