@@ -31,7 +31,7 @@ Target durations are authoritative (spoken time at 140 wpm plus a 2 s pause); th
 
 ## Scene 1: The situation (48 s, 107 words)
 
-**Say:** "4:00 on a Thursday morning, night shift. At the end of Line 3, it is the 2-hourly seal check. The operator takes 3 packs of chicken and rice and drops them in the leak tester. Bubbles stream from the flange on 2 of them. Everything packed since the last good check goes on hold. About 6,000 packs. The phone rings at the production manager's house. Then the QA manager's. A retailer has already complained about slack packs last month. And it is the 6th time this year. At the meeting, the general manager asks two questions. Why does this keep happening? And what is it costing us?"
+**Say:** "4:00 on a Thursday morning, night shift. At the end of Line 3, it is the 2-hourly seal check. The operator takes 3 packs of chicken and rice and drops them in the leak tester. 2 of them leak along the seal. Everything packed since the last good check goes on hold. About 6,000 packs. The phone rings at the production manager's house. Then the QA manager's. A retailer has already complained about slack packs last month. And it is the 6th time this year. At the meeting, the general manager asks two questions. Why does this keep happening? And what is it costing us?"
 
 [SFX] Open on the steady hum and rhythmic thump of a tray sealer on a food line, with the clink of trays and a fan. Under the second line, a faint bubbling from the leak tester.
 
