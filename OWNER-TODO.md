@@ -13,6 +13,13 @@ Kept up to date by the PM. Nothing here blocks the agents right now unless it is
 - [ ] Paste the branded email templates from `web/supabase/email-templates/` into Supabase → Authentication → Emails → Templates (when they are ready)
 - [ ] Test: sign up with `robertsprasath+test1@gmail.com`, click the link, and say where it lands
 
+- [ ] Until SMTP is connected, the PM creates pilot customers' accounts by hand (ask the PM)
+
+## Before the first demo call (from pre-launch QA)
+- [ ] Demo while **signed in** (the AI only works signed in)
+- [ ] Support contact is set to roberts@intelbeyond.com; tell the PM if you want support@rcapilot.com instead
+- [ ] Privacy and terms pages are drafts: have them reviewed before charging customers
+
 ## Approvals
 - [ ] New look: approve the design (screenshots in `design/screens/`) and the orange brand colour
 - [ ] Going live: approve once QA and the security audit pass
