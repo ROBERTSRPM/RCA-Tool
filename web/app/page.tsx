@@ -1,11 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
+import { AccountCta } from "@/components/auth/AccountCta";
 import { AccountMenu } from "@/components/auth/AccountMenu";
 import { DeletedNotice } from "@/components/auth/DeletedNotice";
 import { Logo } from "@/components/Logo";
+import { VideoFacade } from "@/components/site/VideoFacade";
 import { BRAND_BYLINE, BRAND_NAME, BRAND_TAGLINE } from "@/lib/brand";
 import { SAMPLE_ID } from "@/lib/sample";
+import { DEMO_VIDEO, EXPLAINER_VIDEO } from "@/lib/youtube";
 
 /**
  * Headline options. Swap HEADLINE to change the hero:
@@ -98,9 +101,10 @@ export default function Home() {
               <Link href={sampleHref} className="btn btn-primary min-h-12 px-6 text-base">
                 Try the sample investigation
               </Link>
-              <Link href="/signup" className="btn btn-secondary min-h-12 px-6 text-base">
-                Create account
-              </Link>
+              <AccountCta className="btn btn-secondary min-h-12 px-6 text-base" />
+              <a href="#demo" className="btn btn-ghost min-h-12 px-4 text-base">
+                Watch the 3-minute demo
+              </a>
             </div>
             <p className="mt-4 text-sm text-slate-500">No account needed to try it.</p>
           </div>
@@ -136,6 +140,30 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Demo video */}
+        <section id="demo" aria-labelledby="demo-title" className="scroll-mt-4 bg-slate-50 py-16 sm:py-24 lg:pt-32">
+          <div className={wrap}>
+            <p className={eyebrow}>Demo</p>
+            <h2
+              id="demo-title"
+              className="mt-4 max-w-2xl text-3xl font-semibold leading-tight tracking-[-0.03em] text-slate-900 sm:text-5xl"
+            >
+              See it in 3 minutes.
+            </h2>
+            <p className="mt-4 max-w-xl text-base text-slate-600 sm:text-lg">
+              One failure, from the cost to the verified fix.
+            </p>
+            <div className="mx-auto mt-10 max-w-[960px]">
+              <VideoFacade
+                id={DEMO_VIDEO.id}
+                duration={DEMO_VIDEO.duration}
+                title={`${BRAND_NAME} demo: from breakdown to verified fix`}
+                thumb="/landing/yt-demo.webp"
+              />
+            </div>
+          </div>
+        </section>
+
         {/* Credibility */}
         <section aria-label="Who built it" className="border-y border-slate-200 bg-slate-50">
           <div className={`${wrap} py-10 lg:pt-12`}>
@@ -152,6 +180,23 @@ export default function Home() {
             <h2 className="mt-4 max-w-2xl text-3xl font-semibold leading-tight tracking-[-0.03em] text-slate-900 sm:text-5xl">
               From breakdown to verified fix.
             </h2>
+            <div className="mt-8 flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-4 sm:flex-row sm:items-center sm:gap-6">
+              <div className="w-full sm:w-64 sm:shrink-0">
+                <VideoFacade
+                  size="small"
+                  id={EXPLAINER_VIDEO.id}
+                  duration={EXPLAINER_VIDEO.duration}
+                  title="Root cause analysis explainer: why it matters and the method"
+                  thumb="/landing/yt-explainer.webp"
+                />
+              </div>
+              <div>
+                <p className="text-base font-semibold text-slate-900">New to root cause analysis?</p>
+                <p className="mt-1 text-base text-slate-600">
+                  Watch the 12-minute explainer: why RCA matters and the method behind it.
+                </p>
+              </div>
+            </div>
             <ol className="mt-14 space-y-12 sm:mt-16 sm:space-y-16">
               {STEPS.map((s, i) => (
                 <li key={s.n} className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
@@ -224,12 +269,7 @@ export default function Home() {
             <Link href={sampleHref} className="btn btn-primary min-h-12 px-6 text-base">
               Try the sample investigation
             </Link>
-            <Link
-              href="/signup"
-              className="btn min-h-12 border border-slate-500 px-6 text-base text-white hover:border-slate-300 hover:bg-white/10"
-            >
-              Create account
-            </Link>
+            <AccountCta className="btn min-h-12 border border-slate-500 px-6 text-base text-white hover:border-slate-300 hover:bg-white/10" />
           </div>
         </section>
         <footer className="border-t border-slate-800">

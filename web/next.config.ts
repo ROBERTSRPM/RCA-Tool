@@ -34,6 +34,7 @@ function contentSecurityPolicy(): string {
     `connect-src ${connect.join(" ")}`,
     "img-src 'self' data: blob:",
     "font-src 'self'",
+    "frame-src https://www.youtube-nocookie.com",
     "frame-ancestors 'none'",
     "base-uri 'self'",
     "form-action 'self'",
