@@ -2,68 +2,73 @@
 
 One example, kept consistent across the voice, the screen and the maths. All figures are illustrative. Labels below are the exact labels in the live app (https://www.rcapilot.com). Type the values exactly as shown so the recording matches the voiceover.
 
-Scenario: overland conveyor CV-204 at a mine, drive gearbox, high-speed pinion bearing failing from hot, dirty oil and misalignment. Four failures in twelve months.
+Scenario: Line 3 tray sealer at a chilled ready-meal plant (chicken and rice, 480 g tray, modified-atmosphere pack). A process or quality failure: weak seals, leaking and ballooning packs found at dispatch. 6 events in 12 months.
 
 ## The numbers (computed the way `web/lib/finance.ts` does)
 
 | Item | Value |
 |---|---|
-| Events per year | 4 |
-| Downtime per event | 18 hours |
-| Production rate | 900 tonnes/hour |
-| Margin per unit | $12 per tonne |
-| Repair cost per event | $38,000 |
-| Shares | 100% lost for good, 0% made up, 0% buffer |
-| Lost production per event | 18 x 900 = 16,200 tonnes |
-| Opportunity loss per event | 16,200 x $12 = $194,400 |
-| Cost per event | $194,400 + $38,000 = $232,400 |
-| **Annual loss** | 4 x $232,400 = **$929,600** (cash $152,000 + opportunity $777,600) |
-| Hours lost per year | 72 (64,800 tonnes) |
-| Total action cost | $2,000 + $6,000 + $3,000 + $14,000 + $25,000 = **$50,000** |
+| Events per year | 6 |
+| Downtime per event | 8 hours |
+| Production rate | 3,000 packs/hour |
+| Margin per unit | $0.45 per pack |
+| Repair cost per event (maintenance call-out and parts) | $1,200 |
+| Other costs per event | Scrapped product $14,500; Product on hold $3,200; Customer claims and credits $6,800; Retailer penalties $5,000; Rework $2,400 (total $31,900) |
+| Shares | 100% lost for good, 0% made up, 0% buffer (the line runs at capacity) |
+| Lost production per event | 8 x 3,000 = 24,000 packs |
+| Opportunity loss per event | 24,000 x $0.45 = $10,800 |
+| Cash per event | $1,200 + $31,900 = $33,100 |
+| Cost per event | $33,100 + $10,800 = $43,900 |
+| **Annual loss** | 6 x $43,900 = **$263,400** (cash $198,600 + opportunity $64,800) |
+| Hours lost per year | 48 (144,000 packs) |
+| Total action cost | $0 + $1,500 + $6,500 + $2,000 + $1,000 + $9,200 = **$20,200** |
 | Events per year after the fix (cautious) | 1 |
-| Annual loss after | $232,400 |
-| **Annual saving (verified)** | $929,600 - $232,400 = **$697,200** (cash $114,000 + opportunity $583,200) |
-| Payback | $50,000 / ($697,200 / 12) = 0.86 months, about 4 weeks |
-| Hours back | 72 - 18 = 54 hours = 48,600 tonnes |
+| Annual loss after | $43,900 (cash $33,100 + opportunity $10,800) |
+| **Annual saving (verified)** | $263,400 - $43,900 = **$219,500** (cash $165,500 + opportunity $54,000) |
+| Payback | $20,200 / ($219,500 / 12) = 1.10 months, about 5 weeks |
+| Hours back | 48 - 8 = 40 hours = 120,000 packs |
 
-Check of the split: after the fix, cash = 1 x $38,000 = $38,000 and opportunity = 1 x $194,400. Cash saving = $152,000 - $38,000 = $114,000. Opportunity saving = $777,600 - $194,400 = $583,200. Total $697,200. The app shows the split under "Annual saving (verified)".
+Check of the split: cash saving = $198,600 - $33,100 = $165,500. Opportunity saving = $64,800 - $10,800 = $54,000. Total $219,500.
 
 ## Scene 3: account
 
-- Create account with a recording-only email and a throwaway password (not recorded in this file). Blur the email in the edit.
-- Fields: Email, Password, Confirm password. Button: "Create account". Then "New investigation".
+- Show the sign-up form (Email, Password, Confirm password, "Create account") with no real email visible. Do not submit it on camera.
+- Cut to a prepared, signed-in, empty account (no investigations). No email visible. Then "New investigation".
 
 ## Scene 4: Problem step
 
-Card "Draft problem statement from notes", field "Rough notes". Type:
+First, under "Type of failure", click "Process or quality failure" (the other choice is "Equipment failure"). Card "Draft problem statement from notes", field "Rough notes". Type:
 
 ```
-CV204 drive gearbox tripped on high oil temp 2:50am Tues, 4th time this year. Fitter says HS pinion bearing cooked, oil black and smells burnt. Cooler fins looked caked with dust. Stockpile feed stopped, belt down about 18 hrs. Motor was swapped in March.
+Thurs 5:10am dispatch found domed, leaking chicken and rice trays, Line 3. 42 packs on one pallet, more on the next. Seals look weak along one side of the flange. Pallet and whole night shift output on hold. Retailer rejected a load at 9. 6th time this year. New film batch started Tues. Changeover Wed night.
 ```
 
-Click "Draft problem statement from notes". The draft varies each run. Expect it to read roughly like the values below and to list "Not in your notes. Worth finding out:" items (for example the asset's operating hours, whether oil samples exist, the earlier three failures). If the draft is poor, edit the fields in the draft box to these values, then click "Use this draft".
+Click "Draft problem statement from notes". The draft varies each run. Expect it to list "Not in your notes. Worth finding out:" items (for example the seal temperature log, the retained sample results, the earlier five events). If the draft is poor, edit the fields in the draft box to these values, then click "Use this draft".
 
 | Field | Final value |
 |---|---|
-| Title | Repeat gearbox failures on overland conveyor CV-204 |
-| Asset | Overland conveyor CV-204 drive gearbox |
-| Site / area | Mine site, Pit 2 overland conveyor drive house |
-| Date of event | 2026-10-13 |
-| What happened? | The drive gearbox tripped on high oil temperature at 2:50 am. The high-speed pinion bearing had failed and the oil was black and smelled burnt. This is the fourth failure in twelve months. |
-| Where on the equipment? | High-speed pinion bearing and oil system of the drive gearbox. |
-| When did it happen? | 2:50 am on Tuesday 13 October 2026. Fourth time in twelve months. |
-| What was the impact? | Conveyor and stockpile feed stopped for about 18 hours. Crews pulled off planned work for the call-out. Money is added in the next step. |
+| Title | Repeat leaking packs from Line 3 tray sealer |
+| Asset | Line 3 tray sealer |
+| Site / area | Chilled ready-meals, Packing hall, Line 3 |
+| Date of event | 2026-10-15 |
+| What happened? | 42 packs of chicken and rice found leaking and domed at dispatch at 5:10 am. Weak seals along the tray flange. Product on hold and a retailer load rejected. This is the 6th event in twelve months. |
+| Where on the equipment? | Heat seal of the lidding film to the tray flange on the Line 3 tray sealer. |
+| When did it happen? | Produced on night shift, found at 5:10 am on Thursday 15 October 2026. 6th time in twelve months. |
+| What was the impact? | Pallet and shift output on hold, retailer load rejected, line stopped for investigation. Money is added in the next step. |
 
-Asset details:
+## Scene 5: Line / process details and quality reference
+
+For a process failure the app shows "Line / process details" (instead of the equipment asset fields). Fill (use the fields the app shows; values below):
 
 | Field | Value |
 |---|---|
-| Asset tag | CV-204 |
-| Asset type | Gearbox |
-| Make and model | Helical-bevel reducer, 315 kW |
-| Duty or service | Overland conveyor drive |
-| Criticality | A: Critical |
-| Failure mode | Bearing failure |
+| Line | Line 3 |
+| Product | Chicken and rice, 480 g tray |
+| Pack type | Modified-atmosphere tray, lidding film |
+| Process step | Tray sealing (heat seal) |
+| Failure mode | Seal failure (leaking pack) |
+
+Then "Quality reference (NCR / CAPA number)" (optional): `NCR-2291`. Spoken: the RCA can feed the site's QA / CAPA system through this reference.
 
 ## Scene 6: Loss step
 
@@ -71,64 +76,74 @@ Show "I have figures (rough is fine)" and "Not known yet". Then fill:
 
 | Field | Value |
 |---|---|
-| How many times a year does it happen? | 4 |
-| Downtime per event | 18 |
-| Production rate | 900 |
-| Unit name | tonnes |
-| Margin per unit | 12 |
-| Repair cost per event | 38000 |
+| How many times a year does it happen? | 6 |
+| Downtime per event | 8 |
+| Production rate | 3000 |
+| Unit name | packs |
+| Margin per unit | 0.45 |
+| Repair cost per event | 1200 |
 | Currency symbol | $ |
 
-Leave "Or one rough cost per year" empty. In "What happened to the production you lost?" keep "Lost for good" at 100%. Slide it briefly to show "Made up later" and "Covered by buffer stock", then return to 100%.
+Leave "Or one rough cost per year" empty. Under "Other costs per event (optional)", use the quick-add presets (Category, Description, Amount per event):
+
+| Preset | Amount per event |
+|---|---|
+| Scrapped product | 14500 |
+| Product on hold | 3200 |
+| Customer claims and credits | 6800 |
+| Retailer penalties | 5000 |
+| Rework | 2400 |
+
+Keep "Lost for good" at 100%. Slide it briefly to show the other two, then return to 100%. Expected panel: Lost production per event 24,000 packs; Cash costs $33,100; Opportunity loss $10,800; Cost per event $43,900; Annual loss $263,400; Hours lost 48.
 
 ## Scene 7: Evidence step ("Add evidence", six times)
 
 | # | Title | Type | Date | Note |
 |---|---|---|---|---|
-| E1 | Failed high-speed pinion bearing | Photo | 2026-10-14 | Cage broken, rollers blued from heat, wear track off centre. |
-| E2 | Gearbox oil temperature trend, last 4 failures | Data / Trend | 2026-10-14 | Sump temperature climbs from 62 to 85 degrees over about three weeks before each trip. |
-| E3 | Oil cooler inspection | Inspection | 2026-10-14 | About 70% of the cooler fins blocked with fine dust. |
-| E4 | Oil sample after failure | Data / Trend | 2026-10-15 | Black oil, water 0.4%, silica 90 ppm. Breather element split. |
-| E5 | Maintenance history, CV-204 | Document | 2026-10-15 | No alignment record after the motor change in March. No oil sample on file for two years. Cooler cleaning is not a PM task. |
-| E6 | Operator and fitter interviews | Interview | 2026-10-15 | Cooler is behind a guard and not on the weekly round. Motor was aligned with a straight edge. |
+| E1 | Leaking pack, seal cut open | Photo | 2026-10-15 | Unsealed channel about 6 mm wide along the tray flange; no seal pattern on one side. |
+| E2 | Sealing jaw temperature log, Line 3 | Data / Trend | 2026-10-15 | Jaw surface reads 158 degrees against a setpoint of 175. Drifted down over 3 weeks. |
+| E3 | Sealing jaw and seal plate inspection | Inspection | 2026-10-15 | Silicone insert cut and flattened, uneven pressure; marks on the seal plate. |
+| E4 | PLC settings and changeover record | Document | 2026-10-16 | After Wednesday changeover, dwell cut from 1.2 to 0.9 seconds and speed raised to 34 cycles a minute. Settings not locked. |
+| E5 | Film specification, maintenance and QA records | Document | 2026-10-16 | New film batch has a different seal layer, no change notice. Silicone last replaced 14 months ago. PM has no jaw temperature check. Seal check: one visual check per shift. |
+| E6 | Operator and QA interviews | Interview | 2026-10-16 | Behind on the order, so speed was raised. Seal check is by eye. Nobody was told the film had changed. |
 
 For E1 optionally click "Add a photo" and upload any image (do not use a real customer photo).
 
 ## Scene 8: Cause tree
 
-Top box (failure event) text if empty: `Overland conveyor CV-204 drive gearbox failed; conveyor tripped on high oil temperature`
+Top box (failure event) text if empty: `Line 3 tray sealer produced leaking packs that reached dispatch`
 
 Click "Why?" under the box shown. New boxes inherit the parent's type, so set "Type of cause" on each.
 
 | Box | Under | Type of cause | Text | How sure are you? | Evidence that supports it |
 |---|---|---|---|---|---|
-| A1 | Failure event | Physical | Gearbox oil overheated and lost its protective film | Verified | E1, E2, E4 |
-| A2 | A1 | Physical | Oil cooler fins were blocked with dust | Verified | E3 |
-| A3 | A2 | Human | Cooler cleaning was missed on the weekly round | Verified | E6 |
-| A4 | A3 | System / Latent | Cooler cleaning is not a scheduled task with an owner, and the cooler is behind a guard | Verified | E5, E6 |
-| B1 | Failure event | Physical | Dust and water got into the gearbox oil | Verified | E4 |
-| B2 | B1 | Physical | Breather element was saturated and split | Verified | E4 |
-| B3 | B2 | Human | Breather condition was not checked and no oil sample was taken | Hypothesis | E5 |
-| B4 | B3 | System / Latent | No oil sampling programme, and the breather is on no inspection route | Verified | E4, E5 |
-| C1 | Failure event | Physical | High-speed bearing carried a side load from shaft misalignment | Hypothesis | E1 |
-| C2 | C1 | Human | Motor was re-aligned with a straight edge after replacement in March | Hypothesis | E6 |
-| C3 | C2 | System / Latent | No alignment standard, and no alignment check after a motor change | Hypothesis | none yet (link E5 during the Challenge step) |
+| A1 | Failure event | Physical | Seals were weak or incomplete along the tray flange | Verified | E1 |
+| A2 | A1 | Physical | Sealing jaw ran 17 degrees below setpoint, with worn silicone | Verified | E2, E3 |
+| A3 | A2 | System / Latent | The maintenance plan has no jaw temperature check and no silicone replacement interval | Verified | E3, E5 |
+| B1 | Failure event | Physical | Seal temperature and dwell were below the recipe for this film | Verified | E4 |
+| B2 | B1 | Human | Operators raised speed and cut dwell to keep up with the order | Verified | E4, E6 |
+| B3 | B2 | System / Latent | Sealing settings are not locked, and the shift target counts packs per hour only | Verified | E4, E6 |
+| C1 | Failure event | Physical | New film batch has a different seal layer that needs more heat | Verified | E5 |
+| C2 | C1 | Human | The new film batch was accepted without telling QA or production | Hypothesis | E6 |
+| C3 | C2 | System / Latent | No change control for film supplier or specification | Hypothesis | none yet (link E5 during the Challenge step) |
+| D1 | Failure event | Human | Weak seals were not found until dispatch; seal check is once a shift, by eye | Verified | E5, E6 |
+| D2 | D1 | System / Latent | Seal check method is visual only, with no leak test and no frequency based on risk | Verified | E5, E6 |
 
-Tick "This is a root cause" on A4, B4 and C3 (the three roots, R1, R2, R3).
+Tick "This is a root cause" on A3, B3, C3 and D2 (the four roots).
 
-## Scene 9: natural and forced
+## Scene 9: natural, forced and not applicable
 
-- A2 (cooler fins blocked): "Type of wear (optional)" -> "Forced deterioration".
-- Show "Natural deterioration" as the alternative (for example, bearing end-of-life on A1 would be natural if the oil had been clean). Do not set it.
+- A2 (jaw and silicone): choose "Forced". Spoken reason: silicone wear is natural, but running it 14 months past a sensible life with no prompt is wear we allowed. Show "Natural" as the alternative. Do not set it.
+- B1 (recipe settings below spec): choose "Not applicable" (a process cause, no wear).
 - Click the "5 Whys" and "Fishbone" tabs, then back to "Tree".
 
 ## Scene 10: Cause coach and Challenge my analysis
 
-AI output varies and cannot be scripted. Run "Suggest causes for ..." on A1 or "Review the whole tree". Likely suggestions to look for: wrong oil grade or low oil level, cooling fan or airflow problem, belt over-tension or overload. Choose:
+AI output varies and cannot be scripted. Run "Suggest causes for ..." on A1 or "Review the whole tree". Likely suggestions: product or sauce on the tray flange, gas flush mix, film tension. Choose:
 
-- Accept ("Add to tree") one that is genuinely new (for example oil level or grade).
-- Dismiss "Overload or belt over-tension" if offered, and say why: the motor current trend shows no overload. If it is not offered, dismiss whichever suggestion the evidence does not support and change the spoken reason to match.
-- "Challenge my analysis": the expected point is that C3 has no evidence or is not verified ("No evidence" or "Root cause not verified", marked "Fix first" or "Should fix"). Act on it: select C3, tick E5 under "Evidence that supports it", set it to Verified. If the challenge raises something else, act on that instead and adapt the spoken line.
+- Accept ("Add to tree") one that is genuinely new (for example product contaminating the flange).
+- Dismiss "gas mix" if offered, and say why: residual oxygen readings were in spec. If it is not offered, dismiss whichever suggestion the evidence does not support and change the spoken reason.
+- "Challenge my analysis": the expected point is that C3 has no evidence or is not verified. Act on it: select C3, tick E5 under "Evidence that supports it", set it to Verified. If the challenge raises something else, act on that and adapt the spoken line.
 
 ## Scene 11: Actions step
 
@@ -136,41 +151,32 @@ Corrective:
 
 | Field | Value |
 |---|---|
-| What will be done? | Rebuild gearbox with new high-speed pinion and bearings, flush the oil system and refill |
+| What will be done? | Replace jaw silicone and seal plate, recalibrate jaw temperature controllers, re-test and release or scrap held product |
 | Linked to | The failure event |
 | Corrective or preventive? | Corrective |
 | Category | Repair or restore |
-| Owner | Mark Evans |
-| Due date | 2026-10-30 |
+| Owner | Dana Kovacs |
+| Due date | 2026-10-20 |
 | Status | In progress (later Done) |
-| Cost | 0 (the repair cost is already counted in Loss) |
+| Cost | 0 (the call-out and parts are already counted in Loss) |
 
 Preventive (use "Add preventive action" under each root cause):
 
 | # | Fixes root cause | What will be done? | Category | Task description | Do this every | Interval unit | Craft or trade | New task or a change? | Owner | Due | Cost |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| P1 | R1 (A4) | Clean oil cooler fins and record sump oil temperature | Maintenance task | Clean cooler fins and record sump oil temperature against the limit of 75 degrees | 4 | weeks | Mechanical fitter | New task | Jo Nguyen | 2026-12-11 | 2000 |
-| P2 | R2 (B4) | Take gearbox oil sample and check the breather | Condition monitoring | Oil sample for water, particle count and wear metals; check breather element | 3 | months | Lubrication technician | New task | Priya Rao | 2026-12-18 | 6000 |
-| P3 | R2 (B4) | Fit desiccant breathers on the gearbox | Design or equipment change | (none) | | | | | Priya Rao | 2027-01-15 | 3000 |
-| P4 | R3 (C3) | Issue a laser alignment standard, buy a laser tool, train the fitters, and require an alignment record after any motor or gearbox change | Procedure or standard | (none) | | | | | Mark Evans | 2027-01-29 | 14000 |
-| P5 | R2 (B4) | Hold one spare high-speed pinion and bearing set | Spares holding | (none) | | | | | Jo Nguyen | 2027-02-26 | 25000 |
+| P1 | A3 | Check jaw temperature with a probe and inspect the silicone; replace the silicone every 3 months | Maintenance task | Probe jaw surface temperature against setpoint 175, inspect silicone and seal plate | 1 | weeks | Maintenance fitter | New task | Sam Ortiz | 2026-11-06 | 1500 |
+| P2 | B3 | Lock sealing settings by product recipe with recall at changeover, set speed and dwell limits, and change the shift target to good packs | Design or equipment change | (none) | | | | | Priya Rao | 2026-12-04 | 6500 |
+| P3 | C3 | Introduce change control for film supplier and specification, with an incoming seal-layer check and QA sign-off | Procedure or standard | (none) | | | | | Lee Tran | 2026-11-20 | 2000 |
+| P4 | D2 | Leak test one pack per lane every hour and record the result | Procedure or standard | (none) | | | | | Lee Tran | 2026-11-06 | 1000 |
+| P5 | D2 | Buy a bench leak tester for Line 3 | Design or equipment change | (none) | | | | | Priya Rao | 2026-12-11 | 9200 |
 
-Total action cost: $50,000. Six actions.
+Total action cost: $20,200. Six actions.
 
-Spares check card ("Was the right spare there when it failed?"):
-
-| Field | Value |
-|---|---|
-| Was a spare part needed? | Yes |
-| Was it in stock? | No |
-| Supplier lead time | 112 (days, about 16 weeks) |
-| How was the gap covered? | Borrowed a pinion set from the sister gearbox on CV-205 |
-
-"Maintenance plan changes" should then list P1 and P2 with their intervals (4 weeks, 3 months) and craft.
+"Maintenance plan changes" should list P1 with its interval (1 weeks) and craft.
 
 ## Scene 12: Suggested actions and Quality check
 
-On root cause R3 click "Suggested actions" (output varies). Click "Add to actions" on one useful suggestion (if it duplicates P4, add it and then delete the duplicate, or dismiss it and say so). Dismiss another. Then open the Quality check panel and fix any "Fix first" or "Should fix" point (for example a missing interval or an unlinked action).
+On root cause C3 click "Suggested actions" (output varies). Click "Add to actions" on one useful suggestion (if it duplicates P3, add it and then delete the duplicate, or dismiss it and say so). Dismiss another. Then open the Quality check panel and fix any "Fix first" or "Should fix" point.
 
 ## Scene 13: Verify step (recorded as if some months later)
 
@@ -181,11 +187,11 @@ First set Status to Done on every action (Actions step).
 | Review date | 2027-05-18 |
 | Has the failure recurred since the actions were completed? | No, it has not recurred |
 | Expected events per year after the fix | 1 |
-| What did you find? | No gearbox trips since the actions were completed. Oil temperature steady at 64 to 68 degrees. Cooler clean at each 4-weekly check. Two oil samples within limits. Alignment record on file. |
+| What did you find? | No leaking packs from Line 3 since the actions were completed. Jaw temperature within 3 degrees of setpoint at each weekly check. Hourly leak tests all passed. Settings locked by recipe. No film change without QA sign-off. |
 
-Expected on screen: Annual loss before $929,600 (cash $152,000, opportunity $777,600); Annual loss after $232,400; "Annual saving (verified)" $697,200; Total action cost $50,000; Payback period about 0.9 months (0.86).
+Expected on screen: Annual loss before $263,400 (cash $198,600, opportunity $64,800); Annual loss after $43,900; "Annual saving (verified)" $219,500; Total action cost $20,200; Payback period about 1.1 months (1.10).
 
-"Roll this fix out" (Add a similar asset): tag `CV-205`, duty `Overland conveyor drive`, "Add to the register"; then tag `CV-206`, same duty. Create the checks. What to check: `Check oil cooler fins, breather and oil sample; confirm an alignment record exists`. Who will check it: `Jo Nguyen`. Check due: `2027-06-30`.
+"Roll this fix out" (Add a similar asset): tag `L1-TS` (Line 1 tray sealer) and `L2-TS` (Line 2 tray sealer), duty `Tray sealing`, "Add to the register". Create the checks. What to check: `Check jaw temperature, silicone, locked settings and hourly leak test`. Who will check it: `Sam Ortiz`. Check due: `2027-06-30`.
 
 ## Scene 14: Report step
 
