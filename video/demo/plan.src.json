@@ -23,7 +23,7 @@
      "zooms": [{"at": 20.0, "dur": 4, "cx": 1440, "cy": 300, "scale": 1.3}]},
     {"id": "s6", "target": 15, "clip": "scene6.mp4", "from": 0,
      "captions": [{"text": "Savings count once verified", "at": 5.5, "dur": 5.5}, {"text": "Roll out to similar assets", "at": 11.5, "dur": 7}],
-     "highlights": [{"at": 6.8, "dur": 3.8, "x": 826, "y": 610, "w": 268, "h": 180}]},
+     "highlights": [{"at": 6.8, "dur": 2.4, "x": 826, "y": 610, "w": 268, "h": 180}]},
     {"id": "s7", "target": 10, "clip": "scene7.mp4", "from": 0,
      "captions": [{"text": "One-page management summary", "at": "mark:summary", "dur": 7}]},
     {"id": "s8", "target": 10, "endcard": true, "clip": "scene8.mp4", "from": 4.0,

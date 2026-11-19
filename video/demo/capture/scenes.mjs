@@ -14,7 +14,9 @@ const step = (name) => page.getByRole("tab", { name: new RegExp(name) }).or(page
 const open = async () => {
   await page.goto(`${BASE}/app`, { waitUntil: "networkidle" });
   await page.getByRole("link", { name: "Open", exact: true }).first().click();
-  await page.waitForURL(/investigations/); await page.waitForLoadState("networkidle"); await page.waitForTimeout(800);
+  await page.waitForURL(/investigations/); await page.waitForLoadState("networkidle");
+  await page.getByText("Repeat bearing and mechanical seal failures on slurry pump P-101").first().waitFor({ state: "visible", timeout: 30000 });
+  await page.getByRole("tab", { name: /Problem/ }).or(page.getByRole("button", { name: /Problem/ })).first().waitFor({ state: "visible" }); await page.waitForTimeout(1200);
 };
 const goStep = async (r, name) => { await r.click(step(name), 0.9); await r.hold(0.4); await page.evaluate(() => window.scrollTo(0, 0)); };
 // AI call: click, then cut the wait out of the recording
