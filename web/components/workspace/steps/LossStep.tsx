@@ -13,6 +13,7 @@ import {
 } from "@/lib/finance";
 import { uid } from "@/lib/id";
 import { OTHER_COST_CATEGORIES, type Loss, type OtherCost } from "@/lib/types";
+import { COST_PRESETS } from "@/lib/options";
 import { Icon } from "../../icons";
 import { NumberField, SectionCard, SelectField, TextField } from "../../ui";
 import type { StepProps } from "../types";
@@ -266,6 +267,26 @@ export function LossStep({ inv, update }: StepProps) {
             </button>
           }
         >
+          <div className="mb-3" role="group" aria-label="Quick add a cost line">
+            <p className="label">Quick add (quality and product losses)</p>
+            <div className="flex flex-wrap gap-2">
+              {COST_PRESETS.map((pr) => (
+                <button
+                  key={pr.label}
+                  type="button"
+                  className="btn btn-secondary btn-sm"
+                  onClick={() =>
+                    setOthers((list) => [
+                      ...list,
+                      { id: uid(), category: pr.category, description: pr.label, amount: null },
+                    ])
+                  }
+                >
+                  <Icon name="plus" size={14} /> {pr.label}
+                </button>
+              ))}
+            </div>
+          </div>
           {others.length === 0 ? (
             <p className="text-sm text-slate-600">
               No other costs added. The repair cost above is counted as a cash cost.

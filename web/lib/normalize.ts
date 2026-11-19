@@ -15,6 +15,7 @@ import type {
   CauseNode,
   Category,
   Criticality,
+  CauseArea,
   Deterioration,
   IntervalUnit,
   MaintenanceTask,
@@ -71,7 +72,8 @@ const ACTION_CATEGORIES_ALL: ActionCategory[] = [
   "operating_practice",
 ];
 const INTERVAL_UNITS_ALL: IntervalUnit[] = ["hours_run", "days", "weeks", "months"];
-const DETERIORATIONS: Deterioration[] = ["", "natural", "forced"];
+const DETERIORATIONS: Deterioration[] = ["", "natural", "forced", "not_applicable"];
+const CAUSE_AREAS: CauseArea[] = ["", "equipment", "materials", "method", "measurement", "people", "environment"];
 const CRITICALITIES: Criticality[] = ["", "A", "B", "C"];
 const YES_NO: YesNoUnknown[] = ["", "yes", "no"];
 const ROLLOUT_STATUSES: RolloutStatus[] = ["open", "no_issue", "same_problem", "fixed"];
@@ -129,6 +131,7 @@ function normaliseNode(raw: unknown, depth: number, budget: { n: number }): Caus
     ...(oneOf(get(o, "deterioration"), DETERIORATIONS, "") !== ""
       ? { deterioration: oneOf(get(o, "deterioration"), DETERIORATIONS, "") }
       : {}),
+    ...(oneOf(get(o, "area"), CAUSE_AREAS, "") !== "" ? { area: oneOf(get(o, "area"), CAUSE_AREAS, "") } : {}),
     ...(bool(get(o, "aiSuggested")) ? { aiSuggested: true } : {}),
     ...(str(get(o, "aiTest")).trim() ? { aiTest: str(get(o, "aiTest")).slice(0, 600) } : {}),
   };
@@ -298,6 +301,9 @@ export function normaliseInvestigation(raw: unknown, rowId?: string): Investigat
       duty: str(get(p, "duty")),
       criticality: oneOf(get(p, "criticality"), CRITICALITIES, ""),
       failureMode: str(get(p, "failureMode")),
+      // Optional: absent for equipment failures and old investigations.
+      ...(get(p, "failureType") === "process" ? { failureType: "process" as const } : {}),
+      ...(str(get(p, "qualityRef")).trim() ? { qualityRef: str(get(p, "qualityRef")).slice(0, 80) } : {}),
     },
     loss: normaliseLoss(get(raw, "loss"), base.loss),
     evidence: arr(get(raw, "evidence"))

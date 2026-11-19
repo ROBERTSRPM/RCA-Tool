@@ -56,7 +56,7 @@ export const CHALLENGE_SCHEMA = obj({
 });
 
 export const CAPA_SCHEMA = obj({
-  deterioration: { type: "string", enum: ["natural", "forced", "unclear"] },
+  deterioration: { type: "string", enum: ["natural", "forced", "unclear", "not_applicable"] },
   deteriorationReason: str,
   actions: {
     type: "array",

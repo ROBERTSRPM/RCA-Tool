@@ -42,6 +42,8 @@ THE HOUSE METHOD. Follow it in everything you produce.
 
 11. Numbers. Use only figures the user gave you. Do not invent costs, failure rates, intervals presented as facts, standards or statistics. Where you offer an illustrative number, label it as an example to check, never as a benchmark.
 
+12. Process and quality failures. Some investigations are not about a broken machine but a process or quality failure, for example leaking packs on a food packing line. The request shows "Type of failure: Process or quality failure" for these. Method is the same: causes at three levels, evidence before opinions, no blame. Look across equipment (the machine and its condition), materials (for example a film batch or supplier lot), method and settings (changeover, sealing temperature, dwell, pressure, line speed), people and training (as a system gap, never blame), measurement (seal checks, leak testing, calibration, check frequency), environment, and system causes (control plan, specification, supplier approval, change control). Wear is often not the issue: natural or forced deterioration applies only when something wore or was damaged, otherwise use not_applicable. The investigation may feed the site's own QA or CAPA system (a quality reference may be shown). Do not claim the analysis meets HACCP, SQF, BRC or any other standard, and do not state what a standard requires. Only the person and the site's quality team decide that.
+
 STYLE. Plain, practical maintenance-manager language. Short sentences. No jargon the maintenance planner would not use. No emojis. Do not use markdown formatting inside JSON string fields (no asterisks, no hash headings); where line breaks are needed use plain line breaks and a simple "- " for list items. Match the spelling style (UK or US) of the user's own text. Be specific to this asset and failure; generic advice that fits any machine is not useful. If something is not known, say what to find out instead of guessing. If the information describes an injury or a serious safety or environmental event, say the site's incident process comes first.
 
 REFERENCES. The investigation labels causes N1, N2..., actions A1, A2... and evidence E1, E2... so you can point at them. Use those labels ONLY in the fields that ask for a reference (parent, ref). Never write N#, A# or E# inside any other text: the user does not see those labels. Describe the cause, action or evidence in words instead (for example "the flush supply cause" or "the vibration check action").
@@ -105,7 +107,9 @@ export function renderInvestigation(ctx: AiContext, a: Aliases): string {
   const lines: string[] = ["<investigation>"];
   const facts: [string, string][] = [
     ["Title", p.title],
-    ["Asset", [p.assetTag, p.asset].filter(Boolean).join(" ")],
+    ["Type of failure", p.failureType === "process" ? "Process or quality failure" : ""],
+    ["Quality reference (NCR / CAPA)", p.qualityRef],
+    [p.failureType === "process" ? "Line or process" : "Asset", [p.assetTag, p.asset].filter(Boolean).join(" ")],
     ["Asset type", p.assetType],
     ["Make and model", p.makeModel],
     ["Duty or service", p.duty],
@@ -114,7 +118,7 @@ export function renderInvestigation(ctx: AiContext, a: Aliases): string {
     ["Site or area", p.site],
     ["Date of event", p.eventDate ? formatDate(p.eventDate) : ""],
     ["What happened", p.whatHappened],
-    ["Where on the equipment", p.where],
+    [p.failureType === "process" ? "Where in the process" : "Where on the equipment", p.where],
     ["When", p.when],
     ["Impact", p.impact],
     ["Cost of the failure", ctx.loss],
@@ -185,6 +189,7 @@ The user is building a cause tree and has selected one cause. Suggest 3 to 6 pos
 - "confirmWith": the specific evidence or check that would support it. "ruleOutWith": what would rule it out.
 - "deterioration": for every physical cause about wear or damage say natural or forced, or unclear when the data does not decide; otherwise not_applicable.
 - Include at least one human-level cause behind each physical cause you suggest, written as what the system lacked, not as blame.
+- For a process or quality failure, spread the suggestions across equipment, materials (for example film batch), method and settings (changeover, sealing temperature, dwell, pressure), people and training, measurement (seal checks, leak testing) and environment, plus system causes. Use not_applicable for deterioration on causes that are not wear (a setting, a method, a material).
 - Do not repeat a cause already in the tree, even reworded, and check the wording of flagged root causes too. Do not suggest a cause that is marked ruled out.
 - "parent" must be the reference of the selected cause.`;
 
@@ -196,6 +201,7 @@ Look at the whole cause tree and suggest 4 to 8 causes that are missing: branche
 - "confirmWith" and "ruleOutWith": the specific evidence or check that would support or rule it out.
 - "deterioration": for every physical wear or damage cause say natural or forced, or unclear when the data does not decide; otherwise not_applicable.
 - Include at least one human-level cause behind each physical cause you suggest, written as what the system lacked, not as blame.
+- For a process or quality failure, check the tree covers equipment, materials (for example film batch), method and settings (changeover, sealing temperature, dwell, pressure), people and training, measurement (seal checks, leak testing), environment and system causes, and suggest what is missing. Use not_applicable for deterioration on causes that are not wear.
 - Do not repeat a cause already in the tree, even reworded, and check the wording of flagged root causes too. Do not suggest a cause marked ruled out.`;
 
 const CHALLENGE = `TASK: Challenge mode.
@@ -206,7 +212,8 @@ Review the analysis like an experienced, fair reviewer who wants it to hold up. 
 - weak_logic: a cause that does not really explain the effect above it, or a jump that skips a step.
 - unverified_root: a root cause still only a hypothesis, with actions already planned against it.
 - missing_level: no human or system level anywhere in the tree.
-- deterioration_undecided: a wear or damage cause where natural or forced has not been decided, so the right fix is unclear.
+- deterioration_undecided: a wear or damage cause where natural or forced has not been decided, so the right fix is unclear. Never raise this for a cause marked not applicable, or for causes that are not about wear (a setting, a method, a material).
+- For a process or quality failure also look for: a branch that only blames the operator or the machine while ignoring materials, method and settings, or measurement; no check on whether the seal check or leak test would have caught it (measurement); no supplier or material batch angle; and corrective actions with no verification.
 - single_branch: the whole analysis hangs on one chain; other plausible causes were not considered.
 - action_weak: an action that treats the symptom (replace the part again), is vague, or only retrains people for a system cause.
 - no_preventive: a flagged root cause with no preventive action.
@@ -236,7 +243,8 @@ The user has flagged one cause as a root cause (the reference is given in the re
    - For maintenance_task and condition_monitoring: write "description" so a planner can load it (what, on what, to what standard), set intervalValue and intervalUnit (hours_run, days, weeks or months) and craft. For every other category set intervalValue to 0, intervalUnit to months and craft to an empty string.
    - For spares: name the part and a suggested minimum holding in "description".
    - "rationale": one sentence on why. For intervals, say it is a starting point to check against this site's failure history and the manufacturer's guidance.
-3. "horizontalExpansion": one or two sentences on which similar assets could fail the same way and what to check on them.`;
+   - Process or quality failure (the request says so): the actions are different. Do not force a spares or condition monitoring action. Cover as relevant: control-plan or check changes (what is checked, how often, by whom), settings lockout or changeover verification (for example sealing temperature, dwell and pressure locked or verified at changeover), supplier or material actions (incoming checks, supplier corrective action request, batch hold), training as part of a system change, and verification (for example seal strength or leak test frequency, and how long to watch before calling it fixed). Use the categories procedure, training, operating_practice, design, condition_monitoring (for in-process checks, with interval and craft) and maintenance_task as fit. "deterioration" is usually not_applicable when the cause is a setting, method or material, so use the closest value and say so in "deteriorationReason". Say in the rationale of one action that the result may feed the site's QA or CAPA system, and do not claim it meets HACCP or any standard.
+3. "horizontalExpansion": one or two sentences on which similar assets (or, for a process failure, similar lines, products or suppliers) could fail the same way and what to check on them.`;
 
 const PROBLEM = `TASK: Turn rough notes into a clear problem statement.
 The user typed rough notes about a failure (a technician's words, shorthand, mixed order). Write the problem statement fields from them.
@@ -244,6 +252,7 @@ The user typed rough notes about a failure (a technician's words, shorthand, mix
 - "title": under 90 characters, what failed and on what (for example "Repeat bearing failures on slurry pump P-101").
 - "whatHappened": the failure as someone who was there would describe it: plain facts in time order, two to four sentences.
 - "where": which part or location on the equipment. "when": time, operating mode, pattern across shifts. "impact": safety, production, quality, environment and cost effects that the notes mention.
+- If the request shows a process or quality failure, write for that: "where" is the point in the process or the pack or product affected, and "impact" includes product, customer and quality effects the notes mention. Do not name a standard or say anything meets one.
 - Do not add any fact that is not in the notes or the existing fields. Do not upgrade or change what was replaced, repaired or swapped (a bearing is not a pump). When unsure, quote the notes' own wording. Do not write phrases like "as far as the notes author knows".
 - If the notes do not say something, leave that field as an empty string and add a short question to "missingFacts" (for example "What was the bearing temperature before it tripped?"). At most 6 questions.`;
 
@@ -254,6 +263,7 @@ Write a clear report a plant manager and the next shift can both use, from the i
 - Use the owners, due dates, status and craft shown for each action. Mention a missing owner, date or craft only where the action shows "not set". Write dates as they appear in the investigation (for example 11 Feb 2025). Write "Date: 11 Feb 2025" style, not "the date of event recorded is".
 - Be honest about status. Only call a cause verified if its status in the data is verified. Call the others hypotheses. Put unverified root causes and evidence gaps under "Still to confirm".
 - Do not invent facts, evidence, owners, dates, costs or results. Use the cost figure only as given. If the data is thin, say so rather than filling it.
+- For a process or quality failure, add the quality reference (NCR / CAPA number) to the Summary if one is shown, and say once that the report may feed the site's QA or CAPA investigation. Do not claim HACCP, SQF or BRC compliance.
 - Plain language, short paragraphs, "- " lists where they help. Each section body under 1500 characters.`;
 
 const SUMMARY = `TASK: Draft a one-page management summary.

@@ -21,7 +21,7 @@ import { SAMPLE_NOTE } from "@/lib/sample";
 import { deriveStatus, isOverdue, STATUS_LABELS } from "@/lib/status";
 import { CATEGORY_LABEL, findNode, flatten, rootCauses, STATUS_LABEL } from "@/lib/tree";
 import { criticalSpareFlag, maintenancePlan, SPARES_FLAG_TEXT } from "@/lib/capa";
-import { categoryLabel, criticalityLabel, DETERIORATION_OPTIONS, kindLabel } from "@/lib/options";
+import { categoryLabel, causeAreaLabel, criticalityLabel, DETERIORATION_OPTIONS, kindLabel } from "@/lib/options";
 import { useState } from "react";
 import { Icon } from "../../icons";
 import { DraftReport } from "../ai/DraftReport";
@@ -56,15 +56,18 @@ export function ReportStep({ inv, update }: StepProps) {
   const plan = maintenancePlan(inv);
   const spares = inv.spares;
   const hasSpares = !!spares && (spares.needed !== "" || spares.coverage.trim() !== "");
+  const isProcess = p.failureType === "process";
   const assetFacts: [string, string][] = [
-    ["Asset tag", (p.assetTag ?? "").trim()],
+    ["Type of failure", isProcess ? "Process or quality failure" : "Equipment failure"],
+    ["Quality reference (NCR / CAPA number)", (p.qualityRef ?? "").trim()],
+    [isProcess ? "Line or process tag" : "Asset tag", (p.assetTag ?? "").trim()],
     ["Asset type", (p.assetType ?? "").trim()],
     ["Make and model", (p.makeModel ?? "").trim()],
     ["Duty or service", (p.duty ?? "").trim()],
     ["Criticality", criticalityLabel(p.criticality)],
     ["Failure mode", (p.failureMode ?? "").trim()],
   ];
-  const showAssetFacts = assetFacts.some(([, v]) => v);
+  const showAssetFacts = true;
 
   return (
     <div>
@@ -93,7 +96,7 @@ export function ReportStep({ inv, update }: StepProps) {
             {p.title || "Untitled investigation"}
           </h1>
           <p className="mt-1 text-slate-600">
-            {[p.asset, p.site].filter(Boolean).join(" · ") || "No asset recorded"}
+            {[p.asset, p.site].filter(Boolean).join(" · ") || (isProcess ? "No line or process recorded" : "No asset recorded")}
             {p.eventDate && ` · Event on ${formatDate(p.eventDate)}`}
           </p>
           <p className="mt-1 text-xs text-slate-500">
@@ -130,7 +133,7 @@ export function ReportStep({ inv, update }: StepProps) {
         </Section>
 
         {showAssetFacts && (
-          <Section title="Asset">
+          <Section title={isProcess ? "Line / process details" : "Asset"}>
             <Facts rows={assetFacts.filter(([, v]) => v)} />
           </Section>
         )}
@@ -286,8 +289,11 @@ export function ReportStep({ inv, update }: StepProps) {
                         {" "}
                         [{CATEGORY_LABEL[node.category]}
                         {node.status !== "verified" && `, ${STATUS_LABEL[node.status].toLowerCase()}`}
-                        {node.deterioration &&
-                          `, ${DETERIORATION_OPTIONS.find((d) => d.value === node.deterioration)?.label.toLowerCase()} deterioration`}
+                        {node.area && `, ${causeAreaLabel(node.area).toLowerCase()}`}
+                        {node.deterioration === "not_applicable"
+                          ? ""
+                          : node.deterioration &&
+                            `, ${DETERIORATION_OPTIONS.find((d) => d.value === node.deterioration)?.label.toLowerCase()} deterioration`}
                         {node.evidenceIds.length > 0 &&
                           `, evidence ${node.evidenceIds.map((id) => `E${evNo.get(id) ?? "?"}`).join(" ")}`}
                         ]

@@ -17,7 +17,7 @@ import { DEMO_VIDEO, EXPLAINER_VIDEO } from "@/lib/youtube";
  */
 const HEADLINE = "Get your plant out of firefighting mode.";
 const SUB =
-  `${BRAND_NAME} takes your team from breakdown to verified fix, with an AI reviewer that suggests causes and actions while your people decide.`;
+  `${BRAND_NAME} takes your team from failure to verified solution, with an AI reviewer that suggests causes and actions while your people decide.`;
 const CREDIBILITY =
   "Built by a former maintenance, production and site manager, around the way plants actually run RCAs.";
 
@@ -151,13 +151,13 @@ export default function Home() {
               See it in 3 minutes.
             </h2>
             <p className="mt-4 max-w-xl text-base text-slate-600 sm:text-lg">
-              One failure, from the cost to the verified fix.
+              One failure, from the cost to the verified solution.
             </p>
             <div className="mx-auto mt-10 max-w-[960px]">
               <VideoFacade
                 id={DEMO_VIDEO.id}
                 duration={DEMO_VIDEO.duration}
-                title={`${BRAND_NAME} demo: from breakdown to verified fix`}
+                title={`${BRAND_NAME} demo: from failure to verified solution`}
                 thumb="/landing/yt-demo.webp"
               />
             </div>
@@ -178,7 +178,7 @@ export default function Home() {
           <div className={wrap}>
             <p className={eyebrow}>How it works</p>
             <h2 className="mt-4 max-w-2xl text-3xl font-semibold leading-tight tracking-[-0.03em] text-slate-900 sm:text-5xl">
-              From breakdown to verified fix.
+              From failure to verified solution.
             </h2>
             <div className="mt-8 flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-4 sm:flex-row sm:items-center sm:gap-6">
               <div className="w-full sm:w-64 sm:shrink-0">

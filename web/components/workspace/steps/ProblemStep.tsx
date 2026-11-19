@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import type { Problem } from "@/lib/types";
-import { SectionCard, TextAreaField, TextField } from "../../ui";
+import type { FailureType, Problem } from "@/lib/types";
+import { FAILURE_TYPES } from "@/lib/options";
+import { ChoiceGroup, SectionCard, TextAreaField, TextField } from "../../ui";
 import { AssetDetails } from "../AssetDetails";
 import { DraftProblem } from "../ai/DraftProblem";
 import { DemoAiNote } from "../ai/shared";
@@ -14,6 +15,7 @@ export function ProblemStep({ inv, update, go }: StepProps) {
     update((i) => ({ ...i, problem: { ...i.problem, [key]: value } }));
   const p = inv.problem;
   // The cause just copied from a similar failure, so "Open the cause tree" can select it.
+  const isProcess = p.failureType === "process";
   const [added, setAdded] = useState<string | undefined>(undefined);
   return (
     <div className="space-y-5">
@@ -32,10 +34,26 @@ export function ProblemStep({ inv, update, go }: StepProps) {
             value={p.title}
             onChange={(v) => set("title", v)}
           />
+          <ChoiceGroup<FailureType>
+            className="sm:col-span-2"
+            label="Type of failure"
+            help="Pick Process or quality failure for things like leaking packs, wrong settings or out-of-spec product."
+            options={FAILURE_TYPES}
+            value={p.failureType ?? "equipment"}
+            onChange={(v) => set("failureType", v || (p.failureType ?? "equipment"))}
+          />
           <TextField
-            label="Asset"
-            help="The machine or equipment, with its tag number."
-            placeholder="e.g. Slurry pump P-101"
+            className="sm:col-span-2"
+            label="Quality reference (NCR / CAPA number)"
+            help="Optional. The number in your site's quality system, so this investigation can feed it."
+            placeholder="e.g. NCR-2291"
+            value={p.qualityRef ?? ""}
+            onChange={(v) => set("qualityRef", v)}
+          />
+          <TextField
+            label={isProcess ? "Line or process" : "Asset"}
+            help={isProcess ? "The line, process or product affected." : "The machine or equipment, with its tag number."}
+            placeholder={isProcess ? "e.g. Line 3 tray sealer, chilled ready meals" : "e.g. Slurry pump P-101"}
             value={p.asset}
             onChange={(v) => set("asset", v)}
           />

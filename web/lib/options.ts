@@ -5,9 +5,12 @@
 import type {
   ActionCategory,
   ActionKind,
+  CauseArea,
   Criticality,
   Deterioration,
+  FailureType,
   IntervalUnit,
+  OtherCostCategory,
   RolloutStatus,
 } from "./types";
 
@@ -90,10 +93,49 @@ export const DETERIORATION_OPTIONS: { value: Exclude<Deterioration, "">; label: 
     label: "Forced",
     help: "Wear we caused: contamination, misalignment, overload, poor lubrication, wrong operation.",
   },
+  { value: "not_applicable", label: "Not applicable", help: "Not wear: for example a setting, a method or a material." },
 ];
 
 export const DETERIORATION_GUIDANCE =
   "Forced deterioration is removed by fixing its cause. Natural deterioration is managed by inspection, condition monitoring and planned replacement.";
+
+/** Quick-add cash cost lines for process and quality losses. The user fills the amount. */
+export const COST_PRESETS: { label: string; category: OtherCostCategory }[] = [
+  { label: "Scrapped product", category: "scrap" },
+  { label: "Rework", category: "other" },
+  { label: "Product on hold", category: "other" },
+  { label: "Customer claims and credits", category: "penalties" },
+  { label: "Retailer penalties", category: "penalties" },
+];
+
+export const CAUSE_AREAS: { value: Exclude<CauseArea, "">; label: string }[] = [
+  { value: "equipment", label: "Equipment" },
+  { value: "materials", label: "Materials" },
+  { value: "method", label: "Method" },
+  { value: "measurement", label: "Measurement" },
+  { value: "people", label: "People" },
+  { value: "environment", label: "Environment" },
+];
+
+export const causeAreaLabel = (a: CauseArea | undefined): string =>
+  CAUSE_AREAS.find((x) => x.value === a)?.label ?? "";
+
+export const FAILURE_TYPES: { value: FailureType; label: string; help: string }[] = [
+  { value: "equipment", label: "Equipment failure", help: "A machine or asset broke or stopped." },
+  { value: "process", label: "Process or quality failure", help: "A line, method or product quality went wrong, for example leaking packs." },
+];
+
+/** Failure modes that suit a process or quality failure. */
+export const PROCESS_FAILURE_MODES: string[] = [
+  "Seal leak",
+  "Foreign matter",
+  "Wrong weight or fill",
+  "Labelling or coding error",
+  "Out of specification",
+  "Contamination",
+  "Changeover error",
+  "Other",
+];
 
 export const ROLLOUT_STATUS: { value: RolloutStatus; label: string }[] = [
   { value: "open", label: "Open" },

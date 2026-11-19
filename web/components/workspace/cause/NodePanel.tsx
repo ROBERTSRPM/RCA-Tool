@@ -2,7 +2,7 @@
 
 import { evidenceTypeLabel } from "../steps/EvidenceStep";
 import { CATEGORY_HELP, CATEGORY_LABEL, findNode, STATUS_HELP, STATUS_LABEL } from "@/lib/tree";
-import { DETERIORATION_GUIDANCE, DETERIORATION_OPTIONS } from "@/lib/options";
+import { CAUSE_AREAS, DETERIORATION_GUIDANCE, DETERIORATION_OPTIONS } from "@/lib/options";
 import type { Category, NodeStatus, StepId } from "@/lib/types";
 import { Icon } from "../../icons";
 import { CAT_STYLE } from "./NodeCard";
@@ -103,9 +103,40 @@ export function NodePanel({
 
       <fieldset>
         <legend className="label">
+          Cause area <span className="font-normal text-slate-600">(optional)</span>
+        </legend>
+        <div className="grid grid-cols-2 gap-1.5 sm:grid-cols-3" role="radiogroup" aria-label="Cause area">
+          {CAUSE_AREAS.map((a) => {
+            const on = node.area === a.value;
+            return (
+              <button
+                key={a.value}
+                type="button"
+                role="radio"
+                aria-checked={on}
+                onClick={() => patch({ area: on ? "" : a.value })}
+                className={`min-h-11 rounded-lg border-2 px-1.5 text-xs font-semibold leading-tight sm:text-sm ${
+                  on
+                    ? "border-slate-900 bg-slate-900 text-white"
+                    : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
+                }`}
+              >
+                {a.label}
+              </button>
+            );
+          })}
+        </div>
+        <p className="help">
+          Sorts process and quality causes: equipment, materials (e.g. film batch), method and settings, measurement
+          (e.g. seal checks), people, environment. Tap again to clear.
+        </p>
+      </fieldset>
+
+      <fieldset>
+        <legend className="label">
           Type of wear <span className="font-normal text-slate-600">(optional)</span>
         </legend>
-        <div className="grid grid-cols-2 gap-1.5" role="radiogroup" aria-label="Type of wear">
+        <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-3 lg:grid-cols-1" role="radiogroup" aria-label="Type of wear">
           {DETERIORATION_OPTIONS.map((d) => {
             const on = node.deterioration === d.value;
             return (
@@ -121,7 +152,7 @@ export function NodePanel({
                     : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
                 }`}
               >
-                {d.label} deterioration
+                {d.value === "not_applicable" ? d.label : `${d.label} deterioration`}
               </button>
             );
           })}

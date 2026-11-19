@@ -78,12 +78,14 @@ export function CapaSuggest({ inv, update, root }: { inv: Investigation; update:
                   ? "Looks like natural deterioration (normal wear)"
                   : result.deterioration === "forced"
                     ? "Looks like forced deterioration (wear we cause)"
-                    : "Natural or forced: unclear"}
+                    : result.deterioration === "not_applicable"
+                      ? "Not wear: natural or forced does not apply"
+                      : "Natural or forced: unclear"}
               </p>
               {result.deteriorationReason && <p className="mt-1 text-sm text-slate-700">{result.deteriorationReason}</p>}
               {verdict && tagOpen && root.deterioration !== verdict && (
                 <AcceptDismiss
-                  acceptLabel={`Tag this cause as ${verdict}`}
+                  acceptLabel={`Tag this cause as ${verdict === "not_applicable" ? "not applicable" : verdict}`}
                   onAccept={() => {
                     update((i) => ({ ...i, tree: updateNode(i.tree, root.id, { deterioration: verdict }) }));
                     setTagOpen(false);

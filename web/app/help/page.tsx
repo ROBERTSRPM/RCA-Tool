@@ -47,6 +47,15 @@ export default function HelpPage() {
         ))}
       </ol>
 
+      <h2 className="mt-8 text-lg font-semibold text-slate-900">Process and quality failures</h2>
+      <p className="mt-2 text-sm leading-relaxed">
+        Not every failure is a broken machine. On the Problem step, choose “Process or quality failure” for things like
+        leaking packs, then describe the line or process. In the cause tree, tag causes by area (materials, method,
+        measurement and so on) and use “Not applicable” for causes that are not wear, such as a setting. Add the
+        “Quality reference (NCR / CAPA number)” if you have one, so this investigation can feed your site’s QA or CAPA
+        process. {BRAND_NAME} does not replace your HACCP, SQF or BRC system.
+      </p>
+
       <h2 className="mt-8 text-lg font-semibold text-slate-900">How AI suggestions work</h2>
       <p className="mt-2 text-sm leading-relaxed">
         When you are signed in, optional AI buttons can draft a problem statement, coach a cause, challenge your analysis,

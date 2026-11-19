@@ -2,6 +2,7 @@
 
 import { useLayoutEffect, useRef } from "react";
 import { failureText } from "@/lib/investigation";
+import { causeAreaLabel } from "@/lib/options";
 import { canMove, CATEGORY_LABEL, countDescendants, STATUS_LABEL } from "@/lib/tree";
 import type { CauseNode, Category } from "@/lib/types";
 import { Icon } from "../../icons";
@@ -169,6 +170,7 @@ export function NodeCard({
           >
             {kicker ? `${kicker} · ` : ""}
             {isTop ? "Failure event" : CATEGORY_LABEL[node.category]}
+            {!isTop && node.area ? ` · ${causeAreaLabel(node.area)}` : ""}
           </span>
           {!isTop && <StatusMark status={node.status} />}
         </span>

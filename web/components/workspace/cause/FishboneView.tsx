@@ -17,7 +17,7 @@ export function FishboneView() {
     <div>
       <p className="mb-3 text-sm text-slate-600">
         The same causes, sorted by type. A healthy investigation has causes in all three columns:
-        what broke, what people did, and the system gaps that allowed it.
+        what broke, what people did, and the system gaps that allowed it. For process or quality failures, tag each cause with an area (materials, method, measurement and so on) in its panel.
       </p>
       <div className="mb-4 flex items-stretch">
         <div className="flex flex-1 items-center">

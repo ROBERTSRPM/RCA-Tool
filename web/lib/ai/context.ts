@@ -25,7 +25,7 @@ export const AI_LIMITS = {
 export type AiLevel = "physical" | "human" | "system";
 export const AI_LEVELS: AiLevel[] = ["physical", "human", "system"];
 const STATUSES = ["hypothesis", "verified", "ruled_out"] as const;
-const DETERIORATIONS = ["", "natural", "forced"] as const;
+const DETERIORATIONS = ["", "natural", "forced", "not_applicable"] as const;
 const KINDS = ["", "corrective", "preventive"] as const;
 const CATEGORIES = [
   "",
@@ -55,6 +55,9 @@ export interface AiProblem {
   duty: string;
   criticality: string;
   failureMode: string;
+  /** "process" for a process or quality failure; "equipment" otherwise. */
+  failureType: "equipment" | "process";
+  qualityRef: string;
 }
 
 export interface AiEvidence {
@@ -166,6 +169,8 @@ export function buildAiContext(inv: Investigation): AiContext {
       duty: p.duty ?? "",
       criticality: p.criticality ?? "",
       failureMode: p.failureMode ?? "",
+      failureType: p.failureType === "process" ? "process" : "equipment",
+      qualityRef: p.qualityRef ?? "",
     },
     evidence: inv.evidence.map((e) => ({ id: e.id, type: e.type, title: e.title, note: e.note })),
     nodes: flat.map((f) => ({
@@ -215,6 +220,8 @@ function parseAiContextLoose(raw: unknown): AiContext {
     duty: clip(pr.duty, AI_LIMITS.short),
     criticality: oneOf(pr.criticality, ["", "A", "B", "C"] as const, ""),
     failureMode: clip(pr.failureMode, 120),
+    failureType: oneOf(pr.failureType, ["equipment", "process"] as const, "equipment"),
+    qualityRef: clip(pr.qualityRef, 80),
   };
   const evidence: AiEvidence[] = (Array.isArray(o.evidence) ? o.evidence : [])
     .filter(isObj)

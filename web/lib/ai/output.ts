@@ -16,7 +16,7 @@ export interface CoachSuggestion {
   why: string;
   confirmWith: string;
   ruleOutWith: string;
-  deterioration: "" | "natural" | "forced";
+  deterioration: "" | "natural" | "forced" | "not_applicable";
 }
 export interface CoachResult {
   suggestions: CoachSuggestion[];
@@ -56,7 +56,7 @@ export interface CapaAction {
   rationale: string;
 }
 export interface CapaResult {
-  deterioration: "natural" | "forced" | "unclear";
+  deterioration: "natural" | "forced" | "unclear" | "not_applicable";
   deteriorationReason: string;
   actions: CapaAction[];
   horizontalExpansion: string;
@@ -136,7 +136,7 @@ export function validateCoach(raw: unknown, a: Aliases, scope: "node" | "tree", 
     const level = oneOf(s.level, ["physical", "human", "system"] as const);
     if (!t || !level) continue;
     const parent = typeof s.parent === "string" ? a.nodeByAlias.get(s.parent.trim().toUpperCase()) : undefined;
-    const det = oneOf(s.deterioration, ["natural", "forced"] as const);
+    const det = oneOf(s.deterioration, ["natural", "forced", "not_applicable"] as const);
     out.push({
       parentId: scope === "node" ? nodeId : (parent ?? nodeId),
       level,
@@ -144,7 +144,8 @@ export function validateCoach(raw: unknown, a: Aliases, scope: "node" | "tree", 
       why: text(s.why, OUT_LIMITS.note),
       confirmWith: text(s.confirmWith, OUT_LIMITS.note),
       ruleOutWith: text(s.ruleOutWith, OUT_LIMITS.note),
-      deterioration: level === "physical" && det ? det : "",
+      // Wear types only make sense on physical causes. "Not applicable" (a setting, method or material) can sit at any level.
+      deterioration: det === "not_applicable" ? det : level === "physical" && det ? det : "",
     });
   }
   return out.length ? { suggestions: out } : null;
@@ -207,7 +208,7 @@ export function validateCapa(raw: unknown): CapaResult | null {
   }
   if (!actions.length) return null;
   return {
-    deterioration: oneOf(raw.deterioration, ["natural", "forced", "unclear"] as const) ?? "unclear",
+    deterioration: oneOf(raw.deterioration, ["natural", "forced", "unclear", "not_applicable"] as const) ?? "unclear",
     deteriorationReason: text(raw.deteriorationReason, OUT_LIMITS.note),
     actions,
     horizontalExpansion: text(raw.horizontalExpansion, OUT_LIMITS.note),

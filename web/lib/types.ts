@@ -56,7 +56,13 @@ export interface Problem {
   criticality?: Criticality;
   /** A label from FAILURE_MODES, or free text. */
   failureMode?: string;
+  /** Missing means "equipment". "process" is a process or quality failure (e.g. leaking packs). */
+  failureType?: FailureType;
+  /** NCR / CAPA number in the site's quality system. Optional, free text. */
+  qualityRef?: string;
 }
+
+export type FailureType = "equipment" | "process";
 
 export type OtherCostCategory =
   | "parts"
@@ -134,7 +140,10 @@ export interface EvidenceItem {
 }
 
 /** Natural: normal wear in service. Forced: wear we caused. "" = not decided. */
-export type Deterioration = "" | "natural" | "forced";
+export type Deterioration = "" | "natural" | "forced" | "not_applicable";
+
+/** Optional "6M-style" tag on a cause, so process causes can be sorted in the fishbone. */
+export type CauseArea = "" | "equipment" | "materials" | "method" | "measurement" | "people" | "environment";
 
 export interface CauseNode {
   id: string;
@@ -147,6 +156,8 @@ export interface CauseNode {
   children: CauseNode[];
   /** Optional, added later; missing means not decided. */
   deterioration?: Deterioration;
+  /** Optional, added later; missing means not tagged. */
+  area?: CauseArea;
   /** True when the text came from an AI suggestion the user accepted. Still an ordinary editable cause. */
   aiSuggested?: boolean;
   /** For AI-suggested causes: the evidence that would confirm or rule the cause out. */
