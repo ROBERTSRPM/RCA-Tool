@@ -84,3 +84,23 @@ Preview confirmed serving 503a3ea (process mode shows "Where in the process?" an
 Quick regression, all pass: new equipment investigation (default Equipment failure, labels unchanged, loss $3,900 correct), sample P-101 $238,440, an older investigation loads, demo mode (process type, presets, persistence, one AI sign-in note), 390px no horizontal scroll on all seven steps, landing and help wording.
 
 Script and example-data against the app (latest 503a3ea): the earlier mismatches 1 to 9 are resolved in the docs ("Line or process", "Where in the process?", Quality reference under Type of failure, Line / Product / Pack type / Process step fields, "Forced deterioration", the Cause area column, Fishbone Group by, "Create 2 rollout checks", audience box placeholder). Remaining nits only: the top box is labelled "Failure event text" and is prefilled from the problem, so "if empty" rarely applies; Scene 12 Quality check "Fix first" flow and coach Add to tree / Dismiss were still not exercised.
+
+## Retest 2: "countermeasure" wording (dd75110)
+
+**Verdict: GO.**
+
+**The 23/28 local result is a configuration artefact, not a regression.** `qa/prelaunch-fixes.js` needs the Supabase public URL and publishable key at build time (`NEXT_PUBLIC_SUPABASE_*`).
+
+| Build | Supabase env | Result |
+|---|---|---|
+| dd75110 | not set | 23/28 (the P-DEMO-1 AI-note checks and P-AUTH-1 "no Email field" fail, because the app runs in local-only mode with no accounts and no AI sign-in note) |
+| 41b1190 | set | 31/31 |
+| dd75110 | set | 31/31 |
+
+Same script, same conditions. A first attempt with a leftover server on the port gave misleading failures and was discarded. Unit tests at dd75110: 327/327 pass.
+
+**Warning for QA runs:** the signed-in parts of that script clean up the shared qa-user-b account, which deleted my process-failure test investigation. Do not run it against the shared Supabase project while someone else is testing.
+
+**Preview (serving dd75110), spot-check, all pass.** Landing "Prove the countermeasure held" and "from failure to verified solution" (a fresh test investigation was used). Actions heading "5. Countermeasures: track every action". Quality check shows "Address first" / "Should address", with no "Fix first" or "Should fix". Verify "Expected events per year after the countermeasure", "Annual saving (verified)", "Roll out this countermeasure" panel and "The countermeasure is verified." Report has a "Countermeasures" column. No remaining "fix" word on the report, dashboard or help text. Rollout status wording ("Countermeasure in place") was checked in the source, not clicked. Sample P-101 $238,440, demo mode (process type, presets, one AI note), 390px no horizontal scroll on all seven steps.
+
+**Real AI (1 call, CAPA on a process root cause):** still good and specific (jaw deviation alarm and interlock, thermocouple and controller calibration, signed changeover check, increased leak-test sampling as verification). Marks deterioration "not applicable". It uses "countermeasure" naturally ("only call the countermeasure proven if there are no leaking packs...") and has no compliance claims. The older `qa/flows.js` already uses the new Verify label.
