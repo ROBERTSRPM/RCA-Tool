@@ -67,3 +67,20 @@ Untested: typing the top box (failure event) text from example-data.md; the Qual
 ## Notes
 - AI usage: 6 real calls. The two QA accounts' `ai_usage` rows were deleted once (both accounts only) because the daily limit was reached.
 - The QA account now holds one process investigation and one equipment investigation created by this run (plus its sample). They were left in place.
+
+## Retest (fixes at 503a3ea)
+Preview confirmed serving 503a3ea (process mode shows "Where in the process?" and Line / Product / Pack type / Process step). 3 real AI calls (coach x2, management summary) as `qa-user-b`; no rows needed clearing.
+
+**Verdict: GO.** D1, D2, D3, D4 and D6 are fixed. D5 and D7 were left deliberately.
+
+| # | Result |
+|---|---|
+| D1 | Fixed. Fishbone has "Group by: Level / Cause area". It opens by Cause area for a process failure, with columns per area, counts and "Because of: ..." context on each card; "Level" restores the Physical / Human / System columns. Counts matched the tags (one cause showed under "Not tagged yet" because my script toggled its area off). |
+| D2 | Fixed. "Measurement" is one line, 44px tall, at 1440px. Also fine at 390px. |
+| D3 | Fixed. "Where in the process?", Line, Product, Pack type and Process step save and reload and appear on the report. "Seal failure (leaking pack)" is in the Failure mode list (list also has Underweight / overfill, Foreign body, Labelling error, Temperature excursion, Out of specification, Changeover error). |
+| D4 | Fixed. The summary now says "Each event costs $43,900 ($33,100 cash, $10,800 lost margin)... about $263,400 per year" and, once verified, "Verified saving is $219,500 per year against action cost of $20,200, a payback of 1.1 months". The film change-control cause is still called a hypothesis; no compliance claims. |
+| D6 | Fixed. The coach returned "not applicable" for flange contamination, flange distortion and every system or human cause across two runs (A1 and the seal-check cause); only a jaw-pressure cause had no wear tag. No material or method cause was tagged forced. Quality of suggestions stayed good (seal acceptance standard, tooling inspection, limit samples, extra checks after a film or setting change, no leak test on the line). |
+
+Quick regression, all pass: new equipment investigation (default Equipment failure, labels unchanged, loss $3,900 correct), sample P-101 $238,440, an older investigation loads, demo mode (process type, presets, persistence, one AI sign-in note), 390px no horizontal scroll on all seven steps, landing and help wording.
+
+Script and example-data against the app (latest 503a3ea): the earlier mismatches 1 to 9 are resolved in the docs ("Line or process", "Where in the process?", Quality reference under Type of failure, Line / Product / Pack type / Process step fields, "Forced deterioration", the Cause area column, Fishbone Group by, "Create 2 rollout checks", audience box placeholder). Remaining nits only: the top box is labelled "Failure event text" and is prefilled from the problem, so "if empty" rarely applies; Scene 12 Quality check "Fix first" flow and coach Add to tree / Dismiss were still not exercised.
