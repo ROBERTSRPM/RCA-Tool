@@ -80,7 +80,7 @@ export function SignupForm() {
   return (
     <AuthFrame
       title="Create your account"
-      subtitle="Free. Keeps your investigations safe and available on any device."
+      subtitle="Keeps your investigations safe and available on any device. Try it with the sample investigation first if you like."
       footer={
         <>
           Already have an account?{" "}

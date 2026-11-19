@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { callAi } from "@/lib/ai/api";
 import type { AiFeature } from "@/lib/ai/requests";
 import { useAuth } from "../../auth/AuthProvider";
+import { AI_NOTICE_EVENT } from "./notice";
 import { Icon } from "../../icons";
 
 export type RunState<T> =
@@ -21,6 +22,7 @@ export function useAiRun<T>(feature: AiFeature) {
     async (body: Record<string, unknown>) => {
       const mine = ++seq.current;
       setState({ status: "running" });
+      if (typeof window !== "undefined") window.dispatchEvent(new Event(AI_NOTICE_EVENT));
       const out = await callAi<T>(feature, body);
       if (mine !== seq.current) return;
       setState(out.ok ? { status: "done", result: out.result, remainingToday: out.remainingToday } : { status: "error", message: out.message });
@@ -40,6 +42,20 @@ export function useAiAccess(): { ready: boolean; loading: boolean } {
   return { ready: state.status === "in", loading: state.status === "loading" };
 }
 
+/** One small, quiet line per step for signed-out users, in place of a disabled AI panel. */
+export function DemoAiNote({ className = "" }: { className?: string }) {
+  const { state, configured } = useAuth();
+  if (!configured || state.status !== "out") return null;
+  return (
+    <p className={`text-sm text-slate-500 ${className}`} data-testid="ai-demo-note">
+      <Link href="/login" className="font-semibold underline">
+        Sign in
+      </Link>{" "}
+      to get AI suggestions on this step.
+    </p>
+  );
+}
+
 export function AiCard({
   title,
   intro,
@@ -56,6 +72,8 @@ export function AiCard({
 }) {
   const { ready, loading } = useAiAccess();
   const [open, setOpen] = useState(!collapseOnMobile);
+  // Signed out: no panel at all. Each step shows one quiet DemoAiNote instead.
+  if (!ready && !loading) return null;
   const hide = collapseOnMobile && !open ? "hidden sm:block" : "";
   return (
     <section className={`card p-4 ${className}`} aria-label={title} data-testid="ai-card">
@@ -84,26 +102,6 @@ export function AiCard({
         {intro ? `${intro} ` : ""}
         You decide what goes in. Nothing is marked verified because of a suggestion.
       </p>
-      <p className={`mt-1 max-w-prose text-xs text-slate-500 ${hide}`} data-testid="ai-notice">
-        Sends this investigation&rsquo;s text (and any notes you type here) to our AI provider, Anthropic, to answer this request.
-        Anthropic&rsquo;s commercial terms do not allow training models on it.{" "}
-        <Link href="/privacy" className="underline">
-          Privacy
-        </Link>
-      </p>
-      {!ready && !loading && (
-        <p className={`mt-3 rounded-lg border border-slate-300 bg-slate-50 p-3 text-sm text-slate-800 ${hide}`} data-testid="ai-signin">
-          <strong>Sign in to use AI.</strong> AI suggestions are not available in demo mode.{" "}
-          <Link href="/login" className="font-semibold underline">
-            Sign in
-          </Link>{" "}
-          or{" "}
-          <Link href="/signup" className="font-semibold underline">
-            create an account
-          </Link>
-          . The quality check and similar-failure matching work without it.
-        </p>
-      )}
       <div className={`mt-3 ${hide}`}>{children}</div>
     </section>
   );

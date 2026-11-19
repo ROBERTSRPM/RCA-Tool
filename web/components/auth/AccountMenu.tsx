@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { SUPPORT_EMAIL, SUPPORT_MAILTO } from "@/lib/brand";
 import { flushAllPending } from "@/lib/pending";
 import { Icon } from "../icons";
 import { useConfirm } from "../ui";
@@ -135,6 +136,15 @@ export function AccountMenu({ tone = "light" }: { tone?: "dark" | "light" }) {
           >
             {busy ? "Signing out…" : "Sign out"}
           </button>
+          <div className="mt-1 border-t border-slate-100 px-3 py-2 text-xs text-slate-600">
+            <Link href="/help" onClick={() => setOpen(false)} className="font-semibold underline">
+              Help
+            </Link>
+            {" · "}
+            <a href={SUPPORT_MAILTO} className="underline">
+              {SUPPORT_EMAIL}
+            </a>
+          </div>
         </div>
       )}
     </div>

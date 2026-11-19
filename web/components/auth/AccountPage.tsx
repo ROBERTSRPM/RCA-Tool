@@ -260,7 +260,7 @@ export function AccountPage() {
             {configured && (
               <>
                 <Link href="/signup" className="font-semibold underline">
-                  Create a free account
+                  Create an account
                 </Link>{" "}
                 or{" "}
                 <Link href="/login" className="font-semibold underline">

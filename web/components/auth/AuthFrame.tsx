@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useId, type ReactNode } from "react";
 import { BRAND_NAME } from "@/lib/brand";
 import { Logo } from "../Logo";
+import { NeedHelp } from "../site/SiteFooter";
 import { useAuth } from "./AuthProvider";
 
 /** Page chrome shared by the sign-in, sign-up and password pages. */
@@ -50,6 +51,7 @@ export function AuthFrame({
         {configured && footer && (
           <div className="mt-5 text-center text-sm text-slate-600">{footer}</div>
         )}
+        <NeedHelp />
       </main>
     </div>
   );

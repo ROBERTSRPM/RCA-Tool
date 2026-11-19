@@ -15,7 +15,7 @@ describe("account helpers", () => {
     expect(out.account).toBe("a@b.test");
     expect(out.exportedAt).toBe("2026-11-16T10:00:00.000Z");
     expect(out.investigations[0].data).toEqual({ x: 1 });
-    expect(exportFileName(d)).toBe("rootloop-my-data-2026-11-16.json");
+    expect(exportFileName(d)).toBe("rca-pilot-my-data-2026-11-16.json");
   });
   it("needs the exact typed word", () => {
     expect(isDeleteConfirmed("DELETE")).toBe(true);

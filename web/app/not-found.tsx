@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "@/components/Logo";
+import { SUPPORT_EMAIL, SUPPORT_MAILTO } from "@/lib/brand";
 
 export default function NotFound() {
   return (
@@ -24,6 +25,12 @@ export default function NotFound() {
             Home
           </Link>
         </div>
+        <p className="mt-8 text-sm text-slate-600">
+          Need help?{" "}
+          <a href={SUPPORT_MAILTO} className="font-semibold underline">
+            {SUPPORT_EMAIL}
+          </a>
+        </p>
       </main>
     </div>
   );

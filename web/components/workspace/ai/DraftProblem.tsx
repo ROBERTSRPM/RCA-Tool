@@ -15,6 +15,7 @@ export function DraftProblem({ inv, update }: { inv: Investigation; update: Upda
   const [notes, setNotes] = useState("");
   const [fields, setFields] = useState<Fields | null>(null);
   const [last, setLast] = useState<ProblemDraft | null>(null);
+  const [undo, setUndo] = useState<Investigation["problem"] | null>(null);
   if (state.status === "done" && state.result !== last) {
     setLast(state.result);
     const r = state.result;
@@ -25,6 +26,7 @@ export function DraftProblem({ inv, update }: { inv: Investigation; update: Upda
 
   function use() {
     if (!fields) return;
+    setUndo(inv.problem);
     update((i) => ({
       ...i,
       problem: {
@@ -78,10 +80,26 @@ export function DraftProblem({ inv, update }: { inv: Investigation; update: Upda
         </AiButton>
       </div>
       <RunStatus state={state} working="Writing the draft." />
+      {undo && !draft && (
+        <p role="status" className="mt-3 text-sm text-slate-700" data-testid="draft-problem-applied">
+          The draft now fills the &ldquo;Describe the problem&rdquo; fields below.{" "}
+          <button
+            type="button"
+            className="font-semibold underline"
+            onClick={() => {
+              const prev = undo;
+              update((i) => ({ ...i, problem: prev }));
+              setUndo(null);
+            }}
+          >
+            Undo
+          </button>
+        </p>
+      )}
       {draft && fields && (
         <div className="mt-4 rounded-xl border border-slate-200 bg-slate-50/60 p-3 sm:p-4" data-testid="draft-problem-result">
           <p className="text-sm font-semibold text-slate-800">
-            Draft. Edit anything, then use it. Using it replaces the matching fields in the Problem step.
+            Draft. Edit anything here, then press &ldquo;Use this draft&rdquo;. It fills the &ldquo;Describe the problem&rdquo; fields below, and you can undo it.
           </p>
           <div className="mt-3 grid gap-3">
             <TextField label="Title" value={fields.title} onChange={(v) => setFields({ ...fields, title: v })} />
@@ -101,7 +119,7 @@ export function DraftProblem({ inv, update }: { inv: Investigation; update: Upda
             </div>
           )}
           <AcceptDismiss
-            acceptLabel="Use these fields"
+            acceptLabel="Use this draft"
             onAccept={use}
             onDismiss={() => {
               setFields(null);

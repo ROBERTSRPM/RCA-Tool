@@ -1,5 +1,6 @@
 "use client";
 
+import { DemoAiNote } from "../ai/shared";
 import { formatDate, todayISO } from "@/lib/dates";
 import {
   calcLoss,
@@ -77,6 +78,7 @@ export function ReportStep({ inv }: StepProps) {
       </div>
 
       <DraftReport inv={inv} onPrintingChange={setDraftPrinting} />
+      <DemoAiNote className="no-print" />
 
       <article className={`${draftPrinting ? "no-print " : ""}print-sheet card p-5 text-sm leading-relaxed text-slate-800 sm:p-8`}>
         <header className="avoid-break border-b-2 border-slate-900 pb-3">

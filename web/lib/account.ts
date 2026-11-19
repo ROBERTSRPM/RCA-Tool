@@ -1,3 +1,4 @@
+import { SUPPORT_EMAIL } from "./brand";
 import type { RawRow } from "./store/types";
 
 /** The JSON document written by "Download my data". */
@@ -20,7 +21,7 @@ export function buildExport(
 }
 
 export function exportFileName(now = new Date()): string {
-  return `rootloop-my-data-${now.toISOString().slice(0, 10)}.json`;
+  return `rca-pilot-my-data-${now.toISOString().slice(0, 10)}.json`;
 }
 
 export const DELETE_PHRASE = "DELETE";
@@ -31,7 +32,7 @@ export function isDeleteConfirmed(typed: string): boolean {
 }
 
 export const DELETE_UNAVAILABLE_MESSAGE =
-  "Account deletion is not available on this server yet (the delete_own_account database function is not installed). Nothing was deleted. Contact the site owner.";
+  "Account deletion is not available on this server yet (the delete_own_account database function is not installed). Nothing was deleted. Write to " + SUPPORT_EMAIL + ".";
 
 /** Plain message for a failed account deletion, or the unavailable message when the function does not exist. */
 export function deleteAccountError(error: { code?: string; message?: string; status?: number } | null | undefined): string {
@@ -51,5 +52,5 @@ export function deleteAccountError(error: { code?: string; message?: string; sta
   if (error?.status === 401 || msg.includes("jwt") || msg.includes("not authenticated")) {
     return "Your session has expired. Sign in again, then try deleting your account.";
   }
-  return "Could not delete your account. Nothing was deleted. Try again, or contact the site owner.";
+  return "Could not delete your account. Nothing was deleted. Try again, or write to " + SUPPORT_EMAIL + ".";
 }

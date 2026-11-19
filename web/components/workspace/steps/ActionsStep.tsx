@@ -1,5 +1,6 @@
 "use client";
 
+import { DemoAiNote } from "../ai/shared";
 import { blankTask, isTaskCategory, layoutActions } from "@/lib/capa";
 import { useState } from "react";
 import { formatDate } from "@/lib/dates";
@@ -363,6 +364,7 @@ export function ActionsStep({ inv, update, go }: StepProps) {
       </SectionCard>
 
       <ChallengePanel inv={inv} focus="actions" go={go} />
+      <DemoAiNote />
 
       <MaintenancePlan inv={inv} />
 

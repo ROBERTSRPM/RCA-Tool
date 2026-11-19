@@ -1,5 +1,6 @@
 "use client";
 
+import { DemoAiNote } from "../ai/shared";
 import { useCallback, useMemo, useRef, useState } from "react";
 import {
   addChild,
@@ -192,6 +193,7 @@ export function CauseStep({
       </SectionCard>
       <CauseCoachPanel inv={inv} update={update} selectedId={effectiveId} />
       <ChallengePanel inv={inv} focus="cause" go={go} selectNode={select} />
+      <DemoAiNote />
       <SimilarFailures
         inv={inv}
         update={update}

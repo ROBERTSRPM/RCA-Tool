@@ -2,6 +2,7 @@ import { AccountMenu } from "@/components/auth/AccountMenu";
 import { AppNav } from "@/components/AppNav";
 import { AppShell } from "@/components/auth/AppShell";
 import { Logo } from "@/components/Logo";
+import { SiteFooter } from "@/components/site/SiteFooter";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -19,6 +20,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       <div className="flex-1">
         <AppShell>{children}</AppShell>
       </div>
+      <SiteFooter />
     </div>
   );
 }

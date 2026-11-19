@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { decideImport, prepareImport, type ImportDecision } from "@/lib/store/import";
 import { getAccountStore, getLocalStore } from "@/lib/store";
+import { AiNoticeHost } from "../workspace/ai/AiNoticeHost";
 import { useAuth } from "./AuthProvider";
 
 /**
@@ -30,6 +31,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       {state.status === "out" && configured && <DemoBanner />}
       {state.status === "in" && <ImportOffer key={userId} userId={userId} onImported={refresh} />}
       <div key={`${userId}:${tick}`}>{children}</div>
+      <AiNoticeHost />
     </>
   );
 }
@@ -44,7 +46,7 @@ function DemoBanner() {
       <p>
       You are in demo mode: work is saved only in this browser.{" "}
       <Link href="/signup" className="font-semibold underline">
-        Create a free account
+        Create an account
       </Link>{" "}
       to keep it.{" "}
       <Link href="/login" className="whitespace-nowrap font-semibold underline">

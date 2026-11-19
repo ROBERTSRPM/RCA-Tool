@@ -5,6 +5,7 @@ import type { Problem } from "@/lib/types";
 import { SectionCard, TextAreaField, TextField } from "../../ui";
 import { AssetDetails } from "../AssetDetails";
 import { DraftProblem } from "../ai/DraftProblem";
+import { DemoAiNote } from "../ai/shared";
 import { SimilarFailures } from "../SimilarFailures";
 import type { StepProps } from "../types";
 
@@ -17,6 +18,7 @@ export function ProblemStep({ inv, update, go }: StepProps) {
   return (
     <div className="space-y-5">
       <DraftProblem inv={inv} update={update} />
+      <DemoAiNote />
       <SectionCard
         title="1. Describe the problem"
         help="Write what you know now. Plain facts, no guessing at causes yet. Everything saves as you type."

@@ -71,7 +71,7 @@ export function LoginForm() {
         <>
           New here?{" "}
           <Link href="/signup" className="font-semibold text-slate-900 underline">
-            Create a free account
+            Create an account
           </Link>
         </>
       }
