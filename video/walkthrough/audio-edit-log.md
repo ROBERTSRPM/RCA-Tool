@@ -18,26 +18,39 @@ Method: Whisper small.en (faster-whisper, script as prompt) on each part and aga
 | Walkthrough voice | -16.1 LUFS | -2.2 dBFS | +6.7 | +7.4 | +6.4 | -2.1 | -0.1 | -6.5 |
 (levels relative to the 800 to 1600 Hz band). Every band is within 1.5 dB. Final video audio: see the report in the hand-off message (about -16 LUFS, true peak under -1.5 dBTP).
 
+## "Retake" audit (owner rule: "retake" means the line was redone; cut the word and the mistaken take before it, keep only the redo)
+Method: Whisper (small.en) on both recordings with word times, plus a scan for every short isolated utterance in the recordings (each one transcribed on its own), and a final check of the first and last 3 seconds of every kept piece (spoken scene numbers, "retake"). Every "Retake" found, and what was cut (source seconds in the named part):
+| # | Where | Mistaken take(s) cut | The word | Kept |
+|---|---|---|---|---|
+| 1 | Part 1, scene 4 | two aborted takes of "It also lists what's missing under not in your notes" (200.1 to 212.6) | "Retake" at 213.8 and a second "Retake" at 215.6 to 216.1 (a first version of this edit kept the second one; it is cut now) | complete third take from 216.55 |
+| 2 | Part 1, scene 6 | first take of "Step 2 is the loss. This is the one the general manager cares about." (266.1 to 272.5) | "Retake" 273.0 | second take from 274.2 |
+| 3 | Part 1, scene 8 | first take of "Operators raised the speed and cut the dwell time to keep up." (487.1 to 493.3); an aborted "Operators" (496.6) | "Retake" at 494.4 and again at 498.6 | third take from 499.9 |
+| 4 | Part 2, scene 11 | first take of "Step 5 is actions. This is where a lot of RCAs quietly die, in a list of we..." (66.9 to 75.0), then "Scene 11" | "retake" 75.3 | second take from 79.8 |
+| 5 | Part 2, scene 15 | "and the proof the countermeasure works in..." (289.7 to 292.1) | "Retake" 292.6 | complete take from 294.2 |
+| 6 | Part 1, scene 10 region (596 to 633) | not used: scene 10 comes from part 2 | "retake" at 597.1, 615.7, 632.5 | n/a |
+| 7 | Part 2, after the last line | not used (after the end of the kept audio) | "Retake" at 336.7 | n/a |
+No "retake" is left in the final audio. The edit-boundary check of all 22 kept pieces shows no spoken scene number or "retake" at any head or tail.
+
 ## Takes and cuts (source seconds in the named part)
-Spoken scene numbers ("Scene 4"), "Retake" calls and aborted takes were removed. Scene 1 to 9 are part 1; 10 to 15 are part 2.
+Spoken scene numbers ("Scene 4") and "Retake" calls were removed. Scenes 1 to 9 are part 1; 10 to 15 are part 2. In scene 10 two sentences are cut as separate pieces so they can be replaced later (see below).
 | Scene | Kept | Removed |
 |---|---|---|
 | 1 | 2.3 to 65.0 | |
 | 2 | 68.1 to 124.5 | "Scene 2" |
 | 3 | 128.35 to 150.0 | "Scene 3" |
-| 4 | 153.4 to 198.9, 215.3 to 233.3 | two aborted takes of "It also lists what's missing under not in your notes" (200 to 213); the third, complete take is kept |
+| 4 | 153.4 to 198.9, 216.55 to 233.3 | retake 1 above |
 | 5 | 235.3 to 263.4 | |
-| 6 | 274.2 to 376.3 | first take of the first two sentences, "Retake" |
-| 7 | 380.4 to 424.2 | spoken "Scene 7" (377.4 to 378.2); Whisper had placed "Step 3" at 378.2 but it is spoken at 380.6, so the cut was moved after a final-mix check heard a stray "7" |
-| 8 | 426.4 to 486.9, 499.9 to 524.5 | first take of "Operators raised the speed...", "Retake", a second aborted take; the third is kept |
+| 6 | 274.2 to 376.3 | retake 2 |
+| 7 | 380.4 to 424.2 | spoken "Scene 7" (377.4 to 378.2) |
+| 8 | 426.4 to 486.9, 499.9 to 524.5 | retake 3 |
 | 9 | 529.0 to 566.0 | |
-| 10 | 4.0 to 63.8 | |
-| 11 | 79.8 to 137.8 | first take of the opening ("...a list of we, retake"), "Scene 11" |
+| 10 | 4.0 to 63.8 (five pieces) | |
+| 11 | 79.8 to 137.8 | retake 4 |
 | 12 | 140.9 to 160.6 | spoken "Scene 12" |
 | 13 | 162.5 to 228.5 | |
 | 14 | 231.9 to 257.0 | |
-| 15 | 260.1 to 288.6, 294.2 to 335.0 | aborted "and the proof the countermeasure works in...", "Retake" |
-Scene 10 in part 1 (567 to 615 s) was ignored, as instructed.
+| 15 | 260.1 to 288.6, 294.2 to 335.0 | retake 5 |
+Whisper word times drifted by up to 2.4 s in places (scene 7 and scene 12 lead-ins, the scene 4 retake), so every cut is placed on the recording's own silences and checked on the processed audio.
 
 ## Where the owner's words differ from the read text (Whisper on the final scene files; the screen follows what was said)
 - Scene 3: "So where do we start?" (text: "do you start"); "an email and password" (text: "an email and a password").

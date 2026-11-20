@@ -27,6 +27,9 @@ async function ai(trigger, resultSel, { wait = 150000 } = {}) {
   try { await page.locator(resultSel).first().waitFor({ state: "visible", timeout: wait }); }
   catch { console.log("AI result timeout", resultSel, await page.locator("[data-testid=ai-error]").allTextContents()); }
   await page.waitForTimeout(600);
+  // owner rule: no "chicken", "rice" or "sauce" anywhere in what the AI shows; throw so the scene is simply re-recorded
+  const shown = (await page.locator(resultSel).first().innerText().catch(() => "")) || "";
+  if (/chicken|\brice\b|sauce/i.test(shown)) throw new Error("AI text contains a forbidden word: " + (shown.match(/.{40}(chicken|\brice\b|sauce).{20}/i)?.[0] ?? ""));
   if (wasRec) { c.r.start(); await c.hold(0.3); }
 }
 const fail = async (where, e) => { await page.screenshot({ path: `${S}/fail-${where}.png` }); console.log("FAILED at", where, String(e).split("\n")[0]); throw e; };
@@ -77,14 +80,29 @@ async function s6() {
   await c.type(lab("How many times a year does it happen?"), D.LOSS.events, 2); await c.type(lab("Downtime per event"), D.LOSS.hours, 2);
   await c.type(lab("Production rate"), D.LOSS.rate, 2); await c.type(lab("Unit name"), D.LOSS.unit, 2);
   await c.type(lab("Margin per unit"), D.LOSS.margin, 2); await c.type(lab("Repair cost per event"), D.LOSS.repair, 2);
-  await c.hold(2.0);
+  await c.hold(1.0);
+  // page is still at the top here: remember where the live-calculation rows and the inputs are
+  await c.rectUnion("inputs", [lab("How many times a year does it happen?"), lab("Downtime per event"), lab("Production rate")], 8);
+  await c.rectUnion("margin", [lab("Margin per unit")], 8);
+  await c.rectBox("lost", page.getByText("Lost production per event", { exact: true }).first(), -14, -8, 372, 60);
+  await c.rectBox("opp", page.getByText("Opportunity loss", { exact: true }).first(), -14, -8, 372, 60);
+  await c.hold(1.5);
   c.mark("other");
   for (const [name, amt] of D.OTHER) {
     await c.scrollTo(btn(name, { exact: true }).first(), 1.0, 300); await c.click(btn(name, { exact: true }).first(), 0.8); await settle();
     const amount = page.getByLabel(/Amount per event/).last(); await c.type(amount, amt, 2); await c.hold(0.8);
   }
-  c.mark("calc"); await c.hold(6.0);
-  c.mark("lost-good"); await c.hold(3.0);
+  // calc 1: the panel's cash and per-event rows
+  c.mark("calc"); await c.scrollTo(page.getByText("LIVE CALCULATION").first(), 1.4, 130); await c.hold(0.5);
+  await c.rectBox("cash", page.getByText("Cash costs", { exact: true }).first(), -14, -8, 372, 60);
+  await c.rectBox("cost-event", page.getByText("Cost per event", { exact: true }).nth(1), -14, -8, 372, 60);
+  await c.rectBox("opp2", page.getByText("Opportunity loss", { exact: true }).first(), -14, -8, 372, 60);
+  await c.hold(7.0);
+  // calc 2: the per-year section and the dark annual-loss box
+  c.mark("annual"); await c.scrollTo(page.getByText("Annual loss", { exact: true }).first(), 1.4, 330); await c.hold(0.5);
+  await c.rectBox("annual", page.getByText("Annual loss", { exact: true }).first(), -20, -14, 372, 150);
+  await c.hold(5.0);
+  c.mark("lost-good"); await c.scrollTo(page.getByText("Lost for good", { exact: true }).first(), 1.2, 240); await c.rectBox("lostgood", page.getByText("Lost for good", { exact: true }).first(), -20, -14, 640, 70); await c.hold(4.0);
 }
 async function s7() {
   c.mark("tab"); await goStep("Evidence"); await c.hold(1.2);
@@ -123,30 +141,45 @@ async function s8() {
 const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 async function s9() {
   c.mark("tab"); await goStep("Cause tree"); await c.scrollBy(260, 0.8); await c.hold(0.5);
-  c.mark("forced"); await selBox(new RegExp("Select cause: " + escapeRe(D.TREE[1][4].slice(0, 25))));
-  await c.moveTo(btn("Forced deterioration"), 0.9); await c.hold(1.5); await c.click(btn("Forced deterioration"), 0.6); await c.hold(2.0);
-  c.mark("na"); await selBox(new RegExp("Select cause: " + escapeRe(D.TREE[3][4].slice(0, 25)))); await c.click(btn("Not applicable"), 0.9); await c.hold(2.0);
+  // "Is the wear natural, or forced?": select the jaw box and show the Type of wear buttons
+  c.mark("wear"); await selBox(new RegExp("Select cause: " + escapeRe(D.TREE[1][4].slice(0, 25))));
+  await c.scrollTo(btn("Natural deterioration"), 1.2, 330); await c.hold(0.6);
+  await c.rectUnion("wear", [btn("Natural deterioration"), btn("Forced deterioration"), btn("Not applicable")], 12);
+  await c.hold(2.0);
+  // "That's natural": cursor on Natural, not clicked
+  c.mark("natural"); await c.moveTo(btn("Natural deterioration"), 1.0); await c.hold(2.0);
+  // "...is forced": click Forced
+  c.mark("forced"); await c.click(btn("Forced deterioration"), 1.0); await c.hold(2.5);
+  // the process cause, not wear
+  c.mark("na"); await selBox(new RegExp("Select cause: " + escapeRe(D.TREE[3][4].slice(0, 25)))); await c.scrollTo(btn("Not applicable"), 1.0, 330); await c.click(btn("Not applicable"), 0.9); await c.hold(1.5);
   c.mark("whys"); await c.top(); await c.scrollBy(120, 0.8); await c.click(btn("5 Whys"), 1.0); await c.hold(4.0);
   c.mark("fishbone"); await c.click(btn("Fishbone"), 0.9); await c.hold(4.0);
   c.mark("level"); await c.click(btn("Level", { exact: true }), 0.9); await c.hold(3.0);
   c.mark("back"); await c.click(btn("Tree", { exact: true }).first(), 0.9); await c.hold(1.5);
 }
-const RESIDUE = /residue|product|contaminat|sauce|food|flange.*(dirty|clean)|(dirty|clean).*flange/i;
-const PARALLEL = /parallel|alignment|aligned|flat|plate/i;
+// the two suggestions the owner wants on screen: product/residue on the flange, and the jaw not pressing evenly on the seal plate
+const RESIDUE = /(residue|debris|dirt|food|product|splash|spill)\b.*flange|flange.*\b(residue|debris|dirt|food|product|splash|spill)/i;
+const RESIDUE_NOT = /check|no standard|not checked|monitor/i;
+const PARALLEL = /(?=.*\bjaw\b)(?=.*(parallel|seal plate|plate))/i;   // jaw and plate in the same suggestion
+const BAD = /sauce|rice|chicken/i;
 async function pickAccept(rx, label) {
   const items = page.getByTestId("coach-item"); const n = await items.count();
   for (let i = 0; i < n; i++) {
     const txt = await items.nth(i).innerText();
     const title = txt.split("\n").find((l) => l.length > 25) ?? "";
-    if (rx.test(title)) { console.log(label, "->", title.slice(0, 120)); await c.click(items.nth(i).getByTestId("ai-accept"), 1.0); return true; }
+    if (rx.test(title) && !BAD.test(title) && !(rx === RESIDUE && RESIDUE_NOT.test(title))) { console.log(label, "->", title.slice(0, 120)); await c.click(items.nth(i).getByTestId("ai-accept"), 1.0); return true; }
   }
   console.log("NOT OFFERED:", label, "| offered:", await items.evaluateAll((els) => els.map((e) => e.innerText.split("\n").find((l) => l.length > 25)?.slice(0, 90))));
   return false;
 }
 async function s10() {
-  await goStep("Cause tree");
-  c.mark("coach"); await c.scrollTo(page.getByTestId("ai-card").filter({ hasText: /^Cause coach/ }).first(), 1.6, 100); await c.hold(1.0);
-  await selBox(new RegExp("Select cause: " + escapeRe(D.TREE[0][4].slice(0, 25)))); await c.scrollTo(page.getByTestId("ai-card").filter({ hasText: /^Cause coach/ }).first(), 1.0, 100);
+  // open on the Cause coach card with the first cause selected, so the screen matches "Now the AI help" from the first second
+  await c.silently(async () => {
+    await goStep("Cause tree"); await selBox(new RegExp("Select cause: " + escapeRe(D.TREE[0][4].slice(0, 25))));
+    await page.getByTestId("ai-card").filter({ hasText: /^Cause coach/ }).first().scrollIntoViewIfNeeded();
+    await page.evaluate(() => { const e = [...document.querySelectorAll("[data-testid=ai-card]")].find((x) => /^Cause coach/.test(x.innerText)); if (e) window.scrollBy(0, e.getBoundingClientRect().top - 130); });
+  });
+  c.mark("coach"); await c.hold(2.5);
   c.mark("coach-run"); await ai(page.getByTestId("coach-node"), "[data-testid=coach-results]");
   c.mark("coach-results"); await c.scrollTo(page.getByTestId("coach-results"), 1.2, 140); await c.hold(6.0);
   c.mark("accept"); if (!(await pickAccept(RESIDUE, "product residue"))) throw new Error("AI did not offer product residue"); await c.hold(2.5);
@@ -179,7 +212,7 @@ async function s11() {
     await fillAction(p);
   }
   c.mark("plan"); await c.scrollTo(page.getByText("Maintenance plan changes", { exact: true }).first(), 1.6, 110); await c.hold(5.0);
-  c.mark("tiles"); await c.top(); await c.scrollBy(240, 1.2); await c.hold(4.0);
+  c.mark("tiles"); await c.top(); await c.scrollBy(240, 1.2); await c.hold(0.5); await c.rectBox("t-total", page.getByText(/^total action cost/i).first(), -14, -12, 262, 110); await c.rectBox("t-actions", page.getByText(/^actions$/i).first(), -14, -12, 262, 110); await c.hold(4.0);
 }
 // root cause order on the Actions step follows the tree order of the four roots
 const ROOTS = ["A3", "B3", "C3", "D2"];
@@ -207,20 +240,29 @@ async function s12() {
   c.mark("capa-results"); await c.scrollTo(page.getByTestId("capa-results").first(), 1.0, 200); await c.hold(6.0);
   c.mark("accept"); await c.click(page.getByTestId("capa-item").first().getByTestId("ai-accept"), 1.0); await c.hold(2.0);
   c.mark("dismiss"); await c.click(page.getByTestId("capa-item").first().getByTestId("ai-dismiss"), 1.0); await c.hold(2.0);
+  // "the Quality check lists any gaps": open it while the accepted suggestion still has no owner or date, then fix that gap and show it clear
+  c.mark("quality"); await c.top(); await c.click(page.locator("button").filter({ hasText: /Quality check/ }).first(), 1.0); await c.hold(0.5);
+  await c.rectUnion("qc", [page.locator("button").filter({ hasText: /Quality check/ }).first()], 6, ); await c.hold(5.0);
   c.mark("fixit");
   const sugRow = page.locator("button").filter({ hasText: /Suggested/ }).filter({ hasText: /\$\d/ }).first();
   await c.scrollTo(sugRow, 1.2, 300); await c.click(sugRow, 0.9); await settle();
   await c.type(lab("Owner").last(), "Lee Tran", 3, 0.6); await c.set(lab("Due date").last(), "2026-12-18"); await c.click(btn("Close").last(), 0.7); await settle(); await c.hold(1.0);
-  c.mark("quality"); await c.top(); await c.click(page.locator("button").filter({ hasText: /Quality check/ }).first(), 1.0); await c.hold(5.0);
+  await c.top(); await c.hold(2.5);
 }
 async function s13() {
+  // "Step 6, proving it stopped": open on the Verify step, then go back to mark the actions Done, then fill in Verify
+  await c.silently(async () => { await goStep("Verify"); });
+  c.mark("verify0"); await c.hold(3.0);
+  c.mark("review"); await c.moveTo(lab("Review date"), 1.0); await c.rectUnion("review", [lab("Review date"), lab("Has the failure recurred since the actions were completed?")], 10); await c.hold(2.5);
   c.mark("tab-actions"); await goStep("Actions"); await c.hold(0.8);
-  c.mark("done");
-  await setAllDone();
+  c.mark("done"); await setAllDone();
   c.mark("verify"); await goStep("Verify"); await c.hold(1.0);
   await c.set(lab("Review date"), D.VERIFY.date); await c.choose(lab("Has the failure recurred since the actions were completed?"), D.VERIFY.recurred);
   await c.type(lab(/Expected events per year after/), D.VERIFY.events, 2); await c.set(lab("What did you find?"), D.VERIFY.found); await c.hold(1.0);
-  c.mark("result"); await c.scrollTo(page.getByText("The result in money").first(), 1.6, 120); await c.hold(8.0);
+  c.mark("result"); await c.scrollTo(page.getByText("The result in money").first(), 1.6, 120); await c.hold(0.6);
+  const tile = async (name, rx) => c.rectBox(name, page.getByText(rx).first(), -16, -14, 262, 176);
+  await tile("t-before", /^annual loss before/i); await tile("t-after", /^annual loss after/i); await tile("t-saving", /^annual saving/i); await tile("t-cost", /^total action cost/i); await tile("t-payback", /^payback period/i);
+  await c.hold(8.0);
   c.mark("rollout"); await c.scrollTo(page.getByText("Roll out this countermeasure", { exact: false }).first(), 1.6, 100); await c.hold(2.0);
   await rollout();
 }
@@ -255,15 +297,37 @@ async function s14() {
   c.mark("tab"); await goStep("Report"); await c.hold(1.5);
   c.mark("note"); await c.type(lab(/Anything to add/), D.AUDIENCE, 3);
   if (!c.rec) return;
-  c.mark("summary"); await ai(btn(/Management summary/), "[data-testid=draft-doc]");
-  c.mark("draft"); await c.scrollTo(page.getByTestId("draft-doc"), 1.4, 140); await c.hold(6.0);
-  c.mark("edit"); const f = page.getByTestId("draft-doc").locator("textarea").nth(1); await c.click(f, 0.9); await page.keyboard.press("End"); await page.keyboard.type(" Checked against the evidence."); await c.hold(2.0);
-  c.mark("print"); await c.scrollTo(btn(/Print this draft/), 1.2, 400); await c.hold(3.0);
+  // "I click Draft report, and it writes the report from everything I have entered"
+  c.mark("report-run"); await ai(btn("Draft report").first(), "[data-testid=draft-doc]");
+  c.mark("report-draft"); await c.scrollTo(page.getByTestId("draft-doc"), 1.4, 140); await c.hold(5.0);
+  // "The management summary is the one page the general manager will actually read"
+  c.mark("summary-run"); await c.scrollTo(btn(/Management summary/).first(), 1.2, 260);
+  await ai(btn(/Management summary/).first(), "[data-testid=draft-doc]");
+  c.mark("summary-draft"); await c.scrollTo(page.getByTestId("draft-doc"), 1.4, 140); await c.hold(5.0);
+  // "I check every fact because my name goes on it": edit one sentence
+  c.mark("edit"); const f = page.getByTestId("draft-doc").locator("textarea").nth(1); await c.ensureVisible(f, true); await c.click(f, 0.9); await page.keyboard.press("End"); await page.keyboard.type(" Checked against the evidence."); await c.r.cur(); await c.r.shot(); await c.hold(2.0);
+  // "Then I print or save as PDF": the Print / Save as PDF button at the top of the step
+  c.mark("print"); await c.top(); await c.moveTo(btn(/Print \/ Save as PDF/).first(), 1.2); await c.rectUnion("printbtn", [btn(/Print \/ Save as PDF/).first()], 10); await c.hold(5.0);
 }
 async function s15() {
-  c.mark("tab"); await goStep("Cause tree"); await c.scrollBy(260, 1.0); await c.hold(6.0);
-  await goStep("Verify"); c.mark("saving"); await c.scrollTo(page.getByText("The result in money").first(), 1.4, 120); await c.hold(9.0);
-  c.mark("dash"); await page.goto(`${BASE}/app`, { waitUntil: "networkidle" }); await page.waitForTimeout(1500); await c.hold(8.0);
+  c.mark("tab"); await goStep("Cause tree"); await c.scrollBy(300, 1.2); await c.hold(2.5);
+  // pan the tree sideways so the four system root causes are on screen together, then remember where they are
+  c.mark("roots");
+  const x0 = await page.evaluate(() => { const el = window.__pan = [...document.querySelectorAll("*")].find((e) => e.scrollWidth > e.clientWidth + 50 && /auto|scroll/.test(getComputedStyle(e).overflowX) && e.textContent.includes("Why?")); return el ? el.scrollLeft : 0; });
+  for (let i = 1; i <= 75; i++) { const t = i / 75, e = t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; await page.evaluate((x) => window.__pan && (window.__pan.scrollLeft = x), x0 + 640 * e); if (c.rec) { await c.r.cur(); await c.r.shot(); } }
+  await c.hold(0.6);
+  const roots = page.locator("button").filter({ hasText: /Root cause/ }).filter({ hasText: /Select cause|System/i });
+  const nr = await roots.count(); for (let i = 0; i < Math.min(nr, 4); i++) await c.rectUnion(`root${i + 1}`, [roots.nth(i)], 6);
+  console.log("root cards found", nr);
+  await c.hold(9.0);
+  c.mark("saving"); await goStep("Verify"); await c.scrollTo(page.getByText("The result in money").first(), 1.4, 120); await c.hold(0.6);
+  const tile = async (name, rx) => c.rectBox(name, page.getByText(rx).first(), -16, -14, 262, 176);
+  await tile("t-before", /^annual loss before/i); await tile("t-saving", /^annual saving/i); await tile("t-payback", /^payback period/i);
+  await c.hold(9.0);
+  c.mark("dash"); await page.goto(`${BASE}/app`, { waitUntil: "networkidle" }); await page.waitForTimeout(1500); await c.hold(0.6);
+  const dt = async (name, txt) => c.rectBox(name, page.getByText(new RegExp("^" + txt + "$", "i")).first(), -22, -16, 250, 135);
+  await dt("d-loss", "OPEN ANNUAL LOSS"); await dt("d-actions", "OPEN ACTIONS"); await dt("d-saved", "VERIFIED ANNUAL SAVINGS"); await dt("d-roll", "ROLLOUT CHECKS");
+  await c.hold(9.0);
 }
 
 const SEQ = { 4: s4, 5: s5, 6: s6, 7: s7, 8: s8, 9: s9, 10: s10, 11: s11, 12: null, 13: s13, 14: s14, 15: s15 };

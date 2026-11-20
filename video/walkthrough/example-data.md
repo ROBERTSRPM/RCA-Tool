@@ -50,7 +50,7 @@ Click "Draft problem statement from notes". The draft varies each run. Expect it
 |---|---|
 | Title | Repeat leaking packs from Line 3 tray sealer |
 | Line or process (labelled "Line or process" for a process failure) | Line 3 tray sealer |
-| Site / area | Chilled ready-meals, Packing hall, Line 3 |
+| Site / area | Packing hall, Line 3 |
 | Date of event | 2026-10-15 |
 | What happened? | At the 4:00 am end-of-line seal check, 2 of 3 packs leaked in the leak tester. Weak seals along the tray flange. About 6,000 packs packed since the last good check at 2:00 am put on hold. This is the 6th event in twelve months. |
 | Where in the process? | Heat seal of the lidding film to the tray flange on the Line 3 tray sealer. |
@@ -66,7 +66,7 @@ Then scroll to the card "Line / process details" (it replaces "Asset details" fo
 | Field | Value |
 |---|---|
 | Line | Line 3 |
-| Product | Ready meal, 480 g tray |
+| Product | 480 g tray |
 | Pack type | Modified-atmosphere tray, lidding film |
 | Process step | Tray sealing (heat seal) |
 | Asset tag (optional) | leave empty |

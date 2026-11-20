@@ -75,7 +75,22 @@ function buildScene(s) {
     labels.push(`[${L}]`);
   });
   parts.push(`${labels.join("")}concat=n=${labels.length}:v=1:a=0,tpad=stop_mode=clone:stop_duration=2,trim=duration=${D.toFixed(3)},setpts=PTS-STARTPTS[base]`);
-  const inputs = ["-i", clip]; let cur = "base"; let k = 1;
+  // highlights: a subtle orange box and glow round a spoken number or item. The rectangle was measured during capture (rects.json) while the
+  // page was still, so the highlight is limited to the hold of the cue it belongs to.
+  const rectsFile = path.join(clipsDir, `scene${n}.rects.json`); const rects = fs.existsSync(rectsFile) ? JSON.parse(fs.readFileSync(rectsFile, "utf8")) : {};
+  const hl = [];
+  for (const h of s.highlights ?? []) {
+    const r = rects[h.rect]; if (!r) { console.log(`WARN ${s.id}: no rect ${h.rect}`); continue; }
+    let a = T(n, h.phrase ?? h.at, h.after) + (h.shift ?? 0), b = a + (h.dur ?? 3);
+    if (h.cue) { const ci = cues.findIndex((c) => c.mark === h.cue); if (ci >= 0) { const lo = cues[ci].s + Math.min(cues[ci].mv, 99) * 0.6, hi = ci + 1 < cues.length ? cues[ci + 1].s : D; a = Math.max(a, lo); b = Math.min(b, hi - 0.2); } }
+    if (b - a < 0.4) { console.log(`WARN ${s.id}: highlight ${h.rect} has no room (${a.toFixed(1)}-${b.toFixed(1)})`); continue; }
+    hl.push({ ...r, a, b, name: h.rect });
+  }
+  if (hl.length) {
+    const dbs = hl.flatMap((h) => [`drawbox=x=${h.x}:y=${h.y}:w=${h.w}:h=${h.h}:color=0xea580c@0.10:t=fill:enable='between(t,${h.a.toFixed(2)},${h.b.toFixed(2)})'`, `drawbox=x=${h.x}:y=${h.y}:w=${h.w}:h=${h.h}:color=0xea580c@0.95:t=5:enable='between(t,${h.a.toFixed(2)},${h.b.toFixed(2)})'`]);
+    parts.push(`[base]${dbs.join(",")}[hb]`);
+  }
+  const inputs = ["-i", clip]; let cur = hl.length ? "hb" : "base"; let k = 1;
   const caps = (s.captions ?? []).map((c) => ({ ...c, a: T(n, c.phrase ?? c.at, c.after) + (c.shift ?? 0) }));
   for (const c of caps) {
     const a = c.a, b = Math.min(a + (c.dur ?? 4), D - 0.1);
@@ -92,7 +107,7 @@ function buildScene(s) {
   const out = path.join(work, "vid", `${s.id}.mp4`);
   execFileSync("ffmpeg", ["-y", "-loglevel", "error", ...inputs, "-filter_complex", parts.join(";"), "-map", `[${cur}]`, "-c:v", "libx264", "-preset", "medium", "-crf", "16", "-pix_fmt", "yuv420p", "-r", "30", "-t", D.toFixed(3), out], { maxBuffer: 1 << 28 });
   console.log(s.id, "scene", D.toFixed(2), "s,", segs.length, "segments,", caps.length, "captions ->", out);
-  return { id: s.id, segs, caps: caps.map((c) => [c.text, +c.a.toFixed(2)]) };
+  return { id: s.id, highlights: hl.map((h) => [h.name, +h.a.toFixed(2), +h.b.toFixed(2)]), segs, caps: caps.map((c) => [c.text, +c.a.toFixed(2)]) };
 }
 const todo = plan.scenes.filter((s) => !only.length || only.includes(s.id));
 await captions(todo.flatMap((s) => (s.captions ?? []).map((c) => c.text)));
