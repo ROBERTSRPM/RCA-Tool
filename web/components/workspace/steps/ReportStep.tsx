@@ -453,8 +453,6 @@ export function ReportStep({ inv, update }: StepProps) {
               {formatMoney(v.cashSaving, cur)}, opportunity {formatMoney(v.opportunitySaving, cur)}) for an
               action cost of {formatMoney(v.totalActionCost, cur)}, paid back in{" "}
               {formatMonths(v.paybackMonths)}.
-              {v.hoursBackPerYear !== null &&
-                ` Line time back: ${formatNumber(v.hoursBackPerYear, 1)} h a year.`}
               {!verified &&
                 " This saving is not yet verified: it counts only when all actions are done and the review, with a date, says the failure has not recurred."}
             </p>
@@ -464,6 +462,9 @@ export function ReportStep({ inv, update }: StepProps) {
                 ? "Savings cannot be calculated until the expected events per year after the countermeasure are entered."
                 : `Savings cannot be calculated while the loss is not costed. ${LOSS_NOT_COSTED}.`}
             </Muted>
+          )}
+          {v.hoursBackPerYear !== null && (
+            <p className="mt-2">Line time back: {formatNumber(v.hoursBackPerYear, 1)} h a year.</p>
           )}
         </Section>
         <Section title="Rollout to similar assets">

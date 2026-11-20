@@ -432,3 +432,26 @@ describe("line time back (hours recovered per year)", () => {
     expect(summarise(open, "2026-11-20").verifiedHours).toBe(0);
   });
 });
+
+describe("line time back: display edge cases", () => {
+  it("values that would round to 0 h show nothing", () => {
+    const inv = blankInvestigation();
+    inv.loss.eventsPerYear = 3;
+    inv.loss.downtimeHours = 0.001;
+    inv.verification.eventsPerYearAfter = 1;
+    expect(hoursBackPerYear(inv)).toBeNull();
+    inv.loss.downtimeHours = 0.03;
+    expect(hoursBackPerYear(inv)).toBeCloseTo(0.06, 5);
+  });
+
+  it("is available when the loss is not costed (report shows it outside the costed branch)", () => {
+    const inv = blankInvestigation();
+    inv.loss.eventsPerYear = 6;
+    inv.loss.downtimeHours = 8;
+    inv.verification.eventsPerYearAfter = 1;
+    const c = calcVerification(inv);
+    expect(c.hasAfterFigure).toBe(false);
+    expect(c.lossCosted).toBe(false);
+    expect(c.hoursBackPerYear).toBe(40);
+  });
+});

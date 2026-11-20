@@ -110,7 +110,11 @@ export function VerifyStep({ inv, update, go }: StepProps) {
               : "Enter the expected events per year after the countermeasure to see the saving."
         }
       >
-        <dl className="grid grid-cols-2 gap-3 lg:grid-cols-5">
+        <dl
+          className={`grid grid-cols-2 gap-3 ${
+            calc.hoursBackPerYear !== null ? "lg:grid-cols-3" : "lg:grid-cols-5"
+          }`}
+        >
           <Metric
             label="Annual loss before"
             value={calc.lossCosted ? formatMoney(calc.annualLossBefore, cur) : LOSS_NOT_COSTED}
@@ -148,7 +152,7 @@ export function VerifyStep({ inv, update, go }: StepProps) {
               label={verified ? "Line time back (verified)" : "Line time back (expected)"}
               value={`${formatNumber(calc.hoursBackPerYear, 1)} h a year`}
               good
-              sub={`${formatNumber(inv.loss.downtimeHours ?? 0, 2)} h × (${inv.loss.eventsPerYear} − ${v.eventsPerYearAfter}) events a year.${
+              sub={`${formatNumber(inv.loss.downtimeHours ?? 0, 2)} h × (${formatNumber(inv.loss.eventsPerYear ?? 0, 2)} − ${formatNumber(v.eventsPerYearAfter ?? 0, 2)}) events a year.${
                 verified ? "" : " Not yet verified."
               }`}
             />

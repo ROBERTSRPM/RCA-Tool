@@ -280,7 +280,8 @@ export function hoursBackPerYear(
   if (inv.loss.notKnown) return null;
   if (!(n(inv.loss.downtimeHours) > 0) || !(n(inv.loss.eventsPerYear) > 0)) return null;
   const hours = calcLoss(inv.loss).hoursLostPerYear - calcLoss(inv.loss, after).hoursLostPerYear;
-  return Number.isFinite(hours) && hours > 0 ? hours : null;
+  // Under 0.05 h would display as "0 h", so treat it as nothing.
+  return Number.isFinite(hours) && hours >= 0.05 ? hours : null;
 }
 
 export function calcVerification(
