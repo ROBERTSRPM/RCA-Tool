@@ -316,7 +316,7 @@ async function s15() {
   const x0 = await page.evaluate(() => { const el = window.__pan = [...document.querySelectorAll("*")].find((e) => e.scrollWidth > e.clientWidth + 50 && /auto|scroll/.test(getComputedStyle(e).overflowX) && e.textContent.includes("Why?")); return el ? el.scrollLeft : 0; });
   for (let i = 1; i <= 75; i++) { const t = i / 75, e = t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; await page.evaluate((x) => window.__pan && (window.__pan.scrollLeft = x), x0 + 640 * e); if (c.rec) { await c.r.cur(); await c.r.shot(); } }
   await c.hold(0.6);
-  const roots = page.locator("button").filter({ hasText: /Root cause/ }).filter({ hasText: /Select cause|System/i });
+  const roots = page.getByRole("button", { name: /Select cause/ }).filter({ hasText: /Root cause/ });
   const nr = await roots.count(); for (let i = 0; i < Math.min(nr, 4); i++) await c.rectUnion(`root${i + 1}`, [roots.nth(i)], 6);
   console.log("root cards found", nr);
   await c.hold(9.0);
