@@ -1,5 +1,5 @@
 VOICEOVER FOR WALKTHROUGH: READING VERSION (RCA Pilot)
-1443 words, about 10 minutes at your normal easy pace
+1455 words, about 10 minutes at your normal easy pace
 
 How to read it
 - Record one clip per scene. Press record, say "Scene 1", wait 2 seconds, read, then stop. Next scene, new clip.
@@ -292,7 +292,9 @@ I hadn't thought of that, so it goes in.
 It also suggests the gas mix,
 but the oxygen readings were in spec, so I dismiss it.
 
-Then Challenge my analysis questions the tree, like an experienced reviewer would.
+Next, I click Challenge my analysis.
+
+It reviews the tree the way an experienced investigator would.
 
 It points out that the film root cause has no evidence linked.
 
@@ -372,8 +374,9 @@ and we got 40 hours of line time back.
 
 Then I ask where else this could happen.
 
-Roll out this countermeasure gives Lines 1 and 2 each a check,
-with an owner and a date.
+With Roll out this countermeasure,
+I add a check for Lines 1 and 2,
+each with an owner and a date.
 
 [STOP RECORDING]
 
@@ -386,7 +389,8 @@ The last step is the Report.
 
 This is where you answer the general manager's two questions.
 
-Draft report writes it from everything I've entered.
+I click Draft report,
+and it writes the report from everything I've entered.
 
 The Management summary is the one page the general manager will actually read.
 

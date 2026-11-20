@@ -42,7 +42,7 @@ With equipment, I always ask one question. Is the wear natural, or forced? Silic
 
 Scene 10: Cause coach and Challenge (48 s)
 Now the AI help. I treat it as a second pair of eyes, not the boss. The Cause coach suggests causes I may have missed. Each one says what would confirm it or rule it out, and I choose Add to tree or Dismiss. It suggests product contaminating the flange. I hadn't thought of that, so it goes in. It also suggests the gas mix, but the oxygen readings were in spec, so I dismiss it.
-Then Challenge my analysis questions the tree, like an experienced reviewer would. It points out that the film root cause has no evidence linked. That's fair, so I link the film specification. The AI suggests. You decide.
+Next, I click Challenge my analysis. It reviews the tree the way an experienced investigator would. It points out that the film root cause has no evidence linked. That's fair, so I link the film specification. The AI suggests. You decide.
 
 Scene 11: Actions (47 s)
 Step 5 is Actions. This is where a lot of RCAs quietly die, in a list of "we should". So every action gets an owner, a due date and a cost. Corrective actions deal with this failure. Preventive actions stop it coming back.
@@ -54,10 +54,10 @@ If you get stuck for ideas, each root cause has a Suggested actions button. Noth
 Scene 13: Verify (48 s)
 Now the part almost nobody does: Step 6, proving it stopped. Savings only count once every action is Done, the review date is in, and the failure hasn't come back. So, months later, I mark the actions Done. I stay cautious and expect 1 event a year, not zero.
 That brings the loss down to $43,900 a year, so the verified saving is $219,500. The $20,200 pays back in about 1.1 months, and we got 40 hours of line time back.
-Then I ask where else this could happen. Roll out this countermeasure gives Lines 1 and 2 each a check, with an owner and a date.
+Then I ask where else this could happen. With Roll out this countermeasure, I add a check for Lines 1 and 2, each with an owner and a date.
 
 Scene 14: Report (26 s)
-The last step is the Report. This is where you answer the general manager's two questions. Draft report writes it from everything I've entered. The Management summary is the one page the general manager will actually read. I check every fact, because my name goes on it. Then I Print or Save as PDF.
+The last step is the Report. This is where you answer the general manager's two questions. I click Draft report, and it writes the report from everything I've entered. The Management summary is the one page the general manager will actually read. I check every fact, because my name goes on it. Then I Print or Save as PDF.
 
 Scene 15: Close (41 s)
 So let's go back to that Thursday morning, and that meeting.
