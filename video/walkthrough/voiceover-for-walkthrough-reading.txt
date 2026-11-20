@@ -24,7 +24,7 @@ and 2 of them leak along the seal.
 That means everything we've packed since the last good check,
 about 6,000 packs, goes on hold.
 
-Then the phones start, the production manager's at home and then the QA manager's.
+Then the phones start ringing: first the production manager's at home, then the QA manager's.
 
 A retailer already complained about slack packs last month,
 and this is the 6th time this year.

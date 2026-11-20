@@ -31,7 +31,7 @@ Target durations are authoritative (spoken time at 140 wpm plus a 2 s pause); th
 
 ## Scene 1: The situation (59 s, 132 words)
 
-**Say:** "It's 4 o'clock in the morning on a Thursday, and the night shift on Line 3 is doing its 2-hourly seal check. The operator takes 3 packs off the end of the line and drops them in the leak tester, and 2 of them leak along the seal. That means everything we've packed since the last good check, about 6,000 packs, goes on hold. Then the phones start, the production manager's at home and then the QA manager's. A retailer already complained about slack packs last month, and this is the 6th time this year. When I ran the operation, this was the call nobody wanted, because I knew the general manager would ask two questions. Why does this keep happening, and what is it actually costing us?"
+**Say:** "It's 4 o'clock in the morning on a Thursday, and the night shift on Line 3 is doing its 2-hourly seal check. The operator takes 3 packs off the end of the line and drops them in the leak tester, and 2 of them leak along the seal. That means everything we've packed since the last good check, about 6,000 packs, goes on hold. Then the phones start ringing: first the production manager's at home, then the QA manager's. A retailer already complained about slack packs last month, and this is the 6th time this year. When I ran the operation, this was the call nobody wanted, because I knew the general manager would ask two questions. Why does this keep happening, and what is it actually costing us?"
 
 [SFX] Open on the steady hum and rhythmic thump of a tray sealer on a food line, with the clink of trays and a fan. Under the second line, a faint bubbling from the leak tester.
 
