@@ -808,6 +808,13 @@
      "shift": 0.0,
      "dur": 4.2,
      "cue": "result"
+    },
+    {
+     "rect": "t-linetime",
+     "phrase": "40 hours",
+     "shift": -0.4,
+     "dur": 4.0,
+     "cue": "result"
     }
    ]
   },
@@ -990,6 +997,13 @@
      "shift": -0.2,
      "dur": 3.2,
      "cue": "dash"
+    },
+    {
+     "rect": "t-linetime",
+     "phrase": "and 40",
+     "shift": -0.2,
+     "dur": 4.0,
+     "cue": "saving"
     }
    ]
   }

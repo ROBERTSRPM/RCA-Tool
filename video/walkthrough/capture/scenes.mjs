@@ -261,7 +261,7 @@ async function s13() {
   await c.type(lab(/Expected events per year after/), D.VERIFY.events, 2); await c.set(lab("What did you find?"), D.VERIFY.found); await c.hold(1.0);
   c.mark("result"); await c.scrollTo(page.getByText("The result in money").first(), 1.6, 120); await c.hold(0.6);
   const tile = async (name, rx) => c.rectBox(name, page.getByText(rx).first(), -16, -14, 206, 138);
-  await tile("t-before", /^annual loss before/i); await tile("t-after", /^annual loss after/i); await tile("t-saving", /^annual saving/i); await tile("t-cost", /^total action cost/i); await tile("t-payback", /^payback period/i);
+  await tile("t-before", /^annual loss before/i); await tile("t-after", /^annual loss after/i); await tile("t-saving", /^annual saving/i); await tile("t-linetime", /^line time back/i); await tile("t-cost", /^total action cost/i); await tile("t-payback", /^payback period/i);
   await c.hold(8.0);
   c.mark("rollout"); await c.scrollTo(page.getByText("Roll out this countermeasure", { exact: false }).first(), 1.6, 100); await c.hold(2.0);
   await rollout();
@@ -322,7 +322,7 @@ async function s15() {
   await c.hold(9.0);
   c.mark("saving"); await goStep("Verify"); await c.scrollTo(page.getByText("The result in money").first(), 1.4, 120); await c.hold(0.6);
   const tile = async (name, rx) => c.rectBox(name, page.getByText(rx).first(), -16, -14, 206, 138);
-  await tile("t-before", /^annual loss before/i); await tile("t-saving", /^annual saving/i); await tile("t-payback", /^payback period/i);
+  await tile("t-before", /^annual loss before/i); await tile("t-saving", /^annual saving/i); await tile("t-linetime", /^line time back/i);
   await c.hold(9.0);
   c.mark("dash"); await page.goto(`${BASE}/app`, { waitUntil: "networkidle" }); await page.waitForTimeout(1500); await c.hold(0.6);
   const dt = async (name, txt) => c.rectBox(name, page.getByText(new RegExp("^" + txt + "$", "i")).first(), -22, -16, 236, 128);
