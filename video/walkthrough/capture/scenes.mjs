@@ -260,7 +260,7 @@ async function s13() {
   await c.set(lab("Review date"), D.VERIFY.date); await c.choose(lab("Has the failure recurred since the actions were completed?"), D.VERIFY.recurred);
   await c.type(lab(/Expected events per year after/), D.VERIFY.events, 2); await c.set(lab("What did you find?"), D.VERIFY.found); await c.hold(1.0);
   c.mark("result"); await c.scrollTo(page.getByText("The result in money").first(), 1.6, 120); await c.hold(0.6);
-  const tile = async (name, rx) => c.rectBox(name, page.getByText(rx).first(), -16, -14, 262, 176);
+  const tile = async (name, rx) => c.rectBox(name, page.getByText(rx).first(), -16, -14, 206, 138);
   await tile("t-before", /^annual loss before/i); await tile("t-after", /^annual loss after/i); await tile("t-saving", /^annual saving/i); await tile("t-cost", /^total action cost/i); await tile("t-payback", /^payback period/i);
   await c.hold(8.0);
   c.mark("rollout"); await c.scrollTo(page.getByText("Roll out this countermeasure", { exact: false }).first(), 1.6, 100); await c.hold(2.0);
@@ -316,16 +316,16 @@ async function s15() {
   const x0 = await page.evaluate(() => { const el = window.__pan = [...document.querySelectorAll("*")].find((e) => e.scrollWidth > e.clientWidth + 50 && /auto|scroll/.test(getComputedStyle(e).overflowX) && e.textContent.includes("Why?")); return el ? el.scrollLeft : 0; });
   for (let i = 1; i <= 75; i++) { const t = i / 75, e = t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; await page.evaluate((x) => window.__pan && (window.__pan.scrollLeft = x), x0 + 640 * e); if (c.rec) { await c.r.cur(); await c.r.shot(); } }
   await c.hold(0.6);
-  const roots = page.getByRole("button", { name: /Select cause/ }).filter({ hasText: /Root cause/ });
-  const nr = await roots.count(); for (let i = 0; i < Math.min(nr, 4); i++) await c.rectUnion(`root${i + 1}`, [roots.nth(i)], 6);
-  console.log("root cards found", nr);
+  const rootTexts = D.TREE.filter((t) => t[7]).map((t) => t[4]);
+  for (let i = 0; i < rootTexts.length; i++) await c.rect(`root${i + 1}`, page.getByRole("button", { name: new RegExp("Select cause: " + escapeRe(rootTexts[i].slice(0, 25))) }).first(), 6, { h: 34 });
+  console.log("root cards", rootTexts.length);
   await c.hold(9.0);
   c.mark("saving"); await goStep("Verify"); await c.scrollTo(page.getByText("The result in money").first(), 1.4, 120); await c.hold(0.6);
-  const tile = async (name, rx) => c.rectBox(name, page.getByText(rx).first(), -16, -14, 262, 176);
+  const tile = async (name, rx) => c.rectBox(name, page.getByText(rx).first(), -16, -14, 206, 138);
   await tile("t-before", /^annual loss before/i); await tile("t-saving", /^annual saving/i); await tile("t-payback", /^payback period/i);
   await c.hold(9.0);
   c.mark("dash"); await page.goto(`${BASE}/app`, { waitUntil: "networkidle" }); await page.waitForTimeout(1500); await c.hold(0.6);
-  const dt = async (name, txt) => c.rectBox(name, page.getByText(new RegExp("^" + txt + "$", "i")).first(), -22, -16, 250, 135);
+  const dt = async (name, txt) => c.rectBox(name, page.getByText(new RegExp("^" + txt + "$", "i")).first(), -22, -16, 236, 128);
   await dt("d-loss", "OPEN ANNUAL LOSS"); await dt("d-actions", "OPEN ACTIONS"); await dt("d-saved", "VERIFIED ANNUAL SAVINGS"); await dt("d-roll", "ROLLOUT CHECKS");
   await c.hold(9.0);
 }
