@@ -1,7 +1,7 @@
 // Capture context: records frame by frame when a Recorder is on, otherwise replays instantly ("fast" mode) to rebuild state.
 import fs from "node:fs";
 import path from "node:path";
-import { Recorder } from "./lib.mjs";
+import { Recorder, H } from "./lib.mjs";
 
 export class Ctx {
   constructor(page, S) { this.page = page; this.S = S; this.r = null; }
@@ -9,16 +9,25 @@ export class Ctx {
   startRecording(n) { this.r = new Recorder(this.page, path.join(this.S, "wframes"), `w${n}`); this.r.start(); }
   stopRecording() { if (this.r) this.r.stop(); }
   mark(l) { if (this.rec) this.r.mark(l); }
+  // bring the element into the middle band of the viewport (away from the sticky header), smoothly when recording
+  async ensureVisible(loc) {
+    await loc.scrollIntoViewIfNeeded();
+    const b = await loc.boundingBox(); if (!b) return;
+    if (b.y < 140 || b.y + b.height > H - 70) {
+      const dy = b.y - 330;
+      if (this.rec) await this.r.scroll(dy, 0.7); else await this.page.evaluate((d) => window.scrollBy(0, d), dy);
+    }
+  }
   async hold(s) { if (this.rec) await this.r.hold(s); else await this.page.waitForTimeout(40); }
   async move(x, y, s = 0.8) { if (this.rec) await this.r.move(x, y, s); }
-  async moveTo(loc, s = 0.8, dx = 0.5, dy = 0.5) { if (this.rec) await this.r.moveTo(loc, s, dx, dy); else await loc.scrollIntoViewIfNeeded(); }
-  async click(loc, s = 0.8) { if (this.rec) await this.r.click(loc, s); else { await loc.scrollIntoViewIfNeeded(); await loc.click(); await this.page.waitForTimeout(60); } }
+  async moveTo(loc, s = 0.8, dx = 0.5, dy = 0.5) { await this.ensureVisible(loc); if (this.rec) await this.r.moveTo(loc, s, dx, dy); }
+  async click(loc, s = 0.8) { await this.ensureVisible(loc); if (this.rec) await this.r.click(loc, s); else { await loc.click(); await this.page.waitForTimeout(60); } }
   async scrollBy(dy, s = 1.5) { if (this.rec) await this.r.scroll(dy, s); }
   async scrollTo(loc, s = 1.4, offset = 140) { if (this.rec) await this.r.scrollToEl(loc, s, offset); else await loc.scrollIntoViewIfNeeded(); }
   async top() { await this.page.evaluate(() => window.scrollTo(0, 0)); }
   // type text into a field; recorded as typing, cpf = characters per frame (30 fps)
   async type(loc, text, cpf = 3, s = 0.7) {
-    await loc.scrollIntoViewIfNeeded();
+    await this.ensureVisible(loc);
     if (!this.rec) { await loc.fill(text); return; }
     await this.r.moveTo(loc, s); await loc.click(); await loc.fill("");
     for (let i = 0; i < text.length; i += cpf) { await this.page.keyboard.type(text.slice(i, i + cpf)); await this.r.cur(); await this.r.shot(); }
@@ -26,13 +35,13 @@ export class Ctx {
   }
   // set a field instantly but show it (cursor to field, one frame after)
   async set(loc, text, s = 0.6) {
-    await loc.scrollIntoViewIfNeeded();
+    await this.ensureVisible(loc);
     if (this.rec) await this.r.moveTo(loc, s);
     await loc.fill(text);
     await this.hold(0.25);
   }
   async choose(loc, label, s = 0.6) {
-    await loc.scrollIntoViewIfNeeded();
+    await this.ensureVisible(loc);
     if (this.rec) await this.r.moveTo(loc, s);
     try { await loc.selectOption(typeof label === "string" ? { label } : label, { timeout: 4000 }); }
     catch (e) { console.log("OPTIONS for", label, "=>", await loc.locator("option").allTextContents()); throw e; }

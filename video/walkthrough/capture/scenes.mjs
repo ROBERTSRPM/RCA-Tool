@@ -2,13 +2,16 @@
 // Env: SCRATCH (state-w.json + qa_password.txt), DEMO_BASE (preview URL, no secrets), CLIPS (output dir).
 import fs from "node:fs";
 import path from "node:path";
-import { launch, BASE } from "./lib.mjs";
+import { launch, login, BASE } from "./lib.mjs";
 import { Ctx } from "./ctx.mjs";
 import * as D from "./data.mjs";
 const S = process.env.SCRATCH;
 const OUT = process.env.CLIPS || path.join(S, "clips-w");
 const N = +process.argv[2];
-const { browser, context, page } = await launch(`${S}/state-w.json`);
+const { browser, context, page } = await launch();
+// fresh sign-in every run (refresh tokens rotate, so a saved session goes stale); the share cookie comes from $DEMO_SHARE
+await page.goto(process.env.DEMO_SHARE, { waitUntil: "networkidle" });
+await login(page, "qa-user-b@rca-tool.test", fs.readFileSync(`${S}/qa_password.txt`, "utf8").trim());
 const c = new Ctx(page, S);
 const step = (name) => page.locator("button").filter({ hasText: new RegExp("^\\s*\\d?\\s*" + name) }).first();
 const lab = (t) => page.getByLabel(t, { exact: true });
@@ -130,17 +133,17 @@ async function s9() {
 }
 async function s10() {
   await goStep("Cause tree");
-  c.mark("coach"); await c.scrollTo(page.getByText("Cause coach", { exact: true }).first(), 1.6, 100); await c.hold(1.0);
-  await selBox(new RegExp("Select cause: " + escapeRe(D.TREE[0][4].slice(0, 25)))); await c.scrollTo(page.getByText("Cause coach", { exact: true }).first(), 1.0, 100);
+  c.mark("coach"); await c.scrollTo(page.getByTestId("ai-card").filter({ hasText: /^Cause coach/ }).first(), 1.6, 100); await c.hold(1.0);
+  await selBox(new RegExp("Select cause: " + escapeRe(D.TREE[0][4].slice(0, 25)))); await c.scrollTo(page.getByTestId("ai-card").filter({ hasText: /^Cause coach/ }).first(), 1.0, 100);
   c.mark("coach-run"); await ai(page.getByTestId("coach-node"), "[data-testid=coach-results]");
   c.mark("coach-results"); await c.scrollTo(page.getByTestId("coach-results"), 1.2, 140); await c.hold(6.0);
   c.mark("accept"); await c.click(page.getByTestId("coach-item").first().getByTestId("ai-accept"), 1.0); await c.hold(2.0);
   c.mark("dismiss"); await c.click(page.getByTestId("coach-item").first().getByTestId("ai-dismiss"), 1.0); await c.hold(2.5);
-  c.mark("challenge"); await c.scrollTo(page.getByText("Challenge my analysis", { exact: true }).first(), 1.4, 90); await c.hold(0.6);
+  c.mark("challenge"); await c.scrollTo(page.getByTestId("ai-card").filter({ hasText: /^Challenge my analysis/ }).first(), 1.4, 90); await c.hold(0.6);
   await ai(btn("Challenge my analysis").last(), "[data-testid=challenge-results]");
   c.mark("challenge-results"); await c.scrollTo(page.getByTestId("challenge-results"), 1.2, 140); await c.hold(6.0);
   c.mark("fix");
-  await c.scrollTo(page.getByText("Describe the failure event").first(), 1.6, 160);
+  await c.scrollTo(page.getByRole("button", { name: /Select cause: Line 3 tray sealer produced/ }).first(), 1.6, 300);
   await selBox(new RegExp("Select cause: " + escapeRe(D.TREE[8][4].slice(0, 25))));
   await c.click(page.getByRole("checkbox", { name: /^E5\./ }).first(), 0.8); await c.click(btn("Verified", { exact: true }).first(), 0.8); await c.hold(4.0);
 }
@@ -218,7 +221,8 @@ async function setAllDone() {
 async function rollout() {
   for (const tag of D.ROLL.tags) {
     const tagField = page.getByLabel("Tag of the similar asset");
-    if (!(await tagField.isVisible().catch(() => false))) { await c.click(btn(/Add a similar asset that is not listed/), 0.9); await settle(); }
+    const addAnother = btn(/Add a similar asset that is not listed/);
+    if ((await addAnother.count()) > 0) { await c.click(addAnother.first(), 0.9); await page.waitForTimeout(700); }
     await c.type(tagField, tag, 2); await c.type(page.getByLabel("Its duty or service"), D.ROLL.duty, 3);
     await c.click(btn(/Add to the register/).last(), 0.8); await page.waitForTimeout(1000); await c.hold(0.6);
   }
@@ -252,7 +256,27 @@ async function s15() {
 const SEQ = { 4: s4, 5: s5, 6: s6, 7: s7, 8: s8, 9: s9, 10: s10, 11: s11, 12: null, 13: s13, 14: s14, 15: s15 };
 await run(0, async () => {
   if (N === 3) {
-    c.startRecording(3); await s3b(); const sec = await c.finish(OUT, "3b"); console.log("scene 3b", sec); return;
+    // 3a: anonymous browser: landing page -> create-account form (never submitted), 3b: prepared empty dashboard -> New investigation
+    const anon = await launch();
+    await anon.page.goto(process.env.DEMO_SHARE, { waitUntil: "networkidle" });
+    await anon.page.goto(`${BASE}/`, { waitUntil: "networkidle" }); await anon.page.waitForTimeout(1200);
+    const a = new Ctx(anon.page, S); a.startRecording("3a");
+    a.mark("landing"); await a.hold(3.5);
+    const link = anon.page.getByRole("link", { name: /Create account|Sign up|Get started|Try it/i }).first();
+    a.mark("signup"); await a.click(link, 1.2); await anon.page.waitForLoadState("networkidle"); await anon.page.waitForTimeout(800); await a.hold(1.0);
+    a.mark("form");
+    await a.type(anon.page.getByLabel("Email"), "name@yourcompany.com", 2);
+    await a.type(anon.page.getByLabel("Password", { exact: true }), "examplepassword", 2);
+    await a.type(anon.page.getByLabel(/Confirm password/), "examplepassword", 2); await a.hold(3.5);
+    const secA = await a.finish(OUT, "3a"); console.log("scene 3a", secA);
+    await anon.browser.close();
+    c.startRecording("3b"); await s3b(); const secB = await c.finish(OUT, "3b"); console.log("scene 3b", secB);
+    const { execFileSync } = await import("node:child_process");
+    fs.writeFileSync(`${S}/c3.txt`, `file '${OUT}/scene3a.mp4'\nfile '${OUT}/scene3b.mp4'\n`);
+    execFileSync("ffmpeg", ["-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", `${S}/c3.txt`, "-c:v", "libx264", "-crf", "14", "-pix_fmt", "yuv420p", "-r", "30", `${OUT}/scene3.mp4`]);
+    const ma = JSON.parse(fs.readFileSync(`${OUT}/scene3a.marks.json`)), mb = JSON.parse(fs.readFileSync(`${OUT}/scene3b.marks.json`));
+    fs.writeFileSync(`${OUT}/scene3.marks.json`, JSON.stringify({ seconds: ma.seconds + mb.seconds, marks: [...ma.marks, ...mb.marks.map((m) => ({ ...m, t: +(m.t + ma.seconds).toFixed(2) }))] }));
+    return;
   }
   await s3b0();
   for (let k = 4; k < N; k++) { if (k === 10) await s10silent(); else if (SEQ[k]) await run(k, SEQ[k]); }
