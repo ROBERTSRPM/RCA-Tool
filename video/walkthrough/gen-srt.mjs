@@ -10,6 +10,10 @@ const OVERRIDES = [
   [3, "So where do you start?", "So where do we start?"], [3, "an email and a password", "an email and password"],
   [10, "link the film specification", "link the film inspection"],
 ];
+// when the owner's two re-recorded scene-10 lines are in recordings/, the captions follow the new wording
+const has = (tag) => fs.readdirSync(here + "recordings").some((f) => f.startsWith(`scene10-line-${tag}.`));
+if (has("a")) OVERRIDES.push([10, "It also suggests the gas mix, but the oxygen readings were in spec, so I dismiss it.", "It also suggests the jaw isn't parallel to the seal plate. The inspection found marks on the plate. So that one goes in too."]);
+if (has("b")) { for (let i = OVERRIDES.length - 1; i >= 0; i--) if (OVERRIDES[i][2] === "link the film inspection") OVERRIDES.splice(i, 1); }
 const scenes = {}; for (const m of txt.matchAll(/Scene (\d+): [^\n]*\n(.*?)(?=\nScene \d+:|$)/gs)) scenes[m[1]] = m[2].replace(/\s+/g, " ").trim().replace(/w w w dot r c a pilot dot com/g, "www.rcapilot.com");
 const norm = (w) => w.toLowerCase().replace(/[^a-z0-9]/g, "");
 const ALIAS = { jots: ["jots", "dots", "jot"], scrapped: ["scrapped", "scrap"], 4: ["4", "four"], two: ["two", "2"], i: ["i", "ive", "ill"] };

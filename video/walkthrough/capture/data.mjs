@@ -1,16 +1,16 @@
 // Values typed on screen: video/walkthrough/example-data.md
-export const NOTES = "Thurs 4:00am end-of-line seal check Line 3, chicken and rice trays. Took 3 packs to leak tester, 2 bubbling from the flange. Last good check was 2:00am so about 6,000 packs on hold. Seals look weak along one side. Retailer complained about slack packs last month. 6th time this year. New film batch started Tues. Changeover Wed night.";
+export const NOTES = "Thurs 4:00am end-of-line seal check Line 3 trays. Took 3 packs to leak tester, 2 bubbling from the flange. Last good check was 2:00am so about 6,000 packs on hold. Seals look weak along one side. Retailer complained about slack packs last month. 6th time this year. New film batch started Tues. Changeover Wed night.";
 export const PROBLEM = {
   title: "Repeat leaking packs from Line 3 tray sealer",
   asset: "Line 3 tray sealer",
   site: "Chilled ready-meals, Packing hall, Line 3",
   date: "2026-10-15",
-  what: "At the 4:00 am end-of-line seal check, 2 of 3 chicken and rice packs leaked in the leak tester. Weak seals along the tray flange. About 6,000 packs packed since the last good check at 2:00 am put on hold. This is the 6th event in twelve months.",
+  what: "At the 4:00 am end-of-line seal check, 2 of 3 packs leaked in the leak tester. Weak seals along the tray flange. About 6,000 packs packed since the last good check at 2:00 am put on hold. This is the 6th event in twelve months.",
   where: "Heat seal of the lidding film to the tray flange on the Line 3 tray sealer.",
   when: "Made on night shift since 2:00 am, found at the 4:00 am seal check on Thursday 15 October 2026. 6th time in twelve months.",
   impact: "About 6,000 packs on hold, line stopped for investigation, and a retailer complaint about slack packs last month. Money is added in the next step.",
 };
-export const LINE = { line: "Line 3", product: "Chicken and rice, 480 g tray", pack: "Modified-atmosphere tray, lidding film", step: "Tray sealing (heat seal)", mode: "Seal failure (leaking pack)" };
+export const LINE = { line: "Line 3", product: "Ready meal, 480 g tray", pack: "Modified-atmosphere tray, lidding film", step: "Tray sealing (heat seal)", mode: "Seal failure (leaking pack)" };
 export const LOSS = { events: "6", hours: "8", rate: "3000", unit: "packs", margin: "0.45", repair: "1200", cur: "$" };
 export const OTHER = [["Scrapped product", "14500"], ["Product on hold", "3200"], ["Customer claims and credits", "6800"], ["Retailer penalties", "5000"], ["Rework", "2400"]];
 export const EVIDENCE = [

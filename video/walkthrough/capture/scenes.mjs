@@ -131,17 +131,30 @@ async function s9() {
   c.mark("level"); await c.click(btn("Level", { exact: true }), 0.9); await c.hold(3.0);
   c.mark("back"); await c.click(btn("Tree", { exact: true }).first(), 0.9); await c.hold(1.5);
 }
+const RESIDUE = /residue|product|contaminat|sauce|food|flange.*(dirty|clean)|(dirty|clean).*flange/i;
+const PARALLEL = /parallel|alignment|aligned|flat|plate/i;
+async function pickAccept(rx, label) {
+  const items = page.getByTestId("coach-item"); const n = await items.count();
+  for (let i = 0; i < n; i++) {
+    const txt = await items.nth(i).innerText();
+    const title = txt.split("\n").find((l) => l.length > 25) ?? "";
+    if (rx.test(title)) { console.log(label, "->", title.slice(0, 120)); await c.click(items.nth(i).getByTestId("ai-accept"), 1.0); return true; }
+  }
+  console.log("NOT OFFERED:", label, "| offered:", await items.evaluateAll((els) => els.map((e) => e.innerText.split("\n").find((l) => l.length > 25)?.slice(0, 90))));
+  return false;
+}
 async function s10() {
   await goStep("Cause tree");
   c.mark("coach"); await c.scrollTo(page.getByTestId("ai-card").filter({ hasText: /^Cause coach/ }).first(), 1.6, 100); await c.hold(1.0);
   await selBox(new RegExp("Select cause: " + escapeRe(D.TREE[0][4].slice(0, 25)))); await c.scrollTo(page.getByTestId("ai-card").filter({ hasText: /^Cause coach/ }).first(), 1.0, 100);
   c.mark("coach-run"); await ai(page.getByTestId("coach-node"), "[data-testid=coach-results]");
   c.mark("coach-results"); await c.scrollTo(page.getByTestId("coach-results"), 1.2, 140); await c.hold(6.0);
-  c.mark("accept"); await c.click(page.getByTestId("coach-item").first().getByTestId("ai-accept"), 1.0); await c.hold(2.0);
-  c.mark("dismiss"); await c.click(page.getByTestId("coach-item").first().getByTestId("ai-dismiss"), 1.0); await c.hold(2.5);
+  c.mark("accept"); if (!(await pickAccept(RESIDUE, "product residue"))) throw new Error("AI did not offer product residue"); await c.hold(2.5);
+  c.mark("accept2"); if (!(await pickAccept(PARALLEL, "jaw not parallel"))) throw new Error("AI did not offer jaw/plate"); await c.hold(2.5);
   c.mark("challenge"); await c.scrollTo(page.getByTestId("ai-card").filter({ hasText: /^Challenge my analysis/ }).first(), 1.4, 90); await c.hold(0.6);
   await ai(btn("Challenge my analysis").last(), "[data-testid=challenge-results]");
   c.mark("challenge-results"); await c.scrollTo(page.getByTestId("challenge-results"), 1.2, 140); await c.hold(6.0);
+  console.log("CHALLENGE:", await page.getByTestId("challenge-item").evaluateAll((els) => els.map((e) => e.innerText.replace(/\s+/g, " ").slice(0, 140))));
   c.mark("fix");
   await c.scrollTo(page.getByRole("button", { name: /Select cause: Line 3 tray sealer produced/ }).first(), 1.6, 300);
   await selBox(new RegExp("Select cause: " + escapeRe(D.TREE[8][4].slice(0, 25))));

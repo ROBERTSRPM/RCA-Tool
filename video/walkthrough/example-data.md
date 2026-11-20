@@ -2,7 +2,7 @@
 
 One example, kept consistent across the voice, the screen and the maths. All figures are illustrative. Labels below are the exact labels in the live app (https://www.rcapilot.com). Type the values exactly as shown so the recording matches the voiceover.
 
-Scenario: Line 3 tray sealer at a chilled ready-meal plant (chicken and rice, 480 g tray, modified-atmosphere pack). A process or quality failure: weak seals, leaking packs found at the operator's end-of-line seal check (3 packs every 2 hours, leak tester). 6 events in 12 months.
+Scenario: Line 3 tray sealer at a chilled ready-meal plant (ready-meal tray, 480 g, modified-atmosphere pack). A process or quality failure: weak seals, leaking packs found at the operator's end-of-line seal check (3 packs every 2 hours, leak tester). 6 events in 12 months.
 
 ## The numbers (computed the way `web/lib/finance.ts` does)
 
@@ -41,7 +41,7 @@ Check of the split: cash saving = $198,600 - $33,100 = $165,500. Opportunity sav
 First, under "Type of failure", click "Process or quality failure" (the other choice is "Equipment failure"). Card "Draft problem statement from notes", field "Rough notes". Type:
 
 ```
-Thurs 4:00am end-of-line seal check Line 3, chicken and rice trays. Took 3 packs to leak tester, 2 bubbling from the flange. Last good check was 2:00am so about 6,000 packs on hold. Seals look weak along one side. Retailer complained about slack packs last month. 6th time this year. New film batch started Tues. Changeover Wed night.
+Thurs 4:00am end-of-line seal check Line 3 trays. Took 3 packs to leak tester, 2 bubbling from the flange. Last good check was 2:00am so about 6,000 packs on hold. Seals look weak along one side. Retailer complained about slack packs last month. 6th time this year. New film batch started Tues. Changeover Wed night.
 ```
 
 Click "Draft problem statement from notes". The draft varies each run. Expect it to list "Not in your notes. Worth finding out:" items (for example the seal temperature log, the check results since 2:00 am, the earlier five events). If the draft is poor, edit the fields in the draft box to these values, then click "Use this draft".
@@ -52,7 +52,7 @@ Click "Draft problem statement from notes". The draft varies each run. Expect it
 | Line or process (labelled "Line or process" for a process failure) | Line 3 tray sealer |
 | Site / area | Chilled ready-meals, Packing hall, Line 3 |
 | Date of event | 2026-10-15 |
-| What happened? | At the 4:00 am end-of-line seal check, 2 of 3 chicken and rice packs leaked in the leak tester. Weak seals along the tray flange. About 6,000 packs packed since the last good check at 2:00 am put on hold. This is the 6th event in twelve months. |
+| What happened? | At the 4:00 am end-of-line seal check, 2 of 3 packs leaked in the leak tester. Weak seals along the tray flange. About 6,000 packs packed since the last good check at 2:00 am put on hold. This is the 6th event in twelve months. |
 | Where in the process? | Heat seal of the lidding film to the tray flange on the Line 3 tray sealer. |
 | When did it happen? | Made on night shift since 2:00 am, found at the 4:00 am seal check on Thursday 15 October 2026. 6th time in twelve months. |
 | What was the impact? | About 6,000 packs on hold, line stopped for investigation, and a retailer complaint about slack packs last month. Money is added in the next step. |
@@ -66,7 +66,7 @@ Then scroll to the card "Line / process details" (it replaces "Asset details" fo
 | Field | Value |
 |---|---|
 | Line | Line 3 |
-| Product | Chicken and rice, 480 g tray |
+| Product | Ready meal, 480 g tray |
 | Pack type | Modified-atmosphere tray, lidding film |
 | Process step | Tray sealing (heat seal) |
 | Asset tag (optional) | leave empty |

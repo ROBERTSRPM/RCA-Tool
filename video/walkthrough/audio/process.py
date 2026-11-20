@@ -2,7 +2,7 @@
 Chain follows the explainer (video/animation/public/audio/edit-log.md): high-pass, gentle noise reduction, light gap expander,
 light compressor, ONE common gain to -16 LUFS joined, one look-ahead limiter. De-esser only with --deess.
 usage: python process.py <part1-48k.wav> <part2-48k.wav> <outdir> [--deess]"""
-import sys, json, numpy as np, soundfile as sf
+import sys, json, glob, os, subprocess, numpy as np, soundfile as sf
 from scipy.signal import butter, sosfiltfilt
 import noisereduce as nr
 import pyloudnorm as pyln
@@ -20,7 +20,7 @@ CUTS = {
  7: [(1, 380.4, 424.2)],
  8: [(1, 426.4, 486.9), (1, 499.9, 524.5)],
  9: [(1, 529.0, 566.0)],
- 10: [(2, 4.0, 63.8)],
+ 10: [(2, 4.0, 32.2), (2, 32.2, 40.2, 'a'), (2, 40.2, 55.3), (2, 55.3, 59.8, 'b'), (2, 59.8, 63.8)],  # 'a' and 'b' are replaced by recordings/scene10-line-a.* / -b.* when present
  11: [(2, 79.8, 137.8)],
  12: [(2, 140.9, 160.6)],
  13: [(2, 162.5, 228.5)],
@@ -59,6 +59,16 @@ def shorten(seg_db, seg, thr, maxgap=2.2, keep=1.4):
     pieces.append(seg[last:]); return pieces, log
 
 sos = butter(4, 80, "hp", fs=SR, output="sos")
+REC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "recordings")
+def replacement(tag):
+    """Owner's re-recorded line for a tagged piece of scene 10 (recordings/scene10-line-<tag>.<ext>), or None."""
+    fs_ = [f for f in glob.glob(os.path.join(REC, f"scene10-line-{tag}.*")) if not f.endswith(".wav.tmp")]
+    if not fs_: return None
+    wav = os.path.join(os.path.dirname(os.path.abspath(sys.argv[3] + "/x")), f"repl-{tag}.wav")
+    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", fs_[0], "-ac", "1", "-ar", str(SR), wav], check=True)
+    y = sf.read(wav, dtype="float64")[0]
+    d = 20 * np.log10(np.abs(y) + 1e-9); keep = np.where(np.convolve((d > floors[2] + 14).astype(int), np.ones(int(0.05 * SR)), "same") > 0)[0]
+    return y[max(0, keep[0] - int(0.12 * SR)): keep[-1] + int(0.20 * SR)] if len(keep) else None
 def peaking(f0, gain_db, q):  # RBJ peaking biquad as sos
     A = 10 ** (gain_db / 40); w = 2 * np.pi * f0 / SR; al = np.sin(w) / (2 * q); cw = np.cos(w)
     b = np.array([1 + al * A, -2 * cw, 1 - al * A]); a = np.array([1 + al / A, -2 * cw, 1 - al / A]); return np.hstack([b / a[0], a / a[0]])[None, :]
@@ -68,13 +78,25 @@ quiet = {p: np.concatenate([x[i*H:(i+1)*H] for i in range(len(x)//H) if dbs[p][i
 scenes, report = {}, {}
 for sc, cuts in CUTS.items():
     parts, info = [], []
-    for (p, a, b) in cuts:
+    gaps = []
+    for ct in cuts:
+        p, a, b = ct[:3]; tag = ct[3] if len(ct) > 3 else None
         a2, b2 = snap(p, a), snap(p, b)
         seg = srcs[p][int(a2 * SR):int(b2 * SR)]; sdb = dbs[p][int(a2 / 0.02):int(b2 / 0.02)]
+        r = replacement(tag) if tag else None
+        if r is not None:  # level-match the new take to the sentence it replaces (raw loudness), keep the original's lead/tail silence out
+            m = pyln.Meter(SR); old = seg[np.where(sdb.repeat(H) > floors[p] + 14)[0]] if False else seg
+            try: g = 10 ** ((m.integrated_loudness(old) - m.integrated_loudness(r)) / 20)
+            except Exception: g = 1.0
+            parts.append(fade(r * g)); info.append({"part": p, "src": [round(a2, 2), round(b2, 2)], "replaced_by": f"scene10-line-{tag}", "gain_db": round(20 * np.log10(g), 1)})
+            gaps.append(0.18); continue
         pcs, lg = shorten(sdb, seg, floors[p] + 12)
-        parts.append(fade(np.concatenate(pcs))); info.append({"part": p, "src": [round(a2, 2), round(b2, 2)], "shortened_pauses": [[round(a2 + u, 2), round(a2 + v, 2)] for u, v in lg]})
+        # contiguous original pieces are joined without an extra gap, so the scene sounds exactly as before
+        contiguous = bool(parts) and not info[-1].get("replaced_by") and abs(info[-1]["src"][1] - a2) < 0.05 and info[-1]["part"] == p
+        gaps.append(0.0 if contiguous else (0.2 if parts else 0.0))
+        parts.append(fade(np.concatenate(pcs)) if not contiguous else np.concatenate(pcs)); info.append({"part": p, "src": [round(a2, 2), round(b2, 2)], "shortened_pauses": [[round(a2 + u, 2), round(a2 + v, 2)] for u, v in lg]})
     body = parts[0]
-    for q in parts[1:]: body = np.concatenate([body, np.zeros(int(0.2 * SR)), q])
+    for q, gp in zip(parts[1:], gaps[1:]): body = np.concatenate([body, np.zeros(int(gp * SR)), q])
     p0 = cuts[0][0]
     y = np.concatenate([np.zeros(int((LEAD) * SR)), body, np.zeros(int(TAIL * SR))])
     y = sosfiltfilt(sos, y)
