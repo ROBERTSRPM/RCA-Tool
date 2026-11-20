@@ -32,3 +32,19 @@ Verdict: PASS (no Blocker or High findings; 4 Low/Medium polish items below).
 - Print/PDF output of the report; Dashboard with multiple currencies.
 
 Screenshots (scratchpad): v1_verify_desktop.png, a_expected_verify.png, a_expected_report.png, a_verified_report.png, dash_after_A.png, k_report.png, k_verify.png, m_verify.png, m_report.png, m_dash.png.
+
+## Retest (fix commit 268d166, real Vercel preview + Supabase)
+
+Verdict: PASS. Fixes 1-4 confirmed; no regressions; no new defects.
+
+Method: Vercel preview opened via the share link (bypass cookie set), signed in as qa-user-a (Supabase), desktop 1280px. The preview behaved as 268d166 (new behaviours below are only in that commit; the exact deployed SHA could not be read from the page). Created 7 investigations through the UI, verified and closed them, checked Verify, Report and Dashboard, then deleted all of them via the row Delete buttons; the dashboard returned to the original sample only (84 h, $238,440). Browser contexts were discarded at the end (local sign-out only, no server-side sign-out call). qa-user-b not used, no AI buttons.
+
+Fix checks
+1. Report sentence when not costed: PASS. Not-costed 8 h, 6 -> 1 shows "Savings cannot be calculated while the loss is not costed..." followed by "Line time back: 40 h a year." Costed case shows the sentence too (separate paragraph).
+2. No "0 h": PASS. 0.001 h x (3 - 1) now shows no card on Verify, Report or Dashboard.
+3. Number formatting: PASS. Verify sub text is "1,000,000 h x (1,000,000 - 0) events a year." (was raw "1000000").
+4. Verify grid at desktop: PASS. Six tiles lay out 3 x 2 (screenshot p_costed_verify.png); no orphan tile.
+
+Regression (all as before): 8 h x (6 - 1) = 40 h a year, "(verified)" label after closing; decimals 7.5 h x (5.5 - 1.25) = 31.9 h; no downtime and after = before show nothing; "Not costed yet" text unchanged; the dashboard tile summed hours of verified investigations only and was back to 84 h after cleanup. Headline report card shows 40 h in both costed and not-costed cases.
+
+Still open (Low, unchanged by design): no upper bound, so 10^6 h x 10^6 events shows "1,000,000,000,000 h a year" and the dashboard total follows it; hours above 8,760 a year are not flagged. Not retested: mobile 390px on the preview (the grid change is lg-only; mobile was fine on the earlier local run), "Not known yet" on the preview (covered earlier locally and by unit tests).
