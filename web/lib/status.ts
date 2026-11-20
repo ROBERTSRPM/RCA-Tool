@@ -1,6 +1,6 @@
 import { todayISO } from "./dates";
 import type { ActionItem, Investigation, InvestigationStatus } from "./types";
-import { isVerifiedClosed, verifiedSaving, verifiedSavingSplit } from "./finance";
+import { isVerifiedClosed, verifiedHoursBack, verifiedSaving, verifiedSavingSplit } from "./finance";
 
 export const STATUS_LABELS: Record<InvestigationStatus, string> = {
   draft: "Draft",
@@ -44,6 +44,8 @@ export interface InvestigationSummary {
   verifiedSaving: number;
   verifiedCash: number;
   verifiedOpportunity: number;
+  /** hours of line time back per year (verified closed only) */
+  verifiedHours: number;
 }
 
 export function summarise(
@@ -57,5 +59,6 @@ export function summarise(
     verifiedSaving: verifiedSaving(inv),
     verifiedCash: verifiedSavingSplit(inv).cash,
     verifiedOpportunity: verifiedSavingSplit(inv).opportunity,
+    verifiedHours: verifiedHoursBack(inv),
   };
 }

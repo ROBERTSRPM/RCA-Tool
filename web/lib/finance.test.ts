@@ -373,3 +373,62 @@ describe("loss without full dollar figures", () => {
     expect(v.annualSaving).toBe(75000);
   });
 });
+
+import { hoursBackPerYear, verifiedHoursBack } from "./finance";
+import { summarise } from "./status";
+
+describe("line time back (hours recovered per year)", () => {
+  const withFigures = (before: number | null, hours: number | null, after: number | null) => {
+    const inv = blankInvestigation();
+    inv.loss.eventsPerYear = before;
+    inv.loss.downtimeHours = hours;
+    inv.verification.eventsPerYearAfter = after;
+    return inv;
+  };
+  const close = (inv: ReturnType<typeof blankInvestigation>) => {
+    inv.actions = [{ ...(blankInvestigation().actions[0] ?? {}), status: "done" } as ActionItem];
+    inv.verification.recurred = "no";
+    inv.verification.reviewDate = "2026-11-01";
+    return inv;
+  };
+
+  it("8 h x (6 - 1) events is 40 h a year", () => {
+    const inv = withFigures(6, 8, 1);
+    expect(hoursBackPerYear(inv)).toBe(40);
+    expect(calcVerification(inv).hoursBackPerYear).toBe(40);
+  });
+
+  it("works without any money figures (not costed)", () => {
+    const inv = withFigures(6, 8, 1);
+    expect(isLossQuantified(inv.loss)).toBe(false);
+    expect(hoursBackPerYear(inv)).toBe(40);
+  });
+
+  it("is null when downtime, events before or events after are unknown", () => {
+    expect(hoursBackPerYear(withFigures(6, null, 1))).toBeNull();
+    expect(hoursBackPerYear(withFigures(null, 8, 1))).toBeNull();
+    expect(hoursBackPerYear(withFigures(6, 8, null))).toBeNull();
+    expect(hoursBackPerYear(withFigures(6, 0, 1))).toBeNull();
+  });
+
+  it("is null when the user chose Not known yet", () => {
+    const inv = withFigures(6, 8, 1);
+    inv.loss.notKnown = true;
+    expect(hoursBackPerYear(inv)).toBeNull();
+  });
+
+  it("is null, not 0 or negative, when nothing is recovered", () => {
+    expect(hoursBackPerYear(withFigures(6, 8, 6))).toBeNull();
+    expect(hoursBackPerYear(withFigures(2, 8, 5))).toBeNull();
+  });
+
+  it("counts as verified only when the investigation is verified closed", () => {
+    const open = withFigures(6, 8, 1);
+    expect(verifiedHoursBack(open)).toBe(0);
+    const closed = close(withFigures(6, 8, 1));
+    expect(isVerifiedClosed(closed)).toBe(true);
+    expect(verifiedHoursBack(closed)).toBe(40);
+    expect(summarise(closed, "2026-11-20").verifiedHours).toBe(40);
+    expect(summarise(open, "2026-11-20").verifiedHours).toBe(0);
+  });
+});

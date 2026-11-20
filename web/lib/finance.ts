@@ -263,6 +263,24 @@ export interface VerifyCalc {
   hasAfterFigure: boolean;
   /** false while the loss is not costed (so no saving can be claimed) */
   lossCosted: boolean;
+  /**
+   * Production hours recovered per year = downtime hours x (events before - events after).
+   * null when downtime hours, events before or events after are unknown, or nothing is recovered.
+   * Needs no money figures, so it can show while the loss is not costed.
+   */
+  hoursBackPerYear: number | null;
+}
+
+/** Hours of line time back per year, or null when it cannot be worked out (never 0 or NaN). */
+export function hoursBackPerYear(
+  inv: Pick<Investigation, "loss" | "verification">,
+): number | null {
+  const after = inv.verification.eventsPerYearAfter;
+  if (after === null || after === undefined || !Number.isFinite(after) || after < 0) return null;
+  if (inv.loss.notKnown) return null;
+  if (!(n(inv.loss.downtimeHours) > 0) || !(n(inv.loss.eventsPerYear) > 0)) return null;
+  const hours = calcLoss(inv.loss).hoursLostPerYear - calcLoss(inv.loss, after).hoursLostPerYear;
+  return Number.isFinite(hours) && hours > 0 ? hours : null;
 }
 
 export function calcVerification(
@@ -299,6 +317,7 @@ export function calcVerification(
     paybackMonths,
     hasAfterFigure,
     lossCosted: isLossQuantified(inv.loss),
+    hoursBackPerYear: hoursBackPerYear(inv),
   };
 }
 
@@ -324,6 +343,14 @@ export function verifiedSaving(
 ): number {
   if (!isVerifiedClosed(inv)) return 0;
   return Math.max(0, calcVerification(inv).annualSaving);
+}
+
+/** Hours of line time back per year, counted only once the investigation is verified closed. */
+export function verifiedHoursBack(
+  inv: Pick<Investigation, "loss" | "actions" | "verification">,
+): number {
+  if (!isVerifiedClosed(inv)) return 0;
+  return hoursBackPerYear(inv) ?? 0;
 }
 
 /** The verified saving split into cash and opportunity parts (each never below 0). */

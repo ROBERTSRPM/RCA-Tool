@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { calcLoss, formatMoney, isLossQuantified, LOSS_NOT_COSTED } from "@/lib/finance";
+import { calcLoss, formatMoney, formatNumber, isLossQuantified, LOSS_NOT_COSTED } from "@/lib/finance";
 import { formatDate, todayISO } from "@/lib/dates";
 import { rolloutProgress } from "@/lib/rollout";
 import { getAssetStore, getStore } from "@/lib/store";
@@ -106,6 +106,7 @@ export function Dashboard() {
     saved: counted.reduce((s, r) => s + r.sum.verifiedSaving, 0),
     savedCash: counted.reduce((s, r) => s + r.sum.verifiedCash, 0),
     savedOpportunity: counted.reduce((s, r) => s + r.sum.verifiedOpportunity, 0),
+    savedHours: rows.reduce((s, r) => s + r.sum.verifiedHours, 0),
   };
 
   /** Runs a store change and shows a readable error instead of failing silently. */
@@ -240,6 +241,11 @@ export function Dashboard() {
           split={
             items && totals.saved > 0
               ? `Cash ${formatMoney(totals.savedCash, currency)} · Opportunity ${formatMoney(totals.savedOpportunity, currency)}`
+              : undefined
+          }
+          extra={
+            items && totals.savedHours > 0
+              ? `${formatNumber(totals.savedHours, 1)} h of line time back a year`
               : undefined
           }
           tone={totals.saved > 0 ? "good" : "neutral"}
@@ -412,6 +418,7 @@ function Stat({
   value,
   hint,
   split,
+  extra,
   tone = "neutral",
   className = "",
 }: {
@@ -420,6 +427,7 @@ function Stat({
   value: string;
   hint: string;
   split?: string;
+  extra?: string;
   tone?: "neutral" | "good" | "bad";
 }) {
   const color =
@@ -432,6 +440,7 @@ function Stat({
       </p>
       <p className="mt-0.5 text-xs text-slate-500">{hint}</p>
       {split && <p className="mt-0.5 text-xs text-slate-500">{split}</p>}
+      {extra && <p className="mt-0.5 text-xs text-slate-500">{extra}</p>}
     </div>
   );
 }

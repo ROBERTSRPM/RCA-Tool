@@ -124,6 +124,12 @@ export function ReportStep({ inv, update }: StepProps) {
               label={verified ? "Annual saving (verified)" : "Expected saving (not yet verified)"}
               value={v.hasAfterFigure ? formatMoney(v.annualSaving, cur) : "Not yet"}
             />
+            {v.hoursBackPerYear !== null && (
+              <Kpi
+                label={verified ? "Line time back (verified)" : "Line time back (expected)"}
+                value={`${formatNumber(v.hoursBackPerYear, 1)} h a year`}
+              />
+            )}
             <Kpi label="Action cost" value={formatMoney(v.totalActionCost, cur)} />
             <Kpi label="Payback" value={formatMonths(v.paybackMonths)} />
           </div>
@@ -447,6 +453,8 @@ export function ReportStep({ inv, update }: StepProps) {
               {formatMoney(v.cashSaving, cur)}, opportunity {formatMoney(v.opportunitySaving, cur)}) for an
               action cost of {formatMoney(v.totalActionCost, cur)}, paid back in{" "}
               {formatMonths(v.paybackMonths)}.
+              {v.hoursBackPerYear !== null &&
+                ` Line time back: ${formatNumber(v.hoursBackPerYear, 1)} h a year.`}
               {!verified &&
                 " This saving is not yet verified: it counts only when all actions are done and the review, with a date, says the failure has not recurred."}
             </p>

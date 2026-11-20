@@ -6,6 +6,7 @@ import {
   calcVerification,
   formatMoney,
   formatMonths,
+  formatNumber,
   isVerifiedClosed,
 } from "@/lib/finance";
 import type { Recurrence } from "@/lib/types";
@@ -142,6 +143,16 @@ export function VerifyStep({ inv, update, go }: StepProps) {
                 : undefined
             }
           />
+          {calc.hoursBackPerYear !== null && (
+            <Metric
+              label={verified ? "Line time back (verified)" : "Line time back (expected)"}
+              value={`${formatNumber(calc.hoursBackPerYear, 1)} h a year`}
+              good
+              sub={`${formatNumber(inv.loss.downtimeHours ?? 0, 2)} h × (${inv.loss.eventsPerYear} − ${v.eventsPerYearAfter}) events a year.${
+                verified ? "" : " Not yet verified."
+              }`}
+            />
+          )}
           <Metric label="Total action cost" value={formatMoney(calc.totalActionCost, cur)} />
           <Metric
             label="Payback period"
