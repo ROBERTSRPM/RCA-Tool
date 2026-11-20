@@ -1,4 +1,4 @@
-# RCA Pilot walkthrough video (13:40)
+# RCA Pilot walkthrough video (13:38)
 
 REVIEW COPY ONLY: nothing here has been uploaded, published, embedded or linked. The owner approves first.
 

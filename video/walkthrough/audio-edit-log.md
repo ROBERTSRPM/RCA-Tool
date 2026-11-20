@@ -28,7 +28,7 @@ Spoken scene numbers ("Scene 4"), "Retake" calls and aborted takes were removed.
 | 4 | 153.4 to 198.9, 215.3 to 233.3 | two aborted takes of "It also lists what's missing under not in your notes" (200 to 213); the third, complete take is kept |
 | 5 | 235.3 to 263.4 | |
 | 6 | 274.2 to 376.3 | first take of the first two sentences, "Retake" |
-| 7 | 378.0 to 424.2 | |
+| 7 | 380.4 to 424.2 | spoken "Scene 7" (377.4 to 378.2); Whisper had placed "Step 3" at 378.2 but it is spoken at 380.6, so the cut was moved after a final-mix check heard a stray "7" |
 | 8 | 426.4 to 486.9, 499.9 to 524.5 | first take of "Operators raised the speed...", "Retake", a second aborted take; the third is kept |
 | 9 | 529.0 to 566.0 | |
 | 10 | 4.0 to 63.8 | |
