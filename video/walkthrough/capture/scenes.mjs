@@ -219,18 +219,18 @@ async function setAllDone() {
   }
 }
 async function rollout() {
-  for (const tag of D.ROLL.tags) {
-    const tagField = page.getByLabel("Tag of the similar asset");
-    const addAnother = btn(/Add a similar asset that is not listed/);
-    if ((await addAnother.count()) > 0) { await c.click(addAnother.first(), 0.9); await page.waitForTimeout(700); }
-    await c.type(tagField, tag, 2); await c.type(page.getByLabel("Its duty or service"), D.ROLL.duty, 3);
-    await c.click(btn(/Add to the register/).last(), 0.8); await page.waitForTimeout(1000); await c.hold(0.6);
+  const tagField = page.getByLabel("Tag of the similar asset");
+  const addAnother = btn(/Add a similar asset that is not listed/);
+  for (let i = 0; i < D.ROLL.tags.length; i++) {
+    if (i > 0) { await addAnother.first().waitFor({ state: "visible", timeout: 10000 }); await page.waitForTimeout(500); await c.click(addAnother.first(), 0.9); await page.waitForTimeout(700); }
+    await tagField.waitFor({ state: "visible", timeout: 10000 });
+    await c.type(tagField, D.ROLL.tags[i], 2); await c.type(page.getByLabel("Its duty or service"), D.ROLL.duty, 3);
+    await c.click(btn(/Add to the register/).last(), 0.8); await page.waitForTimeout(800); await c.hold(0.6);
   }
   c.mark("create");
-  const boxes = page.getByRole("checkbox");
-  const nb = await boxes.count();
-  for (let i = 0; i < nb; i++) { if (!(await boxes.nth(i).isChecked())) await c.click(boxes.nth(i), 0.6); }
-  await c.click(btn(/Create 2 rollout checks/), 1.0); await page.waitForTimeout(900); await c.hold(1.5);
+  await page.waitForTimeout(900);
+  for (const tag of D.ROLL.tags) { const cb = page.locator("label, li, div").filter({ hasText: new RegExp("^\\s*" + tag) }).getByRole("checkbox").first(); if (!(await cb.isChecked())) await c.click(cb, 0.6); await page.waitForTimeout(300); }
+  await c.click(btn(/Create \d rollout check/), 1.0); await page.waitForTimeout(900); await c.hold(1.5);
   c.mark("owners");
   const who = page.getByLabel(/Who will check/), due = page.getByLabel(/Check due/);
   const nw = await who.count().catch(() => 0);
