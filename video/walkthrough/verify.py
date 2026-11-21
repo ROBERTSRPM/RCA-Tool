@@ -32,7 +32,7 @@ for sc in info:
         # a box cuts text when dark pixels (text or lines) lie on BOTH sides of the border at the same point
         def pairs(o, i):
             pts = [((x, y0 - o), (x, y0 + i)) for x in range(x0 + 8, x1 - 8, 4)] + [((x, y1 + o), (x, y1 - i)) for x in range(x0 + 8, x1 - 8, 4)] + [((x0 - o, y), (x0 + i, y)) for y in range(y0 + 8, y1 - 8, 4)] + [((x1 + o, y), (x1 - i, y)) for y in range(y0 + 8, y1 - 8, 4)]
-            isd = lambda q: int(im[min(H - 1, max(0, q[1])), min(W - 1, max(0, q[0]))][:3].mean()) < 110
+            isd = lambda q: (lambda p: int(p.mean()) < 110 and not (p[0] > p[1] + 25 and p[0] > p[2] + 40))(im[min(H - 1, max(0, q[1])), min(W - 1, max(0, q[0]))][:3].astype(int))
             return sum(isd(p) and isd(q) for p, q in pts) / max(1, len(pts))
         dark = max(pairs(8, 8), pairs(10, 6))
         cutok = dark < 0.06
