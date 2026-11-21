@@ -79,9 +79,14 @@ function buildScene(s) {
   // page was still, so the highlight is limited to the hold of the cue it belongs to.
   const rectsFile = path.join(clipsDir, `scene${n}.rects.json`); const rects = fs.existsSync(rectsFile) ? JSON.parse(fs.readFileSync(rectsFile, "utf8")) : {};
   const hl = [];
-  for (const h of s.highlights ?? []) {
-    const r = rects[h.rect]; if (!r) { console.log(`WARN ${s.id}: no rect ${h.rect}`); continue; }
-    let a = T(n, h.phrase ?? h.at, h.after) + (h.shift ?? 0), b = a + (h.dur ?? 3);
+  for (let h of s.highlights ?? []) {
+    const nm = h.item ?? h.rect; const r = rects[nm]; if (!r) { console.log(`WARN ${s.id}: no rect ${nm}`); continue; }
+    let a, b;
+    if (h.item) {  // an item beat: the box is on from the moment the cursor has arrived until the next beat starts (capped), on exactly that item
+      const ci = cues.findIndex((c) => c.mark === h.item); if (ci < 0) { console.log(`WARN ${s.id}: no cue for item ${h.item}`); continue; }
+      a = cues[ci].s + Math.min(cues[ci].mv, 1.0) * 0.85; b = Math.min(a + (h.dur ?? 4.8), (ci + 1 < cues.length ? cues[ci + 1].s : D) - 0.1);
+    } else { a = T(n, h.phrase ?? h.at, h.after) + (h.shift ?? 0); b = a + (h.dur ?? 3); }
+    h = { ...h, rect: nm };
     if (h.cue) { const ci = cues.findIndex((c) => c.mark === h.cue); if (ci >= 0) { const lo = cues[ci].s + Math.min(cues[ci].mv, 99) * 0.6, hi = ci + 1 < cues.length ? cues[ci + 1].s : D; a = Math.max(a, lo); b = Math.min(b, hi - 0.2); } }
     if (b - a < 0.4) { console.log(`WARN ${s.id}: highlight ${h.rect} has no room (${a.toFixed(1)}-${b.toFixed(1)})`); continue; }
     hl.push({ ...r, a, b, name: h.rect });
@@ -107,9 +112,11 @@ function buildScene(s) {
   const out = path.join(work, "vid", `${s.id}.mp4`);
   execFileSync("ffmpeg", ["-y", "-loglevel", "error", ...inputs, "-filter_complex", parts.join(";"), "-map", `[${cur}]`, "-c:v", "libx264", "-preset", "medium", "-crf", "16", "-pix_fmt", "yuv420p", "-r", "30", "-t", D.toFixed(3), out], { maxBuffer: 1 << 28 });
   console.log(s.id, "scene", D.toFixed(2), "s,", segs.length, "segments,", caps.length, "captions ->", out);
-  return { id: s.id, highlights: hl.map((h) => [h.name, +h.a.toFixed(2), +h.b.toFixed(2)]), segs, caps: caps.map((c) => [c.text, +c.a.toFixed(2)]) };
+  return { id: s.id, cues: s.cues.map((c, i) => ({ mark: c.mark, phrase: c.phrase ?? null, at: +cues[i].s.toFixed(2) })), highlightsFull: hl.map((h) => ({ name: h.name, a: +h.a.toFixed(2), b: +h.b.toFixed(2), rect: { x: h.x, y: h.y, w: h.w, h: h.h } })), highlights: hl.map((h) => [h.name, +h.a.toFixed(2), +h.b.toFixed(2)]), segs, caps: caps.map((c) => [c.text, +c.a.toFixed(2)]) };
 }
 const todo = plan.scenes.filter((s) => !only.length || only.includes(s.id));
 await captions(todo.flatMap((s) => (s.captions ?? []).map((c) => c.text)));
 const info = todo.map(buildScene);
-fs.writeFileSync(path.join(work, "build-info.json"), JSON.stringify(info, null, 1));
+const biFile = path.join(work, "build-info.json"); let prev = []; try { prev = JSON.parse(fs.readFileSync(biFile, "utf8")); } catch {}
+const merged = [...prev.filter((p) => !info.some((i) => i.id === p.id)), ...info].sort((x, y) => +x.id.slice(1) - +y.id.slice(1));
+fs.writeFileSync(biFile, JSON.stringify(merged, null, 1));

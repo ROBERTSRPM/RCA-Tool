@@ -49,12 +49,11 @@ async function s4() {
     c.mark("notes"); await c.type(lab("Rough notes"), D.NOTES, 3);
     c.mark("draft");
     await ai(btn("Draft problem statement from notes").last(), "[data-testid=draft-problem-result]");
-    c.mark("draft-result"); await c.scrollTo(page.getByTestId("draft-problem-result"), 1.0, 130); await c.hold(5.0);
-    c.mark("edit");
-    const box = page.getByTestId("draft-problem-result");
-    const first = box.locator("input[type=text], textarea").first();
-    await c.set(first, D.PROBLEM.title, 0.9); await c.hold(1.5);
-    c.mark("use"); await c.click(btn("Use this draft"), 1.0); await settle(); await c.hold(1.0);
+    c.mark("draft-result"); await c.scrollTo(page.getByTestId("draft-problem-result"), 1.0, 130); await c.hold(4.0);
+    // "It also lists what's missing, under Not in your notes, worth finding out"
+    await c.item("notlist", page.getByText(/Not in your notes/).first(), { kind: "wide", pad: 8, hold: 3.0 });
+    // "Then I press Use this draft"
+    await c.item("use", btn("Use this draft"), { pad: 6, click: true, hold: 1.2 }); await settle();
   }
   c.mark("fields");
   await c.scrollTo(page.getByText("1. Describe the problem").first(), 1.2, 120); await c.hold(2.0);
@@ -73,36 +72,38 @@ async function s5() {
   await c.type(lab("Line"), D.LINE.line, 3); await c.type(lab("Product"), D.LINE.product, 3); await c.type(lab("Pack type"), D.LINE.pack, 3);
   await c.type(lab("Process step"), D.LINE.step, 3); await c.type(lab("Asset type"), "Tray sealer", 3); await page.keyboard.press("Tab"); await c.type(lab("Failure mode"), D.LINE.mode, 3); await c.hold(3.0);
 }
+// type into a field as one beat: the cursor goes to the field, its real box is recorded for the highlight, then the value is typed
+async function typeItem(name, loc, text, o = {}) { await c.item(name, loc, { pad: 6, hold: 0.1, move: 0.7, ...o }); await c.type(loc, text, 2, 0.3); await c.hold(o.after ?? 0.8); }
 async function s6() {
   c.mark("tab"); await goStep("Loss"); await c.hold(1.5);
-  c.mark("options"); await c.moveTo(btn("Not known yet"), 1.0); await c.hold(2.0);
-  c.mark("figures");
-  await c.type(lab("How many times a year does it happen?"), D.LOSS.events, 2); await c.type(lab("Downtime per event"), D.LOSS.hours, 2);
-  await c.type(lab("Production rate"), D.LOSS.rate, 2); await c.type(lab("Unit name"), D.LOSS.unit, 2);
-  await c.type(lab("Margin per unit"), D.LOSS.margin, 2); await c.type(lab("Repair cost per event"), D.LOSS.repair, 2);
-  await c.hold(1.0);
-  // page is still at the top here: remember where the live-calculation rows and the inputs are
-  await c.rectUnion("inputs", [lab("How many times a year does it happen?"), lab("Downtime per event"), lab("Production rate")], 8);
-  await c.rectUnion("margin", [lab("Margin per unit")], 8);
-  await c.rectBox("lost", page.getByText("Lost production per event", { exact: true }).first(), -14, -8, 372, 60);
-  await c.rectBox("opp", page.getByText("Opportunity loss", { exact: true }).first(), -14, -8, 372, 60);
-  await c.hold(1.5);
-  c.mark("other");
+  await c.item("options", btn("Not known yet"), { pad: 6, hold: 2.0 });
+  // "Here we have 6 events a year, 8 hours each, at 3000 packs an hour": one beat per field, in the order spoken
+  await typeItem("f-events", lab("How many times a year does it happen?"), D.LOSS.events);
+  await typeItem("f-hours", lab("Downtime per event"), D.LOSS.hours);
+  await typeItem("f-rate", lab("Production rate"), D.LOSS.rate);
+  await c.type(lab("Unit name"), D.LOSS.unit, 2, 0.4);
+  // "So each event we don't make 24,000 packs"
+  await c.item("r-lost", page.getByText("Lost production per event", { exact: true }).first(), { kind: "row", pad: 6, hold: 2.2 });
+  // "At 45 cents a pack, that's $10,800 of lost margin"
+  await typeItem("f-margin", lab("Margin per unit"), D.LOSS.margin);
+  await c.item("r-opp", page.getByText("Opportunity loss", { exact: true }).first(), { kind: "row", pad: 6, hold: 2.2 });
+  // "Then there's the cash. There's the $1,200 call-out"
+  await typeItem("f-repair", lab("Repair cost per event"), D.LOSS.repair);
+  // "...everything that quietly adds up under Other costs"
+  await c.item("other", page.getByText(/^Other costs per event/).first(), { pad: 8, hold: 1.5 });
+  const rows = { "Scrapped product": "o-scrap", "Product on hold": "o-hold", "Customer claims and credits": "o-claims", "Retailer penalties": "o-pen", "Rework": "o-rework" };
   for (const [name, amt] of D.OTHER) {
     await c.scrollTo(btn(name, { exact: true }).first(), 1.0, 300); await c.click(btn(name, { exact: true }).first(), 0.8); await settle();
-    const amount = page.getByLabel(/Amount per event/).last(); await c.type(amount, amt, 2); await c.hold(0.8);
+    const amount = page.getByLabel(/Amount per event/).last();
+    await c.item(rows[name], amount, { kind: "orow", pad: 8, hold: 0.1, move: 0.6 }); await c.type(amount, amt, 2, 0.3); await c.hold(1.0);
   }
-  // calc 1: the panel's cash and per-event rows
-  c.mark("calc"); await c.scrollTo(page.getByText("LIVE CALCULATION").first(), 1.4, 130); await c.hold(0.5);
-  await c.rectBox("cash", page.getByText("Cash costs", { exact: true }).first(), -14, -8, 372, 60);
-  await c.rectBox("cost-event", page.getByText("Cost per event", { exact: true }).nth(1), -14, -8, 372, 60);
-  await c.rectBox("opp2", page.getByText("Opportunity loss", { exact: true }).first(), -14, -8, 372, 60);
-  await c.hold(7.0);
-  // calc 2: the per-year section and the dark annual-loss box
-  c.mark("annual"); await c.scrollTo(page.getByText("Annual loss", { exact: true }).first(), 1.4, 330); await c.hold(0.5);
-  await c.rectBox("annual", page.getByText("Annual loss", { exact: true }).first(), -20, -14, 372, 150);
-  await c.hold(5.0);
-  c.mark("lost-good"); await c.scrollTo(page.getByText("Lost for good", { exact: true }).first(), 1.2, 240); await c.rectBox("lostgood", page.getByText("Lost for good", { exact: true }).first(), -20, -14, 640, 70); await c.hold(4.0);
+  // "That makes $33,100 of cash" / "one event costs $43,900"
+  await c.item("r-cash", page.getByText("Cash costs", { exact: true }).first(), { kind: "row", pad: 6, hold: 2.4 });
+  await c.item("r-cost", page.getByText("Cost per event", { exact: true }).nth(1), { kind: "row", pad: 6, hold: 2.4 });
+  // "six a year comes to $263,400"
+  await c.item("r-annual", page.getByText("Annual loss", { exact: true }).first(), { kind: "box", pad: 8, hold: 3.0 });
+  // "...that output is gone for good"
+  await c.item("r-lostgood", page.getByText("Lost for good", { exact: true }).first(), { kind: "wide", pad: 8, hold: 3.0 });
 }
 async function s7() {
   c.mark("tab"); await goStep("Evidence"); await c.hold(1.2);
@@ -141,15 +142,13 @@ async function s8() {
 const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 async function s9() {
   c.mark("tab"); await goStep("Cause tree"); await c.scrollBy(260, 0.8); await c.hold(0.5);
-  // "Is the wear natural, or forced?": select the jaw box and show the Type of wear buttons
+  // "Is the wear natural, or forced?": select the jaw box, then the Type of wear buttons
   c.mark("wear"); await selBox(new RegExp("Select cause: " + escapeRe(D.TREE[1][4].slice(0, 25))));
-  await c.scrollTo(btn("Natural deterioration"), 1.2, 330); await c.hold(0.6);
-  await c.rectUnion("wear", [btn("Natural deterioration"), btn("Forced deterioration"), btn("Not applicable")], 12);
-  await c.hold(2.0);
-  // "That's natural": cursor on Natural, not clicked
-  c.mark("natural"); await c.moveTo(btn("Natural deterioration"), 1.0); await c.hold(2.0);
+  await c.item("wear-q", btn("Natural deterioration").locator("xpath=.."), { pad: 8, hold: 2.5 });
+  // "That's natural": the cursor on Natural, not clicked
+  await c.item("natural", btn("Natural deterioration"), { pad: 6, hold: 2.0 });
   // "...is forced": click Forced
-  c.mark("forced"); await c.click(btn("Forced deterioration"), 1.0); await c.hold(2.5);
+  await c.item("forced", btn("Forced deterioration"), { pad: 6, click: true, hold: 2.5 });
   // the process cause, not wear
   c.mark("na"); await selBox(new RegExp("Select cause: " + escapeRe(D.TREE[3][4].slice(0, 25)))); await c.scrollTo(btn("Not applicable"), 1.0, 330); await c.click(btn("Not applicable"), 0.9); await c.hold(1.5);
   c.mark("whys"); await c.top(); await c.scrollBy(120, 0.8); await c.click(btn("5 Whys"), 1.0); await c.hold(4.0);
@@ -162,12 +161,12 @@ const RESIDUE = /(residue|debris|dirt|food|product|splash|spill)\b.*flange|flang
 const RESIDUE_NOT = /check|no standard|not checked|monitor/i;
 const PARALLEL = /(?=.*\bjaw\b)(?=.*(parallel|seal plate|plate))/i;   // jaw and plate in the same suggestion
 const BAD = /sauce|rice|chicken/i;
-async function pickAccept(rx, label) {
+async function pickAccept(rx, label, itemName) {
   const items = page.getByTestId("coach-item"); const n = await items.count();
   for (let i = 0; i < n; i++) {
     const txt = await items.nth(i).innerText();
     const title = txt.split("\n").find((l) => l.length > 25) ?? "";
-    if (rx.test(title) && !BAD.test(title) && !(rx === RESIDUE && RESIDUE_NOT.test(title))) { console.log(label, "->", title.slice(0, 120)); await c.click(items.nth(i).getByTestId("ai-accept"), 1.0); return true; }
+    if (rx.test(title) && !BAD.test(title) && !(rx === RESIDUE && RESIDUE_NOT.test(title))) { console.log(label, "->", title.slice(0, 120)); await c.item(itemName, items.nth(i), { pad: 8, hold: 1.4 }); await c.click(items.nth(i).getByTestId("ai-accept"), 0.8); return true; }
   }
   console.log("NOT OFFERED:", label, "| offered:", await items.evaluateAll((els) => els.map((e) => e.innerText.split("\n").find((l) => l.length > 25)?.slice(0, 90))));
   return false;
@@ -182,16 +181,20 @@ async function s10() {
   c.mark("coach"); await c.hold(2.5);
   c.mark("coach-run"); await ai(page.getByTestId("coach-node"), "[data-testid=coach-results]");
   c.mark("coach-results"); await c.scrollTo(page.getByTestId("coach-results"), 1.2, 140); await c.hold(6.0);
-  c.mark("accept"); if (!(await pickAccept(RESIDUE, "product residue"))) throw new Error("AI did not offer product residue"); await c.hold(2.5);
-  c.mark("accept2"); if (!(await pickAccept(PARALLEL, "jaw not parallel"))) throw new Error("AI did not offer jaw/plate"); await c.hold(2.5);
+  if (!(await pickAccept(RESIDUE, "product residue", "accept"))) throw new Error("AI did not offer product residue"); await c.hold(1.5);
+  if (!(await pickAccept(PARALLEL, "seal plate", "accept2"))) throw new Error("AI did not offer jaw/plate"); await c.hold(1.5);
   c.mark("challenge"); await c.scrollTo(page.getByTestId("ai-card").filter({ hasText: /^Challenge my analysis/ }).first(), 1.4, 90); await c.hold(0.6);
   await ai(btn("Challenge my analysis").last(), "[data-testid=challenge-results]");
-  c.mark("challenge-results"); await c.scrollTo(page.getByTestId("challenge-results"), 1.2, 140); await c.hold(6.0);
+  c.mark("challenge-results"); await c.scrollTo(page.getByTestId("challenge-results"), 1.2, 140); await c.hold(2.5);
+  // "It points out that the film root cause has no evidence linked": the item about the film change control
+  const chal = page.getByTestId("challenge-item").filter({ hasText: /film supplier|change control/i }).first();
+  await c.item("chal", chal, { pad: 8, hold: 3.0 });
   console.log("CHALLENGE:", await page.getByTestId("challenge-item").evaluateAll((els) => els.map((e) => e.innerText.replace(/\s+/g, " ").slice(0, 140))));
   c.mark("fix");
   await c.scrollTo(page.getByRole("button", { name: /Select cause: Line 3 tray sealer produced/ }).first(), 1.6, 300);
   await selBox(new RegExp("Select cause: " + escapeRe(D.TREE[8][4].slice(0, 25))));
-  await c.click(page.getByRole("checkbox", { name: /^E5\./ }).first(), 0.8); await c.click(btn("Verified", { exact: true }).first(), 0.8); await c.hold(4.0);
+  await c.item("e5", page.locator("label").filter({ has: page.getByRole("checkbox", { name: /^E5\./ }) }).first(), { kind: "self", pad: 8, click: true, hold: 1.0 });
+  await c.click(btn("Verified", { exact: true }).first(), 0.8); await c.hold(3.0);
 }
 async function s10silent() { // replay without AI: only the Challenge fix
   await goStep("Cause tree"); await selBox(new RegExp("Select cause: " + escapeRe(D.TREE[8][4].slice(0, 25))));
@@ -212,7 +215,7 @@ async function s11() {
     await fillAction(p);
   }
   c.mark("plan"); await c.scrollTo(page.getByText("Maintenance plan changes", { exact: true }).first(), 1.6, 110); await c.hold(5.0);
-  c.mark("tiles"); await c.top(); await c.scrollBy(240, 1.2); await c.hold(0.5); await c.rectBox("t-total", page.getByText(/^total action cost/i).first(), -14, -12, 262, 110); await c.rectBox("t-actions", page.getByText(/^actions$/i).first(), -14, -12, 262, 110); await c.hold(4.0);
+  c.mark("tiles"); await c.top(); await c.item("t-total", page.getByText(/^total action cost/i).first(), { kind: "tile", pad: 6, hold: 3.5 });
 }
 // root cause order on the Actions step follows the tree order of the four roots
 const ROOTS = ["A3", "B3", "C3", "D2"];
@@ -253,16 +256,21 @@ async function s13() {
   // "Step 6, proving it stopped": open on the Verify step, then go back to mark the actions Done, then fill in Verify
   await c.silently(async () => { await goStep("Verify"); });
   c.mark("verify0"); await c.hold(3.0);
-  c.mark("review"); await c.moveTo(lab("Review date"), 1.0); await c.rectUnion("review", [lab("Review date"), lab("Has the failure recurred since the actions were completed?")], 10); await c.hold(2.5);
+  // "...the review date is in, and the failure hasn't come back"
+  await c.item("review-date", lab("Review date"), { pad: 6, hold: 1.8 });
+  await c.item("recurred", lab("Has the failure recurred since the actions were completed?"), { pad: 6, hold: 1.8 });
   c.mark("tab-actions"); await goStep("Actions"); await c.hold(0.8);
   c.mark("done"); await setAllDone();
   c.mark("verify"); await goStep("Verify"); await c.hold(1.0);
   await c.set(lab("Review date"), D.VERIFY.date); await c.choose(lab("Has the failure recurred since the actions were completed?"), D.VERIFY.recurred);
   await c.type(lab(/Expected events per year after/), D.VERIFY.events, 2); await c.set(lab("What did you find?"), D.VERIFY.found); await c.hold(1.0);
   c.mark("result"); await c.scrollTo(page.getByText("The result in money").first(), 1.6, 120); await c.hold(0.6);
-  const tile = async (name, rx) => c.rectBox(name, page.getByText(rx).first(), -16, -14, 206, 138);
-  await tile("t-before", /^annual loss before/i); await tile("t-after", /^annual loss after/i); await tile("t-saving", /^annual saving/i); await tile("t-linetime", /^line time back/i); await tile("t-cost", /^total action cost/i); await tile("t-payback", /^payback period/i);
-  await c.hold(8.0);
+  // "...brings the loss down to $43,900 ... the verified saving is $219,500 ... the $20,200 pays back in about 1.1 months ... 40 hours of line time back"
+  await c.item("t-after", page.getByText(/^annual loss after/i).first(), { kind: "tile", pad: 6, hold: 3.0 });
+  await c.item("t-saving", page.getByText(/^annual saving/i).first(), { kind: "tile", pad: 6, hold: 3.0 });
+  await c.item("t-cost", page.getByText(/^total action cost/i).first(), { kind: "tile", pad: 6, hold: 2.4 });
+  await c.item("t-payback", page.getByText(/^payback period/i).first(), { kind: "tile", pad: 6, hold: 2.4 });
+  await c.item("t-linetime", page.getByText(/^line time back/i).first(), { kind: "tile", pad: 6, hold: 3.0 });
   c.mark("rollout"); await c.scrollTo(page.getByText("Roll out this countermeasure", { exact: false }).first(), 1.6, 100); await c.hold(2.0);
   await rollout();
 }
@@ -310,24 +318,24 @@ async function s14() {
   c.mark("print"); await c.top(); await c.moveTo(btn(/Print \/ Save as PDF/).first(), 1.2); await c.rectUnion("printbtn", [btn(/Print \/ Save as PDF/).first()], 10); await c.hold(5.0);
 }
 async function s15() {
-  c.mark("tab"); await goStep("Cause tree"); await c.scrollBy(300, 1.2); await c.hold(2.5);
-  // pan the tree sideways so the four system root causes are on screen together, then remember where they are
+  c.mark("tab"); await goStep("Cause tree"); await c.scrollBy(300, 1.2); await c.hold(2.0);
+  // pan the tree sideways so the system root causes are in reach
   c.mark("roots");
   const x0 = await page.evaluate(() => { const el = window.__pan = [...document.querySelectorAll("*")].find((e) => e.scrollWidth > e.clientWidth + 50 && /auto|scroll/.test(getComputedStyle(e).overflowX) && e.textContent.includes("Why?")); return el ? el.scrollLeft : 0; });
   for (let i = 1; i <= 75; i++) { const t = i / 75, e = t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; await page.evaluate((x) => window.__pan && (window.__pan.scrollLeft = x), x0 + 640 * e); if (c.rec) { await c.r.cur(); await c.r.shot(); } }
-  await c.hold(0.6);
-  const rootTexts = D.TREE.filter((t) => t[7]).map((t) => t[4]);
-  for (let i = 0; i < rootTexts.length; i++) await c.rect(`root${i + 1}`, page.getByRole("button", { name: new RegExp("Select cause: " + escapeRe(rootTexts[i].slice(0, 25))) }).first(), 6, { h: 34 });
-  console.log("root cards", rootTexts.length);
-  await c.hold(9.0);
+  await c.hold(0.5);
+  // "...nothing in our system checked the jaw (A3), locked the settings (B3), controlled the film (C3), or caught a bad seal early (D2)"
+  const rootBtn = (t) => page.getByRole("button", { name: new RegExp("Select cause: " + escapeRe(t.slice(0, 25))) }).first();
+  const names = { A3: "root-jaw", B3: "root-settings", C3: "root-film", D2: "root-seal" };
+  for (const t of D.TREE.filter((x) => x[7])) await c.item(names[t[0]], rootBtn(t[4]), { kind: "card", pad: 6, hold: 2.0 });
   c.mark("saving"); await goStep("Verify"); await c.scrollTo(page.getByText("The result in money").first(), 1.4, 120); await c.hold(0.6);
-  const tile = async (name, rx) => c.rectBox(name, page.getByText(rx).first(), -16, -14, 206, 138);
-  await tile("t-before", /^annual loss before/i); await tile("t-saving", /^annual saving/i); await tile("t-linetime", /^line time back/i);
-  await c.hold(9.0);
-  c.mark("dash"); await page.goto(`${BASE}/app`, { waitUntil: "networkidle" }); await page.waitForTimeout(1500); await c.hold(0.6);
-  const dt = async (name, txt) => c.rectBox(name, page.getByText(new RegExp("^" + txt + "$", "i")).first(), -22, -16, 236, 128);
-  await dt("d-loss", "OPEN ANNUAL LOSS"); await dt("d-actions", "OPEN ACTIONS"); await dt("d-saved", "VERIFIED ANNUAL SAVINGS"); await dt("d-roll", "ROLLOUT CHECKS");
-  await c.hold(9.0);
+  await c.item("t-before", page.getByText(/^annual loss before/i).first(), { kind: "tile", pad: 6, hold: 3.0 });
+  await c.item("t-saving", page.getByText(/^annual saving/i).first(), { kind: "tile", pad: 6, hold: 3.0 });
+  await c.item("t-linetime", page.getByText(/^line time back/i).first(), { kind: "tile", pad: 6, hold: 3.0 });
+  c.mark("dash"); await page.goto(`${BASE}/app`, { waitUntil: "networkidle" }); await page.waitForTimeout(1500); await c.hold(0.8);
+  await c.item("d-loss", page.getByText(/^open annual loss$/i).first(), { kind: "tile", pad: 6, hold: 3.0 });
+  await c.item("d-saved", page.getByText(/^verified annual savings$/i).first(), { kind: "tile", pad: 6, hold: 3.0 });
+  await c.item("d-actions", page.getByText(/^open actions$/i).first(), { kind: "tile", pad: 6, hold: 3.0 });
 }
 
 const SEQ = { 4: s4, 5: s5, 6: s6, 7: s7, 8: s8, 9: s9, 10: s10, 11: s11, 12: null, 13: s13, 14: s14, 15: s15 };

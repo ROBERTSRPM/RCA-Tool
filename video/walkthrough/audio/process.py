@@ -21,11 +21,11 @@ CUTS = {
  8: [(1, 426.4, 486.9), (1, 499.9, 524.5)],
  9: [(1, 529.0, 566.0)],
  10: [(2, 4.0, 32.2), (2, 32.2, 40.2, 'a'), (2, 40.2, 55.3), (2, 55.3, 59.8, 'b'), (2, 59.8, 63.8)],  # 'a' and 'b' are replaced by recordings/scene10-line-a.* / -b.* when present
- 11: [(2, 79.8, 137.8)],
+ 11: [(2, 79.8, 98.55), (2, 98.55, 102.4, 'p'), (2, 102.4, 137.8)],  # 'p' = "Preventive actions stop it coming back." (owner's re-record: scene11-line-preventive.*)
  12: [(2, 140.9, 160.6)],
  13: [(2, 162.5, 228.5)],
  14: [(2, 231.9, 257.0)],
- 15: [(2, 260.1, 288.6), (2, 294.2, 335.0)],
+ 15: [(2, 260.1, 265.5, 'o'), (2, 265.5, 288.6), (2, 294.2, 335.0)],  # 'o' = "So let's go back to that Thursday morning, and that meeting." (scene15-line-opening.*)
 }
 LEAD, TAIL = 0.5, 0.8   # room tone before/after every scene (scene 1 gets a longer lead for the sound design)
 srcs = {1: sf.read(sys.argv[1], dtype="float64")[0], 2: sf.read(sys.argv[2], dtype="float64")[0]}
@@ -60,9 +60,10 @@ def shorten(seg_db, seg, thr, maxgap=2.2, keep=1.4):
 
 sos = butter(4, 80, "hp", fs=SR, output="sos")
 REC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "recordings")
+REPL_FILES = {"a": "scene10-line-a", "b": "scene10-line-b", "p": "scene11-line-preventive", "o": "scene15-line-opening"}
 def replacement(tag):
-    """Owner's re-recorded line for a tagged piece of scene 10 (recordings/scene10-line-<tag>.<ext>), or None."""
-    fs_ = [f for f in glob.glob(os.path.join(REC, f"scene10-line-{tag}.*")) if not f.endswith(".wav.tmp")]
+    """Owner's re-recorded line for a tagged piece (recordings/<name>.<ext>), or None."""
+    fs_ = [f for f in glob.glob(os.path.join(REC, REPL_FILES[tag] + ".*")) if not f.endswith(".wav.tmp")]
     if not fs_: return None
     wav = os.path.join(os.path.dirname(os.path.abspath(sys.argv[3] + "/x")), f"repl-{tag}.wav")
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", fs_[0], "-ac", "1", "-ar", str(SR), wav], check=True)
@@ -88,7 +89,7 @@ for sc, cuts in CUTS.items():
             m = pyln.Meter(SR); old = seg[np.where(sdb.repeat(H) > floors[p] + 14)[0]] if False else seg
             try: g = 10 ** ((m.integrated_loudness(old) - m.integrated_loudness(r)) / 20)
             except Exception: g = 1.0
-            parts.append(fade(r * g)); info.append({"part": p, "src": [round(a2, 2), round(b2, 2)], "replaced_by": f"scene10-line-{tag}", "gain_db": round(20 * np.log10(g), 1)})
+            parts.append(fade(r * g)); info.append({"part": p, "src": [round(a2, 2), round(b2, 2)], "replaced_by": REPL_FILES[tag], "gain_db": round(20 * np.log10(g), 1)})
             gaps.append(0.18); continue
         pcs, lg = shorten(sdb, seg, floors[p] + 12)
         # contiguous original pieces are joined without an extra gap, so the scene sounds exactly as before

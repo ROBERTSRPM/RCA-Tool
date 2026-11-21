@@ -46,43 +46,44 @@
    "cues": [
     {
      "mark": "type",
-     "at": 0,
-     "move": 1.2
+     "move": 1.2,
+     "at": 0
     },
     {
      "mark": "notes",
+     "move": 2.0,
      "phrase": "A supervisor just",
-     "shift": -0.3,
-     "move": 2.0
+     "shift": -0.3
     },
     {
      "mark": "draft",
+     "move": 1.4,
      "phrase": "The AI turns",
-     "shift": -0.5,
-     "move": 1.4
+     "shift": -0.5
     },
     {
      "mark": "draft-result",
+     "move": 1.4,
      "phrase": "It doesn't guess",
-     "shift": -0.6,
-     "move": 1.4
+     "shift": -0.6
     },
     {
-     "mark": "edit",
-     "phrase": "That's your first",
-     "shift": -1.0,
-     "move": 2.0
+     "mark": "notlist",
+     "move": 1.8,
+     "phrase": "under not",
+     "shift": -0.7
     },
     {
      "mark": "use",
+     "move": 1.8,
      "phrase": "Then I press",
-     "shift": -0.4,
-     "move": 1.6
+     "shift": -0.5
     },
     {
      "mark": "fields",
+     "move": 2.5,
      "phrase": "correct anything",
-     "move": 2.5
+     "shift": 0
     }
    ],
    "captions": [
@@ -100,6 +101,14 @@
      "text": "3. Use this draft, then edit",
      "phrase": "Then I press",
      "dur": 6
+    }
+   ],
+   "highlights": [
+    {
+     "item": "notlist"
+    },
+    {
+     "item": "use"
     }
    ]
   },
@@ -136,44 +145,116 @@
    "cues": [
     {
      "mark": "tab",
-     "at": 0,
-     "move": 1.5
+     "move": 1.5,
+     "at": 0
     },
     {
      "mark": "options",
+     "move": 1.8,
      "phrase": "If you don't",
-     "shift": -0.3,
-     "move": 2.0
+     "shift": -0.3
     },
     {
-     "mark": "figures",
-     "phrase": "Here we have",
-     "shift": -0.3,
-     "move": 3.0
+     "mark": "f-events",
+     "move": 1.2,
+     "phrase": "six events",
+     "shift": -0.4
+    },
+    {
+     "mark": "f-hours",
+     "move": 1.2,
+     "phrase": "eight hours",
+     "shift": -0.4
+    },
+    {
+     "mark": "f-rate",
+     "move": 1.2,
+     "phrase": "at 3",
+     "shift": -0.3
+    },
+    {
+     "mark": "r-lost",
+     "move": 1.6,
+     "phrase": "we don't make",
+     "shift": -0.6
+    },
+    {
+     "mark": "f-margin",
+     "move": 1.2,
+     "phrase": "At 45",
+     "shift": -0.4
+    },
+    {
+     "mark": "r-opp",
+     "move": 1.6,
+     "phrase": "that's $10",
+     "shift": -0.5
+    },
+    {
+     "mark": "f-repair",
+     "move": 1.2,
+     "phrase": "There's the $1",
+     "shift": -0.4
     },
     {
      "mark": "other",
-     "phrase": "Then there's the",
-     "shift": -0.3,
-     "move": 3.0
+     "move": 1.6,
+     "phrase": "under other",
+     "shift": -0.4
     },
     {
-     "mark": "calc",
+     "mark": "o-scrap",
+     "move": 1.6,
+     "phrase": "Scrap product",
+     "shift": -0.4
+    },
+    {
+     "mark": "o-hold",
+     "move": 1.6,
+     "phrase": "Product on",
+     "shift": -0.4
+    },
+    {
+     "mark": "o-claims",
+     "move": 1.6,
+     "phrase": "Customer claims",
+     "shift": -0.4
+    },
+    {
+     "mark": "o-pen",
+     "move": 1.6,
+     "phrase": "Retailer penalties",
+     "shift": -0.4
+    },
+    {
+     "mark": "o-rework",
+     "move": 1.6,
+     "phrase": "rework",
+     "shift": -0.5
+    },
+    {
+     "mark": "r-cash",
+     "move": 1.6,
      "phrase": "That makes",
-     "shift": -1.8,
-     "move": 1.6
+     "shift": -0.6
     },
     {
-     "mark": "annual",
+     "mark": "r-cost",
+     "move": 1.6,
+     "phrase": "one event costs",
+     "shift": -0.5
+    },
+    {
+     "mark": "r-annual",
+     "move": 1.6,
      "phrase": "six a year",
-     "shift": -2.0,
-     "move": 1.6
+     "shift": -0.8
     },
     {
-     "mark": "lost-good",
-     "phrase": "And because the",
-     "shift": -1.6,
-     "move": 1.6
+     "mark": "r-lostgood",
+     "move": 1.6,
+     "phrase": "that output",
+     "shift": -0.6
     }
    ],
    "captions": [
@@ -195,60 +276,58 @@
    ],
    "highlights": [
     {
-     "rect": "inputs",
-     "phrase": "Here we have",
-     "shift": 0.2,
-     "dur": 5.8,
-     "cue": "figures"
+     "item": "options"
     },
     {
-     "rect": "lost",
-     "phrase": "each event we",
-     "shift": 0.0,
-     "dur": 3.8,
-     "cue": "figures"
+     "item": "f-events"
     },
     {
-     "rect": "margin",
-     "phrase": "At 45",
-     "shift": -0.2,
-     "dur": 2.4,
-     "cue": "figures"
+     "item": "f-hours"
     },
     {
-     "rect": "opp",
-     "phrase": "that's $10",
-     "shift": 0.2,
-     "dur": 3.6,
-     "cue": "figures"
+     "item": "f-rate"
     },
     {
-     "rect": "cash",
-     "phrase": "That makes",
-     "shift": 0.3,
-     "dur": 4.6,
-     "cue": "calc"
+     "item": "r-lost"
     },
     {
-     "rect": "cost-event",
-     "phrase": "one event costs",
-     "shift": -0.3,
-     "dur": 3.6,
-     "cue": "calc"
+     "item": "f-margin"
     },
     {
-     "rect": "annual",
-     "phrase": "comes to",
-     "shift": 0.2,
-     "dur": 5.0,
-     "cue": "annual"
+     "item": "r-opp"
     },
     {
-     "rect": "lostgood",
-     "phrase": "gone for good",
-     "shift": -4.5,
-     "dur": 5.2,
-     "cue": "lost-good"
+     "item": "f-repair"
+    },
+    {
+     "item": "other"
+    },
+    {
+     "item": "o-scrap"
+    },
+    {
+     "item": "o-hold"
+    },
+    {
+     "item": "o-claims"
+    },
+    {
+     "item": "o-pen"
+    },
+    {
+     "item": "o-rework"
+    },
+    {
+     "item": "r-cash"
+    },
+    {
+     "item": "r-cost"
+    },
+    {
+     "item": "r-annual"
+    },
+    {
+     "item": "r-lostgood"
     }
    ]
   },
@@ -426,55 +505,62 @@
    "cues": [
     {
      "mark": "tab",
-     "at": 0,
-     "move": 1.5
+     "move": 1.5,
+     "at": 0
     },
     {
      "mark": "wear",
-     "phrase": "Is the wear",
-     "shift": -0.5,
-     "move": 2.8
+     "move": 2.0,
+     "phrase": "With equipment",
+     "shift": 0.6
+    },
+    {
+     "mark": "wear-q",
+     "move": 1.6,
+     "phrase": "is the wear",
+     "shift": -0.5
     },
     {
      "mark": "natural",
+     "move": 1.4,
      "phrase": "That's natural",
-     "shift": -0.4,
-     "move": 1.0
+     "shift": -0.5
     },
     {
      "mark": "forced",
+     "move": 1.4,
      "phrase": "is forced",
-     "shift": -0.6,
-     "move": 1.0
+     "shift": -0.8
     },
     {
      "mark": "na",
+     "move": 2.8,
      "phrase": "So I record",
-     "shift": -0.6,
-     "move": 2.8
+     "shift": -0.5
     },
     {
      "mark": "whys",
+     "move": 2.0,
      "phrase": "The same tree",
-     "shift": -0.2,
-     "move": 2.0
+     "shift": -0.2
     },
     {
      "mark": "fishbone",
+     "move": 1.8,
      "phrase": "fishbone",
-     "shift": -0.6,
-     "move": 1.8
+     "shift": -0.6
     },
     {
      "mark": "level",
+     "move": 1.3,
      "phrase": "grouped by",
-     "shift": 0.6,
-     "move": 1.3
+     "shift": 0.6
     },
     {
      "mark": "back",
+     "move": 1.0,
      "phrase": "end-1.4",
-     "move": 1.0
+     "shift": 0
     }
    ],
    "captions": [
@@ -491,11 +577,13 @@
    ],
    "highlights": [
     {
-     "rect": "wear",
-     "phrase": "Is the wear",
-     "shift": 0.4,
-     "dur": 4.5,
-     "cue": "wear"
+     "item": "wear-q"
+    },
+    {
+     "item": "natural"
+    },
+    {
+     "item": "forced"
     }
    ]
   },
@@ -504,50 +592,62 @@
    "cues": [
     {
      "mark": "coach",
-     "at": 0,
-     "move": 1.0
+     "move": 1.0,
+     "at": 0
     },
     {
      "mark": "coach-run",
+     "move": 1.4,
      "phrase": "The cause coach",
-     "shift": -0.5,
-     "move": 1.4
+     "shift": -0.5
     },
     {
      "mark": "coach-results",
+     "move": 1.5,
      "phrase": "Each one says",
-     "shift": -0.5,
-     "move": 1.5
+     "shift": -0.5
     },
     {
      "mark": "accept",
-     "phrase": "I hadn't thought",
-     "shift": -0.9,
-     "move": 2.5
+     "move": 1.8,
+     "phrase": "It suggests product",
+     "shift": 0.6
     },
     {
      "mark": "accept2",
+     "move": 1.8,
      "phrase": "seal plate",
-     "shift": 0.1,
-     "move": 2.5
+     "shift": -0.5
     },
     {
      "mark": "challenge",
+     "move": 3.0,
      "phrase": "Next I click",
-     "shift": -0.5,
-     "move": 3.0
+     "shift": -0.5
     },
     {
      "mark": "challenge-results",
+     "move": 1.5,
      "phrase": "It reviews the",
-     "shift": -0.3,
-     "move": 1.5
+     "shift": -0.3
+    },
+    {
+     "mark": "chal",
+     "move": 1.8,
+     "phrase": "film root cause",
+     "shift": -0.8
     },
     {
      "mark": "fix",
+     "move": 1.8,
      "phrase": "That's fair",
-     "shift": -0.3,
-     "move": 3.0
+     "shift": -1.6
+    },
+    {
+     "mark": "e5",
+     "move": 1.4,
+     "phrase": "film specification",
+     "shift": -1.0
     }
    ],
    "captions": [
@@ -565,6 +665,23 @@
      "text": "The AI suggests. You decide.",
      "phrase": "end-4.5",
      "dur": 4
+    }
+   ],
+   "highlights": [
+    {
+     "item": "accept",
+     "dur": 2.3
+    },
+    {
+     "item": "accept2",
+     "dur": 2.3
+    },
+    {
+     "item": "chal"
+    },
+    {
+     "item": "e5",
+     "dur": 2.2
     }
    ]
   },
@@ -619,10 +736,10 @@
      "move": 1.6
     },
     {
-     "mark": "tiles",
+     "mark": "t-total",
+     "move": 1.6,
      "phrase": "The total cost",
-     "shift": -0.3,
-     "move": 1.5
+     "shift": -0.8
     }
    ],
    "captions": [
@@ -639,11 +756,7 @@
    ],
    "highlights": [
     {
-     "rect": "t-total",
-     "phrase": "The total cost",
-     "shift": -0.2,
-     "dur": 3.4,
-     "cue": "tiles"
+     "item": "t-total"
     }
    ]
   },
@@ -709,56 +822,92 @@
    "cues": [
     {
      "mark": "verify0",
-     "at": 0,
-     "move": 1.0
+     "move": 1.0,
+     "at": 0
     },
     {
-     "mark": "review",
+     "mark": "review-date",
+     "move": 1.4,
      "phrase": "the review date",
-     "shift": -0.8,
-     "move": 1.2
+     "shift": -0.6
+    },
+    {
+     "mark": "recurred",
+     "move": 1.4,
+     "phrase": "hasn't come",
+     "shift": -0.6
     },
     {
      "mark": "tab-actions",
+     "move": 1.4,
      "phrase": "So months later",
-     "shift": -0.4,
-     "move": 1.4
+     "shift": -0.4
     },
     {
      "mark": "done",
+     "move": 3.0,
      "phrase": "I mark the actions",
-     "shift": -0.2,
-     "move": 3.0
+     "shift": -0.2
     },
     {
      "mark": "verify",
+     "move": 3.0,
      "phrase": "I stay cautious",
-     "shift": -0.6,
-     "move": 3.0
+     "shift": -0.6
     },
     {
      "mark": "result",
+     "move": 1.8,
      "phrase": "That brings the",
-     "shift": -1.8,
-     "move": 1.8
+     "shift": -2.0
+    },
+    {
+     "mark": "t-after",
+     "move": 1.4,
+     "phrase": "down to",
+     "shift": -0.6
+    },
+    {
+     "mark": "t-saving",
+     "move": 1.4,
+     "phrase": "verified savings",
+     "shift": -0.6
+    },
+    {
+     "mark": "t-cost",
+     "move": 1.4,
+     "phrase": "The $20",
+     "shift": -0.6
+    },
+    {
+     "mark": "t-payback",
+     "move": 1.4,
+     "phrase": "about 1",
+     "shift": -0.6
+    },
+    {
+     "mark": "t-linetime",
+     "move": 1.4,
+     "phrase": "40 hours",
+     "shift": -0.7
     },
     {
      "mark": "rollout",
+     "move": 2.5,
      "phrase": "Then I ask",
-     "shift": -0.3,
-     "move": 2.5
+     "shift": -0.3
     },
     {
      "mark": "create",
+     "move": 2.0,
      "phrase": "I add a check",
-     "shift": -0.5,
-     "move": 2.0
+     "shift": -0.5
     },
     {
      "mark": "owners",
+     "move": 3.0,
      "phrase": "each with an",
-     "shift": -0.3,
-     "move": 3.0
+     "shift": -0.3
     }
    ],
    "captions": [
@@ -775,46 +924,25 @@
    ],
    "highlights": [
     {
-     "rect": "review",
-     "phrase": "the review date",
-     "shift": -0.2,
-     "dur": 2.6,
-     "cue": "review"
+     "item": "review-date"
     },
     {
-     "rect": "t-after",
-     "phrase": "down to",
-     "shift": 0.0,
-     "dur": 4.6,
-     "cue": "result"
+     "item": "recurred"
     },
     {
-     "rect": "t-saving",
-     "phrase": "verified savings",
-     "shift": -0.2,
-     "dur": 5.4,
-     "cue": "result"
+     "item": "t-after"
     },
     {
-     "rect": "t-cost",
-     "phrase": "The $20",
-     "shift": -0.2,
-     "dur": 3.4,
-     "cue": "result"
+     "item": "t-saving"
     },
     {
-     "rect": "t-payback",
-     "phrase": "pays back",
-     "shift": 0.0,
-     "dur": 4.2,
-     "cue": "result"
+     "item": "t-cost"
     },
     {
-     "rect": "t-linetime",
-     "phrase": "40 hours",
-     "shift": -0.4,
-     "dur": 4.0,
-     "cue": "result"
+     "item": "t-payback"
+    },
+    {
+     "item": "t-linetime"
     }
    ]
   },
@@ -903,26 +1031,86 @@
    "cues": [
     {
      "mark": "tab",
-     "at": 0,
-     "move": 2.0
+     "move": 2.0,
+     "at": 0
     },
     {
      "mark": "roots",
+     "move": 3.0,
      "phrase": "Why does this",
-     "shift": -0.8,
-     "move": 3.0
+     "shift": -0.8
+    },
+    {
+     "mark": "root-jaw",
+     "move": 1.4,
+     "phrase": "checked the",
+     "shift": -0.5
+    },
+    {
+     "mark": "root-settings",
+     "move": 1.4,
+     "phrase": "locked the",
+     "shift": -0.5
+    },
+    {
+     "mark": "root-film",
+     "move": 1.4,
+     "phrase": "controlled the",
+     "shift": -0.5
+    },
+    {
+     "mark": "root-seal",
+     "move": 1.4,
+     "phrase": "caught a",
+     "shift": -0.6
     },
     {
      "mark": "saving",
+     "move": 2.5,
      "phrase": "What is it costing",
-     "shift": -1.8,
-     "move": 2.5
+     "shift": -1.8
+    },
+    {
+     "mark": "t-before",
+     "move": 1.4,
+     "phrase": "$263",
+     "shift": -0.8
+    },
+    {
+     "mark": "t-saving",
+     "move": 1.4,
+     "phrase": "$219",
+     "shift": -0.8
+    },
+    {
+     "mark": "t-linetime",
+     "move": 1.4,
+     "phrase": "and 40",
+     "shift": -0.6
     },
     {
      "mark": "dash",
-     "phrase": "And this is the",
-     "shift": -0.4,
-     "move": 1.2
+     "move": 1.2,
+     "phrase": "And this is",
+     "shift": -0.4
+    },
+    {
+     "mark": "d-loss",
+     "move": 1.4,
+     "phrase": "What failures",
+     "shift": -0.5
+    },
+    {
+     "mark": "d-saved",
+     "move": 1.4,
+     "phrase": "what you have",
+     "shift": -0.5
+    },
+    {
+     "mark": "d-actions",
+     "move": 1.4,
+     "phrase": "the actions still",
+     "shift": -0.5
     }
    ],
    "captions": [
@@ -939,71 +1127,34 @@
    ],
    "highlights": [
     {
-     "rect": "root1",
-     "phrase": "checked the",
-     "dur": 2.6,
-     "cue": "roots"
+     "item": "root-jaw"
     },
     {
-     "rect": "root2",
-     "phrase": "locked the",
-     "dur": 2.2,
-     "cue": "roots"
+     "item": "root-settings"
     },
     {
-     "rect": "root3",
-     "phrase": "controlled the",
-     "dur": 2.2,
-     "cue": "roots"
+     "item": "root-film"
     },
     {
-     "rect": "root4",
-     "phrase": "caught a",
-     "shift": -0.2,
-     "dur": 2.6,
-     "cue": "roots"
+     "item": "root-seal"
     },
     {
-     "rect": "t-before",
-     "phrase": "$263",
-     "shift": -0.3,
-     "dur": 3.6,
-     "cue": "saving"
+     "item": "t-before"
     },
     {
-     "rect": "t-saving",
-     "phrase": "$219",
-     "shift": -0.3,
-     "dur": 5.2,
-     "cue": "saving"
+     "item": "t-saving"
     },
     {
-     "rect": "d-loss",
-     "phrase": "What failures",
-     "shift": 0.1,
-     "dur": 3.3,
-     "cue": "dash"
+     "item": "t-linetime"
     },
     {
-     "rect": "d-saved",
-     "phrase": "what you have",
-     "shift": 0.0,
-     "dur": 3.3,
-     "cue": "dash"
+     "item": "d-loss"
     },
     {
-     "rect": "d-actions",
-     "phrase": "the actions still",
-     "shift": -0.2,
-     "dur": 3.2,
-     "cue": "dash"
+     "item": "d-saved"
     },
     {
-     "rect": "t-linetime",
-     "phrase": "and 40",
-     "shift": -0.2,
-     "dur": 4.0,
-     "cue": "saving"
+     "item": "d-actions"
     }
    ]
   }

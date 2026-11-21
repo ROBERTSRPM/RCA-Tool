@@ -41,6 +41,39 @@ export class Ctx {
     const k = 1920 / 1440; this.rects = this.rects ?? {};
     this.rects[name] = { x: Math.round((x0 - pad) * k), y: Math.round((y0 - pad) * k), w: Math.round((x1 - x0 + 2 * pad) * k), h: Math.round((y1 - y0 + 2 * pad) * k) };
   }
+  // ---- item beats: the cursor goes to the named element, the whole element is on screen, and its real DOM box is recorded for the highlight ----
+  // kind: self (the element), tile (its stat-tile ancestor), row (its calculation-row ancestor), wide (its wide card ancestor)
+  async domBox(loc, kind = "self") {
+    return await loc.evaluate((el, kind) => {
+      const lim = { tile: [150, 430, 70, 330], row: [330, 560, 28, 150], box: [300, 560, 100, 420], orow: [560, 1500, 40, 130], card: [240, 300, 100, 175], wide: [560, 1500, 40, 600] }[kind];
+      let e = el;
+      if (lim) { while (e && e.parentElement) { const r = e.getBoundingClientRect(); if (r.width >= lim[0] && r.width <= lim[1] && r.height >= lim[2] && r.height <= lim[3]) break; e = e.parentElement; } }
+      const r = e.getBoundingClientRect(); return { x: r.x, y: r.y, w: r.width, h: r.height };
+    }, kind);
+  }
+  // scroll so the whole element sits clear of the sticky header and the caption strip
+  async frame(loc, kind = "self") {
+    await loc.scrollIntoViewIfNeeded();
+    for (let i = 0; i < 2; i++) {
+      const b = await this.domBox(loc, kind);
+      if (b.y < 150 || b.y + b.h > H - 110) { const dy = b.y - Math.max(170, Math.min(300, (H - b.h) / 2 - 20)); if (this.rec) await this.r.scroll(dy, 0.8); else await this.page.evaluate((d) => window.scrollBy(0, d), dy); }
+    }
+  }
+  async item(name, loc, { kind = "self", pad = 8, hold = 2.2, dx = 0.5, dy = 0.5, move = 0.9, click = false } = {}) {
+    this.mark(name);
+    await this.frame(loc, kind);
+    if (this.rec) await this.r.moveTo(loc, move, dx, dy);
+    if (click) { if (this.rec) await this.r.click(loc, 0.3); else await loc.click(); await this.page.waitForTimeout(250); }
+    if (this.rec) {
+      const b = await this.domBox(loc, kind), k = 1920 / 1440, el = await loc.boundingBox();
+      const rect = { x: Math.round((b.x - pad) * k), y: Math.round((b.y - pad) * k), w: Math.round((b.w + 2 * pad) * k), h: Math.round((b.h + 2 * pad) * k) };
+      this.rects = this.rects ?? {}; this.rects[name] = rect;
+      const cx = this.r.mx * k, cy = this.r.my * k;
+      this.checks = this.checks ?? {};
+      this.checks[name] = { fullyVisible: b.y >= 80 && b.y + b.h <= H && b.x >= 0 && b.x + b.w <= 1440, rectInFrame: rect.x >= 0 && rect.y >= 0 && rect.x + rect.w <= 1920 && rect.y + rect.h <= 1080, cursorOnElement: !!el && cx >= (el.x - 4) * k && cx <= (el.x + el.width + 4) * k && cy >= (el.y - 4) * k && cy <= (el.y + el.height + 4) * k, rect, cursor: [Math.round(cx), Math.round(cy)] };
+    }
+    await this.hold(hold);
+  }
   // run page changes without recording (the scene then opens on the finished state)
   async silently(fn) { const was = this.rec; if (was) this.r.stop(); await fn(); if (was) { this.r.start(); await this.r.hold(0.1); } }
   async hold(s) { if (this.rec) await this.r.hold(s); else await this.page.waitForTimeout(40); }
@@ -78,6 +111,7 @@ export class Ctx {
     fs.copyFileSync(out, path.join(OUT, `scene${n}.mp4`));
     fs.copyFileSync(out.replace(".mp4", ".marks.json"), path.join(OUT, `scene${n}.marks.json`));
     fs.writeFileSync(path.join(OUT, `scene${n}.rects.json`), JSON.stringify(this.rects ?? {}, null, 1));
+    fs.writeFileSync(path.join(OUT, `scene${n}.checks.json`), JSON.stringify(this.checks ?? {}, null, 1));
     return JSON.parse(fs.readFileSync(out.replace(".mp4", ".marks.json"))).seconds;
   }
 }

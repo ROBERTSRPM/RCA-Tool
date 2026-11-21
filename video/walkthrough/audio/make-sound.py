@@ -3,7 +3,7 @@ noise and sine waves, so there is no sample, loop or library track and nothing t
 usage: python make-sound.py <report.json> <voice.wav> <out dir>
 Both stems are ducked under the voice (speech-driven envelope) so they never mask speech. Cues follow script.md [SFX]/[MUSIC]:
 scene 1 plant ambience, sealer and conveyor, leak tester, hold tags, two phones, silence on the final question; scene 2 soft ticks
-as the four aims and the figures appear; scene 13 a soft chime at the verified saving; the end card; a quiet calm bed under scenes 2 to 15."""
+as the four aims and the figures appear; scene 13 a soft chime at the verified saving; two short music stings only (opening title, closing card): no music under speech."""
 import sys, json, numpy as np, soundfile as sf
 from scipy.signal import butter, sosfilt, sosfiltfilt
 from scipy.ndimage import uniform_filter1d
@@ -90,41 +90,24 @@ for at in (34.0, 36.2, 40.6, 44.2, 50.0): tick(at, 980, 0.04)
 # scene 13: a soft two-note chime as the verified saving appears
 chime = lambda at, f, a: put(sfx, at, (np.sin(2 * np.pi * f * np.arange(int(1.6 * SR)) / SR) + 0.25 * np.sin(2 * np.pi * 2 * f * np.arange(int(1.6 * SR)) / SR)) * np.exp(-np.arange(int(1.6 * SR)) / SR * 3.2) * np.minimum(np.arange(int(1.6 * SR)) / SR / 0.01, 1), a)
 chime(starts[13] + 35.4, 659, 0.035); chime(starts[13] + 35.75, 880, 0.035)
-# end card: one soft low tone
-endc = starts[15] + rep["15"]["seconds"] - 4.8
-chime(endc, 392, 0.04)
 # duck the SFX under speech (never over a spoken word): ambience and rings lightly, other SFX more
 sfx_d = ducked(sfx, 7)
-# ---------- music ----------
-def pad(freqs, dur, amp):
-    m = int(dur * SR); tt = np.arange(m) / SR; sig = np.zeros(m)
-    for f in freqs:
-        for det, g in ((0.997, 1.0), (1.003, 1.0), (1.0, 0.7)):
-            sig += g * (np.sin(2 * np.pi * f * det * tt) + 0.3 * np.sin(2 * np.pi * 2 * f * det * tt + 0.5) + 0.08 * np.sin(2 * np.pi * 3 * f * det * tt))
-    sig = lp(sig, 1800) / (len(freqs) * 2.4)
-    return sig * np.minimum(np.minimum(tt / 2.5, (dur - tt) / 2.5), 1) * amp
-def pluck(f, dur=1.8):
+# ---------- music: no bed under speech. Only a short, soft, minimal sting on the opening title and on the closing card ----------
+def bell(f, dur=2.4, amp=1.0):
     m = int(dur * SR); tt = np.arange(m) / SR
-    return (np.sin(2 * np.pi * f * tt) + 0.2 * np.sin(2 * np.pi * 2 * f * tt)) * np.exp(-tt * 2.4) * np.minimum(tt / 0.01, 1)
-CH = [([220.0, 277.18, 329.63, 415.30], [440.0, 554.37, 659.26, 830.6]), ([185.0, 220.0, 277.18, 369.99], [369.99, 440, 554.37, 739.99]), ([146.83, 220.0, 293.66, 369.99], [293.66, 440, 587.33, 739.99]), ([164.81, 207.65, 246.94, 329.63], [329.63, 415.3, 493.88, 659.26])]  # Amaj7, F#m7, D, Esus-ish: a slow, plain loop
+    return (np.sin(2 * np.pi * f * tt) + 0.35 * np.sin(2 * np.pi * 2 * f * tt) * np.exp(-tt * 3) + 0.12 * np.sin(2 * np.pi * 3.01 * f * tt) * np.exp(-tt * 6)) * np.exp(-tt * 1.8) * np.minimum(tt / 0.015, 1) * amp
 music = np.zeros(n)
-def bed(a, b, amp, plucks=True):
-    t = a; i = 0
-    while t < b - 1.0:
-        notes, up = CH[i % 4]; d = min(8.0, b - t + 2.0)
-        put(music, t, pad(notes, d, amp), 1.0)
-        if plucks:
-            for j, f in enumerate(up): put(music, t + 1.0 + j * 1.5, pluck(f), amp * 0.5)
-        t += 8.0 - 1.5; i += 1
-# scene 1: low tense drone from 3 s, gone by the last question; scenes 2 to 15: the calm bed, a soft pulse in scene 6, calm bed back under the end card
-drone = (np.sin(2 * np.pi * 55 * T) + 0.5 * np.sin(2 * np.pi * 82.4 * T) * (1 + 0.3 * np.sin(2 * np.pi * 0.2 * T)) + 0.2 * np.sin(2 * np.pi * 110.4 * T)) * env(S1 + 3.0, S1 + 54.0, 5.0)
-music += lp(drone, 400) * 0.05
-bed(starts[2], TOTAL, 0.05)
-pulse_a, pulse_b = starts[6] + 55.0, starts[6] + 100.0
-for k in np.arange(pulse_a, pulse_b, 1.0):
-    m = int(0.5 * SR); tt = np.arange(m) / SR; put(music, k, np.sin(2 * np.pi * 110 * tt) * np.exp(-tt * 7) * 0.5, 0.045 * min(1, (k - pulse_a) / 10 + 0.3))
-music *= np.minimum(1.0, np.maximum(0.0, (TOTAL - T) / 4.0))        # fade out under the end card
-music_d = ducked(music, 14)
+# opening title (0 to 3 s): two clean rising notes, then a soft chord that rings out
+put(music, S1 + 0.00, bell(440.0, 2.6), 0.06); put(music, S1 + 0.28, bell(659.26, 2.6), 0.06); put(music, S1 + 0.56, bell(880.0, 3.0), 0.05); put(music, S1 + 0.56, bell(554.37, 3.0), 0.03)
+# closing card: the same motif resolving, starting as the end card fades in
+try:
+    wd = json.load(open(sys.argv[1].replace("report.json", "words.json")))["15"]
+    ec = next(w[1] for i, w in enumerate(wd) if w[0].lower() == "you" and i + 1 < len(wd) and wd[i + 1][0].lower().startswith("can") and w[1] > 55) - 0.5
+except Exception:
+    ec = rep["15"]["seconds"] - 6.0
+E = starts[15] + ec
+put(music, E + 0.00, bell(659.26, 3.2), 0.05); put(music, E + 0.30, bell(554.37, 3.2), 0.05); put(music, E + 0.60, bell(440.0, 3.6), 0.06); put(music, E + 0.60, bell(880.0, 3.6), 0.03)
+music_d = ducked(music, 9)
 # overall stem levels: measure and set so the music sits well under the voice (about -34 LUFS alone, ducked further under speech)
 import pyloudnorm as pyln
 m_ = pyln.Meter(SR)
@@ -132,7 +115,7 @@ def settle(x, target):
     try: l = m_.integrated_loudness(x)
     except Exception: return x
     return x * 10 ** ((target - l) / 20)
-music_d = settle(music_d, -36.0); sfx_d = sfx_d * 1.0
+sfx_d = sfx_d * 1.0
 for name, x in (("sfx", sfx_d), ("music", music_d)):
-    pk = np.abs(x).max(); print(name, "peak dBFS", round(20 * np.log10(pk + 1e-9), 1), "LUFS", round(m_.integrated_loudness(x), 1))
+    pk = np.abs(x).max(); print(name, "peak dBFS", round(20 * np.log10(pk + 1e-9), 1), "LUFS", round(m_.integrated_loudness(x), 1) if name == "sfx" else "(two short stings, no bed)")
     sf.write(f"{out}/{name}.wav", x.astype(np.float32), SR, subtype="PCM_16")
