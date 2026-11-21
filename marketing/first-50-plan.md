@@ -12,7 +12,7 @@ Dates assume Monday 23 November 2026 as week 1. Weeks 5 and 6 fall over Christma
 For 5 sites:
 - The 90-day pilot, with the owner setting up the asset register and co-leading the first 1 or 2 real RCAs.
 - Pilot fee waived or reduced in return for: using it on real failures, written feedback by email every two weeks, and a short case study (with the site's approval and naming only if they agree).
-- Owner decision: the old LAUNCH-PLAN says "free for 3 months". The pricing draft says A$2,500 pilot. Pick one: fee waived for design partners, half price, or full price with credit. Avoid the word "free" in all copy.
+- Owner decision: the old LAUNCH-PLAN has no fee for the first 3 months. The pricing draft says A$2,500 pilot. Pick one: fee waived for design partners, half price, or full price with credit.
 - Owner decision: the old plan says a 30-minute feedback call every two weeks. Email only is the rule. Offer written feedback by default, and a short meeting only if the partner asks for one.
 - Cap it at 5. Say so. A cap is honest and makes a decision easier.
 
@@ -101,7 +101,7 @@ Rule for groups: be useful first. Share a story or a lesson. Mention the tool on
 - Send the demo link in every DM that gets a reply. Use the explainer for people who want the method first.
 - Look at the title and thumbnail A/B test results after about 2 weeks or 1,000 impressions (see `video/demo/youtube-upload.md`) and keep the winner.
 - Make sure the video description and pinned comment point to the site and the email.
-- Do not mention the longer walkthrough video. It is not approved yet.
+- Do not mention the longer full-length video. It is not approved yet.
 
 ## Success measures at the end of 6 weeks
 
@@ -115,4 +115,4 @@ Rule for groups: be useful first. Share a story or a lesson. Mention the tool on
 
 - No replies from warm contacts: the message is too long or sounds like a pitch. Cut it to three lines and ask only for advice.
 - Replies but no trial: the sample investigation is too far from their problem. Offer to load one of their real failures.
-- Trial but no pilot: ask what blocked them. It is usually time, price or IT. Fix the right one.
+- Trial but no pilot: ask what blocked them. It is usually time, price or IT. Deal with the right one.
