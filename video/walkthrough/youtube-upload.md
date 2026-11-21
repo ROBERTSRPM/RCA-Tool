@@ -1,4 +1,4 @@
-# YouTube upload pack: RCA Pilot walkthrough (13:36)
+# YouTube upload pack: RCA Pilot walkthrough (13:38)
 
 DRAFT FOR THE OWNER'S REVIEW. Nothing has been uploaded, published or linked.
 File: `video/walkthrough/out/rca-pilot-walkthrough.mp4` (git-ignored). Captions: `video/walkthrough/captions.srt`.
@@ -48,11 +48,11 @@ Chapters
 6:26 Cause tree
 7:53 Natural vs forced wear, 5 Whys, Fishbone
 8:31 Cause coach and Challenge my analysis
-9:32 Actions
-10:32 Suggested actions and Quality check
-10:53 Verify and roll out
-12:00 Report
-12:26 Close
+9:34 Actions
+10:33 Suggested actions and Quality check
+10:54 Verify and roll out
+12:01 Report
+12:28 Close
 
 #RootCauseAnalysis #Maintenance #Reliability
 

@@ -7,8 +7,8 @@ Scenes 1 and 2 are simple illustrations in the app's style (no footage, no peopl
 | # | Scene | Voice says | Screen shows | Status |
 |---|---|---|---|---|
 | 1 | 13 and 15 | "...and we got 40 hours of line time back" | The branch preview now has a "Line time back (verified)  40 h a year" tile on the Verify step and a "40 h of line time back a year" line under Verified annual savings on the dashboard (app change a4a74c0, after this audit's first draft). Nothing was added by the video: the recording simply shows it, and the tile is highlighted as the voice says it. If the owner reverts that app change, this claim goes back to NOT SHOWN. | OK (with the current preview app) |
-| 2 | 10 | "It also suggests the gas mix, but the oxygen readings were in spec, so I dismiss it." | The real AI no longer offers a gas-mix suggestion; the screen adds the jaw/seal-plate suggestion instead. Fixed when the owner's re-recorded line (a) is dropped in. | NO until re-record |
-| 3 | 10 | "...so I link the film inspection." | The evidence item is titled "Film specification, maintenance and QA records". Fixed by re-recorded line (b). | PART until re-record |
+| 2 | 10 | (was) "It also suggests the gas mix..." | Replaced by the owner's re-recorded line: "It also suggests the seal plate is marked and not flat. The inspection found those marks." The screen shows the AI's "Seal plate is marked and not flat..." suggestion being added. | OK (fixed by the re-record) |
+| 3 | 10 | (was) "...so I link the film inspection." | Now "...so I link the film specification", matching the evidence item "Film specification, maintenance and QA records". | OK (fixed by the re-record) |
 | 4 | 10 | "It suggests product contaminating the flange." | Shown: the AI's own wording is "Product, fat or moisture was on the tray flange..." (no rice or sauce). | OK |
 | 5 | 13 | "Lines 1 and 2" | The roll-out assets are entered as L1-TS and L2-TS with duty "Tray sealing" (Line 1 and Line 2 tray sealers). | PART |
 | 6 | 7 | "Keep the retained packs and the worn parts, and photograph them" | Advice only. The first evidence item has an "Add a photo" button but no photo is uploaded on screen (no real customer photo). | NA |
@@ -52,7 +52,7 @@ Scenes 1 and 2 are simple illustrations in the app's style (no footage, no peopl
 | 9 | 5 Whys; Fishbone grouped by Cause area | Both views shown, Group by Level / Cause area | OK |
 | 10 | Cause coach; "Add to tree" or "Dismiss" | Card and results with the buttons; two suggestions added | OK |
 | 10 | Challenge my analysis points out the film root cause has no evidence | Challenge results: "Flagged root cause with no evidence linked..." first (real AI output) | OK |
-| 10 | "link the film inspection" | Evidence item E5 ticked and set to Verified | PART (see mismatch 3) |
+| 10 | "link the film specification" | Evidence item E5 (film specification) ticked and set to Verified | OK |
 | 11 | owner, due date and cost on every action | Action forms filled | OK |
 | 11 | jaw: Maintenance task, check every week, replace silicone every 3 months | Action P1 with task, "every 1 weeks" | OK |
 | 11 | settings: Design or equipment change; film: Procedure or standard; seal checks: more checks and a faster leak tester | Actions P2 to P5 | OK |
