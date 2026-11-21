@@ -45,7 +45,7 @@ export class Ctx {
   // kind: self (the element), tile (its stat-tile ancestor), row (its calculation-row ancestor), wide (its wide card ancestor)
   async domBox(loc, kind = "self") {
     return await loc.evaluate((el, kind) => {
-      const lim = { tile: [150, 430, 70, 330], row: [330, 560, 28, 150], box: [300, 560, 100, 420], orow: [560, 1500, 40, 130], card: [240, 300, 100, 175], wide: [560, 1500, 40, 600] }[kind];
+      const lim = { tile: [150, 430, 70, 330], stile: [150, 430, 45, 120], row: [330, 560, 28, 150], box: [300, 560, 100, 420], orow: [560, 1500, 40, 130], card: [240, 300, 100, 175], wide: [560, 1500, 40, 600] }[kind];
       let e = el;
       if (lim) { while (e && e.parentElement) { const r = e.getBoundingClientRect(); if (r.width >= lim[0] && r.width <= lim[1] && r.height >= lim[2] && r.height <= lim[3]) break; e = e.parentElement; } }
       const r = e.getBoundingClientRect(); return { x: r.x, y: r.y, w: r.width, h: r.height };

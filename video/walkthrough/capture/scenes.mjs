@@ -215,7 +215,7 @@ async function s11() {
     await fillAction(p);
   }
   c.mark("plan"); await c.scrollTo(page.getByText("Maintenance plan changes", { exact: true }).first(), 1.6, 110); await c.hold(5.0);
-  c.mark("tiles"); await c.top(); await c.item("t-total", page.getByText(/^total action cost/i).first(), { kind: "tile", pad: 6, hold: 3.5 });
+  c.mark("tiles"); await c.top(); await c.item("t-total", page.getByText(/^total action cost/i).first(), { kind: "stile", pad: 6, hold: 3.5 });
 }
 // root cause order on the Actions step follows the tree order of the four roots
 const ROOTS = ["A3", "B3", "C3", "D2"];
