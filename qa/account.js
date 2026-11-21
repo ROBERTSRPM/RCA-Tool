@@ -424,21 +424,21 @@ test('A-LOSS-1', 'Signed in: the new loss fields persist in the account and carr
     const v = async (k) => Number(await page.getByLabel(k + ' percent', { exact: true }).inputValue()); eq([await v('Lost for good'), await v('Made up later'), await v('Covered by buffer stock')], [48, 32, 20]);
     eq(await page.getByLabel('Recovery note (optional)').inputValue(), 'two Saturdays'); eq(await page.getByTestId('other-cost-line').count(), 2); eq(await page.getByTestId('annual-loss').innerText(), '$20,462');
   });
-  await sub('verify-report', 'Verify and Report show expected saving $12,641 (cash $8,801 + opportunity $3,840), payback 4.7 months', async () => {
-    await step(page, 'Verify'); const t = (await page.locator('dl').last().innerText()).replace(/\s+/g, ' ').toLowerCase(); ok(t.includes('expected saving (not yet verified) $12,641') && t.includes('cash $8,801 · opportunity $3,840') && t.includes('4.7 months'), t);
-    const r = (await e.reportText(page)).toLowerCase(); ok(r.includes('cash costs $2,200 $14,702') && r.includes('opportunity loss (240 units lost for good'.replace('units', 'pcs') + ' × $4) $960 $5,760') && r.includes('total $3,160 $20,462'), r.slice(0, 600));
+  await sub('verify-report', 'Verify and Report show expected saving $12,641 (money spent $8,801 + lost margin $3,840), payback 4.7 months', async () => {
+    await step(page, 'Verify'); const t = (await page.locator('dl').last().innerText()).replace(/\s+/g, ' ').toLowerCase(); ok(t.includes('expected saving (not yet verified) $12,641') && t.includes('money spent $8,801 · lost margin $3,840') && t.includes('4.7 months'), t);
+    const r = (await e.reportText(page)).toLowerCase(); ok(r.includes('money spent $2,200 $14,702') && r.includes('lost margin (240 units lost for good'.replace('units', 'pcs') + ' × $4) $960 $5,760') && r.includes('total $3,160 $20,462'), r.slice(0, 600));
   });
   const num = (t) => Number((/\$([\d,]+)/.exec(t) || [0, '0'])[1].replace(/,/g, ''));
-  const split = (t) => { const m = /Cash \$([\d,]+) · Opportunity \$([\d,]+)/.exec(t); return m ? [Number(m[1].replace(/,/g, '')), Number(m[2].replace(/,/g, ''))] : [0, 0]; };
+  const split = (t) => { const m = /Money spent \$([\d,]+) · Lost margin \$([\d,]+)/.exec(t); return m ? [Number(m[1].replace(/,/g, '')), Number(m[2].replace(/,/g, ''))] : [0, 0]; };
   const tiles = async () => { await page.goto(BASE + '/app'); await e.dashStats(page); return page.evaluate(() => [...document.querySelectorAll('section[aria-label="Totals"] > div')].map(d => d.innerText.replace(/\s+/g, ' '))); };
   await sub('dashboard', 'Account dashboard: the S3 row is $20,462 with split $14,702 / $5,760; the loss tile rises by exactly that; verified tile does not change until closed', async () => {
-    const after = await tiles(); const row = (await e.dashRows(page)).find(x => x.includes('LOSS-S3')); ok(row.includes('$20,462') && row.includes('Cash $14,702 · Opportunity $5,760'), row);
+    const after = await tiles(); const row = (await e.dashRows(page)).find(x => x.includes('LOSS-S3')); ok(row.includes('$20,462') && row.includes('Money spent $14,702 · Lost margin $5,760'), row);
     // baseline = tiles with the S3 investigation removed from the maths: compare against a second read after deleting nothing is impossible, so use the row-sum identity
-    const rows = await e.dashRows(page); let openSum = 0; for (const r of rows) { if (/Closed/.test(r)) continue; const m = /\$([\d,]+) Cash/.exec(r); if (m) openSum += Number(m[1].replace(/,/g, '')); }
-    eq(num(after[0]), openSum, 'loss tile = sum of non-closed row annual losses'); eq(split(after[0])[0] + split(after[0])[1], num(after[0]), 'cash + opportunity = tile'); ok(after[0].includes('$'), after[0]);
+    const rows = await e.dashRows(page); let openSum = 0; for (const r of rows) { if (/Closed/.test(r)) continue; const m = /\$([\d,]+) Money spent/.exec(r); if (m) openSum += Number(m[1].replace(/,/g, '')); }
+    eq(num(after[0]), openSum, 'loss tile = sum of non-closed row annual losses'); eq(split(after[0])[0] + split(after[0])[1], num(after[0]), 'money spent + lost margin = tile'); ok(after[0].includes('$'), after[0]);
     h.note('observation', 'A-LOSS-1 tiles before closing: ' + after.join(' | ')); globalThis.__savedBefore = [num(after[3]), ...split(after[3])];
   });
-  await sub('close-dashboard', 'After closing S3 the verified tile rises by exactly $12,641 (cash +$8,801, opportunity +$3,840) and the loss tile drops by $20,462', async () => {
+  await sub('close-dashboard', 'After closing S3 the verified tile rises by exactly $12,641 (money spent +$8,801, lost margin +$3,840) and the loss tile drops by $20,462', async () => {
     const before = globalThis.__savedBefore; const lossBefore = num((await tiles())[0]);
     await page.goto(BASE + '/app/investigations/' + id); await page.getByLabel('Title', { exact: true }).waitFor(); await step(page, 'Actions'); await f.setActionStatus(page, 0, 'Done');
     await f.fillVerify(page, { date: '2026-11-10', recurred: 'No, it has not recurred' }); await waitSaved(page); const t = await tiles();

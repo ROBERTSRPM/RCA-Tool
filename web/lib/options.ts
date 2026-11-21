@@ -99,7 +99,7 @@ export const DETERIORATION_OPTIONS: { value: Exclude<Deterioration, "">; label: 
 export const DETERIORATION_GUIDANCE =
   "Forced deterioration is removed by dealing with its cause. Natural deterioration is managed by inspection, condition monitoring and planned replacement.";
 
-/** Quick-add cash cost lines for process and quality losses. The user fills the amount. */
+/** Quick-add money spent lines for process and quality losses. The user fills the amount. */
 export const COST_PRESETS: { label: string; category: OtherCostCategory }[] = [
   { label: "Scrapped product", category: "scrap" },
   { label: "Rework", category: "other" },

@@ -185,13 +185,13 @@ test('D-E2E-1', 'Full flow: new investigation, 7 steps, hand-checked numbers, da
   await sub('report', 'Report content matches data and hand-calculated figures', async () => {
     has(e.PROBLEM.title); has('Conveyor C-7 gearbox · Packing hall B · Event on 20 Oct 2026'); has('Status: Closed');
     has('Annual loss ' + money(calc.annual)); has('Annual saving (verified) ' + money(calc.saving)); has('Action cost ' + money(calc.actionCost)); has('Payback ' + e.months(calc.payback));
-    // round 2 report format (loss table). Hand calc: 660 cartons/event, 100% lost for good -> opportunity 660 x 2.5 = 1,650/event = 6,600/yr; cash = repair 1,800/event = 7,200/yr
+    // round 2 report format (loss table). Hand calc: 660 cartons/event, 100% lost for good -> lost margin 660 x 2.5 = 1,650/event = 6,600/yr; money spent = repair 1,800/event = 7,200/yr
     has('Each event stops production for 5.5 h at 120 cartons/h, so 660 cartons are not produced'); has('100% is lost for good, 0% is made up later and 0% is covered by buffer stock');
-    has('Cash: repair $1,800 $7,200'); has('Cash costs $1,800 $7,200'); has('Opportunity loss (660 cartons lost for good × $2.5) $1,650 $6,600'); has('Total $3,450 $13,800'); has('$13,800 per year in total');
+    has('Money spent: repair $1,800 $7,200'); has('Money spent $1,800 $7,200'); has('Lost margin (660 cartons lost for good × $2.5) $1,650 $6,600'); has('Total $3,450 $13,800'); has('$13,800 per year in total');
     for (const x of ['Oil sample report', 'Operator interview', 'Alignment check', 'Gearbox oil starved', 'Oil level not checked on rounds', 'Inspection route has no gearbox oil check', 'Coupling misaligned', 'No alignment spec in install procedure', 'Wrong grease used', 'Grease type not on lubrication chart']) has(x);
     has('Add gearbox oil check to daily route'); has('Sam Patel'); has('10 Jan 2026'); has('1 Mar 2027'); has('$1,200'); has('$951'); has('Total $2,151');
     has('Review date 10 Nov 2026'); has('No repeat in 3 weeks.');
-    has('Annual loss falls from $13,800 to $3,450: a saving of $10,350 per year (cash $5,400, opportunity $4,950) for an action cost of $2,151, paid back in 2.5 months'); ok(!repL.includes('not yet verified'), 'closed investigation still says not yet verified');
+    has('Annual loss falls from $13,800 to $3,450: a saving of $10,350 per year (money spent $5,400, lost margin $4,950) for an action cost of $2,151, paid back in 2.5 months'); ok(!repL.includes('not yet verified'), 'closed investigation still says not yet verified');
     eq(await page.locator('article.print-sheet h2:has-text("Root causes") + ol li').count(), 2, 'root cause list');
   });
   await sub('report-ruledout', 'Report marks ruled-out cause and category/evidence tags', async () => {

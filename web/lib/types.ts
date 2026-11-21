@@ -109,7 +109,7 @@ export interface Loss {
   ratePerHour: number | null;
   unitName: string;
   marginPerUnit: number | null;
-  /** Simple default cash cost per event (parts, labour, contractors). */
+  /** Simple default money spent per event (parts, labour, contractors). */
   repairCost: number | null;
   currency: string;
   /** The user chose "Not known yet": no figures are used or shown until they add some. */
@@ -126,12 +126,12 @@ export interface Loss {
   shareMadeUp?: number;
   /** % of the lost production covered by buffer stock (no cost per event). */
   shareBuffer?: number;
-  /** Cash cost per event of making the production up later. */
+  /** Money spent per event on making the production up later. */
   recoveryCost?: number | null;
   recoveryNote?: string;
   /** Optional yearly cost of holding the buffer stock, attributed to this failure. */
   bufferHoldingCostPerYear?: number | null;
-  /** Extra cash costs per event, on top of the simple repair cost. */
+  /** Extra money spent per event, on top of the simple repair cost. */
   otherCosts?: OtherCost[];
 }
 

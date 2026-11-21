@@ -93,25 +93,25 @@ export interface LossCalc {
   /** units never made up per year */
   unitsLostForGoodPerYear: number;
 
-  /** cash cost lines per event */
+  /** money spent lines per event */
   repairPerEvent: number;
   recoveryPerEvent: number;
   otherPerEvent: number;
-  /** cash per event = repair + recovery + other lines */
+  /** money spent per event = repair + recovery + other lines */
   cashPerEvent: number;
-  /** opportunity loss per event = units lost for good x margin per unit */
+  /** lost margin per event = units lost for good x margin per unit */
   lostMarginPerEvent: number;
   opportunityPerEvent: number;
-  /** total cost of one event = cash + opportunity (buffer holding is yearly, see below) */
+  /** total cost of one event = money spent + lost margin (buffer holding is yearly, see below) */
   costPerEvent: number;
 
   /** yearly cost of holding buffer stock (0 unless some production is covered by buffer) */
   bufferHoldingPerYear: number;
-  /** annual cash costs = cash per event x events + buffer holding */
+  /** annual money spent = money spent per event x events + buffer holding */
   annualCash: number;
-  /** annual opportunity loss = opportunity per event x events */
+  /** annual lost margin = lost margin per event x events */
   annualOpportunity: number;
-  /** annual loss = annual cash + annual opportunity (or the rough yearly estimate when nothing else costs a year) */
+  /** annual loss = annual money spent + annual lost margin (or the rough yearly estimate when nothing else costs a year) */
   annualLoss: number;
   /** true when annualLoss is the user's single rough yearly estimate, not built from the detailed figures */
   usesEstimate: boolean;
@@ -249,7 +249,7 @@ export interface VerifyCalc {
   annualLossBefore: number;
   annualLossAfter: number;
   annualSaving: number;
-  /** the same three figures, split into cash costs and opportunity loss */
+  /** the same three figures, split into money spent and lost margin */
   cashBefore: number;
   cashAfter: number;
   cashSaving: number;
@@ -354,7 +354,7 @@ export function verifiedHoursBack(
   return hoursBackPerYear(inv) ?? 0;
 }
 
-/** The verified saving split into cash and opportunity parts (each never below 0). */
+/** The verified saving split into money spent and lost margin parts (each never below 0). */
 export function verifiedSavingSplit(
   inv: Pick<Investigation, "loss" | "actions" | "verification">,
 ): { cash: number; opportunity: number } {

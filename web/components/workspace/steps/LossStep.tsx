@@ -251,7 +251,7 @@ export function LossStep({ inv, update }: StepProps) {
 
         <SectionCard
           title="Other costs per event (optional)"
-          help="Anything else that one failure costs in money spent, on top of the repair cost above. Each line counts once per event."
+          help="Anything else that one failure costs, on top of the repair cost above. Each line counts once per event."
           right={
             <button
               type="button"
