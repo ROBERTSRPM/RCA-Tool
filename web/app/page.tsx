@@ -29,7 +29,7 @@ const STEPS = [
     src: "/landing/step-cost.webp",
     width: 760,
     height: 780,
-    alt: "Loss step: cash costs, opportunity loss and an annual loss of $238,440 calculated from events per year, hours lost and margin.",
+    alt: "Loss step: money spent, lost margin and an annual loss of $238,440 calculated from events per year, hours lost and margin.",
     frame: "max-w-[400px]",
   },
   {

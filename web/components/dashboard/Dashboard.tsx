@@ -219,7 +219,7 @@ export function Dashboard() {
           }
           split={
             items && !(totals.openCount > 0 && totals.notCosted === totals.openCount)
-              ? `Cash ${formatMoney(totals.lossCash, currency)} · Opportunity ${formatMoney(totals.lossOpportunity, currency)}`
+              ? `Money spent ${formatMoney(totals.lossCash, currency)} · Lost margin ${formatMoney(totals.lossOpportunity, currency)}`
               : undefined
           }
         />
@@ -240,7 +240,7 @@ export function Dashboard() {
           hint="Closed investigations only: failure confirmed stopped"
           split={
             items && totals.saved > 0
-              ? `Cash ${formatMoney(totals.savedCash, currency)} · Opportunity ${formatMoney(totals.savedOpportunity, currency)}`
+              ? `Money spent ${formatMoney(totals.savedCash, currency)} · Lost margin ${formatMoney(totals.savedOpportunity, currency)}`
               : undefined
           }
           extra={
@@ -370,7 +370,7 @@ export function Dashboard() {
                     </p>
                     {annual > 0 && (
                       <p className="text-xs text-slate-500">
-                        Cash {formatMoney(cash, inv.loss.currency)} · Opportunity{" "}
+                        Money spent {formatMoney(cash, inv.loss.currency)} · Lost margin{" "}
                         {formatMoney(opportunity, inv.loss.currency)}
                       </p>
                     )}

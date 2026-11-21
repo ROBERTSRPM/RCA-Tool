@@ -150,7 +150,7 @@ export function buildAiContext(inv: Investigation): AiContext {
     ? lc.usesEstimate
       ? `rough estimate of ${formatMoney(lc.annualLoss, cur)} lost per year (not broken down)`
       : `${inv.loss.eventsPerYear ?? "?"} events per year, ${inv.loss.downtimeHours ?? "?"} hours down per event, ` +
-        `${formatMoney(lc.costPerEvent, cur)} per event (${formatMoney(lc.cashPerEvent, cur)} cash, ${formatMoney(lc.opportunityPerEvent, cur)} lost margin), ` +
+        `${formatMoney(lc.costPerEvent, cur)} per event (${formatMoney(lc.cashPerEvent, cur)} money spent, ${formatMoney(lc.opportunityPerEvent, cur)} lost margin), ` +
         `about ${formatMoney(lc.annualLoss, cur)} lost per year`
     : "loss not costed yet";
   const v = inv.verification;

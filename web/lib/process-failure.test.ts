@@ -42,7 +42,7 @@ describe("process / quality failures", () => {
     );
   });
 
-  it("cost presets are cash costs the user fills in", () => {
+  it("cost presets are money-spent lines the user fills in", () => {
     const l = { ...blankInvestigation().loss, eventsPerYear: 2 };
     const withPresets = {
       ...l,

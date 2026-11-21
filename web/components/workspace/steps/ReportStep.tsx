@@ -186,7 +186,7 @@ export function ReportStep({ inv, update }: StepProps) {
               </thead>
               <tbody>
                 <tr className="border-b border-slate-200">
-                  <td className="py-1 pr-2">Cash: repair</td>
+                  <td className="py-1 pr-2">Money spent: repair</td>
                   <td className="py-1 pr-2 text-right tabular-nums">{formatMoney(c.repairPerEvent, cur)}</td>
                   <td className="py-1 text-right tabular-nums">
                     {formatMoney(c.repairPerEvent * (inv.loss.eventsPerYear ?? 0), cur)}
@@ -195,7 +195,7 @@ export function ReportStep({ inv, update }: StepProps) {
                 {c.recoveryPerEvent > 0 && (
                   <tr className="border-b border-slate-200">
                     <td className="py-1 pr-2">
-                      Cash: recovery of production made up later
+                      Money spent: recovery of production made up later
                       {inv.loss.recoveryNote ? ` (${inv.loss.recoveryNote})` : ""}
                     </td>
                     <td className="py-1 pr-2 text-right tabular-nums">{formatMoney(c.recoveryPerEvent, cur)}</td>
@@ -207,7 +207,7 @@ export function ReportStep({ inv, update }: StepProps) {
                 {others.map((o) => (
                   <tr key={o.id} className="border-b border-slate-200">
                     <td className="py-1 pr-2">
-                      Cash: {OTHER_COST_CATEGORIES.find((k) => k.value === o.category)?.label ?? "Other"}
+                      Money spent: {OTHER_COST_CATEGORIES.find((k) => k.value === o.category)?.label ?? "Other"}
                       {o.description ? ` (${o.description})` : ""}
                     </td>
                     <td className="py-1 pr-2 text-right tabular-nums">{formatMoney(o.amount ?? 0, cur)}</td>
@@ -218,19 +218,19 @@ export function ReportStep({ inv, update }: StepProps) {
                 ))}
                 {c.bufferHoldingPerYear > 0 && (
                   <tr className="border-b border-slate-200">
-                    <td className="py-1 pr-2">Cash: buffer stock holding (yearly)</td>
+                    <td className="py-1 pr-2">Money spent: buffer stock holding (yearly)</td>
                     <td className="py-1 pr-2 text-right">n/a</td>
                     <td className="py-1 text-right tabular-nums">{formatMoney(c.bufferHoldingPerYear, cur)}</td>
                   </tr>
                 )}
                 <tr className="border-b border-slate-200 font-semibold">
-                  <td className="py-1 pr-2">Cash costs</td>
+                  <td className="py-1 pr-2">Money spent</td>
                   <td className="py-1 pr-2 text-right tabular-nums">{formatMoney(c.cashPerEvent, cur)}</td>
                   <td className="py-1 text-right tabular-nums">{formatMoney(c.annualCash, cur)}</td>
                 </tr>
                 <tr className="border-b border-slate-200 font-semibold">
                   <td className="py-1 pr-2">
-                    Opportunity loss ({formatNumber(c.unitsLostForGoodPerEvent, 1)} {unit} lost for good × {cur}
+                    Lost margin ({formatNumber(c.unitsLostForGoodPerEvent, 1)} {unit} lost for good × {cur}
                     {formatNumber(inv.loss.marginPerUnit ?? 0, 2)})
                   </td>
                   <td className="py-1 pr-2 text-right tabular-nums">{formatMoney(c.opportunityPerEvent, cur)}</td>
@@ -449,8 +449,8 @@ export function ReportStep({ inv, update }: StepProps) {
             <p className="mt-2">
               Annual loss falls from <strong>{formatMoney(v.annualLossBefore, cur)}</strong> to{" "}
               <strong>{formatMoney(v.annualLossAfter, cur)}</strong>: {verified ? "a saving" : "an expected saving"} of{" "}
-              <strong>{formatMoney(v.annualSaving, cur)} per year</strong> (cash{" "}
-              {formatMoney(v.cashSaving, cur)}, opportunity {formatMoney(v.opportunitySaving, cur)}) for an
+              <strong>{formatMoney(v.annualSaving, cur)} per year</strong> (money spent{" "}
+              {formatMoney(v.cashSaving, cur)}, lost margin {formatMoney(v.opportunitySaving, cur)}) for an
               action cost of {formatMoney(v.totalActionCost, cur)}, paid back in{" "}
               {formatMonths(v.paybackMonths)}.
               {!verified &&

@@ -27,7 +27,7 @@ export function VerifyStep({ inv, update, go }: StepProps) {
   const calc = calcVerification(inv);
   const verified = isVerifiedClosed(inv);
   const split = (cash: number, opp: number) =>
-    `Cash ${formatMoney(cash, cur)} · Opportunity ${formatMoney(opp, cur)}`;
+    `Money spent ${formatMoney(cash, cur)} · Lost margin ${formatMoney(opp, cur)}`;
   const setV = (patch: Partial<typeof v>) =>
     update((i) => ({ ...i, verification: { ...i.verification, ...patch } }));
   const openActions = inv.actions.filter((a) => a.status !== "done").length;

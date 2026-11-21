@@ -218,7 +218,7 @@ export function LossStep({ inv, update }: StepProps) {
                 <>
                   <NumberField
                     label="Recovery cost per event"
-                    help="One number for the extra cash it costs to make the production up: overtime premium, extra energy, expedited freight."
+                    help="One number for the extra money it costs to make the production up: overtime premium, extra energy, expedited freight."
                     value={l.recoveryCost ?? null}
                     onChange={(v) => set("recoveryCost", v)}
                     prefix={cur}
@@ -251,7 +251,7 @@ export function LossStep({ inv, update }: StepProps) {
 
         <SectionCard
           title="Other costs per event (optional)"
-          help="Anything else that one failure costs in cash, on top of the repair cost above. Each line counts once per event."
+          help="Anything else that one failure costs in money spent, on top of the repair cost above. Each line counts once per event."
           right={
             <button
               type="button"
@@ -289,7 +289,7 @@ export function LossStep({ inv, update }: StepProps) {
           </div>
           {others.length === 0 ? (
             <p className="text-sm text-slate-600">
-              No other costs added. The repair cost above is counted as a cash cost.
+              No other costs added. The repair cost above is counted as money spent.
             </p>
           ) : (
             <ul className="space-y-3">
@@ -381,19 +381,19 @@ export function LossStep({ inv, update }: StepProps) {
           </h3>
           <dl className="mt-1 space-y-3">
             <Row
-              label="Cash costs"
+              label="Money spent"
               value={formatMoney(c.cashPerEvent, cur)}
               formula={`${formatMoney(c.repairPerEvent, cur)} repair + ${formatMoney(c.recoveryPerEvent, cur)} recovery + ${formatMoney(c.otherPerEvent, cur)} other costs`}
             />
             <Row
-              label="Opportunity loss"
+              label="Lost margin"
               value={formatMoney(c.opportunityPerEvent, cur)}
               formula={`${formatNumber(c.unitsLostForGoodPerEvent, 1)} ${unit} lost for good × ${cur}${n(l.marginPerUnit)} margin`}
             />
             <Row
               label="Cost per event"
               value={formatMoney(c.costPerEvent, cur)}
-              formula={`${formatMoney(c.cashPerEvent, cur)} cash + ${formatMoney(c.opportunityPerEvent, cur)} opportunity loss`}
+              formula={`${formatMoney(c.cashPerEvent, cur)} money spent + ${formatMoney(c.opportunityPerEvent, cur)} lost margin`}
             />
           </dl>
 
@@ -408,7 +408,7 @@ export function LossStep({ inv, update }: StepProps) {
           </h3>
           <dl className="mt-1 space-y-3">
             <Row
-              label="Cash costs"
+              label="Money spent"
               value={formatMoney(c.annualCash, cur)}
               formula={`${formatMoney(c.cashPerEvent, cur)} × ${n(l.eventsPerYear)} events${
                 c.bufferHoldingPerYear > 0
@@ -417,7 +417,7 @@ export function LossStep({ inv, update }: StepProps) {
               }`}
             />
             <Row
-              label="Opportunity loss"
+              label="Lost margin"
               value={formatMoney(c.annualOpportunity, cur)}
               formula={`${formatMoney(c.opportunityPerEvent, cur)} × ${n(l.eventsPerYear)} events`}
             />
@@ -449,8 +449,8 @@ export function LossStep({ inv, update }: StepProps) {
             ) : (
               <>
                 <p className="mt-1 text-sm">
-                  {formatMoney(c.annualCash, cur)} cash costs + {formatMoney(c.annualOpportunity, cur)}{" "}
-                  opportunity loss
+                  {formatMoney(c.annualCash, cur)} money spent + {formatMoney(c.annualOpportunity, cur)}{" "}
+                  lost margin
                 </p>
                 <p className="text-sm">
                   {formatMoney(c.costPerEvent, cur)} per event × {n(l.eventsPerYear)} events per year
@@ -464,10 +464,10 @@ export function LossStep({ inv, update }: StepProps) {
           <p className="mt-4 text-sm leading-relaxed text-slate-600">
             <strong className="text-slate-900">The formula, in words:</strong> hours of downtime times
             the units you make per hour gives the production lost. The share lost for good,
-            times the margin on each unit, is the <em>opportunity loss</em>: profit you will never
-            get back. Cash costs are what you actually pay out: the repair cost, the recovery cost
+            times the margin on each unit, is the <em>lost margin</em>: profit you will never
+            get back. Money spent is what you actually pay out: the repair cost, the recovery cost
             for production made up later, and any other cost lines. Production covered by buffer
-            stock costs nothing per event. Cash plus opportunity loss is what one failure costs;
+            stock costs nothing per event. Money spent plus lost margin is what one failure costs;
             multiply by how often it happens, then add any yearly buffer holding cost, to get the
             cost per year.
           </p>
