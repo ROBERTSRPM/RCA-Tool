@@ -95,7 +95,7 @@ function bearer(req: Request): string | null {
   return m ? m[1] : null;
 }
 
-function modelCall(req: AiRequest): { call: ModelCall; validate: (raw: unknown) => unknown } {
+export function modelCall(req: AiRequest): { call: ModelCall; validate: (raw: unknown) => unknown } {
   const aliases = makeAliases(req.context);
   const m = modelCallRaw(req, aliases);
   return { call: m.call, validate: (raw) => cleanResult(m.validate(raw), aliases) };

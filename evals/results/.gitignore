@@ -1,0 +1,2 @@
+# Full run detail (raw model answers) stays local or in the CI artifact. Summaries (*.md) may be committed.
+*.json

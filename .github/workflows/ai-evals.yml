@@ -1,0 +1,133 @@
+name: AI evals
+
+# Runs the RCA Pilot AI eval set and fails the check if quality regressed against evals/baseline.json.
+# Needs the repo secret ANTHROPIC_API_KEY (see evals/README.md). Without it the paid run is skipped
+# with a clear message and the check does not fail.
+
+on:
+  pull_request:
+    paths:
+      - "web/lib/ai/**"
+      - "web/lib/brand.ts"
+      - "web/.env.example"
+      - "web/evals/**"
+      - "evals/**"
+      - "web/package.json"
+      - "web/package-lock.json"
+      - ".github/workflows/ai-evals.yml"
+  push:
+    paths:
+      - "web/lib/ai/**"
+      - "web/lib/brand.ts"
+      - "web/.env.example"
+      - "web/evals/**"
+      - "evals/**"
+      - "web/package.json"
+      - "web/package-lock.json"
+      - ".github/workflows/ai-evals.yml"
+  workflow_dispatch:
+    inputs:
+      update_baseline:
+        description: "Write a new evals/baseline.json from this run and commit it (only for a run the owner accepts)"
+        type: boolean
+        default: false
+
+concurrency:
+  group: ai-evals-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  evals:
+    name: Run AI evals
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    # Never on forks: secrets are not available there and a fork must not spend the owner's key.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - run: npm ci
+
+      - name: Dry run (builds every prompt, tests the hard checks, no API calls)
+        run: npm run evals -- --dry-run
+
+      - name: Check for the API key
+        id: key
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -n "$ANTHROPIC_API_KEY" ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            msg="AI evals skipped: the repository secret ANTHROPIC_API_KEY is not set. Add it under Settings, Secrets and variables, Actions to enable the check (see evals/README.md). The dry run above still passed."
+            echo "::notice title=AI evals skipped::$msg"
+            echo "### AI evals skipped" >> "$GITHUB_STEP_SUMMARY"
+            echo "$msg" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Run evals (compare with baseline)
+        id: run
+        if: steps.key.outputs.present == 'true'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_MODEL }}
+          JUDGE_MODEL: ${{ vars.JUDGE_MODEL }}
+          UPDATE_BASELINE: ${{ github.event_name == 'workflow_dispatch' && inputs.update_baseline }}
+        run: |
+          args=""
+          if [ "$UPDATE_BASELINE" = "true" ]; then args="--update-baseline"; fi
+          npm run evals -- $args
+
+      - name: Job summary
+        if: always() && steps.key.outputs.present == 'true'
+        run: |
+          latest=$(ls -1 ../evals/results/*.md 2>/dev/null | tail -n 1 || true)
+          if [ -n "$latest" ]; then cat "$latest" >> "$GITHUB_STEP_SUMMARY"; else echo "No summary was produced." >> "$GITHUB_STEP_SUMMARY"; fi
+
+      - name: Upload results
+        if: always() && steps.key.outputs.present == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-eval-results
+          path: |
+            evals/results/*.md
+            evals/results/*.json
+            evals/baseline.json
+          if-no-files-found: ignore
+
+  commit-baseline:
+    name: Commit new baseline
+    needs: evals
+    if: github.event_name == 'workflow_dispatch' && inputs.update_baseline && needs.evals.result == 'success'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: ai-eval-results
+          path: artifact
+      - name: Commit evals/baseline.json
+        run: |
+          if [ ! -f artifact/baseline.json ]; then echo "No baseline was produced (was the key set?)."; exit 0; fi
+          cp artifact/baseline.json evals/baseline.json
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add evals/baseline.json
+          git diff --cached --quiet && { echo "Baseline unchanged."; exit 0; }
+          git commit -m "Update AI eval baseline"
+          git push || echo "::warning::Push was rejected (branch protection?). Download the ai-eval-results artifact and commit evals/baseline.json by hand."
