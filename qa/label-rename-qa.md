@@ -26,3 +26,13 @@ Verdict: FAIL (one Medium: the landing page screenshots still show the old label
 
 ## Not tested
 - Email templates (none found in the repo); the PDF print output itself (only the on-screen report); AI responses (context string only read, AI buttons not used); creating a new costed investigation with other-cost lines on the preview (the sample covers all labels).
+
+## Retest (fix commit c1ad6bc)
+
+Verdict: PASS for the product (finding 1 and 2 fixed, no regressions). One Low item remains: the QA scripts are only partly updated.
+
+- Finding 1, landing images: FIXED. `step-cost.webp` now shows "Money spent", "Lost margin" and "$57,000 money spent + $181,440 lost margin"; `step-verify.webp` shows "Money spent $57,000 . Lost margin $181,440". Both load on the preview (naturalWidth 760 and 1330) and look right at 1280px and 390px; the alt text now matches the image. Mobile verify image text is small but it is the same scaling as before.
+- Finding 2, help text: FIXED. Loss step now reads "Anything else that one failure costs, on top of the repair cost above. Each line counts once per event." Live on the preview; the old phrase is gone. Code comments in finance.ts, types.ts and options.ts also updated.
+- Finding 5, QA scripts: PARTLY FIXED (Low). `qa/account.js` and `qa/demo.js` were updated, but old strings are still asserted in `qa/loss.js` (lines ~193, 202, 207, 210, 219, 221, 247: "Cash $57,000 . Opportunity ...", "Cash: repair ...", "cash $8,801, opportunity $3,840"), `qa/e2e.js` (lines 104-106: 'cash ... . opportunity ...') and `qa/features.js` (line 488: 'Cash $57,000 . Opportunity $181,440'). Those checks will fail until updated. `qa/gen-plan.js` text and old result logs also mention cash/opportunity (documentation only).
+- The 390px element wider than the viewport: PRE-EXISTING, not caused by this change and not a real overflow. It is the landing hero image (`img.w-[230%] max-w-none sm:w-full`, 819 px wide) deliberately cropped inside a parent with `overflow: hidden`; page scroll width stays 390. The class dates from commit 50b189c (landing redesign, 19 Nov), long before the rename.
+- Regression on the preview (signed in as qa-user-a, sample investigation read only, no data created or changed, local sign-out only): no cash/opportunity text on dashboard, Loss, Verify, Report or landing at 1280px and 390px; new labels present; no horizontal overflow other than the hero crop above. vitest 335/335, tsc and lint clean.
