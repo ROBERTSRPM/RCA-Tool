@@ -1,0 +1,396 @@
+{
+  "id": "case-14",
+  "formatVersion": 1,
+  "title": "Pneumatic control valve sticking, wet instrument air",
+  "slug": "control-valve-instrument-air",
+  "tests": "Cross-asset link to compressor and dryer; instrument faults repeatedly replaced.",
+  "flags": [
+    "messy",
+    "forced"
+  ],
+  "summary": "A level control valve on a thickener feed sticks and hunts; the positioner has been replaced twice. Moisture and oil are in the instrument air. The air dryer has been in alarm for weeks. The tree stops at 'positioner faulty'.",
+  "input": {
+    "investigation": {
+      "id": "eval-case-14",
+      "schemaVersion": 1,
+      "createdAt": "2026-11-21T00:00:00.000Z",
+      "updatedAt": "2026-11-21T00:00:00.000Z",
+      "isSample": false,
+      "problem": {
+        "title": "Level control valve LV-3306 sticking, positioner replaced twice",
+        "asset": "Thickener feed level control valve 3306",
+        "site": "Nickel concentrator, thickener area, Kalgoorlie WA",
+        "eventDate": "2026-09-18",
+        "whatHappened": "LV-3306 started sticking and hunting on 18 Sep 2026, causing tank level swings and an overflow to the bund. The positioner was replaced on 18 Sep and again on 2 Oct; the valve stuck again on 9 Oct. Water and oil were found in the positioner air filter.",
+        "where": "Positioner and actuator air supply on LV-3306.",
+        "when": "Worst in the early morning; air dryer high dew point alarm active for 3 weeks.",
+        "impact": "Thickener level swings, one overflow to the bund, operators on manual for several shifts.",
+        "assetTag": "LV-3306",
+        "assetType": "Valve/actuator",
+        "makeModel": "150 mm globe control valve, pneumatic diaphragm actuator with smart positioner",
+        "duty": "Controls feed to a thickener, continuous",
+        "criticality": "B",
+        "failureMode": "Instrumentation or control fault"
+      },
+      "loss": {
+        "eventsPerYear": 4,
+        "downtimeHours": 3,
+        "ratePerHour": 400,
+        "unitName": "tonnes",
+        "marginPerUnit": 10,
+        "repairCost": 3800,
+        "currency": "$"
+      },
+      "evidence": [
+        {
+          "id": "e1",
+          "type": "photo",
+          "title": "Positioner air filter",
+          "note": "Water and oil emulsion in the filter bowl. Rust spots on the regulator.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e2",
+          "type": "data",
+          "title": "Instrument air dew point trend",
+          "note": "Dew point above alarm limit for 3 weeks; dryer drain not releasing.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e3",
+          "type": "document",
+          "title": "Work orders for LV-3306",
+          "note": "Two positioner replacements and one air filter clean in 3 weeks. No WO on the dryer alarm.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e4",
+          "type": "inspection",
+          "title": "Actuator diaphragm and stem",
+          "note": "Stem sticking from corrosion on the guide; diaphragm intact.",
+          "date": "",
+          "image": null
+        }
+      ],
+      "tree": {
+        "id": "n0",
+        "text": "Control valve LV-3306 sticks and hunts",
+        "category": "physical",
+        "status": "verified",
+        "evidenceIds": [],
+        "isRootCause": false,
+        "collapsed": false,
+        "children": [
+          {
+            "id": "n1",
+            "text": "Positioner faulty",
+            "category": "physical",
+            "status": "verified",
+            "evidenceIds": [],
+            "isRootCause": false,
+            "collapsed": false,
+            "children": [
+              {
+                "id": "n2",
+                "text": "Positioner replaced twice, still sticking",
+                "category": "physical",
+                "status": "hypothesis",
+                "evidenceIds": [],
+                "isRootCause": true,
+                "collapsed": false,
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "a1",
+          "causeId": "",
+          "description": "Replace the positioner on LV-3306",
+          "owner": "Instrument supervisor",
+          "dueDate": "2026-10-02",
+          "status": "done",
+          "cost": 3800,
+          "kind": "corrective",
+          "category": "repair"
+        },
+        {
+          "id": "a2",
+          "causeId": "n2",
+          "description": "Replace the positioner when it sticks",
+          "owner": "",
+          "dueDate": "",
+          "status": "open",
+          "cost": null,
+          "kind": "preventive",
+          "category": "repair"
+        }
+      ],
+      "spares": {
+        "needed": "yes",
+        "inStock": "no",
+        "leadTimeDays": 14,
+        "coverage": "Positioner replacement bought urgently."
+      },
+      "rollouts": [],
+      "verification": {
+        "reviewDate": "",
+        "recurred": "unreviewed",
+        "eventsPerYearAfter": null,
+        "notes": ""
+      }
+    },
+    "problemDraft": {
+      "existingFields": {
+        "asset": "Thickener feed level control valve 3306",
+        "assetTag": "LV-3306",
+        "assetType": "Valve/actuator",
+        "makeModel": "150 mm globe control valve, pneumatic diaphragm actuator with smart positioner",
+        "duty": "Controls feed to a thickener, continuous",
+        "criticality": "B",
+        "failureMode": "Instrumentation or control fault",
+        "site": "Nickel concentrator, thickener area, Kalgoorlie WA",
+        "eventDate": "2026-09-18",
+        "title": "",
+        "whatHappened": "",
+        "where": "",
+        "when": "",
+        "impact": ""
+      },
+      "roughNotes": "lv3306 sticking again. new positioner twice (18 sep, 2 oct), stuck again 9 oct. pulled the filter reg and it had water and a bit of oil in it. instrument air dryer alarm has been on for 3 weeks. overflow to the bund once."
+    }
+  },
+  "requests": {
+    "coach": [
+      {
+        "scope": "node",
+        "nodeId": "n1"
+      },
+      {
+        "scope": "tree"
+      }
+    ],
+    "challenge": [
+      {
+        "focus": "all"
+      }
+    ],
+    "capa": [
+      {
+        "rootCauseId": "n2"
+      }
+    ],
+    "draft": [
+      {
+        "kind": "problem",
+        "notes": "lv3306 sticking again. new positioner twice (18 sep, 2 oct), stuck again 9 oct. pulled the filter reg and it had water and a bit of oil in it. instrument air dryer alarm has been on for 3 weeks. overflow to the bund once."
+      },
+      {
+        "kind": "report",
+        "notes": ""
+      },
+      {
+        "kind": "summary",
+        "notes": ""
+      }
+    ]
+  },
+  "grading": {
+    "coach": {
+      "selectedNodeId": "n1",
+      "mustSuggest": [
+        {
+          "level": "physical",
+          "idea": "Wet and oily instrument air contaminating the positioner and corroding the stem guide"
+        },
+        {
+          "level": "physical",
+          "idea": "Instrument air dryer failing (drain not releasing, dew point alarm)"
+        },
+        {
+          "level": "system",
+          "idea": "Dryer alarm raised no work order, so a known problem had no owner"
+        },
+        {
+          "level": "system",
+          "idea": "Instrument air dew point not on the maintenance monitoring or round"
+        }
+      ],
+      "acceptable": [
+        "Compressor oil carry-over",
+        "Air filter regulator not draining automatically"
+      ],
+      "wrongOrDangerous": [
+        "Instrument technician fitted it wrongly (blame)",
+        "Replace with a different positioner brand as the answer"
+      ]
+    },
+    "challenge": {
+      "mustFlag": [
+        {
+          "ref": "n1",
+          "type": "no_evidence",
+          "note": "Verified with no evidence"
+        },
+        {
+          "ref": "n2",
+          "type": "weak_logic",
+          "note": "Restates the symptom; two replacements did not fix it"
+        },
+        {
+          "ref": "n0",
+          "type": "missing_level",
+          "note": "No system cause"
+        },
+        {
+          "ref": "a2",
+          "type": "action_weak",
+          "note": "Replace on failure"
+        },
+        {
+          "ref": "n0",
+          "type": "single_branch",
+          "note": "One chain"
+        }
+      ],
+      "mustNotFlag": [
+        "blame",
+        "no_evidence on n0",
+        "stopped_at_physical without noting that the real cause lies on another asset"
+      ],
+      "expectation": "Questions: what did the air filter show; what is upstream; why did the dryer alarm not generate a job?",
+      "deliberateWeaknesses": [
+        "n1 verified, no evidence; positioner replacement twice shows it was not the cause",
+        "Root n2 is a restatement of the symptom (weak_logic)",
+        "e1 to e4 are not used",
+        "No link to the instrument air dryer, a separate asset",
+        "a2 is replace-on-failure (action_weak)",
+        "No human or system cause: alarm on the dryer for 3 weeks with no WO"
+      ]
+    },
+    "capa": [
+      {
+        "rootCauseId": "n2",
+        "expectedDeterioration": "forced",
+        "deteriorationReasoning": "Moisture and oil in the air corroded the stem guide and fouled the positioner. That is contamination we allowed, not wear.",
+        "corrective": [
+          "Dryer repair and instrument air blow-down, replace the filter regulator and clean or replace the stem guide"
+        ],
+        "preventive": [
+          {
+            "category": "maintenance_task",
+            "what": "Service the instrument air dryer and check the drain",
+            "interval": "every 3 months, starting point to check with the dryer maker",
+            "craft": "Mechanical fitter or compressor technician"
+          },
+          {
+            "category": "condition_monitoring",
+            "what": "Instrument air dew point read on rounds or on the DCS with an alarm and a work order raised from the alarm",
+            "interval": "each round or continuous",
+            "craft": "Instrument technician"
+          },
+          {
+            "category": "procedure",
+            "what": "Alarm response procedure so a dryer alarm raises a priority job",
+            "interval": "one off",
+            "craft": "Maintenance planner"
+          },
+          {
+            "category": "design",
+            "what": "Filter regulator with auto drain on each control valve air supply, if a review supports it",
+            "interval": "one off",
+            "craft": "Instrument engineer"
+          },
+          {
+            "category": "spares",
+            "what": "Hold a spare positioner and filter regulator for this valve type",
+            "interval": "one off",
+            "craft": "Stores"
+          }
+        ],
+        "spares": "Positioner and filter regulator for this valve family; replacement had a 14 day lead time.",
+        "rollout": "Other valves and instruments on the same air header: check filters for water and oil, and inspect stems.",
+        "unacceptable": [
+          "Replace the positioner on failure",
+          "Retrain technicians",
+          "Invented dew point limits presented as a standard"
+        ]
+      }
+    ],
+    "draft": {
+      "problem": {
+        "mustInclude": [
+          "LV-3306 sticking and hunting from 18 Sep 2026",
+          "positioner replaced 18 Sep and 2 Oct",
+          "stuck again 9 Oct",
+          "water and oil in the filter",
+          "dryer alarm for 3 weeks",
+          "one overflow to the bund"
+        ],
+        "mustNotInvent": [
+          "dew point values not in the notes",
+          "the compressor make",
+          "the root cause"
+        ],
+        "gapsToPointOut": [
+          "Who owns the dryer alarm and why did it not raise a job?",
+          "What was the level swing and duration?"
+        ]
+      },
+      "report": {
+        "mustInclude": [
+          "Evidence e1 to e4 reviewed",
+          "The cause crosses to the instrument air system"
+        ],
+        "mustNotInvent": [
+          "verified positioner fault",
+          "a saving"
+        ],
+        "stillToConfirm": [
+          "n1 not evidenced",
+          "dryer branch not in the tree",
+          "a2 is replace on failure"
+        ]
+      }
+    }
+  },
+  "hardChecks": {
+    "schemaValid": true,
+    "noPersonBlamedAsRoot": true,
+    "nothingMarkedVerified": true,
+    "noInventedNumbers": true,
+    "allowedNumbers": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "9",
+      "02",
+      "09",
+      "10",
+      "14",
+      "18",
+      "150",
+      "400",
+      "2026",
+      "3306",
+      "3800"
+    ],
+    "allowedNumbersNote": "Numbers in the AI output must come from this list or from the app's own cost calculation (buildAiContext loss line). Anything else is invented.",
+    "noCostData": false,
+    "processFailure": false,
+    "processRules": "",
+    "wordingRules": [
+      "Use 'countermeasure', never 'fix' as a noun",
+      "No N#, A# or E# labels inside prose",
+      "No markdown in string fields",
+      "No dates as YYYY-MM-DD in prose"
+    ]
+  }
+}

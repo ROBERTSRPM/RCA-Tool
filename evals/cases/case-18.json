@@ -1,0 +1,414 @@
+{
+  "id": "case-18",
+  "formatVersion": 1,
+  "title": "Secondary cone crusher, mantle and bowl liner worn through",
+  "slug": "cone-crusher-liner-wear-production-pressure",
+  "tests": "Natural wear; production pressure as a system cause; no liner profile measurement.",
+  "flags": [
+    "messy",
+    "natural",
+    "system pressure"
+  ],
+  "summary": "A secondary cone crusher ran its mantle past the wear limit during a busy month. The mantle backing was damaged and the main shaft head was gouged. Liners wear naturally but changes are scheduled by feel and delayed by production pressure.",
+  "input": {
+    "investigation": {
+      "id": "eval-case-18",
+      "schemaVersion": 1,
+      "createdAt": "2026-11-21T00:00:00.000Z",
+      "updatedAt": "2026-11-21T00:00:00.000Z",
+      "isSample": false,
+      "problem": {
+        "title": "Mantle ran past wear limit and damaged cone head on CR-02",
+        "asset": "Secondary cone crusher 02",
+        "site": "Hard rock quarry, Hunter Valley NSW",
+        "eventDate": "2026-11-03",
+        "whatHappened": "CR-02 was stopped on 3 Nov 2026 after a loud knocking. The mantle was worn through at one side and the backing material had failed, damaging the head. Liner change had been due about 5 weeks earlier but was pushed out twice for a big order.",
+        "where": "Mantle, bowl liner and cone head of CR-02.",
+        "when": "Tail end of a 6-week high demand period.",
+        "impact": "Crusher out for 6 days. Head repair and contractor crane. Order shipped short.",
+        "assetTag": "CR-02",
+        "assetType": "Crusher",
+        "makeModel": "Standard cone crusher, 250 kW",
+        "duty": "Secondary crushing, 400 t/h",
+        "criticality": "A",
+        "failureMode": "Wear/erosion"
+      },
+      "loss": {
+        "eventsPerYear": 1,
+        "downtimeHours": 144,
+        "ratePerHour": 400,
+        "unitName": "tonnes",
+        "marginPerUnit": 5,
+        "repairCost": 88000,
+        "currency": "$",
+        "otherCosts": [
+          {
+            "id": "oc1",
+            "category": "penalties",
+            "description": "Short shipment credit to customer",
+            "amount": 18000
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "id": "e1",
+          "type": "photo",
+          "title": "Worn mantle and damaged head",
+          "note": "Mantle thin at one side, backing material cracked out, head gouged.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e2",
+          "type": "document",
+          "title": "Liner change records",
+          "note": "Previous liners changed at 410,000, 395,000 and 420,000 t. This set reached about 505,000 t.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e3",
+          "type": "document",
+          "title": "Production schedule and meeting notes",
+          "note": "Liner change deferred twice during the high demand month; approved verbally by the plant manager.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e4",
+          "type": "interview",
+          "title": "Operator",
+          "note": "Liner wear is gauged by eye; there is no profile gauge or measurement record.",
+          "date": "",
+          "image": null
+        }
+      ],
+      "tree": {
+        "id": "n0",
+        "text": "Mantle on CR-02 wore through and damaged the cone head",
+        "category": "physical",
+        "status": "verified",
+        "evidenceIds": [],
+        "isRootCause": false,
+        "collapsed": false,
+        "children": [
+          {
+            "id": "n1",
+            "text": "Mantle ran 505,000 t, about 20% beyond the normal liner life",
+            "category": "physical",
+            "status": "verified",
+            "evidenceIds": [
+              "e2"
+            ],
+            "isRootCause": false,
+            "collapsed": false,
+            "children": [
+              {
+                "id": "n2",
+                "text": "Liner change deferred twice for production",
+                "category": "human",
+                "status": "verified",
+                "evidenceIds": [
+                  "e3"
+                ],
+                "isRootCause": false,
+                "collapsed": false,
+                "children": [
+                  {
+                    "id": "n3",
+                    "text": "No wear limit that stops production, and no liner profile measurement",
+                    "category": "system",
+                    "status": "verified",
+                    "evidenceIds": [
+                      "e3",
+                      "e4"
+                    ],
+                    "isRootCause": true,
+                    "collapsed": false,
+                    "children": []
+                  }
+                ]
+              }
+            ],
+            "deterioration": "natural"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "a1",
+          "causeId": "",
+          "description": "Repair cone head and fit new liners on CR-02",
+          "owner": "Mechanical supervisor",
+          "dueDate": "2026-11-12",
+          "status": "done",
+          "cost": 88000,
+          "kind": "corrective",
+          "category": "repair"
+        },
+        {
+          "id": "a2",
+          "causeId": "n3",
+          "description": "Introduce a liner wear limit and measure the profile",
+          "owner": "Reliability engineer",
+          "dueDate": "2026-12-15",
+          "status": "open",
+          "cost": null,
+          "kind": "preventive",
+          "category": "condition_monitoring",
+          "task": {
+            "description": "Measure liner profile with a gauge or laser and record against the change limit",
+            "intervalValue": null,
+            "intervalUnit": "weeks",
+            "craft": "Mechanical fitter",
+            "change": "new"
+          }
+        }
+      ],
+      "spares": {
+        "needed": "yes",
+        "inStock": "yes",
+        "leadTimeDays": null,
+        "coverage": "Liner set in stores, used."
+      },
+      "rollouts": [],
+      "verification": {
+        "reviewDate": "",
+        "recurred": "unreviewed",
+        "eventsPerYearAfter": null,
+        "notes": ""
+      }
+    },
+    "problemDraft": {
+      "existingFields": {
+        "asset": "Secondary cone crusher 02",
+        "assetTag": "CR-02",
+        "assetType": "Crusher",
+        "makeModel": "Standard cone crusher, 250 kW",
+        "duty": "Secondary crushing, 400 t/h",
+        "criticality": "A",
+        "failureMode": "Wear/erosion",
+        "site": "Hard rock quarry, Hunter Valley NSW",
+        "eventDate": "2026-11-03",
+        "title": "",
+        "whatHappened": "",
+        "where": "",
+        "when": "",
+        "impact": ""
+      },
+      "roughNotes": "cr02 mantle worn thru, backing failed, head damaged. liners should have been done 5 wks ago but we pushed it twice for the big order. no one measures the profile, we go by the tonnes. liner set was on the shelf. 6 days out. credit note for short shipment."
+    }
+  },
+  "requests": {
+    "coach": [
+      {
+        "scope": "node",
+        "nodeId": "n3"
+      },
+      {
+        "scope": "tree"
+      }
+    ],
+    "challenge": [
+      {
+        "focus": "all"
+      }
+    ],
+    "capa": [
+      {
+        "rootCauseId": "n3"
+      }
+    ],
+    "draft": [
+      {
+        "kind": "problem",
+        "notes": "cr02 mantle worn thru, backing failed, head damaged. liners should have been done 5 wks ago but we pushed it twice for the big order. no one measures the profile, we go by the tonnes. liner set was on the shelf. 6 days out. credit note for short shipment."
+      },
+      {
+        "kind": "report",
+        "notes": ""
+      },
+      {
+        "kind": "summary",
+        "notes": ""
+      }
+    ]
+  },
+  "grading": {
+    "coach": {
+      "selectedNodeId": "n3",
+      "mustSuggest": [
+        {
+          "level": "system",
+          "idea": "No decision rule for deferring liner changes and who may approve it"
+        },
+        {
+          "level": "system",
+          "idea": "No liner profile measurement or tonnage tracking in the PM plan"
+        },
+        {
+          "level": "physical",
+          "idea": "Backing material (liner backing) quality or age"
+        }
+      ],
+      "acceptable": [
+        "Tonnage counter not reset at last change",
+        "Crusher feed not consistent"
+      ],
+      "wrongOrDangerous": [
+        "Plant manager's decision was wrong (blame)",
+        "Operators failed to measure"
+      ]
+    },
+    "challenge": {
+      "mustFlag": [
+        {
+          "ref": "a2",
+          "type": "no_task_interval",
+          "note": "No interval or hours/tonnes basis"
+        }
+      ],
+      "mustNotFlag": [
+        "blame (n2 describes a decision in the system context, not a person)",
+        "stopped_at_physical",
+        "no_evidence",
+        "missing_level",
+        "deterioration_undecided (natural is stated)"
+      ],
+      "expectation": "Mostly sound; one or two low or medium points such as a2 interval and the lack of a risk assessment for deferrals.",
+      "deliberateWeaknesses": [
+        "a2 has no interval (no_task_interval)",
+        "n2 words a decision of the plant manager: should be carefully worded as system, not blame",
+        "No spare liner planning beyond the set on the shelf",
+        "Rollout to other crushers not mentioned",
+        "Wear is natural but extending its life by delay is a forced condition: the AI should explain this"
+      ]
+    },
+    "capa": [
+      {
+        "rootCauseId": "n3",
+        "expectedDeterioration": "natural",
+        "deteriorationReasoning": "Liner wear is natural. The failure came from running the mantle past its limit, which is a decision made without a wear rule.",
+        "corrective": [
+          "Repair head and fit liners (a1 done)"
+        ],
+        "preventive": [
+          {
+            "category": "condition_monitoring",
+            "what": "Liner profile measurement against a replace-at limit",
+            "interval": "every 1 week, or every 50,000 t",
+            "craft": "Mechanical fitter"
+          },
+          {
+            "category": "procedure",
+            "what": "Liner change decision rule: defer only with a documented risk assessment and a hard stop limit",
+            "interval": "one off",
+            "craft": "Plant manager and reliability engineer"
+          },
+          {
+            "category": "maintenance_task",
+            "what": "Plan the liner change from the tonnage history with the crew booked",
+            "interval": "starting point about 400,000 t from the last three sets",
+            "craft": "Maintenance planner"
+          },
+          {
+            "category": "spares",
+            "what": "Hold a full liner set and backing material at all times, with a trigger to reorder",
+            "interval": "one off",
+            "craft": "Stores"
+          },
+          {
+            "category": "procedure",
+            "what": "Reset the tonnage counter at each change and record it",
+            "interval": "one off",
+            "craft": "Maintenance planner"
+          }
+        ],
+        "spares": "One full liner set for CR-02 and backing material, reordered when one is fitted.",
+        "rollout": "Other cone and jaw crushers on site: add profile gauge and the deferral rule.",
+        "unacceptable": [
+          "Blame the plant manager",
+          "Find the forcing cause as the only action",
+          "'Do not delay again'"
+        ]
+      }
+    ],
+    "draft": {
+      "problem": {
+        "mustInclude": [
+          "CR-02 stopped on 3 Nov 2026 after loud knocking",
+          "mantle worn through at one side, backing failed, head damaged",
+          "liner change due 5 weeks earlier, deferred twice",
+          "6 days out",
+          "credit note for the short shipment"
+        ],
+        "mustNotInvent": [
+          "who approved the deferral (the evidence names the plant manager role, the notes do not)",
+          "tonnage figures not in the notes",
+          "cost beyond the notes"
+        ],
+        "gapsToPointOut": [
+          "How many tonnes had the mantle crushed?",
+          "Was there a risk assessment for the deferral?"
+        ]
+      },
+      "report": {
+        "mustInclude": [
+          "Natural wear with delay as the system cause",
+          "Costs as computed",
+          "a2 has no interval"
+        ],
+        "mustNotInvent": [
+          "a verified saving",
+          "blame of a person"
+        ],
+        "stillToConfirm": [
+          "a2 interval",
+          "verification not done"
+        ]
+      }
+    }
+  },
+  "hardChecks": {
+    "schemaValid": true,
+    "noPersonBlamedAsRoot": true,
+    "nothingMarkedVerified": true,
+    "noInventedNumbers": true,
+    "allowedNumbers": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "02",
+      "03",
+      "11",
+      "12",
+      "15",
+      "20",
+      "144",
+      "250",
+      "400",
+      "2026",
+      "18000",
+      "88000",
+      "395,000",
+      "410,000",
+      "420,000",
+      "505,000"
+    ],
+    "allowedNumbersNote": "Numbers in the AI output must come from this list or from the app's own cost calculation (buildAiContext loss line). Anything else is invented.",
+    "noCostData": false,
+    "processFailure": false,
+    "processRules": "",
+    "wordingRules": [
+      "Use 'countermeasure', never 'fix' as a noun",
+      "No N#, A# or E# labels inside prose",
+      "No markdown in string fields",
+      "No dates as YYYY-MM-DD in prose"
+    ]
+  }
+}

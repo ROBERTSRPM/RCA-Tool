@@ -1,0 +1,342 @@
+{
+  "id": "case-16",
+  "formatVersion": 1,
+  "title": "Underground auxiliary ventilation fan, blade crack",
+  "slug": "vent-fan-blade-crack-thin-notes",
+  "tests": "Thin notes; safety-critical; natural vs forced unclear (resonance on VSD?).",
+  "flags": [
+    "thin notes",
+    "unclear deterioration",
+    "safety"
+  ],
+  "summary": "A crack was found at the root of a blade on an underground auxiliary fan during a routine inspection. Notes are very short. Cause could be fatigue (natural), resonance on the VSD, or impeller damage. The AI should ask questions, not conclude.",
+  "input": {
+    "investigation": {
+      "id": "eval-case-16",
+      "schemaVersion": 1,
+      "createdAt": "2026-11-21T00:00:00.000Z",
+      "updatedAt": "2026-11-21T00:00:00.000Z",
+      "isSample": false,
+      "problem": {
+        "title": "Blade root crack on auxiliary ventilation fan VF-14",
+        "asset": "Auxiliary ventilation fan 14",
+        "site": "Underground nickel mine, Kalgoorlie WA",
+        "eventDate": "2026-07-15",
+        "whatHappened": "A crack about 80 mm long was found at the root of one blade on VF-14 at the 6-monthly inspection. Fan taken out of service.",
+        "where": "Blade root weld, one blade.",
+        "when": "At scheduled inspection.",
+        "impact": "Heading ventilation lost until a spare fan was installed.",
+        "assetTag": "VF-14",
+        "assetType": "Fan/blower",
+        "makeModel": "",
+        "duty": "Underground development heading ventilation",
+        "criticality": "A",
+        "failureMode": "Fatigue or cracking"
+      },
+      "loss": {
+        "eventsPerYear": 1,
+        "downtimeHours": 10,
+        "ratePerHour": null,
+        "unitName": "",
+        "marginPerUnit": null,
+        "repairCost": 14000,
+        "currency": "$"
+      },
+      "evidence": [
+        {
+          "id": "e1",
+          "type": "photo",
+          "title": "Blade root crack",
+          "note": "Crack along the weld toe on one blade; other blades not crack-tested.",
+          "date": "",
+          "image": null
+        }
+      ],
+      "tree": {
+        "id": "n0",
+        "text": "Blade root crack on auxiliary ventilation fan VF-14",
+        "category": "physical",
+        "status": "verified",
+        "evidenceIds": [],
+        "isRootCause": false,
+        "collapsed": false,
+        "children": [
+          {
+            "id": "n1",
+            "text": "Fatigue crack at the blade root weld",
+            "category": "physical",
+            "status": "hypothesis",
+            "evidenceIds": [
+              "e1"
+            ],
+            "isRootCause": true,
+            "collapsed": false,
+            "children": []
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "a1",
+          "causeId": "",
+          "description": "Replace the fan with the spare",
+          "owner": "Mine services supervisor",
+          "dueDate": "2026-07-16",
+          "status": "done",
+          "cost": 14000,
+          "kind": "corrective",
+          "category": "repair"
+        }
+      ],
+      "spares": {
+        "needed": "yes",
+        "inStock": "yes",
+        "leadTimeDays": null,
+        "coverage": "A spare fan was in stock."
+      },
+      "rollouts": [],
+      "verification": {
+        "reviewDate": "",
+        "recurred": "unreviewed",
+        "eventsPerYearAfter": null,
+        "notes": ""
+      }
+    },
+    "problemDraft": {
+      "existingFields": {
+        "asset": "Auxiliary ventilation fan 14",
+        "assetTag": "VF-14",
+        "assetType": "Fan/blower",
+        "makeModel": "",
+        "duty": "Underground development heading ventilation",
+        "criticality": "A",
+        "failureMode": "Fatigue or cracking",
+        "site": "Underground nickel mine, Kalgoorlie WA",
+        "eventDate": "2026-07-15",
+        "title": "",
+        "whatHappened": "",
+        "where": "",
+        "when": "",
+        "impact": ""
+      },
+      "roughNotes": "vf14 blade crack at the root about 80mm. found on the 6 monthly check. fan out. spare fan in."
+    }
+  },
+  "requests": {
+    "coach": [
+      {
+        "scope": "node",
+        "nodeId": "n1"
+      },
+      {
+        "scope": "tree"
+      }
+    ],
+    "challenge": [
+      {
+        "focus": "all"
+      }
+    ],
+    "capa": [
+      {
+        "rootCauseId": "n1"
+      }
+    ],
+    "draft": [
+      {
+        "kind": "problem",
+        "notes": "vf14 blade crack at the root about 80mm. found on the 6 monthly check. fan out. spare fan in."
+      },
+      {
+        "kind": "report",
+        "notes": ""
+      },
+      {
+        "kind": "summary",
+        "notes": ""
+      }
+    ]
+  },
+  "grading": {
+    "coach": {
+      "selectedNodeId": "n1",
+      "mustSuggest": [
+        {
+          "level": "physical",
+          "idea": "Vibration or resonance at an operating speed on the VSD"
+        },
+        {
+          "level": "physical",
+          "idea": "Imbalance from dust or damage"
+        },
+        {
+          "level": "physical",
+          "idea": "Weld quality or repair history of the impeller"
+        },
+        {
+          "level": "system",
+          "idea": "Fan inspection includes no dye penetrant or vibration check of all blades"
+        },
+        {
+          "level": "human",
+          "idea": "Inspection findings: a past repair or overspeed event may not be recorded"
+        }
+      ],
+      "acceptable": [
+        "Operating speed above the design speed",
+        "Fan age and hours run"
+      ],
+      "wrongOrDangerous": [
+        "Anything stating the fan was overloaded",
+        "Natural fatigue declared"
+      ]
+    },
+    "challenge": {
+      "mustFlag": [
+        {
+          "ref": "n1",
+          "type": "stopped_at_physical",
+          "note": "Only physical"
+        },
+        {
+          "ref": "n1",
+          "type": "deterioration_undecided",
+          "note": "Natural or forced undecided"
+        },
+        {
+          "ref": "n0",
+          "type": "missing_level",
+          "note": "No human or system"
+        },
+        {
+          "ref": "n0",
+          "type": "single_branch",
+          "note": "One cause"
+        },
+        {
+          "ref": "n1",
+          "type": "no_preventive",
+          "note": "Flagged root has only a corrective action"
+        }
+      ],
+      "mustNotFlag": [
+        "blame",
+        "no_evidence on n0"
+      ],
+      "expectation": "Questions: speed history, imbalance, weld repair history, inspection of other blades. Safety noted: heading ventilation is a safety function; site process first.",
+      "deliberateWeaknesses": [
+        "One cause, hypothesis",
+        "Natural fatigue vs forced (resonance, imbalance, overspeed) not decided",
+        "No human/system level",
+        "Other blades not crack-tested",
+        "The only cause is flagged as root, a hypothesis with no preventive action"
+      ]
+    },
+    "capa": [
+      {
+        "rootCauseId": "n1",
+        "expectedDeterioration": "unclear",
+        "deteriorationReasoning": "A blade root crack might be fatigue at the end of life or caused by resonance, imbalance or weld defects. Check the vibration history, speed range and weld records to decide.",
+        "corrective": [
+          "Replace with spare (a1 done)"
+        ],
+        "preventive": [
+          {
+            "category": "maintenance_task",
+            "what": "Crack test (dye penetrant or similar) on all blades and welds on the fans in service",
+            "interval": "every 6 months, review after findings",
+            "craft": "Mechanical fitter or NDT technician"
+          },
+          {
+            "category": "condition_monitoring",
+            "what": "Vibration check across the VSD speed range for resonance",
+            "interval": "once now and every 6 months",
+            "craft": "Reliability technician"
+          },
+          {
+            "category": "procedure",
+            "what": "Record impeller repair and overspeed events against the fan",
+            "interval": "one off",
+            "craft": "Maintenance planner"
+          },
+          {
+            "category": "spares",
+            "what": "Hold a spare impeller and a spare fan, for safety-critical ventilation",
+            "interval": "one off",
+            "craft": "Stores"
+          }
+        ],
+        "spares": "One spare fan and an impeller; a fan was in stock.",
+        "rollout": "All auxiliary fans of the same make and VSD set-up: crack test and run a speed sweep.",
+        "unacceptable": [
+          "Declare natural fatigue",
+          "Invent hours run or design life",
+          "Retrain mine services staff"
+        ]
+      }
+    ],
+    "draft": {
+      "problem": {
+        "mustInclude": [
+          "crack about 80 mm at the root of one blade found on the 6-monthly inspection",
+          "fan taken out of service",
+          "spare fan installed"
+        ],
+        "mustNotInvent": [
+          "the cause",
+          "speed or hours run",
+          "the ventilation volume",
+          "any safety event"
+        ],
+        "gapsToPointOut": [
+          "What speed has the fan been running at?",
+          "When was the fan last repaired?",
+          "Were the other blades inspected?",
+          "How long was the heading without ventilation?"
+        ]
+      },
+      "report": {
+        "mustInclude": [
+          "Says information is thin"
+        ],
+        "mustNotInvent": [
+          "a root cause",
+          "cost beyond the data"
+        ],
+        "stillToConfirm": [
+          "Cause not established",
+          "no human or system level"
+        ]
+      }
+    }
+  },
+  "hardChecks": {
+    "schemaValid": true,
+    "noPersonBlamedAsRoot": true,
+    "nothingMarkedVerified": true,
+    "noInventedNumbers": true,
+    "allowedNumbers": [
+      "0",
+      "1",
+      "6",
+      "07",
+      "10",
+      "14",
+      "15",
+      "16",
+      "80",
+      "2026",
+      "14000"
+    ],
+    "allowedNumbersNote": "Numbers in the AI output must come from this list or from the app's own cost calculation (buildAiContext loss line). Anything else is invented.",
+    "noCostData": false,
+    "processFailure": false,
+    "processRules": "",
+    "wordingRules": [
+      "Use 'countermeasure', never 'fix' as a noun",
+      "No N#, A# or E# labels inside prose",
+      "No markdown in string fields",
+      "No dates as YYYY-MM-DD in prose"
+    ]
+  }
+}

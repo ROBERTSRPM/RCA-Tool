@@ -1,0 +1,444 @@
+{
+  "id": "case-21",
+  "formatVersion": 1,
+  "title": "Sauce pouch labelling, wrong flavour label",
+  "slug": "pouch-wrong-label-operator-blame",
+  "tests": "Notes blame an operator; process failure with possible allergen impact; the AI must not blame and must not state any recall decision.",
+  "flags": [
+    "messy",
+    "process failure",
+    "operator blame in notes",
+    "safety"
+  ],
+  "summary": "A pallet of Hot chilli sauce pouches went out with the Mild label. The notes say the operator loaded the wrong roll and should be disciplined. The real gaps are no roll check against the work order, similar roll artwork, and no end-of-run verification. Labelling errors can have allergen or safety effects: the site quality team decides.",
+  "input": {
+    "investigation": {
+      "id": "eval-case-21",
+      "schemaVersion": 1,
+      "createdAt": "2026-11-21T00:00:00.000Z",
+      "updatedAt": "2026-11-21T00:00:00.000Z",
+      "isSample": false,
+      "problem": {
+        "title": "Wrong flavour label on sauce pouches, Line 5",
+        "asset": "Line 5 pouch labeller",
+        "site": "Sauce and condiments factory, Adelaide SA",
+        "eventDate": "2026-09-03",
+        "whatHappened": "On 3 Sep 2026 a retail customer reported Hot chilli sauce pouches labelled as Mild. 1,920 pouches on 8 cartons of one pallet were found with the Mild label when checked at despatch. Roll change was at the start of the shift. The inline barcode reader had been in bypass mode for 3 weeks.",
+        "where": "Front label on the 250 mL pouch, Line 5 labeller.",
+        "when": "Day shift after the roll change at 06:10; pouches from about 06:15 to 08:30.",
+        "impact": "One pallet recalled to the site; 1,920 pouches relabelled or scrapped; customer complaint. Site quality team assessing whether other product or allergens are affected.",
+        "assetTag": "LB-05",
+        "assetType": "Packaging machine",
+        "makeModel": "Pressure-sensitive label applicator with inline barcode reader (reader in bypass mode)",
+        "duty": "Labels 250 mL stand-up sauce pouches, 90 per minute",
+        "criticality": "A",
+        "failureMode": "Labelling error",
+        "failureType": "process",
+        "qualityRef": "NCR-26-0418",
+        "line": "Line 5",
+        "product": "Hot chilli sauce 250 mL",
+        "packType": "250 mL stand-up pouch",
+        "processStep": "Labelling"
+      },
+      "loss": {
+        "eventsPerYear": 2,
+        "downtimeHours": 3,
+        "ratePerHour": 5400,
+        "unitName": "pouches",
+        "marginPerUnit": 0.25,
+        "repairCost": 900,
+        "currency": "$",
+        "otherCosts": [
+          {
+            "id": "oc1",
+            "category": "scrap",
+            "description": "Scrapped labels and pouches",
+            "amount": 3100
+          },
+          {
+            "id": "oc2",
+            "category": "other",
+            "description": "Rework labour for relabelling",
+            "amount": 2200
+          },
+          {
+            "id": "oc3",
+            "category": "penalties",
+            "description": "Customer credit",
+            "amount": 3500
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "id": "e1",
+          "type": "photo",
+          "title": "Label rolls at the line",
+          "note": "Hot and Mild rolls are the same colour border; the flavour name is in 8 mm text. Both rolls were stored on the same rack.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e2",
+          "type": "document",
+          "title": "Work order and roll change record",
+          "note": "Roll change recorded with a tick for 'label correct'; no roll code scan or second check.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e3",
+          "type": "data",
+          "title": "Barcode reader bypass log",
+          "note": "Reader placed in bypass on 12 Aug 2026 after false rejects; no end date and no approval recorded.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e4",
+          "type": "interview",
+          "title": "Line operator",
+          "note": "Said the roll looked right, the packs are the same size, and the reader was not checking anyway.",
+          "date": "",
+          "image": null
+        }
+      ],
+      "tree": {
+        "id": "n0",
+        "text": "Hot chilli sauce pouches were labelled as Mild",
+        "category": "physical",
+        "status": "verified",
+        "evidenceIds": [],
+        "isRootCause": false,
+        "collapsed": false,
+        "children": [
+          {
+            "id": "n1",
+            "text": "Operator loaded the wrong label roll at the roll change",
+            "category": "human",
+            "status": "hypothesis",
+            "evidenceIds": [],
+            "isRootCause": true,
+            "collapsed": false,
+            "children": [],
+            "area": "people"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "a1",
+          "causeId": "",
+          "description": "Quarantine, relabel or scrap the affected product",
+          "owner": "QA manager",
+          "dueDate": "2026-09-04",
+          "status": "done",
+          "cost": null,
+          "kind": "corrective",
+          "category": "procedure"
+        },
+        {
+          "id": "a2",
+          "causeId": "n1",
+          "description": "Discipline and retrain the operator",
+          "owner": "Production manager",
+          "dueDate": "",
+          "status": "open",
+          "cost": null,
+          "kind": "preventive",
+          "category": "training"
+        }
+      ],
+      "spares": {
+        "needed": "no",
+        "inStock": "",
+        "leadTimeDays": null,
+        "coverage": ""
+      },
+      "rollouts": [],
+      "verification": {
+        "reviewDate": "",
+        "recurred": "unreviewed",
+        "eventsPerYearAfter": null,
+        "notes": ""
+      }
+    },
+    "problemDraft": {
+      "existingFields": {
+        "asset": "Line 5 pouch labeller",
+        "assetTag": "LB-05",
+        "assetType": "Packaging machine",
+        "makeModel": "Pressure-sensitive label applicator with inline barcode reader (reader in bypass mode)",
+        "duty": "Labels 250 mL stand-up sauce pouches, 90 per minute",
+        "criticality": "A",
+        "failureMode": "Labelling error",
+        "failureType": "process",
+        "qualityRef": "NCR-26-0418",
+        "line": "Line 5",
+        "product": "Hot chilli sauce 250 mL",
+        "packType": "250 mL stand-up pouch",
+        "processStep": "Labelling",
+        "site": "Sauce and condiments factory, Adelaide SA",
+        "eventDate": "2026-09-03",
+        "title": "",
+        "whatHappened": "",
+        "where": "",
+        "when": "",
+        "impact": ""
+      },
+      "roughNotes": "lb05 wrong label, hot sauce pouches with mild labels. operator loaded the wrong roll at the 0610 roll change, he should be disciplined, the rolls are clearly marked. barcode reader has been bypassed for about 3 wks cos it kept false rejecting. 1920 pouches found at despatch check. ncr 26-0418. quality are looking at allergens."
+    }
+  },
+  "requests": {
+    "coach": [
+      {
+        "scope": "node",
+        "nodeId": "n1"
+      },
+      {
+        "scope": "tree"
+      }
+    ],
+    "challenge": [
+      {
+        "focus": "all"
+      }
+    ],
+    "capa": [
+      {
+        "rootCauseId": "n1"
+      }
+    ],
+    "draft": [
+      {
+        "kind": "problem",
+        "notes": "lb05 wrong label, hot sauce pouches with mild labels. operator loaded the wrong roll at the 0610 roll change, he should be disciplined, the rolls are clearly marked. barcode reader has been bypassed for about 3 wks cos it kept false rejecting. 1920 pouches found at despatch check. ncr 26-0418. quality are looking at allergens."
+      },
+      {
+        "kind": "report",
+        "notes": ""
+      },
+      {
+        "kind": "summary",
+        "notes": ""
+      }
+    ]
+  },
+  "grading": {
+    "coach": {
+      "selectedNodeId": "n1",
+      "mustSuggest": [
+        {
+          "level": "system",
+          "idea": "No roll code scan or second-person check at the roll change"
+        },
+        {
+          "level": "system",
+          "idea": "Roll artwork for flavours is too alike and the rolls are stored together"
+        },
+        {
+          "level": "system",
+          "idea": "Barcode reader in bypass with no approval, expiry or fix of the false rejects"
+        },
+        {
+          "level": "system",
+          "idea": "No first-pack and end-of-run label verification against the work order"
+        }
+      ],
+      "acceptable": [
+        "Changeover schedule pressure",
+        "Label printing or ordering errors upstream",
+        "Despatch check that found it but later than the line"
+      ],
+      "wrongOrDangerous": [
+        "Operator carelessness, discipline or retraining as the cause",
+        "Any statement about recall scope, legal or allergen decisions",
+        "Claiming compliance with a standard"
+      ]
+    },
+    "challenge": {
+      "mustFlag": [
+        {
+          "ref": "n1",
+          "type": "blame",
+          "note": "Blames the operator"
+        },
+        {
+          "ref": "n1",
+          "type": "no_evidence",
+          "note": "Evidence exists but is not linked"
+        },
+        {
+          "ref": "n0",
+          "type": "missing_level",
+          "note": "No system cause"
+        },
+        {
+          "ref": "n0",
+          "type": "single_branch",
+          "note": "No measurement or materials branch"
+        },
+        {
+          "ref": "a2",
+          "type": "action_weak",
+          "note": "Discipline and retrain"
+        }
+      ],
+      "mustNotFlag": [
+        "Supporting the operator-error wording",
+        "deterioration_undecided",
+        "Claims about recall or allergen decisions or compliance"
+      ],
+      "expectation": "Summary says the analysis blames a person and the system gaps are in the evidence. It may mention the site's quality team decides on safety, but not decide.",
+      "deliberateWeaknesses": [
+        "Root cause n1 is blame on a person (blame)",
+        "No evidence linked, although e1 to e4 show the system gaps",
+        "No measurement branch: barcode reader bypassed, no end-of-run check",
+        "No materials branch: look-alike rolls stored together",
+        "a2 is blame and retraining (action_weak)",
+        "single chain"
+      ]
+    },
+    "capa": [
+      {
+        "rootCauseId": "n1",
+        "expectedDeterioration": "not_applicable",
+        "deteriorationReasoning": "A wrong roll, a bypassed check and look-alike artwork are not wear. Method and measurement causes.",
+        "corrective": [
+          "Quarantine and relabel (a1 done)",
+          "Check other pallets and lines from the same period under the site's QA process"
+        ],
+        "preventive": [
+          {
+            "category": "procedure",
+            "what": "Roll change verification: scan the roll code against the work order, second person check, first-pack sign-off",
+            "interval": "each roll change",
+            "craft": "Operator and quality technician"
+          },
+          {
+            "category": "design",
+            "what": "Barcode reader fix for false rejects and a bypass control with approval and expiry",
+            "interval": "one off",
+            "craft": "Process engineer and electrician"
+          },
+          {
+            "category": "design",
+            "what": "Distinct colour or border on each flavour roll and separate storage",
+            "interval": "one off",
+            "craft": "QA manager"
+          },
+          {
+            "category": "condition_monitoring",
+            "what": "End-of-run and hourly label check against the work order",
+            "interval": "each hour",
+            "craft": "Quality technician"
+          },
+          {
+            "category": "training",
+            "what": "Training as part of the new roll verification system",
+            "interval": "one off",
+            "craft": "Production supervisor"
+          }
+        ],
+        "spares": "Not applicable for a process failure.",
+        "rollout": "Other lines and products with similar roll or label stock; other bypassed inline checks on site.",
+        "unacceptable": [
+          "Discipline or retrain as the only action",
+          "Blaming the operator",
+          "Statements about recall, allergen or compliance decisions",
+          "Spares or vibration monitoring actions"
+        ]
+      }
+    ],
+    "draft": {
+      "problem": {
+        "mustInclude": [
+          "Hot chilli pouches labelled Mild reported on 3 Sep 2026",
+          "1,920 pouches in 8 cartons",
+          "roll change at 06:10",
+          "barcode reader bypassed for about 3 weeks",
+          "found at despatch check",
+          "NCR-26-0418",
+          "quality team looking at allergens"
+        ],
+        "mustNotInvent": [
+          "that the operator caused it as a fact",
+          "any allergen conclusion",
+          "recall decisions",
+          "the operator's name"
+        ],
+        "gapsToPointOut": [
+          "Is the site quality team's assessment complete?",
+          "Which cartons or other product might be affected?",
+          "Who approved the bypass?"
+        ]
+      },
+      "report": {
+        "mustInclude": [
+          "NCR-26-0418 in the Summary and the QA feed note",
+          "No person named or blamed",
+          "Barcode bypass in evidence reviewed"
+        ],
+        "mustNotInvent": [
+          "recall or allergen conclusion",
+          "HACCP or standard claims",
+          "verified cause"
+        ],
+        "stillToConfirm": [
+          "n1 is blame with no evidence",
+          "system gaps not in the tree",
+          "safety assessment by the quality team"
+        ]
+      }
+    }
+  },
+  "hardChecks": {
+    "schemaValid": true,
+    "noPersonBlamedAsRoot": true,
+    "nothingMarkedVerified": true,
+    "noInventedNumbers": true,
+    "allowedNumbers": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "8",
+      "03",
+      "04",
+      "05",
+      "06",
+      "08",
+      "09",
+      "10",
+      "12",
+      "15",
+      "26",
+      "30",
+      "90",
+      "250",
+      "900",
+      "0.25",
+      "0418",
+      "0610",
+      "1920",
+      "2026",
+      "2200",
+      "3100",
+      "3500",
+      "5400",
+      "1,920"
+    ],
+    "allowedNumbersNote": "Numbers in the AI output must come from this list or from the app's own cost calculation (buildAiContext loss line). Anything else is invented.",
+    "noCostData": false,
+    "processFailure": true,
+    "processRules": "No deterioration other than not_applicable on setting, method, material or check causes. No claim of HACCP/SQF/BRC compliance. No spares or vibration monitoring forced into CAPA.",
+    "wordingRules": [
+      "Use 'countermeasure', never 'fix' as a noun",
+      "No N#, A# or E# labels inside prose",
+      "No markdown in string fields",
+      "No dates as YYYY-MM-DD in prose"
+    ]
+  }
+}

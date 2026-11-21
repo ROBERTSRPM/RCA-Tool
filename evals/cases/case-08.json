@@ -1,0 +1,483 @@
+{
+  "id": "case-08",
+  "formatVersion": 1,
+  "title": "Apron feeder gearbox, gear tooth pitting",
+  "slug": "gearbox-pitting-oil-trend-ignored",
+  "tests": "Natural deterioration with a missed condition-monitoring signal and long spare lead time.",
+  "flags": [
+    "messy",
+    "natural",
+    "spares gap"
+  ],
+  "summary": "Apron feeder gearbox at a hard rock quarry failed with gear tooth pitting after about 38,000 hours. Oil analysis iron had risen over 5 months with no one trending it. No spare gearbox, 7 weeks lead time. Actions in the tree are 'replace gearbox' and 'order spare' with no interval.",
+  "input": {
+    "investigation": {
+      "id": "eval-case-08",
+      "schemaVersion": 1,
+      "createdAt": "2026-11-21T00:00:00.000Z",
+      "updatedAt": "2026-11-21T00:00:00.000Z",
+      "isSample": false,
+      "problem": {
+        "title": "Gear tooth pitting failure on apron feeder gearbox GB-1102",
+        "asset": "Apron feeder gearbox",
+        "site": "Hard rock quarry, Hunter Valley NSW",
+        "eventDate": "2026-02-12",
+        "whatHappened": "Apron feeder gearbox GB-1102 started knocking on 10 Feb 2026 and was stopped on 12 Feb after the magnetic drain plug came out heavily loaded with metal. On strip down, several teeth on the second stage were pitted and spalled. Run hours were about 38,000. Oil samples showed iron rising for 5 months.",
+        "where": "Second stage planetary gear teeth in GB-1102.",
+        "when": "Normal duty; knocking noted over two shifts first.",
+        "impact": "Feeder out for 11 days, crushing on stockpile reclaim only, trucks and loaders used to feed a mobile unit. Hire cost for contractor crane.",
+        "assetTag": "GB-1102",
+        "assetType": "Gearbox",
+        "makeModel": "Planetary, 200 kW, heavy duty",
+        "duty": "Apron feeder under the primary crusher hopper, variable speed",
+        "criticality": "A",
+        "failureMode": "Wear/erosion"
+      },
+      "loss": {
+        "eventsPerYear": 0.5,
+        "downtimeHours": 264,
+        "ratePerHour": 350,
+        "unitName": "tonnes",
+        "marginPerUnit": 6,
+        "repairCost": 118000,
+        "currency": "$",
+        "otherCosts": [
+          {
+            "id": "oc1",
+            "category": "contractors",
+            "description": "Mobile crusher and loader hire during outage",
+            "amount": 64000
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "id": "e1",
+          "type": "photo",
+          "title": "Pitted second stage gear teeth",
+          "note": "Pitting and spalling over about 40% of the tooth face on three teeth. Contact pattern towards the tooth root.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e2",
+          "type": "data",
+          "title": "Oil analysis, last 6 samples",
+          "note": "Iron 22, 40, 78, 130, 210, 340 ppm over 5 months. Lab comments 'monitor' then 'action advised' on the last two.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e3",
+          "type": "document",
+          "title": "Run hours and duty log",
+          "note": "About 38,000 h. Load within the nameplate duty, no overload trips on record.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e4",
+          "type": "document",
+          "title": "Spares register and PO history",
+          "note": "No spare gearbox. Supplier lead time quoted at 7 weeks. Reconditioned unit purchased with expedited charge.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e5",
+          "type": "interview",
+          "title": "Reliability technician",
+          "note": "Oil results arrive by email to a shared mailbox; no one trends them.",
+          "date": "",
+          "image": null
+        }
+      ],
+      "tree": {
+        "id": "n0",
+        "text": "Apron feeder gearbox GB-1102 failed with second stage gear tooth pitting",
+        "category": "physical",
+        "status": "verified",
+        "evidenceIds": [],
+        "isRootCause": false,
+        "collapsed": false,
+        "children": [
+          {
+            "id": "n1",
+            "text": "Second stage gear teeth pitted and spalled",
+            "category": "physical",
+            "status": "verified",
+            "evidenceIds": [
+              "e1",
+              "e3"
+            ],
+            "isRootCause": false,
+            "collapsed": false,
+            "children": [
+              {
+                "id": "n2",
+                "text": "Gear surface fatigue after about 38,000 hours",
+                "category": "physical",
+                "status": "hypothesis",
+                "evidenceIds": [
+                  "e3"
+                ],
+                "isRootCause": true,
+                "collapsed": false,
+                "children": []
+              }
+            ]
+          },
+          {
+            "id": "n3",
+            "text": "Oil iron rose for 5 months with no action",
+            "category": "human",
+            "status": "hypothesis",
+            "evidenceIds": [
+              "e2"
+            ],
+            "isRootCause": false,
+            "collapsed": false,
+            "children": []
+          },
+          {
+            "id": "n4",
+            "text": "No spare gearbox, 7 week lead time",
+            "category": "system",
+            "status": "verified",
+            "evidenceIds": [
+              "e4"
+            ],
+            "isRootCause": false,
+            "collapsed": false,
+            "children": []
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "a1",
+          "causeId": "",
+          "description": "Replace GB-1102 with reconditioned unit",
+          "owner": "Maintenance supervisor",
+          "dueDate": "2026-02-23",
+          "status": "done",
+          "cost": 118000,
+          "kind": "corrective",
+          "category": "repair"
+        },
+        {
+          "id": "a2",
+          "causeId": "n2",
+          "description": "Order a spare gearbox",
+          "owner": "Stores",
+          "dueDate": "",
+          "status": "open",
+          "cost": null,
+          "kind": "preventive",
+          "category": "spares"
+        },
+        {
+          "id": "a3",
+          "causeId": "n3",
+          "description": "Monitor oil analysis",
+          "owner": "",
+          "dueDate": "",
+          "status": "open",
+          "cost": null,
+          "kind": "preventive",
+          "category": "condition_monitoring",
+          "task": {
+            "description": "Monitor oil analysis results",
+            "intervalValue": null,
+            "intervalUnit": "months",
+            "craft": "",
+            "change": "new"
+          }
+        }
+      ],
+      "spares": {
+        "needed": "yes",
+        "inStock": "no",
+        "leadTimeDays": 49,
+        "coverage": "Reconditioned gearbox bought from the supplier; 7 weeks quoted, expedited to 11 days at a premium."
+      },
+      "rollouts": [],
+      "verification": {
+        "reviewDate": "",
+        "recurred": "unreviewed",
+        "eventsPerYearAfter": null,
+        "notes": ""
+      }
+    },
+    "problemDraft": {
+      "existingFields": {
+        "asset": "Apron feeder gearbox",
+        "assetTag": "GB-1102",
+        "assetType": "Gearbox",
+        "makeModel": "Planetary, 200 kW, heavy duty",
+        "duty": "Apron feeder under the primary crusher hopper, variable speed",
+        "criticality": "A",
+        "failureMode": "Wear/erosion",
+        "site": "Hard rock quarry, Hunter Valley NSW",
+        "eventDate": "2026-02-12",
+        "title": "",
+        "whatHappened": "",
+        "where": "",
+        "when": "",
+        "impact": ""
+      },
+      "roughNotes": "gb1102 knocking for 2 days then stopped. mag plug full of swarf. 2nd stage teeth pitted and spalling. 38k hrs approx. oil results iron was creeping up since sept, nothing done. no spare box, supplier said 7 weeks, got it in 11 days by paying extra. 11 days with the feeder down."
+    }
+  },
+  "requests": {
+    "coach": [
+      {
+        "scope": "node",
+        "nodeId": "n3"
+      },
+      {
+        "scope": "tree"
+      }
+    ],
+    "challenge": [
+      {
+        "focus": "all"
+      }
+    ],
+    "capa": [
+      {
+        "rootCauseId": "n2"
+      }
+    ],
+    "draft": [
+      {
+        "kind": "problem",
+        "notes": "gb1102 knocking for 2 days then stopped. mag plug full of swarf. 2nd stage teeth pitted and spalling. 38k hrs approx. oil results iron was creeping up since sept, nothing done. no spare box, supplier said 7 weeks, got it in 11 days by paying extra. 11 days with the feeder down."
+      },
+      {
+        "kind": "report",
+        "notes": ""
+      },
+      {
+        "kind": "summary",
+        "notes": ""
+      }
+    ]
+  },
+  "grading": {
+    "coach": {
+      "selectedNodeId": "n3",
+      "mustSuggest": [
+        {
+          "level": "system",
+          "idea": "Oil analysis results have no named owner, no trend, no alarm limit and go to a shared mailbox"
+        },
+        {
+          "level": "system",
+          "idea": "No condition monitoring route with vibration on the gearbox"
+        },
+        {
+          "level": "physical",
+          "idea": "Check whether tooth load, oil viscosity or contamination was normal (to decide natural vs forced)"
+        },
+        {
+          "level": "system",
+          "idea": "No spare gearbox strategy for a critical, single feeder"
+        }
+      ],
+      "acceptable": [
+        "Overload from feeder jamming events",
+        "Lube film thickness at low speed on the VSD",
+        "Gear ratio or design life review"
+      ],
+      "wrongOrDangerous": [
+        "Technician failed to read the report (blame)",
+        "Forced deterioration declared without evidence"
+      ]
+    },
+    "challenge": {
+      "mustFlag": [
+        {
+          "ref": "n2",
+          "type": "stopped_at_physical",
+          "note": "Root is the fatigue only"
+        },
+        {
+          "ref": "n2",
+          "type": "deterioration_undecided",
+          "note": "Natural or forced not decided"
+        },
+        {
+          "ref": "n3",
+          "type": "weak_logic",
+          "note": "Human gap with no system cause beneath it"
+        },
+        {
+          "ref": "a3",
+          "type": "no_task_interval",
+          "note": "No interval or craft"
+        },
+        {
+          "ref": "a2",
+          "type": "action_weak",
+          "note": "Spare with no justification"
+        },
+        {
+          "ref": "n2",
+          "type": "no_preventive",
+          "note": "No monitoring or interval for the root"
+        }
+      ],
+      "mustNotFlag": [
+        "blame (the wording does not blame)",
+        "no_evidence on n0",
+        "single_branch (three branches exist)"
+      ],
+      "expectation": "Summary says the gear fatigue and the missed oil trend need linking to system causes (owner, alarm limits, spare).",
+      "deliberateWeaknesses": [
+        "n2 flagged root is physical, natural/forced not decided",
+        "n3 human gap has no system cause beneath it (oil results go to a shared mailbox with no owner)",
+        "n3 not flagged as a root",
+        "a3 has no interval or craft (no_task_interval)",
+        "a2 spare has no stated holding or reason",
+        "Pitting can also be forced (load, lube film): not tested"
+      ]
+    },
+    "capa": [
+      {
+        "rootCauseId": "n2",
+        "expectedDeterioration": "natural",
+        "deteriorationReasoning": "38,000 h in normal duty and no overload on record suggests fatigue life reached. Check oil viscosity and contamination in the lab report to confirm it was not forced.",
+        "corrective": [
+          "Replace gearbox (a1 done)"
+        ],
+        "preventive": [
+          {
+            "category": "condition_monitoring",
+            "what": "Oil sample for wear metals with an iron limit and a trend, reviewed by a named person",
+            "interval": "every 1 month, review limits against the site history",
+            "craft": "Reliability technician"
+          },
+          {
+            "category": "condition_monitoring",
+            "what": "Vibration spectrum route on the gearbox",
+            "interval": "every 1 month",
+            "craft": "Reliability technician"
+          },
+          {
+            "category": "maintenance_task",
+            "what": "Magnetic plug check and debris record",
+            "interval": "every 2 weeks",
+            "craft": "Mechanical fitter"
+          },
+          {
+            "category": "maintenance_task",
+            "what": "Planned gearbox exchange or inspection at a set hours run based on this and future failures",
+            "interval": "starting point about 30,000 h to check against OEM guidance",
+            "craft": "Maintenance planner"
+          },
+          {
+            "category": "spares",
+            "what": "Hold a spare or reconditioned gearbox, or a standby arrangement with the supplier",
+            "interval": "one off",
+            "craft": "Stores/planner"
+          }
+        ],
+        "spares": "One spare gearbox of this model or a standing exchange agreement: 49 day lead time on a single critical feeder.",
+        "rollout": "Other planetary gearboxes of the same make and age on crushing feeders: oil trend and run hours.",
+        "unacceptable": [
+          "Forced-wear actions (find the forcing cause) stated as the main action",
+          "Only 'replace gearbox when it fails'",
+          "Retrain technician"
+        ]
+      }
+    ],
+    "draft": {
+      "problem": {
+        "mustInclude": [
+          "knocking from 10 Feb 2026, stopped 12 Feb",
+          "magnet plug full of metal",
+          "second stage teeth pitted and spalled",
+          "about 38,000 hours",
+          "oil iron rising for 5 months",
+          "11 days down",
+          "no spare, 7 weeks lead time"
+        ],
+        "mustNotInvent": [
+          "the iron ppm values (not in the notes)",
+          "reason for pitting",
+          "the supplier name"
+        ],
+        "gapsToPointOut": [
+          "What were the oil analysis values and who received them?",
+          "Was vibration measured before the failure?",
+          "Were there any overload events?"
+        ]
+      },
+      "report": {
+        "mustInclude": [
+          "Spares: not in stock, 49 days lead time",
+          "a3 has no interval or craft",
+          "Costs as computed"
+        ],
+        "mustNotInvent": [
+          "verified natural deterioration",
+          "payback"
+        ],
+        "stillToConfirm": [
+          "Natural or forced not decided",
+          "no system cause under the oil trend",
+          "verification not done"
+        ]
+      }
+    }
+  },
+  "hardChecks": {
+    "schemaValid": true,
+    "noPersonBlamedAsRoot": true,
+    "nothingMarkedVerified": true,
+    "noInventedNumbers": true,
+    "allowedNumbers": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "02",
+      "10",
+      "11",
+      "12",
+      "22",
+      "23",
+      "38",
+      "40",
+      "49",
+      "78",
+      "0.5",
+      "130",
+      "200",
+      "210",
+      "264",
+      "340",
+      "350",
+      "1102",
+      "2026",
+      "64000",
+      "118000",
+      "38,000"
+    ],
+    "allowedNumbersNote": "Numbers in the AI output must come from this list or from the app's own cost calculation (buildAiContext loss line). Anything else is invented.",
+    "noCostData": false,
+    "processFailure": false,
+    "processRules": "",
+    "wordingRules": [
+      "Use 'countermeasure', never 'fix' as a noun",
+      "No N#, A# or E# labels inside prose",
+      "No markdown in string fields",
+      "No dates as YYYY-MM-DD in prose"
+    ]
+  }
+}

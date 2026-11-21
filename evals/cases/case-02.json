@@ -1,0 +1,506 @@
+{
+  "id": "case-02",
+  "formatVersion": 1,
+  "title": "Tailings transfer pump, casing wear-through",
+  "slug": "slurry-pump-liner-wear",
+  "tests": "Natural deterioration; physical-only root; no spare, standby out; weak actions with no interval.",
+  "flags": [
+    "messy",
+    "natural",
+    "spares gap"
+  ],
+  "summary": "The volute liner on tailings pump P-4120 wore through after 4,100 h, in line with the last four sets. Standby P-4121 was already down waiting on an impeller. The plant ran on a bypass for 3 days. The tree stops at 'liner reached end of life', natural vs forced is undecided, and the only preventive action is 'change liner on a planned basis' with no interval.",
+  "input": {
+    "investigation": {
+      "id": "eval-case-02",
+      "schemaVersion": 1,
+      "createdAt": "2026-11-21T00:00:00.000Z",
+      "updatedAt": "2026-11-21T00:00:00.000Z",
+      "isSample": false,
+      "problem": {
+        "title": "Volute liner wear-through on tailings pump P-4120",
+        "asset": "Tailings transfer pump 4120",
+        "site": "Iron ore beneficiation plant, Pilbara WA",
+        "eventDate": "2026-05-09",
+        "whatHappened": "The volute liner of P-4120 wore through at the cutwater on 9 May 2026 and slurry sprayed from the casing split. The pump tripped on low discharge pressure after 4,100 hours on this liner. Standby P-4121 was out of service with its impeller removed, so the plant ran on a bypass at reduced tails rate for 3 days until a liner arrived.",
+        "where": "Cutwater area of the volute liner on P-4120.",
+        "when": "Pump in normal duty on VSD. Noticed rougher sound for about a week before the trip.",
+        "impact": "Plant at about 60% feed for 72 hours, about 30 hours of lost production. Slurry spray onto the pad, clean-up by vacuum truck. No injury.",
+        "assetTag": "P-4120",
+        "assetType": "Slurry pump",
+        "makeModel": "Hard-metal lined 6/4 slurry pump, 90 kW VSD",
+        "duty": "Tailings transfer from thickener to storage facility, duty/standby",
+        "criticality": "B",
+        "failureMode": "Wear/erosion"
+      },
+      "loss": {
+        "eventsPerYear": 2,
+        "downtimeHours": 30,
+        "ratePerHour": 650,
+        "unitName": "tonnes",
+        "marginPerUnit": 9,
+        "repairCost": 38000,
+        "currency": "$"
+      },
+      "evidence": [
+        {
+          "id": "e1",
+          "type": "data",
+          "title": "Run hours and liner change history, last four sets",
+          "note": "Liner lives 4,600, 4,450, 4,300 and 4,100 h. Current set ran 4,100 h.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e2",
+          "type": "photo",
+          "title": "Wear-through at the cutwater",
+          "note": "Hole about 40 mm at the cutwater. Even wear pattern, no gouging or cavitation pitting seen. Liner hardness not measured.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e3",
+          "type": "data",
+          "title": "Tailings density and sizing log",
+          "note": "Density 1.38 to 1.42 t/m3 steady across the period. Sieve P80 about 150 microns, same as last year.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e4",
+          "type": "document",
+          "title": "Work order for standby P-4121",
+          "note": "WO raised 22 Apr for impeller wear. Part on order, 6 week lead time. Still open on 9 May.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e5",
+          "type": "document",
+          "title": "Store stock list",
+          "note": "No spare volute liner for the 6/4 pump on hand. One impeller on hand. No min/max set for liners.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e6",
+          "type": "interview",
+          "title": "Operator",
+          "note": "Pump sounded rougher for about a week. Not logged. No casing thickness checks are done on any slurry pump.",
+          "date": "",
+          "image": null
+        }
+      ],
+      "tree": {
+        "id": "n0",
+        "text": "Volute liner on tailings pump P-4120 wore through",
+        "category": "physical",
+        "status": "verified",
+        "evidenceIds": [],
+        "isRootCause": false,
+        "collapsed": false,
+        "children": [
+          {
+            "id": "n1",
+            "text": "Volute liner wore through at the cutwater",
+            "category": "physical",
+            "status": "verified",
+            "evidenceIds": [
+              "e1",
+              "e2"
+            ],
+            "isRootCause": false,
+            "collapsed": false,
+            "children": [
+              {
+                "id": "n2",
+                "text": "Liner reached the end of its wear life",
+                "category": "physical",
+                "status": "verified",
+                "evidenceIds": [
+                  "e1",
+                  "e3"
+                ],
+                "isRootCause": true,
+                "collapsed": false,
+                "children": []
+              },
+              {
+                "id": "n3",
+                "text": "Pump run away from best efficiency point, wearing the cutwater faster",
+                "category": "physical",
+                "status": "hypothesis",
+                "evidenceIds": [],
+                "isRootCause": false,
+                "collapsed": false,
+                "children": []
+              }
+            ]
+          },
+          {
+            "id": "n4",
+            "text": "Standby P-4121 was out of service waiting on an impeller",
+            "category": "physical",
+            "status": "verified",
+            "evidenceIds": [
+              "e4"
+            ],
+            "isRootCause": false,
+            "collapsed": false,
+            "children": [
+              {
+                "id": "n5",
+                "text": "No spare liner or impeller held; no min/max set in stores",
+                "category": "system",
+                "status": "hypothesis",
+                "evidenceIds": [
+                  "e5"
+                ],
+                "isRootCause": false,
+                "collapsed": false,
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "a1",
+          "causeId": "",
+          "description": "Replace volute liner on P-4120",
+          "owner": "Mechanical supervisor",
+          "dueDate": "2026-05-12",
+          "status": "done",
+          "cost": 38000,
+          "kind": "corrective",
+          "category": "repair"
+        },
+        {
+          "id": "a2",
+          "causeId": "",
+          "description": "Repair standby P-4121 impeller",
+          "owner": "Mechanical supervisor",
+          "dueDate": "2026-06-15",
+          "status": "open",
+          "cost": null,
+          "kind": "corrective",
+          "category": "repair"
+        },
+        {
+          "id": "a3",
+          "causeId": "n2",
+          "description": "Change liner on a planned basis",
+          "owner": "",
+          "dueDate": "",
+          "status": "open",
+          "cost": null,
+          "kind": "preventive",
+          "category": "maintenance_task",
+          "task": {
+            "description": "Change volute liner",
+            "intervalValue": null,
+            "intervalUnit": "months",
+            "craft": "",
+            "change": "new"
+          }
+        }
+      ],
+      "spares": {
+        "needed": "yes",
+        "inStock": "no",
+        "leadTimeDays": 49,
+        "coverage": "Liner was air-freighted from the pump supplier; a liner set was borrowed from a mine site store for a day."
+      },
+      "rollouts": [],
+      "verification": {
+        "reviewDate": "",
+        "recurred": "unreviewed",
+        "eventsPerYearAfter": null,
+        "notes": ""
+      }
+    },
+    "problemDraft": {
+      "existingFields": {
+        "asset": "Tailings transfer pump 4120",
+        "assetTag": "P-4120",
+        "assetType": "Slurry pump",
+        "makeModel": "Hard-metal lined 6/4 slurry pump, 90 kW VSD",
+        "duty": "Tailings transfer from thickener to storage facility, duty/standby",
+        "criticality": "B",
+        "failureMode": "Wear/erosion",
+        "site": "Iron ore beneficiation plant, Pilbara WA",
+        "eventDate": "2026-05-09",
+        "title": "",
+        "whatHappened": "",
+        "where": "",
+        "when": "",
+        "impact": ""
+      },
+      "roughNotes": "4120 blew a hole in the casing liner at the cutwater, sprayed tails everywhere. 4121 was down waiting on an impeller so we were on bypass for 3 days. liner did 4100 hrs. last 3 sets did 4300 4450 4600 or so. no spare liner on site. someone said it was rough for a week."
+    }
+  },
+  "requests": {
+    "coach": [
+      {
+        "scope": "node",
+        "nodeId": "n2"
+      },
+      {
+        "scope": "tree"
+      }
+    ],
+    "challenge": [
+      {
+        "focus": "all"
+      }
+    ],
+    "capa": [
+      {
+        "rootCauseId": "n2"
+      }
+    ],
+    "draft": [
+      {
+        "kind": "problem",
+        "notes": "4120 blew a hole in the casing liner at the cutwater, sprayed tails everywhere. 4121 was down waiting on an impeller so we were on bypass for 3 days. liner did 4100 hrs. last 3 sets did 4300 4450 4600 or so. no spare liner on site. someone said it was rough for a week."
+      },
+      {
+        "kind": "report",
+        "notes": ""
+      },
+      {
+        "kind": "summary",
+        "notes": ""
+      }
+    ]
+  },
+  "grading": {
+    "coach": {
+      "selectedNodeId": "n2",
+      "mustSuggest": [
+        {
+          "level": "system",
+          "idea": "No wear monitoring (casing thickness) or planned change point set from the liner life history"
+        },
+        {
+          "level": "system",
+          "idea": "No spare liner held and no min/max, so the repair waited 49 days lead time"
+        },
+        {
+          "level": "human",
+          "idea": "Rough sound was noticed but there is no way or expectation to log it"
+        },
+        {
+          "level": "physical",
+          "idea": "Wear rate is normal for this abrasive duty (lives 4,100 to 4,600 h) or abnormal, with a way to check"
+        }
+      ],
+      "acceptable": [
+        "Standby availability not managed (standby down 17 days)",
+        "Liner material suitability for the duty as a question, not a conclusion",
+        "Pump speed on the VSD relative to best efficiency flow"
+      ],
+      "wrongOrDangerous": [
+        "Operator should have reported the noise sooner (blame)",
+        "Cavitation or misalignment stated as the cause with no evidence",
+        "Forced deterioration declared, because the lives are consistent"
+      ]
+    },
+    "challenge": {
+      "mustFlag": [
+        {
+          "ref": "n2",
+          "type": "stopped_at_physical",
+          "note": "Flagged root is only the liner end of life"
+        },
+        {
+          "ref": "n2",
+          "type": "deterioration_undecided",
+          "note": "Wear is natural or forced, never decided"
+        },
+        {
+          "ref": "n3",
+          "type": "no_evidence",
+          "note": "Hypothesis with no evidence"
+        },
+        {
+          "ref": "a3",
+          "type": "no_task_interval",
+          "note": "No interval, craft or owner"
+        },
+        {
+          "ref": "a3",
+          "type": "action_weak",
+          "note": "Vague 'planned basis'"
+        },
+        {
+          "ref": "n2",
+          "type": "no_preventive",
+          "note": "Only a vague preventive action exists"
+        }
+      ],
+      "mustNotFlag": [
+        "blame (no person is blamed)",
+        "single_branch (a second branch exists)",
+        "any no_evidence on n0",
+        "missing_level without noting n5 is a system cause already in the tree"
+      ],
+      "expectation": "Summary says the analysis stops at the wear and that the system side (monitoring, spares, standby) needs to be carried through.",
+      "deliberateWeaknesses": [
+        "Flagged root cause n2 is physical only, with no human or system cause beneath it (stopped_at_physical)",
+        "n1 and n2: natural vs forced not decided (deterioration_undecided)",
+        "n3 hypothesis, no evidence",
+        "Only preventive action a3 has no interval, no craft, no owner (no_task_interval, action_weak)",
+        "n5 (the real system gap) is not flagged as a root cause"
+      ]
+    },
+    "capa": [
+      {
+        "rootCauseId": "n2",
+        "expectedDeterioration": "natural",
+        "deteriorationReasoning": "Liner lives of 4,100 to 4,600 h are consistent and the slurry density and sizing are unchanged. This looks like normal wear that is managed, not removed.",
+        "corrective": [
+          "Replace liner (a1 done) and repair standby (a2): do not repeat"
+        ],
+        "preventive": [
+          {
+            "category": "condition_monitoring",
+            "what": "Ultrasonic thickness readings on the volute at the cutwater and discharge against a minimum thickness",
+            "interval": "every 500 hours run or monthly",
+            "craft": "Reliability technician or mechanical fitter"
+          },
+          {
+            "category": "maintenance_task",
+            "what": "Planned liner change set from the history, shorter than the shortest recent life (4,100 h)",
+            "interval": "starting point about 3,500 h run, to check against site history and OEM guidance",
+            "craft": "Mechanical fitter"
+          },
+          {
+            "category": "spares",
+            "what": "Hold a volute liner and an impeller for the 6/4 pump with a min/max in stores",
+            "interval": "one off",
+            "craft": "Stores/planner"
+          },
+          {
+            "category": "procedure",
+            "what": "Standby pump out of service for more than a set time triggers a priority review",
+            "interval": "one off",
+            "craft": "Maintenance planner"
+          },
+          {
+            "category": "operating_practice",
+            "what": "Log an unusual sound or vibration on the round sheet",
+            "interval": "each round",
+            "craft": "Operator"
+          }
+        ],
+        "spares": "Volute liner and impeller for the 6/4 pump; reason is the 49 day lead time and the standby already down.",
+        "rollout": "All pumps of the same size and duty on tailings and thickener underflow: add thickness readings and check liner stock.",
+        "unacceptable": [
+          "Find and remove the forcing cause as the main action (wrong for natural)",
+          "Only 'replace liner when it fails'",
+          "Retrain operators",
+          "Inventing a material grade or price"
+        ]
+      }
+    ],
+    "draft": {
+      "problem": {
+        "mustInclude": [
+          "liner wore through at the cutwater on 9 May 2026",
+          "4,100 hours on the liner",
+          "trip on low discharge pressure",
+          "standby P-4121 out of service with impeller removed",
+          "bypass at reduced rate for 3 days",
+          "rough sound for about a week"
+        ],
+        "mustNotInvent": [
+          "why it wore through",
+          "a liner material",
+          "cost figures that are not in the notes",
+          "the name of any person"
+        ],
+        "gapsToPointOut": [
+          "What was the discharge pressure and motor current trend before the trip?",
+          "When was the casing last inspected or measured?",
+          "How long was the plant actually at reduced rate, and what rate?"
+        ]
+      },
+      "report": {
+        "mustInclude": [
+          "Wear is a hypothesis of natural deterioration, not verified as such",
+          "Spares not in stock, 49 days lead time",
+          "Standby out of service as a separate branch",
+          "a3 has no owner, date, interval or craft"
+        ],
+        "mustNotInvent": [
+          "a verified saving",
+          "a thickness reading",
+          "interval values not in the data"
+        ],
+        "stillToConfirm": [
+          "Natural vs forced not decided",
+          "no human or system cause under the flagged root",
+          "n3 has no evidence"
+        ]
+      }
+    }
+  },
+  "hardChecks": {
+    "schemaValid": true,
+    "noPersonBlamedAsRoot": true,
+    "nothingMarkedVerified": true,
+    "noInventedNumbers": true,
+    "allowedNumbers": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "9",
+      "05",
+      "06",
+      "09",
+      "12",
+      "15",
+      "22",
+      "30",
+      "40",
+      "49",
+      "60",
+      "72",
+      "80",
+      "90",
+      "150",
+      "650",
+      "1.38",
+      "1.42",
+      "2026",
+      "4100",
+      "4120",
+      "4121",
+      "4300",
+      "4450",
+      "4600",
+      "38000",
+      "4,100",
+      "4,300",
+      "4,450",
+      "4,600"
+    ],
+    "allowedNumbersNote": "Numbers in the AI output must come from this list or from the app's own cost calculation (buildAiContext loss line). Anything else is invented.",
+    "noCostData": false,
+    "processFailure": false,
+    "processRules": "",
+    "wordingRules": [
+      "Use 'countermeasure', never 'fix' as a noun",
+      "No N#, A# or E# labels inside prose",
+      "No markdown in string fields",
+      "No dates as YYYY-MM-DD in prose"
+    ]
+  }
+}

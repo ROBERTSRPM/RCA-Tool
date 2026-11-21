@@ -1,0 +1,493 @@
+{
+  "id": "case-07",
+  "formatVersion": 1,
+  "title": "Conveyor drive gearbox, high-speed bearing failure",
+  "slug": "gearbox-water-in-oil",
+  "tests": "Sound analysis, clear-cut; forced deterioration; checks the AI does not over-challenge.",
+  "flags": [
+    "clear-cut",
+    "forced",
+    "sound tree"
+  ],
+  "summary": "High-speed pinion bearing failed on the CV-08 drive gearbox. Oil analysis showed water in oil and high iron. A cracked breather and wash-down habits let water in. Tree covers physical, human and system with evidence, and actions have intervals and crafts.",
+  "input": {
+    "investigation": {
+      "id": "eval-case-07",
+      "schemaVersion": 1,
+      "createdAt": "2026-11-21T00:00:00.000Z",
+      "updatedAt": "2026-11-21T00:00:00.000Z",
+      "isSample": false,
+      "problem": {
+        "title": "Pinion bearing failure on CV-08 drive gearbox",
+        "asset": "Gearbox CV-08 drive",
+        "site": "Gold processing plant, crushing circuit, Kalgoorlie WA",
+        "eventDate": "2026-04-07",
+        "whatHappened": "The high-speed pinion input bearing on GB-0801 failed on 7 Apr 2026. The gearbox went noisy and tripped on high vibration. The gearbox was lifted and the bearing was found broken up, oil milky. Oil sample 3 weeks earlier showed water and high iron but was not actioned.",
+        "where": "High-speed pinion input bearing, non-drive side, of GB-0801.",
+        "when": "Day shift, gearbox 11 weeks after the last service. After a plant wash-down the day before.",
+        "impact": "CV-08 stopped for 38 hours. Mill feed lost. Gearbox rebuild at the workshop.",
+        "assetTag": "GB-0801",
+        "assetType": "Gearbox",
+        "makeModel": "Helical-bevel, 160 kW, ratio 31.5:1",
+        "duty": "Conveyor drive, raw feed to the mill, continuous",
+        "criticality": "A",
+        "failureMode": "Bearing failure"
+      },
+      "loss": {
+        "eventsPerYear": 1,
+        "downtimeHours": 38,
+        "ratePerHour": 280,
+        "unitName": "tonnes",
+        "marginPerUnit": 15,
+        "repairCost": 41000,
+        "currency": "$"
+      },
+      "evidence": [
+        {
+          "id": "e1",
+          "type": "photo",
+          "title": "Failed pinion bearing",
+          "note": "Rollers pitted, rust staining on the cage, bearing broken up. Oil emulsified.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e2",
+          "type": "data",
+          "title": "Oil analysis report, 17 Mar",
+          "note": "Water 0.8%, iron 180 ppm against 40 ppm baseline from the previous sample. Report flagged 'action advised' in the lab portal; no one at site received an alert.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e3",
+          "type": "inspection",
+          "title": "Breather",
+          "note": "Breather cap cracked, desiccant saturated. Seal around the dipstick loose.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e4",
+          "type": "interview",
+          "title": "Mill operators",
+          "note": "Wash-down with a hose at every shift change; gearbox is within 2 m of the hose point. No cover on the gearbox.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e5",
+          "type": "document",
+          "title": "Lube PM job plan",
+          "note": "Job plan has 'check oil level' only. Oil sampling is a 3 monthly route; results go to the lab portal with no named reviewer.",
+          "date": "",
+          "image": null
+        }
+      ],
+      "tree": {
+        "id": "n0",
+        "text": "High-speed pinion bearing on GB-0801 failed",
+        "category": "physical",
+        "status": "verified",
+        "evidenceIds": [],
+        "isRootCause": false,
+        "collapsed": false,
+        "children": [
+          {
+            "id": "n1",
+            "text": "Bearing rollers pitted and rusted; oil emulsified with water",
+            "category": "physical",
+            "status": "verified",
+            "evidenceIds": [
+              "e1",
+              "e2"
+            ],
+            "isRootCause": false,
+            "collapsed": false,
+            "children": [
+              {
+                "id": "n2",
+                "text": "Water entered through a cracked breather and loose dipstick seal",
+                "category": "physical",
+                "status": "verified",
+                "evidenceIds": [
+                  "e3"
+                ],
+                "isRootCause": false,
+                "collapsed": false,
+                "children": [
+                  {
+                    "id": "n3",
+                    "text": "Gearbox is hosed down at every shift change with no cover",
+                    "category": "human",
+                    "status": "verified",
+                    "evidenceIds": [
+                      "e4"
+                    ],
+                    "isRootCause": false,
+                    "collapsed": false,
+                    "children": [
+                      {
+                        "id": "n4",
+                        "text": "No wash-down standard or exclusion zone, and gearbox not sealed or covered for the wash-down environment",
+                        "category": "system",
+                        "status": "verified",
+                        "evidenceIds": [
+                          "e4"
+                        ],
+                        "isRootCause": true,
+                        "collapsed": false,
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "id": "n5",
+                    "text": "Breather and seal condition not checked in the PM job plan",
+                    "category": "system",
+                    "status": "verified",
+                    "evidenceIds": [
+                      "e5",
+                      "e3"
+                    ],
+                    "isRootCause": true,
+                    "collapsed": false,
+                    "children": []
+                  }
+                ],
+                "deterioration": "forced"
+              },
+              {
+                "id": "n6",
+                "text": "Oil analysis warning of water and iron was not acted on",
+                "category": "human",
+                "status": "verified",
+                "evidenceIds": [
+                  "e2",
+                  "e5"
+                ],
+                "isRootCause": false,
+                "collapsed": false,
+                "children": [
+                  {
+                    "id": "n7",
+                    "text": "Oil analysis results have no named reviewer or alert, so an 'action advised' went unseen",
+                    "category": "system",
+                    "status": "verified",
+                    "evidenceIds": [
+                      "e2",
+                      "e5"
+                    ],
+                    "isRootCause": true,
+                    "collapsed": false,
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "a1",
+          "causeId": "",
+          "description": "Replace pinion bearing and rebuild GB-0801, flush and refill oil",
+          "owner": "Workshop supervisor",
+          "dueDate": "2026-04-30",
+          "status": "done",
+          "cost": 41000,
+          "kind": "corrective",
+          "category": "repair"
+        },
+        {
+          "id": "a2",
+          "causeId": "n4",
+          "description": "Fit a wash-down cover on GB-0801 and mark an exclusion zone for hoses",
+          "owner": "Reliability engineer",
+          "dueDate": "2026-06-15",
+          "status": "in_progress",
+          "cost": null,
+          "kind": "preventive",
+          "category": "design"
+        },
+        {
+          "id": "a3",
+          "causeId": "n5",
+          "description": "Add breather and seal check to the lube PM",
+          "owner": "Maintenance planner",
+          "dueDate": "2026-05-15",
+          "status": "in_progress",
+          "cost": null,
+          "kind": "preventive",
+          "category": "maintenance_task",
+          "task": {
+            "description": "Check breather, desiccant and dipstick seal; replace desiccant breather if saturated",
+            "intervalValue": 4,
+            "intervalUnit": "weeks",
+            "craft": "Lubrication technician",
+            "change": "changed"
+          }
+        },
+        {
+          "id": "a4",
+          "causeId": "n7",
+          "description": "Set up oil analysis alerts to the reliability technician with action in 5 working days",
+          "owner": "Reliability technician",
+          "dueDate": "2026-05-01",
+          "status": "done",
+          "cost": null,
+          "kind": "preventive",
+          "category": "procedure"
+        }
+      ],
+      "spares": {
+        "needed": "yes",
+        "inStock": "no",
+        "leadTimeDays": 28,
+        "coverage": "A refurbished gearbox was borrowed from another site and fitted; the failed unit was rebuilt."
+      },
+      "rollouts": [],
+      "verification": {
+        "reviewDate": "",
+        "recurred": "unreviewed",
+        "eventsPerYearAfter": null,
+        "notes": ""
+      }
+    },
+    "problemDraft": {
+      "existingFields": {
+        "asset": "Gearbox CV-08 drive",
+        "assetTag": "GB-0801",
+        "assetType": "Gearbox",
+        "makeModel": "Helical-bevel, 160 kW, ratio 31.5:1",
+        "duty": "Conveyor drive, raw feed to the mill, continuous",
+        "criticality": "A",
+        "failureMode": "Bearing failure",
+        "site": "Gold processing plant, crushing circuit, Kalgoorlie WA",
+        "eventDate": "2026-04-07",
+        "title": "",
+        "whatHappened": "",
+        "where": "",
+        "when": "",
+        "impact": ""
+      },
+      "roughNotes": "gb0801 hf pinion brg done. gearbox milky, water in it. oil sample 3 wks ago said water 0.8% iron high, nobody read it till after. breather cracked. we washdown the area every shift change, hose gets on the gearbox. 38 hours down. borrowed a box from other site."
+    }
+  },
+  "requests": {
+    "coach": [
+      {
+        "scope": "node",
+        "nodeId": "n2"
+      },
+      {
+        "scope": "tree"
+      }
+    ],
+    "challenge": [
+      {
+        "focus": "all"
+      }
+    ],
+    "capa": [
+      {
+        "rootCauseId": "n5"
+      }
+    ],
+    "draft": [
+      {
+        "kind": "problem",
+        "notes": "gb0801 hf pinion brg done. gearbox milky, water in it. oil sample 3 wks ago said water 0.8% iron high, nobody read it till after. breather cracked. we washdown the area every shift change, hose gets on the gearbox. 38 hours down. borrowed a box from other site."
+      },
+      {
+        "kind": "report",
+        "notes": ""
+      },
+      {
+        "kind": "summary",
+        "notes": ""
+      }
+    ]
+  },
+  "grading": {
+    "coach": {
+      "selectedNodeId": "n2",
+      "mustSuggest": [
+        {
+          "level": "human",
+          "idea": "Wash-down practice puts water on the gearbox"
+        },
+        {
+          "level": "system",
+          "idea": "No breather and seal check in the PM"
+        },
+        {
+          "level": "system",
+          "idea": "No wash-down standard or cover"
+        },
+        {
+          "level": "physical",
+          "idea": "Alternative or additional ingress path, e.g. condensation through the breather in cooling cycles"
+        }
+      ],
+      "acceptable": [
+        "Oil level checked by sight glass only",
+        "Desiccant breather not specified in the OEM kit"
+      ],
+      "wrongOrDangerous": [
+        "Operators should not use the hose (blame)",
+        "Replace the gearbox with a new unit only"
+      ]
+    },
+    "challenge": {
+      "mustFlag": [],
+      "mustNotFlag": [
+        "stopped_at_physical",
+        "blame",
+        "no_evidence",
+        "missing_level",
+        "no_task_interval on a3",
+        "no_preventive",
+        "single_branch",
+        "deterioration_undecided (n2 is forced)"
+      ],
+      "expectation": "Few or no issues. Acceptable low points: a2 not complete; check on other gearboxes not recorded; n1 deterioration not tagged.",
+      "deliberateWeaknesses": [
+        "None deliberate: tree is sound. Low-level gaps only: a2 has no interval/verification of exclusion zone use; no horizontal check on other gearboxes."
+      ]
+    },
+    "capa": [
+      {
+        "rootCauseId": "n5",
+        "expectedDeterioration": "forced",
+        "deteriorationReasoning": "Water contamination is wear we caused through ingress and wash-down, not normal bearing fatigue.",
+        "corrective": [
+          "Rebuild and flush (a1 done)"
+        ],
+        "preventive": [
+          {
+            "category": "maintenance_task",
+            "what": "Check breather, desiccant and seals and record water in oil visually",
+            "interval": "every 4 weeks",
+            "craft": "Lubrication technician"
+          },
+          {
+            "category": "condition_monitoring",
+            "what": "Oil sample for water and wear metals with a stated limit and a named reviewer",
+            "interval": "every 3 months, review against the site history",
+            "craft": "Lubrication technician"
+          },
+          {
+            "category": "design",
+            "what": "Desiccant breather and sealed dipstick, wash-down cover",
+            "interval": "one off",
+            "craft": "Reliability engineer"
+          },
+          {
+            "category": "procedure",
+            "what": "Wash-down standard with excluded equipment",
+            "interval": "one off",
+            "craft": "Operations supervisor"
+          },
+          {
+            "category": "spares",
+            "what": "Hold a pinion bearing set and breather kit for this gearbox model",
+            "interval": "one off",
+            "craft": "Stores"
+          }
+        ],
+        "spares": "Pinion bearing set and breather kit for GB-0801 type; no spare box was available (28 days).",
+        "rollout": "All gearboxes in the crushing and conveying areas that are near a wash-down point: check breather and seals, add to oil route.",
+        "unacceptable": [
+          "Shorten the bearing interval as the countermeasure",
+          "Tell operators not to wash",
+          "Replace the gearbox with a new one as the only step"
+        ]
+      }
+    ],
+    "draft": {
+      "problem": {
+        "mustInclude": [
+          "pinion input bearing failed on 7 Apr 2026",
+          "oil milky",
+          "oil sample of 17 Mar showed water and high iron",
+          "38 hours down per the loss data",
+          "breather cracked",
+          "wash-down every shift change"
+        ],
+        "mustNotInvent": [
+          "water percentage not in notes (0.8% is in the notes, iron ppm is not)",
+          "ppm values not in notes",
+          "name of the lab"
+        ],
+        "gapsToPointOut": [
+          "Who received the oil analysis report and when?",
+          "What was the vibration trend before the trip?"
+        ]
+      },
+      "report": {
+        "mustInclude": [
+          "Verified causes only because evidence is linked",
+          "Spares not in stock, 28 days lead time",
+          "Maintenance task a3 4 weeks, lubrication technician, changed"
+        ],
+        "mustNotInvent": [
+          "verified saving",
+          "a verified status for any cause that is not verified in the data"
+        ],
+        "stillToConfirm": [
+          "a2 not complete",
+          "verification not done"
+        ]
+      }
+    }
+  },
+  "hardChecks": {
+    "schemaValid": true,
+    "noPersonBlamedAsRoot": true,
+    "nothingMarkedVerified": true,
+    "noInventedNumbers": true,
+    "allowedNumbers": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "01",
+      "04",
+      "05",
+      "06",
+      "07",
+      "08",
+      "11",
+      "15",
+      "17",
+      "28",
+      "30",
+      "38",
+      "40",
+      "0.8",
+      "160",
+      "180",
+      "280",
+      "0801",
+      "2026",
+      "31.5",
+      "41000"
+    ],
+    "allowedNumbersNote": "Numbers in the AI output must come from this list or from the app's own cost calculation (buildAiContext loss line). Anything else is invented.",
+    "noCostData": false,
+    "processFailure": false,
+    "processRules": "",
+    "wordingRules": [
+      "Use 'countermeasure', never 'fix' as a noun",
+      "No N#, A# or E# labels inside prose",
+      "No markdown in string fields",
+      "No dates as YYYY-MM-DD in prose"
+    ]
+  }
+}

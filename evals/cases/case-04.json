@@ -1,0 +1,415 @@
+{
+  "id": "case-04",
+  "formatVersion": 1,
+  "title": "Overland conveyor, belt rip at transfer chute",
+  "slug": "conveyor-belt-rip-tramp-steel",
+  "tests": "Obvious physical cause (tramp steel) with system causes missing; no evidence linked on verified nodes.",
+  "flags": [
+    "messy",
+    "forced"
+  ],
+  "summary": "Belt on stockyard feed conveyor CV-210 was ripped about 6 m at the head chute transfer. A broken bucket tooth from the primary loader was found jammed in the chute. The tree says 'tramp steel' and stops. Nodes are marked verified with no evidence linked.",
+  "input": {
+    "investigation": {
+      "id": "eval-case-04",
+      "schemaVersion": 1,
+      "createdAt": "2026-11-21T00:00:00.000Z",
+      "updatedAt": "2026-11-21T00:00:00.000Z",
+      "isSample": false,
+      "problem": {
+        "title": "Belt rip at head chute on stockyard feed conveyor CV-210",
+        "asset": "Stockyard feed conveyor 210",
+        "site": "Iron ore stockyard, Pilbara WA",
+        "eventDate": "2026-07-02",
+        "whatHappened": "On 2 Jul 2026 the belt on CV-210 was ripped by about 6 m longitudinally at the head chute. A steel bucket tooth about 300 mm long was found jammed across the chute skirts. The conveyor was stopped by the rip detection loop. Belt was spliced and the conveyor restarted after 22 hours.",
+        "where": "Head end transfer chute, impact zone, carry side of the belt.",
+        "when": "Night shift, ore from stockpile 3, loader operating on the feed hopper before the crusher.",
+        "impact": "Stockyard feed stopped for 22 hours; port ship loading drew down stockpile. Belt repair contractors called out.",
+        "assetTag": "CV-210",
+        "assetType": "Belt conveyor",
+        "makeModel": "1,200 mm wide steel cord belt, 450 m centres",
+        "duty": "Ore from crusher to stockyard, 2,000 t/h, no standby",
+        "criticality": "A",
+        "failureMode": "Belt or chain failure"
+      },
+      "loss": {
+        "eventsPerYear": 1,
+        "downtimeHours": 22,
+        "ratePerHour": 2000,
+        "unitName": "tonnes",
+        "marginPerUnit": 4,
+        "repairCost": 52000,
+        "currency": "$"
+      },
+      "evidence": [
+        {
+          "id": "e1",
+          "type": "photo",
+          "title": "Ripped belt and the tooth in the chute",
+          "note": "Tooth about 300 mm long, hardened steel, jammed across the skirts. Rip about 6 m long.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e2",
+          "type": "inspection",
+          "title": "Overbelt magnet check",
+          "note": "Magnet is a permanent type; surface had a layer of fines. Not tested after the event.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e3",
+          "type": "document",
+          "title": "Belt rip detection log",
+          "note": "Loop operated and tripped the belt within seconds of the rip starting.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e4",
+          "type": "interview",
+          "title": "Loader operator",
+          "note": "Said the loader bucket had been 'working hard' that week on a hard face. No tooth inspection recorded.",
+          "date": "",
+          "image": null
+        }
+      ],
+      "tree": {
+        "id": "n0",
+        "text": "Belt on stockyard feed conveyor CV-210 ripped at the head chute",
+        "category": "physical",
+        "status": "verified",
+        "evidenceIds": [],
+        "isRootCause": false,
+        "collapsed": false,
+        "children": [
+          {
+            "id": "n1",
+            "text": "Steel tooth jammed in the head chute and cut the belt",
+            "category": "physical",
+            "status": "verified",
+            "evidenceIds": [],
+            "isRootCause": false,
+            "collapsed": false,
+            "children": [
+              {
+                "id": "n2",
+                "text": "Tramp steel from the loader bucket entered the feed",
+                "category": "physical",
+                "status": "verified",
+                "evidenceIds": [],
+                "isRootCause": false,
+                "collapsed": false,
+                "children": [
+                  {
+                    "id": "n3",
+                    "text": "Loader bucket tooth broke off",
+                    "category": "physical",
+                    "status": "verified",
+                    "evidenceIds": [],
+                    "isRootCause": true,
+                    "collapsed": false,
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "a1",
+          "causeId": "",
+          "description": "Splice belt and restore CV-210",
+          "owner": "Mechanical supervisor",
+          "dueDate": "2026-07-03",
+          "status": "done",
+          "cost": 52000,
+          "kind": "corrective",
+          "category": "repair"
+        },
+        {
+          "id": "a2",
+          "causeId": "n3",
+          "description": "Replace loader teeth",
+          "owner": "Plant supervisor",
+          "dueDate": "",
+          "status": "open",
+          "cost": null,
+          "kind": "preventive",
+          "category": "repair"
+        }
+      ],
+      "spares": {
+        "needed": "yes",
+        "inStock": "yes",
+        "leadTimeDays": null,
+        "coverage": "Splice kit and 10 m of belt in the store; contractor splice crew called out from town."
+      },
+      "rollouts": [],
+      "verification": {
+        "reviewDate": "",
+        "recurred": "unreviewed",
+        "eventsPerYearAfter": null,
+        "notes": ""
+      }
+    },
+    "problemDraft": {
+      "existingFields": {
+        "asset": "Stockyard feed conveyor 210",
+        "assetTag": "CV-210",
+        "assetType": "Belt conveyor",
+        "makeModel": "1,200 mm wide steel cord belt, 450 m centres",
+        "duty": "Ore from crusher to stockyard, 2,000 t/h, no standby",
+        "criticality": "A",
+        "failureMode": "Belt or chain failure",
+        "site": "Iron ore stockyard, Pilbara WA",
+        "eventDate": "2026-07-02",
+        "title": "",
+        "whatHappened": "",
+        "where": "",
+        "when": "",
+        "impact": ""
+      },
+      "roughNotes": "cv210 belt ripped at the head chute about 6m. found a bucket tooth jammed in the chute. must have come off the loader or the crusher liner. rip detector tripped it. 22 hrs to splice. nights."
+    }
+  },
+  "requests": {
+    "coach": [
+      {
+        "scope": "node",
+        "nodeId": "n3"
+      },
+      {
+        "scope": "tree"
+      }
+    ],
+    "challenge": [
+      {
+        "focus": "all"
+      }
+    ],
+    "capa": [
+      {
+        "rootCauseId": "n3"
+      }
+    ],
+    "draft": [
+      {
+        "kind": "problem",
+        "notes": "cv210 belt ripped at the head chute about 6m. found a bucket tooth jammed in the chute. must have come off the loader or the crusher liner. rip detector tripped it. 22 hrs to splice. nights."
+      },
+      {
+        "kind": "report",
+        "notes": ""
+      },
+      {
+        "kind": "summary",
+        "notes": ""
+      }
+    ]
+  },
+  "grading": {
+    "coach": {
+      "selectedNodeId": "n3",
+      "mustSuggest": [
+        {
+          "level": "physical",
+          "idea": "Overbelt magnet or metal detector did not catch the tooth (fines layer, wrong position, no test)"
+        },
+        {
+          "level": "human",
+          "idea": "Loader teeth are not inspected on a set routine, so wear and missing teeth go unseen"
+        },
+        {
+          "level": "system",
+          "idea": "No bucket tooth wear check or replacement standard in the loader PM plan"
+        },
+        {
+          "level": "system",
+          "idea": "No tramp metal protection test routine or ownership"
+        }
+      ],
+      "acceptable": [
+        "Hard face digging conditions raising tooth loading",
+        "Tooth retention system worn",
+        "Chute design allowing a tooth to jam"
+      ],
+      "wrongOrDangerous": [
+        "Loader operator was careless (blame)",
+        "Replace the belt with a stronger one as the main answer"
+      ]
+    },
+    "challenge": {
+      "mustFlag": [
+        {
+          "ref": "n3",
+          "type": "stopped_at_physical",
+          "note": "Root cause is the tooth only"
+        },
+        {
+          "ref": "n1",
+          "type": "no_evidence",
+          "note": "Verified with no evidence linked"
+        },
+        {
+          "ref": "n0",
+          "type": "missing_level",
+          "note": "No human or system cause anywhere"
+        },
+        {
+          "ref": "n3",
+          "type": "no_preventive",
+          "note": "Root has only a repair-like action"
+        },
+        {
+          "ref": "a2",
+          "type": "action_weak",
+          "note": "Replacing teeth treats the symptom"
+        },
+        {
+          "ref": "n0",
+          "type": "single_branch",
+          "note": "One chain"
+        }
+      ],
+      "mustNotFlag": [
+        "blame (no person is blamed in the wording)",
+        "deterioration_undecided on n3 unless the point is made softly (a tooth wear question is relevant, flagged low at most)",
+        "no_evidence on n0"
+      ],
+      "expectation": "Summary says all three verified causes need linking to evidence and that nothing explains why the metal got through.",
+      "deliberateWeaknesses": [
+        "n1, n2, n3 marked verified with no evidence linked (no_evidence) although e1 exists",
+        "Root n3 is physical only (stopped_at_physical)",
+        "No human or system level anywhere (missing_level)",
+        "Overbelt magnet (e2) not covered at all: why tramp steel was not caught",
+        "a2 treats the symptom (action_weak)",
+        "Single chain (single_branch)"
+      ]
+    },
+    "capa": [
+      {
+        "rootCauseId": "n3",
+        "expectedDeterioration": "forced",
+        "deteriorationReasoning": "A tooth breaking off a bucket is damage we can prevent by inspecting and replacing teeth before they fail, and by catching tramp steel before the belt. It is not clear yet whether wear or impact caused it: check the broken tooth.",
+        "corrective": [
+          "Splice and restore (a1 done)"
+        ],
+        "preventive": [
+          {
+            "category": "maintenance_task",
+            "what": "Inspect loader bucket teeth and adaptors for wear and missing teeth to a set wear limit",
+            "interval": "each shift pre-start check, full measure every 250 hours run",
+            "craft": "Operator and mechanical fitter"
+          },
+          {
+            "category": "maintenance_task",
+            "what": "Test overbelt magnet or metal detector with a test piece, and clean the magnet face",
+            "interval": "every 1 week",
+            "craft": "Electrician or operator"
+          },
+          {
+            "category": "design",
+            "what": "Review magnet or detector position and size for the belt width and burden",
+            "interval": "one off",
+            "craft": "Reliability engineer"
+          },
+          {
+            "category": "procedure",
+            "what": "Tooth replacement standard with wear limit and a record",
+            "interval": "one off",
+            "craft": "Maintenance planner"
+          },
+          {
+            "category": "spares",
+            "what": "Hold a set of teeth and adaptors for the loader",
+            "interval": "one off",
+            "craft": "Stores"
+          }
+        ],
+        "spares": "Teeth and adaptors for the loader; name the part type, no part numbers.",
+        "rollout": "All other loaders and excavators feeding conveyors, and all conveyors fed through the same crusher without tramp metal protection.",
+        "unacceptable": [
+          "Retrain loader operators as the only action",
+          "Just 'replace teeth'",
+          "'Be more careful'"
+        ]
+      }
+    ],
+    "draft": {
+      "problem": {
+        "mustInclude": [
+          "belt ripped about 6 m at the head chute on 2 Jul 2026",
+          "steel tooth about 300 mm jammed",
+          "rip detector tripped it",
+          "22 hours to restore",
+          "night shift"
+        ],
+        "mustNotInvent": [
+          "the tooth came from the loader as a fact (notes say 'must have')",
+          "a cost not in the notes",
+          "name of the loader operator"
+        ],
+        "gapsToPointOut": [
+          "Which machine did the tooth come from, and has a bucket been checked for a missing tooth?",
+          "Was the overbelt magnet running and did it pick the tooth up?"
+        ]
+      },
+      "report": {
+        "mustInclude": [
+          "Cause nodes shown as hypotheses where evidence is not linked",
+          "Repair done, preventive action open with no owner or date"
+        ],
+        "mustNotInvent": [
+          "a verified saving",
+          "evidence the magnet failed"
+        ],
+        "stillToConfirm": [
+          "n1 to n3 have no linked evidence",
+          "no human or system cause",
+          "magnet status unknown"
+        ]
+      }
+    }
+  },
+  "hardChecks": {
+    "schemaValid": true,
+    "noPersonBlamedAsRoot": true,
+    "nothingMarkedVerified": true,
+    "noInventedNumbers": true,
+    "allowedNumbers": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "6",
+      "02",
+      "03",
+      "07",
+      "10",
+      "22",
+      "210",
+      "300",
+      "450",
+      "2000",
+      "2026",
+      "1,200",
+      "2,000",
+      "52000"
+    ],
+    "allowedNumbersNote": "Numbers in the AI output must come from this list or from the app's own cost calculation (buildAiContext loss line). Anything else is invented.",
+    "noCostData": false,
+    "processFailure": false,
+    "processRules": "",
+    "wordingRules": [
+      "Use 'countermeasure', never 'fix' as a noun",
+      "No N#, A# or E# labels inside prose",
+      "No markdown in string fields",
+      "No dates as YYYY-MM-DD in prose"
+    ]
+  }
+}

@@ -1,0 +1,337 @@
+{
+  "id": "case-12",
+  "formatVersion": 1,
+  "title": "Sump pump motor, earth fault from wet terminal box",
+  "slug": "motor-terminal-box-water-thin-notes",
+  "tests": "Thin notes; messy; forced vs natural unclear; evidence missing.",
+  "flags": [
+    "thin notes",
+    "messy",
+    "unclear deterioration"
+  ],
+  "summary": "A pit sump pump motor tripped on earth fault and the terminal box was wet. Notes and evidence are minimal. Tests that the AI asks for evidence and does not conclude.",
+  "input": {
+    "investigation": {
+      "id": "eval-case-12",
+      "schemaVersion": 1,
+      "createdAt": "2026-11-21T00:00:00.000Z",
+      "updatedAt": "2026-11-21T00:00:00.000Z",
+      "isSample": false,
+      "problem": {
+        "title": "Earth fault on pit sump pump motor",
+        "asset": "Pit sump pump 7 motor",
+        "site": "Open cut coal mine, Bowen Basin QLD",
+        "eventDate": "2026-02-27",
+        "whatHappened": "Motor on the pit sump pump tripped on earth fault after heavy rain. Terminal box was wet inside.",
+        "where": "Terminal box.",
+        "when": "After heavy rain, overnight.",
+        "impact": "Sump filled until a spare pump was fitted.",
+        "assetTag": "M-7107",
+        "assetType": "Electric motor",
+        "makeModel": "",
+        "duty": "Open pit dewatering sump",
+        "criticality": "B",
+        "failureMode": "Electrical fault"
+      },
+      "loss": {
+        "eventsPerYear": 2,
+        "downtimeHours": 6,
+        "ratePerHour": null,
+        "unitName": "",
+        "marginPerUnit": null,
+        "repairCost": 3500,
+        "currency": "$"
+      },
+      "evidence": [
+        {
+          "id": "e1",
+          "type": "photo",
+          "title": "Terminal box",
+          "note": "Water inside, tracking on the terminal block, cable gland perished.",
+          "date": "",
+          "image": null
+        }
+      ],
+      "tree": {
+        "id": "n0",
+        "text": "Earth fault trip on pit sump pump motor M-7107",
+        "category": "physical",
+        "status": "verified",
+        "evidenceIds": [],
+        "isRootCause": false,
+        "collapsed": false,
+        "children": [
+          {
+            "id": "n1",
+            "text": "Water in the terminal box",
+            "category": "physical",
+            "status": "hypothesis",
+            "evidenceIds": [
+              "e1"
+            ],
+            "isRootCause": true,
+            "collapsed": false,
+            "children": []
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "a1",
+          "causeId": "",
+          "description": "Replace the motor",
+          "owner": "Electrical supervisor",
+          "dueDate": "",
+          "status": "done",
+          "cost": 3500,
+          "kind": "corrective",
+          "category": "repair"
+        }
+      ],
+      "spares": {
+        "needed": "yes",
+        "inStock": "yes",
+        "leadTimeDays": null,
+        "coverage": ""
+      },
+      "rollouts": [],
+      "verification": {
+        "reviewDate": "",
+        "recurred": "unreviewed",
+        "eventsPerYearAfter": null,
+        "notes": ""
+      }
+    },
+    "problemDraft": {
+      "existingFields": {
+        "asset": "Pit sump pump 7 motor",
+        "assetTag": "M-7107",
+        "assetType": "Electric motor",
+        "makeModel": "",
+        "duty": "Open pit dewatering sump",
+        "criticality": "B",
+        "failureMode": "Electrical fault",
+        "site": "Open cut coal mine, Bowen Basin QLD",
+        "eventDate": "2026-02-27",
+        "title": "",
+        "whatHappened": "",
+        "where": "",
+        "when": "",
+        "impact": ""
+      },
+      "roughNotes": "m7107 earth fault trip after the rain last night. terminal box full of water. dried it out, megger was low so we replaced the motor. cable gland looked old."
+    }
+  },
+  "requests": {
+    "coach": [
+      {
+        "scope": "node",
+        "nodeId": "n1"
+      },
+      {
+        "scope": "tree"
+      }
+    ],
+    "challenge": [
+      {
+        "focus": "all"
+      }
+    ],
+    "capa": [
+      {
+        "rootCauseId": "n1"
+      }
+    ],
+    "draft": [
+      {
+        "kind": "problem",
+        "notes": "m7107 earth fault trip after the rain last night. terminal box full of water. dried it out, megger was low so we replaced the motor. cable gland looked old."
+      },
+      {
+        "kind": "report",
+        "notes": ""
+      },
+      {
+        "kind": "summary",
+        "notes": ""
+      }
+    ]
+  },
+  "grading": {
+    "coach": {
+      "selectedNodeId": "n1",
+      "mustSuggest": [
+        {
+          "level": "physical",
+          "idea": "Cable gland perished or wrong IP rating gland, allowing rain into the box"
+        },
+        {
+          "level": "physical",
+          "idea": "Box cover seal or drain breather failed"
+        },
+        {
+          "level": "system",
+          "idea": "No inspection of glands and boxes on outdoor motors in the PM plan"
+        },
+        {
+          "level": "system",
+          "idea": "Standard for outdoor installations in a pit area not defined (IP rating, gland type, cable entry)"
+        }
+      ],
+      "acceptable": [
+        "Cable damaged by mobile equipment",
+        "Water from the sump splashing",
+        "Condensation"
+      ],
+      "wrongOrDangerous": [
+        "Electrician failed to close the cover (blame, no evidence)",
+        "Declared natural wear"
+      ]
+    },
+    "challenge": {
+      "mustFlag": [
+        {
+          "ref": "n0",
+          "type": "missing_level",
+          "note": "No human or system cause"
+        },
+        {
+          "ref": "n1",
+          "type": "stopped_at_physical",
+          "note": "Only physical"
+        },
+        {
+          "ref": "n0",
+          "type": "single_branch",
+          "note": "One cause only"
+        },
+        {
+          "ref": "n1",
+          "type": "deterioration_undecided",
+          "note": "Gland ageing, forced or natural not decided"
+        },
+        {
+          "ref": "n1",
+          "type": "no_preventive",
+          "note": "Flagged root has only a corrective action"
+        }
+      ],
+      "mustNotFlag": [
+        "blame",
+        "no_evidence on n0",
+        "stating the gland is the proven root"
+      ],
+      "expectation": "Short list of questions: how did the water get in, how many other outdoor motors?",
+      "deliberateWeaknesses": [
+        "Only one cause node, no entry for how water got in",
+        "No human or system level",
+        "The only cause is flagged as root but is a hypothesis with no preventive action",
+        "e1 mentions the perished gland, not used in the tree",
+        "Deterioration of the gland (UV, age) not decided"
+      ]
+    },
+    "capa": [
+      {
+        "rootCauseId": "n1",
+        "expectedDeterioration": "unclear",
+        "deteriorationReasoning": "The gland is perished: that could be age and UV (natural) or the wrong gland type for the pit environment (forced). Check the gland type and date installed.",
+        "corrective": [
+          "Replace motor (a1 done)"
+        ],
+        "preventive": [
+          {
+            "category": "condition_monitoring",
+            "what": "Inspect terminal box seal, gland and drain on outdoor motors and record megger readings",
+            "interval": "every 6 months",
+            "craft": "Electrician"
+          },
+          {
+            "category": "design",
+            "what": "Specify gland and box IP rating for outdoor and pit duty and check at installation",
+            "interval": "one off",
+            "craft": "Electrical engineer"
+          },
+          {
+            "category": "spares",
+            "what": "Hold gland kits and a spare motor of this size",
+            "interval": "one off",
+            "craft": "Stores"
+          }
+        ],
+        "spares": "Motor or a terminal box and gland kit for the sump pump motor; no part numbers.",
+        "rollout": "Other pit dewatering motors and outdoor motors in the same area.",
+        "unacceptable": [
+          "Declaring natural or forced with confidence",
+          "Retrain electricians",
+          "Inventing a megger value or IP rating"
+        ]
+      }
+    ],
+    "draft": {
+      "problem": {
+        "mustInclude": [
+          "motor tripped on earth fault after heavy rain",
+          "terminal box wet inside",
+          "megger low",
+          "motor replaced",
+          "cable gland looked old"
+        ],
+        "mustNotInvent": [
+          "the pump flow rate",
+          "time of the trip",
+          "make or rating of the motor",
+          "megger values"
+        ],
+        "gapsToPointOut": [
+          "What time did it trip and how much rain fell?",
+          "What was the megger reading?",
+          "When was the gland last inspected?",
+          "How many outdoor motors are of this type?"
+        ]
+      },
+      "report": {
+        "mustInclude": [
+          "Report is short; says information is thin"
+        ],
+        "mustNotInvent": [
+          "a root cause",
+          "cost beyond the loss data",
+          "verified"
+        ],
+        "stillToConfirm": [
+          "No root cause",
+          "no human or system cause",
+          "gland age unknown"
+        ]
+      }
+    }
+  },
+  "hardChecks": {
+    "schemaValid": true,
+    "noPersonBlamedAsRoot": true,
+    "nothingMarkedVerified": true,
+    "noInventedNumbers": true,
+    "allowedNumbers": [
+      "0",
+      "1",
+      "2",
+      "6",
+      "7",
+      "02",
+      "27",
+      "2026",
+      "3500",
+      "7107"
+    ],
+    "allowedNumbersNote": "Numbers in the AI output must come from this list or from the app's own cost calculation (buildAiContext loss line). Anything else is invented.",
+    "noCostData": false,
+    "processFailure": false,
+    "processRules": "",
+    "wordingRules": [
+      "Use 'countermeasure', never 'fix' as a noun",
+      "No N#, A# or E# labels inside prose",
+      "No markdown in string fields",
+      "No dates as YYYY-MM-DD in prose"
+    ]
+  }
+}

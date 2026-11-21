@@ -1,0 +1,459 @@
+{
+  "id": "case-24",
+  "formatVersion": 1,
+  "title": "Crusher hydraulic power pack, pump failure from contamination",
+  "slug": "hydraulic-power-pack-contamination",
+  "tests": "Forced deterioration (contamination); filter bypass; evidence in oil analysis; some no-evidence nodes.",
+  "flags": [
+    "clear-cut",
+    "forced"
+  ],
+  "summary": "Hydraulic pump on a crusher setting-adjust power pack failed with scored pistons. Oil analysis showed particle counts well over the target and the return filter bypass indicator was popped for weeks. The tree is partly evidenced with two nodes unsupported.",
+  "input": {
+    "investigation": {
+      "id": "eval-case-24",
+      "schemaVersion": 1,
+      "createdAt": "2026-11-21T00:00:00.000Z",
+      "updatedAt": "2026-11-21T00:00:00.000Z",
+      "isSample": false,
+      "problem": {
+        "title": "Hydraulic pump failure on crusher power pack HPU-02",
+        "asset": "Crusher hydraulic power pack 02",
+        "site": "Hard rock quarry, Hunter Valley NSW",
+        "eventDate": "2026-08-12",
+        "whatHappened": "The piston pump on HPU-02 lost pressure on 12 Aug 2026 and the crusher setting could not be adjusted. The pump was removed and the pistons and port plate were scored. The oil was dark with metal fines. The return filter bypass indicator had been popped for several weeks.",
+        "where": "Pump pistons, port plate, and return filter on HPU-02.",
+        "when": "Pressure loss over about 3 days; found at day shift.",
+        "impact": "Crusher out of service for 2 days, as tramp release could not be set. Pump replacement and a full oil change and flush.",
+        "assetTag": "HPU-02",
+        "assetType": "Other",
+        "makeModel": "Variable displacement piston pump, 45 kW",
+        "duty": "Crusher setting adjust and tramp release, intermittent",
+        "criticality": "A",
+        "failureMode": "Wear/erosion"
+      },
+      "loss": {
+        "eventsPerYear": 2,
+        "downtimeHours": 48,
+        "ratePerHour": 400,
+        "unitName": "tonnes",
+        "marginPerUnit": 5,
+        "repairCost": 21000,
+        "currency": "$"
+      },
+      "evidence": [
+        {
+          "id": "e1",
+          "type": "photo",
+          "title": "Pump pistons and port plate",
+          "note": "Axial scoring on 5 of 9 pistons; port plate scored and discoloured.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e2",
+          "type": "data",
+          "title": "Oil analysis report",
+          "note": "Particle count ISO 22/20/17. Silicon high. The site target is not set in the plan.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e3",
+          "type": "inspection",
+          "title": "Return filter",
+          "note": "Bypass indicator popped; element blocked with fines and dirt. Breather without a filter element.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e4",
+          "type": "interview",
+          "title": "Operator",
+          "note": "Indicator seen red for weeks; no instruction about what to do.",
+          "date": "",
+          "image": null
+        }
+      ],
+      "tree": {
+        "id": "n0",
+        "text": "Hydraulic pump on HPU-02 failed",
+        "category": "physical",
+        "status": "verified",
+        "evidenceIds": [],
+        "isRootCause": false,
+        "collapsed": false,
+        "children": [
+          {
+            "id": "n1",
+            "text": "Pistons and port plate scored by contamination in the oil",
+            "category": "physical",
+            "status": "verified",
+            "evidenceIds": [
+              "e1",
+              "e2"
+            ],
+            "isRootCause": false,
+            "collapsed": false,
+            "children": [
+              {
+                "id": "n2",
+                "text": "Return filter in bypass, so unfiltered oil circulated",
+                "category": "physical",
+                "status": "verified",
+                "evidenceIds": [
+                  "e3"
+                ],
+                "isRootCause": false,
+                "collapsed": false,
+                "children": [
+                  {
+                    "id": "n3",
+                    "text": "Filter element changes are not on a regular task",
+                    "category": "system",
+                    "status": "hypothesis",
+                    "evidenceIds": [],
+                    "isRootCause": false,
+                    "collapsed": false,
+                    "children": []
+                  },
+                  {
+                    "id": "n4",
+                    "text": "Nobody acted on the filter bypass indicator",
+                    "category": "human",
+                    "status": "hypothesis",
+                    "evidenceIds": [
+                      "e4"
+                    ],
+                    "isRootCause": false,
+                    "collapsed": false,
+                    "children": [
+                      {
+                        "id": "n5",
+                        "text": "No response procedure or ownership for the bypass indicator, and no oil cleanliness target",
+                        "category": "system",
+                        "status": "hypothesis",
+                        "evidenceIds": [
+                          "e4",
+                          "e2"
+                        ],
+                        "isRootCause": true,
+                        "collapsed": false,
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "n6",
+                "text": "Dirt ingress through an open breather",
+                "category": "physical",
+                "status": "hypothesis",
+                "evidenceIds": [
+                  "e3"
+                ],
+                "isRootCause": false,
+                "collapsed": false,
+                "children": []
+              }
+            ],
+            "deterioration": "forced"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "a1",
+          "causeId": "",
+          "description": "Replace pump, flush the system, change oil and filter",
+          "owner": "Mechanical supervisor",
+          "dueDate": "2026-08-16",
+          "status": "done",
+          "cost": 21000,
+          "kind": "corrective",
+          "category": "repair"
+        },
+        {
+          "id": "a2",
+          "causeId": "n5",
+          "description": "Check the filter indicator on rounds",
+          "owner": "Operations supervisor",
+          "dueDate": "2026-09-15",
+          "status": "open",
+          "cost": null,
+          "kind": "preventive",
+          "category": "condition_monitoring",
+          "task": {
+            "description": "Check filter bypass indicator and raise a job if red",
+            "intervalValue": 1,
+            "intervalUnit": "weeks",
+            "craft": "Operator",
+            "change": "new"
+          }
+        }
+      ],
+      "spares": {
+        "needed": "yes",
+        "inStock": "no",
+        "leadTimeDays": 25,
+        "coverage": "Pump exchanged at a premium; oil bought locally."
+      },
+      "rollouts": [],
+      "verification": {
+        "reviewDate": "",
+        "recurred": "unreviewed",
+        "eventsPerYearAfter": null,
+        "notes": ""
+      }
+    },
+    "problemDraft": {
+      "existingFields": {
+        "asset": "Crusher hydraulic power pack 02",
+        "assetTag": "HPU-02",
+        "assetType": "Other",
+        "makeModel": "Variable displacement piston pump, 45 kW",
+        "duty": "Crusher setting adjust and tramp release, intermittent",
+        "criticality": "A",
+        "failureMode": "Wear/erosion",
+        "site": "Hard rock quarry, Hunter Valley NSW",
+        "eventDate": "2026-08-12",
+        "title": "",
+        "whatHappened": "",
+        "where": "",
+        "when": "",
+        "impact": ""
+      },
+      "roughNotes": "hpu02 pump lost pressure over 3 days, pistons and port plate scored. oil dark with fines. return filter bypass indicator popped for weeks, no one logged it. oil sample says dirty. new pump exchange. 2 days down."
+    }
+  },
+  "requests": {
+    "coach": [
+      {
+        "scope": "node",
+        "nodeId": "n6"
+      },
+      {
+        "scope": "tree"
+      }
+    ],
+    "challenge": [
+      {
+        "focus": "all"
+      }
+    ],
+    "capa": [
+      {
+        "rootCauseId": "n5"
+      }
+    ],
+    "draft": [
+      {
+        "kind": "problem",
+        "notes": "hpu02 pump lost pressure over 3 days, pistons and port plate scored. oil dark with fines. return filter bypass indicator popped for weeks, no one logged it. oil sample says dirty. new pump exchange. 2 days down."
+      },
+      {
+        "kind": "report",
+        "notes": ""
+      },
+      {
+        "kind": "summary",
+        "notes": ""
+      }
+    ]
+  },
+  "grading": {
+    "coach": {
+      "selectedNodeId": "n6",
+      "mustSuggest": [
+        {
+          "level": "physical",
+          "idea": "Breather has no filter element and lets in dust"
+        },
+        {
+          "level": "system",
+          "idea": "No oil cleanliness target and no oil sampling plan"
+        },
+        {
+          "level": "system",
+          "idea": "No filter element change task"
+        },
+        {
+          "level": "physical",
+          "idea": "Oil topped up with dirty or wrong oil, check the top-up method"
+        }
+      ],
+      "acceptable": [
+        "Cooler leak or water in the oil",
+        "Pump life vs contamination history"
+      ],
+      "wrongOrDangerous": [
+        "Operator should have changed the filter (blame)",
+        "Larger pump as the answer"
+      ]
+    },
+    "challenge": {
+      "mustFlag": [
+        {
+          "ref": "n5",
+          "type": "unverified_root",
+          "note": "Root is a hypothesis with an action planned"
+        },
+        {
+          "ref": "n3",
+          "type": "no_evidence",
+          "note": "No evidence"
+        },
+        {
+          "ref": "a2",
+          "type": "action_weak",
+          "note": "Round check only: no filter change task and no oil sampling"
+        },
+        {
+          "ref": "n6",
+          "type": "no_preventive",
+          "note": "Has no action"
+        }
+      ],
+      "mustNotFlag": [
+        "blame",
+        "stopped_at_physical",
+        "missing_level",
+        "deterioration_undecided (forced)",
+        "no_evidence on n0"
+      ],
+      "expectation": "Mostly sound. 3 to 4 low or medium issues.",
+      "deliberateWeaknesses": [
+        "n3 and n5 are hypotheses though evidence is partly available",
+        "n6 is not linked to any action",
+        "No cleanliness target in the plan",
+        "a2 is a round check only, no oil sampling and no filter change interval",
+        "Spares not covered (25 days lead time)"
+      ]
+    },
+    "capa": [
+      {
+        "rootCauseId": "n5",
+        "expectedDeterioration": "forced",
+        "deteriorationReasoning": "Contamination damaged the pistons and port plate. It is forced wear from dirty oil, not natural pump life.",
+        "corrective": [
+          "Replace pump, flush system (a1 done)"
+        ],
+        "preventive": [
+          {
+            "category": "maintenance_task",
+            "what": "Replace return filter element at a set interval and when the indicator goes red",
+            "interval": "every 6 months or 1,000 hours run, check against the oil results",
+            "craft": "Mechanical fitter"
+          },
+          {
+            "category": "condition_monitoring",
+            "what": "Oil sample for particle count and water against a stated cleanliness target",
+            "interval": "every 3 months",
+            "craft": "Lubrication technician"
+          },
+          {
+            "category": "procedure",
+            "what": "Response procedure for a filter bypass indicator with a time to act",
+            "interval": "one off",
+            "craft": "Operations supervisor"
+          },
+          {
+            "category": "design",
+            "what": "Fit a filtered breather and a quick-fit filter cart connection",
+            "interval": "one off",
+            "craft": "Reliability engineer"
+          },
+          {
+            "category": "spares",
+            "what": "Hold a pump or an exchange unit, plus filter elements",
+            "interval": "one off",
+            "craft": "Stores"
+          }
+        ],
+        "spares": "Hydraulic pump exchange unit and filter elements; 25 day lead time on a critical power pack.",
+        "rollout": "All hydraulic power packs on crushers and conveyors: check breather, filter indicators and oil cleanliness.",
+        "unacceptable": [
+          "Shorten the pump replacement interval",
+          "Retrain operators only",
+          "Invented ISO cleanliness targets presented as a standard"
+        ]
+      }
+    ],
+    "draft": {
+      "problem": {
+        "mustInclude": [
+          "pump lost pressure over about 3 days, found 12 Aug 2026",
+          "pistons and port plate scored",
+          "oil dark with metal fines",
+          "filter bypass indicator popped for weeks",
+          "2 days down"
+        ],
+        "mustNotInvent": [
+          "particle count values (not in the notes)",
+          "target ISO code",
+          "name of the pump maker"
+        ],
+        "gapsToPointOut": [
+          "What was the particle count and the target?",
+          "When was the filter last replaced?"
+        ]
+      },
+      "report": {
+        "mustInclude": [
+          "Forced deterioration noted",
+          "Spares: not in stock, 25 days"
+        ],
+        "mustNotInvent": [
+          "verified saving",
+          "an ISO target as a standard"
+        ],
+        "stillToConfirm": [
+          "n3, n5 unverified",
+          "a2 only a round check"
+        ]
+      }
+    }
+  },
+  "hardChecks": {
+    "schemaValid": true,
+    "noPersonBlamedAsRoot": true,
+    "nothingMarkedVerified": true,
+    "noInventedNumbers": true,
+    "allowedNumbers": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "9",
+      "02",
+      "08",
+      "09",
+      "12",
+      "15",
+      "16",
+      "17",
+      "20",
+      "22",
+      "25",
+      "45",
+      "48",
+      "400",
+      "2026",
+      "21000"
+    ],
+    "allowedNumbersNote": "Numbers in the AI output must come from this list or from the app's own cost calculation (buildAiContext loss line). Anything else is invented.",
+    "noCostData": false,
+    "processFailure": false,
+    "processRules": "",
+    "wordingRules": [
+      "Use 'countermeasure', never 'fix' as a noun",
+      "No N#, A# or E# labels inside prose",
+      "No markdown in string fields",
+      "No dates as YYYY-MM-DD in prose"
+    ]
+  }
+}

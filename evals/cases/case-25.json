@@ -1,0 +1,452 @@
+{
+  "id": "case-25",
+  "formatVersion": 1,
+  "title": "Pasteuriser plate heat exchanger, gasket leak",
+  "slug": "phe-gasket-leak-pressure-shock",
+  "tests": "Mixed natural ageing and forced pressure shocks; quality impact; the AI must not claim food-safety compliance.",
+  "flags": [
+    "messy",
+    "natural",
+    "forced"
+  ],
+  "summary": "A plate heat exchanger on a milk pasteuriser leaked from a gasket after 22 months, found on a pressure test before start-up. Gaskets age naturally but water hammer from a fast-closing valve and a hot caustic CIP step also shorten life. The team replaced the gasket and recorded no cause.",
+  "input": {
+    "investigation": {
+      "id": "eval-case-25",
+      "schemaVersion": 1,
+      "createdAt": "2026-11-21T00:00:00.000Z",
+      "updatedAt": "2026-11-21T00:00:00.000Z",
+      "isSample": false,
+      "problem": {
+        "title": "Gasket leak on pasteuriser plate heat exchanger PHE-01",
+        "asset": "Pasteuriser PHE-01",
+        "site": "Dairy processing plant, Victoria",
+        "eventDate": "2026-10-08",
+        "whatHappened": "On 8 Oct 2026 the pre-start pressure test failed on PHE-01 and a leak was found at a gasket in the regeneration section. The gasket was 22 months old. Plates were pulled, the gasket replaced, and the plate pack retightened. The first batch start was delayed.",
+        "where": "Regeneration section gasket between plates, plate pack.",
+        "when": "At the pre-start pressure test after a weekend CIP.",
+        "impact": "Start delayed 5 hours, raw milk held in the silo and a late tanker turned away; no product reached a customer.",
+        "assetTag": "PHE-01",
+        "assetType": "Heat exchanger",
+        "makeModel": "Gasketed plate heat exchanger, three sections",
+        "duty": "Milk pasteurising and regenerative cooling, 12,000 L/h",
+        "criticality": "A",
+        "failureMode": "Seal or gland leak"
+      },
+      "loss": {
+        "eventsPerYear": 3,
+        "downtimeHours": 5,
+        "ratePerHour": 12000,
+        "unitName": "litres",
+        "marginPerUnit": 0.12,
+        "repairCost": 3800,
+        "currency": "$",
+        "otherCosts": [
+          {
+            "id": "oc1",
+            "category": "scrap",
+            "description": "Milk dumped and tanker turned away",
+            "amount": 4200
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "id": "e1",
+          "type": "photo",
+          "title": "Failed gasket",
+          "note": "Gasket hard, flattened, with a nick at one corner. Compression set evident.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e2",
+          "type": "document",
+          "title": "PHE service record",
+          "note": "Gaskets replaced on a 24 month cycle, the maker's manual suggests a shorter life. Plate pack tightened to the dimension at each service.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e3",
+          "type": "data",
+          "title": "Pressure log from the pasteuriser",
+          "note": "Pressure spikes of about 2 bar above normal at the steam valve closing; 4 per shift.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e4",
+          "type": "document",
+          "title": "CIP program",
+          "note": "Caustic stage at the upper end of the plate maker's temperature guidance.",
+          "date": "",
+          "image": null
+        }
+      ],
+      "tree": {
+        "id": "n0",
+        "text": "Gasket on pasteuriser PHE-01 leaked at the pre-start pressure test",
+        "category": "physical",
+        "status": "verified",
+        "evidenceIds": [],
+        "isRootCause": false,
+        "collapsed": false,
+        "children": [
+          {
+            "id": "n1",
+            "text": "Gasket hard and compression set after 22 months",
+            "category": "physical",
+            "status": "verified",
+            "evidenceIds": [
+              "e1",
+              "e2"
+            ],
+            "isRootCause": false,
+            "collapsed": false,
+            "children": [
+              {
+                "id": "n2",
+                "text": "Gasket replacement interval of 24 months is longer than the maker's guidance",
+                "category": "system",
+                "status": "hypothesis",
+                "evidenceIds": [
+                  "e2"
+                ],
+                "isRootCause": true,
+                "collapsed": false,
+                "children": []
+              }
+            ],
+            "deterioration": "natural"
+          },
+          {
+            "id": "n3",
+            "text": "Pressure spikes from a fast closing steam valve",
+            "category": "physical",
+            "status": "hypothesis",
+            "evidenceIds": [
+              "e3"
+            ],
+            "isRootCause": false,
+            "collapsed": false,
+            "children": []
+          },
+          {
+            "id": "n4",
+            "text": "Hot caustic CIP stage",
+            "category": "physical",
+            "status": "hypothesis",
+            "evidenceIds": [
+              "e4"
+            ],
+            "isRootCause": false,
+            "collapsed": false,
+            "children": []
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "a1",
+          "causeId": "",
+          "description": "Replace gaskets and retighten the plate pack",
+          "owner": "Maintenance supervisor",
+          "dueDate": "2026-10-08",
+          "status": "done",
+          "cost": 3800,
+          "kind": "corrective",
+          "category": "repair"
+        },
+        {
+          "id": "a2",
+          "causeId": "n2",
+          "description": "Replace gaskets every 12 months",
+          "owner": "Maintenance planner",
+          "dueDate": "2026-11-30",
+          "status": "open",
+          "cost": null,
+          "kind": "preventive",
+          "category": "maintenance_task",
+          "task": {
+            "description": "Replace PHE gaskets and retighten to the plate maker's dimension",
+            "intervalValue": 12,
+            "intervalUnit": "months",
+            "craft": "Mechanical fitter",
+            "change": "changed"
+          }
+        }
+      ],
+      "spares": {
+        "needed": "yes",
+        "inStock": "yes",
+        "leadTimeDays": null,
+        "coverage": "A full gasket set was in stores."
+      },
+      "rollouts": [],
+      "verification": {
+        "reviewDate": "",
+        "recurred": "unreviewed",
+        "eventsPerYearAfter": null,
+        "notes": ""
+      }
+    },
+    "problemDraft": {
+      "existingFields": {
+        "asset": "Pasteuriser PHE-01",
+        "assetTag": "PHE-01",
+        "assetType": "Heat exchanger",
+        "makeModel": "Gasketed plate heat exchanger, three sections",
+        "duty": "Milk pasteurising and regenerative cooling, 12,000 L/h",
+        "criticality": "A",
+        "failureMode": "Seal or gland leak",
+        "site": "Dairy processing plant, Victoria",
+        "eventDate": "2026-10-08",
+        "title": "",
+        "whatHappened": "",
+        "where": "",
+        "when": "",
+        "impact": ""
+      },
+      "roughNotes": "phe01 gasket leaking regen section on pressure test sunday night. gasket 22 months old. swapped, tightened pack. start was late 5 hrs, milk backed up. there is a fast closing steam valve on the heating section and the water hammer is bad. caustic CIP runs at a high temp. 12 months is the gasket life in the manual but we do 24."
+    }
+  },
+  "requests": {
+    "coach": [
+      {
+        "scope": "node",
+        "nodeId": "n1"
+      },
+      {
+        "scope": "tree"
+      }
+    ],
+    "challenge": [
+      {
+        "focus": "all"
+      }
+    ],
+    "capa": [
+      {
+        "rootCauseId": "n2"
+      }
+    ],
+    "draft": [
+      {
+        "kind": "problem",
+        "notes": "phe01 gasket leaking regen section on pressure test sunday night. gasket 22 months old. swapped, tightened pack. start was late 5 hrs, milk backed up. there is a fast closing steam valve on the heating section and the water hammer is bad. caustic CIP runs at a high temp. 12 months is the gasket life in the manual but we do 24."
+      },
+      {
+        "kind": "report",
+        "notes": ""
+      },
+      {
+        "kind": "summary",
+        "notes": ""
+      }
+    ]
+  },
+  "grading": {
+    "coach": {
+      "selectedNodeId": "n1",
+      "mustSuggest": [
+        {
+          "level": "physical",
+          "idea": "Water hammer from the fast-closing steam valve shocking the plate pack"
+        },
+        {
+          "level": "physical",
+          "idea": "Caustic CIP temperature near the gasket material limit"
+        },
+        {
+          "level": "system",
+          "idea": "The gasket interval was set without a review of the maker's guidance or the site's failure history"
+        },
+        {
+          "level": "system",
+          "idea": "No pressure shock limit or valve closing time spec in the design or commissioning"
+        }
+      ],
+      "acceptable": [
+        "Gasket material selection",
+        "Plate pack tightening dimension not recorded",
+        "Gasket stored or fitted wrongly"
+      ],
+      "wrongOrDangerous": [
+        "Claiming the analysis meets a dairy food safety standard",
+        "Fitter tightened the pack wrongly (blame)",
+        "Shorten the interval only"
+      ]
+    },
+    "challenge": {
+      "mustFlag": [
+        {
+          "ref": "n2",
+          "type": "unverified_root",
+          "note": "Action planned on a hypothesis"
+        },
+        {
+          "ref": "n3",
+          "type": "deterioration_undecided",
+          "note": "Forced from pressure shock not decided"
+        },
+        {
+          "ref": "n4",
+          "type": "deterioration_undecided",
+          "note": "Forced from caustic temperature not decided"
+        },
+        {
+          "ref": "a2",
+          "type": "action_weak",
+          "note": "Shorter interval treats the symptom if the forcing causes are not removed"
+        },
+        {
+          "ref": "n0",
+          "type": "single_branch",
+          "note": "Forced branches are listed but not carried through"
+        }
+      ],
+      "mustNotFlag": [
+        "blame",
+        "no_task_interval on a2 (12 months, craft set)",
+        "standard compliance claims",
+        "no_evidence on n0"
+      ],
+      "expectation": "Summary says natural ageing is mixed with forced causes and that shortening the interval alone is not enough.",
+      "deliberateWeaknesses": [
+        "Mixed natural ageing (n1) with forced causes (n3, n4) not distinguished: a2 shortens the interval without removing the forced causes",
+        "n3 and n4 not flagged and no actions",
+        "Root n2 is hypothesis with an action planned",
+        "No monitoring: leak or pressure test result before start is the only detection",
+        "Deterioration on n3 and n4 not decided"
+      ]
+    },
+    "capa": [
+      {
+        "rootCauseId": "n2",
+        "expectedDeterioration": "unclear",
+        "deteriorationReasoning": "Gasket ageing is natural, but pressure shocks and hot caustic shorten life: forced. Remove or limit the forcing causes and then set the interval. Check the maker's guidance and the failure history.",
+        "corrective": [
+          "Replace gaskets and retighten (a1 done)"
+        ],
+        "preventive": [
+          {
+            "category": "design",
+            "what": "Increase the closing time of the steam valve or add a soft close or surge damper to remove the pressure spikes",
+            "interval": "one off",
+            "craft": "Process engineer"
+          },
+          {
+            "category": "procedure",
+            "what": "Review CIP caustic temperature and time with the plate maker's guidance",
+            "interval": "one off",
+            "craft": "Process engineer and QA"
+          },
+          {
+            "category": "maintenance_task",
+            "what": "Replace gaskets at an interval from the maker's guidance and the site failure history, record the tightening dimension",
+            "interval": "starting point 12 months, check against the history and the maker",
+            "craft": "Mechanical fitter"
+          },
+          {
+            "category": "condition_monitoring",
+            "what": "Pressure shock trend on the pasteuriser and leak test result trend",
+            "interval": "each start and monthly review",
+            "craft": "Instrument technician"
+          },
+          {
+            "category": "spares",
+            "what": "Hold a full gasket set and a spare plate",
+            "interval": "one off",
+            "craft": "Stores"
+          }
+        ],
+        "spares": "Gasket set (in stock) and spare plate; set a minimum.",
+        "rollout": "Other plate heat exchangers on the site with fast closing steam or water valves and the same CIP programme.",
+        "unacceptable": [
+          "Shorten the interval as the only action",
+          "Claim the work meets a dairy safety standard",
+          "Blame the fitter"
+        ]
+      }
+    ],
+    "draft": {
+      "problem": {
+        "mustInclude": [
+          "pre-start pressure test failed on 8 Oct 2026",
+          "leak at a regeneration section gasket",
+          "gasket 22 months old",
+          "start delayed 5 hours",
+          "raw milk held, tanker turned away",
+          "fast closing steam valve and water hammer noted",
+          "caustic CIP high temperature noted"
+        ],
+        "mustNotInvent": [
+          "the maker's actual life figure beyond the notes (12 months is in the notes)",
+          "product reaching a customer",
+          "pressure values not in the notes",
+          "a standard"
+        ],
+        "gapsToPointOut": [
+          "What was the pressure test value?",
+          "What are the valve closing time and the caustic temperature?"
+        ]
+      },
+      "report": {
+        "mustInclude": [
+          "Evidence e1 to e4",
+          "Natural ageing with forced causes mentioned",
+          "a2 changed task 12 months, mechanical fitter"
+        ],
+        "mustNotInvent": [
+          "food safety compliance",
+          "verified saving"
+        ],
+        "stillToConfirm": [
+          "n2 hypothesis",
+          "n3 and n4 unverified",
+          "verification not done"
+        ]
+      }
+    }
+  },
+  "hardChecks": {
+    "schemaValid": true,
+    "noPersonBlamedAsRoot": true,
+    "nothingMarkedVerified": true,
+    "noInventedNumbers": true,
+    "allowedNumbers": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "8",
+      "01",
+      "08",
+      "10",
+      "11",
+      "12",
+      "22",
+      "24",
+      "30",
+      "0.12",
+      "2026",
+      "3800",
+      "4200",
+      "12000",
+      "12,000"
+    ],
+    "allowedNumbersNote": "Numbers in the AI output must come from this list or from the app's own cost calculation (buildAiContext loss line). Anything else is invented.",
+    "noCostData": false,
+    "processFailure": false,
+    "processRules": "",
+    "wordingRules": [
+      "Use 'countermeasure', never 'fix' as a noun",
+      "No N#, A# or E# labels inside prose",
+      "No markdown in string fields",
+      "No dates as YYYY-MM-DD in prose"
+    ]
+  }
+}

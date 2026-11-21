@@ -1,0 +1,403 @@
+{
+  "id": "case-10",
+  "formatVersion": 1,
+  "title": "Cooling water pump motor, bearing failure after greasing",
+  "slug": "motor-overgreasing-blame-fitter",
+  "tests": "Blame wording in the tree ('fitter over-greased'); forced deterioration.",
+  "flags": [
+    "clear-cut",
+    "forced",
+    "blame in tree"
+  ],
+  "summary": "A 90 kW cooling water pump motor lost its drive-end bearing three weeks after a PM grease. The bearing had hot, pushed-out grease. The tree's root cause says 'fitter over-greased'. The fix is the system: no grease quantity or interval in the PM, a grease gun that is not metered.",
+  "input": {
+    "investigation": {
+      "id": "eval-case-10",
+      "schemaVersion": 1,
+      "createdAt": "2026-11-21T00:00:00.000Z",
+      "updatedAt": "2026-11-21T00:00:00.000Z",
+      "isSample": false,
+      "problem": {
+        "title": "Drive-end bearing failure on cooling water pump motor M-5502",
+        "asset": "Cooling water pump 5502 motor",
+        "site": "Alumina refinery, utilities area, Gladstone QLD",
+        "eventDate": "2026-08-21",
+        "whatHappened": "Motor M-5502 tripped on high drive-end bearing temperature on 21 Aug 2026, 3 weeks after the PM greasing round. Drive-end bearing was found overheated, grease pushed out of the end cap and the bearing rough. Motor was swapped for a spare.",
+        "where": "Drive-end bearing of M-5502.",
+        "when": "Day shift. 3 weeks after the 6-monthly grease task.",
+        "impact": "Cooling water duty moved to the standby pump; no production loss. Motor swap and rewind of the bearing seat was needed.",
+        "assetTag": "M-5502",
+        "assetType": "Electric motor",
+        "makeModel": "90 kW, 4 pole, 415 V, 1,480 rpm, grease nipples both ends",
+        "duty": "Drives the cooling water pump on the process cooling circuit, continuous",
+        "criticality": "B",
+        "failureMode": "Bearing failure"
+      },
+      "loss": {
+        "eventsPerYear": 1,
+        "downtimeHours": 0,
+        "ratePerHour": 0,
+        "unitName": "",
+        "marginPerUnit": 0,
+        "repairCost": 9800,
+        "currency": "$"
+      },
+      "evidence": [
+        {
+          "id": "e1",
+          "type": "photo",
+          "title": "Drive-end bearing and end cap",
+          "note": "Grease packed full in the cavity and pushed out of the cap seal. Bearing discoloured and rough.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e2",
+          "type": "document",
+          "title": "PM job card for greasing",
+          "note": "Card says 'grease motor bearings 6 monthly'. No quantity, no grease type, no purge procedure.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e3",
+          "type": "inspection",
+          "title": "Grease gun in use",
+          "note": "Hand grease gun, not metered. Different gun used on all rounds.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e4",
+          "type": "interview",
+          "title": "Fitter",
+          "note": "Said he pumped until 'it felt full' because the card gave no quantity. No training on small-motor greasing.",
+          "date": "",
+          "image": null
+        }
+      ],
+      "tree": {
+        "id": "n0",
+        "text": "Drive-end bearing on motor M-5502 overheated and failed",
+        "category": "physical",
+        "status": "verified",
+        "evidenceIds": [],
+        "isRootCause": false,
+        "collapsed": false,
+        "children": [
+          {
+            "id": "n1",
+            "text": "Bearing cavity over-filled with grease, causing churning and overheating",
+            "category": "physical",
+            "status": "verified",
+            "evidenceIds": [
+              "e1"
+            ],
+            "isRootCause": false,
+            "collapsed": false,
+            "children": [
+              {
+                "id": "n2",
+                "text": "Fitter over-greased the bearing",
+                "category": "human",
+                "status": "hypothesis",
+                "evidenceIds": [],
+                "isRootCause": true,
+                "collapsed": false,
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "a1",
+          "causeId": "",
+          "description": "Swap motor M-5502 and send the failed motor for repair",
+          "owner": "Mechanical supervisor",
+          "dueDate": "2026-08-24",
+          "status": "done",
+          "cost": 9800,
+          "kind": "corrective",
+          "category": "repair"
+        },
+        {
+          "id": "a2",
+          "causeId": "n2",
+          "description": "Counsel the fitter on greasing",
+          "owner": "Maintenance supervisor",
+          "dueDate": "2026-09-10",
+          "status": "open",
+          "cost": null,
+          "kind": "preventive",
+          "category": "training"
+        }
+      ],
+      "spares": {
+        "needed": "yes",
+        "inStock": "yes",
+        "leadTimeDays": null,
+        "coverage": "Spare 90 kW motor in store."
+      },
+      "rollouts": [],
+      "verification": {
+        "reviewDate": "",
+        "recurred": "unreviewed",
+        "eventsPerYearAfter": null,
+        "notes": ""
+      }
+    },
+    "problemDraft": {
+      "existingFields": {
+        "asset": "Cooling water pump 5502 motor",
+        "assetTag": "M-5502",
+        "assetType": "Electric motor",
+        "makeModel": "90 kW, 4 pole, 415 V, 1,480 rpm, grease nipples both ends",
+        "duty": "Drives the cooling water pump on the process cooling circuit, continuous",
+        "criticality": "B",
+        "failureMode": "Bearing failure",
+        "site": "Alumina refinery, utilities area, Gladstone QLD",
+        "eventDate": "2026-08-21",
+        "title": "",
+        "whatHappened": "",
+        "where": "",
+        "when": "",
+        "impact": ""
+      },
+      "roughNotes": "m5502 de bearing hot, tripped on temp alarm 3 wks after grease round. grease all over the end cap. bearing rough. fitter over greased it, its obvious. swapped motor from stores. standby took the duty."
+    }
+  },
+  "requests": {
+    "coach": [
+      {
+        "scope": "node",
+        "nodeId": "n2"
+      },
+      {
+        "scope": "tree"
+      }
+    ],
+    "challenge": [
+      {
+        "focus": "all"
+      }
+    ],
+    "capa": [
+      {
+        "rootCauseId": "n2"
+      }
+    ],
+    "draft": [
+      {
+        "kind": "problem",
+        "notes": "m5502 de bearing hot, tripped on temp alarm 3 wks after grease round. grease all over the end cap. bearing rough. fitter over greased it, its obvious. swapped motor from stores. standby took the duty."
+      },
+      {
+        "kind": "report",
+        "notes": ""
+      },
+      {
+        "kind": "summary",
+        "notes": ""
+      }
+    ]
+  },
+  "grading": {
+    "coach": {
+      "selectedNodeId": "n2",
+      "mustSuggest": [
+        {
+          "level": "system",
+          "idea": "PM job card has no grease quantity, type or procedure"
+        },
+        {
+          "level": "system",
+          "idea": "Grease gun is not metered and does not suit small motors"
+        },
+        {
+          "level": "system",
+          "idea": "No training or competence check on greasing for fitters"
+        },
+        {
+          "level": "physical",
+          "idea": "Check bearing relief or purge path blocked, so grease could not escape"
+        }
+      ],
+      "acceptable": [
+        "Wrong grease type incompatible with existing grease",
+        "Grease interval too short for the bearing size"
+      ],
+      "wrongOrDangerous": [
+        "Fitter was careless or lazy",
+        "Discipline",
+        "'Counsel the fitter' as an answer"
+      ]
+    },
+    "challenge": {
+      "mustFlag": [
+        {
+          "ref": "n2",
+          "type": "blame",
+          "note": "Root cause blames the fitter"
+        },
+        {
+          "ref": "n2",
+          "type": "no_evidence",
+          "note": "No evidence linked though e2 to e4 exist"
+        },
+        {
+          "ref": "n0",
+          "type": "missing_level",
+          "note": "Tree has no system cause anywhere"
+        },
+        {
+          "ref": "a2",
+          "type": "action_weak",
+          "note": "Counselling for a system cause"
+        },
+        {
+          "ref": "n1",
+          "type": "deterioration_undecided",
+          "note": "Forced from over-greasing not tagged"
+        },
+        {
+          "ref": "n2",
+          "type": "no_preventive",
+          "note": "No system-level preventive action"
+        }
+      ],
+      "mustNotFlag": [
+        "Support for the 'obvious' fitter error wording",
+        "no_evidence on n0"
+      ],
+      "expectation": "Summary says it stops at a person; the card, gun and training are the system.",
+      "deliberateWeaknesses": [
+        "n2 blames the fitter (blame)",
+        "n2 has no evidence linked although e2, e3, e4 point to the system",
+        "No system level: no quantity or interval, unmetered gun, no training",
+        "Action a2 retrains for a system gap",
+        "No task or interval in the preventive actions",
+        "Over-greasing is forced deterioration, not tagged"
+      ]
+    },
+    "capa": [
+      {
+        "rootCauseId": "n2",
+        "expectedDeterioration": "forced",
+        "deteriorationReasoning": "Over-filling the bearing with grease is damage we caused by method, not normal bearing wear.",
+        "corrective": [
+          "Swap motor and repair the failed one (a1 done)"
+        ],
+        "preventive": [
+          {
+            "category": "procedure",
+            "what": "Greasing job card with grease type, quantity in grams or strokes per bearing, relief path check and run-in",
+            "interval": "one off",
+            "craft": "Lubrication technician or planner"
+          },
+          {
+            "category": "maintenance_task",
+            "what": "Grease motor bearings by a measured quantity with a metered gun",
+            "interval": "every 6 months, starting point to check with the motor maker and bearing size",
+            "craft": "Lubrication technician"
+          },
+          {
+            "category": "condition_monitoring",
+            "what": "Bearing temperature and vibration spot check after greasing",
+            "interval": "after each greasing and every 3 months",
+            "craft": "Reliability technician"
+          },
+          {
+            "category": "design",
+            "what": "Fit grease relief or automatic lubricator on critical small motors, only if a review supports it",
+            "interval": "one off",
+            "craft": "Reliability engineer"
+          },
+          {
+            "category": "training",
+            "what": "Short hands-on greasing training as part of the system change, not on its own",
+            "interval": "one off",
+            "craft": "Maintenance supervisor"
+          }
+        ],
+        "spares": "Hold drive-end bearing set and end cap seal for the 90 kW frame; the spare motor exists so set a min of 1 motor.",
+        "rollout": "All grease-lubricated motors on the same PM task and the same grease gun routes: check for over-fill symptoms.",
+        "unacceptable": [
+          "Counsel or retrain the fitter as the only action",
+          "Shorten the bearing replacement interval",
+          "'Be more careful'"
+        ]
+      }
+    ],
+    "draft": {
+      "problem": {
+        "mustInclude": [
+          "motor M-5502 tripped on high drive-end bearing temperature on 21 Aug 2026",
+          "3 weeks after the PM greasing round",
+          "grease pushed out of the end cap",
+          "bearing rough",
+          "swapped for spare, standby took duty"
+        ],
+        "mustNotInvent": [
+          "that the fitter over-greased (notes assert it; the AI must not state it as a fact or a blame)",
+          "the amount of grease",
+          "fitter's name"
+        ],
+        "gapsToPointOut": [
+          "What does the job card say for quantity and type?",
+          "What was the bearing temperature trend after greasing?"
+        ]
+      },
+      "report": {
+        "mustInclude": [
+          "Blame reworded as a method gap",
+          "a2 is a counselling action: flagged as weak in still to confirm"
+        ],
+        "mustNotInvent": [
+          "greasing quantities",
+          "verified saving"
+        ],
+        "stillToConfirm": [
+          "n2 not evidenced",
+          "no system cause recorded"
+        ]
+      }
+    }
+  },
+  "hardChecks": {
+    "schemaValid": true,
+    "noPersonBlamedAsRoot": true,
+    "nothingMarkedVerified": true,
+    "noInventedNumbers": true,
+    "allowedNumbers": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "6",
+      "08",
+      "09",
+      "10",
+      "21",
+      "24",
+      "90",
+      "415",
+      "2026",
+      "5502",
+      "9800",
+      "1,480"
+    ],
+    "allowedNumbersNote": "Numbers in the AI output must come from this list or from the app's own cost calculation (buildAiContext loss line). Anything else is invented.",
+    "noCostData": false,
+    "processFailure": false,
+    "processRules": "",
+    "wordingRules": [
+      "Use 'countermeasure', never 'fix' as a noun",
+      "No N#, A# or E# labels inside prose",
+      "No markdown in string fields",
+      "No dates as YYYY-MM-DD in prose"
+    ]
+  }
+}

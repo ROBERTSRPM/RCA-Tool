@@ -1,0 +1,487 @@
+{
+  "id": "case-19",
+  "formatVersion": 1,
+  "title": "Chilled ready meal tray sealer, leaking packs",
+  "slug": "tray-sealer-leaking-seals",
+  "tests": "Process/quality failure: leaking seals; causes across equipment, materials, method, measurement. Deterioration must be not_applicable for non-wear causes.",
+  "flags": [
+    "messy",
+    "process failure",
+    "not_applicable"
+  ],
+  "summary": "Sauce leaked from sealed trays of a chilled curry ready meal on Line 3. Seal check once per shift missed it. Film from a new supplier lot, a sealing temperature setpoint changed at a changeover, and sauce on the seal area all appear in the notes. Tree blames the sealing head only.",
+  "input": {
+    "investigation": {
+      "id": "eval-case-19",
+      "schemaVersion": 1,
+      "createdAt": "2026-11-21T00:00:00.000Z",
+      "updatedAt": "2026-11-21T00:00:00.000Z",
+      "isSample": false,
+      "problem": {
+        "title": "Leaking seals on chilled curry trays, Line 3",
+        "asset": "Line 3 tray sealer",
+        "site": "Chilled meals factory, Western Sydney NSW",
+        "eventDate": "2026-04-22",
+        "whatHappened": "On 22 Apr 2026 the retail DC rejected a pallet of 400 g butter chicken trays after leaking packs were found. About 3% of a 2-hour production run was leaking at the seal. The seal check once per shift did not find it. Film from a new supplier lot was loaded that morning and the sealing temperature was changed at the changeover.",
+        "where": "Lidding film seal on the long edge of the tray, tray flange.",
+        "when": "Run started after the morning changeover to butter chicken; leaks found from about 09:00 to 11:00 production.",
+        "impact": "1,440 trays on one pallet rejected, a further 3,600 trays held for 100% inspection, retailer complaint raised.",
+        "assetTag": "TS-03",
+        "assetType": "Packaging machine",
+        "makeModel": "Inline tray sealer, 6 trays per stroke",
+        "duty": "Seals lidding film on 400 g curry trays",
+        "criticality": "A",
+        "failureMode": "Seal failure (leaking pack)",
+        "failureType": "process",
+        "qualityRef": "NCR-26-0231",
+        "line": "Line 3",
+        "product": "Butter chicken curry",
+        "packType": "400 g tray with lidding film",
+        "processStep": "Tray sealing"
+      },
+      "loss": {
+        "eventsPerYear": 3,
+        "downtimeHours": 2,
+        "ratePerHour": 2400,
+        "unitName": "trays",
+        "marginPerUnit": 0.9,
+        "repairCost": 1200,
+        "currency": "$",
+        "otherCosts": [
+          {
+            "id": "oc1",
+            "category": "scrap",
+            "description": "Rejected and held trays scrapped",
+            "amount": 6200
+          },
+          {
+            "id": "oc2",
+            "category": "other",
+            "description": "Rework and 100% inspection labour",
+            "amount": 2800
+          },
+          {
+            "id": "oc3",
+            "category": "penalties",
+            "description": "Retailer credit and fines",
+            "amount": 4500
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "id": "e1",
+          "type": "photo",
+          "title": "Leaking seal sample trays",
+          "note": "Channel leaks at the long edge seal; sauce residue visible in the seal channel on 4 of 6 samples.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e2",
+          "type": "data",
+          "title": "Sealer setpoint log",
+          "note": "Temperature 175 C on the previous run; 185 C after the changeover. Dwell time unchanged, pressure not logged.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e3",
+          "type": "document",
+          "title": "Film delivery and CoA",
+          "note": "New lidding film lot from the new supplier, received 20 Apr. Certificate states seal initiation temperature range; incoming check not done.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e4",
+          "type": "document",
+          "title": "Shift seal check record",
+          "note": "One tray tested by dye test at 07:00 and passed. Next check due at 15:00.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e5",
+          "type": "inspection",
+          "title": "Filler nozzle and tray flange",
+          "note": "Filler dripping on 2 of 6 nozzles; sauce on flange of some trays before sealing.",
+          "date": "",
+          "image": null
+        }
+      ],
+      "tree": {
+        "id": "n0",
+        "text": "Leaking seals on butter chicken trays, Line 3",
+        "category": "physical",
+        "status": "verified",
+        "evidenceIds": [],
+        "isRootCause": false,
+        "collapsed": false,
+        "children": [
+          {
+            "id": "n1",
+            "text": "Sealing head temperature too high for the new film",
+            "category": "physical",
+            "status": "hypothesis",
+            "evidenceIds": [],
+            "isRootCause": false,
+            "collapsed": false,
+            "children": [
+              {
+                "id": "n2",
+                "text": "Operator set the wrong temperature at the changeover",
+                "category": "human",
+                "status": "hypothesis",
+                "evidenceIds": [],
+                "isRootCause": true,
+                "collapsed": false,
+                "children": [],
+                "area": "people"
+              }
+            ],
+            "deterioration": "not_applicable",
+            "area": "equipment"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "a1",
+          "causeId": "",
+          "description": "Hold and inspect the affected pallets",
+          "owner": "QA manager",
+          "dueDate": "2026-04-23",
+          "status": "done",
+          "cost": null,
+          "kind": "corrective",
+          "category": "procedure"
+        },
+        {
+          "id": "a2",
+          "causeId": "n2",
+          "description": "Remind operators to check temperature after changeover",
+          "owner": "Production supervisor",
+          "dueDate": "",
+          "status": "open",
+          "cost": null,
+          "kind": "preventive",
+          "category": "training"
+        }
+      ],
+      "spares": {
+        "needed": "no",
+        "inStock": "",
+        "leadTimeDays": null,
+        "coverage": ""
+      },
+      "rollouts": [],
+      "verification": {
+        "reviewDate": "",
+        "recurred": "unreviewed",
+        "eventsPerYearAfter": null,
+        "notes": ""
+      }
+    },
+    "problemDraft": {
+      "existingFields": {
+        "asset": "Line 3 tray sealer",
+        "assetTag": "TS-03",
+        "assetType": "Packaging machine",
+        "makeModel": "Inline tray sealer, 6 trays per stroke",
+        "duty": "Seals lidding film on 400 g curry trays",
+        "criticality": "A",
+        "failureMode": "Seal failure (leaking pack)",
+        "failureType": "process",
+        "qualityRef": "NCR-26-0231",
+        "line": "Line 3",
+        "product": "Butter chicken curry",
+        "packType": "400 g tray with lidding film",
+        "processStep": "Tray sealing",
+        "site": "Chilled meals factory, Western Sydney NSW",
+        "eventDate": "2026-04-22",
+        "title": "",
+        "whatHappened": "",
+        "where": "",
+        "when": "",
+        "impact": ""
+      },
+      "roughNotes": "ts03 leaking seals on butter chicken. dc rejected a pallet, about 3% of the 9-11am run leaking. we had a changeover that morning, seal temp went to 185 from 175 for the new film, i think. new film lot from the new supplier went on at the same time. sauce splash on the flange on some trays, filler was dripping. seal check is once a shift and passed at 7am. ncr 26-0231."
+    }
+  },
+  "requests": {
+    "coach": [
+      {
+        "scope": "node",
+        "nodeId": "n0"
+      },
+      {
+        "scope": "tree"
+      }
+    ],
+    "challenge": [
+      {
+        "focus": "all"
+      }
+    ],
+    "capa": [
+      {
+        "rootCauseId": "n2"
+      }
+    ],
+    "draft": [
+      {
+        "kind": "problem",
+        "notes": "ts03 leaking seals on butter chicken. dc rejected a pallet, about 3% of the 9-11am run leaking. we had a changeover that morning, seal temp went to 185 from 175 for the new film, i think. new film lot from the new supplier went on at the same time. sauce splash on the flange on some trays, filler was dripping. seal check is once a shift and passed at 7am. ncr 26-0231."
+      },
+      {
+        "kind": "report",
+        "notes": ""
+      },
+      {
+        "kind": "summary",
+        "notes": ""
+      }
+    ]
+  },
+  "grading": {
+    "coach": {
+      "selectedNodeId": "n0",
+      "mustSuggest": [
+        {
+          "level": "physical",
+          "idea": "Sauce on the seal flange from filler drips contaminating the seal"
+        },
+        {
+          "level": "physical",
+          "idea": "New film lot from the new supplier with a different seal initiation range"
+        },
+        {
+          "level": "system",
+          "idea": "Change control: a new film or supplier does not trigger seal parameter validation"
+        },
+        {
+          "level": "system",
+          "idea": "Setpoints not locked or verified at changeover (temperature, dwell, pressure)"
+        },
+        {
+          "level": "system",
+          "idea": "Seal check frequency of once per shift is too sparse to catch a run problem (measurement)"
+        },
+        {
+          "level": "human",
+          "idea": "Operators had no recipe card or verified setpoint for the new film, as a system gap"
+        }
+      ],
+      "acceptable": [
+        "Sealing head wear or heater element drift",
+        "Tray flange deformation",
+        "Ambient temperature of the chilled room"
+      ],
+      "wrongOrDangerous": [
+        "Operator error as a cause",
+        "Marking any deterioration as forced for non-wear causes (setpoint, film, check frequency)",
+        "Claiming the analysis meets a food standard",
+        "Stating the cause is proven"
+      ]
+    },
+    "challenge": {
+      "mustFlag": [
+        {
+          "ref": "n2",
+          "type": "blame",
+          "note": "Blames the operator"
+        },
+        {
+          "ref": "n2",
+          "type": "no_evidence",
+          "note": "Flagged root with no evidence linked"
+        },
+        {
+          "ref": "n0",
+          "type": "missing_level",
+          "note": "No system cause"
+        },
+        {
+          "ref": "n0",
+          "type": "single_branch",
+          "note": "Only the sealer temperature branch: no materials, measurement, or filler drip"
+        },
+        {
+          "ref": "n1",
+          "type": "no_evidence",
+          "note": "Hypothesis though e2 exists"
+        },
+        {
+          "ref": "a2",
+          "type": "action_weak",
+          "note": "Training for a system gap"
+        }
+      ],
+      "mustNotFlag": [
+        "deterioration_undecided on any node (not wear)",
+        "claim of HACCP or standard compliance",
+        "no_task_interval on a1 (not a task)"
+      ],
+      "expectation": "Should raise measurement (once-a-shift check) and supplier or material batch as the missing branches; summary in plain words.",
+      "deliberateWeaknesses": [
+        "Branch only blames the operator (blame) and the machine; no materials (film lot, supplier), measurement (once-per-shift check) or filler drip angle",
+        "n1 and n2 no evidence although e2 exists",
+        "Root n2 is human with no system cause",
+        "a2 retrains for a system gap",
+        "Verification of the countermeasure absent (no leak test frequency)",
+        "No supplier or incoming check angle"
+      ]
+    },
+    "capa": [
+      {
+        "rootCauseId": "n2",
+        "expectedDeterioration": "not_applicable",
+        "deteriorationReasoning": "A setpoint, a film lot and a check frequency are not wear. Say so in the reason.",
+        "corrective": [
+          "Hold and inspect affected pallets (a1 done)",
+          "Check and clean filler nozzles, tray flange clean-up"
+        ],
+        "preventive": [
+          {
+            "category": "procedure",
+            "what": "Setpoint card per film and product with temperature, dwell and pressure, verified by a second person at changeover",
+            "interval": "each changeover",
+            "craft": "Production supervisor"
+          },
+          {
+            "category": "operating_practice",
+            "what": "Lock or verify setpoints at changeover before the first pack leaves the line",
+            "interval": "each changeover",
+            "craft": "Operator"
+          },
+          {
+            "category": "condition_monitoring",
+            "what": "In-process seal check by dye or vacuum leak test, increased in frequency after a changeover or film change",
+            "interval": "first pack, then every 30 minutes for the first 2 hours, then hourly (starting point to review with QA)",
+            "craft": "Quality technician"
+          },
+          {
+            "category": "procedure",
+            "what": "Supplier approval and incoming check for lidding film including seal range test; change control for new lots or suppliers",
+            "interval": "one off",
+            "craft": "QA manager"
+          },
+          {
+            "category": "maintenance_task",
+            "what": "Fix filler nozzle drips and add a drip tray or sensor",
+            "interval": "next planned stop and weekly check",
+            "craft": "Mechanical fitter"
+          },
+          {
+            "category": "training",
+            "what": "Training on the new setpoint card as part of the system change",
+            "interval": "one off",
+            "craft": "Production supervisor"
+          }
+        ],
+        "spares": "Not forced for a process failure. Optionally hold a spare sealing head heater and temperature sensor, only if shown relevant.",
+        "rollout": "Other lines and products using the same lidding film or supplier; other changeovers where the film changes.",
+        "unacceptable": [
+          "Retrain or remind operators as the only action",
+          "Claim the analysis meets HACCP or any standard",
+          "Forcing a spares or vibration monitoring action",
+          "Mark the film or setpoint as forced deterioration"
+        ]
+      }
+    ],
+    "draft": {
+      "problem": {
+        "mustInclude": [
+          "pallet rejected by the DC on 22 Apr 2026",
+          "about 3% leaking in a 2-hour run",
+          "changeover that morning",
+          "new film lot from the new supplier",
+          "seal check once per shift passed at 7am",
+          "NCR-26-0231",
+          "3,600 trays held"
+        ],
+        "mustNotInvent": [
+          "that the temperature or film is the cause",
+          "the 185 and 175 values unless used from the notes (they are in the notes)",
+          "retailer name",
+          "a standard"
+        ],
+        "gapsToPointOut": [
+          "What were the dwell and pressure settings?",
+          "Which film lot number?",
+          "How many trays in the run in total?"
+        ]
+      },
+      "report": {
+        "mustInclude": [
+          "NCR-26-0231 in the Summary and a note that the report may feed the site's QA or CAPA system",
+          "Evidence e1 to e5",
+          "Measurement and supplier gaps under Still to confirm"
+        ],
+        "mustNotInvent": [
+          "HACCP, SQF or BRC compliance",
+          "verified cause",
+          "a saving"
+        ],
+        "stillToConfirm": [
+          "Root cause is human with no system cause",
+          "no evidence on n1, n2",
+          "verification not defined"
+        ]
+      }
+    }
+  },
+  "hardChecks": {
+    "schemaValid": true,
+    "noPersonBlamedAsRoot": true,
+    "nothingMarkedVerified": true,
+    "noInventedNumbers": true,
+    "allowedNumbers": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "9",
+      "00",
+      "03",
+      "04",
+      "07",
+      "09",
+      "11",
+      "15",
+      "20",
+      "22",
+      "23",
+      "26",
+      "0.9",
+      "100",
+      "175",
+      "185",
+      "400",
+      "0231",
+      "1200",
+      "2026",
+      "2400",
+      "2800",
+      "4500",
+      "6200",
+      "1,440",
+      "3,600"
+    ],
+    "allowedNumbersNote": "Numbers in the AI output must come from this list or from the app's own cost calculation (buildAiContext loss line). Anything else is invented.",
+    "noCostData": false,
+    "processFailure": true,
+    "processRules": "No deterioration other than not_applicable on setting, method, material or check causes. No claim of HACCP/SQF/BRC compliance. No spares or vibration monitoring forced into CAPA.",
+    "wordingRules": [
+      "Use 'countermeasure', never 'fix' as a noun",
+      "No N#, A# or E# labels inside prose",
+      "No markdown in string fields",
+      "No dates as YYYY-MM-DD in prose"
+    ]
+  }
+}

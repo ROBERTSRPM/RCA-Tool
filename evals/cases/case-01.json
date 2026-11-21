@@ -1,0 +1,513 @@
+{
+  "id": "case-01",
+  "formatVersion": 1,
+  "title": "Cyclone feed pump, gland seal failure",
+  "slug": "slurry-pump-gland-water",
+  "tests": "Sound, well-evidenced analysis (should NOT be over-flagged); forced deterioration; clear-cut.",
+  "flags": [
+    "clear-cut",
+    "forced",
+    "sound tree"
+  ],
+  "summary": "Gland packing on the duty cyclone feed pump P-2301 failed for the fourth time in 10 months. Slurry was pushed into the gland because gland water pressure was below stuffing box pressure. The shared gland water strainer was 80% blocked; rounds only ask 'gland water OK?'. The tree is mostly sound and evidenced. The test is that the AI does not invent problems.",
+  "input": {
+    "investigation": {
+      "id": "eval-case-01",
+      "schemaVersion": 1,
+      "createdAt": "2026-11-21T00:00:00.000Z",
+      "updatedAt": "2026-11-21T00:00:00.000Z",
+      "isSample": false,
+      "problem": {
+        "title": "Repeat gland failures on cyclone feed pump P-2301",
+        "asset": "Cyclone feed pump 2301",
+        "site": "Gold processing plant, grinding circuit, Kalgoorlie WA",
+        "eventDate": "2026-03-18",
+        "whatHappened": "P-2301 was stopped at about 02:40 on 18 Mar 2026 after the packing gland ran hot and leaked slurry across the pump base. Gland packing and shaft sleeve were found scored. This is the fourth gland failure on P-2301 in 10 months. Standby P-2302 was started and the circuit ran at reduced throughput for about 6 hours.",
+        "where": "Packing gland and shaft sleeve, drive side of P-2301 stuffing box.",
+        "when": "Normal duty, no recent process upset. Events spread across shifts; this one was found on the 2-hourly round.",
+        "impact": "Grinding throughput cut by about 35% for 6 hours. About 2 m3 of slurry spilled and cleaned up. Gland repack and sleeve replacement. No injury.",
+        "assetTag": "P-2301",
+        "assetType": "Slurry pump",
+        "makeModel": "Rubber-lined 10/8 slurry pump, 250 kW",
+        "duty": "Primary mill discharge to cyclone cluster, duty/standby",
+        "criticality": "A",
+        "failureMode": "Seal or gland leak"
+      },
+      "loss": {
+        "eventsPerYear": 5,
+        "downtimeHours": 2.1,
+        "ratePerHour": 180,
+        "unitName": "tonnes",
+        "marginPerUnit": 22,
+        "repairCost": 4800,
+        "currency": "$"
+      },
+      "evidence": [
+        {
+          "id": "e1",
+          "type": "data",
+          "title": "Gland water pressure readings, P-2301 and P-2302",
+          "note": "18 Mar: gland water 0.4 bar at the P-2301 stuffing box. Stuffing box slurry pressure about 1.9 bar from the discharge gauge, so slurry was being pushed into the gland. P-2302 gland water 0.6 bar.",
+          "date": "2026-03-18",
+          "image": null
+        },
+        {
+          "id": "e2",
+          "type": "photo",
+          "title": "Failed gland packing and shaft sleeve",
+          "note": "Packing rings hard and glazed with fine grit through the layers. Sleeve scored about 0.8 mm deep under the packing.",
+          "date": "2026-03-18",
+          "image": null
+        },
+        {
+          "id": "e3",
+          "type": "inspection",
+          "title": "Gland water header strainer",
+          "note": "Common header strainer found about 80% blocked with scale and rubber flakes. No record of when it was last cleaned.",
+          "date": "2026-03-19",
+          "image": null
+        },
+        {
+          "id": "e4",
+          "type": "document",
+          "title": "Operator round sheet",
+          "note": "Round sheet asks only 'Gland water OK?' with a tick box. No pressure or flow value recorded. All ticked for the last 3 months.",
+          "date": "2026-03-19",
+          "image": null
+        },
+        {
+          "id": "e5",
+          "type": "document",
+          "title": "Work order history P-2301",
+          "note": "Four gland repack or sleeve WOs in 10 months, each closed 'repacked gland, ok'. No WO or PM task for the gland water strainer.",
+          "date": "2026-03-20",
+          "image": null
+        },
+        {
+          "id": "e6",
+          "type": "interview",
+          "title": "Operator and fitter conversation",
+          "note": "Operators judge flow by eye on the rotameter; the glass is stained and hard to read. Fitters set the gland followers by feel.",
+          "date": "2026-03-20",
+          "image": null
+        },
+        {
+          "id": "e7",
+          "type": "document",
+          "title": "P&ID and DCS alarm list",
+          "note": "No pressure or flow instrument on the gland water header. No alarm or interlock to the pumps.",
+          "date": "2026-03-21",
+          "image": null
+        }
+      ],
+      "tree": {
+        "id": "n0",
+        "text": "Gland on cyclone feed pump P-2301 failed, fourth time in 10 months",
+        "category": "physical",
+        "status": "verified",
+        "evidenceIds": [],
+        "isRootCause": false,
+        "collapsed": false,
+        "children": [
+          {
+            "id": "n1",
+            "text": "Packing glazed and sleeve scored by abrasive slurry entering the gland",
+            "category": "physical",
+            "status": "verified",
+            "evidenceIds": [
+              "e2"
+            ],
+            "isRootCause": false,
+            "collapsed": false,
+            "children": [
+              {
+                "id": "n2",
+                "text": "Gland water pressure was below stuffing box slurry pressure, so slurry was pushed into the packing",
+                "category": "physical",
+                "status": "verified",
+                "evidenceIds": [
+                  "e1"
+                ],
+                "isRootCause": false,
+                "collapsed": false,
+                "children": [
+                  {
+                    "id": "n3",
+                    "text": "Common gland water header strainer was about 80% blocked, restricting flow to both pumps",
+                    "category": "physical",
+                    "status": "verified",
+                    "evidenceIds": [
+                      "e3"
+                    ],
+                    "isRootCause": false,
+                    "collapsed": false,
+                    "children": [
+                      {
+                        "id": "n4",
+                        "text": "Strainer was not cleaned and low flow was not noticed on rounds; the rotameter is hard to read",
+                        "category": "human",
+                        "status": "verified",
+                        "evidenceIds": [
+                          "e4",
+                          "e6"
+                        ],
+                        "isRootCause": false,
+                        "collapsed": false,
+                        "children": [
+                          {
+                            "id": "n5",
+                            "text": "No strainer cleaning task in the PM plan, and the round sheet has no pressure or flow limit",
+                            "category": "system",
+                            "status": "verified",
+                            "evidenceIds": [
+                              "e4",
+                              "e5"
+                            ],
+                            "isRootCause": true,
+                            "collapsed": false,
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "id": "n6",
+                        "text": "Gland water supply has no low-pressure or low-flow alarm or interlock",
+                        "category": "system",
+                        "status": "verified",
+                        "evidenceIds": [
+                          "e7"
+                        ],
+                        "isRootCause": true,
+                        "collapsed": false,
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "n7",
+                "text": "Gland followers are adjusted by feel, with no set leakage standard",
+                "category": "human",
+                "status": "hypothesis",
+                "evidenceIds": [
+                  "e6"
+                ],
+                "isRootCause": false,
+                "collapsed": false,
+                "children": [
+                  {
+                    "id": "n8",
+                    "text": "No standard job plan for gland packing and adjustment",
+                    "category": "system",
+                    "status": "hypothesis",
+                    "evidenceIds": [],
+                    "isRootCause": false,
+                    "collapsed": false,
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "a1",
+          "causeId": "",
+          "description": "Repack gland and replace sleeve on P-2301, clean the gland water header strainer",
+          "owner": "Mechanical supervisor",
+          "dueDate": "2026-03-19",
+          "status": "done",
+          "cost": 4800,
+          "kind": "corrective",
+          "category": "repair"
+        },
+        {
+          "id": "a2",
+          "causeId": "n5",
+          "description": "Add gland water strainer clean to the PM plan",
+          "owner": "Maintenance planner",
+          "dueDate": "2026-04-15",
+          "status": "in_progress",
+          "cost": null,
+          "kind": "preventive",
+          "category": "maintenance_task",
+          "task": {
+            "description": "Remove and clean gland water header strainer, record gland water pressure before and after",
+            "intervalValue": 4,
+            "intervalUnit": "weeks",
+            "craft": "Mechanical fitter",
+            "change": "new"
+          }
+        },
+        {
+          "id": "a3",
+          "causeId": "n6",
+          "description": "Fit gland water low-pressure alarm on the header, wired to the DCS",
+          "owner": "Instrument technician",
+          "dueDate": "2026-05-30",
+          "status": "open",
+          "cost": 6200,
+          "kind": "preventive",
+          "category": "design"
+        }
+      ],
+      "spares": {
+        "needed": "yes",
+        "inStock": "yes",
+        "leadTimeDays": null,
+        "coverage": "Packing and a spare sleeve were in stock."
+      },
+      "rollouts": [],
+      "verification": {
+        "reviewDate": "",
+        "recurred": "unreviewed",
+        "eventsPerYearAfter": null,
+        "notes": ""
+      }
+    },
+    "problemDraft": {
+      "existingFields": {
+        "asset": "Cyclone feed pump 2301",
+        "assetTag": "P-2301",
+        "assetType": "Slurry pump",
+        "makeModel": "Rubber-lined 10/8 slurry pump, 250 kW",
+        "duty": "Primary mill discharge to cyclone cluster, duty/standby",
+        "criticality": "A",
+        "failureMode": "Seal or gland leak",
+        "site": "Gold processing plant, grinding circuit, Kalgoorlie WA",
+        "eventDate": "2026-03-18",
+        "title": "",
+        "whatHappened": "",
+        "where": "",
+        "when": "",
+        "impact": ""
+      },
+      "roughNotes": "p2301 gland blew out again 0240 nights. packing hard n glazed, sleeve scored. gland water looked ok on rotameter when i checked but pressure gauge on the stuffing box was low. 4th time since last may. swapped to p2302, tonnes down for about 6 hrs. spill round the base ~2 cubes, cleaned up by day shift. no one hurt."
+    }
+  },
+  "requests": {
+    "coach": [
+      {
+        "scope": "node",
+        "nodeId": "n3"
+      },
+      {
+        "scope": "tree"
+      }
+    ],
+    "challenge": [
+      {
+        "focus": "all"
+      }
+    ],
+    "capa": [
+      {
+        "rootCauseId": "n5"
+      }
+    ],
+    "draft": [
+      {
+        "kind": "problem",
+        "notes": "p2301 gland blew out again 0240 nights. packing hard n glazed, sleeve scored. gland water looked ok on rotameter when i checked but pressure gauge on the stuffing box was low. 4th time since last may. swapped to p2302, tonnes down for about 6 hrs. spill round the base ~2 cubes, cleaned up by day shift. no one hurt."
+      },
+      {
+        "kind": "report",
+        "notes": ""
+      },
+      {
+        "kind": "summary",
+        "notes": ""
+      }
+    ]
+  },
+  "grading": {
+    "coach": {
+      "selectedNodeId": "n3",
+      "mustSuggest": [
+        {
+          "level": "human",
+          "idea": "Strainer cleaning is not owned or scheduled, so low flow went unnoticed"
+        },
+        {
+          "level": "system",
+          "idea": "No PM task or flow/pressure instrument on the gland water header"
+        },
+        {
+          "level": "physical",
+          "idea": "Source of the scale and rubber flakes in the water supply (water quality, hose or lining breaking down)"
+        }
+      ],
+      "acceptable": [
+        "Single shared header feeds both pumps, so one blockage hits duty and standby",
+        "Gland water pressure setpoint never defined",
+        "Stained rotameter glass"
+      ],
+      "wrongOrDangerous": [
+        "Operator was careless on rounds",
+        "Replace the pump or change the packing grade as the answer",
+        "Tighten the gland harder (burns the sleeve)",
+        "Anything stated as proven"
+      ]
+    },
+    "challenge": {
+      "mustFlag": [],
+      "mustNotFlag": [
+        "stopped_at_physical on n3 (human and system causes sit beneath it)",
+        "blame on n4 (it is written as a system gap)",
+        "missing_level",
+        "no_preventive (n5 and n6 both have actions)",
+        "no_task_interval on a2 (4 weeks and a craft are set)",
+        "any no_evidence on n0",
+        "deterioration_undecided (a wear cause is not left undecided: n1, n2 are physical states, forced is clear from the tree text)"
+      ],
+      "expectation": "At most 2 issues, all low or medium. Summary says the analysis looks sound. Acceptable low-level points: n7/n8 hypothesis with no evidence; a3 not yet done; no horizontal expansion to other pumps on the shared header.",
+      "deliberateWeaknesses": [
+        "None deliberate. The tree is sound. Two low-level gaps are left on purpose: the gland adjustment branch (n7, n8) is still a hypothesis with no evidence."
+      ]
+    },
+    "capa": [
+      {
+        "rootCauseId": "n5",
+        "expectedDeterioration": "forced",
+        "deteriorationReasoning": "Slurry entered the gland because gland water pressure fell below slurry pressure. We caused it by not maintaining or monitoring the supply.",
+        "corrective": [
+          "Repack and replace sleeve (already done, a1): the AI should not repeat it"
+        ],
+        "preventive": [
+          {
+            "category": "maintenance_task",
+            "what": "Clean gland water strainer on both pumps and record gland water pressure",
+            "interval": "4 weeks (or on a hours run basis)",
+            "craft": "Mechanical fitter"
+          },
+          {
+            "category": "condition_monitoring",
+            "what": "Gland water pressure and flow reading against a stated minimum above stuffing box pressure, on rounds",
+            "interval": "each round shift",
+            "craft": "Operator"
+          },
+          {
+            "category": "procedure",
+            "what": "Change the round sheet from 'OK?' tick to a recorded pressure with a limit",
+            "interval": "one off",
+            "craft": "Operations supervisor"
+          },
+          {
+            "category": "design",
+            "what": "Low-pressure alarm and standby-pump interlock",
+            "interval": "one off",
+            "craft": "Instrument technician (a3 already covers the alarm: do not duplicate)"
+          }
+        ],
+        "spares": "Hold packing set, 1 sleeve and 1 strainer basket for the 10/8 pump; sleeve and packing already in stock so say min holding, not a new purchase.",
+        "rollout": "Other pumps on the same gland water header and any slurry pump using packing with a shared supply.",
+        "unacceptable": [
+          "Shorten the gland repack interval as the countermeasure",
+          "Retrain operators as the only action",
+          "Be more careful on rounds",
+          "Invented part numbers or prices"
+        ]
+      }
+    ],
+    "draft": {
+      "problem": {
+        "mustInclude": [
+          "P-2301 stopped about 02:40 on 18 Mar 2026",
+          "gland hot and leaking slurry",
+          "packing hard/glazed, sleeve scored",
+          "fourth failure in 10 months",
+          "standby P-2302 started, about 6 hours at reduced throughput",
+          "about 2 cubic metres spilled",
+          "no injury"
+        ],
+        "mustNotInvent": [
+          "any cause (blocked strainer, low gland water)",
+          "a bearing or impeller failure",
+          "a cost or tonnes figure not in the notes",
+          "who was on shift"
+        ],
+        "gapsToPointOut": [
+          "What was the gland temperature or alarm before the stop?",
+          "Which shift or operator found it, and what time was it last checked?"
+        ]
+      },
+      "report": {
+        "mustInclude": [
+          "Root causes at system level: no strainer task and no round limit; no alarm",
+          "Evidence reviewed lists all 7 items",
+          "Actions with owners, due dates, a2 interval 4 weeks and craft mechanical fitter",
+          "Spares section: in stock",
+          "Cost per event as computed by the app"
+        ],
+        "mustNotInvent": [
+          "verified saving or payback",
+          "completion dates not in the data",
+          "a standard claim"
+        ],
+        "stillToConfirm": [
+          "n7/n8 gland adjustment branch still a hypothesis",
+          "verification not yet done",
+          "rollout to other pumps not recorded"
+        ]
+      }
+    }
+  },
+  "hardChecks": {
+    "schemaValid": true,
+    "noPersonBlamedAsRoot": true,
+    "nothingMarkedVerified": true,
+    "noInventedNumbers": true,
+    "allowedNumbers": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "02",
+      "03",
+      "04",
+      "05",
+      "10",
+      "15",
+      "18",
+      "19",
+      "20",
+      "21",
+      "22",
+      "30",
+      "35",
+      "40",
+      "80",
+      "0.4",
+      "0.6",
+      "0.8",
+      "1.9",
+      "180",
+      "2.1",
+      "250",
+      "0240",
+      "2026",
+      "2301",
+      "2302",
+      "4800",
+      "6200"
+    ],
+    "allowedNumbersNote": "Numbers in the AI output must come from this list or from the app's own cost calculation (buildAiContext loss line). Anything else is invented.",
+    "noCostData": false,
+    "processFailure": false,
+    "processRules": "",
+    "wordingRules": [
+      "Use 'countermeasure', never 'fix' as a noun",
+      "No N#, A# or E# labels inside prose",
+      "No markdown in string fields",
+      "No dates as YYYY-MM-DD in prose"
+    ]
+  }
+}

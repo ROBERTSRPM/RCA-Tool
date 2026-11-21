@@ -1,0 +1,338 @@
+{
+  "id": "case-23",
+  "formatVersion": 1,
+  "title": "Screw compressor, high discharge temperature trips",
+  "slug": "screw-compressor-high-temp-thin-notes",
+  "tests": "Thin notes; hot ambient; natural vs forced unclear; AI must ask questions.",
+  "flags": [
+    "thin notes",
+    "unclear deterioration"
+  ],
+  "summary": "A 132 kW oil-injected screw compressor tripped on high discharge air temperature on hot afternoons. Notes are short: 'cooler dirty'. Ambient is up to 45 C and the cooler fins are dusty. Tests asking the right questions without invented figures.",
+  "input": {
+    "investigation": {
+      "id": "eval-case-23",
+      "schemaVersion": 1,
+      "createdAt": "2026-11-21T00:00:00.000Z",
+      "updatedAt": "2026-11-21T00:00:00.000Z",
+      "isSample": false,
+      "problem": {
+        "title": "High discharge temperature trips on screw compressor C-02",
+        "asset": "Screw compressor 2",
+        "site": "Gold processing plant, compressor house, Kalgoorlie WA",
+        "eventDate": "2026-11-10",
+        "whatHappened": "C-02 tripped on high discharge temperature on several afternoons. The air cooler fins were found coated in dust.",
+        "where": "Oil and air coolers.",
+        "when": "Hot afternoons.",
+        "impact": "Plant air pressure dips, standby compressor starts.",
+        "assetTag": "C-02",
+        "assetType": "Compressor",
+        "makeModel": "",
+        "duty": "Plant air, base load, 24/7",
+        "criticality": "A",
+        "failureMode": "Overheating"
+      },
+      "loss": {
+        "eventsPerYear": 8,
+        "downtimeHours": 1,
+        "ratePerHour": null,
+        "unitName": "",
+        "marginPerUnit": null,
+        "repairCost": 600,
+        "currency": "$"
+      },
+      "evidence": [
+        {
+          "id": "e1",
+          "type": "photo",
+          "title": "Cooler fins",
+          "note": "Dust and fine mud on about half of the fin face.",
+          "date": "",
+          "image": null
+        }
+      ],
+      "tree": {
+        "id": "n0",
+        "text": "Screw compressor C-02 trips on high discharge temperature",
+        "category": "physical",
+        "status": "verified",
+        "evidenceIds": [],
+        "isRootCause": false,
+        "collapsed": false,
+        "children": [
+          {
+            "id": "n1",
+            "text": "Coolers fouled with dust",
+            "category": "physical",
+            "status": "hypothesis",
+            "evidenceIds": [
+              "e1"
+            ],
+            "isRootCause": true,
+            "collapsed": false,
+            "children": []
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "a1",
+          "causeId": "",
+          "description": "Blow out the cooler",
+          "owner": "",
+          "dueDate": "",
+          "status": "done",
+          "cost": null,
+          "kind": "corrective",
+          "category": "repair"
+        }
+      ],
+      "spares": {
+        "needed": "",
+        "inStock": "",
+        "leadTimeDays": null,
+        "coverage": ""
+      },
+      "rollouts": [],
+      "verification": {
+        "reviewDate": "",
+        "recurred": "unreviewed",
+        "eventsPerYearAfter": null,
+        "notes": ""
+      }
+    },
+    "problemDraft": {
+      "existingFields": {
+        "asset": "Screw compressor 2",
+        "assetTag": "C-02",
+        "assetType": "Compressor",
+        "makeModel": "",
+        "duty": "Plant air, base load, 24/7",
+        "criticality": "A",
+        "failureMode": "Overheating",
+        "site": "Gold processing plant, compressor house, Kalgoorlie WA",
+        "eventDate": "2026-11-10",
+        "title": "",
+        "whatHappened": "",
+        "where": "",
+        "when": "",
+        "impact": ""
+      },
+      "roughNotes": "c02 hi temp trips on hot arvos. cooler dusty. blew it out with air. standby ran. maybe oil too."
+    }
+  },
+  "requests": {
+    "coach": [
+      {
+        "scope": "node",
+        "nodeId": "n1"
+      },
+      {
+        "scope": "tree"
+      }
+    ],
+    "challenge": [
+      {
+        "focus": "all"
+      }
+    ],
+    "capa": [
+      {
+        "rootCauseId": "n1"
+      }
+    ],
+    "draft": [
+      {
+        "kind": "problem",
+        "notes": "c02 hi temp trips on hot arvos. cooler dusty. blew it out with air. standby ran. maybe oil too."
+      },
+      {
+        "kind": "report",
+        "notes": ""
+      },
+      {
+        "kind": "summary",
+        "notes": ""
+      }
+    ]
+  },
+  "grading": {
+    "coach": {
+      "selectedNodeId": "n1",
+      "mustSuggest": [
+        {
+          "level": "physical",
+          "idea": "Oil level low, oil filter or thermostatic valve fault"
+        },
+        {
+          "level": "physical",
+          "idea": "Compressor house ventilation and recirculation of hot air in summer"
+        },
+        {
+          "level": "system",
+          "idea": "No cooler cleaning task or condition check in the PM plan"
+        },
+        {
+          "level": "human",
+          "idea": "Cooler fouling not recorded on rounds because there is no limit set"
+        }
+      ],
+      "acceptable": [
+        "Cooling fan not running or belt slipping",
+        "Dust from nearby roads or traffic"
+      ],
+      "wrongOrDangerous": [
+        "Operator did not clean it (blame)",
+        "Any figures for ambient or oil temperatures not in the data"
+      ]
+    },
+    "challenge": {
+      "mustFlag": [
+        {
+          "ref": "n1",
+          "type": "stopped_at_physical",
+          "note": "Only physical"
+        },
+        {
+          "ref": "n0",
+          "type": "missing_level",
+          "note": "No human or system cause"
+        },
+        {
+          "ref": "n0",
+          "type": "single_branch",
+          "note": "One cause"
+        },
+        {
+          "ref": "n1",
+          "type": "deterioration_undecided",
+          "note": "Dust fouling, forced vs natural undecided"
+        },
+        {
+          "ref": "n1",
+          "type": "no_preventive",
+          "note": "Flagged root has only a corrective action"
+        }
+      ],
+      "mustNotFlag": [
+        "blame",
+        "no_evidence on n0",
+        "no_task_interval on a1"
+      ],
+      "expectation": "Questions: oil level and temperature, ventilation, past cleaning dates.",
+      "deliberateWeaknesses": [
+        "One cause, thin",
+        "No other cause: oil level, oil cooler, thermostatic valve, fan, ventilation of the compressor house",
+        "No human or system cause",
+        "Natural vs forced not decided on the fouling",
+        "The only cause is flagged as root but has no preventive action"
+      ]
+    },
+    "capa": [
+      {
+        "rootCauseId": "n1",
+        "expectedDeterioration": "unclear",
+        "deteriorationReasoning": "Dust fouling in a desert plant could be an expected exposure (natural) or poor housekeeping and ventilation (forced). Check cleaning history and house ventilation.",
+        "corrective": [
+          "Clean the cooler (a1 done)"
+        ],
+        "preventive": [
+          {
+            "category": "maintenance_task",
+            "what": "Clean oil and air coolers to a clean fin standard and record the discharge temperature before and after",
+            "interval": "every 4 weeks in summer, check against the history",
+            "craft": "Mechanical fitter"
+          },
+          {
+            "category": "condition_monitoring",
+            "what": "Discharge temperature trend with an early alarm below the trip",
+            "interval": "continuous, review weekly",
+            "craft": "Instrument technician"
+          },
+          {
+            "category": "design",
+            "what": "Check compressor house ventilation and filter for hot air recirculation",
+            "interval": "one off",
+            "craft": "Reliability engineer"
+          },
+          {
+            "category": "spares",
+            "what": "Hold oil, oil filter and a thermostatic valve for the compressor",
+            "interval": "one off",
+            "craft": "Stores"
+          }
+        ],
+        "spares": "Oil, oil filter and thermostatic valve kit for C-02; do not give part numbers.",
+        "rollout": "All compressors in the house and other plant air compressors in dusty areas.",
+        "unacceptable": [
+          "Declaring natural or forced with confidence",
+          "Inventing temperature limits as standards",
+          "Retrain operators"
+        ]
+      }
+    ],
+    "draft": {
+      "problem": {
+        "mustInclude": [
+          "trips on high discharge temperature on hot afternoons",
+          "cooler dusty",
+          "cooler blown out with air",
+          "standby ran"
+        ],
+        "mustNotInvent": [
+          "ambient temperatures",
+          "oil temperature",
+          "a cause",
+          "dates of the trips"
+        ],
+        "gapsToPointOut": [
+          "What dates and temperatures were the trips?",
+          "What is the oil level and when was it last changed?",
+          "When was the cooler last cleaned?"
+        ]
+      },
+      "report": {
+        "mustInclude": [
+          "Says information is thin"
+        ],
+        "mustNotInvent": [
+          "a root cause",
+          "a cost saving"
+        ],
+        "stillToConfirm": [
+          "Root cause not established",
+          "no human or system level"
+        ]
+      }
+    }
+  },
+  "hardChecks": {
+    "schemaValid": true,
+    "noPersonBlamedAsRoot": true,
+    "nothingMarkedVerified": true,
+    "noInventedNumbers": true,
+    "allowedNumbers": [
+      "0",
+      "1",
+      "2",
+      "7",
+      "8",
+      "02",
+      "10",
+      "11",
+      "24",
+      "600",
+      "2026"
+    ],
+    "allowedNumbersNote": "Numbers in the AI output must come from this list or from the app's own cost calculation (buildAiContext loss line). Anything else is invented.",
+    "noCostData": false,
+    "processFailure": false,
+    "processRules": "",
+    "wordingRules": [
+      "Use 'countermeasure', never 'fix' as a noun",
+      "No N#, A# or E# labels inside prose",
+      "No markdown in string fields",
+      "No dates as YYYY-MM-DD in prose"
+    ]
+  }
+}

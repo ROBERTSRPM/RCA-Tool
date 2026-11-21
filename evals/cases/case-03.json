@@ -1,0 +1,449 @@
+{
+  "id": "case-03",
+  "formatVersion": 1,
+  "title": "Clarified juice pump, repeat seal failures",
+  "slug": "process-pump-cavitation-seal",
+  "tests": "Single-branch tree stopping at physical; cavitation as forced; obvious cause (the seal) is a symptom.",
+  "flags": [
+    "messy",
+    "forced",
+    "single branch"
+  ],
+  "summary": "Mechanical seal on clarified juice pump P-312 at a sugar mill failed five times in the season. Fitters replaced the seal like for like each time. Evidence points to cavitation from low suction tank level during mill stops and a blocked suction strainer. The tree is a single chain ending on the strainer.",
+  "input": {
+    "investigation": {
+      "id": "eval-case-03",
+      "schemaVersion": 1,
+      "createdAt": "2026-11-21T00:00:00.000Z",
+      "updatedAt": "2026-11-21T00:00:00.000Z",
+      "isSample": false,
+      "problem": {
+        "title": "Repeat mechanical seal failures on clarified juice pump P-312",
+        "asset": "Clarified juice pump 312",
+        "site": "Sugar mill, juice treatment, Burdekin QLD",
+        "eventDate": "2026-08-14",
+        "whatHappened": "The mechanical seal on P-312 leaked juice on 14 Aug 2026 and the pump was stopped. Seal faces were chipped with carbon dust around the seal. This is the fifth seal failure on P-312 this crushing season. The seal was replaced like for like each time.",
+        "where": "Mechanical seal faces and gland area on P-312, drive end.",
+        "when": "During crushing, often shortly after a mill stop and restart. Pump noisy 'like gravel' at start-up.",
+        "impact": "Juice flow to evaporators stopped for about 4 hours each event, cane held at the mills, juice spillage to drain.",
+        "assetTag": "P-312",
+        "assetType": "Centrifugal pump",
+        "makeModel": "End-suction 150x100 centrifugal, 55 kW",
+        "duty": "Clarified juice from clarifier to evaporator feed tank, single pump, 24/7 in crushing season",
+        "criticality": "A",
+        "failureMode": "Seal or gland leak"
+      },
+      "loss": {
+        "eventsPerYear": 5,
+        "downtimeHours": 4,
+        "ratePerHour": 380,
+        "unitName": "tonnes of cane",
+        "marginPerUnit": 6,
+        "repairCost": 6500,
+        "currency": "$"
+      },
+      "evidence": [
+        {
+          "id": "e1",
+          "type": "photo",
+          "title": "Seal faces",
+          "note": "Carbon face chipped at the edge, dust build-up around the seal. Faces dry-run marks, no juice film marks on one side.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e2",
+          "type": "data",
+          "title": "Suction tank level trend, last 6 weeks",
+          "note": "Level below 20% for 30 to 40 minutes after each mill stop and restart on 4 of the 5 failure dates.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e3",
+          "type": "inspection",
+          "title": "Suction strainer",
+          "note": "About 60% blocked with fibre (bagacillo) when pulled on 14 Aug. Last clean not recorded.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e4",
+          "type": "data",
+          "title": "Pump motor current and discharge pressure",
+          "note": "Current and discharge pressure swing for several minutes on restart, then settle.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e5",
+          "type": "interview",
+          "title": "Fitter",
+          "note": "Changed the seal 'like for like' five times. Pump sounds like gravel at start-up.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e6",
+          "type": "document",
+          "title": "Work order history",
+          "note": "Five seal WOs this season. No strainer clean or suction level check on the PM plan.",
+          "date": "",
+          "image": null
+        }
+      ],
+      "tree": {
+        "id": "n0",
+        "text": "Mechanical seal on clarified juice pump P-312 failed, fifth time this season",
+        "category": "physical",
+        "status": "verified",
+        "evidenceIds": [],
+        "isRootCause": false,
+        "collapsed": false,
+        "children": [
+          {
+            "id": "n1",
+            "text": "Seal faces chipped and ran dry",
+            "category": "physical",
+            "status": "verified",
+            "evidenceIds": [
+              "e1"
+            ],
+            "isRootCause": false,
+            "collapsed": false,
+            "children": [
+              {
+                "id": "n2",
+                "text": "Pump cavitates at the suction on restart",
+                "category": "physical",
+                "status": "hypothesis",
+                "evidenceIds": [],
+                "isRootCause": false,
+                "collapsed": false,
+                "children": [
+                  {
+                    "id": "n3",
+                    "text": "Suction strainer blocked with fibre",
+                    "category": "physical",
+                    "status": "verified",
+                    "evidenceIds": [
+                      "e3"
+                    ],
+                    "isRootCause": true,
+                    "collapsed": false,
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "a1",
+          "causeId": "",
+          "description": "Replace mechanical seal on P-312",
+          "owner": "Mechanical supervisor",
+          "dueDate": "2026-08-14",
+          "status": "done",
+          "cost": 6500,
+          "kind": "corrective",
+          "category": "repair"
+        },
+        {
+          "id": "a2",
+          "causeId": "n3",
+          "description": "Clean the suction strainer more often",
+          "owner": "",
+          "dueDate": "",
+          "status": "open",
+          "cost": null,
+          "kind": "preventive",
+          "category": "maintenance_task"
+        }
+      ],
+      "spares": {
+        "needed": "yes",
+        "inStock": "yes",
+        "leadTimeDays": null,
+        "coverage": "Seal kits in stock."
+      },
+      "rollouts": [],
+      "verification": {
+        "reviewDate": "",
+        "recurred": "unreviewed",
+        "eventsPerYearAfter": null,
+        "notes": ""
+      }
+    },
+    "problemDraft": {
+      "existingFields": {
+        "asset": "Clarified juice pump 312",
+        "assetTag": "P-312",
+        "assetType": "Centrifugal pump",
+        "makeModel": "End-suction 150x100 centrifugal, 55 kW",
+        "duty": "Clarified juice from clarifier to evaporator feed tank, single pump, 24/7 in crushing season",
+        "criticality": "A",
+        "failureMode": "Seal or gland leak",
+        "site": "Sugar mill, juice treatment, Burdekin QLD",
+        "eventDate": "2026-08-14",
+        "title": "",
+        "whatHappened": "",
+        "where": "",
+        "when": "",
+        "impact": ""
+      },
+      "roughNotes": "312 seal gone again, 5th this season. faces chipped, black dust round the seal. pump sounds like gravel on startup after mill stops. strainer on the suction was pretty blocked with fibre. fitters changed the seal same as always. tank level was low again i think."
+    }
+  },
+  "requests": {
+    "coach": [
+      {
+        "scope": "node",
+        "nodeId": "n2"
+      },
+      {
+        "scope": "tree"
+      }
+    ],
+    "challenge": [
+      {
+        "focus": "all"
+      }
+    ],
+    "capa": [
+      {
+        "rootCauseId": "n3"
+      }
+    ],
+    "draft": [
+      {
+        "kind": "problem",
+        "notes": "312 seal gone again, 5th this season. faces chipped, black dust round the seal. pump sounds like gravel on startup after mill stops. strainer on the suction was pretty blocked with fibre. fitters changed the seal same as always. tank level was low again i think."
+      },
+      {
+        "kind": "report",
+        "notes": ""
+      },
+      {
+        "kind": "summary",
+        "notes": ""
+      }
+    ]
+  },
+  "grading": {
+    "coach": {
+      "selectedNodeId": "n2",
+      "mustSuggest": [
+        {
+          "level": "physical",
+          "idea": "Suction tank level falls too low on mill stop and restart, reducing NPSH available"
+        },
+        {
+          "level": "physical",
+          "idea": "Juice close to boiling or flashing at the suction (temperature check)"
+        },
+        {
+          "level": "human",
+          "idea": "Restart practice does not hold the tank level or check strainer pressure drop"
+        },
+        {
+          "level": "system",
+          "idea": "No suction level interlock, no strainer differential indicator, no PM task for strainer"
+        },
+        {
+          "level": "system",
+          "idea": "Seal repair job plan has no check on why the seal failed (repeat like-for-like replacement)"
+        }
+      ],
+      "acceptable": [
+        "Fibre carry-over from clarifier",
+        "Pump selection or suction pipe design as a question",
+        "Seal flush or arrangement not suited to the duty"
+      ],
+      "wrongOrDangerous": [
+        "Fitter installed the seal badly (blame, no evidence)",
+        "Replace pump with a bigger one as a conclusion",
+        "Cavitation declared proven"
+      ]
+    },
+    "challenge": {
+      "mustFlag": [
+        {
+          "ref": "n3",
+          "type": "stopped_at_physical",
+          "note": "Root is only the blocked strainer"
+        },
+        {
+          "ref": "n0",
+          "type": "single_branch",
+          "note": "One chain only"
+        },
+        {
+          "ref": "n2",
+          "type": "no_evidence",
+          "note": "Cavitation has evidence available (e2, e4) but none linked"
+        },
+        {
+          "ref": "n1",
+          "type": "deterioration_undecided",
+          "note": "Damage to the seal faces, forced or natural not decided"
+        },
+        {
+          "ref": "a2",
+          "type": "action_weak",
+          "note": "Vague 'more often'"
+        },
+        {
+          "ref": "a2",
+          "type": "no_task_interval",
+          "note": "No interval or craft"
+        }
+      ],
+      "mustNotFlag": [
+        "blame (no person is blamed)",
+        "missing_level on the grounds that no human cause exists without also noting that no human or system cause sits under n3",
+        "any no_evidence on n0"
+      ],
+      "expectation": "Summary says it is one chain stopping at a physical cause. Questions point at tank level, restart practice and why a like-for-like seal swap was repeated.",
+      "deliberateWeaknesses": [
+        "Whole analysis is one chain (single_branch)",
+        "Flagged root n3 is physical, no human or system cause (stopped_at_physical)",
+        "n2 cavitation is a hypothesis with no evidence linked although e2 and e4 exist (no_evidence)",
+        "Wear or damage on n1 and n2: forced or natural not decided",
+        "a2 vague, no interval, no craft, no owner",
+        "Tank level branch (e2) not in the tree at all; no materials/method angle on restart practice"
+      ]
+    },
+    "capa": [
+      {
+        "rootCauseId": "n3",
+        "expectedDeterioration": "forced",
+        "deteriorationReasoning": "Cavitation and a blocked strainer are conditions we allow, not normal wear. The seal runs dry because of how the pump is fed and restarted.",
+        "corrective": [
+          "Seal replacement (a1) is already done: do not repeat"
+        ],
+        "preventive": [
+          {
+            "category": "maintenance_task",
+            "what": "Pull and clean suction strainer, record differential before and after",
+            "interval": "start with every 1 week in season, check against history",
+            "craft": "Mechanical fitter or operator"
+          },
+          {
+            "category": "design",
+            "what": "Strainer differential pressure indicator and suction tank low level alarm or interlock",
+            "interval": "one off",
+            "craft": "Instrument technician"
+          },
+          {
+            "category": "procedure",
+            "what": "Restart procedure that holds suction tank level above a set value before restarting the pump",
+            "interval": "one off",
+            "craft": "Operations supervisor"
+          },
+          {
+            "category": "procedure",
+            "what": "Seal repair job plan with failure cause check before like-for-like replacement",
+            "interval": "one off",
+            "craft": "Reliability technician"
+          },
+          {
+            "category": "condition_monitoring",
+            "what": "Vibration or motor current check on start-up for cavitation",
+            "interval": "monthly",
+            "craft": "Reliability technician"
+          }
+        ],
+        "spares": "Seal kit and strainer basket for P-312 (kits already in stock, state a holding level).",
+        "rollout": "Other juice and thin liquor pumps with the same suction layout and tank restart pattern.",
+        "unacceptable": [
+          "Shorten the seal replacement interval as the countermeasure",
+          "Retrain the fitter",
+          "'Check the strainer more often' with no interval or craft"
+        ]
+      }
+    ],
+    "draft": {
+      "problem": {
+        "mustInclude": [
+          "seal on P-312 leaked on 14 Aug 2026",
+          "fifth seal failure this crushing season",
+          "carbon face chipped, dust around seal",
+          "replaced like for like each time",
+          "strainer about 60% blocked",
+          "noisy at start-up after mill stops"
+        ],
+        "mustNotInvent": [
+          "cavitation as the cause",
+          "tank level figures",
+          "cost per hour",
+          "name of fitter or operator"
+        ],
+        "gapsToPointOut": [
+          "What was the suction tank level at the time of each failure?",
+          "What was the strainer differential pressure before it was pulled?",
+          "How long did each stop last?"
+        ]
+      },
+      "report": {
+        "mustInclude": [
+          "Cavitation shown as a hypothesis",
+          "Evidence list includes tank level trend",
+          "Spares in stock, no gap"
+        ],
+        "mustNotInvent": [
+          "a verified saving",
+          "reason for restart level drops",
+          "interval for strainer clean"
+        ],
+        "stillToConfirm": [
+          "No human or system cause under the flagged root",
+          "a2 has no owner, interval or craft",
+          "n2 not linked to evidence"
+        ]
+      }
+    }
+  },
+  "hardChecks": {
+    "schemaValid": true,
+    "noPersonBlamedAsRoot": true,
+    "nothingMarkedVerified": true,
+    "noInventedNumbers": true,
+    "allowedNumbers": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "08",
+      "14",
+      "20",
+      "24",
+      "30",
+      "40",
+      "55",
+      "60",
+      "100",
+      "150",
+      "312",
+      "380",
+      "2026",
+      "6500"
+    ],
+    "allowedNumbersNote": "Numbers in the AI output must come from this list or from the app's own cost calculation (buildAiContext loss line). Anything else is invented.",
+    "noCostData": false,
+    "processFailure": false,
+    "processRules": "",
+    "wordingRules": [
+      "Use 'countermeasure', never 'fix' as a noun",
+      "No N#, A# or E# labels inside prose",
+      "No markdown in string fields",
+      "No dates as YYYY-MM-DD in prose"
+    ]
+  }
+}

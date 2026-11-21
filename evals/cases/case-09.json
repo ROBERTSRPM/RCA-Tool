@@ -1,0 +1,418 @@
+{
+  "id": "case-09",
+  "formatVersion": 1,
+  "title": "Leach tank agitator gearbox, output seal leak and low oil",
+  "slug": "agitator-gearbox-no-cost-data",
+  "tests": "No cost data at all (loss 'not known'); AI must not invent costs. Forced deterioration.",
+  "flags": [
+    "messy",
+    "forced",
+    "no cost data"
+  ],
+  "summary": "Output shaft seal leaked on a leach tank agitator gearbox; oil ran low and the lower bearing overheated. Nobody has costed it. Loss is 'not known yet'. The AI must not estimate dollars or hours. Tree stops at 'seal worn'.",
+  "input": {
+    "investigation": {
+      "id": "eval-case-09",
+      "schemaVersion": 1,
+      "createdAt": "2026-11-21T00:00:00.000Z",
+      "updatedAt": "2026-11-21T00:00:00.000Z",
+      "isSample": false,
+      "problem": {
+        "title": "Output shaft seal leak and bearing damage on leach tank agitator gearbox",
+        "asset": "Leach tank 3 agitator gearbox",
+        "site": "Gold processing plant, leach area, Kalgoorlie WA",
+        "eventDate": "2026-10-05",
+        "whatHappened": "The output shaft seal on GB-3103 was found leaking oil on 5 Oct 2026. The oil level was below the sight glass and the lower output bearing housing was hot. The agitator was stopped and the gearbox removed. The lower bearing was blued and the shaft was grooved under the seal.",
+        "where": "Output shaft seal and lower output bearing of GB-3103.",
+        "when": "Found on routine round, day shift. Seal replaced about 5 months earlier.",
+        "impact": "Tank 3 agitation stopped during repair. Oil spill to the tank bund. Costs and lost production not worked out.",
+        "assetTag": "GB-3103",
+        "assetType": "Gearbox",
+        "makeModel": "Right-angle helical-bevel, 75 kW",
+        "duty": "Leach tank agitator, continuous",
+        "criticality": "B",
+        "failureMode": "Seal or gland leak"
+      },
+      "loss": {
+        "eventsPerYear": null,
+        "downtimeHours": null,
+        "ratePerHour": null,
+        "unitName": "",
+        "marginPerUnit": null,
+        "repairCost": null,
+        "currency": "$",
+        "notKnown": true
+      },
+      "evidence": [
+        {
+          "id": "e1",
+          "type": "photo",
+          "title": "Output shaft under the seal",
+          "note": "Groove about 0.4 mm deep under the seal lip. Seal lip hard and cracked.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e2",
+          "type": "photo",
+          "title": "Lower output bearing",
+          "note": "Blued races and discoloured grease. Roller track smeared.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e3",
+          "type": "document",
+          "title": "May seal replacement job card",
+          "note": "Card says 'replaced seal'. No record of shaft condition, sleeve fitted, or lubricant on the lip.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e4",
+          "type": "interview",
+          "title": "Operator",
+          "note": "Oil level seen low 2 rounds before; the sight glass is dirty with leach reagent splash and hard to read.",
+          "date": "",
+          "image": null
+        }
+      ],
+      "tree": {
+        "id": "n0",
+        "text": "Output seal on agitator gearbox GB-3103 leaked and the lower bearing overheated",
+        "category": "physical",
+        "status": "verified",
+        "evidenceIds": [],
+        "isRootCause": false,
+        "collapsed": false,
+        "children": [
+          {
+            "id": "n1",
+            "text": "Output seal lip hard and cracked, shaft grooved under the seal",
+            "category": "physical",
+            "status": "verified",
+            "evidenceIds": [
+              "e1"
+            ],
+            "isRootCause": false,
+            "collapsed": false,
+            "children": [
+              {
+                "id": "n2",
+                "text": "Seal worn out",
+                "category": "physical",
+                "status": "hypothesis",
+                "evidenceIds": [],
+                "isRootCause": true,
+                "collapsed": false,
+                "children": []
+              }
+            ]
+          },
+          {
+            "id": "n3",
+            "text": "Oil ran low and lower bearing overheated",
+            "category": "physical",
+            "status": "verified",
+            "evidenceIds": [
+              "e2",
+              "e4"
+            ],
+            "isRootCause": false,
+            "collapsed": false,
+            "children": []
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "a1",
+          "causeId": "",
+          "description": "Replace seal, shaft sleeve and bearing on GB-3103",
+          "owner": "Mechanical supervisor",
+          "dueDate": "2026-10-09",
+          "status": "done",
+          "cost": null,
+          "kind": "corrective",
+          "category": "repair"
+        },
+        {
+          "id": "a2",
+          "causeId": "n2",
+          "description": "Check the seal more often",
+          "owner": "",
+          "dueDate": "",
+          "status": "open",
+          "cost": null,
+          "kind": "preventive",
+          "category": "maintenance_task"
+        }
+      ],
+      "spares": {
+        "needed": "yes",
+        "inStock": "yes",
+        "leadTimeDays": null,
+        "coverage": "Seal kit and bearing in stock."
+      },
+      "rollouts": [],
+      "verification": {
+        "reviewDate": "",
+        "recurred": "unreviewed",
+        "eventsPerYearAfter": null,
+        "notes": ""
+      }
+    },
+    "problemDraft": {
+      "existingFields": {
+        "asset": "Leach tank 3 agitator gearbox",
+        "assetTag": "GB-3103",
+        "assetType": "Gearbox",
+        "makeModel": "Right-angle helical-bevel, 75 kW",
+        "duty": "Leach tank agitator, continuous",
+        "criticality": "B",
+        "failureMode": "Seal or gland leak",
+        "site": "Gold processing plant, leach area, Kalgoorlie WA",
+        "eventDate": "2026-10-05",
+        "title": "",
+        "whatHappened": "",
+        "where": "",
+        "when": "",
+        "impact": ""
+      },
+      "roughNotes": "gb3103 leaking from the output seal, oil level low below the glass, lower brg hot. pulled it, bearing blued, shaft grooved where the seal runs. seal was changed in May. nobody has looked at cost. spare bearing and seal in store."
+    }
+  },
+  "requests": {
+    "coach": [
+      {
+        "scope": "node",
+        "nodeId": "n2"
+      },
+      {
+        "scope": "tree"
+      }
+    ],
+    "challenge": [
+      {
+        "focus": "all"
+      }
+    ],
+    "capa": [
+      {
+        "rootCauseId": "n2"
+      }
+    ],
+    "draft": [
+      {
+        "kind": "problem",
+        "notes": "gb3103 leaking from the output seal, oil level low below the glass, lower brg hot. pulled it, bearing blued, shaft grooved where the seal runs. seal was changed in May. nobody has looked at cost. spare bearing and seal in store."
+      },
+      {
+        "kind": "report",
+        "notes": ""
+      },
+      {
+        "kind": "summary",
+        "notes": ""
+      }
+    ]
+  },
+  "grading": {
+    "coach": {
+      "selectedNodeId": "n2",
+      "mustSuggest": [
+        {
+          "level": "physical",
+          "idea": "Shaft groove under the seal: shaft not repaired or sleeve not fitted at the May seal change"
+        },
+        {
+          "level": "physical",
+          "idea": "Splash and reagent contamination attacking the seal lip or dirty breather"
+        },
+        {
+          "level": "human",
+          "idea": "The May job card had no checks on shaft condition or seal fitting method"
+        },
+        {
+          "level": "system",
+          "idea": "No standard job plan for seal replacement and no oil level check that works with a dirty sight glass"
+        }
+      ],
+      "acceptable": [
+        "Seal type or material not suitable for the leach environment",
+        "Breather blocked leading to pressure at the seal"
+      ],
+      "wrongOrDangerous": [
+        "Fitter installed the seal wrongly (blame)",
+        "Any dollar amount or hours of lost production"
+      ]
+    },
+    "challenge": {
+      "mustFlag": [
+        {
+          "ref": "n2",
+          "type": "stopped_at_physical",
+          "note": "Root is the seal only"
+        },
+        {
+          "ref": "n2",
+          "type": "no_evidence",
+          "note": "Flagged root with no evidence"
+        },
+        {
+          "ref": "n2",
+          "type": "deterioration_undecided",
+          "note": "Forced or natural not decided"
+        },
+        {
+          "ref": "a2",
+          "type": "no_task_interval",
+          "note": "No interval or craft"
+        },
+        {
+          "ref": "a2",
+          "type": "action_weak",
+          "note": "Vague 'check more often'"
+        },
+        {
+          "ref": "n3",
+          "type": "weak_logic",
+          "note": "Oil low has no cause beneath it"
+        }
+      ],
+      "mustNotFlag": [
+        "blame",
+        "no_evidence on n0",
+        "any request that depends on invented cost values (it may point out that cost is not known yet, at most low)"
+      ],
+      "expectation": "Summary says causes stop at the seal; may mention costing is missing but must not suggest a number.",
+      "deliberateWeaknesses": [
+        "Root n2 is physical, no cause for why a 5-month-old seal was worn out",
+        "Shaft groove suggests contaminated seal or wrong fit; not explored",
+        "n2 no evidence",
+        "Seal wear: forced vs natural undecided",
+        "a2 vague, no interval or craft",
+        "Oil level and sight glass contamination branch (n3) has no cause beneath it",
+        "No loss data (the AI must not guess)"
+      ]
+    },
+    "capa": [
+      {
+        "rootCauseId": "n2",
+        "expectedDeterioration": "forced",
+        "deteriorationReasoning": "A seal that failed in 5 months with a grooved shaft suggests forcing causes (shaft not restored at the last change, contamination), not normal seal life. Check the May job and the old shaft.",
+        "corrective": [
+          "Replace seal, sleeve, bearing (a1 done)"
+        ],
+        "preventive": [
+          {
+            "category": "procedure",
+            "what": "Standard job plan for gearbox output seal replacement: shaft inspection, sleeve or repair, lip lubrication, fitting tool, photo and record",
+            "interval": "one off",
+            "craft": "Reliability technician and mechanical fitter"
+          },
+          {
+            "category": "condition_monitoring",
+            "what": "Oil level check against a clear marker plus seal leak check on rounds, with a clean sight glass",
+            "interval": "every 1 week",
+            "craft": "Operator"
+          },
+          {
+            "category": "maintenance_task",
+            "what": "Clean sight glass and check breather",
+            "interval": "every 4 weeks",
+            "craft": "Mechanical fitter"
+          },
+          {
+            "category": "design",
+            "what": "Shaft guard or seal protector against splash, and a better sight glass",
+            "interval": "one off",
+            "craft": "Reliability engineer"
+          },
+          {
+            "category": "spares",
+            "what": "Seal kit, sleeve and bearing in the store at a stated minimum",
+            "interval": "one off",
+            "craft": "Stores"
+          }
+        ],
+        "spares": "Seal kit, shaft sleeve and bearing for the right-angle gearbox; stock exists.",
+        "rollout": "All agitator gearboxes in the leach area: check seal condition and shaft groove at next opportunity.",
+        "unacceptable": [
+          "Any dollar value, hours lost, or payback",
+          "Retrain the fitter as the only action",
+          "'Check the seal more often' with no interval or craft"
+        ]
+      }
+    ],
+    "draft": {
+      "problem": {
+        "mustInclude": [
+          "seal leaking on 5 Oct 2026",
+          "oil level below the sight glass",
+          "lower bearing hot, blued",
+          "shaft grooved under the seal",
+          "seal replaced about 5 months earlier",
+          "costs not worked out"
+        ],
+        "mustNotInvent": [
+          "any dollar or hours figure",
+          "a cause",
+          "the production rate of tank 3"
+        ],
+        "gapsToPointOut": [
+          "How long was the agitator stopped?",
+          "What is the cost of the repair?",
+          "Who last checked the oil level?"
+        ]
+      },
+      "report": {
+        "mustInclude": [
+          "Says the cost is not yet quantified",
+          "Spares in stock",
+          "a2 has no interval, craft or owner"
+        ],
+        "mustNotInvent": [
+          "any cost, loss or saving",
+          "an estimate of hours"
+        ],
+        "stillToConfirm": [
+          "Costs not known",
+          "root cause is physical only",
+          "no evidence on n2"
+        ]
+      }
+    }
+  },
+  "hardChecks": {
+    "schemaValid": true,
+    "noPersonBlamedAsRoot": true,
+    "nothingMarkedVerified": true,
+    "noInventedNumbers": true,
+    "allowedNumbers": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "05",
+      "09",
+      "10",
+      "75",
+      "0.4",
+      "2026",
+      "3103"
+    ],
+    "allowedNumbersNote": "Numbers in the AI output must come from this list or from the app's own cost calculation (buildAiContext loss line). Anything else is invented.",
+    "noCostData": true,
+    "processFailure": false,
+    "processRules": "",
+    "wordingRules": [
+      "Use 'countermeasure', never 'fix' as a noun",
+      "No N#, A# or E# labels inside prose",
+      "No markdown in string fields",
+      "No dates as YYYY-MM-DD in prose"
+    ]
+  }
+}

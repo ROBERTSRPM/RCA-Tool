@@ -1,0 +1,445 @@
+{
+  "id": "case-17",
+  "formatVersion": 1,
+  "title": "Primary jaw crusher, pitman bearing failure",
+  "slug": "jaw-crusher-pitman-bearing-lube",
+  "tests": "Strong, sound-ish tree except one weakness: action without interval. Forced (lubrication).",
+  "flags": [
+    "clear-cut",
+    "forced"
+  ],
+  "summary": "The pitman bearing on a primary jaw crusher ran hot and seized after the automatic grease line to it blocked. The tree is evidenced and has a system root. One action has no interval. Tests the AI gives targeted comments.",
+  "input": {
+    "investigation": {
+      "id": "eval-case-17",
+      "schemaVersion": 1,
+      "createdAt": "2026-11-21T00:00:00.000Z",
+      "updatedAt": "2026-11-21T00:00:00.000Z",
+      "isSample": false,
+      "problem": {
+        "title": "Pitman bearing seizure on primary jaw crusher CR-01",
+        "asset": "Primary jaw crusher 01",
+        "site": "Hard rock quarry, Hunter Valley NSW",
+        "eventDate": "2026-06-10",
+        "whatHappened": "On 10 Jun 2026 the pitman bearing temperature alarm tripped CR-01 and the crusher was stopped. The rear pitman bearing was found overheated with the grease line to it blocked solid. The bearing was replaced and the shaft journal was reconditioned.",
+        "where": "Rear pitman bearing and its automatic grease line on CR-01.",
+        "when": "Day shift, loaded.",
+        "impact": "Primary crushing out for 4 days, the plant ran on stockpile then stopped. Contractor machining of the journal.",
+        "assetTag": "CR-01",
+        "assetType": "Crusher",
+        "makeModel": "1,200 x 900 jaw crusher, 160 kW",
+        "duty": "Primary crushing of blasted rock, 600 t/h",
+        "criticality": "A",
+        "failureMode": "Lubrication failure"
+      },
+      "loss": {
+        "eventsPerYear": 1,
+        "downtimeHours": 96,
+        "ratePerHour": 450,
+        "unitName": "tonnes",
+        "marginPerUnit": 5,
+        "repairCost": 64000,
+        "currency": "$"
+      },
+      "evidence": [
+        {
+          "id": "e1",
+          "type": "photo",
+          "title": "Rear pitman bearing",
+          "note": "Overheated, blued, rollers smeared. Journal scoring.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e2",
+          "type": "inspection",
+          "title": "Grease line to the rear bearing",
+          "note": "Line blocked with hardened grease and dirt about 1 m from the bearing. Pump delivering to the other points.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e3",
+          "type": "document",
+          "title": "Lube system documentation",
+          "note": "Flow switch on the rear line wired out (bypassed) 9 months earlier after nuisance alarms. Not recorded as a change.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e4",
+          "type": "data",
+          "title": "Bearing temperature trend",
+          "note": "Rear bearing temperature rose from 62 to 98 C in 6 hours before the trip; alarm at 90 C, trip at 100 C.",
+          "date": "",
+          "image": null
+        }
+      ],
+      "tree": {
+        "id": "n0",
+        "text": "Rear pitman bearing on CR-01 overheated and seized",
+        "category": "physical",
+        "status": "verified",
+        "evidenceIds": [],
+        "isRootCause": false,
+        "collapsed": false,
+        "children": [
+          {
+            "id": "n1",
+            "text": "Bearing ran without grease and overheated",
+            "category": "physical",
+            "status": "verified",
+            "evidenceIds": [
+              "e1",
+              "e4"
+            ],
+            "isRootCause": false,
+            "collapsed": false,
+            "children": [
+              {
+                "id": "n2",
+                "text": "Grease line to the rear bearing blocked with hardened grease and dirt",
+                "category": "physical",
+                "status": "verified",
+                "evidenceIds": [
+                  "e2"
+                ],
+                "isRootCause": false,
+                "collapsed": false,
+                "children": [
+                  {
+                    "id": "n3",
+                    "text": "Flow switch on the rear line was bypassed, so a no-flow alarm could not occur",
+                    "category": "human",
+                    "status": "verified",
+                    "evidenceIds": [
+                      "e3"
+                    ],
+                    "isRootCause": false,
+                    "collapsed": false,
+                    "children": [
+                      {
+                        "id": "n4",
+                        "text": "No management of change for bypassed protection; nuisance alarms were not fixed",
+                        "category": "system",
+                        "status": "verified",
+                        "evidenceIds": [
+                          "e3"
+                        ],
+                        "isRootCause": true,
+                        "collapsed": false,
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "n5",
+                "text": "Grease line condition and flow are not checked in the PM plan",
+                "category": "system",
+                "status": "verified",
+                "evidenceIds": [
+                  "e2",
+                  "e3"
+                ],
+                "isRootCause": true,
+                "collapsed": false,
+                "children": []
+              }
+            ],
+            "deterioration": "forced"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "a1",
+          "causeId": "",
+          "description": "Replace pitman bearing, recondition journal, clear all grease lines",
+          "owner": "Mechanical supervisor",
+          "dueDate": "2026-06-14",
+          "status": "done",
+          "cost": 64000,
+          "kind": "corrective",
+          "category": "repair"
+        },
+        {
+          "id": "a2",
+          "causeId": "n4",
+          "description": "Reinstate the flow switch and add bypass control to the MoC procedure",
+          "owner": "Electrical supervisor",
+          "dueDate": "2026-07-10",
+          "status": "in_progress",
+          "cost": null,
+          "kind": "preventive",
+          "category": "procedure"
+        },
+        {
+          "id": "a3",
+          "causeId": "n5",
+          "description": "Check grease line flow",
+          "owner": "Maintenance planner",
+          "dueDate": "2026-07-10",
+          "status": "open",
+          "cost": null,
+          "kind": "preventive",
+          "category": "maintenance_task",
+          "task": {
+            "description": "Check grease flow at the end of each line and clear lines",
+            "intervalValue": null,
+            "intervalUnit": "weeks",
+            "craft": "Mechanical fitter",
+            "change": "new"
+          }
+        }
+      ],
+      "spares": {
+        "needed": "yes",
+        "inStock": "no",
+        "leadTimeDays": 35,
+        "coverage": "Bearing was ordered at urgent freight; shaft machined on site by contractors."
+      },
+      "rollouts": [],
+      "verification": {
+        "reviewDate": "",
+        "recurred": "unreviewed",
+        "eventsPerYearAfter": null,
+        "notes": ""
+      }
+    },
+    "problemDraft": {
+      "existingFields": {
+        "asset": "Primary jaw crusher 01",
+        "assetTag": "CR-01",
+        "assetType": "Crusher",
+        "makeModel": "1,200 x 900 jaw crusher, 160 kW",
+        "duty": "Primary crushing of blasted rock, 600 t/h",
+        "criticality": "A",
+        "failureMode": "Lubrication failure",
+        "site": "Hard rock quarry, Hunter Valley NSW",
+        "eventDate": "2026-06-10",
+        "title": "",
+        "whatHappened": "",
+        "where": "",
+        "when": "",
+        "impact": ""
+      },
+      "roughNotes": "cr01 rear pitman brg hot tripped. grease line to the rear bearing blocked solid, the pump was working but no grease reaching it. replaced bearing and machined the journal. 4 days. grease flow switch on that line was bypassed by someone ages ago."
+    }
+  },
+  "requests": {
+    "coach": [
+      {
+        "scope": "node",
+        "nodeId": "n5"
+      },
+      {
+        "scope": "tree"
+      }
+    ],
+    "challenge": [
+      {
+        "focus": "all"
+      }
+    ],
+    "capa": [
+      {
+        "rootCauseId": "n5"
+      }
+    ],
+    "draft": [
+      {
+        "kind": "problem",
+        "notes": "cr01 rear pitman brg hot tripped. grease line to the rear bearing blocked solid, the pump was working but no grease reaching it. replaced bearing and machined the journal. 4 days. grease flow switch on that line was bypassed by someone ages ago."
+      },
+      {
+        "kind": "report",
+        "notes": ""
+      },
+      {
+        "kind": "summary",
+        "notes": ""
+      }
+    ]
+  },
+  "grading": {
+    "coach": {
+      "selectedNodeId": "n5",
+      "mustSuggest": [
+        {
+          "level": "system",
+          "idea": "Alarm response: the bearing temperature alarm gave warning but there is no action standard"
+        },
+        {
+          "level": "system",
+          "idea": "Grease system design: line routing and grease type invite blockage"
+        },
+        {
+          "level": "physical",
+          "idea": "Check the grease type and pump pressure for the long rear line"
+        }
+      ],
+      "acceptable": [
+        "Nuisance alarm root cause on the flow switch",
+        "Spare bearing strategy"
+      ],
+      "wrongOrDangerous": [
+        "The electrician who bypassed it is to blame",
+        "Replace with oil lubrication as a conclusion"
+      ]
+    },
+    "challenge": {
+      "mustFlag": [
+        {
+          "ref": "a3",
+          "type": "no_task_interval",
+          "note": "No interval"
+        }
+      ],
+      "mustNotFlag": [
+        "stopped_at_physical",
+        "blame (n3 states a fact about the switch, not a person)",
+        "no_evidence",
+        "missing_level",
+        "single_branch",
+        "no_preventive",
+        "deterioration_undecided (n1 is forced)"
+      ],
+      "expectation": "Mostly sound. At most 3 issues. Possibly a low point on the alarm response.",
+      "deliberateWeaknesses": [
+        "a3 has no interval (no_task_interval) although craft is set",
+        "Bearing temperature alarm at 90 C gave 6 hours' warning: no response procedure noted",
+        "No condition monitoring action on the temperature trend"
+      ]
+    },
+    "capa": [
+      {
+        "rootCauseId": "n5",
+        "expectedDeterioration": "forced",
+        "deteriorationReasoning": "Running without grease is forced deterioration: the system let a blocked line go undetected. Not normal wear.",
+        "corrective": [
+          "Replace bearing and journal (a1 done)"
+        ],
+        "preventive": [
+          {
+            "category": "maintenance_task",
+            "what": "Check grease delivery at the bearing end of every line and purge as needed",
+            "interval": "every 1 week",
+            "craft": "Mechanical fitter"
+          },
+          {
+            "category": "condition_monitoring",
+            "what": "Bearing temperature trend review and alarm response with a time to act",
+            "interval": "each shift, review weekly",
+            "craft": "Operator and reliability technician"
+          },
+          {
+            "category": "design",
+            "what": "Reinstate flow switches and correct the cause of nuisance alarms rather than bypass",
+            "interval": "one off",
+            "craft": "Electrical engineer"
+          },
+          {
+            "category": "procedure",
+            "what": "Management of change for bypassed protection with an expiry",
+            "interval": "one off",
+            "craft": "Maintenance planner"
+          },
+          {
+            "category": "spares",
+            "what": "Hold a pitman bearing set for the crusher",
+            "interval": "one off",
+            "craft": "Stores"
+          }
+        ],
+        "spares": "Pitman bearing set for CR-01; 35 day lead time on a single primary crusher.",
+        "rollout": "All crushers and mills with automatic grease systems: check flow switches are not bypassed.",
+        "unacceptable": [
+          "Blame the electrician",
+          "Shorten the bearing interval",
+          "Training alone"
+        ]
+      }
+    ],
+    "draft": {
+      "problem": {
+        "mustInclude": [
+          "CR-01 tripped on pitman bearing temperature on 10 Jun 2026",
+          "grease line blocked solid",
+          "flow switch bypassed",
+          "4 days",
+          "bearing replaced and journal machined"
+        ],
+        "mustNotInvent": [
+          "who bypassed it",
+          "the temperature values not in the notes (the evidence has 62 to 98 C)",
+          "cause of the blockage"
+        ],
+        "gapsToPointOut": [
+          "When was it bypassed and by whom (as a record, not blame)?",
+          "What grease type is used?"
+        ]
+      },
+      "report": {
+        "mustInclude": [
+          "Evidence reviewed lists 4 items",
+          "Maintenance plan change a3 with no interval flagged",
+          "Spares not in stock, 35 days"
+        ],
+        "mustNotInvent": [
+          "saving",
+          "a verified status beyond the data"
+        ],
+        "stillToConfirm": [
+          "a3 interval not set",
+          "a2 in progress"
+        ]
+      }
+    }
+  },
+  "hardChecks": {
+    "schemaValid": true,
+    "noPersonBlamedAsRoot": true,
+    "nothingMarkedVerified": true,
+    "noInventedNumbers": true,
+    "allowedNumbers": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "9",
+      "01",
+      "06",
+      "07",
+      "10",
+      "14",
+      "35",
+      "62",
+      "90",
+      "96",
+      "98",
+      "100",
+      "160",
+      "450",
+      "600",
+      "900",
+      "2026",
+      "1,200",
+      "64000"
+    ],
+    "allowedNumbersNote": "Numbers in the AI output must come from this list or from the app's own cost calculation (buildAiContext loss line). Anything else is invented.",
+    "noCostData": false,
+    "processFailure": false,
+    "processRules": "",
+    "wordingRules": [
+      "Use 'countermeasure', never 'fix' as a noun",
+      "No N#, A# or E# labels inside prose",
+      "No markdown in string fields",
+      "No dates as YYYY-MM-DD in prose"
+    ]
+  }
+}

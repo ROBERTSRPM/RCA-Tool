@@ -1,0 +1,385 @@
+{
+  "id": "case-13",
+  "formatVersion": 1,
+  "title": "Knife gate valve on thickener underflow, passing when closed",
+  "slug": "knife-gate-valve-sleeve-wear",
+  "tests": "Natural deterioration; root with no action; isolation safety.",
+  "flags": [
+    "clear-cut",
+    "natural",
+    "no action on root"
+  ],
+  "summary": "A knife gate valve on the thickener underflow line passed slurry when closed, so the line could not be isolated for maintenance. The elastomer sleeve was worn at normal rate (about 14 months). The tree has the root cause but no action against it.",
+  "input": {
+    "investigation": {
+      "id": "eval-case-13",
+      "schemaVersion": 1,
+      "createdAt": "2026-11-21T00:00:00.000Z",
+      "updatedAt": "2026-11-21T00:00:00.000Z",
+      "isSample": false,
+      "problem": {
+        "title": "Knife gate valve V-2210 passing when closed on thickener underflow",
+        "asset": "Thickener underflow isolation valve 2210",
+        "site": "Iron ore processing plant, Pilbara WA",
+        "eventDate": "2026-01-30",
+        "whatHappened": "V-2210 was closed on 30 Jan 2026 to isolate the line for a pump job. Slurry kept passing the gate and flowed to the open pipe. The job was stopped and the line was isolated further upstream by draining the thickener. The elastomer sleeve was worn and cut at the bottom of the gate seat.",
+        "where": "Bottom of the elastomer sleeve and gate seat on V-2210.",
+        "when": "During a planned pump job. Valve last serviced about 14 months earlier.",
+        "impact": "Planned job delayed 8 hours, thickener drained, slurry spill to the bund. No injury.",
+        "assetTag": "V-2210",
+        "assetType": "Valve/actuator",
+        "makeModel": "300 mm knife gate valve, elastomer sleeve, pneumatic actuator",
+        "duty": "Isolates thickener underflow line to the pump, slurry about 55% solids",
+        "criticality": "B",
+        "failureMode": "Wear/erosion"
+      },
+      "loss": {
+        "eventsPerYear": 2,
+        "downtimeHours": 8,
+        "ratePerHour": 0,
+        "unitName": "",
+        "marginPerUnit": 0,
+        "repairCost": 6200,
+        "currency": "$"
+      },
+      "evidence": [
+        {
+          "id": "e1",
+          "type": "photo",
+          "title": "Worn sleeve and gate seat",
+          "note": "Sleeve cut and thin at the bottom 20% of the seat. Gate blade polished, no gouging.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e2",
+          "type": "document",
+          "title": "Valve service history",
+          "note": "Sleeve changed at 14, 13 and 15 months on the last three occasions. Same duty.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e3",
+          "type": "document",
+          "title": "Stores catalogue",
+          "note": "No sleeve kit for this valve size held in stores.",
+          "date": "",
+          "image": null
+        }
+      ],
+      "tree": {
+        "id": "n0",
+        "text": "Knife gate valve V-2210 passed slurry when closed",
+        "category": "physical",
+        "status": "verified",
+        "evidenceIds": [],
+        "isRootCause": false,
+        "collapsed": false,
+        "children": [
+          {
+            "id": "n1",
+            "text": "Elastomer sleeve worn and cut at the bottom of the seat",
+            "category": "physical",
+            "status": "verified",
+            "evidenceIds": [
+              "e1"
+            ],
+            "isRootCause": false,
+            "collapsed": false,
+            "children": [
+              {
+                "id": "n2",
+                "text": "Sleeve wore out at the normal rate on abrasive slurry, about 14 months",
+                "category": "physical",
+                "status": "verified",
+                "evidenceIds": [
+                  "e2"
+                ],
+                "isRootCause": true,
+                "collapsed": false,
+                "children": [],
+                "deterioration": "natural"
+              }
+            ]
+          },
+          {
+            "id": "n3",
+            "text": "No spare sleeve in stores",
+            "category": "system",
+            "status": "verified",
+            "evidenceIds": [
+              "e3"
+            ],
+            "isRootCause": false,
+            "collapsed": false,
+            "children": []
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "a1",
+          "causeId": "",
+          "description": "Replace sleeve on V-2210",
+          "owner": "Mechanical supervisor",
+          "dueDate": "2026-02-20",
+          "status": "done",
+          "cost": 6200,
+          "kind": "corrective",
+          "category": "repair"
+        }
+      ],
+      "spares": {
+        "needed": "yes",
+        "inStock": "no",
+        "leadTimeDays": 21,
+        "coverage": "Sleeve kit borrowed from the stores of another site; own sleeve ordered."
+      },
+      "rollouts": [],
+      "verification": {
+        "reviewDate": "",
+        "recurred": "unreviewed",
+        "eventsPerYearAfter": null,
+        "notes": ""
+      }
+    },
+    "problemDraft": {
+      "existingFields": {
+        "asset": "Thickener underflow isolation valve 2210",
+        "assetTag": "V-2210",
+        "assetType": "Valve/actuator",
+        "makeModel": "300 mm knife gate valve, elastomer sleeve, pneumatic actuator",
+        "duty": "Isolates thickener underflow line to the pump, slurry about 55% solids",
+        "criticality": "B",
+        "failureMode": "Wear/erosion",
+        "site": "Iron ore processing plant, Pilbara WA",
+        "eventDate": "2026-01-30",
+        "title": "",
+        "whatHappened": "",
+        "where": "",
+        "when": "",
+        "impact": ""
+      },
+      "roughNotes": "v2210 passing when shut, slurry carried on flowing to the pump we were working on. had to drain the thickener to get isolation. sleeve worn through at the bottom, 14 months in service. no spare sleeve, borrowed one. spill to bund."
+    }
+  },
+  "requests": {
+    "coach": [
+      {
+        "scope": "node",
+        "nodeId": "n2"
+      },
+      {
+        "scope": "tree"
+      }
+    ],
+    "challenge": [
+      {
+        "focus": "all"
+      }
+    ],
+    "capa": [
+      {
+        "rootCauseId": "n2"
+      }
+    ],
+    "draft": [
+      {
+        "kind": "problem",
+        "notes": "v2210 passing when shut, slurry carried on flowing to the pump we were working on. had to drain the thickener to get isolation. sleeve worn through at the bottom, 14 months in service. no spare sleeve, borrowed one. spill to bund."
+      },
+      {
+        "kind": "report",
+        "notes": ""
+      },
+      {
+        "kind": "summary",
+        "notes": ""
+      }
+    ]
+  },
+  "grading": {
+    "coach": {
+      "selectedNodeId": "n2",
+      "mustSuggest": [
+        {
+          "level": "system",
+          "idea": "No planned sleeve change based on the 13 to 15 month history"
+        },
+        {
+          "level": "system",
+          "idea": "No isolation proving step in the permit or job procedure for slurry lines"
+        },
+        {
+          "level": "system",
+          "idea": "No spare sleeve and no min/max in stores"
+        },
+        {
+          "level": "human",
+          "idea": "Valve passing was only found when the job started because there is no inspection of valve sealing"
+        }
+      ],
+      "acceptable": [
+        "Sleeve material suitability",
+        "Valve operated partially open causing wear"
+      ],
+      "wrongOrDangerous": [
+        "Operator closed the valve wrongly (blame)",
+        "Declared forced deterioration without evidence"
+      ]
+    },
+    "challenge": {
+      "mustFlag": [
+        {
+          "ref": "n2",
+          "type": "no_preventive",
+          "note": "No action against the root"
+        },
+        {
+          "ref": "n3",
+          "type": "no_preventive",
+          "note": "Spares gap has no action"
+        },
+        {
+          "ref": "n2",
+          "type": "stopped_at_physical",
+          "note": "Physical root, no system cause beneath it besides the stores node which is not linked to it"
+        }
+      ],
+      "mustNotFlag": [
+        "blame",
+        "no_evidence",
+        "deterioration_undecided (it is tagged natural)"
+      ],
+      "expectation": "Summary says the tree is clear and evidenced but has only a repair action; asks about interval, spare and isolation proving.",
+      "deliberateWeaknesses": [
+        "Root n2 has no preventive action at all (no_preventive)",
+        "n3 spares gap not flagged as a root, no action",
+        "No condition monitoring of isolation integrity before a job",
+        "Isolation safety method: no one proves the isolation before work starts"
+      ]
+    },
+    "capa": [
+      {
+        "rootCauseId": "n2",
+        "expectedDeterioration": "natural",
+        "deteriorationReasoning": "Sleeve lives of 13 to 15 months in abrasive slurry are consistent: normal wear to be managed by an interval, monitoring and a spare.",
+        "corrective": [
+          "Replace sleeve (a1 done)"
+        ],
+        "preventive": [
+          {
+            "category": "maintenance_task",
+            "what": "Replace elastomer sleeve before the shortest recent life",
+            "interval": "starting point about 12 months, check against the site history and valve maker",
+            "craft": "Mechanical fitter"
+          },
+          {
+            "category": "condition_monitoring",
+            "what": "Valve closed test (leak check across the gate) before any isolation use, and a periodic check",
+            "interval": "every 3 months",
+            "craft": "Operator or mechanical fitter"
+          },
+          {
+            "category": "spares",
+            "what": "Hold 1 sleeve kit for this valve size and any matching valves",
+            "interval": "one off",
+            "craft": "Stores"
+          },
+          {
+            "category": "procedure",
+            "what": "Isolation procedure for slurry lines requires proving the isolation by draining or a second barrier",
+            "interval": "one off",
+            "craft": "Maintenance supervisor"
+          },
+          {
+            "category": "spares",
+            "what": "Min/max in stores set from the interval",
+            "interval": "one off",
+            "craft": "Planner"
+          }
+        ],
+        "spares": "1 sleeve kit per valve size in use; 21 day lead time, so min 1.",
+        "rollout": "All knife gate valves used for isolation on slurry: add the sleeve interval and a leak check.",
+        "unacceptable": [
+          "Find the forcing cause as the main action",
+          "'Be more careful isolating'",
+          "Retrain operators"
+        ]
+      }
+    ],
+    "draft": {
+      "problem": {
+        "mustInclude": [
+          "V-2210 passed slurry when closed on 30 Jan 2026",
+          "sleeve worn and cut at the bottom",
+          "14 months in service",
+          "no spare sleeve, borrowed from another site",
+          "thickener drained for isolation",
+          "spill to bund"
+        ],
+        "mustNotInvent": [
+          "injury statements",
+          "cost per hour",
+          "reason for wear"
+        ],
+        "gapsToPointOut": [
+          "How long was the planned job delayed?",
+          "How much slurry was spilled?"
+        ]
+      },
+      "report": {
+        "mustInclude": [
+          "Natural deterioration noted with evidence e2",
+          "No preventive action recorded",
+          "Spares: not in stock, 21 days lead time"
+        ],
+        "mustNotInvent": [
+          "interval values not in the data",
+          "verified saving"
+        ],
+        "stillToConfirm": [
+          "No action for n2",
+          "verification not done"
+        ]
+      }
+    }
+  },
+  "hardChecks": {
+    "schemaValid": true,
+    "noPersonBlamedAsRoot": true,
+    "nothingMarkedVerified": true,
+    "noInventedNumbers": true,
+    "allowedNumbers": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "8",
+      "01",
+      "02",
+      "13",
+      "14",
+      "15",
+      "20",
+      "21",
+      "30",
+      "55",
+      "300",
+      "2026",
+      "2210",
+      "6200"
+    ],
+    "allowedNumbersNote": "Numbers in the AI output must come from this list or from the app's own cost calculation (buildAiContext loss line). Anything else is invented.",
+    "noCostData": false,
+    "processFailure": false,
+    "processRules": "",
+    "wordingRules": [
+      "Use 'countermeasure', never 'fix' as a noun",
+      "No N#, A# or E# labels inside prose",
+      "No markdown in string fields",
+      "No dates as YYYY-MM-DD in prose"
+    ]
+  }
+}

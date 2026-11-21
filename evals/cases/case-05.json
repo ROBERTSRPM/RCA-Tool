@@ -1,0 +1,349 @@
+{
+  "id": "case-05",
+  "formatVersion": 1,
+  "title": "Coal conveyor, head pulley lagging worn",
+  "slug": "conveyor-lagging-slip-thin-notes",
+  "tests": "Thin notes; natural deterioration; does the AI ask the right questions instead of inventing?",
+  "flags": [
+    "thin notes",
+    "natural",
+    "messy"
+  ],
+  "summary": "Coal conveyor CV-12 tripped on belt slip three times in a week. The fitter's notes are short. Lagging on the head pulley looked worn smooth. Only two evidence items, one tree node beyond the event. Tests that the AI points at gaps and does not invent facts.",
+  "input": {
+    "investigation": {
+      "id": "eval-case-05",
+      "schemaVersion": 1,
+      "createdAt": "2026-11-21T00:00:00.000Z",
+      "updatedAt": "2026-11-21T00:00:00.000Z",
+      "isSample": false,
+      "problem": {
+        "title": "Belt slip trips on coal conveyor CV-12",
+        "asset": "Coal conveyor 12",
+        "site": "Coal handling plant, Bowen Basin QLD",
+        "eventDate": "2026-09-04",
+        "whatHappened": "CV-12 tripped three times on belt-slip protection over one week. Head pulley lagging looked worn smooth when inspected.",
+        "where": "Head pulley lagging.",
+        "when": "Mostly in wet weather.",
+        "impact": "Coal delivery stops on each trip.",
+        "assetTag": "CV-12",
+        "assetType": "Belt conveyor",
+        "makeModel": "",
+        "duty": "Raw coal to the coal handling plant, 900 t/h",
+        "criticality": "B",
+        "failureMode": "Wear/erosion"
+      },
+      "loss": {
+        "eventsPerYear": 3,
+        "downtimeHours": 1.5,
+        "ratePerHour": 900,
+        "unitName": "tonnes",
+        "marginPerUnit": 7,
+        "repairCost": 1800,
+        "currency": "$"
+      },
+      "evidence": [
+        {
+          "id": "e1",
+          "type": "photo",
+          "title": "Head pulley lagging",
+          "note": "Ceramic diamond pattern worn smooth across the middle third of the pulley face.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e2",
+          "type": "document",
+          "title": "Belt slip trip log",
+          "note": "3 trips on belt slip: 1, 3 and 4 Sep. No time of day recorded.",
+          "date": "",
+          "image": null
+        }
+      ],
+      "tree": {
+        "id": "n0",
+        "text": "Belt slip trips on coal conveyor CV-12",
+        "category": "physical",
+        "status": "verified",
+        "evidenceIds": [],
+        "isRootCause": false,
+        "collapsed": false,
+        "children": [
+          {
+            "id": "n1",
+            "text": "Head pulley lagging worn smooth",
+            "category": "physical",
+            "status": "hypothesis",
+            "evidenceIds": [
+              "e1"
+            ],
+            "isRootCause": true,
+            "collapsed": false,
+            "children": []
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "a1",
+          "causeId": "n1",
+          "description": "Re-lag the head pulley",
+          "owner": "Mechanical supervisor",
+          "dueDate": "",
+          "status": "open",
+          "cost": null,
+          "kind": "corrective",
+          "category": "repair"
+        }
+      ],
+      "spares": {
+        "needed": "",
+        "inStock": "",
+        "leadTimeDays": null,
+        "coverage": ""
+      },
+      "rollouts": [],
+      "verification": {
+        "reviewDate": "",
+        "recurred": "unreviewed",
+        "eventsPerYearAfter": null,
+        "notes": ""
+      }
+    },
+    "problemDraft": {
+      "existingFields": {
+        "asset": "Coal conveyor 12",
+        "assetTag": "CV-12",
+        "assetType": "Belt conveyor",
+        "makeModel": "",
+        "duty": "Raw coal to the coal handling plant, 900 t/h",
+        "criticality": "B",
+        "failureMode": "Wear/erosion",
+        "site": "Coal handling plant, Bowen Basin QLD",
+        "eventDate": "2026-09-04",
+        "title": "",
+        "whatHappened": "",
+        "where": "",
+        "when": "",
+        "impact": ""
+      },
+      "roughNotes": "cv12 head pulley lagging smooth. belt slip trip x3 this week mostly when its wet. fitter re-set the tension on thursday. need to relag."
+    }
+  },
+  "requests": {
+    "coach": [
+      {
+        "scope": "node",
+        "nodeId": "n1"
+      },
+      {
+        "scope": "tree"
+      }
+    ],
+    "challenge": [
+      {
+        "focus": "all"
+      }
+    ],
+    "capa": [
+      {
+        "rootCauseId": "n1"
+      }
+    ],
+    "draft": [
+      {
+        "kind": "problem",
+        "notes": "cv12 head pulley lagging smooth. belt slip trip x3 this week mostly when its wet. fitter re-set the tension on thursday. need to relag."
+      },
+      {
+        "kind": "report",
+        "notes": ""
+      },
+      {
+        "kind": "summary",
+        "notes": ""
+      }
+    ]
+  },
+  "grading": {
+    "coach": {
+      "selectedNodeId": "n1",
+      "mustSuggest": [
+        {
+          "level": "physical",
+          "idea": "Wet coal or water on the belt face reducing grip, with a way to check (belt cleaning, scrapers, rain protection)"
+        },
+        {
+          "level": "physical",
+          "idea": "Belt tension low or take-up not working, because the fitter re-set it"
+        },
+        {
+          "level": "system",
+          "idea": "No lagging wear measurement in inspection route or PM plan"
+        },
+        {
+          "level": "human",
+          "idea": "Lagging wear not measured on rounds because there is no limit to measure against"
+        }
+      ],
+      "acceptable": [
+        "Carry-back or build-up on the pulley",
+        "Belt cover wear or speed mismatch",
+        "Lagging type unsuitable for wet duty"
+      ],
+      "wrongOrDangerous": [
+        "Anything stating the lagging wore out in a specific number of hours",
+        "Fitter set tension wrongly (blame)"
+      ]
+    },
+    "challenge": {
+      "mustFlag": [
+        {
+          "ref": "n1",
+          "type": "stopped_at_physical",
+          "note": "Only a physical cause is listed"
+        },
+        {
+          "ref": "n0",
+          "type": "missing_level",
+          "note": "No human or system cause anywhere"
+        },
+        {
+          "ref": "n1",
+          "type": "deterioration_undecided",
+          "note": "Wear with natural or forced not decided"
+        },
+        {
+          "ref": "n0",
+          "type": "single_branch",
+          "note": "One cause only"
+        },
+        {
+          "ref": "n1",
+          "type": "unverified_root",
+          "note": "Action planned on a hypothesis"
+        }
+      ],
+      "mustNotFlag": [
+        "blame",
+        "no_evidence on n0",
+        "stating the lagging is the proven root"
+      ],
+      "expectation": "Summary says the analysis is just started; asks what changed in the weather, belt condition and tension history.",
+      "deliberateWeaknesses": [
+        "Notes and tree very thin: no cause beyond the lagging",
+        "No natural or forced decision",
+        "n1 is a flagged root that is still only a hypothesis, with action a1 against it",
+        "No human or system level",
+        "Wet weather and tension re-set not explored"
+      ]
+    },
+    "capa": [
+      {
+        "rootCauseId": "n1",
+        "expectedDeterioration": "unclear",
+        "deteriorationReasoning": "Lagging smooth at the pulley centre may be normal wear or wear we caused (wet coal, carry-back, low tension). Check lagging age and hours run, scraper condition and tension record to decide.",
+        "corrective": [
+          "Re-lag the head pulley (a1): the AI may restate it only if not repeating a1"
+        ],
+        "preventive": [
+          {
+            "category": "condition_monitoring",
+            "what": "Lagging thickness and pattern check against a minimum, with photo",
+            "interval": "every 3 months",
+            "craft": "Mechanical fitter"
+          },
+          {
+            "category": "spares",
+            "what": "Lagging or a lagged spare pulley held, if the lagging life is found to be natural wear",
+            "interval": "one off",
+            "craft": "Stores/planner"
+          },
+          {
+            "category": "procedure",
+            "what": "Record the take-up tension or position on the job plan after any re-set",
+            "interval": "one off",
+            "craft": "Mechanical supervisor"
+          }
+        ],
+        "spares": "Lagging material or a spare lagged head pulley, to be sized after the lagging life is known; do not give a part number or price.",
+        "rollout": "Other coal conveyors with ceramic lagging and wet-weather exposure.",
+        "unacceptable": [
+          "Declaring natural or forced with confidence",
+          "Inventing a lagging life in hours",
+          "Retrain operators"
+        ]
+      }
+    ],
+    "draft": {
+      "problem": {
+        "mustInclude": [
+          "CV-12 tripped on belt-slip protection three times in a week",
+          "head pulley lagging worn smooth",
+          "mostly wet weather",
+          "fitter reset tension on Thursday",
+          "needs re-lagging"
+        ],
+        "mustNotInvent": [
+          "the lagging age",
+          "belt tension values",
+          "the date of the Thursday reset",
+          "cost per trip"
+        ],
+        "gapsToPointOut": [
+          "What dates and times were the trips, and what was the weather?",
+          "How long since the head pulley was last lagged?",
+          "What was the tension before and after the reset?",
+          "Are there scrapers or belt cleaners and what is their condition?"
+        ]
+      },
+      "report": {
+        "mustInclude": [
+          "Report is short and says the data is thin",
+          "Evidence reviewed lists 2 items"
+        ],
+        "mustNotInvent": [
+          "any root cause",
+          "any cost saving",
+          "intervals"
+        ],
+        "stillToConfirm": [
+          "Root cause not established",
+          "no human or system level",
+          "owner and date not set on a1"
+        ]
+      }
+    }
+  },
+  "hardChecks": {
+    "schemaValid": true,
+    "noPersonBlamedAsRoot": true,
+    "nothingMarkedVerified": true,
+    "noInventedNumbers": true,
+    "allowedNumbers": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "7",
+      "04",
+      "09",
+      "12",
+      "1.5",
+      "900",
+      "1800",
+      "2026"
+    ],
+    "allowedNumbersNote": "Numbers in the AI output must come from this list or from the app's own cost calculation (buildAiContext loss line). Anything else is invented.",
+    "noCostData": false,
+    "processFailure": false,
+    "processRules": "",
+    "wordingRules": [
+      "Use 'countermeasure', never 'fix' as a noun",
+      "No N#, A# or E# labels inside prose",
+      "No markdown in string fields",
+      "No dates as YYYY-MM-DD in prose"
+    ]
+  }
+}

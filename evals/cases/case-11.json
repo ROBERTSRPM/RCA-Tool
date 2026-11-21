@@ -1,0 +1,435 @@
+{
+  "id": "case-11",
+  "formatVersion": 1,
+  "title": "VSD-driven mill feed motor, bearing and winding damage",
+  "slug": "motor-vsd-bearing-currents-obvious-wrong",
+  "tests": "Obvious cause (overload) is WRONG; real cause is VSD bearing currents. AI should not endorse overload.",
+  "flags": [
+    "messy",
+    "forced",
+    "obvious cause wrong"
+  ],
+  "summary": "A 250 kW VSD-driven motor tripped and had burnt windings. The team blames overload. The current trend shows no overload. Bearings have fluting, the motor has no shaft grounding ring, and the rotor rubbed after the bearing wore. Tree contains 'motor overloaded' marked verified with no evidence.",
+  "input": {
+    "investigation": {
+      "id": "eval-case-11",
+      "schemaVersion": 1,
+      "createdAt": "2026-11-21T00:00:00.000Z",
+      "updatedAt": "2026-11-21T00:00:00.000Z",
+      "isSample": false,
+      "problem": {
+        "title": "Winding damage and bearing failure on mill feed motor M-1204",
+        "asset": "Mill feed conveyor motor 1204",
+        "site": "Gold processing plant, grinding area, Kalgoorlie WA",
+        "eventDate": "2026-05-27",
+        "whatHappened": "Motor M-1204 tripped on earth fault on 27 May 2026. The motor had been noisy for about 2 weeks. On strip-down the drive-end bearing was destroyed, the rotor had rubbed the stator and the stator windings were burnt in one section. The team's first view was motor overload.",
+        "where": "Drive-end bearing, rotor and stator windings of M-1204.",
+        "when": "Variable speed duty. Noise first noticed at lower belt speeds about 2 weeks before the trip.",
+        "impact": "Mill feed stopped for 29 hours until a spare motor was fitted. Motor sent for rewind.",
+        "assetTag": "M-1204",
+        "assetType": "Electric motor",
+        "makeModel": "250 kW, 6 pole, 415 V, VSD fed, 18 months in service",
+        "duty": "Mill feed belt drive, variable speed, continuous",
+        "criticality": "A",
+        "failureMode": "Electrical fault"
+      },
+      "loss": {
+        "eventsPerYear": 1,
+        "downtimeHours": 29,
+        "ratePerHour": 220,
+        "unitName": "tonnes",
+        "marginPerUnit": 14,
+        "repairCost": 46000,
+        "currency": "$"
+      },
+      "evidence": [
+        {
+          "id": "e1",
+          "type": "data",
+          "title": "Motor current trend, 6 months",
+          "note": "Running current 62 to 78% of full load, no overload alarms, no sustained current above 85%.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e2",
+          "type": "photo",
+          "title": "Drive-end bearing outer race",
+          "note": "Regular pattern of fine grey frosted lines (fluting) across the whole raceway. Balls and cage worn.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e3",
+          "type": "document",
+          "title": "VSD installation records",
+          "note": "Motor fed by 70 m of unscreened cable. No shaft grounding ring or insulated bearing fitted. No output filter.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e4",
+          "type": "data",
+          "title": "Vibration spectrum from the route, 3 months before",
+          "note": "Bearing defect frequencies present at the drive end and slowly rising; no one reviewed the spectrum.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e5",
+          "type": "inspection",
+          "title": "Windings",
+          "note": "One burnt section at the point where the rotor rubbed; rest of the winding insulation tested above minimum.",
+          "date": "",
+          "image": null
+        }
+      ],
+      "tree": {
+        "id": "n0",
+        "text": "Motor M-1204 failed with burnt windings and a destroyed drive-end bearing",
+        "category": "physical",
+        "status": "verified",
+        "evidenceIds": [],
+        "isRootCause": false,
+        "collapsed": false,
+        "children": [
+          {
+            "id": "n1",
+            "text": "Motor was overloaded and the windings burnt",
+            "category": "physical",
+            "status": "verified",
+            "evidenceIds": [],
+            "isRootCause": false,
+            "collapsed": false,
+            "children": [
+              {
+                "id": "n2",
+                "text": "Belt too heavy for the motor",
+                "category": "physical",
+                "status": "hypothesis",
+                "evidenceIds": [],
+                "isRootCause": true,
+                "collapsed": false,
+                "children": []
+              }
+            ]
+          },
+          {
+            "id": "n3",
+            "text": "Drive-end bearing failed and the rotor rubbed the stator",
+            "category": "physical",
+            "status": "verified",
+            "evidenceIds": [
+              "e5"
+            ],
+            "isRootCause": false,
+            "collapsed": false,
+            "children": []
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "a1",
+          "causeId": "",
+          "description": "Fit spare motor, send M-1204 for rewind",
+          "owner": "Electrical supervisor",
+          "dueDate": "2026-05-29",
+          "status": "done",
+          "cost": 46000,
+          "kind": "corrective",
+          "category": "repair"
+        },
+        {
+          "id": "a2",
+          "causeId": "n2",
+          "description": "Fit a larger motor on the mill feed belt",
+          "owner": "Reliability engineer",
+          "dueDate": "2026-08-30",
+          "status": "open",
+          "cost": 85000,
+          "kind": "preventive",
+          "category": "design"
+        }
+      ],
+      "spares": {
+        "needed": "yes",
+        "inStock": "yes",
+        "leadTimeDays": null,
+        "coverage": "Spare 250 kW motor held in the main store; fitted and aligned in 20 hours."
+      },
+      "rollouts": [],
+      "verification": {
+        "reviewDate": "",
+        "recurred": "unreviewed",
+        "eventsPerYearAfter": null,
+        "notes": ""
+      }
+    },
+    "problemDraft": {
+      "existingFields": {
+        "asset": "Mill feed conveyor motor 1204",
+        "assetTag": "M-1204",
+        "assetType": "Electric motor",
+        "makeModel": "250 kW, 6 pole, 415 V, VSD fed, 18 months in service",
+        "duty": "Mill feed belt drive, variable speed, continuous",
+        "criticality": "A",
+        "failureMode": "Electrical fault",
+        "site": "Gold processing plant, grinding area, Kalgoorlie WA",
+        "eventDate": "2026-05-27",
+        "title": "",
+        "whatHappened": "",
+        "where": "",
+        "when": "",
+        "impact": ""
+      },
+      "roughNotes": "m1204 earth fault trip, windings cooked in 1 section, DE bearing wrecked, rotor rubbing stator. it was noisy for 2 weeks. overload i reckon, the belt gets heavy. swapped the spare in. drive was a VSD installed 18 mths ago."
+    }
+  },
+  "requests": {
+    "coach": [
+      {
+        "scope": "node",
+        "nodeId": "n3"
+      },
+      {
+        "scope": "tree"
+      }
+    ],
+    "challenge": [
+      {
+        "focus": "all"
+      }
+    ],
+    "capa": [
+      {
+        "rootCauseId": "n3"
+      }
+    ],
+    "draft": [
+      {
+        "kind": "problem",
+        "notes": "m1204 earth fault trip, windings cooked in 1 section, DE bearing wrecked, rotor rubbing stator. it was noisy for 2 weeks. overload i reckon, the belt gets heavy. swapped the spare in. drive was a VSD installed 18 mths ago."
+      },
+      {
+        "kind": "report",
+        "notes": ""
+      },
+      {
+        "kind": "summary",
+        "notes": ""
+      }
+    ]
+  },
+  "grading": {
+    "coach": {
+      "selectedNodeId": "n3",
+      "mustSuggest": [
+        {
+          "level": "physical",
+          "idea": "Bearing currents from the VSD (fluting) with no shaft grounding or insulated bearing"
+        },
+        {
+          "level": "physical",
+          "idea": "Cable and earthing arrangement: unscreened cable, no output filter"
+        },
+        {
+          "level": "system",
+          "idea": "VSD installation standard has no bearing current protection for this motor size"
+        },
+        {
+          "level": "system",
+          "idea": "Vibration route spectra not reviewed, so rising bearing defect frequency was missed"
+        }
+      ],
+      "acceptable": [
+        "Bearing lubrication condition",
+        "Motor alignment after installation"
+      ],
+      "wrongOrDangerous": [
+        "Overload as a cause (current trend shows 62 to 78%)",
+        "Larger motor as an answer without evidence",
+        "Operator overloaded the belt (blame)"
+      ]
+    },
+    "challenge": {
+      "mustFlag": [
+        {
+          "ref": "n1",
+          "type": "no_evidence",
+          "note": "Verified with no evidence, contradicted by e1"
+        },
+        {
+          "ref": "n2",
+          "type": "no_evidence",
+          "note": "Flagged root with no evidence"
+        },
+        {
+          "ref": "n2",
+          "type": "weak_logic",
+          "note": "e1 shows no overload so the logic does not hold"
+        },
+        {
+          "ref": "n3",
+          "type": "stopped_at_physical",
+          "note": "Bearing branch has no cause beneath it"
+        },
+        {
+          "ref": "a2",
+          "type": "action_weak",
+          "note": "Costly action against an unsupported root"
+        },
+        {
+          "ref": "n0",
+          "type": "missing_level",
+          "note": "No human or system cause"
+        }
+      ],
+      "mustNotFlag": [
+        "Agreeing that overload is the cause",
+        "blame",
+        "no_evidence on n0"
+      ],
+      "expectation": "Summary says the evidence (current trend, fluting, no grounding) points away from overload; asks about bearing currents.",
+      "deliberateWeaknesses": [
+        "n1 and n2 marked verified or flagged with no evidence, and e1 contradicts overload",
+        "n3 has no cause beneath it: the bearing branch has the real cause (e2, e3) but no one linked them",
+        "Action a2 would spend $85,000 on a motor change that evidence does not support",
+        "Natural vs forced not decided",
+        "No human or system level"
+      ]
+    },
+    "capa": [
+      {
+        "rootCauseId": "n3",
+        "expectedDeterioration": "forced",
+        "deteriorationReasoning": "Fluting from VSD currents passing through the bearing is damage we cause by how the drive is installed, not normal bearing wear. It is not overload.",
+        "corrective": [
+          "Spare motor fitted and rewind (a1 done)"
+        ],
+        "preventive": [
+          {
+            "category": "design",
+            "what": "Fit shaft grounding ring or insulated bearing at the drive end, screened motor cable and an output filter, if the drive supplier and electrical engineer confirm",
+            "interval": "one off",
+            "craft": "Electrical engineer"
+          },
+          {
+            "category": "condition_monitoring",
+            "what": "Vibration spectrum review of bearing defect frequencies by a named person with alarm limits",
+            "interval": "every 1 month",
+            "craft": "Reliability technician"
+          },
+          {
+            "category": "procedure",
+            "what": "VSD installation standard that includes bearing current protection and a check list at commissioning",
+            "interval": "one off",
+            "craft": "Electrical engineer"
+          },
+          {
+            "category": "spares",
+            "what": "Hold a drive-end bearing set and the grounding ring for this frame",
+            "interval": "one off",
+            "craft": "Stores"
+          },
+          {
+            "category": "maintenance_task",
+            "what": "Measure shaft voltage or bearing current with a grounding check at the next stop",
+            "interval": "every 6 months initially",
+            "craft": "Electrician"
+          }
+        ],
+        "spares": "Spare motor exists; also hold bearing set and grounding ring for the 250 kW frame.",
+        "rollout": "All VSD fed motors above about 100 kW on site: check for shaft grounding and cable, inspect bearings at next opportunity.",
+        "unacceptable": [
+          "Fit a larger motor",
+          "Overload protection changes as the main action",
+          "Retrain operators",
+          "Declaring bearing currents as proven before measurement"
+        ]
+      }
+    ],
+    "draft": {
+      "problem": {
+        "mustInclude": [
+          "earth fault trip on 27 May 2026",
+          "noisy for about 2 weeks",
+          "DE bearing destroyed, rotor rubbed stator, burnt section of winding",
+          "VSD installed 18 months ago",
+          "spare motor fitted"
+        ],
+        "mustNotInvent": [
+          "overload as a fact (the notes say 'i reckon')",
+          "bearing currents as a cause",
+          "the cost of the rewind not in the notes"
+        ],
+        "gapsToPointOut": [
+          "What was the motor current before the trip?",
+          "Was vibration data available before the failure?",
+          "How is the drive earthed and what cable is used?"
+        ]
+      },
+      "report": {
+        "mustInclude": [
+          "Overload is not supported by the evidence (current trend)",
+          "Causes shown as hypotheses",
+          "Evidence includes fluting photo and VSD records"
+        ],
+        "mustNotInvent": [
+          "verified bearing currents",
+          "a verified saving",
+          "a measured shaft voltage"
+        ],
+        "stillToConfirm": [
+          "Overload branch has no evidence",
+          "a2 spends money on an unsupported cause",
+          "bearing branch has no cause beneath it"
+        ]
+      }
+    }
+  },
+  "hardChecks": {
+    "schemaValid": true,
+    "noPersonBlamedAsRoot": true,
+    "nothingMarkedVerified": true,
+    "noInventedNumbers": true,
+    "allowedNumbers": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "05",
+      "08",
+      "14",
+      "18",
+      "20",
+      "27",
+      "29",
+      "30",
+      "62",
+      "70",
+      "78",
+      "85",
+      "220",
+      "250",
+      "415",
+      "1204",
+      "2026",
+      "46000",
+      "85000"
+    ],
+    "allowedNumbersNote": "Numbers in the AI output must come from this list or from the app's own cost calculation (buildAiContext loss line). Anything else is invented.",
+    "noCostData": false,
+    "processFailure": false,
+    "processRules": "",
+    "wordingRules": [
+      "Use 'countermeasure', never 'fix' as a noun",
+      "No N#, A# or E# labels inside prose",
+      "No markdown in string fields",
+      "No dates as YYYY-MM-DD in prose"
+    ]
+  }
+}

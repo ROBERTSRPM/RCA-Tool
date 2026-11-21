@@ -1,0 +1,453 @@
+{
+  "id": "case-06",
+  "formatVersion": 1,
+  "title": "Coal conveyor, seized idler and belt smouldering",
+  "slug": "conveyor-idler-fire-blame",
+  "tests": "Safety event; tree blames the patrol operator (blame); natural vs forced undecided.",
+  "flags": [
+    "messy",
+    "forced",
+    "safety",
+    "blame in tree"
+  ],
+  "summary": "A seized return idler wore through its shell and heated the belt on CV-31 at a coal handling plant. Smoke was seen by the control room and the belt stopped; no flames spread and nobody was hurt. The tree's root cause reads 'patrol operator missed the seized idler'. Thermal scan and idler change history exist but are not linked.",
+  "input": {
+    "investigation": {
+      "id": "eval-case-06",
+      "schemaVersion": 1,
+      "createdAt": "2026-11-21T00:00:00.000Z",
+      "updatedAt": "2026-11-21T00:00:00.000Z",
+      "isSample": false,
+      "problem": {
+        "title": "Seized idler and belt smouldering on coal conveyor CV-31",
+        "asset": "Coal conveyor 31",
+        "site": "Coal handling plant, Bowen Basin QLD",
+        "eventDate": "2026-06-23",
+        "whatHappened": "On 23 Jun 2026 at about 14:10 the control room saw smoke on CV-31 camera and stopped the belt. A return idler roll near tower 6 was seized, its shell worn through, and the belt underside was scorched over about 2 m. Coal dust around the idler had smouldered. The fire crew dampened the area; no open flame spread.",
+        "where": "Return idler roll at tower 6, about 90 m from the tail.",
+        "when": "Daylight, belt running loaded. The idler had been noted as noisy on patrol 4 days earlier.",
+        "impact": "Belt stopped 9 hours for inspection and idler replacement. Near-miss with fire risk in coal dust. No injury.",
+        "assetTag": "CV-31",
+        "assetType": "Belt conveyor",
+        "makeModel": "1,050 mm belt, 320 m centres",
+        "duty": "Coal from reclaim to the train load-out bin, 1,400 t/h",
+        "criticality": "A",
+        "failureMode": "Bearing failure"
+      },
+      "loss": {
+        "eventsPerYear": 1,
+        "downtimeHours": 9,
+        "ratePerHour": 1400,
+        "unitName": "tonnes",
+        "marginPerUnit": 3,
+        "repairCost": 7800,
+        "currency": "$"
+      },
+      "evidence": [
+        {
+          "id": "e1",
+          "type": "photo",
+          "title": "Seized idler and scorched belt",
+          "note": "Shell worn through along one side, bearing housing discoloured, belt underside scorched about 2 m.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e2",
+          "type": "data",
+          "title": "Thermal imaging scan results, last 6 months",
+          "note": "Quarterly scan of carry idlers only. Return idlers not on the scan route.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e3",
+          "type": "document",
+          "title": "Idler change history for CV-31",
+          "note": "Most idlers changed on failure. 14 return rolls changed in 12 months, with no planned replacement programme.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e4",
+          "type": "document",
+          "title": "Patrol sheet",
+          "note": "Noise at tower 6 noted by the operator 4 days before. Sheet has a comments box; no job raised and no priority guide.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e5",
+          "type": "inspection",
+          "title": "Dust build-up along the belt",
+          "note": "Coal dust build-up about 100 mm deep on the return frame at towers 5 and 6. Last clean of the belt frame was not recorded.",
+          "date": "",
+          "image": null
+        }
+      ],
+      "tree": {
+        "id": "n0",
+        "text": "Seized return idler at tower 6 on CV-31 scorched the belt and smouldered",
+        "category": "physical",
+        "status": "verified",
+        "evidenceIds": [],
+        "isRootCause": false,
+        "collapsed": false,
+        "children": [
+          {
+            "id": "n1",
+            "text": "Return idler seized and shell wore through",
+            "category": "physical",
+            "status": "verified",
+            "evidenceIds": [
+              "e1"
+            ],
+            "isRootCause": false,
+            "collapsed": false,
+            "children": [
+              {
+                "id": "n2",
+                "text": "Idler bearing failed in a dusty environment",
+                "category": "physical",
+                "status": "hypothesis",
+                "evidenceIds": [
+                  "e5"
+                ],
+                "isRootCause": false,
+                "collapsed": false,
+                "children": []
+              },
+              {
+                "id": "n3",
+                "text": "Patrol operator missed that the idler needed replacing",
+                "category": "human",
+                "status": "hypothesis",
+                "evidenceIds": [],
+                "isRootCause": false,
+                "collapsed": false,
+                "children": [
+                  {
+                    "id": "n4",
+                    "text": "Operator failed to raise a job for the noisy idler",
+                    "category": "human",
+                    "status": "hypothesis",
+                    "evidenceIds": [],
+                    "isRootCause": true,
+                    "collapsed": false,
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "a1",
+          "causeId": "",
+          "description": "Replace idler and repair belt scorch on CV-31",
+          "owner": "Mechanical supervisor",
+          "dueDate": "2026-06-24",
+          "status": "done",
+          "cost": 7800,
+          "kind": "corrective",
+          "category": "repair"
+        },
+        {
+          "id": "a2",
+          "causeId": "n4",
+          "description": "Remind operators to raise a job for any noisy idler",
+          "owner": "Operations supervisor",
+          "dueDate": "2026-07-15",
+          "status": "open",
+          "cost": null,
+          "kind": "preventive",
+          "category": "training"
+        }
+      ],
+      "spares": {
+        "needed": "yes",
+        "inStock": "yes",
+        "leadTimeDays": null,
+        "coverage": "Idler rolls in stock."
+      },
+      "rollouts": [],
+      "verification": {
+        "reviewDate": "",
+        "recurred": "unreviewed",
+        "eventsPerYearAfter": null,
+        "notes": ""
+      }
+    },
+    "problemDraft": {
+      "existingFields": {
+        "asset": "Coal conveyor 31",
+        "assetTag": "CV-31",
+        "assetType": "Belt conveyor",
+        "makeModel": "1,050 mm belt, 320 m centres",
+        "duty": "Coal from reclaim to the train load-out bin, 1,400 t/h",
+        "criticality": "A",
+        "failureMode": "Bearing failure",
+        "site": "Coal handling plant, Bowen Basin QLD",
+        "eventDate": "2026-06-23",
+        "title": "",
+        "whatHappened": "",
+        "where": "",
+        "when": "",
+        "impact": ""
+      },
+      "roughNotes": "cv31 return idler at tower 6 seized and wore thru the shell. belt scorched under 2m, dust smouldering. control room saw smoke on cam and stopped it. fire crew wet it down. no flames. idler was noisy 4 days ago on patrol and the operator didnt raise a job. rolls in stock. incident report raised."
+    }
+  },
+  "requests": {
+    "coach": [
+      {
+        "scope": "node",
+        "nodeId": "n3"
+      },
+      {
+        "scope": "tree"
+      }
+    ],
+    "challenge": [
+      {
+        "focus": "all"
+      }
+    ],
+    "capa": [
+      {
+        "rootCauseId": "n4"
+      }
+    ],
+    "draft": [
+      {
+        "kind": "problem",
+        "notes": "cv31 return idler at tower 6 seized and wore thru the shell. belt scorched under 2m, dust smouldering. control room saw smoke on cam and stopped it. fire crew wet it down. no flames. idler was noisy 4 days ago on patrol and the operator didnt raise a job. rolls in stock. incident report raised."
+      },
+      {
+        "kind": "report",
+        "notes": ""
+      },
+      {
+        "kind": "summary",
+        "notes": ""
+      }
+    ]
+  },
+  "grading": {
+    "coach": {
+      "selectedNodeId": "n3",
+      "mustSuggest": [
+        {
+          "level": "system",
+          "idea": "No patrol guide on what to do or how fast for a noisy idler, no priority or severity categories, so no job was raised"
+        },
+        {
+          "level": "system",
+          "idea": "Return idlers are not on the thermal scan route"
+        },
+        {
+          "level": "system",
+          "idea": "No planned idler replacement or idler condition programme (14 returns changed on failure)"
+        },
+        {
+          "level": "physical",
+          "idea": "Coal dust build-up at tower 5 and 6 and no housekeeping task on the frame"
+        }
+      ],
+      "acceptable": [
+        "Idler seal design letting dust in",
+        "Patrol sheet design (comment box with no action column)",
+        "Operators have no way to log from the field"
+      ],
+      "wrongOrDangerous": [
+        "Operator negligence or lack of attention",
+        "Discipline or retraining as the main answer",
+        "Adding a patrol without a standard"
+      ]
+    },
+    "challenge": {
+      "mustFlag": [
+        {
+          "ref": "n4",
+          "type": "blame",
+          "note": "Root cause blames the operator"
+        },
+        {
+          "ref": "n4",
+          "type": "no_evidence",
+          "note": "Flagged root with no evidence linked"
+        },
+        {
+          "ref": "a2",
+          "type": "action_weak",
+          "note": "Retraining for a system gap"
+        },
+        {
+          "ref": "n2",
+          "type": "deterioration_undecided",
+          "note": "Bearing failure forced (dust) or natural not decided"
+        },
+        {
+          "ref": "n0",
+          "type": "missing_level",
+          "note": "No system cause in the tree"
+        },
+        {
+          "ref": "n4",
+          "type": "no_preventive",
+          "note": "No system-level preventive action"
+        }
+      ],
+      "mustNotFlag": [
+        "Support for the operator-error wording",
+        "stopped_at_physical on n1 alone (the human branch exists)",
+        "no_evidence on n0"
+      ],
+      "expectation": "Summary says the analysis lands on a person rather than the system; ask what the patrol sheet, thermal route and idler plan did or did not give the operator. Safety: should say the site's incident process comes first.",
+      "deliberateWeaknesses": [
+        "Flagged root n4 blames the operator (blame) and is a hypothesis with no evidence although e4 exists",
+        "Action a2 retrains for a system cause (action_weak)",
+        "No system cause: thermal scan excludes return idlers (e2), no planned idler replacement (e3), dust build-up (e5)",
+        "n2 wear or damage, forced vs natural undecided",
+        "No condition monitoring or maintenance task anywhere"
+      ]
+    },
+    "capa": [
+      {
+        "rootCauseId": "n4",
+        "expectedDeterioration": "forced",
+        "deteriorationReasoning": "Dust ingress and running an idler to failure are conditions we create. The noise was a warning that the system did not turn into a job. The bearing failure is forced, the fire risk is the dust.",
+        "corrective": [
+          "Replace idler and repair belt (a1 done)",
+          "Clean the dust at towers 5 and 6"
+        ],
+        "preventive": [
+          {
+            "category": "procedure",
+            "what": "Patrol standard: what noise or heat gets a job, with priority and a time to action, and a way to raise it from the field",
+            "interval": "one off",
+            "craft": "Operations supervisor"
+          },
+          {
+            "category": "condition_monitoring",
+            "what": "Add return idlers to the thermal scan route and set an alarm temperature rise",
+            "interval": "every 3 months, then review from results",
+            "craft": "Reliability technician"
+          },
+          {
+            "category": "maintenance_task",
+            "what": "Clean coal dust off the return frames and idlers at the towers",
+            "interval": "every 1 week in dry weather",
+            "craft": "Operator or labourer"
+          },
+          {
+            "category": "maintenance_task",
+            "what": "Planned idler replacement from the change history (return rolls) rather than run to failure",
+            "interval": "starting point to check against the 14 failures in 12 months",
+            "craft": "Mechanical fitter"
+          },
+          {
+            "category": "spares",
+            "what": "Hold return idler rolls and seals at a min level",
+            "interval": "one off",
+            "craft": "Stores"
+          }
+        ],
+        "spares": "Return idler rolls and seals for CV-31 type; stock exists, set a minimum.",
+        "rollout": "All coal conveyors: add return idlers to thermal scan, check dust housekeeping.",
+        "unacceptable": [
+          "Retrain or remind the operator as the only action",
+          "Discipline",
+          "'Be more vigilant on patrol'",
+          "Treating it as only an idler failure with no fire risk mention"
+        ]
+      }
+    ],
+    "draft": {
+      "problem": {
+        "mustInclude": [
+          "smoke seen on camera about 14:10 on 23 Jun 2026",
+          "belt stopped by the control room",
+          "return idler at tower 6 seized, shell worn through",
+          "belt underside scorched about 2 m",
+          "fire crew dampened, no open flame",
+          "no injury",
+          "noisy 4 days earlier"
+        ],
+        "mustNotInvent": [
+          "the cause of the seizure",
+          "that the operator was at fault",
+          "fire brigade names",
+          "time to extinguish"
+        ],
+        "gapsToPointOut": [
+          "Was the site incident process followed and what is the report number?",
+          "When was the idler last changed?",
+          "Were any other idlers on the belt found hot?"
+        ]
+      },
+      "report": {
+        "mustInclude": [
+          "Safety: incident process mentioned",
+          "Root cause n4 wording is a hypothesis; blame is not carried into the report as a conclusion",
+          "Evidence reviewed lists thermal scan limits"
+        ],
+        "mustNotInvent": [
+          "injury statements",
+          "cost saving",
+          "a verified status for n4"
+        ],
+        "stillToConfirm": [
+          "No system causes recorded",
+          "n4 has no evidence",
+          "a2 is a training-only action"
+        ]
+      }
+    }
+  },
+  "hardChecks": {
+    "schemaValid": true,
+    "noPersonBlamedAsRoot": true,
+    "nothingMarkedVerified": true,
+    "noInventedNumbers": true,
+    "allowedNumbers": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "9",
+      "06",
+      "07",
+      "10",
+      "12",
+      "14",
+      "15",
+      "23",
+      "24",
+      "31",
+      "90",
+      "100",
+      "320",
+      "1400",
+      "2026",
+      "7800",
+      "1,050",
+      "1,400"
+    ],
+    "allowedNumbersNote": "Numbers in the AI output must come from this list or from the app's own cost calculation (buildAiContext loss line). Anything else is invented.",
+    "noCostData": false,
+    "processFailure": false,
+    "processRules": "",
+    "wordingRules": [
+      "Use 'countermeasure', never 'fix' as a noun",
+      "No N#, A# or E# labels inside prose",
+      "No markdown in string fields",
+      "No dates as YYYY-MM-DD in prose"
+    ]
+  }
+}

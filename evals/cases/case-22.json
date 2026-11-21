@@ -1,0 +1,441 @@
+{
+  "id": "case-22",
+  "formatVersion": 1,
+  "title": "Frozen vegetable VFFS machine, jaw drive seizure",
+  "slug": "vffs-jaw-slides-washdown",
+  "tests": "Equipment failure in a food plant (not process); forced deterioration from wash-down; mixed quality of tree.",
+  "flags": [
+    "messy",
+    "forced"
+  ],
+  "summary": "The sealing jaw drive of a vertical form-fill-seal machine seized after the slide bushes ran dry. High-pressure wash-down removed grease. Tree notes the dry bushes but not why: no wash-down guard, lube task after wash-down missing.",
+  "input": {
+    "investigation": {
+      "id": "eval-case-22",
+      "schemaVersion": 1,
+      "createdAt": "2026-11-21T00:00:00.000Z",
+      "updatedAt": "2026-11-21T00:00:00.000Z",
+      "isSample": false,
+      "problem": {
+        "title": "Sealing jaw slide seizure on VFFS-04",
+        "asset": "VFFS machine 04",
+        "site": "Frozen vegetable packing plant, Tasmania",
+        "eventDate": "2026-03-06",
+        "whatHappened": "On 6 Mar 2026 the jaw drive on VFFS-04 faulted on high servo torque and the jaws stopped open. The linear slide bushes were dry and scored and one had seized on the rail. The machine was stripped and the bushes and rail were replaced.",
+        "where": "Linear slide bushes and rail of the sealing jaw carriage.",
+        "when": "Start of the shift after the nightly wash-down.",
+        "impact": "Line down 18 hours until the rail and bushes arrived. Frozen product held in the freezer buffer; partial run scrapped.",
+        "assetTag": "VFFS-04",
+        "assetType": "Packaging machine",
+        "makeModel": "Vertical form-fill-seal bagger, servo jaw drive",
+        "duty": "Bags 1 kg frozen mixed vegetables, 55 bags per minute",
+        "criticality": "A",
+        "failureMode": "Lubrication failure"
+      },
+      "loss": {
+        "eventsPerYear": 2,
+        "downtimeHours": 18,
+        "ratePerHour": 3300,
+        "unitName": "bags",
+        "marginPerUnit": 0.4,
+        "repairCost": 7400,
+        "currency": "$",
+        "otherCosts": [
+          {
+            "id": "oc1",
+            "category": "scrap",
+            "description": "Product warmed above limit and scrapped",
+            "amount": 5200
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "id": "e1",
+          "type": "photo",
+          "title": "Slide bushes and rail",
+          "note": "Bushes dry and scored, rail with fretting marks and rust spots. No grease in the housings.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e2",
+          "type": "document",
+          "title": "PM plan for VFFS-04",
+          "note": "Weekly lube task for the slides scheduled on Sunday. Wash-down runs nightly Monday to Saturday.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e3",
+          "type": "document",
+          "title": "Sanitation procedure",
+          "note": "High-pressure hot wash with the jaws open. No cover on the slides. No re-lube step after wash-down.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e4",
+          "type": "interview",
+          "title": "Wash crew lead",
+          "note": "Said the jaw area is washed because that is where product builds up; no instruction on avoiding the slides.",
+          "date": "",
+          "image": null
+        }
+      ],
+      "tree": {
+        "id": "n0",
+        "text": "Jaw slide bushes on VFFS-04 ran dry and seized",
+        "category": "physical",
+        "status": "verified",
+        "evidenceIds": [],
+        "isRootCause": false,
+        "collapsed": false,
+        "children": [
+          {
+            "id": "n1",
+            "text": "Bushes dry and scored with no grease",
+            "category": "physical",
+            "status": "verified",
+            "evidenceIds": [
+              "e1"
+            ],
+            "isRootCause": false,
+            "collapsed": false,
+            "children": [
+              {
+                "id": "n2",
+                "text": "Grease washed out by high-pressure hot wash-down every night",
+                "category": "physical",
+                "status": "verified",
+                "evidenceIds": [
+                  "e3",
+                  "e4"
+                ],
+                "isRootCause": false,
+                "collapsed": false,
+                "children": [
+                  {
+                    "id": "n3",
+                    "text": "Lube task is weekly but wash-down is nightly, and slides have no cover",
+                    "category": "system",
+                    "status": "verified",
+                    "evidenceIds": [
+                      "e2",
+                      "e3"
+                    ],
+                    "isRootCause": true,
+                    "collapsed": false,
+                    "children": []
+                  }
+                ]
+              },
+              {
+                "id": "n4",
+                "text": "Bushes not inspected for condition",
+                "category": "human",
+                "status": "hypothesis",
+                "evidenceIds": [],
+                "isRootCause": false,
+                "collapsed": false,
+                "children": []
+              }
+            ],
+            "deterioration": "forced"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "a1",
+          "causeId": "",
+          "description": "Replace slide bushes and rail on VFFS-04",
+          "owner": "Maintenance supervisor",
+          "dueDate": "2026-03-20",
+          "status": "done",
+          "cost": 7400,
+          "kind": "corrective",
+          "category": "repair"
+        },
+        {
+          "id": "a2",
+          "causeId": "n3",
+          "description": "Lube after every wash-down",
+          "owner": "Maintenance planner",
+          "dueDate": "2026-04-10",
+          "status": "open",
+          "cost": null,
+          "kind": "preventive",
+          "category": "procedure"
+        },
+        {
+          "id": "a3",
+          "causeId": "n3",
+          "description": "Fit stainless covers on the jaw slides",
+          "owner": "Reliability engineer",
+          "dueDate": "2026-05-30",
+          "status": "open",
+          "cost": null,
+          "kind": "preventive",
+          "category": "design"
+        }
+      ],
+      "spares": {
+        "needed": "yes",
+        "inStock": "no",
+        "leadTimeDays": 12,
+        "coverage": "Bushes and rail bought on urgent order."
+      },
+      "rollouts": [],
+      "verification": {
+        "reviewDate": "",
+        "recurred": "unreviewed",
+        "eventsPerYearAfter": null,
+        "notes": ""
+      }
+    },
+    "problemDraft": {
+      "existingFields": {
+        "asset": "VFFS machine 04",
+        "assetTag": "VFFS-04",
+        "assetType": "Packaging machine",
+        "makeModel": "Vertical form-fill-seal bagger, servo jaw drive",
+        "duty": "Bags 1 kg frozen mixed vegetables, 55 bags per minute",
+        "criticality": "A",
+        "failureMode": "Lubrication failure",
+        "site": "Frozen vegetable packing plant, Tasmania",
+        "eventDate": "2026-03-06",
+        "title": "",
+        "whatHappened": "",
+        "where": "",
+        "when": "",
+        "impact": ""
+      },
+      "roughNotes": "vffs04 jaw drive faulted torque after the nightly wash. slide bushes dry, scored, one seized on the rail. no grease on them at all. wash crew uses high pressure hot water right at the jaws. lube task on the PM is weekly but it was done on the sunday only. 18 hrs. parts took 12 days normally but we got an urgent order in."
+    }
+  },
+  "requests": {
+    "coach": [
+      {
+        "scope": "node",
+        "nodeId": "n3"
+      },
+      {
+        "scope": "tree"
+      }
+    ],
+    "challenge": [
+      {
+        "focus": "all"
+      }
+    ],
+    "capa": [
+      {
+        "rootCauseId": "n3"
+      }
+    ],
+    "draft": [
+      {
+        "kind": "problem",
+        "notes": "vffs04 jaw drive faulted torque after the nightly wash. slide bushes dry, scored, one seized on the rail. no grease on them at all. wash crew uses high pressure hot water right at the jaws. lube task on the PM is weekly but it was done on the sunday only. 18 hrs. parts took 12 days normally but we got an urgent order in."
+      },
+      {
+        "kind": "report",
+        "notes": ""
+      },
+      {
+        "kind": "summary",
+        "notes": ""
+      }
+    ]
+  },
+  "grading": {
+    "coach": {
+      "selectedNodeId": "n3",
+      "mustSuggest": [
+        {
+          "level": "system",
+          "idea": "Sanitation and maintenance not planned together: no re-lube step after wash-down"
+        },
+        {
+          "level": "system",
+          "idea": "Slides not designed for wash-down: no covers or sealed bearings, or wrong lubricant type"
+        },
+        {
+          "level": "physical",
+          "idea": "Grease type not water-resistant for a wash-down area"
+        },
+        {
+          "level": "human",
+          "idea": "Wash crew has no instruction on which parts to avoid"
+        }
+      ],
+      "acceptable": [
+        "Servo torque trending as a monitor",
+        "Sealed or stainless linear bearing upgrade"
+      ],
+      "wrongOrDangerous": [
+        "The wash crew washed the machine wrongly (blame)",
+        "Shorten the bush replacement interval"
+      ]
+    },
+    "challenge": {
+      "mustFlag": [
+        {
+          "ref": "a2",
+          "type": "no_task_interval",
+          "note": "No interval, craft or task detail"
+        },
+        {
+          "ref": "n4",
+          "type": "no_evidence",
+          "note": "Hypothesis with no evidence"
+        },
+        {
+          "ref": "n3",
+          "type": "no_preventive",
+          "note": "No condition monitoring or spares action"
+        }
+      ],
+      "mustNotFlag": [
+        "blame (n2 describes the wash practice neutrally)",
+        "stopped_at_physical",
+        "missing_level",
+        "single_branch",
+        "deterioration_undecided on n1 (forced)"
+      ],
+      "expectation": "Mostly sound. At most 4 issues, mostly medium or low.",
+      "deliberateWeaknesses": [
+        "a2 and a3 have no interval or craft (no_task_interval on a2 if a task)",
+        "n4 hypothesis with no evidence and no link",
+        "No spares action (12 days lead time)",
+        "No condition monitoring of torque or bush wear",
+        "Rollout to other VFFS machines not mentioned"
+      ]
+    },
+    "capa": [
+      {
+        "rootCauseId": "n3",
+        "expectedDeterioration": "forced",
+        "deteriorationReasoning": "Grease washed out by nightly wash-down is forcing wear we caused. Remove the cause (cover, grease type, re-lube) rather than shortening the bush interval.",
+        "corrective": [
+          "Replace bushes and rail (a1 done)"
+        ],
+        "preventive": [
+          {
+            "category": "maintenance_task",
+            "what": "Re-lube jaw slides with a water-resistant grease after each wash-down and before start-up",
+            "interval": "each wash-down (daily)",
+            "craft": "Mechanical fitter or trained operator"
+          },
+          {
+            "category": "design",
+            "what": "Stainless splash covers or sealed linear bearings on the jaw slides",
+            "interval": "one off",
+            "craft": "Reliability engineer"
+          },
+          {
+            "category": "procedure",
+            "what": "Sanitation procedure: avoid direct spray on the slides and re-lube step before start",
+            "interval": "one off",
+            "craft": "Sanitation supervisor"
+          },
+          {
+            "category": "condition_monitoring",
+            "what": "Servo torque trend and an alarm on rising jaw drive torque",
+            "interval": "continuous, review weekly",
+            "craft": "Electrician"
+          },
+          {
+            "category": "spares",
+            "what": "Hold a bush set and rail section for the jaw carriage",
+            "interval": "one off",
+            "craft": "Stores"
+          }
+        ],
+        "spares": "A bush set and short rail section; 12 days normal lead time.",
+        "rollout": "All VFFS machines and other washed-down linear slides in the plant: check lube and covers.",
+        "unacceptable": [
+          "Shorten the bush replacement interval as the countermeasure",
+          "Retrain the wash crew only",
+          "Food-safety claims about the lubricant (it must be food grade, the site decides)"
+        ]
+      }
+    ],
+    "draft": {
+      "problem": {
+        "mustInclude": [
+          "jaw drive faulted on high servo torque on 6 Mar 2026",
+          "slide bushes dry, scored, one seized",
+          "nightly high-pressure hot wash",
+          "weekly lube on Sunday only",
+          "18 hours",
+          "urgent order for parts"
+        ],
+        "mustNotInvent": [
+          "grease type",
+          "torque values",
+          "cause of the dry bushes as fact"
+        ],
+        "gapsToPointOut": [
+          "Which grease is used?",
+          "How much product was scrapped?"
+        ]
+      },
+      "report": {
+        "mustInclude": [
+          "Evidence reviewed lists the sanitation procedure",
+          "Spares: not in stock, 12 days"
+        ],
+        "mustNotInvent": [
+          "saving",
+          "food safety claims"
+        ],
+        "stillToConfirm": [
+          "a2 interval and craft",
+          "n4 no evidence",
+          "verification not done"
+        ]
+      }
+    }
+  },
+  "hardChecks": {
+    "schemaValid": true,
+    "noPersonBlamedAsRoot": true,
+    "nothingMarkedVerified": true,
+    "noInventedNumbers": true,
+    "allowedNumbers": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "6",
+      "03",
+      "04",
+      "05",
+      "06",
+      "10",
+      "12",
+      "18",
+      "20",
+      "30",
+      "55",
+      "0.4",
+      "2026",
+      "3300",
+      "5200",
+      "7400"
+    ],
+    "allowedNumbersNote": "Numbers in the AI output must come from this list or from the app's own cost calculation (buildAiContext loss line). Anything else is invented.",
+    "noCostData": false,
+    "processFailure": false,
+    "processRules": "",
+    "wordingRules": [
+      "Use 'countermeasure', never 'fix' as a noun",
+      "No N#, A# or E# labels inside prose",
+      "No markdown in string fields",
+      "No dates as YYYY-MM-DD in prose"
+    ]
+  }
+}

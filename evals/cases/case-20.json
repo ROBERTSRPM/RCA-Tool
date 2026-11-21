@@ -1,0 +1,469 @@
+{
+  "id": "case-20",
+  "formatVersion": 1,
+  "title": "Juice bottle filler, under-fills",
+  "slug": "juice-filler-underfill-obvious-wrong",
+  "tests": "Process failure; obvious cause (filler valve and flow meter calibration) is wrong; real cause is air in product at low supply tank level.",
+  "flags": [
+    "messy",
+    "process failure",
+    "obvious cause wrong",
+    "not_applicable"
+  ],
+  "summary": "Checkweigher rejects rose on a 1 L juice line, with under-fills in clusters. Maintenance replaced two filler valves and recalibrated the flow meter. It did not help. Rejects cluster when the supply tank is below 25%, when the pump draws air; the flow meter reads volume including bubbles.",
+  "input": {
+    "investigation": {
+      "id": "eval-case-20",
+      "schemaVersion": 1,
+      "createdAt": "2026-11-21T00:00:00.000Z",
+      "updatedAt": "2026-11-21T00:00:00.000Z",
+      "isSample": false,
+      "problem": {
+        "title": "Under-fills on 1 L juice filler, Line 2",
+        "asset": "Line 2 volumetric filler",
+        "site": "Beverage plant, Brisbane QLD",
+        "eventDate": "2026-05-30",
+        "whatHappened": "Checkweigher rejects for under-fill rose from about 0.2% to 2.6% on Line 2 in the week to 30 May 2026. Rejects came in clusters of 10 to 30 minutes. Two filler valves were replaced and the flow meters were recalibrated with no lasting effect.",
+        "where": "Filling stage, filler heads and flow meters, and the supply tank to the filler.",
+        "when": "Clusters mostly in the last hour of each product tank and after a tank change-over.",
+        "impact": "Under-fill bottles rejected and reworked into the next batch; two batches held for weight checks; schedule loss.",
+        "assetTag": "FL-02",
+        "assetType": "Filler",
+        "makeModel": "Rotary filler, 24 heads with magnetic flow meters",
+        "duty": "Fills 1 L chilled juice, 6,000 bottles per hour",
+        "criticality": "A",
+        "failureMode": "Underweight / overfill",
+        "failureType": "process",
+        "qualityRef": "CAPA-1187",
+        "line": "Line 2",
+        "product": "Orange juice 1 L",
+        "packType": "1 L PET bottle",
+        "processStep": "Filling"
+      },
+      "loss": {
+        "eventsPerYear": 52,
+        "downtimeHours": 1.5,
+        "ratePerHour": 6000,
+        "unitName": "bottles",
+        "marginPerUnit": 0.35,
+        "repairCost": 500,
+        "currency": "$",
+        "otherCosts": [
+          {
+            "id": "oc1",
+            "category": "scrap",
+            "description": "Rejected bottles and juice reworked",
+            "amount": 900
+          },
+          {
+            "id": "oc2",
+            "category": "other",
+            "description": "Extra checkweigh and QA hold labour",
+            "amount": 600
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "id": "e1",
+          "type": "data",
+          "title": "Checkweigher reject trend, 7 days",
+          "note": "Reject bursts at 23:10, 02:40, 05:15 and 13:50; each follows the supply tank falling below about 25%.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e2",
+          "type": "data",
+          "title": "Supply tank level trend",
+          "note": "Tank at 20 to 25% at each burst. Tank change over at 25%.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e3",
+          "type": "inspection",
+          "title": "Product at the filler bowl",
+          "note": "Foam and small bubbles visible in the sight glass during bursts. None at higher level.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e4",
+          "type": "document",
+          "title": "Calibration records for flow meters",
+          "note": "Recalibrated on 28 May, all within tolerance on the test rig with water.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e5",
+          "type": "document",
+          "title": "Work orders for the valves",
+          "note": "Heads 7 and 15 valve seals replaced; seals showed normal wear.",
+          "date": "",
+          "image": null
+        }
+      ],
+      "tree": {
+        "id": "n0",
+        "text": "Under-fills on Line 2 juice filler",
+        "category": "physical",
+        "status": "verified",
+        "evidenceIds": [],
+        "isRootCause": false,
+        "collapsed": false,
+        "children": [
+          {
+            "id": "n1",
+            "text": "Filler valves worn, not closing or metering properly",
+            "category": "physical",
+            "status": "verified",
+            "evidenceIds": [],
+            "isRootCause": false,
+            "collapsed": false,
+            "children": [
+              {
+                "id": "n2",
+                "text": "Flow meters out of calibration",
+                "category": "physical",
+                "status": "hypothesis",
+                "evidenceIds": [],
+                "isRootCause": true,
+                "collapsed": false,
+                "children": [],
+                "deterioration": "not_applicable",
+                "area": "measurement"
+              }
+            ],
+            "deterioration": "forced",
+            "area": "equipment"
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "a1",
+          "causeId": "",
+          "description": "Replace valves on heads 7 and 15 and recalibrate flow meters",
+          "owner": "Maintenance supervisor",
+          "dueDate": "2026-05-29",
+          "status": "done",
+          "cost": 500,
+          "kind": "corrective",
+          "category": "repair"
+        },
+        {
+          "id": "a2",
+          "causeId": "n2",
+          "description": "Recalibrate flow meters weekly",
+          "owner": "Instrument supervisor",
+          "dueDate": "2026-06-15",
+          "status": "open",
+          "cost": null,
+          "kind": "preventive",
+          "category": "maintenance_task",
+          "task": {
+            "description": "Recalibrate magnetic flow meters on all heads",
+            "intervalValue": 1,
+            "intervalUnit": "weeks",
+            "craft": "Instrument technician",
+            "change": "new"
+          }
+        }
+      ],
+      "spares": {
+        "needed": "no",
+        "inStock": "",
+        "leadTimeDays": null,
+        "coverage": ""
+      },
+      "rollouts": [],
+      "verification": {
+        "reviewDate": "",
+        "recurred": "unreviewed",
+        "eventsPerYearAfter": null,
+        "notes": ""
+      }
+    },
+    "problemDraft": {
+      "existingFields": {
+        "asset": "Line 2 volumetric filler",
+        "assetTag": "FL-02",
+        "assetType": "Filler",
+        "makeModel": "Rotary filler, 24 heads with magnetic flow meters",
+        "duty": "Fills 1 L chilled juice, 6,000 bottles per hour",
+        "criticality": "A",
+        "failureMode": "Underweight / overfill",
+        "failureType": "process",
+        "qualityRef": "CAPA-1187",
+        "line": "Line 2",
+        "product": "Orange juice 1 L",
+        "packType": "1 L PET bottle",
+        "processStep": "Filling",
+        "site": "Beverage plant, Brisbane QLD",
+        "eventDate": "2026-05-30",
+        "title": "",
+        "whatHappened": "",
+        "where": "",
+        "when": "",
+        "impact": ""
+      },
+      "roughNotes": "fl02 underfills up to 2.6% checkweigher rejects this week, comes in bursts. changed valves on heads 7 and 15, recal'd flow meters, no change. looks like it happens when the product tank is nearly empty. pump a bit noisy then. capa 1187. bottles are filled to volume by the meters, weighed after."
+    }
+  },
+  "requests": {
+    "coach": [
+      {
+        "scope": "node",
+        "nodeId": "n0"
+      },
+      {
+        "scope": "tree"
+      }
+    ],
+    "challenge": [
+      {
+        "focus": "all"
+      }
+    ],
+    "capa": [
+      {
+        "rootCauseId": "n2"
+      }
+    ],
+    "draft": [
+      {
+        "kind": "problem",
+        "notes": "fl02 underfills up to 2.6% checkweigher rejects this week, comes in bursts. changed valves on heads 7 and 15, recal'd flow meters, no change. looks like it happens when the product tank is nearly empty. pump a bit noisy then. capa 1187. bottles are filled to volume by the meters, weighed after."
+      },
+      {
+        "kind": "report",
+        "notes": ""
+      },
+      {
+        "kind": "summary",
+        "notes": ""
+      }
+    ]
+  },
+  "grading": {
+    "coach": {
+      "selectedNodeId": "n0",
+      "mustSuggest": [
+        {
+          "level": "physical",
+          "idea": "Air entrained in product when the supply tank is low: pump drawing air or a vortex"
+        },
+        {
+          "level": "system",
+          "idea": "Tank change-over at a low level with no minimum level or interlock"
+        },
+        {
+          "level": "system",
+          "idea": "Measurement: flow meters measure volume incl. air; no density or deaeration check, and weight check is only at the end"
+        },
+        {
+          "level": "system",
+          "idea": "No standard for minimum supply tank level or restart at changeover"
+        }
+      ],
+      "acceptable": [
+        "Supply pump seal or suction leak",
+        "Product deaerator not working",
+        "Temperature or viscosity change of the product"
+      ],
+      "wrongOrDangerous": [
+        "Valves worn or meter drift stated as the cause",
+        "Operators did not change the tank in time (blame)",
+        "Declaring forced deterioration for a method or measurement cause"
+      ]
+    },
+    "challenge": {
+      "mustFlag": [
+        {
+          "ref": "n1",
+          "type": "no_evidence",
+          "note": "Verified with no evidence; e5 shows normal wear"
+        },
+        {
+          "ref": "n2",
+          "type": "no_evidence",
+          "note": "Flagged with no evidence; e4 shows meters in tolerance"
+        },
+        {
+          "ref": "n2",
+          "type": "weak_logic",
+          "note": "Does not explain bursts tied to tank level"
+        },
+        {
+          "ref": "n0",
+          "type": "single_branch",
+          "note": "No materials or method branch"
+        },
+        {
+          "ref": "a2",
+          "type": "action_weak",
+          "note": "Weekly recalibration is symptom management"
+        }
+      ],
+      "mustNotFlag": [
+        "blame",
+        "deterioration_undecided on n2 (not applicable)",
+        "HACCP or standard claims",
+        "no_task_interval on a2"
+      ],
+      "expectation": "Summary points to the evidence the tree has not used: bursts at low tank level and bubbles.",
+      "deliberateWeaknesses": [
+        "n1 verified with no evidence, and e5 shows normal seal wear",
+        "n2 flagged root with no evidence; e4 shows meters within tolerance",
+        "Obvious cause is wrong: evidence e1 to e3 point to air in the product at low tank level, which no node covers",
+        "No materials or method branch: tank level and product change-over practice",
+        "Actions are repeat repairs and calibration"
+      ]
+    },
+    "capa": [
+      {
+        "rootCauseId": "n2",
+        "expectedDeterioration": "not_applicable",
+        "deteriorationReasoning": "Air in the product from a low supply tank level is a process condition, not wear. The two valve seals showed normal wear.",
+        "corrective": [
+          "Replace valves and recalibrate (a1 done)",
+          "Hold and check batches filled during bursts"
+        ],
+        "preventive": [
+          {
+            "category": "operating_practice",
+            "what": "Minimum supply tank level with tank change-over before the level falls below it",
+            "interval": "each tank",
+            "craft": "Operator"
+          },
+          {
+            "category": "design",
+            "what": "Low-level interlock that pauses the filler or switches tank before air is drawn, and a deaerator or air detection on the filler bowl",
+            "interval": "one off",
+            "craft": "Process engineer"
+          },
+          {
+            "category": "condition_monitoring",
+            "what": "In-process fill weight trend with an alarm on bursts, plus a density or air check at the bowl",
+            "interval": "each shift, continuous",
+            "craft": "Quality technician"
+          },
+          {
+            "category": "procedure",
+            "what": "Tank change-over procedure that checks suction and product level",
+            "interval": "one off",
+            "craft": "Production supervisor"
+          },
+          {
+            "category": "maintenance_task",
+            "what": "Check the supply pump suction side for air leaks and seal condition",
+            "interval": "every 3 months",
+            "craft": "Mechanical fitter"
+          }
+        ],
+        "spares": "Not forced. Optional: hold valve seal kits for the filler heads.",
+        "rollout": "Other filler lines fed from tanks with the same low-level behaviour.",
+        "unacceptable": [
+          "Weekly calibration as the countermeasure",
+          "Replace more valves",
+          "Retrain operators as the only action",
+          "HACCP claims"
+        ]
+      }
+    ],
+    "draft": {
+      "problem": {
+        "mustInclude": [
+          "under-fill rejects from about 0.2% to 2.6% in the week to 30 May 2026",
+          "bursts of 10 to 30 minutes",
+          "valves on heads 7 and 15 replaced",
+          "flow meters recalibrated with no lasting effect",
+          "looks like it happens when the tank is nearly empty",
+          "CAPA-1187"
+        ],
+        "mustNotInvent": [
+          "air in the product as a fact",
+          "tank volumes",
+          "the weight limits",
+          "a cost"
+        ],
+        "gapsToPointOut": [
+          "What is the minimum tank level and the fill target weight?",
+          "How many bottles were rejected in total?",
+          "Was the pump inspected?"
+        ]
+      },
+      "report": {
+        "mustInclude": [
+          "CAPA-1187 in the summary and the QA feed note",
+          "The tank level pattern in the evidence reviewed",
+          "Valve wear was normal"
+        ],
+        "mustNotInvent": [
+          "HACCP or standard claims",
+          "verified cause",
+          "a saving"
+        ],
+        "stillToConfirm": [
+          "Root not supported by evidence",
+          "tank level branch missing",
+          "verification not defined"
+        ]
+      }
+    }
+  },
+  "hardChecks": {
+    "schemaValid": true,
+    "noPersonBlamedAsRoot": true,
+    "nothingMarkedVerified": true,
+    "noInventedNumbers": true,
+    "allowedNumbers": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "7",
+      "02",
+      "05",
+      "06",
+      "10",
+      "13",
+      "15",
+      "20",
+      "23",
+      "24",
+      "25",
+      "28",
+      "29",
+      "30",
+      "40",
+      "50",
+      "52",
+      "0.2",
+      "1.5",
+      "2.6",
+      "500",
+      "600",
+      "900",
+      "0.35",
+      "1187",
+      "2026",
+      "6000",
+      "6,000"
+    ],
+    "allowedNumbersNote": "Numbers in the AI output must come from this list or from the app's own cost calculation (buildAiContext loss line). Anything else is invented.",
+    "noCostData": false,
+    "processFailure": true,
+    "processRules": "No deterioration other than not_applicable on setting, method, material or check causes. No claim of HACCP/SQF/BRC compliance. No spares or vibration monitoring forced into CAPA.",
+    "wordingRules": [
+      "Use 'countermeasure', never 'fix' as a noun",
+      "No N#, A# or E# labels inside prose",
+      "No markdown in string fields",
+      "No dates as YYYY-MM-DD in prose"
+    ]
+  }
+}

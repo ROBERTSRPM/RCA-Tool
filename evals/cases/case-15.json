@@ -1,0 +1,417 @@
+{
+  "id": "case-15",
+  "formatVersion": 1,
+  "title": "Baghouse ID fan, vibration trips from build-up on impeller",
+  "slug": "id-fan-imbalance-buildup",
+  "tests": "Messy multi-cause; forced; wet feed and bag leak competing explanations.",
+  "flags": [
+    "messy",
+    "forced"
+  ],
+  "summary": "Cement plant baghouse ID fan tripped on high vibration four times in a month. Impeller blades had uneven dust build-up. Candidates: wet raw material, a leaking bag row, low gas temperature dew-point. The tree has two plausible branches but the root is a single physical statement.",
+  "input": {
+    "investigation": {
+      "id": "eval-case-15",
+      "schemaVersion": 1,
+      "createdAt": "2026-11-21T00:00:00.000Z",
+      "updatedAt": "2026-11-21T00:00:00.000Z",
+      "isSample": false,
+      "problem": {
+        "title": "High vibration trips on baghouse ID fan F-402",
+        "asset": "Baghouse ID fan 402",
+        "site": "Cement plant, raw mill area, Hunter Valley NSW",
+        "eventDate": "2026-03-11",
+        "whatHappened": "F-402 tripped on high vibration four times between 10 Feb and 11 Mar 2026. Each time the impeller was found with an uneven crust of dust on several blades, which was chipped off. Vibration returned within a week.",
+        "where": "Impeller blades and housing of F-402.",
+        "when": "Worse after wet weather and after raw mill restarts.",
+        "impact": "Raw mill stopped for 3 to 6 hours on each trip, about 4.5 h average, and kiln feed reduced.",
+        "assetTag": "F-402",
+        "assetType": "Fan/blower",
+        "makeModel": "Backward-curved centrifugal, 355 kW, VSD",
+        "duty": "Kiln raw mill baghouse induced draught, continuous",
+        "criticality": "A",
+        "failureMode": "Other"
+      },
+      "loss": {
+        "eventsPerYear": 12,
+        "downtimeHours": 4.5,
+        "ratePerHour": 190,
+        "unitName": "tonnes of raw meal",
+        "marginPerUnit": 8,
+        "repairCost": 2400,
+        "currency": "$"
+      },
+      "evidence": [
+        {
+          "id": "e1",
+          "type": "photo",
+          "title": "Impeller build-up",
+          "note": "Uneven crust, up to 25 mm thick, on 5 of 12 blades. Material hard and damp when chipped.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e2",
+          "type": "data",
+          "title": "Baghouse inlet gas temperature trend",
+          "note": "Inlet drops to about 85 C at raw mill restarts; no preheat on the baghouse.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e3",
+          "type": "data",
+          "title": "Fan vibration trend",
+          "note": "Vibration rises slowly over 5 to 7 days then trips; 1x component dominates.",
+          "date": "",
+          "image": null
+        },
+        {
+          "id": "e4",
+          "type": "data",
+          "title": "Baghouse differential pressure",
+          "note": "Rising over the month; two compartments isolated for bag leaks not yet repaired.",
+          "date": "",
+          "image": null
+        }
+      ],
+      "tree": {
+        "id": "n0",
+        "text": "Baghouse ID fan F-402 trips on high vibration",
+        "category": "physical",
+        "status": "verified",
+        "evidenceIds": [],
+        "isRootCause": false,
+        "collapsed": false,
+        "children": [
+          {
+            "id": "n1",
+            "text": "Uneven dust build-up on impeller blades unbalances the fan",
+            "category": "physical",
+            "status": "verified",
+            "evidenceIds": [
+              "e1",
+              "e3"
+            ],
+            "isRootCause": false,
+            "collapsed": false,
+            "children": [
+              {
+                "id": "n2",
+                "text": "Damp dust sticks to the blades",
+                "category": "physical",
+                "status": "hypothesis",
+                "evidenceIds": [
+                  "e1"
+                ],
+                "isRootCause": true,
+                "collapsed": false,
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      "actions": [
+        {
+          "id": "a1",
+          "causeId": "",
+          "description": "Clean impeller and rebalance F-402",
+          "owner": "Mechanical supervisor",
+          "dueDate": "2026-03-11",
+          "status": "done",
+          "cost": 2400,
+          "kind": "corrective",
+          "category": "repair"
+        },
+        {
+          "id": "a2",
+          "causeId": "n2",
+          "description": "Clean the impeller every 2 weeks",
+          "owner": "Maintenance planner",
+          "dueDate": "2026-04-01",
+          "status": "open",
+          "cost": null,
+          "kind": "preventive",
+          "category": "maintenance_task",
+          "task": {
+            "description": "Clean impeller",
+            "intervalValue": 2,
+            "intervalUnit": "weeks",
+            "craft": "Mechanical fitter",
+            "change": "new"
+          }
+        }
+      ],
+      "spares": {
+        "needed": "no",
+        "inStock": "",
+        "leadTimeDays": null,
+        "coverage": ""
+      },
+      "rollouts": [],
+      "verification": {
+        "reviewDate": "",
+        "recurred": "unreviewed",
+        "eventsPerYearAfter": null,
+        "notes": ""
+      }
+    },
+    "problemDraft": {
+      "existingFields": {
+        "asset": "Baghouse ID fan 402",
+        "assetTag": "F-402",
+        "assetType": "Fan/blower",
+        "makeModel": "Backward-curved centrifugal, 355 kW, VSD",
+        "duty": "Kiln raw mill baghouse induced draught, continuous",
+        "criticality": "A",
+        "failureMode": "Other",
+        "site": "Cement plant, raw mill area, Hunter Valley NSW",
+        "eventDate": "2026-03-11",
+        "title": "",
+        "whatHappened": "",
+        "where": "",
+        "when": "",
+        "impact": ""
+      },
+      "roughNotes": "f402 high vib trip again, 4th time since 10 feb. impeller had crust on some blades, chipped it off, ok for a week. worse after rain and after raw mill restart. gas temp at the baghouse inlet goes low sometimes. bag differential pressure a bit high. no idea."
+    }
+  },
+  "requests": {
+    "coach": [
+      {
+        "scope": "node",
+        "nodeId": "n2"
+      },
+      {
+        "scope": "tree"
+      }
+    ],
+    "challenge": [
+      {
+        "focus": "all"
+      }
+    ],
+    "capa": [
+      {
+        "rootCauseId": "n2"
+      }
+    ],
+    "draft": [
+      {
+        "kind": "problem",
+        "notes": "f402 high vib trip again, 4th time since 10 feb. impeller had crust on some blades, chipped it off, ok for a week. worse after rain and after raw mill restart. gas temp at the baghouse inlet goes low sometimes. bag differential pressure a bit high. no idea."
+      },
+      {
+        "kind": "report",
+        "notes": ""
+      },
+      {
+        "kind": "summary",
+        "notes": ""
+      }
+    ]
+  },
+  "grading": {
+    "coach": {
+      "selectedNodeId": "n2",
+      "mustSuggest": [
+        {
+          "level": "physical",
+          "idea": "Gas temperature falling below the dew point at the baghouse inlet at raw mill restarts"
+        },
+        {
+          "level": "physical",
+          "idea": "Wet raw material or ingress of moisture"
+        },
+        {
+          "level": "physical",
+          "idea": "Leaking bags and rising differential pressure putting more dust through the fan"
+        },
+        {
+          "level": "system",
+          "idea": "No heating or preheat procedure at restart, and no alarm on low inlet temperature"
+        },
+        {
+          "level": "system",
+          "idea": "Bag leaks identified but repair not prioritised"
+        }
+      ],
+      "acceptable": [
+        "Fan inlet damper or gas path design",
+        "Hopper level and dust removal"
+      ],
+      "wrongOrDangerous": [
+        "Operator restarted too fast (blame)",
+        "Rebalance the fan more often as the answer"
+      ]
+    },
+    "challenge": {
+      "mustFlag": [
+        {
+          "ref": "n2",
+          "type": "stopped_at_physical",
+          "note": "No human or system cause"
+        },
+        {
+          "ref": "n2",
+          "type": "unverified_root",
+          "note": "Action planned on a hypothesis"
+        },
+        {
+          "ref": "n1",
+          "type": "deterioration_undecided",
+          "note": "Build-up is forced but not tagged"
+        },
+        {
+          "ref": "a2",
+          "type": "action_weak",
+          "note": "Cleaning every 2 weeks is symptom management"
+        },
+        {
+          "ref": "n0",
+          "type": "single_branch",
+          "note": "Gas temperature and bag leak branches missing"
+        }
+      ],
+      "mustNotFlag": [
+        "blame",
+        "no_task_interval on a2 (2 weeks, craft set)",
+        "no_evidence on n0"
+      ],
+      "expectation": "Questions: dew point, bag condition, restart sequence. Do not criticise a2's interval.",
+      "deliberateWeaknesses": [
+        "Root n2 is physical, no source of the moisture (wet material, low gas temp, bag leaks) and no human or system cause",
+        "Branch of gas temperature (e2) and bags (e4) not in the tree",
+        "Deterioration type not decided on n1",
+        "Cleaning every 2 weeks is a symptom response, not a countermeasure",
+        "unverified root with an action planned"
+      ]
+    },
+    "capa": [
+      {
+        "rootCauseId": "n2",
+        "expectedDeterioration": "forced",
+        "deteriorationReasoning": "Dust sticking to the blades comes from damp gas and bag leaks, conditions we allow. It is not normal wear.",
+        "corrective": [
+          "Clean and rebalance (a1 done)"
+        ],
+        "preventive": [
+          {
+            "category": "operating_practice",
+            "what": "Preheat or hold baghouse inlet gas temperature above a set limit before restarting the raw mill",
+            "interval": "each restart",
+            "craft": "Operations supervisor"
+          },
+          {
+            "category": "condition_monitoring",
+            "what": "Baghouse inlet temperature low alarm and differential pressure trend with limits",
+            "interval": "continuous, review monthly",
+            "craft": "Instrument technician"
+          },
+          {
+            "category": "maintenance_task",
+            "what": "Repair leaking bag rows within a set time and replace bags",
+            "interval": "next planned stop and each leak",
+            "craft": "Mechanical fitter"
+          },
+          {
+            "category": "condition_monitoring",
+            "what": "Fan vibration trend with a review of the 1x trend",
+            "interval": "every 1 week",
+            "craft": "Reliability technician"
+          },
+          {
+            "category": "spares",
+            "what": "Hold a spare impeller or a refurbished rotor for F-402",
+            "interval": "one off",
+            "craft": "Stores"
+          }
+        ],
+        "spares": "Spare impeller or rotor for F-402; none held now.",
+        "rollout": "Other baghouse fans on raw mill and kiln: check temperature at restarts and vibration trends.",
+        "unacceptable": [
+          "Only 'clean more often'",
+          "Shorten rebalancing intervals",
+          "Retrain operators"
+        ]
+      }
+    ],
+    "draft": {
+      "problem": {
+        "mustInclude": [
+          "F-402 tripped on high vibration four times between 10 Feb and 11 Mar 2026",
+          "crust on blades",
+          "chipped off",
+          "worse after rain and restarts",
+          "low inlet gas temperature",
+          "differential pressure high"
+        ],
+        "mustNotInvent": [
+          "85 C unless it is in the evidence (it is not in the notes)",
+          "cause of the build-up",
+          "raw material moisture"
+        ],
+        "gapsToPointOut": [
+          "What was the gas temperature at each trip?",
+          "Which compartments have bag leaks?"
+        ]
+      },
+      "report": {
+        "mustInclude": [
+          "Causes as hypotheses where unverified",
+          "Spares: none noted"
+        ],
+        "mustNotInvent": [
+          "verified root",
+          "saving"
+        ],
+        "stillToConfirm": [
+          "Moisture source not established",
+          "no human or system cause"
+        ]
+      }
+    }
+  },
+  "hardChecks": {
+    "schemaValid": true,
+    "noPersonBlamedAsRoot": true,
+    "nothingMarkedVerified": true,
+    "noInventedNumbers": true,
+    "allowedNumbers": [
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "01",
+      "03",
+      "04",
+      "10",
+      "11",
+      "12",
+      "25",
+      "85",
+      "190",
+      "355",
+      "4.5",
+      "402",
+      "2026",
+      "2400"
+    ],
+    "allowedNumbersNote": "Numbers in the AI output must come from this list or from the app's own cost calculation (buildAiContext loss line). Anything else is invented.",
+    "noCostData": false,
+    "processFailure": false,
+    "processRules": "",
+    "wordingRules": [
+      "Use 'countermeasure', never 'fix' as a noun",
+      "No N#, A# or E# labels inside prose",
+      "No markdown in string fields",
+      "No dates as YYYY-MM-DD in prose"
+    ]
+  }
+}
