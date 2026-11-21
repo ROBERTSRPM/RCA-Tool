@@ -86,7 +86,7 @@ async function s6() {
   await c.item("r-lost", page.getByText("Lost production per event", { exact: true }).first(), { kind: "row", pad: 6, hold: 2.2 });
   // "At 45 cents a pack, that's $10,800 of lost margin"
   await typeItem("f-margin", lab("Margin per unit"), D.LOSS.margin);
-  await c.item("r-opp", page.getByText("Opportunity loss", { exact: true }).first(), { kind: "row", pad: 6, hold: 2.2 });
+  await c.item("r-opp", page.getByText("Lost margin", { exact: true }).first(), { kind: "row", pad: 6, hold: 2.2 });
   // "Then there's the cash. There's the $1,200 call-out"
   await typeItem("f-repair", lab("Repair cost per event"), D.LOSS.repair);
   // "...everything that quietly adds up under Other costs"
@@ -98,7 +98,7 @@ async function s6() {
     await c.item(rows[name], amount, { kind: "orow", pad: 8, hold: 0.1, move: 0.6 }); await c.type(amount, amt, 2, 0.3); await c.hold(1.0);
   }
   // "That makes $33,100 of cash" / "one event costs $43,900"
-  await c.item("r-cash", page.getByText("Cash costs", { exact: true }).first(), { kind: "row", pad: 6, hold: 2.4 });
+  await c.item("r-cash", page.getByText("Money spent", { exact: true }).first(), { kind: "row", pad: 6, hold: 2.4 });
   await c.item("r-cost", page.getByText("Cost per event", { exact: true }).nth(1), { kind: "row", pad: 6, hold: 2.4 });
   // "six a year comes to $263,400"
   await c.item("r-annual", page.getByText("Annual loss", { exact: true }).first(), { kind: "box", pad: 8, hold: 3.0 });
@@ -285,6 +285,7 @@ async function rollout() {
   const tagField = page.getByLabel("Tag of the similar asset");
   const addAnother = btn(/Add a similar asset that is not listed/);
   for (let i = 0; i < D.ROLL.tags.length; i++) {
+    if (await page.getByText(D.ROLL.tags[i], { exact: true }).count()) continue; // the asset is already in the register: just tick it below
     if (i > 0) { await addAnother.first().waitFor({ state: "visible", timeout: 10000 }); await page.waitForTimeout(500); await c.click(addAnother.first(), 0.9); await page.waitForTimeout(700); }
     await tagField.waitFor({ state: "visible", timeout: 10000 });
     await c.type(tagField, D.ROLL.tags[i], 2); await c.type(page.getByLabel("Its duty or service"), D.ROLL.duty, 3);
