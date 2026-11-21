@@ -1,60 +1,47 @@
 # Handoff for a new session
 
-Read this first, then `BLUEPRINT.md` and `AI-ROADMAP.md` (the owner-approved AI feature plan). This file replaces the long history of the first session.
+Read this first. Then, depending on the task: `marketing/` (getting customers), `LAUNCH-PLAN.md`, `OWNER-TODO.md`, `BLUEPRINT.md`, `AI-ROADMAP.md`.
 
 ## How to work (owner's standing instructions)
-- You are the project manager. Delegate building, fixing, testing and media work to sub-agents on Sonnet; keep your own checks light (one look per deliverable). The owner is on a usage-limited plan.
-- Keep messages to the owner very short: progress, and only what is needed from them.
+- You are the project manager. Delegate building, fixing, testing, research and media work to sub-agents on Sonnet; keep your own checks light (one look per deliverable). The owner wants tokens saved.
+- Keep messages to the owner very short: progress, and only what is needed from them. Discuss before jumping to solutions; ask before changing headlines, titles or the owner's wording.
 - Never claim something works without a check. Every app change gets an independent QA pass before it goes live.
-- Branches: work and in-progress snapshots go to `work`. Only verified work is fast-forwarded to `main`. Vercel deploys `main` to the live site automatically.
-- If an agent stops on a usage limit, resume it with SendMessage after the reset rather than starting a new one.
+- Branch `claude/new-session-tdmk2t` for work. Only verified work is fast-forwarded to `main`, and only after the owner says "go live". Vercel deploys `main` to the live site.
+- If an agent stops on a usage limit, resume it with SendMessage after the reset rather than starting a new one; schedule a one-off reminder for the reset time.
+- Never ask for secrets in chat. Supabase delete prompts may not reach the owner's device; avoid needing them.
+- Wording rules: "countermeasure" not "fix"; never "free"; contact is email only, roberts@intelbeyond.com, and never "call me" or "reach out" (side hustle). Numbers as digits. Conversational, one idea per sentence.
+- **Reminder owed to the owner:** before the first customer, narrow `.claude/settings.json` from all Supabase tools (`mcp__Supabase`) to read-only.
 
 ## Owner
-- Former Maintenance Manager, Production Manager and Site/Plant Manager. Wants the product to show their authority as a subject expert.
-- Has a full-time job. Not appearing on camera; voice only.
-- Their expertise to build into the product: natural vs forced deterioration, CAPA (corrective and preventive), maintenance plan changes, spares, learning from similar past failures, rolling a fix out to similar assets (horizontal expansion).
+- Roberts. Former Maintenance Manager, Production Manager and Site/Plant Manager. Full-time job; this is a side hustle. Voice only on video, no camera. Based in Australia.
 
 ## Live systems
 | What | Where |
 |---|---|
-| Live site | https://www.rcapilot.com (also rca-tool-omega.vercel.app; Vercel project `rca-tool`, root directory `web`). AI layer, restyle and pre-launch fixes went live 2026-11-19 (main = f95916b), owner-approved after QA, security audit v1 and release retest GO |
+| Live site | https://www.rcapilot.com (Vercel project `rca-tool`, root `web`). main = 1eea886 (2026-11-21). |
 | Repo | github.com/ROBERTSRPM/RCA-Tool |
-| Database and login | Supabase project `rca-saas`, id `ccigtztlrvgkzyppjmxt`, Sydney. Tables `investigations` and `assets`, both with owner-only row level security, size checks and per-user limits. Function `delete_own_account()`. Migrations in `web/supabase/migrations/` (all applied). |
-| Cloud environment | `rca-tool`: allows the Supabase host, the live site, and Hugging Face hosts (for speech-to-text). |
-| Test accounts | `qa-user-a@rca-tool.test`, `qa-user-b@rca-tool.test`. The password is NOT in the repo; QA scripts read `QA_PASSWORD`. If you don't have it, reset both with SQL via the Supabase tools (`extensions.crypt(..., extensions.gen_salt('bf'))` on `auth.users.encrypted_password`) and keep it in the scratchpad only. |
+| Database and login | Supabase `rca-saas`, id `ccigtztlrvgkzyppjmxt`, Sydney, RLS on all tables. Migrations in `web/supabase/migrations/` (all applied). |
+| Email | Resend, domain rcapilot.com verified; Supabase custom SMTP and 2 branded templates set by the owner. End-to-end signup email test still to confirm. |
+| AI | Anthropic key in Vercel only (`ANTHROPIC_API_KEY`), model `claude-sonnet-5-5`; 30 per user per day, 5 per minute, 300 per day globally. |
+| Test accounts | `qa-user-a@rca-tool.test` (QA), `qa-user-b@rca-tool.test` (video recording). Password only in the session scratchpad. |
+| Preview | Behind Vercel login; share link was in chat only (never in the repo). Owner to rotate it after testing. |
 
 ## Product state (live)
-- Demo mode without an account; email/password accounts; account page with data export and account deletion.
-- 7-step investigation: Problem (with asset details), Loss (lost / made up / buffer split, cash vs opportunity), Evidence, Cause tree (Tree / 5 Whys / Fishbone views, natural vs forced deterioration), Actions (CAPA, maintenance plan changes, spares check), Verify (savings counted only when verified; "Roll this fix out" to similar assets), Report.
-- Asset register, similar past failures, rule-based quality check.
-- Security: OWASP audit in `security/owasp-audit.md`; fixes applied; strict headers.
-- Product name is "RCA Pilot by Intelbeyond", chosen by the owner; domain rcapilot.com to be bought by the owner on Vercel; preliminary name check done (verdict: use with caution, no existing RCA Pilot product found but RCA is a registered mark incl. software; `web/lib/brand.ts`).
+- 7-step investigation: Problem (equipment or process/quality failure), Loss ("Money spent" and "Lost margin", "Not known yet" allowed), Evidence, Cause tree (tree / 5 Whys / fishbone, cause area), Actions (corrective and preventive countermeasures, maintenance plan, spares), Verify (savings and "Line time back" in hours, counted only when verified; roll out to similar assets), Report and one-page management summary.
+- AI: cause coach, challenge my analysis, CAPA suggestions, problem statement and report drafting. All suggestions need Accept.
+- Dashboard: open loss, actions, overdue, verified savings with line time back, roll-out checks.
+- QA and security reports in `qa/` and `security/`.
 
-## AI layer (built on branch `claude/new-session-tdmk2t`)
-- Features: Cause coach and Challenge mode on the Cause tree step (Challenge also on Actions), CAPA recommender per root cause on Actions, write-up drafting (problem statement on Problem; report and one-page management summary on Report). Every result is a suggestion with Accept / Dismiss; accepted items are ordinary editable data flagged `aiSuggested` (never verified).
-- Code: `web/lib/ai/` (context slimming and caps, prompts with the owner's method as a cached system prompt, JSON schemas, output validation, limits, Anthropic call, dev mock, shared handler), routes `web/app/api/ai/{coach,challenge,capa,draft}/route.ts`, UI in `web/components/workspace/ai/`. SDK: `@anthropic-ai/sdk`, structured outputs (`output_config.format`).
-- Env vars (Vercel, server-side, no NEXT_PUBLIC_): `ANTHROPIC_API_KEY` (required to switch AI on; without it the UI says AI is not switched on), `ANTHROPIC_MODEL` (optional, default `claude-sonnet-5-5`), `AI_DAILY_LIMIT` (default 30) and `AI_BURST_LIMIT` (default 5), optional `AI_EFFORT`. Supabase variables are already needed.
-- Database: migration `20261118000100_ai_usage_limits.sql` (applied): table `ai_usage` (owner-only select, no direct writes) and function `ai_consume()` (SECURITY DEFINER, authenticated only; the Supabase advisor "signed-in users can execute SECURITY DEFINER function" is expected for it, as for `delete_own_account`).
-- Failed AI calls (outage, timeout, unusable answer) are refunded from the daily allowance by migration `20261118000200_ai_usage_refund.sql` (applied): `ai_refund()` allows at most 5 refunds per 24 h; every call still counts toward the burst limit. Privacy summary (draft) at `/privacy`; each AI panel shows a one-line notice that investigation text goes to Anthropic.
-- Local testing without a key: `AI_MOCK=1 npm run dev` returns canned answers (`AI_MOCK=fail` simulates an outage). It is ignored when NODE_ENV is production, so it cannot run on Vercel. Node `fetch` in the container needs `NODE_USE_ENV_PROXY=1 NODE_EXTRA_CA_CERTS=/root/.ccr/ca-bundle.crt` to reach Supabase.
-- Not done: real-API quality tuning of prompts (no key was reachable from the build container), photos in the write-up (text only; TODO in `DraftReport.tsx`).
+## Videos
+- Public: explainer https://youtu.be/b_pNSfn9jjI and demo https://youtu.be/3_s0V_pwHdE (sources in `video/demo/`).
+- Walkthrough (13–14 min, tray sealer leaking packs story, owner's voice): `video/walkthrough/`. **Not approved yet; must not be uploaded, linked or used until the owner approves.** Final render in progress on 2026-11-21 (AI scenes after the test account's daily AI limit reset). Owner feedback rules: screen must match the voice at every moment; cursor and a tight orange glow border on the item being spoken about; no music under the voice.
+
+## Getting customers (next focus, new chat)
+- Drafts (not posted or sent) in `marketing/`: `ICP.md`, `first-50-plan.md`, `outreach-templates.md`, `linkedin-posts.md`, `landing-page-notes.md`, `owner-actions.md`.
+- Pricing draft (not final): A$2,500 90-day site pilot, then A$450 a month per site, ex GST. Design-partner terms still to decide (the old "free for 3 months" in `LAUNCH-PLAN.md` conflicts with the no-"free" rule).
+- Skills shortlist (not installed, owner to decide): coreyhaines31/marketingskills (cold-email, copywriting, cro, seo-audit, social), remotion-dev/skills, supabase/agent-skills, sergebulaev/linkedin-skills (drafts only, no paid integrations). Read each skill's files before installing.
 
 ## Open items
-- Minor defects in `qa/defects.md`: 404 page breaks the CSP; CSP still allows inline scripts; asset status slow (~4 s) signed in; existing accounts lack the sample assets until "Reset sample data"; demo-mode two-tab race (NEW-01); long Problem step and Actions below the fold on phones.
-- Some QA header checks fail only because Node `fetch` can't use the proxy in the container; verify headers with curl.
-- Owner to do in Supabase: minimum password length 8, leaked-password protection, CAPTCHA before public promotion.
-
-## Video
-- Published on YouTube: explainer https://youtu.be/b_pNSfn9jjI , product demo (2:55, owner's voice) https://youtu.be/3_s0V_pwHdE . Demo sources in `video/demo/` (script, recording, captions, upload pack `youtube-upload.md`, A/B thumbnails).
-- Final: `video/out/rca-explainer-final.mp4` (12:23, 1080p, voiceover). Not in git (too large); rebuild with the commands in `video/animation/README.md`. The owner has a copy.
-- Script: `video/voiceover.txt` is final (owner-approved). Scenes 1, 3 to 6, 8 to 17; scenes 2 and 7 were removed.
-- Original recording: `video/recordings/voiceover-original.m4a`. Edit and enhancement log: `video/animation/public/audio/edit-log.md`. Per-scene WAVs are not in git; rebuild them from the original following that log.
-- YouTube title options, description, chapters and thumbnails: `video/youtube-metadata.md`.
-
-## Next steps (owner decisions pending)
-1. AI layer: Core features built (see "AI layer" below); needs ANTHROPIC_API_KEY in Vercel, a real-API quality pass on a preview deployment, and independent QA before `main`. Next AI items are in `AI-ROADMAP.md`.
-2. Teams/organisations (shared investigations per site, invitations, roles). Owner has not yet approved.
-3. Billing (Stripe), own email sending service, terms and privacy pages.
-4. Product name and custom domain (Vercel → Settings → Domains; then update Supabase Site URL and Redirect URLs).
-5. Codex independent review (instructions were given to the owner).
-6. Path to 50 paying users: 5 design partners from the owner's network, then content and outreach.
+- `OWNER-TODO.md`: Supabase password/CAPTCHA/session settings, Vercel and Supabase Pro before taking money, Anthropic spend limit, Stripe, privacy and terms review.
+- Low: `qa/loss.js`, `qa/e2e.js`, `qa/features.js` still assert the old "Cash"/"Opportunity" labels.
+- Minor defects in `qa/defects.md`.
