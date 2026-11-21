@@ -1,6 +1,6 @@
 """Automatic cue check. For every highlighted item cue: grab a still from the built scene video at the middle of the highlight window and test
 (1) the orange box is really drawn on the rectangle measured from the page's DOM (all four edges),
-(2) the box does not cut through anything: the ring just outside it is clear of dark text/lines,
+(2) the box does not cut through anything: no dark text or line runs across the border (dark on both sides of it),
 (3) the cursor arrow is on the item (pixel check around the recorded cursor position),
 plus the capture-time checks recorded for the element (whole element inside the viewport, cursor inside the element's box).
 Writes the table into claims-audit.md between the CUE-CHECK markers and saves the stills (git-ignored) in <work>/stills.
@@ -29,8 +29,12 @@ for sc in info:
         def frac(pts, f): return sum(f(im[min(H - 1, max(0, y)), min(W - 1, max(0, x))]) for x, y in pts) / max(1, len(pts))
         edge = [(x, y0 + 2) for x in range(x0 + 8, x1 - 8, 6)] + [(x, y1 - 3) for x in range(x0 + 8, x1 - 8, 6)] + [(x0 + 2, y) for y in range(y0 + 8, y1 - 8, 6)] + [(x1 - 3, y) for y in range(y0 + 8, y1 - 8, 6)]
         boxok = frac(edge, orange) >= 0.9
-        ring = [(x, y0 - 6) for x in range(x0 + 8, x1 - 8, 4)] + [(x, y1 + 6) for x in range(x0 + 8, x1 - 8, 4)] + [(x0 - 6, y) for y in range(y0 + 8, y1 - 8, 4)] + [(x1 + 6, y) for y in range(y0 + 8, y1 - 8, 4)]
-        dark = frac(ring, lambda p: int(p[:3].mean()) < 110 and not orange(p))
+        # a box cuts text when dark pixels (text or lines) lie on BOTH sides of the border at the same point
+        def pairs(o, i):
+            pts = [((x, y0 - o), (x, y0 + i)) for x in range(x0 + 8, x1 - 8, 4)] + [((x, y1 + o), (x, y1 - i)) for x in range(x0 + 8, x1 - 8, 4)] + [((x0 - o, y), (x0 + i, y)) for y in range(y0 + 8, y1 - 8, 4)] + [((x1 + o, y), (x1 - i, y)) for y in range(y0 + 8, y1 - 8, 4)]
+            isd = lambda q: int(im[min(H - 1, max(0, q[1])), min(W - 1, max(0, q[0]))][:3].mean()) < 110
+            return sum(isd(p) and isd(q) for p, q in pts) / max(1, len(pts))
+        dark = max(pairs(8, 8), pairs(10, 6))
         cutok = dark < 0.06
         ck = checks.get(h["name"], {})
         cx, cy = ck.get("cursor", [None, None])

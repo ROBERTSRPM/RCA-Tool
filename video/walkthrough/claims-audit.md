@@ -67,3 +67,49 @@ Scenes 1 and 2 are simple illustrations in the app's style (no footage, no peopl
 | 15 | nothing checked the jaw, locked the settings, controlled the film, or caught a bad seal early | The four system root-cause boxes highlighted in turn | OK |
 | 15 | $263,400 a year; $219,500 saved and verified; 40 hours back | Verify tiles highlighted in turn (annual loss before, annual saving, line time back) | OK (current preview app) |
 | 15 | the dashboard: what failures cost, what you've saved and verified, actions still open | Dashboard tiles highlighted in turn | OK |
+
+<!-- CUE-CHECK-START -->
+## Automatic cue check (still at the middle of each highlight)
+38 highlighted item cues, 25 pass, 13 fail. Stills are in the work folder (not committed).
+
+| Scene | Item | Spoken phrase | Cue at (s) | Box on (s) | Whole element on screen | Cursor on element | Box drawn on its DOM rectangle | Nothing cut by the box | Cursor arrow in still | Result |
+|---|---|---|---|---|---|---|---|---|---|---|
+| s6 | options | If you don't | 6.26 | 7.1 to 11.9 | yes | yes | yes | NO (10% dark) | yes | FAIL |
+| s6 | f-events | six events | 18.94 | 19.8 to 20.8 | yes | yes | yes | NO (18% dark) | yes | FAIL |
+| s6 | f-rate | at 3 | 21.98 | 22.8 to 26.3 | yes | yes | yes | yes | NO | FAIL |
+| s6 | r-lost | we don't make | 26.44 | 27.3 to 30.9 | yes | yes | yes | yes | yes | PASS |
+| s6 | f-margin | At 0 | 31.04 | 31.9 to 33.3 | yes | yes | yes | NO (16% dark) | yes | FAIL |
+| s6 | r-opp | that's $10 | 33.44 | 34.3 to 39.1 | yes | yes | yes | yes | yes | PASS |
+| s6 | f-repair | There's the $1 | 40.84 | 41.7 to 46.5 | yes | yes | yes | NO (21% dark) | yes | FAIL |
+| s6 | other | under other | 46.86 | 47.7 to 49.0 | yes | yes | yes | NO (16% dark) | yes | FAIL |
+| s6 | o-scrap | Scrap product | 49.12 | 50.0 to 52.6 | yes | yes | yes | yes | NO | FAIL |
+| s6 | o-hold | Product on | 52.66 | 53.5 to 57.4 | yes | yes | yes | yes | NO | FAIL |
+| s6 | o-claims | Customer claims | 57.48 | 58.3 to 62.9 | yes | yes | yes | yes | NO | FAIL |
+| s6 | o-pen | Retailer penalties | 63.02 | 63.9 to 65.9 | yes | yes | yes | yes | yes | PASS |
+| s6 | o-rework | rework | 66.02 | 66.9 to 71.7 | yes | yes | yes | NO (6% dark) | yes | FAIL |
+| s6 | r-cash | That makes | 75.74 | 76.6 to 81.4 | yes | yes | yes | yes | yes | PASS |
+| s6 | r-cost | one event costs | 82.52 | 83.4 to 87.5 | yes | yes | yes | yes | yes | PASS |
+| s6 | r-annual | six a year | 87.58 | 88.4 to 93.2 | yes | yes | yes | yes | yes | PASS |
+| s6 | r-lostgood | that output | 98.14 | 99.0 to 103.3 | yes | yes | yes | yes | yes | PASS |
+| s9 | wear-q | is the wear | 5.06 | 5.9 to 10.7 | yes | yes | yes | NO (16% dark) | yes | FAIL |
+| s9 | natural | That's natural | 12.52 | 13.4 to 18.2 | yes | yes | yes | NO (8% dark) | yes | FAIL |
+| s9 | forced | is forced | 20.84 | 21.7 to 25.4 | yes | yes | yes | yes | yes | PASS |
+| s11 | t-total | The total cost | 53 | 53.9 to 58.6 | yes | yes | yes | yes | yes | PASS |
+| s13 | review-date | the review date | 12.54 | 13.4 to 15.1 | yes | yes | yes | yes | yes | PASS |
+| s13 | recurred | hasn't come | 15.18 | 16.0 to 17.4 | yes | yes | yes | NO (15% dark) | yes | FAIL |
+| s13 | t-after | down to | 29.08 | 29.9 to 34.7 | yes | yes | yes | yes | yes | PASS |
+| s13 | t-saving | verified savings | 34.92 | 35.8 to 40.5 | yes | yes | yes | yes | yes | PASS |
+| s13 | t-cost | The $20 | 40.62 | 41.5 to 44.3 | yes | yes | yes | yes | yes | PASS |
+| s13 | t-payback | about 1 | 44.42 | 45.3 to 47.2 | yes | yes | yes | yes | yes | PASS |
+| s13 | t-linetime | 40 hours | 47.32 | 48.2 to 51.3 | yes | yes | yes | yes | yes | PASS |
+| s15 | root-jaw | checked the | 10.5 | 11.3 to 12.2 | yes | yes | yes | yes | yes | PASS |
+| s15 | root-settings | locked the | 12.3 | 13.2 to 14.1 | yes | yes | yes | yes | yes | PASS |
+| s15 | root-film | controlled the | 14.2 | 15.1 to 15.7 | yes | yes | yes | yes | yes | PASS |
+| s15 | root-seal | caught a | 15.78 | 16.6 to 20.5 | yes | yes | yes | yes | yes | PASS |
+| s15 | t-before | $263 | 25.52 | 26.4 to 31.2 | yes | yes | yes | yes | yes | PASS |
+| s15 | t-saving | $219 | 31.88 | 32.7 to 37.5 | yes | yes | yes | yes | yes | PASS |
+| s15 | t-linetime | and 40 | 38.36 | 39.2 to 42.3 | yes | yes | yes | yes | yes | PASS |
+| s15 | d-loss | What failures | 49.36 | 50.2 to 51.8 | yes | yes | yes | yes | yes | PASS |
+| s15 | d-saved | what you have | 51.94 | 52.8 to 55.8 | yes | yes | yes | yes | yes | PASS |
+| s15 | d-actions | the actions still | 55.88 | 56.7 to 61.5 | yes | yes | yes | yes | yes | PASS |
+<!-- CUE-CHECK-END -->

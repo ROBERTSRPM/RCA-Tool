@@ -73,7 +73,7 @@ async function s5() {
   await c.type(lab("Process step"), D.LINE.step, 3); await c.type(lab("Asset type"), "Tray sealer", 3); await page.keyboard.press("Tab"); await c.type(lab("Failure mode"), D.LINE.mode, 3); await c.hold(3.0);
 }
 // type into a field as one beat: the cursor goes to the field, its real box is recorded for the highlight, then the value is typed
-async function typeItem(name, loc, text, o = {}) { await c.item(name, loc, { pad: 6, hold: 0.1, move: 0.7, ...o }); await c.type(loc, text, 2, 0.3); await c.hold(o.after ?? 0.8); }
+async function typeItem(name, loc, text, o = {}) { await c.item(name, loc, { pad: 6, hold: 0.1, move: 0.7, fill: true, ...o }); await c.type(loc, text, 2, 0.3); await c.hold(o.after ?? 0.8); }
 async function s6() {
   c.mark("tab"); await goStep("Loss"); await c.hold(1.5);
   await c.item("options", btn("Not known yet"), { pad: 6, hold: 2.0 });
@@ -95,7 +95,7 @@ async function s6() {
   for (const [name, amt] of D.OTHER) {
     await c.scrollTo(btn(name, { exact: true }).first(), 1.0, 300); await c.click(btn(name, { exact: true }).first(), 0.8); await settle();
     const amount = page.getByLabel(/Amount per event/).last();
-    await c.item(rows[name], amount, { kind: "orow", pad: 8, hold: 0.1, move: 0.6 }); await c.type(amount, amt, 2, 0.3); await c.hold(1.0);
+    await c.item(rows[name], amount, { kind: "orow", pad: 8, hold: 0.1, move: 0.6, fill: true }); await c.type(amount, amt, 2, 0.3); await c.hold(1.0);
   }
   // "That makes $33,100 of cash" / "one event costs $43,900"
   await c.item("r-cash", page.getByText("Money spent", { exact: true }).first(), { kind: "row", pad: 6, hold: 2.4 });
@@ -144,7 +144,7 @@ async function s9() {
   c.mark("tab"); await goStep("Cause tree"); await c.scrollBy(260, 0.8); await c.hold(0.5);
   // "Is the wear natural, or forced?": select the jaw box, then the Type of wear buttons
   c.mark("wear"); await selBox(new RegExp("Select cause: " + escapeRe(D.TREE[1][4].slice(0, 25))));
-  await c.item("wear-q", btn("Natural deterioration").locator("xpath=.."), { pad: 8, hold: 2.5 });
+  await c.item("wear-q", page.getByRole("radiogroup", { name: "Type of wear" }), { pad: 8, hold: 2.5, also: page.getByText("Type of wear", { exact: false }).first() });
   // "That's natural": the cursor on Natural, not clicked
   await c.item("natural", btn("Natural deterioration"), { pad: 6, hold: 2.0 });
   // "...is forced": click Forced
