@@ -92,7 +92,13 @@ function buildScene(s) {
     hl.push({ ...r, a, b, name: h.rect });
   }
   if (hl.length) {
-    const dbs = hl.flatMap((h) => [`drawbox=x=${h.x}:y=${h.y}:w=${h.w}:h=${h.h}:color=0xea580c@0.10:t=fill:enable='between(t,${h.a.toFixed(2)},${h.b.toFixed(2)})'`, `drawbox=x=${h.x}:y=${h.y}:w=${h.w}:h=${h.h}:color=0xea580c@0.95:t=5:enable='between(t,${h.a.toFixed(2)},${h.b.toFixed(2)})'`]);
+    // look: a bright brand-orange border fitted tight round the element with a soft outer glow, nothing filled over the content, and the rest of the screen dimmed slightly
+    const dbs = hl.flatMap((h) => {
+      const en = `enable='between(t,${h.a.toFixed(2)},${h.b.toFixed(2)})'`, f = (v) => Math.round(v);
+      const glow = [[5, 0.30], [10, 0.17], [15, 0.08]].map(([g, al]) => `drawbox=x=${f(h.x - g)}:y=${f(h.y - g)}:w=${f(h.w + 2 * g)}:h=${f(h.h + 2 * g)}:color=0xea580c@${al}:t=5:${en}`);
+      const dim = [`drawbox=x=0:y=0:w=iw:h=${f(h.y)}:color=black@0.22:t=fill:${en}`, `drawbox=x=0:y=${f(h.y + h.h)}:w=iw:h=ih-${f(h.y + h.h)}:color=black@0.22:t=fill:${en}`, `drawbox=x=0:y=${f(h.y)}:w=${f(h.x)}:h=${f(h.h)}:color=black@0.22:t=fill:${en}`, `drawbox=x=${f(h.x + h.w)}:y=${f(h.y)}:w=iw-${f(h.x + h.w)}:h=${f(h.h)}:color=black@0.22:t=fill:${en}`];
+      return [...dim, ...glow, `drawbox=x=${f(h.x)}:y=${f(h.y)}:w=${f(h.w)}:h=${f(h.h)}:color=0xea580c@0.97:t=4:${en}`];
+    });
     parts.push(`[base]${dbs.join(",")}[hb]`);
   }
   const inputs = ["-i", clip]; let cur = hl.length ? "hb" : "base"; let k = 1;

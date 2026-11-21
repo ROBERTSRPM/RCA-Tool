@@ -68,8 +68,16 @@ def replacement(tag):
     wav = os.path.join(os.path.dirname(os.path.abspath(sys.argv[3] + "/x")), f"repl-{tag}.wav")
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", fs_[0], "-ac", "1", "-ar", str(SR), wav], check=True)
     y = sf.read(wav, dtype="float64")[0]
-    d = 20 * np.log10(np.abs(y) + 1e-9); keep = np.where(np.convolve((d > floors[2] + 14).astype(int), np.ones(int(0.05 * SR)), "same") > 0)[0]
-    return y[max(0, keep[0] - int(0.12 * SR)): keep[-1] + int(0.20 * SR)] if len(keep) else None
+    # re-recorded lines can come from a noisier room than the main takes (here about -52 dBFS against -85): clean each one with its own
+    # noise profile (its leading silence), then gate the gaps down to the level of the rest of the scene so there is no step in the room tone
+    lead = y[: int(0.4 * SR)]; lead_db = 20 * np.log10(np.sqrt(np.mean(lead ** 2)) + 1e-9)
+    if not (-72 < lead_db < -42): return y   # quiet room or speech in the lead-in: the normal chain is enough
+    y = nr.reduce_noise(y=y, sr=SR, y_noise=lead, stationary=True, prop_decrease=0.97, n_fft=2048, freq_mask_smooth_hz=400, time_mask_smooth_ms=60)
+    w_ = int(0.02 * SR); e_ = 20 * np.log10(np.sqrt(uniform_filter1d(y ** 2, w_)) + 1e-9)
+    thr_ = np.percentile(e_, 90) - 30
+    g_ = np.where(e_ < thr_, 10 ** (-24 / 20), 1.0); g_ = uniform_filter1d(g_, int(0.08 * SR))
+    y = y * g_
+    return y
 def peaking(f0, gain_db, q):  # RBJ peaking biquad as sos
     A = 10 ** (gain_db / 40); w = 2 * np.pi * f0 / SR; al = np.sin(w) / (2 * q); cw = np.cos(w)
     b = np.array([1 + al * A, -2 * cw, 1 - al * A]); a = np.array([1 + al / A, -2 * cw, 1 - al / A]); return np.hstack([b / a[0], a / a[0]])[None, :]
