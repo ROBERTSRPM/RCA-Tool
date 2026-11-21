@@ -39,20 +39,20 @@ Contact: roberts@intelbeyond.com
 
 Chapters
 0:00 The situation
-1:04 What we want
-2:02 Sign in and start
-2:25 Problem: draft from notes
+1:03 What we want
+2:01 Sign in and start
+2:24 Problem: draft from notes
 3:28 Quality reference and line details
-3:58 Loss in dollars
+3:57 Loss in dollars
 5:41 Evidence
 6:26 Cause tree
 7:53 Natural vs forced wear, 5 Whys, Fishbone
 8:31 Cause coach and Challenge my analysis
-9:34 Actions
+9:33 Actions
 10:33 Suggested actions and Quality check
 10:54 Verify and roll out
 12:01 Report
-12:28 Close
+12:27 Close
 
 #RootCauseAnalysis #Maintenance #Reliability
 

@@ -53,7 +53,7 @@ async function s4() {
     // "It also lists what's missing, under Not in your notes, worth finding out"
     await c.item("notlist", page.getByText(/Not in your notes/).first(), { kind: "wide", pad: 8, hold: 3.0 });
     // "Then I press Use this draft"
-    await c.item("use", btn("Use this draft"), { pad: 6, click: true, hold: 1.2 }); await settle();
+    await c.item("use", btn("Use this draft"), { pad: 6, click: true, preClick: 1.8, hold: 1.2 }); await settle();
   }
   c.mark("fields");
   await c.scrollTo(page.getByText("1. Describe the problem").first(), 1.2, 120); await c.hold(2.0);
@@ -316,7 +316,7 @@ async function s14() {
   // "I check every fact because my name goes on it": edit one sentence
   c.mark("edit"); const f = page.getByTestId("draft-doc").locator("textarea").nth(1); await c.ensureVisible(f, true); await c.click(f, 0.9); await page.keyboard.press("End"); await page.keyboard.type(" Checked against the evidence."); await c.r.cur(); await c.r.shot(); await c.hold(2.0);
   // "Then I print or save as PDF": the Print / Save as PDF button at the top of the step
-  c.mark("print"); await c.top(); await c.moveTo(btn(/Print \/ Save as PDF/).first(), 1.2); await c.rectUnion("printbtn", [btn(/Print \/ Save as PDF/).first()], 10); await c.hold(5.0);
+  await c.top(); await c.item("printbtn", btn(/Print \/ Save as PDF/).first(), { pad: 6, move: 1.2, hold: 5.0 });
 }
 async function s15() {
   c.mark("tab"); await goStep("Cause tree"); await c.scrollBy(300, 1.2); await c.hold(2.0);

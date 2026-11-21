@@ -108,7 +108,8 @@
      "item": "notlist"
     },
     {
-     "item": "use"
+     "item": "use",
+     "dur": 1.7
     }
    ]
   },
@@ -991,7 +992,7 @@
      "move": 2.0
     },
     {
-     "mark": "print",
+     "mark": "printbtn",
      "phrase": "Then I print",
      "shift": -0.5,
      "move": 2.0
@@ -1016,11 +1017,8 @@
    ],
    "highlights": [
     {
-     "rect": "printbtn",
-     "phrase": "Then I print",
-     "shift": 0.3,
-     "dur": 2.6,
-     "cue": "print"
+     "item": "printbtn",
+     "dur": 4
     }
    ]
   },

@@ -70,10 +70,12 @@ Scenes 1 and 2 are simple illustrations in the app's style (no footage, no peopl
 
 <!-- CUE-CHECK-START -->
 ## Automatic cue check (still at the middle of each highlight)
-38 highlighted item cues, 38 pass, 0 fail. Stills are in the work folder (not committed).
+45 highlighted item cues, 45 pass, 0 fail. Stills are in the work folder (not committed).
 
 | Scene | Item | Spoken phrase | Cue at (s) | Box on (s) | Whole element on screen | Cursor on element | Box drawn on its DOM rectangle | Nothing cut by the box | Cursor arrow in still | Result |
 |---|---|---|---|---|---|---|---|---|---|---|
+| s4 | notlist | under not | 48.18 | 49.0 to 53.8 | yes | yes | yes | yes | yes | PASS |
+| s4 | use | Then I press | 55.28 | 56.1 to 57.8 | yes | yes | yes | yes | yes | PASS |
 | s6 | options | If you don't | 6.26 | 7.1 to 11.9 | yes | yes | yes | yes | yes | PASS |
 | s6 | f-events | six events | 18.94 | 19.8 to 20.8 | yes | yes | yes | yes | yes | PASS |
 | s6 | f-rate | at 3 | 21.98 | 22.8 to 26.3 | yes | yes | yes | yes | yes | PASS |
@@ -94,6 +96,10 @@ Scenes 1 and 2 are simple illustrations in the app's style (no footage, no peopl
 | s9 | wear-q | is the wear | 5.06 | 5.9 to 10.7 | yes | yes | yes | yes | yes | PASS |
 | s9 | natural | That's natural | 12.52 | 13.4 to 18.2 | yes | yes | yes | yes | yes | PASS |
 | s9 | forced | is forced | 20.84 | 21.7 to 25.4 | yes | yes | yes | yes | yes | PASS |
+| s10 | accept | It suggests product | 21.66 | 22.5 to 24.8 | yes | yes | yes | yes | yes | PASS |
+| s10 | accept2 | seal plate | 30.16 | 31.0 to 33.3 | yes | yes | yes | yes | yes | PASS |
+| s10 | chal | film root cause | 49.56 | 50.4 to 51.8 | yes | yes | yes | yes | yes | PASS |
+| s10 | e5 | film specification | 55 | 55.9 to 58.0 | yes | yes | yes | yes | yes | PASS |
 | s11 | t-total | The total cost | 53 | 53.9 to 58.6 | yes | yes | yes | yes | yes | PASS |
 | s13 | review-date | the review date | 12.54 | 13.4 to 15.1 | yes | yes | yes | yes | yes | PASS |
 | s13 | recurred | hasn't come | 15.18 | 16.0 to 17.4 | yes | yes | yes | yes | yes | PASS |
@@ -102,6 +108,7 @@ Scenes 1 and 2 are simple illustrations in the app's style (no footage, no peopl
 | s13 | t-cost | The $20 | 40.62 | 41.5 to 44.3 | yes | yes | yes | yes | yes | PASS |
 | s13 | t-payback | about 1 | 44.42 | 45.3 to 47.2 | yes | yes | yes | yes | yes | PASS |
 | s13 | t-linetime | 40 hours | 47.32 | 48.2 to 51.3 | yes | yes | yes | yes | yes | PASS |
+| s14 | printbtn | Then I print | 22.04 | 22.9 to 26.2 | yes | yes | yes | yes | yes | PASS |
 | s15 | root-jaw | checked the | 10.5 | 11.3 to 12.2 | yes | yes | yes | yes | yes | PASS |
 | s15 | root-settings | locked the | 12.3 | 13.2 to 14.1 | yes | yes | yes | yes | yes | PASS |
 | s15 | root-film | controlled the | 14.2 | 15.1 to 15.7 | yes | yes | yes | yes | yes | PASS |
@@ -113,3 +120,8 @@ Scenes 1 and 2 are simple illustrations in the app's style (no footage, no peopl
 | s15 | d-saved | what you have | 51.94 | 52.8 to 55.8 | yes | yes | yes | yes | yes | PASS |
 | s15 | d-actions | the actions still | 55.88 | 56.7 to 61.5 | yes | yes | yes | yes | yes | PASS |
 <!-- CUE-CHECK-END -->
+
+## Round 3 notes
+- Screen capture uses the live labels "Money spent" and "Lost margin" (rename 009e4d6 / 1eea886). The voice still says "cash" and "lost margin"; the "Money spent" figure is highlighted when "cash" is spoken ("That makes $33,100 of cash", scene 6).
+- Highlights: bright orange border (4 px) tightly fitted to the element's DOM bounding box, soft glow, no fill, rest of the screen dimmed 22%. Every item cue is listed in the table above with its spoken phrase, time, and result (whole element on screen, cursor on element, box on the DOM rectangle, nothing cut by the box, cursor arrow in the still).
+- Scene 4: the "Use this draft" box is shown only while the button exists (the click comes after the highlight); scene 10 shows the product residue and seal plate suggestions, and the Challenge item about the film change control (AI output captured live, checked for chicken, rice and sauce).
