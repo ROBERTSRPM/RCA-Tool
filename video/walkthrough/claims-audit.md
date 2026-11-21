@@ -6,7 +6,7 @@ Scenes 1 and 2 are simple illustrations in the app's style (no footage, no peopl
 ## Mismatches the owner should decide on
 | # | Scene | Voice says | Screen shows | Status |
 |---|---|---|---|---|
-| 1 | 13 and 15 | "...and we got 40 hours of line time back" | Nothing in the app shows hours recovered. The Verify result tiles show annual loss before and after, annual saving (verified), total action cost and payback; the dashboard has no hours tile. The Loss step showed "Hours lost 48" before the fix, but there is no "after" or "back" figure. (Owner is deciding on an app change; nothing done.) | NO |
+| 1 | 13 and 15 | "...and we got 40 hours of line time back" | The branch preview now has a "Line time back (verified)  40 h a year" tile on the Verify step and a "40 h of line time back a year" line under Verified annual savings on the dashboard (app change a4a74c0, after this audit's first draft). Nothing was added by the video: the recording simply shows it, and the tile is highlighted as the voice says it. If the owner reverts that app change, this claim goes back to NOT SHOWN. | OK (with the current preview app) |
 | 2 | 10 | "It also suggests the gas mix, but the oxygen readings were in spec, so I dismiss it." | The real AI no longer offers a gas-mix suggestion; the screen adds the jaw/seal-plate suggestion instead. Fixed when the owner's re-recorded line (a) is dropped in. | NO until re-record |
 | 3 | 10 | "...so I link the film inspection." | The evidence item is titled "Film specification, maintenance and QA records". Fixed by re-recorded line (b). | PART until re-record |
 | 4 | 10 | "It suggests product contaminating the flange." | Shown: the AI's own wording is "Product, fat or moisture was on the tray flange..." (no rice or sauce). | OK |
@@ -61,9 +61,9 @@ Scenes 1 and 2 are simple illustrations in the app's style (no footage, no peopl
 | 13 | savings count once every action is Done, review date in, failure not recurred | Verify step with Review date and "Has the failure recurred" highlighted, then actions set to Done | OK |
 | 13 | expect 1 event a year, not zero | Field typed | OK |
 | 13 | loss down to $43,900; verified saving $219,500; $20,200 pays back in about 1.1 months | "Annual loss after", "Annual saving (verified)", "Total action cost", "Payback period" highlighted | OK |
-| 13 | 40 hours of line time back | not shown | NO |
+| 13 | 40 hours of line time back | "Line time back (verified) 40 h a year" tile, highlighted | OK (current preview app) |
 | 13 | Roll out this countermeasure, Lines 1 and 2, each with an owner and a date | Two assets added, "Create 2 rollout checks", owner and due date typed | PART |
 | 14 | Draft report; Management summary is one page; I check every fact; Print or Save as PDF | See mismatch 10 | PART |
 | 15 | nothing checked the jaw, locked the settings, controlled the film, or caught a bad seal early | The four system root-cause boxes highlighted in turn | OK |
-| 15 | $263,400 a year; $219,500 saved and verified; 40 hours back | Verify tiles highlighted (annual loss before, annual saving); no hours figure | PART |
+| 15 | $263,400 a year; $219,500 saved and verified; 40 hours back | Verify tiles highlighted in turn (annual loss before, annual saving, line time back) | OK (current preview app) |
 | 15 | the dashboard: what failures cost, what you've saved and verified, actions still open | Dashboard tiles highlighted in turn | OK |

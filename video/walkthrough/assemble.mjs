@@ -16,7 +16,7 @@ ff("-f", "concat", "-safe", "0", "-i", path.join(work, "voice.txt"), "-c", "copy
 // generated sfx and music stems (audio/make-sound.py), ducked under the voice
 execFileSync(process.env.PY || "python3", [path.join(path.dirname(new URL(import.meta.url).pathname), "audio/make-sound.py"), path.join(audioDir, "report.json"), path.join(out, "stems/voice.wav"), path.join(out, "stems")], { stdio: "inherit" });
 // mix: plain sum, no extra gain on the voice (already -16 LUFS, one limiter); sfx and music are ducked stems far below it
-ff("-i", path.join(out, "stems/voice.wav"), "-i", path.join(out, "stems/sfx.wav"), "-i", path.join(out, "stems/music.wav"), "-filter_complex", "[0][1][2]amix=inputs=3:normalize=0:duration=first", "-ar", "48000", path.join(work, "mix.wav"));
+ff("-i", path.join(out, "stems/voice.wav"), "-i", path.join(out, "stems/sfx.wav"), "-i", path.join(out, "stems/music.wav"), "-filter_complex", "[0][1][2]amix=inputs=3:normalize=0:duration=first,volume=-0.2dB", "-ar", "48000", path.join(work, "mix.wav"));
 // video
 const files = ids.map((i) => (i === 1 ? path.join(work, "story1.mp4") : i === 2 ? path.join(work, "story2.mp4") : path.join(work, "vid", `s${i}.mp4`)));
 const parts = ids.map((i, k) => `[${k}:v]fps=30,scale=1920:1080,tpad=stop_mode=clone:stop_duration=1,trim=duration=${D[k].toFixed(3)},setpts=PTS-STARTPTS[v${k}]`);

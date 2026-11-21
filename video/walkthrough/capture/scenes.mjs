@@ -355,8 +355,19 @@ await run(0, async () => {
     fs.writeFileSync(`${OUT}/scene3.marks.json`, JSON.stringify({ seconds: ma.seconds + mb.seconds, marks: [...ma.marks, ...mb.marks.map((m) => ({ ...m, t: +(m.t + ma.seconds).toFixed(2) }))] }));
     return;
   }
+  if (N === 15 && process.env.REUSE) {  // scene 13's run left the finished investigation (and its rollout checks): open it instead of rebuilding
+    await page.goto(`${BASE}/app`, { waitUntil: "networkidle" }); await page.waitForTimeout(1500);
+    // keep only one investigation on the dashboard (delete extras through the app's own Delete button)
+    for (let g = 0; g < 8 && (await page.getByRole("link", { name: "Open", exact: true }).count()) > 1; g++) {
+      await page.getByRole("button", { name: /delete/i }).last().click(); await page.waitForTimeout(500);
+      const ok = page.getByRole("button", { name: /^(delete|yes|confirm)/i }).last(); if (await ok.count()) await ok.click(); await page.waitForTimeout(1500);
+    }
+    console.log("investigations on dashboard:", await page.getByRole("link", { name: "Open", exact: true }).count());
+    await page.getByRole("link", { name: "Open", exact: true }).first().click(); await page.waitForURL(/investigations/); await page.waitForLoadState("networkidle"); await page.waitForTimeout(2000);
+  } else {
   await s3b0();
   for (let k = 4; k < N; k++) { if (k === 10) await s10silent(); else if (SEQ[k]) await run(k, SEQ[k]); }
+  }
   c.startRecording(N);
   await run(N, N === 12 ? s12 : SEQ[N]);
   const sec = await c.finish(OUT, N); console.log("scene", N, "done", sec, "s");
