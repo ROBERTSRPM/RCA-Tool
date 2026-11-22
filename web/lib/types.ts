@@ -204,6 +204,8 @@ export interface ActionItem {
   dueDate: string; // YYYY-MM-DD or ""
   status: ActionStatus;
   cost: number | null;
+  /** Added later. Set when the Actions list ticks an action done: what it was, so unticking restores it. Missing means Open. */
+  statusBeforeDone?: "open" | "in_progress";
   /** Added later; missing means not classified. */
   kind?: ActionKind;
   category?: ActionCategory;

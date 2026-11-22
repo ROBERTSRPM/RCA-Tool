@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   actionsToCsv,
   buildRows,
@@ -12,8 +12,10 @@ import {
   filterChoices,
   filterRows,
   filtersFromParams,
+  neighbourKey,
   NO_ASSET,
   NO_OWNER,
+  openCountText,
   setActionDone,
   STATUS_WORD,
   TYPE_OPTIONS,
@@ -61,7 +63,11 @@ export function ActionsPage() {
   const where = auth.status === "in" ? "your account" : "this browser";
   const [invs, setInvs] = useState<Investigation[] | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [busy, setBusy] = useState<Set<string>>(() => new Set());
+  // Rows being saved: the tick the user asked for, shown at once and reverted if the save fails.
+  const [pending, setPending] = useState<Map<string, boolean>>(() => new Map());
+  const [announce, setAnnounce] = useState("");
+  const focusReq = useRef<{ from: string; to: string | null } | null>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
   const [filters, setFilters] = useState<ActionFilters>(() => filtersFromParams((k) => params.get(k)));
   const today = todayISO();
 
@@ -113,19 +119,43 @@ export function ActionsPage() {
   const filtered = JSON.stringify(filters) !== JSON.stringify(DEFAULT_FILTERS);
   const overdueShown = shown.filter((r) => isOverdue(r.action, today)).length;
 
-  async function tick(row: ActionRow, done: boolean) {
-    if (busy.has(row.key)) return;
-    setBusy((b) => new Set(b).add(row.key));
+  // Leaving or reloading while a save is on its way would lose the tick.
+  const saving = pending.size > 0;
+  useEffect(() => {
+    if (!saving) return;
+    const warn = (e: BeforeUnloadEvent) => e.preventDefault();
+    window.addEventListener("beforeunload", warn);
+    return () => window.removeEventListener("beforeunload", warn);
+  }, [saving]);
+
+  // After a save removes a row from the list, keep keyboard focus in the list.
+  useEffect(() => {
+    const req = focusReq.current;
+    if (!req || !invs) return;
+    if (shown.some((r) => r.key === req.from)) return; // row is still there
+    focusReq.current = null;
+    const next = req.to ? document.querySelector<HTMLInputElement>(`[data-row-key="${req.to}"] input[type=checkbox]`) : null;
+    (next ?? headingRef.current)?.focus();
+  }, [invs, shown]);
+
+  async function tick(row: ActionRow, done: boolean, hadFocus: boolean) {
+    if (pending.has(row.key)) return;
+    if (hadFocus) focusReq.current = { from: row.key, to: neighbourKey(shown, row.key) };
+    setPending((m) => new Map(m).set(row.key, done));
     setError(null);
     try {
       const saved = await setActionDone(getStore(), row.invId, row.action.id, done);
-      setInvs((cur) => (cur ?? []).map((i) => (i.id === saved.id ? saved : i)));
+      const next = (invs ?? []).map((i) => (i.id === saved.id ? saved : i));
+      setInvs(next);
+      setAnnounce(`${done ? "Marked done" : "Marked not done"}. ${openCountText(next)}.`);
     } catch (e) {
+      focusReq.current = null;
+      setAnnounce("");
       setError(e instanceof Error && e.message ? e.message : "That did not save. Try again.");
       reload(); // show what is really saved
     } finally {
-      setBusy((b) => {
-        const n = new Set(b);
+      setPending((m) => {
+        const n = new Map(m);
         n.delete(row.key);
         return n;
       });
@@ -136,7 +166,7 @@ export function ActionsPage() {
     <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="h-page">Actions</h1>
+          <h1 ref={headingRef} tabIndex={-1} className="h-page outline-none">Actions</h1>
           <p className="mt-1 max-w-xl text-sm text-slate-600">
             Every countermeasure from every investigation, in one list. Tick an action when it is done.
           </p>
@@ -150,6 +180,10 @@ export function ActionsPage() {
           <Icon name="list" /> Export to Excel
         </button>
       </div>
+
+      <p className="sr-only" role="status" aria-live="polite" data-testid="actions-announce">
+        {announce}
+      </p>
 
       {error && (
         <p role="alert" className="mt-4 rounded-lg bg-red-50 p-3 text-sm text-red-800">
@@ -210,7 +244,7 @@ export function ActionsPage() {
             />
           </section>
 
-          <p className="mt-4 flex flex-wrap items-center gap-x-3 text-sm text-slate-600" aria-live="polite">
+          <p className="mt-4 flex flex-wrap items-center gap-x-3 text-sm text-slate-600">
             <span data-testid="actions-count">
               {shown.length} {shown.length === 1 ? "action" : "actions"}
             </span>
@@ -257,7 +291,7 @@ export function ActionsPage() {
               </div>
               <ul className="divide-y divide-slate-200" data-testid="actions-list">
                 {shown.map((r) => (
-                  <Row key={r.key} row={r} today={today} busy={busy.has(r.key)} onTick={tick} />
+                  <Row key={r.key} row={r} today={today} saving={pending.get(r.key)} onTick={tick} />
                 ))}
               </ul>
             </div>
@@ -271,21 +305,25 @@ export function ActionsPage() {
 function Row({
   row,
   today,
-  busy,
+  saving,
   onTick,
 }: {
   row: ActionRow;
   today: string;
-  busy: boolean;
-  onTick: (row: ActionRow, done: boolean) => void;
+  /** The tick being saved, or undefined when nothing is. */
+  saving: boolean | undefined;
+  onTick: (row: ActionRow, done: boolean, hadFocus: boolean) => void;
 }) {
   const a = row.action;
   const late = isOverdue(a, today);
-  const done = a.status === "done";
+  const isSaving = saving !== undefined;
+  const done = saving ?? a.status === "done";
   const label = a.description.trim() || "Untitled action";
   return (
     <li
       data-testid="action-row"
+      data-row-key={row.key}
+      aria-busy={isSaving || undefined}
       data-overdue={late ? "true" : undefined}
       className={`grid grid-cols-[28px_minmax(0,1fr)] gap-x-3 gap-y-2 px-4 py-4 sm:px-5 lg:items-center lg:gap-x-4 ${GRID} ${
         late ? "bg-red-50/70" : ""
@@ -296,9 +334,9 @@ function Row({
           type="checkbox"
           className="h-5 w-5 accent-emerald-600"
           checked={done}
-          disabled={busy}
+          disabled={isSaving}
           aria-label={`${done ? "Mark not done" : "Mark done"}: ${label}`}
-          onChange={(e) => onTick(row, e.target.checked)}
+          onChange={(e) => onTick(row, e.target.checked, document.activeElement === e.currentTarget)}
         />
       </label>
       <p className={`min-w-0 text-sm font-semibold leading-snug ${done ? "text-slate-500 line-through" : "text-slate-900"}`}>
@@ -320,6 +358,9 @@ function Row({
           </span>
         </Cell>
         <Cell label="Status">
+          {isSaving ? (
+            <span className="chip bg-slate-100 text-slate-700" role="status">Saving…</span>
+          ) : (
           <span
             className={`chip ${
               done ? "bg-emerald-100 text-emerald-800" : a.status === "in_progress" ? "bg-sky-100 text-sky-900" : "bg-slate-200 text-slate-800"
@@ -327,6 +368,7 @@ function Row({
           >
             {STATUS_WORD[a.status]}
           </span>
+          )}
         </Cell>
         <Cell label="Asset">
           <span className={`block truncate ${row.asset ? "" : "text-slate-600"}`} title={row.asset}>

@@ -10,6 +10,8 @@ import {
   filterRows,
   filtersFromParams,
   isDueThisWeek,
+  neighbourKey,
+  openCountText,
   NO_OWNER,
   setActionDone,
   withActionDone,
@@ -66,6 +68,12 @@ describe("rows", () => {
   });
   it("names an untitled investigation", () => {
     expect(buildRows([inv("", "", [act("x")])])[0].invTitle).toBe("Untitled investigation");
+  });
+  it("shows the tag and name once", () => {
+    expect(buildRows([inv("T", "Conveyor C-2", [act("x")], "C-2")])[0].asset).toBe("Conveyor C-2");
+    expect(buildRows([inv("T", "Slurry pump P-101", [act("x")], "P-101")])[0].asset).toBe("Slurry pump P-101");
+    expect(buildRows([inv("T", "", [act("x")], "C-2")])[0].asset).toBe("C-2");
+    expect(buildRows([inv("T", "Fan", [act("x")], "")])[0].asset).toBe("Fan");
   });
   it("does not repeat a tag already in the asset name", () => {
     expect(buildRows([inv("T", "P-101 Tailings pump", [act("x")], "p-101")])[0].asset).toBe("P-101 Tailings pump");
@@ -170,7 +178,14 @@ describe("tick done", () => {
   it("sets done, and back to open", () => {
     const next = withActionDone(A.actions, "a3", true);
     expect(next.find((a) => a.id === "a3")!.status).toBe("done");
-    expect(withActionDone(next, "a3", false).find((a) => a.id === "a3")!.status).toBe("open");
+    expect(withActionDone(next, "a3", false).find((a) => a.id === "a3")!.status).toBe("in_progress");
+    // an action that was Open comes back Open, and the memory note is cleared
+    const o = withActionDone(A.actions, "a1", true);
+    const back = withActionDone(o, "a1", false).find((a) => a.id === "a1")!;
+    expect(back.status).toBe("open");
+    expect(back).not.toHaveProperty("statusBeforeDone");
+    // done with nothing remembered (set in the investigation) goes to Open
+    expect(withActionDone(A.actions, "a4", false).find((a) => a.id === "a4")!.status).toBe("open");
     expect(A.actions.find((a) => a.id === "a3")!.status).toBe("in_progress"); // input untouched
   });
 
@@ -212,5 +227,30 @@ describe("tick done", () => {
     const created = await store.create({ actions: [act("z1")] });
     await expect(setActionDone(store, created.id, "nope", true)).rejects.toThrow(/no longer exists/);
     await expect(setActionDone(store, "missing", "z1", true)).rejects.toThrow(/no longer exists/);
+  });
+});
+
+describe("focus and announcements", () => {
+  const keys = [{ key: "a" }, { key: "b" }, { key: "c" }];
+  it("moves to the next row, else the previous, else nothing", () => {
+    expect(neighbourKey(keys, "a")).toBe("b");
+    expect(neighbourKey(keys, "b")).toBe("c");
+    expect(neighbourKey(keys, "c")).toBe("b");
+    expect(neighbourKey([{ key: "a" }], "a")).toBeNull();
+    expect(neighbourKey(keys, "zzz")).toBeNull();
+  });
+  it("counts open actions across investigations", () => {
+    expect(openCountText([A, B])).toBe("6 open actions");
+    expect(openCountText([inv("T", "", [act("x")])])).toBe("1 open action");
+    expect(openCountText([])).toBe("0 open actions");
+  });
+  it("keeps the remembered status through a save and reload", async () => {
+    const mem = new MemoryStorage();
+    const store = new LocalStorageInvestigationStore(() => mem);
+    const c = await store.create({ actions: [act("p1", { status: "in_progress" })] });
+    await setActionDone(store, c.id, "p1", true);
+    expect((await store.get(c.id))!.actions[0].statusBeforeDone).toBe("in_progress");
+    await setActionDone(store, c.id, "p1", false);
+    expect((await store.get(c.id))!.actions[0].status).toBe("in_progress");
   });
 });

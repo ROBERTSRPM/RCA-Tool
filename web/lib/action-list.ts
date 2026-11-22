@@ -42,11 +42,12 @@ export const DEFAULT_FILTERS: ActionFilters = { status: "open", due: "any", owne
 
 export const STATUS_WORD: Record<ActionStatus, string> = { open: "Open", in_progress: "In progress", done: "Done" };
 
+/** Tag and name once: "P-101 Tailings pump". If the name already holds the tag, the name alone. */
 export function assetLabel(inv: Pick<Investigation, "problem">): string {
   const p = inv.problem;
   const tag = (p.assetTag ?? "").trim();
   const name = (p.asset ?? "").trim();
-  if (tag && name && name.toLowerCase().startsWith(tag.toLowerCase())) return name;
+  if (tag && name && name.toLowerCase().includes(tag.toLowerCase())) return name;
   return [tag, name].filter(Boolean).join(" ");
 }
 
@@ -199,11 +200,32 @@ export function csvFileName(today: string = todayISO()): string {
 /* ---------- Tick done ---------- */
 
 /**
- * Done, or back to Open. (An action that was In progress goes back to Open;
- * the investigation's own status field is the same field, so both agree.)
+ * Done, or back to what it was. Ticking remembers In progress, so unticking
+ * restores it; anything else (or nothing remembered) goes back to Open.
  */
 export function withActionDone(actions: ActionItem[], actionId: string, done: boolean): ActionItem[] {
-  return actions.map((a) => (a.id === actionId ? { ...a, status: done ? "done" : "open" } : a));
+  return actions.map((a) => {
+    if (a.id !== actionId) return a;
+    const { statusBeforeDone, ...rest } = a;
+    if (done) {
+      if (a.status === "done") return a;
+      return { ...rest, status: "done", statusBeforeDone: a.status === "in_progress" ? "in_progress" : "open" };
+    }
+    return { ...rest, status: statusBeforeDone === "in_progress" ? "in_progress" : "open" };
+  });
+}
+
+/** "5 open actions", "1 open action". Open means not done, as on the dashboard. */
+export function openCountText(invs: Pick<Investigation, "actions">[]): string {
+  const n = invs.reduce((s, i) => s + i.actions.filter(isOpenAction).length, 0);
+  return `${n} open ${n === 1 ? "action" : "actions"}`;
+}
+
+/** Where focus goes when a row leaves the list: the next row, else the previous, else nothing (the heading). */
+export function neighbourKey(shown: Pick<ActionRow, "key">[], key: string): string | null {
+  const i = shown.findIndex((r) => r.key === key);
+  if (i < 0) return null;
+  return (shown[i + 1] ?? shown[i - 1])?.key ?? null;
 }
 
 /**

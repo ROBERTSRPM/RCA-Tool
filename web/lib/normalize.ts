@@ -148,6 +148,7 @@ function normaliseAction(raw: unknown): ActionItem | null {
     dueDate: str(get(raw, "dueDate")),
     status: oneOf(get(raw, "status"), ACTION_STATUSES, "open"),
     cost: num(get(raw, "cost")),
+    ...(get(raw, "statusBeforeDone") === "in_progress" ? { statusBeforeDone: "in_progress" as const } : {}),
     ...(oneOf(get(raw, "kind"), KINDS, "") !== "" ? { kind: oneOf(get(raw, "kind"), KINDS, "") } : {}),
     ...(oneOf(get(raw, "category"), ACTION_CATEGORIES_ALL, "") !== ""
       ? { category: oneOf(get(raw, "category"), ACTION_CATEGORIES_ALL, "") }
