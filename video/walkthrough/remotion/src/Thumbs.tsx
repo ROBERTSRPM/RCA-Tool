@@ -11,37 +11,30 @@ const Base = ({children, bg}: {children: React.ReactNode; bg: string}) => (
   <AbsoluteFill style={{background: bg, fontFamily: FONT}}><style>{fontFace}</style>{children}</AbsoluteFill>
 );
 
-// A: the GM's question, dark with a HOLD tag
+// thumb 1: the story moment (both phones ringing at night) with the general manager's question
 export const ThumbA = () => (
   <Base bg={C.night}>
-    <div style={{position: "absolute", left: 64, top: 56}}><Brand dark /></div>
-    <div style={{position: "absolute", left: 64, top: 170, width: 780, fontSize: 104, fontWeight: 800, lineHeight: 1.0, letterSpacing: -3, color: "#fff"}}>Why does this keep happening?</div>
-    <div style={{position: "absolute", left: 64, bottom: 60, fontSize: 40, color: "#cbd0d8", fontWeight: 500}}>Root cause analysis, start to finish</div>
-    <div style={{position: "absolute", right: 64, top: 110, transform: "rotate(7deg)", background: C.red, color: "#fff", fontSize: 96, fontWeight: 800, padding: "18px 44px", borderRadius: 14, letterSpacing: 2}}>HOLD</div>
-    <div style={{position: "absolute", right: 64, top: 330, fontSize: 120, fontWeight: 800, color: "#fff", letterSpacing: -3}}>6,000</div>
-    <div style={{position: "absolute", right: 64, top: 462, fontSize: 40, color: "#cbd0d8"}}>packs on hold</div>
+    <Img src={staticFile("thumb1-bg.jpg")} style={{position: "absolute", left: -140, top: -130, width: 1560, height: 877, objectFit: "cover"}} />
+    <div style={{position: "absolute", left: 0, right: 0, bottom: 0, height: 330, background: "linear-gradient(to top, rgba(14,18,24,0.97) 55%, rgba(14,18,24,0))"}} />
+    <div style={{position: "absolute", left: 56, bottom: 44, width: 1170, fontSize: 118, fontWeight: 800, lineHeight: 1.0, letterSpacing: -3, color: "#fff"}}>Why does this <span style={{color: "#fb923c"}}>keep happening?</span></div>
+    <div style={{position: "absolute", left: 40, top: 36}}><LogoMark size={76} /></div>
   </Base>
 );
-// B: the money
+// thumb 2: the real app, the verified saving
 export const ThumbB = () => (
   <Base bg={C.page}>
-    <div style={{position: "absolute", left: 64, top: 56}}><Brand /></div>
-    <div style={{position: "absolute", left: 64, top: 150, fontSize: 200, fontWeight: 800, letterSpacing: -7, color: C.accent, lineHeight: 1}}>$263,400</div>
-    <div style={{position: "absolute", left: 70, top: 370, fontSize: 84, fontWeight: 700, letterSpacing: -2, color: C.text, lineHeight: 1.05, width: 1100}}>a year from one tray sealer</div>
-    <div style={{position: "absolute", left: 70, bottom: 56, display: "flex", gap: 26, alignItems: "center"}}>
-      <div style={{width: 8, height: 64, background: C.accent, borderRadius: 4}} />
-      <div style={{fontSize: 42, color: C.muted, fontWeight: 500}}>Find the cause. Prove the fix. (illustrative)</div>
-    </div>
+    <div style={{position: "absolute", left: 40, top: 36}}><LogoMark size={76} /></div>
+    <div style={{position: "absolute", left: 56, top: 112, width: 1170, fontSize: 132, fontWeight: 800, letterSpacing: -4, color: C.text, lineHeight: 1}}><span style={{color: C.accent}}>$219,500</span> saved</div>
+    <div style={{position: "absolute", left: 60, top: 252, fontSize: 84, fontWeight: 800, letterSpacing: -2, color: C.text}}>and proven</div>
+    <Img src={staticFile("thumb2-crop.jpg")} style={{position: "absolute", left: 56, bottom: 40, width: 1000, borderRadius: 18, border: `5px solid ${C.accent}`, boxShadow: "0 14px 40px rgba(0,0,0,0.25)"}} />
   </Base>
 );
-// C: the product, from rough notes to a verified fix
+// thumb 3: the real app, the cause tree
 export const ThumbC = () => (
-  <Base bg="#fff">
-    <Img src={staticFile("thumb-c-bg.jpg")} style={{position: "absolute", right: -60, top: 0, width: 900, height: 720, objectFit: "cover", opacity: 0.95, borderLeft: `3px solid ${C.strong}`}} />
-    <div style={{position: "absolute", left: 0, top: 0, bottom: 0, width: 640, background: "rgba(255,255,255,0.97)"}} />
-    <div style={{position: "absolute", left: 56, top: 52}}><Brand /></div>
-    <div style={{position: "absolute", left: 56, top: 150, width: 560, fontSize: 92, fontWeight: 800, lineHeight: 1.02, letterSpacing: -2.5, color: C.text}}>From "seals bad" to a verified fix</div>
-    <div style={{position: "absolute", left: 56, bottom: 56, fontSize: 38, color: C.muted, fontWeight: 500, width: 540}}>Full walkthrough, step by step</div>
+  <Base bg={C.night}>
+    <div style={{position: "absolute", left: 40, top: 36}}><LogoMark size={76} /></div>
+    <div style={{position: "absolute", left: 56, top: 122, width: 1190, fontSize: 112, fontWeight: 800, letterSpacing: -4, color: "#fff", lineHeight: 1.02}}>Find the <span style={{color: "#fb923c"}}>real cause</span></div>
+    <Img src={staticFile("thumb3-crop.jpg")} style={{position: "absolute", left: 56, bottom: 40, width: 1010, borderRadius: 18, border: `5px solid #fb923c`, boxShadow: "0 14px 40px rgba(0,0,0,0.5)"}} />
   </Base>
 );
 export const EndCardW = () => (

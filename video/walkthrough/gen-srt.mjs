@@ -50,5 +50,12 @@ for (let n = 1; n <= 15; n++) {
   });
   start += rep[n].seconds;
 }
+// no cue may run into the next one: trim an end that overlaps the following start (a cue shorter than 0.7 s is stretched above)
+{
+  const toS = (h, m, sec, ms) => +h * 3600 + +m * 60 + +sec + +ms / 1000;
+  const cues = [...out.matchAll(/(\d+)\n(\d\d):(\d\d):(\d\d),(\d+) --> (\d\d):(\d\d):(\d\d),(\d+)\n(.*?)\n\n/gs)].map((m) => ({ i: m[1], a: toS(m[2], m[3], m[4], m[5]), b: toS(m[6], m[7], m[8], m[9]), t: m[10] }));
+  for (let k = 0; k + 1 < cues.length; k++) if (cues[k].b > cues[k + 1].a - 0.04) cues[k].b = Math.max(cues[k].a + 0.1, Math.min(cues[k].b, cues[k + 1].a - 0.01));
+  out = cues.map((c) => `${c.i}\n${ts(c.a)} --> ${ts(c.b)}\n${c.t}\n\n`).join("");
+}
 fs.writeFileSync(here + "captions.srt", out);
 console.log(idx - 1, "cues");

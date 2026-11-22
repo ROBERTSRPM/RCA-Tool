@@ -91,7 +91,7 @@ So where do we start?
 com and make an account with an email and password.
 
 24
-00:02:14,690 --> 00:02:15,390
+00:02:14,690 --> 00:02:14,960
 You need an account for the AI buttons.
 
 25
@@ -195,7 +195,7 @@ So each event, we don't make 24,000 packs.
 At 45 cents a pack, that's $10,800 of lost margin.
 
 50
-00:04:36,130 --> 00:04:36,830
+00:04:36,130 --> 00:04:36,540
 Then there's the cash.
 
 51
@@ -563,7 +563,7 @@ controlled the film, or caught a bad seal early.
 It was never one unlucky operator.
 
 142
-00:12:50,280 --> 00:12:50,980
+00:12:50,280 --> 00:12:50,530
 What is it costing us?
 
 143
