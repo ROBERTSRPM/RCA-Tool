@@ -72,6 +72,9 @@ function assess(call: EvalCall, raw: unknown, validate: (r: unknown) => unknown)
     spec: call.checks.spec,
     allowedNumbers: call.checks.allowedNumbers,
     verifiedNodeTexts: call.checks.verifiedNodeTexts,
+    unverifiedNodeTexts: call.checks.unverifiedNodeTexts,
+    verifiedDeterioration: call.checks.verifiedDeterioration,
+    inputTexts: call.checks.inputTexts,
     isInjection: call.checks.isInjection,
     expectsIssues: call.checks.expectsIssues,
   });

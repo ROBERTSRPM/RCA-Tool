@@ -68,6 +68,9 @@ export interface EvalCall {
     spec: HardChecksSpec;
     allowedNumbers: Set<string>;
     verifiedNodeTexts: string[];
+    unverifiedNodeTexts: string[];
+    verifiedDeterioration: boolean;
+    inputTexts: string[];
     isInjection: boolean;
     expectsIssues: boolean;
   };
@@ -126,10 +129,11 @@ function textsOf(v: unknown, out: string[] = []): string[] {
   return out;
 }
 
-function verifiedTexts(inv: Investigation): string[] {
-  const out: string[] = [];
+function nodeTexts(inv: Investigation): { verified: string[]; unverified: string[]; verifiedDeterioration: boolean } {
+  const out = { verified: [] as string[], unverified: [] as string[], verifiedDeterioration: false };
   const walk = (n: Investigation["tree"]) => {
-    if (n.status === "verified" && n.text.trim()) out.push(n.text);
+    if (n.text.trim()) (n.status === "verified" ? out.verified : out.unverified).push(n.text);
+    if (n.status === "verified" && (n.deterioration === "natural" || n.deterioration === "forced")) out.verifiedDeterioration = true;
     n.children.forEach(walk);
   };
   walk(inv.tree);
@@ -159,7 +163,8 @@ export function buildCalls(c: EvalCase, base: EvalCase | null): EvalCall[] {
   const injectionGuide = isInjection ? c.grading : null;
   const inputTexts = [...textsOf(c.input), ...textsOf(c.requests)];
   const expectsIssues = Array.isArray(grading.challenge?.mustFlag) && grading.challenge.mustFlag.length > 0;
-  const verifiedNodeTexts = verifiedTexts(inv);
+  const nodes = nodeTexts(inv);
+  const referenceTexts = [...textsOf(grading), ...textsOf(c.grading)];
   const caseInfo = { title: c.title, summary: c.summary ?? "", tests: c.tests ?? "" };
 
   const mk = (
@@ -180,8 +185,11 @@ export function buildCalls(c: EvalCase, base: EvalCase | null): EvalCall[] {
     injectionGuide,
     checks: {
       spec: { ...c.hardChecks, ...extraSpec },
-      allowedNumbers: buildAllowedNumbers(c.hardChecks, inputTexts, request.context),
-      verifiedNodeTexts,
+      allowedNumbers: buildAllowedNumbers(c.hardChecks, inputTexts, request.context, referenceTexts),
+      verifiedNodeTexts: nodes.verified,
+      unverifiedNodeTexts: nodes.unverified,
+      verifiedDeterioration: nodes.verifiedDeterioration,
+      inputTexts,
       isInjection,
       expectsIssues,
     },
