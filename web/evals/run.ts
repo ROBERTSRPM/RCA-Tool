@@ -11,7 +11,7 @@ import { getModel, hasApiKey } from "../lib/ai/anthropic";
 import { modelCall } from "../lib/ai/handler";
 import { mockModel } from "../lib/ai/mock";
 import { SYSTEM_PROMPT } from "../lib/ai/prompts";
-import { buildAllCalls, EVALS_DIR, filterCases, loadCases, parseFeatureFilter, type EvalCall } from "./cases";
+import { buildAllCalls, coreCases, EVALS_DIR, filterCases, loadCases, parseFeatureFilter, type EvalCall } from "./cases";
 import { runHardChecks } from "./checks";
 import { compare, DEFAULT_THRESHOLD, loadBaseline, makeBaseline } from "./gate";
 import { buildJudgePrompt, getJudgeModel, JUDGE_SYSTEM, judge } from "./judge";
@@ -22,10 +22,11 @@ import { selfTest } from "./selftest";
 
 const HELP = `Usage: npm run evals -- [options]   (run from web/)
 
-  --cases <list>        Case ids to run: case-03,injection-02, numbers (3), ranges (1-5), or the groups case / injection. Default: all 30.
+  --all                 Run all 30 cases (about twice the cost of the default). For occasional deep checks. Its scores are not compared with the baseline and cannot write one.
+  --cases <list>        Case ids to run: case-03,injection-02, numbers (3), ranges (1-5), or the groups case / injection. Default: the 15-case core set in evals/core.json. A filtered run never fails the gate.
   --features <list>     coach, challenge, capa, draft, or draft:problem|report|summary. Default: all.
-  --dry-run             Build every prompt and run the hard checks on mock outputs. No API calls, no key needed.
-  --update-baseline     After a full run, write evals/baseline.json (use only for a run the owner accepts).
+  --dry-run             Build every prompt (all 30 cases unless --cases is given) and run the hard checks on mock outputs. No API calls, no key needed. Prints the cost estimate for the core run and for --all.
+  --update-baseline     After a default (core) run, write evals/baseline.json (use only for a run the owner accepts).
   --threshold <n>       Largest allowed drop per feature before the gate fails. Default ${DEFAULT_THRESHOLD}.
   --concurrency <n>     Parallel cases of work. Default 4.
   --baseline <file>     Baseline file. Default evals/baseline.json.
@@ -134,7 +135,7 @@ const OUT_TOKENS: Record<string, number> = { "coach:node": 1200, "coach:tree": 1
 const THINKING_TOKENS = 1500;
 const JUDGE_OUT = 400;
 
-async function dryRun(calls: EvalCall[], concurrency: number): Promise<number> {
+async function dryRun(calls: EvalCall[], concurrency: number, coreIds: Set<string>): Promise<number> {
   // The mock refuses to run in production; the dry run is a local tool, so make sure it is not.
   (process.env as Record<string, string | undefined>).NODE_ENV = process.env.NODE_ENV === "production" ? "development" : process.env.NODE_ENV;
   process.env.AI_MOCK = "1";
@@ -146,6 +147,7 @@ async function dryRun(calls: EvalCall[], concurrency: number): Promise<number> {
   const modelName = getModel();
   const judgeName = getJudgeModel();
   const est = { m: zeroUsage(), j: zeroUsage() };
+  const estCore = { m: zeroUsage(), j: zeroUsage(), n: 0 };
   const promptTokens: number[] = [];
   const rows = await pool(calls, Math.max(concurrency, 16), async (call) => {
     const m = modelCall(call.request);
@@ -159,8 +161,15 @@ async function dryRun(calls: EvalCall[], concurrency: number): Promise<number> {
   rows.forEach((r, idx) => {
     promptTokens.push(r.inTok);
     const sysCached = idx > 0 ? r.sys : 0;
-    est.m = addUsage(est.m, { input: r.inTok - sysCached, output: r.outTok + THINKING_TOKENS, cacheRead: sysCached, cacheWrite: 0 });
-    est.j = addUsage(est.j, { input: r.jIn, output: JUDGE_OUT + THINKING_TOKENS, cacheRead: 0, cacheWrite: 0 });
+    const mu = { input: r.inTok - sysCached, output: r.outTok + THINKING_TOKENS, cacheRead: sysCached, cacheWrite: 0 };
+    const ju = { input: r.jIn, output: JUDGE_OUT + THINKING_TOKENS, cacheRead: 0, cacheWrite: 0 };
+    est.m = addUsage(est.m, mu);
+    est.j = addUsage(est.j, ju);
+    if (coreIds.has(r.call.caseId)) {
+      estCore.m = addUsage(estCore.m, mu);
+      estCore.j = addUsage(estCore.j, ju);
+      estCore.n++;
+    }
     const schemaBad = r.a.checks.find((c) => c.name === "schemaValid" && !c.pass);
     if (schemaBad) {
       bad++;
@@ -174,13 +183,22 @@ async function dryRun(calls: EvalCall[], concurrency: number): Promise<number> {
     log(`Other hard checks that flagged the generic mock answers (expected, the mock is canned text, not a model): ${checkFailures.length}`);
     for (const f of checkFailures.slice(0, 5)) log(`  ${f}`);
   }
-  const mc = costOf(est.m, modelName);
-  const jc = costOf(est.j, judgeName);
+  const sum = (label: string, n: number, e: { m: Usage; j: Usage }) => {
+    const mc = costOf(e.m, modelName);
+    const jc = costOf(e.j, judgeName);
+    log(`${label}: ${n} answers (ESTIMATE: real prompt sizes, assumed output sizes incl. ${THINKING_TOKENS} thinking tokens, system prompt cached)`);
+    log(`  model ${modelName}: ${e.m.input + e.m.cacheRead} in, ${e.m.output} out, ${fmtUsd(mc)}`);
+    log(`  judge ${judgeName}: ${e.j.input} in, ${e.j.output} out, ${fmtUsd(jc)}`);
+    log(`  total ${fmtUsd(mc !== null && jc !== null ? mc + jc : null)}`);
+  };
   log("");
-  log(`Pre-flight estimate for a real run of these ${calls.length} answers (ESTIMATE: real prompt sizes, assumed output sizes incl. ${THINKING_TOKENS} thinking tokens, system prompt cached):`);
-  log(`  model ${modelName}: ${est.m.input + est.m.cacheRead} in, ${est.m.output} out, ${fmtUsd(mc)}`);
-  log(`  judge ${judgeName}: ${est.j.input} in, ${est.j.output} out, ${fmtUsd(jc)}`);
-  log(`  total ${fmtUsd(mc !== null && jc !== null ? mc + jc : null)}`);
+  if (estCore.n > 0 && estCore.n < calls.length) {
+    sum(`Pre-flight estimate for the default real run (core set, ${new Set(calls.filter((c) => coreIds.has(c.caseId)).map((c) => c.caseId)).size} cases)`, estCore.n, estCore);
+    log("");
+    sum("Pre-flight estimate for a real run with --all", calls.length, est);
+  } else {
+    sum(`Pre-flight estimate for a real run of these ${calls.length} answers`, calls.length, est);
+  }
   const ok = bad === 0 && st.failures.length === 0;
   log(ok ? "\nDRY RUN PASSED" : "\nDRY RUN FAILED");
   return ok ? 0 : 2;
@@ -193,6 +211,7 @@ async function main(): Promise<number> {
     options: {
       cases: { type: "string" },
       features: { type: "string" },
+      all: { type: "boolean", default: false },
       "dry-run": { type: "boolean", default: false },
       "update-baseline": { type: "boolean", default: false },
       threshold: { type: "string" },
@@ -212,17 +231,25 @@ async function main(): Promise<number> {
     log("--threshold must be a number >= 0 and --concurrency a whole number >= 1.");
     return 2;
   }
-  const all = loadCases();
-  const cases = filterCases(all, o.cases);
+  const everything = loadCases();
+  const core = coreCases(everything);
+  const casesFilter = o.cases === "all" ? undefined : o.cases;
+  if (o.all && casesFilter) {
+    log("Use either --all or --cases, not both.");
+    return 2;
+  }
+  // Default: the core set. --all or --cases all: every case. --cases <list>: just those (a filtered run).
+  const runAll = Boolean(o.all) || o.cases === "all";
+  const cases = casesFilter ? filterCases(everything, casesFilter) : runAll || o["dry-run"] ? everything : core;
   const featureOk = parseFeatureFilter(o.features);
-  const calls = buildAllCalls(cases, all, featureOk);
+  const calls = buildAllCalls(cases, everything, featureOk);
   if (!calls.length) {
     log("Nothing to run: the filters match no calls.");
     return 2;
   }
-  const partial = Boolean(o.cases && o.cases !== "all") || Boolean(o.features && o.features !== "all");
+  const partial = Boolean(casesFilter) || Boolean(o.features && o.features !== "all");
 
-  if (o["dry-run"]) return dryRun(calls, concurrency);
+  if (o["dry-run"]) return dryRun(calls, concurrency, new Set(core.map((c) => c.id)));
 
   if (!hasApiKey()) {
     log("ANTHROPIC_API_KEY is not set. Set it in the environment (never in a file) or use --dry-run.");
@@ -232,7 +259,7 @@ async function main(): Promise<number> {
   const model = getModel();
   const judgeModel = getJudgeModel();
   const startedAt = new Date().toISOString();
-  log(`Running ${calls.length} answers over ${cases.length} cases. Model ${model}, judge ${judgeModel}, concurrency ${concurrency}.`);
+  log(`Running ${calls.length} answers over ${cases.length} cases (${casesFilter ? "filtered" : runAll ? "all" : "core set"}). Model ${model}, judge ${judgeModel}, concurrency ${concurrency}.`);
   let done = 0;
   const items = await pool(calls, concurrency, async (call) => {
     const item = await evalReal(call);
@@ -245,7 +272,7 @@ async function main(): Promise<number> {
   const stats = featureStats(items);
   const baselineFile = o.baseline ? path.resolve(o.baseline) : path.join(EVALS_DIR, "baseline.json");
   const baseline = loadBaseline(baselineFile);
-  const gate = compare(stats, baseline, { threshold, partial, model, judgeModel });
+  const gate = compare(stats, baseline, { threshold, partial, model, judgeModel, caseIds: cases.map((c) => c.id) });
   const totals = {
     model: items.reduce((u: Usage, i) => addUsage(u, i.modelUsage), zeroUsage()),
     judge: items.reduce((u: Usage, i) => addUsage(u, i.judgeUsage), zeroUsage()),
@@ -272,11 +299,11 @@ async function main(): Promise<number> {
     return 2;
   }
   if (o["update-baseline"]) {
-    if (partial) {
-      log("Refusing to write a baseline from a filtered run. Run all cases and features.");
+    if (partial || runAll) {
+      log("Refusing to write a baseline from a filtered or --all run. Run the default core set with all features.");
       return 2;
     }
-    fs.writeFileSync(baselineFile, JSON.stringify(makeBaseline(stats, model, judgeModel), null, 2) + "\n");
+    fs.writeFileSync(baselineFile, JSON.stringify(makeBaseline(stats, model, judgeModel, cases.map((c) => c.id)), null, 2) + "\n");
     log(`Baseline written to ${baselineFile}.`);
     return 0;
   }

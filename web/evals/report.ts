@@ -118,7 +118,9 @@ export function renderMarkdown(args: {
         ? "FAIL: regression against the baseline."
         : gate.status === "no_baseline"
           ? "NO BASELINE: nothing was compared (gate not enforced)."
-          : "PARTIAL RUN: gate not enforced.";
+          : gate.status === "set_mismatch"
+            ? "BASELINE FROM A DIFFERENT CASE SET: nothing was compared (gate not enforced)."
+            : "PARTIAL RUN: gate not enforced.";
   L.push(`- Result: **${verdict}**`);
   L.push("");
   L.push(`## Score per feature (0 to 10)`);

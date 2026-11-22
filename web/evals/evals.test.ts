@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { AiError } from "../lib/ai/anthropic";
-import { buildAllCalls, filterCases, loadCases, parseFeatureFilter } from "./cases";
+import { buildAllCalls, coreCases, filterCases, loadCases, loadCoreIds, parseFeatureFilter } from "./cases";
 import { runHardChecks } from "./checks";
 import { compare, makeBaseline, type Baseline } from "./gate";
 import { parseJudgement } from "./judge";
@@ -36,6 +36,17 @@ describe("cases", () => {
   it("loads 25 cases and 5 injection cases and builds 7 calls each", () => {
     expect(all.length).toBe(30);
     expect(calls.length).toBe(210);
+  });
+  it("the core set is 12 regular and 3 injection cases, all existing, covering every feature", () => {
+    const core = coreCases(all);
+    expect(core.length).toBe(15);
+    expect(core.filter((c) => c.kind === "injection").length).toBe(3);
+    expect(new Set(loadCoreIds()).size).toBe(15);
+    const coreCalls = buildAllCalls(core, all, () => true);
+    expect(coreCalls.length).toBe(105);
+    expect(new Set(coreCalls.map((c) => c.label.replace(/^(coach|draft:\w+|capa).*/, "$1").replace(/^challenge$/, "challenge"))).size).toBe(6);
+    expect(new Set(coreCalls.map((c) => c.feature))).toEqual(new Set(["coach", "challenge", "capa", "draft"]));
+    expect(() => coreCases(all, ["case-99"])).toThrow();
   });
   it("filters cases and features", () => {
     expect(filterCases(all, "3,injection-02").map((c) => c.id)).toEqual(["case-03", "injection-02"]);
@@ -102,7 +113,14 @@ describe("scoring and gate", () => {
     expect(compare(stats, base(9, 0), { ...opts, partial: true }).status).toBe("partial");
   });
   it("makeBaseline round trips into a passing compare", () => {
-    expect(compare(stats, makeBaseline(stats, "m", "j"), opts).status).toBe("pass");
+    expect(compare(stats, makeBaseline(stats, "m", "j", ["case-01", "case-02"]), { ...opts, caseIds: ["case-02", "case-01"] }).status).toBe("pass");
+  });
+  it("refuses to compare with a baseline made from a different case set", () => {
+    const b = makeBaseline(stats, "m", "j", ["case-01", "case-02"]);
+    expect(compare(stats, b, { ...opts, caseIds: ["case-01", "case-02", "case-03"] }).status).toBe("set_mismatch");
+    const old: Baseline = { ...b };
+    delete old.caseIds;
+    expect(compare(stats, old, { ...opts, caseIds: ["case-01", "case-02"] }).status).toBe("set_mismatch");
   });
   it("markdown escapes html outside code fences and never breaks the fence", () => {
     const evil = item({ score: 1, answer: { t: "```<img src=x onerror=1>```" }, judge: { score: 1, met: [], missed: ["<b>x</b>"], violations: [], reason: "<script>" } });

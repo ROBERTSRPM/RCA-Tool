@@ -13,6 +13,22 @@ import { buildAllowedNumbers, type HardChecksSpec } from "./checks";
 
 export const EVALS_DIR = path.resolve(import.meta.dirname, "../../evals");
 export const CASES_DIR = path.join(EVALS_DIR, "cases");
+export const CORE_FILE = path.join(EVALS_DIR, "core.json");
+
+/** The case ids of the default "core" set, from evals/core.json. */
+export function loadCoreIds(file = CORE_FILE): string[] {
+  const j = JSON.parse(fs.readFileSync(file, "utf8")) as { cases?: { id?: unknown }[] };
+  const ids = (j.cases ?? []).map((c) => c.id);
+  if (!ids.length || ids.some((id) => typeof id !== "string")) throw new Error("evals/core.json: expected a non-empty cases list of { id, why }");
+  return ids as string[];
+}
+
+/** The cases of the core set. Throws if core.json names a case that does not exist. */
+export function coreCases(all: EvalCase[], coreIds = loadCoreIds()): EvalCase[] {
+  const missing = coreIds.filter((id) => !all.some((c) => c.id === id));
+  if (missing.length) throw new Error(`evals/core.json names unknown case(s): ${missing.join(", ")}`);
+  return all.filter((c) => coreIds.includes(c.id));
+}
 
 export interface EvalCase {
   id: string;

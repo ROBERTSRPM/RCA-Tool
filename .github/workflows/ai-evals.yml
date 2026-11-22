@@ -1,7 +1,7 @@
 name: AI evals
 
 # Runs the RCA Pilot AI eval set and fails the check if quality regressed against evals/baseline.json.
-# Needs the repo secret ANTHROPIC_API_KEY (see evals/README.md). Without it the paid run is skipped
+# The paid run uses the default 15-case core set (evals/core.json); the dry run covers all 30. Needs the repo secret ANTHROPIC_API_KEY (see evals/README.md). Without it the paid run is skipped
 # with a clear message and the check does not fail.
 
 on:
@@ -60,7 +60,7 @@ jobs:
 
       - run: npm ci
 
-      - name: Dry run (builds every prompt, tests the hard checks, no API calls)
+      - name: Dry run (builds every prompt for all 30 cases, tests the hard checks, no API calls)
         run: npm run evals -- --dry-run
 
       - name: Check for the API key
@@ -78,7 +78,7 @@ jobs:
             echo "$msg" >> "$GITHUB_STEP_SUMMARY"
           fi
 
-      - name: Run evals (compare with baseline)
+      - name: Run evals (default core set, compare with baseline)
         id: run
         if: steps.key.outputs.present == 'true'
         env:

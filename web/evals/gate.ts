@@ -16,6 +16,10 @@ export interface Baseline {
   model: string;
   judgeModel: string;
   note: string;
+  /** The case set the baseline was made from: "core" (the default) or "all". Absent in old files. */
+  caseSet?: string;
+  /** The exact case ids in that run, sorted. A baseline is only compared with a run of the same ids. */
+  caseIds?: string[];
   features: Record<string, BaselineFeature>;
 }
 
@@ -28,7 +32,7 @@ export function loadBaseline(file: string): Baseline | null {
   }
 }
 
-export function makeBaseline(stats: Record<string, FeatureStats>, model: string, judgeModel: string, now = new Date()): Baseline {
+export function makeBaseline(stats: Record<string, FeatureStats>, model: string, judgeModel: string, caseIds: string[], now = new Date(), caseSet = "core"): Baseline {
   const features: Record<string, BaselineFeature> = {};
   for (const [f, s] of Object.entries(stats)) {
     if (s.meanScore === null) continue;
@@ -44,6 +48,8 @@ export function makeBaseline(stats: Record<string, FeatureStats>, model: string,
     updatedAt: now.toISOString(),
     model,
     judgeModel,
+    caseSet,
+    caseIds: [...caseIds].sort(),
     note: "Per-feature mean judge score (0-10; a hard-check failure counts as 0) and number of items with a hard-check failure. Written by the eval runner with --update-baseline.",
     features,
   };
@@ -62,7 +68,7 @@ export interface GateRow {
   hardRegressed: boolean;
 }
 export interface GateResult {
-  status: "pass" | "fail" | "no_baseline" | "partial";
+  status: "pass" | "fail" | "no_baseline" | "partial" | "set_mismatch";
   threshold: number;
   rows: GateRow[];
   notes: string[];
@@ -72,12 +78,25 @@ export interface GateResult {
 export function compare(
   stats: Record<string, FeatureStats>,
   baseline: Baseline | null,
-  opts: { threshold: number; partial: boolean; model: string; judgeModel: string },
+  opts: { threshold: number; partial: boolean; model: string; judgeModel: string; caseIds?: string[] },
 ): GateResult {
   const notes: string[] = [];
   if (opts.partial) return { status: "partial", threshold: opts.threshold, rows: [], notes: ["Filtered run (--cases or --features): the gate is not enforced because scores are not comparable to a full-run baseline."] };
   if (!baseline) {
     return { status: "no_baseline", threshold: opts.threshold, rows: [], notes: ["No baseline.json yet, so there is nothing to compare with. The gate is NOT enforced. Run with --update-baseline once the owner accepts a run."] };
+  }
+  if (opts.caseIds) {
+    const now = [...opts.caseIds].sort().join(",");
+    const then = baseline.caseIds ? [...baseline.caseIds].sort().join(",") : null;
+    if (then !== now) {
+      const how = then === null ? "does not record which cases it was made from" : `was made from ${baseline.caseIds!.length} cases`;
+      return {
+        status: "set_mismatch",
+        threshold: opts.threshold,
+        rows: [],
+        notes: [`The baseline ${how}, but this run used ${opts.caseIds.length} cases (a different set). Scores are not comparable, so the gate is NOT enforced. Run the default core set with --update-baseline to make a matching baseline.`],
+      };
+    }
   }
   if (baseline.model !== opts.model) notes.push(`Model differs from the baseline (${baseline.model} then, ${opts.model} now).`);
   if (baseline.judgeModel !== opts.judgeModel) notes.push(`Judge differs from the baseline (${baseline.judgeModel} then, ${opts.judgeModel} now): scores may not be comparable.`);
