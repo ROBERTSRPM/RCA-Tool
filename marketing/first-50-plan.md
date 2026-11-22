@@ -1,7 +1,7 @@
 # First 50 plan: 6 weeks (draft for owner review)
 
 Sized for 5 to 8 hours a week around a full-time job. Nothing is posted or sent without the owner's review.
-Pricing in this plan is a DRAFT: A$2,500 90-day site pilot, then A$450 a month per site, ex GST.
+Pricing is not set. Answer "how much?" with: "We're setting pricing with our first sites. I'll take you through it on a call."
 
 Goal for the 6 weeks: 5 design partners signed up, and the first conversations with a second wave of cold contacts. Fifty paying users is a longer game. Treat this as the first leg.
 
@@ -12,7 +12,7 @@ Dates assume Monday 23 November 2026 as week 1. Weeks 5 and 6 fall over Christma
 For 5 sites:
 - The 90-day pilot, with the owner setting up the asset register and co-leading the first 1 or 2 real RCAs.
 - Pilot fee waived or reduced in return for: using it on real failures, written feedback by email every two weeks, and a short case study (with the site's approval and naming only if they agree).
-- Owner decision: the old LAUNCH-PLAN has no fee for the first 3 months. The pricing draft says A$2,500 pilot. Pick one: fee waived for design partners, half price, or full price with credit.
+- Owner decision: set the design-partner terms with the first sites. Until then, do not quote a price.
 - Owner decision: the old plan says a 30-minute feedback call every two weeks. Email only is the rule. Offer written feedback by default, and a short meeting only if the partner asks for one.
 - Cap it at 5. Say so. A cap is honest and makes a decision easier.
 
@@ -55,7 +55,7 @@ Every Friday, 15 minutes: update stages, count the week's numbers, set next week
 - Turn the best conversations into pilot offers. Send the pilot summary by email. (2 h)
 - Follow up cold notes from week 3. (1 h)
 - Post 6 and post 7. (1.5 h)
-- Answer "how much?" with the draft pricing reply. (0.5 h)
+- Answer "how much?" with the standard line (outreach-templates.md section 6). (0.5 h)
 - Collect one question per person: what stopped them? Put it in the sheet. (0.5 h)
 - Metric: 2 design partners agreed in principle. 20 cold contacts reached.
 

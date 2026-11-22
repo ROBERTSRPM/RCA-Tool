@@ -1,11 +1,11 @@
 # Owner actions: what only you can do
 
-Email only. Nothing here has been sent or posted. Pricing is a DRAFT (A$2,500 90-day pilot, then A$450 a month per site, ex GST).
+Email only. Nothing here has been sent or posted. Pricing is not set. Answer "how much?" with: "We're setting pricing with our first sites. I'll take you through it on a call."
 
 ## Decisions (30 minutes in total, do these first)
 
-- [ ] **Design-partner terms.** Pilot fee waived, reduced, or full price credited later? The old plan had no fee for 3 months, the pricing draft says A$2,500. Pick one. (10 min)
-- [ ] **Pricing draft.** Keep A$2,500 and A$450 as drafts for the first conversations, or change them. (10 min)
+- [ ] **Design-partner terms.** Decide the terms to agree with the first 5 sites. Until then, do not quote a price. (10 min)
+- [ ] **Pricing.** Set pricing with the first sites. Do not quote a number until you have decided. (10 min)
 - [ ] **Feedback format.** Written email feedback every two weeks, with a short meeting only if the partner asks? (2 min)
 - [ ] **Teams and sites.** Build before the first pilots end (recommended in LAUNCH-PLAN) or later. (5 min)
 - [ ] **Support address.** Keep roberts@intelbeyond.com or use support@rcapilot.com. (2 min)
@@ -14,7 +14,7 @@ Email only. Nothing here has been sent or posted. Pricing is a DRAFT (A$2,500 90
 
 - [ ] **ABN and trading entity** for invoices and Stripe. If not decided yet, ask an accountant. (30 min to decide, 1 to 2 hours if registering)
 - [ ] **Stripe account** with the ABN, for invoices and subscriptions. (30 min)
-- [ ] **GST registration check.** Prices are quoted ex GST. Confirm whether you must register and what your invoices must show. (accountant, 30 min)
+- [ ] **GST registration check.** Once pricing is set, confirm whether you must register and what your invoices must show. (accountant, 30 min)
 - [ ] **Terms and privacy pages reviewed** by someone qualified before the first payment. (1 to 2 hours, plus reviewer time)
 
 ## Accounts and settings (from OWNER-TODO.md)

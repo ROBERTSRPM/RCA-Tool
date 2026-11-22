@@ -2,7 +2,7 @@
 
 Voice: plain, first person, plant language. Short sentences.
 The 4am story uses the figures from the demo script (illustrative: 6 events a year, about 6,000 packs on hold). Replace them with what you remember from real events before posting. Mark any invented example as an example.
-Pricing is a DRAFT everywhere it appears.
+Do not state a price in any post.
 Links: demo https://youtu.be/3_s0V_pwHdE , explainer https://youtu.be/b_pNSfn9jjI
 LinkedIn tip: put the link in the first comment, not the post body.
 Suggested order: 1, 2, 3 in weeks 1 and 2. Spread the rest over the plan.
@@ -166,4 +166,4 @@ If you manage maintenance, reliability, operations or CI at a site like that, em
 Demo: https://youtu.be/3_s0V_pwHdE
 Why repeat failures cost so much: https://youtu.be/b_pNSfn9jjI
 
-[Owner: describe the terms only after you've decided them. Don't state a price in the post unless you want to. The draft price is A$2,500 for the 90-day pilot, then A$450 a month per site, ex GST.]
+[Owner: describe the terms only after you've decided them. Don't state a price in the post. If asked in the comments, reply: "We're setting pricing with our first sites. I'll take you through it on a call."]

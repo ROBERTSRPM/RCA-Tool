@@ -1,6 +1,6 @@
 # Ideal customer profile (draft for owner review)
 
-Pricing referenced here is a DRAFT: A$2,500 90-day site pilot, then A$450 a month per site, ex GST. Not final.
+Pricing is not set. Answer "how much?" with: "We're setting pricing with our first sites. I'll take you through it on a call."
 
 ## Who we sell to
 
@@ -61,7 +61,7 @@ Good question to open with: "What failure did you have to explain to management 
 | "AI on plant data. Is it safe?" | The AI only suggests. Your people accept or dismiss every item. Nothing is marked verified because of a suggestion. Investigation text goes to the AI provider only to answer that request. Check the provider's current terms and the site's privacy page before quoting more. |
 | "Where is our data held?" | In Australia (Sydney region). Confirm this is still true before saying it (LAUNCH-PLAN notes it as a goal for the privacy page). |
 | "It's one person's side project. What if it disappears?" | Be straight about it. Data can be exported at any time. The owner has run plants and uses the tool on real failures. A 90-day pilot limits the risk on both sides. |
-| "A$2,500 and A$450 a month (draft) is more than we can sign off." | One avoided breakdown on a critical asset usually costs more than a year's fee. The pilot fee is set to sit under a manager's own approval limit. Check the site's limit before the conversation. |
+| "The price is more than we can sign off." | Say: "We're setting pricing with our first sites. I'll take you through it on a call." Then ask what a repeat failure on a critical asset costs them in a year, and who approves spend at that level. The 30-day stop in the founding-site offer caps the risk. Check the site's approval limit before the conversation. |
 | "Our IT will want a security review." | A short security summary is on the owner's list (see owner-actions.md). Until then, say so and offer it by email. |
 | "We tried RCA software before and nobody used it." | Ask what stopped them. Usually it was too heavy or nobody owned follow-up. The pilot is built around one or two real failures, not a rollout to everyone. |
 | "Will it replace our reliability engineer?" | No. It makes their analysis quicker and keeps a record. The AI suggests, they decide. |
