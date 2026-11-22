@@ -73,3 +73,17 @@ Investigation steps (problem, verify, report, cause tree), Dashboard and Assets 
 
 ## Result
 PASS
+
+## Retest of commit a47bbab
+Checks: lint, tsc and build pass; 31 test files, 393 tests pass. Retested signed in, on a build pointed at the project's Supabase, with one test investigation of 2 actions (one In progress). The test investigation was deleted through the Delete button. No AI, no SQL.
+
+1. Saving state: fixed. A tick shows "Saving…" and the box is disabled for the roughly 2.5 s the save takes. A reload during the save raises the browser leave warning. After the save the tick persisted across a reload.
+2. In progress: fixed. Ticking then unticking an In progress action puts it back to "In progress".
+3. Asset label: fixed. The list and the CSV show "Conveyor C-2" and "Slurry pump P-101", not doubled.
+4. Keyboard: fixed. Space on a tick box in the Open list moves focus to the next row's box. The live message reads "Marked done. 1 open action.". When the last row is ticked, focus goes to the page heading and the message reads "Marked done. 0 open actions.".
+
+Regression: the Actions list, filters, CSV download, dashboard tiles (open 0, overdue 0 after both ticks) and the investigation's actions step ("2 of 2 done") agree and show no console errors.
+
+Not rerun: the demo-mode (signed-out) suite; only signed-in paths were rechecked.
+
+Result of retest: PASS
