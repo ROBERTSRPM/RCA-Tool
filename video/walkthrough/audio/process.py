@@ -11,7 +11,7 @@ from scipy.ndimage import minimum_filter1d, uniform_filter1d
 SR = 48000
 # scene -> list of (part, start, end) source seconds; segments are joined with 0.2 s of silence
 CUTS = {
- 1: [(1, 2.3, 65.0)],
+ 1: [(1, 2.3, 30.05), (1, 30.05, 37.9, "s"), (1, 37.9, 65.0)],
  2: [(1, 68.1, 124.5)],
  3: [(1, 128.35, 150.0)],
  4: [(1, 153.4, 198.9), (1, 216.55, 233.3)],
@@ -60,7 +60,8 @@ def shorten(seg_db, seg, thr, maxgap=2.2, keep=1.4):
 
 sos = butter(4, 80, "hp", fs=SR, output="sos")
 REC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "recordings")
-REPL_FILES = {"a": "scene10-line-a", "b": "scene10-line-b", "p": "scene11-line-preventive", "o": "scene15-line-opening"}
+REPL_FILES = {"a": "scene10-line-a", "b": "scene10-line-b", "p": "scene11-line-preventive", "o": "scene15-line-opening", "s": "scene1-line-phones"}
+TRIM_DB = {"s": -3.0}
 def replacement(tag):
     """Owner's re-recorded line for a tagged piece (recordings/<name>.<ext>), or None."""
     fs_ = [f for f in glob.glob(os.path.join(REC, REPL_FILES[tag] + ".*")) if not f.endswith(".wav.tmp")]
@@ -97,6 +98,7 @@ for sc, cuts in CUTS.items():
             m = pyln.Meter(SR); old = seg[np.where(sdb.repeat(H) > floors[p] + 14)[0]] if False else seg
             try: g = 10 ** ((m.integrated_loudness(old) - m.integrated_loudness(r)) / 20)
             except Exception: g = 1.0
+            g *= 10 ** (TRIM_DB.get(tag, 0.0) / 20)  # measured on the processed scene: the integrated match alone left tag s about 3 dB louder than the sentences around it
             parts.append(fade(r * g)); info.append({"part": p, "src": [round(a2, 2), round(b2, 2)], "replaced_by": REPL_FILES[tag], "gain_db": round(20 * np.log10(g), 1)})
             gaps.append(0.18); continue
         pcs, lg = shorten(sdb, seg, floors[p] + 12)

@@ -25,7 +25,7 @@ Scenes 1 and 2 are simple illustrations in the app's style (no footage, no peopl
 | 1 | 4 o'clock Thursday; night shift Line 3 does its 2-hourly seal check | Title card, then a tray sealer line illustration with "LINE 3 SEALER" | OK |
 | 1 | 3 packs into the leak tester, 2 leak along the seal | Leak tester illustration, "2 of 3 leak", bubbles from the flange | OK |
 | 1 | about 6,000 packs on hold | "About 6,000 packs on hold", pallets with HOLD tags | OK |
-| 1 | phones ringing: production manager, then QA manager | Two phone illustrations ringing in turn | OK |
+| 1 | phones ringing: Production Manager, then QA Manager (second ring starts on "QA Manager") | Two phone illustrations ringing in turn | OK |
 | 1 | retailer complained about slack packs last month; 6th time this year | Slack pack illustration, counter 1 to 6 | OK |
 | 1 | general manager would ask two questions | Meeting room, then both questions as text | OK |
 | 2 | find the cause; understand the financial impact; countermeasure; prove it | Four statements appear in turn | OK |

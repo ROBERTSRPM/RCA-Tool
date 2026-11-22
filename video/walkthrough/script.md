@@ -31,7 +31,7 @@ Target durations are authoritative (spoken time at 140 wpm plus a 2 s pause); th
 
 ## Scene 1: The situation (59 s, 132 words)
 
-**Say:** "It's 4 o'clock in the morning on a Thursday, and the night shift on Line 3 is doing its 2-hourly seal check. The operator takes 3 packs off the end of the line and drops them in the leak tester, and 2 of them leak along the seal. That means everything we've packed since the last good check, about 6,000 packs, goes on hold. Then the phones start ringing: first the production manager's at home, then the QA manager's. A retailer already complained about slack packs last month, and this is the 6th time this year. When I ran the operation, this was the call nobody wanted, because I knew the general manager would ask two questions. Why does this keep happening, and what is it actually costing us?"
+**Say:** "It's 4 o'clock in the morning on a Thursday, and the night shift on Line 3 is doing its 2-hourly seal check. The operator takes 3 packs off the end of the line and drops them in the leak tester, and 2 of them leak along the seal. That means everything we've packed since the last good check, about 6,000 packs, goes on hold. Then the phones start ringing. First the Production Manager at home, then the QA Manager. A retailer already complained about slack packs last month, and this is the 6th time this year. When I ran the operation, this was the call nobody wanted, because I knew the general manager would ask two questions. Why does this keep happening, and what is it actually costing us?"
 
 [SFX] Open on the steady hum and rhythmic thump of a tray sealer on a food line, with the clink of trays and a fan. Under the second line, a faint bubbling from the leak tester.
 
@@ -39,7 +39,7 @@ Target durations are authoritative (spoken time at 140 wpm plus a 2 s pause); th
 
 [VISUAL] Plain title card ("It's 4 o'clock in the morning on a Thursday"), then slow stills or simple graphics: a night shift tray sealer under bright light, end-of-line check table, an operator at the end of the line pressing a pack under water in a leak tester with bubbles rising from the flange, a slack pack with a loose lid, red product-hold tags going on pallets, a bedside phone lighting up at night, then a meeting room. Caption: "Line 3 tray sealer, chilled ready meals. Illustrative example." Last 5 s: text "Why does this keep happening? What is it costing us?"
 
-[SFX] Phone ringing at night on "Then the phones start", a second ring tone on "Then the QA manager's". Cut all sound on the final question, then silence for one beat.
+[SFX] Phone ringing at night on "Then the phones start", a second ring tone on "QA Manager". Cut all sound on the final question, then silence for one beat.
 
 [MUSIC] Fades out on the last question.
 

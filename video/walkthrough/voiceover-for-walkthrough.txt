@@ -4,7 +4,7 @@ Read it like you're telling the story to a colleague, at your normal easy pace. 
 
 Scene 1: The situation (59 s)
 It's 4 o'clock in the morning on a Thursday, and the night shift on Line 3 is doing its 2-hourly seal check. The operator takes 3 packs off the end of the line and drops them in the leak tester, and 2 of them leak along the seal. That means everything we've packed since the last good check, about 6,000 packs, goes on hold.
-Then the phones start ringing: first the production manager's at home, then the QA manager's. A retailer already complained about slack packs last month, and this is the 6th time this year.
+Then the phones start ringing. First the Production Manager at home, then the QA Manager. A retailer already complained about slack packs last month, and this is the 6th time this year.
 When I ran the operation, this was the call nobody wanted, because I knew the general manager would ask two questions. Why does this keep happening, and what is it actually costing us?
 
 Scene 2: What we are trying to achieve (42 s)

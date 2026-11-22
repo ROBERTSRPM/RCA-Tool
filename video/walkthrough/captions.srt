@@ -7,594 +7,598 @@ It's 4 o'clock in the morning on a Thursday,
 and the night shift on Line 3 is doing its 2-hourly seal check.
 
 3
-00:00:09,080 --> 00:00:14,750
+00:00:09,080 --> 00:00:12,130
 The operator takes 3 packs off the end of the line and drops them in the leak tester,
 
 4
-00:00:14,800 --> 00:00:18,600
+00:00:12,180 --> 00:00:18,600
 and 2 of them leak along the seal.
 
 5
-00:00:19,040 --> 00:00:27,280
+00:00:19,000 --> 00:00:27,300
 That means everything we've packed since the last good check, about 6,000 packs, goes on hold.
 
 6
-00:00:28,480 --> 00:00:36,020
-Then the phones start ringing: first the production manager's at home, then the QA manager's.
+00:00:28,520 --> 00:00:31,000
+Then the phones start ringing.
 
 7
-00:00:36,720 --> 00:00:44,340
-A retailer already complained about slack packs last month, and this is the 6th time this year.
+00:00:31,300 --> 00:00:36,040
+First the Production Manager at home, then the QA Manager.
 
 8
-00:00:45,160 --> 00:00:49,400
-When I ran the operation, this was the call nobody wanted,
+00:00:36,780 --> 00:00:44,380
+A retailer already complained about slack packs last month, and this is the 6th time this year.
 
 9
-00:00:49,740 --> 00:00:54,310
-because I knew the general manager would ask two questions.
+00:00:45,180 --> 00:00:49,420
+When I ran the operation, this was the call nobody wanted,
 
 10
-00:00:54,360 --> 00:01:01,840
-Why does this keep happening, and what is it actually costing us?
+00:00:49,800 --> 00:00:54,370
+because I knew the general manager would ask two questions.
 
 11
-00:01:03,860 --> 00:01:06,760
-So what do we want?
+00:00:54,420 --> 00:01:01,880
+Why does this keep happening, and what is it actually costing us?
 
 12
-00:01:07,840 --> 00:01:12,380
-First, find the real cause, not just the faulty pack.
+00:01:03,890 --> 00:01:06,790
+So what do we want?
 
 13
-00:01:12,840 --> 00:01:17,260
-Second, understand the financial impact to the business.
+00:01:07,590 --> 00:01:12,410
+First, find the real cause, not just the faulty pack.
 
 14
-00:01:17,820 --> 00:01:21,420
-Third, put in a countermeasure that holds.
+00:01:12,890 --> 00:01:17,290
+Second, understand the financial impact to the business.
 
 15
-00:01:22,020 --> 00:01:25,960
-And finally, prove it, months later.
+00:01:17,830 --> 00:01:21,450
+Third, put in a countermeasure that holds.
 
 16
-00:01:26,500 --> 00:01:31,780
-I'll do it in RCA Pilot, starting from a blank page.
+00:01:22,050 --> 00:01:25,990
+And finally, prove it, months later.
 
 17
-00:01:32,220 --> 00:01:36,960
-The numbers are illustrative, made up to show the method.
+00:01:26,530 --> 00:01:31,810
+I'll do it in RCA Pilot, starting from a blank page.
 
 18
-00:01:37,600 --> 00:01:41,190
-We have 6 events a year, and each one stops the line for 8 hours.
+00:01:32,250 --> 00:01:36,990
+The numbers are illustrative, made up to show the method.
 
 19
-00:01:41,240 --> 00:01:50,470
-The line runs at 3,000 packs an hour, with 45 cents margin a pack.
+00:01:37,610 --> 00:01:41,220
+We have 6 events a year, and each one stops the line for 8 hours.
 
 20
-00:01:50,520 --> 00:02:00,160
-On top of that, each event costs on average about $33,100 in cash.
+00:01:41,270 --> 00:01:50,500
+The line runs at 3,000 packs an hour, with 45 cents margin a pack.
 
 21
-00:02:02,580 --> 00:02:09,010
-So where do we start?
+00:01:50,550 --> 00:02:00,190
+On top of that, each event costs on average about $33,100 in cash.
 
 22
-00:02:09,060 --> 00:02:14,020
-com and make an account with an email and password.
+00:02:02,630 --> 00:02:09,040
+So where do we start?
 
 23
-00:02:14,660 --> 00:02:15,360
-You need an account for the AI buttons.
+00:02:09,090 --> 00:02:14,050
+com and make an account with an email and password.
 
 24
-00:02:14,940 --> 00:02:23,300
-I've prepared one earlier, so I'll start with New investigation.
+00:02:14,670 --> 00:02:15,370
+You need an account for the AI buttons.
 
 25
-00:02:24,560 --> 00:02:27,000
-Step 1 is the Problem.
+00:02:14,970 --> 00:02:23,330
+I've prepared one earlier, so I'll start with New investigation.
 
 26
-00:02:27,400 --> 00:02:30,960
-This is where a lot of investigations go wrong.
+00:02:24,590 --> 00:02:27,030
+Step 1 is the Problem.
 
 27
-00:02:31,400 --> 00:02:36,600
-Somebody writes "seals bad", and everyone moves on.
+00:02:27,430 --> 00:02:30,990
+This is where a lot of investigations go wrong.
 
 28
-00:02:37,500 --> 00:02:40,480
-First I set the Type of failure.
+00:02:31,430 --> 00:02:36,610
+Somebody writes "seals bad", and everyone moves on.
 
 29
-00:02:41,280 --> 00:02:45,440
-A leaking pack is a Process or quality failure.
+00:02:37,510 --> 00:02:40,510
+First I set the Type of failure.
 
 30
-00:02:45,960 --> 00:02:52,150
-Now, nobody writes a perfect problem statement at 4 o'clock in the morning.
+00:02:41,310 --> 00:02:45,470
+A leaking pack is a Process or quality failure.
 
 31
-00:02:52,200 --> 00:03:01,500
-A supervisor just jots rough notes, and that's what Draft problem statement from notes is for.
+00:02:45,990 --> 00:02:52,180
+Now, nobody writes a perfect problem statement at 4 o'clock in the morning.
 
 32
-00:03:02,020 --> 00:03:07,600
-The AI turns the notes into a clear statement, using only what I wrote.
+00:02:52,230 --> 00:03:01,530
+A supervisor just jots rough notes, and that's what Draft problem statement from notes is for.
 
 33
-00:03:08,200 --> 00:03:10,640
-It doesn't guess a cause.
+00:03:02,050 --> 00:03:07,610
+The AI turns the notes into a clear statement, using only what I wrote.
 
 34
-00:03:10,860 --> 00:03:18,340
-It also lists what's missing, under Not in your notes, worth finding out.
+00:03:08,230 --> 00:03:10,650
+It doesn't guess a cause.
 
 35
-00:03:18,600 --> 00:03:20,290
-That's your first round of questions.
+00:03:10,930 --> 00:03:18,370
+It also lists what's missing, under Not in your notes, worth finding out.
 
 36
-00:03:20,340 --> 00:03:26,560
-Then I press Use this draft and correct anything that's wrong.
+00:03:18,630 --> 00:03:20,340
+That's your first round of questions.
 
 37
-00:03:28,400 --> 00:03:31,520
-Two small things matter later.
+00:03:20,390 --> 00:03:26,590
+Then I press Use this draft and correct anything that's wrong.
 
 38
-00:03:32,120 --> 00:03:37,940
-If this started as a non-conformance, put the number in Quality reference.
+00:03:28,430 --> 00:03:31,550
+Two small things matter later.
 
 39
-00:03:38,600 --> 00:03:42,040
-Ours is NCR-2291.
+00:03:32,150 --> 00:03:37,970
+If this started as a non-conformance, put the number in Quality reference.
 
 40
-00:03:43,340 --> 00:03:48,790
-That way the analysis can feed into your QA and CAPA system.
+00:03:38,630 --> 00:03:42,070
+Ours is NCR-2291.
 
 41
-00:03:48,840 --> 00:03:56,440
-Then fill in the Line / process details, so you can find this investigation again.
+00:03:43,370 --> 00:03:48,820
+That way the analysis can feed into your QA and CAPA system.
 
 42
-00:03:57,600 --> 00:04:00,220
-Step 2 is the Loss.
+00:03:48,870 --> 00:03:56,470
+Then fill in the Line / process details, so you can find this investigation again.
 
 43
-00:04:00,620 --> 00:04:03,920
-This is the one the general manager cares about.
+00:03:57,630 --> 00:04:00,250
+Step 2 is the Loss.
 
 44
-00:04:04,160 --> 00:04:09,970
-If you don't have figures yet, choose Not known yet, or put in a rough yearly estimate.
+00:04:00,650 --> 00:04:03,950
+This is the one the general manager cares about.
 
 45
-00:04:10,020 --> 00:04:14,860
-A rough number beats none.
+00:04:04,110 --> 00:04:10,000
+If you don't have figures yet, choose Not known yet, or put in a rough yearly estimate.
 
 46
-00:04:15,880 --> 00:04:22,820
-Here we have 6 events a year, 8 hours each, at 3,000 packs an hour.
+00:04:10,050 --> 00:04:14,890
+A rough number beats none.
 
 47
-00:04:23,200 --> 00:04:27,620
-So each event, we don't make 24,000 packs.
+00:04:15,850 --> 00:04:22,260
+Here we have 6 events a year, 8 hours each, at 3,000 packs an hour.
 
 48
-00:04:29,040 --> 00:04:35,120
-At 45 cents a pack, that's $10,800 of lost margin.
+00:04:22,310 --> 00:04:27,650
+So each event, we don't make 24,000 packs.
 
 49
-00:04:36,120 --> 00:04:36,820
-Then there's the cash.
+00:04:28,930 --> 00:04:35,150
+At 45 cents a pack, that's $10,800 of lost margin.
 
 50
-00:04:36,520 --> 00:04:46,460
-There's the $1,200 call-out, and then everything that quietly adds up under Other costs.
+00:04:36,170 --> 00:04:36,870
+Then there's the cash.
 
 51
-00:04:47,120 --> 00:04:50,140
-Scrapped product is $14,500.
+00:04:36,550 --> 00:04:46,370
+There's the $1,200 call-out, and then everything that quietly adds up under Other costs.
 
 52
-00:04:50,660 --> 00:04:54,340
-Product on hold is $3,200.
+00:04:47,170 --> 00:04:49,760
+Scrapped product is $14,500.
 
 53
-00:04:55,480 --> 00:04:56,180
-Customer claims and credits are $6,800, retailer penalties $5,000, and rework $2,400.
+00:04:49,810 --> 00:04:54,370
+Product on hold is $3,200.
 
 54
-00:04:55,740 --> 00:05:13,200
-Claims and penalties don't hit every event, so these are averages across the year.
+00:04:54,950 --> 00:04:55,740
+Customer claims and credits are $6,800, retailer penalties $5,000, and rework $2,400.
 
 55
-00:05:13,940 --> 00:05:18,900
-That makes $33,100 of cash.
+00:04:55,790 --> 00:05:13,210
+Claims and penalties don't hit every event, so these are averages across the year.
 
 56
-00:05:19,420 --> 00:05:32,160
-So on average, one event costs $43,900, and 6 a year comes to $263,400.
+00:05:14,190 --> 00:05:18,480
+That makes $33,100 of cash.
 
 57
-00:05:33,040 --> 00:05:39,820
-And because the line runs at capacity, that output is gone for good.
+00:05:18,530 --> 00:05:32,470
+So on average, one event costs $43,900, and 6 a year comes to $263,400.
 
 58
-00:05:41,020 --> 00:05:43,740
-Step 3 is Evidence.
+00:05:33,550 --> 00:05:39,790
+And because the line runs at capacity, that output is gone for good.
 
 59
-00:05:44,280 --> 00:05:49,400
-In any plant meeting, that means evidence before opinions,
+00:05:41,050 --> 00:05:43,770
+Step 3 is Evidence.
 
 60
-00:05:50,080 --> 00:05:53,800
-because everyone has a theory about those seals.
+00:05:44,330 --> 00:05:49,430
+In any plant meeting, that means evidence before opinions,
 
 61
-00:05:54,280 --> 00:06:00,220
-Each piece gets a title, a type, a date and a note.
+00:05:50,130 --> 00:05:53,830
+because everyone has a theory about those seals.
 
 62
-00:06:00,980 --> 00:06:08,440
-Here we have a photo of a leaking pack, the sealing temperature log, the jaw inspection,
+00:05:54,310 --> 00:06:00,250
+Each piece gets a title, a type, a date and a note.
 
 63
-00:06:09,100 --> 00:06:15,860
-the settings and changeover record, the film specification, and the interviews.
+00:06:01,010 --> 00:06:08,450
+Here we have a photo of a leaking pack, the sealing temperature log, the jaw inspection,
 
 64
-00:06:16,820 --> 00:06:24,320
-Keep the retained packs and the worn parts, and photograph them before anything gets cleaned up.
+00:06:09,130 --> 00:06:15,890
+the settings and changeover record, the film specification, and the interviews.
 
 65
-00:06:27,400 --> 00:06:31,280
-Now we get to Step 4, the Cause tree.
+00:06:16,850 --> 00:06:24,350
+Keep the retained packs and the worn parts, and photograph them before anything gets cleaned up.
 
 66
-00:06:32,080 --> 00:06:34,760
-This is where the real thinking happens.
+00:06:27,430 --> 00:06:31,310
+Now we get to Step 4, the Cause tree.
 
 67
-00:06:35,060 --> 00:06:39,800
-The top box is the failure event, and we keep asking Why?
+00:06:32,110 --> 00:06:34,790
+This is where the real thinking happens.
 
 68
-00:06:40,380 --> 00:06:41,880
-in plain words.
+00:06:35,130 --> 00:06:39,830
+The top box is the failure event, and we keep asking Why?
 
 69
-00:06:43,020 --> 00:06:45,020
-Why were the packs leaking?
+00:06:40,430 --> 00:06:41,910
+in plain words.
 
 70
-00:06:45,760 --> 00:06:48,680
-Because the seals were weak along the flange.
+00:06:42,910 --> 00:06:45,050
+Why were the packs leaking?
 
 71
-00:06:49,540 --> 00:06:50,260
-Why?
+00:06:45,790 --> 00:06:48,710
+Because the seals were weak along the flange.
 
 72
-00:06:50,720 --> 00:06:56,800
-Because the jaw ran 17 degrees low, and the silicone was worn.
+00:06:49,590 --> 00:06:50,290
+Why?
 
 73
-00:06:57,520 --> 00:06:59,300
-That's the physical cause.
+00:06:49,890 --> 00:06:56,830
+Because the jaw ran 17 degrees low, and the silicone was worn.
 
 74
-00:07:00,180 --> 00:07:04,160
-If we stopped there, we'd be back here in a few weeks.
+00:06:57,390 --> 00:06:59,330
+That's the physical cause.
 
 75
-00:07:04,400 --> 00:07:07,760
-So we ask why it wasn't caught.
+00:07:00,210 --> 00:07:04,190
+If we stopped there, we'd be back here in a few weeks.
 
 76
-00:07:08,680 --> 00:07:14,800
-Nothing in the maintenance plan checks the jaw temperature or replaces that silicone.
+00:07:04,430 --> 00:07:07,790
+So we ask why it wasn't caught.
 
 77
-00:07:15,340 --> 00:07:23,860
-That's the system level, and the real root, so I mark it with This is a root cause.
+00:07:08,710 --> 00:07:14,850
+Nothing in the maintenance plan checks the jaw temperature or replaces that silicone.
 
 78
-00:07:24,780 --> 00:07:28,080
-The other branches work the same way.
+00:07:15,350 --> 00:07:23,890
+That's the system level, and the real root, so I mark it with This is a root cause.
 
 79
-00:07:28,220 --> 00:07:33,460
-Operators raised the speed and cut the dwell time to keep up.
+00:07:25,070 --> 00:07:28,070
+The other branches work the same way.
 
 80
-00:07:33,720 --> 00:07:35,830
-A new film batch came in.
+00:07:28,250 --> 00:07:33,450
+Operators raised the speed and cut the dwell time to keep up.
 
 81
-00:07:35,880 --> 00:07:39,850
-And the seal check was only 3 packs every 2 hours.
+00:07:33,710 --> 00:07:35,840
+A new film batch came in.
 
 82
-00:07:39,900 --> 00:07:47,600
-For each cause, I tick the evidence and mark it Verified or Ruled out.
+00:07:35,890 --> 00:07:39,840
+And the seal check was only 3 packs every 2 hours.
 
 83
-00:07:48,100 --> 00:07:51,740
-If I can't prove it, it stays a theory.
+00:07:39,890 --> 00:07:47,630
+For each cause, I tick the evidence and mark it Verified or Ruled out.
 
 84
-00:07:53,000 --> 00:07:57,820
-With equipment, I always ask one question.
+00:07:48,130 --> 00:07:51,770
+If I can't prove it, it stays a theory.
 
 85
-00:07:58,560 --> 00:08:00,960
-Is the wear natural, or forced?
+00:07:53,030 --> 00:07:57,850
+With equipment, I always ask one question.
 
 86
-00:08:01,600 --> 00:08:05,460
-Silicone on a sealing jaw wears out eventually.
+00:07:58,610 --> 00:08:00,970
+Is the wear natural, or forced?
 
 87
-00:08:06,020 --> 00:08:07,240
-That's natural.
+00:08:01,630 --> 00:08:05,490
+Silicone on a sealing jaw wears out eventually.
 
 88
-00:08:07,760 --> 00:08:15,700
-But running it a year past its life, because nothing prompted anyone to change it, is forced.
+00:08:06,050 --> 00:08:07,270
+That's natural.
 
 89
-00:08:16,340 --> 00:08:21,510
-That's wear we allowed, so I record it under Type of wear.
+00:08:07,790 --> 00:08:15,730
+But running it a year past its life, because nothing prompted anyone to change it, is forced.
 
 90
-00:08:21,560 --> 00:08:29,960
-The same tree also shows as 5 Whys, or as a Fishbone grouped by Cause area.
+00:08:16,390 --> 00:08:21,540
+That's wear we allowed, so I record it under Type of wear.
 
 91
-00:08:31,140 --> 00:08:33,140
-Now the AI help.
+00:08:21,590 --> 00:08:29,990
+The same tree also shows as 5 Whys, or as a Fishbone grouped by Cause area.
 
 92
-00:08:33,760 --> 00:08:38,080
-I treat it as a second pair of eyes, not the boss.
+00:08:31,170 --> 00:08:33,170
+Now the AI help.
 
 93
-00:08:38,860 --> 00:08:43,120
-The Cause coach suggests causes I may have missed.
+00:08:33,810 --> 00:08:38,110
+I treat it as a second pair of eyes, not the boss.
 
 94
-00:08:43,960 --> 00:08:51,300
-Each one says what would confirm it or rule it out, and I choose Add to tree or Dismiss.
+00:08:38,910 --> 00:08:43,150
+The Cause coach suggests causes I may have missed.
 
 95
-00:08:52,200 --> 00:08:55,580
-It suggests product contaminating the flange.
+00:08:43,990 --> 00:08:51,330
+Each one says what would confirm it or rule it out, and I choose Add to tree or Dismiss.
 
 96
-00:08:56,520 --> 00:08:58,970
-I hadn't thought of that, so it goes in.
+00:08:52,230 --> 00:08:55,610
+It suggests product contaminating the flange.
 
 97
-00:08:59,020 --> 00:09:04,480
-It also suggests the seal plate is marked and not flat.
+00:08:56,550 --> 00:08:58,980
+I hadn't thought of that, so it goes in.
 
 98
-00:09:04,840 --> 00:09:07,140
-The inspection found those marks.
+00:08:59,030 --> 00:09:04,510
+It also suggests the seal plate is marked and not flat.
 
 99
-00:09:07,620 --> 00:09:09,400
-So that one goes in too.
+00:09:04,870 --> 00:09:07,170
+The inspection found those marks.
 
 100
-00:09:10,200 --> 00:09:13,500
-Next, I click Challenge my analysis.
+00:09:07,650 --> 00:09:09,430
+So that one goes in too.
 
 101
-00:09:14,380 --> 00:09:18,960
-It reviews the tree the way an experienced investigator would.
+00:09:10,250 --> 00:09:13,530
+Next, I click Challenge my analysis.
 
 102
-00:09:19,740 --> 00:09:24,300
-It points out that the film root cause has no evidence linked.
+00:09:14,390 --> 00:09:18,990
+It reviews the tree the way an experienced investigator would.
 
 103
-00:09:24,640 --> 00:09:28,620
-That's fair, so I link the film specification.
+00:09:19,750 --> 00:09:24,330
+It points out that the film root cause has no evidence linked.
 
 104
-00:09:29,420 --> 00:09:30,350
-The AI suggests.
+00:09:24,690 --> 00:09:28,650
+That's fair, so I link the film specification.
 
 105
-00:09:30,400 --> 00:09:32,100
-You decide.
+00:09:29,450 --> 00:09:30,380
+The AI suggests.
 
 106
-00:09:34,250 --> 00:09:36,510
-Step 5 is Actions.
+00:09:30,430 --> 00:09:32,130
+You decide.
 
 107
-00:09:36,950 --> 00:09:42,810
-This is where a lot of RCAs quietly die, in a list of "we should".
+00:09:34,280 --> 00:09:36,540
+Step 5 is Actions.
 
 108
-00:09:43,610 --> 00:09:48,870
-So every action gets an owner, a due date and a cost.
+00:09:36,980 --> 00:09:42,840
+This is where a lot of RCAs quietly die, in a list of "we should".
 
 109
-00:09:49,770 --> 00:09:52,550
-Corrective actions deal with this failure.
+00:09:43,620 --> 00:09:48,900
+So every action gets an owner, a due date and a cost.
 
 110
-00:09:53,870 --> 00:09:56,440
-Preventive actions stop it from coming back.
+00:09:49,800 --> 00:09:52,580
+Corrective actions deal with this failure.
 
 111
-00:09:56,490 --> 00:10:03,160
-For the jaw, it's a Maintenance task: check the temperature every week,
+00:09:53,900 --> 00:09:56,470
+Preventive actions stop it from coming back.
 
 112
-00:10:03,210 --> 00:10:06,630
-and replace the silicone every 3 months.
+00:09:56,520 --> 00:10:03,190
+For the jaw, it's a Maintenance task: check the temperature every week,
 
 113
-00:10:07,190 --> 00:10:14,350
-For the settings, it's a Design or equipment change, to lock them by recipe.
+00:10:03,240 --> 00:10:06,660
+and replace the silicone every 3 months.
 
 114
-00:10:15,170 --> 00:10:21,050
-For the film, it's a Procedure or standard, with supplier change control.
+00:10:07,220 --> 00:10:14,400
+For the settings, it's a Design or equipment change, to lock them by recipe.
 
 115
-00:10:21,390 --> 00:10:26,910
-And for the seal checks, it's more frequent checks and a faster leak tester.
+00:10:15,200 --> 00:10:21,080
+For the film, it's a Procedure or standard, with supplier change control.
 
 116
-00:10:27,350 --> 00:10:31,870
-The total cost is $20,200.
+00:10:21,420 --> 00:10:26,940
+And for the seal checks, it's more frequent checks and a faster leak tester.
 
 117
-00:10:33,150 --> 00:10:40,050
-If you get stuck for ideas, each root cause has a Suggested actions button.
+00:10:27,380 --> 00:10:31,900
+The total cost is $20,200.
 
 118
-00:10:40,770 --> 00:10:44,250
-Nothing goes in until I click Add to actions.
+00:10:33,180 --> 00:10:40,080
+If you get stuck for ideas, each root cause has a Suggested actions button.
 
 119
-00:10:44,830 --> 00:10:51,730
-And the Quality check lists any gaps, like a root cause with no action against it.
+00:10:40,800 --> 00:10:44,280
+Nothing goes in until I click Add to actions.
 
 120
-00:10:55,070 --> 00:11:02,410
-Now the part almost nobody does: Step 6, proving it stopped.
+00:10:44,820 --> 00:10:51,760
+And the Quality check lists any gaps, like a root cause with no action against it.
 
 121
-00:11:03,150 --> 00:11:06,930
-Savings only count once every action is Done,
+00:10:55,100 --> 00:11:02,820
+Now the part almost nobody does: Step 6, proving it stopped.
 
 122
-00:11:07,270 --> 00:11:11,370
-the review date is in, and the failure hasn't come back.
+00:11:03,180 --> 00:11:06,940
+Savings only count once every action is Done,
 
 123
-00:11:12,010 --> 00:11:16,130
-So, months later, I mark the actions Done.
+00:11:07,320 --> 00:11:11,400
+the review date is in, and the failure hasn't come back.
 
 124
-00:11:16,550 --> 00:11:21,140
-I stay cautious and expect 1 event a year, not zero.
+00:11:12,100 --> 00:11:16,180
+So, months later, I mark the actions Done.
 
 125
-00:11:21,190 --> 00:11:39,820
-That brings the loss down to $43,900 a year, so the verified saving is $219,500.
+00:11:16,580 --> 00:11:21,170
+I stay cautious and expect 1 event a year, not zero.
 
 126
-00:11:39,870 --> 00:11:44,730
-1 months, and we got 40 hours of line time back.
+00:11:21,220 --> 00:11:39,870
+That brings the loss down to $43,900 a year, so the verified saving is $219,500.
 
 127
-00:11:45,830 --> 00:11:49,040
-Then I ask where else this could happen.
+00:11:39,920 --> 00:11:44,760
+1 months, and we got 40 hours of line time back.
 
 128
-00:11:49,090 --> 00:11:53,730
-With Roll out this countermeasure,
+00:11:45,840 --> 00:11:49,050
+Then I ask where else this could happen.
 
 129
-00:11:54,470 --> 00:12:00,270
-I add a check for Lines 1 and 2, each with an owner and a date.
+00:11:49,100 --> 00:11:53,760
+With Roll out this countermeasure,
 
 130
-00:12:01,510 --> 00:12:04,390
-The last step is the Report.
+00:11:54,500 --> 00:12:00,300
+I add a check for Lines 1 and 2, each with an owner and a date.
 
 131
-00:12:04,670 --> 00:12:08,090
-This is where you answer the general manager's two questions.
+00:12:01,540 --> 00:12:04,420
+The last step is the Report.
 
 132
-00:12:08,750 --> 00:12:14,170
-I click Draft report, and it writes the report from everything I've entered.
+00:12:04,700 --> 00:12:08,120
+This is where you answer the general manager's two questions.
 
 133
-00:12:14,770 --> 00:12:19,610
-The Management summary is the one page the general manager will actually read.
+00:12:08,760 --> 00:12:14,200
+I click Draft report, and it writes the report from everything I've entered.
 
 134
-00:12:19,970 --> 00:12:24,000
-I check every fact, because my name goes on it.
+00:12:14,800 --> 00:12:19,640
+The Management summary is the one page the general manager will actually read.
 
 135
-00:12:24,050 --> 00:12:26,770
-Then I Print or Save as PDF.
+00:12:20,000 --> 00:12:24,010
+I check every fact, because my name goes on it.
 
 136
-00:12:27,810 --> 00:12:33,350
-So let's go back to that Thursday morning, and that meeting.
+00:12:24,060 --> 00:12:26,800
+Then I Print or Save as PDF.
 
 137
-00:12:34,510 --> 00:12:36,430
-Why does this keep happening?
+00:12:27,840 --> 00:12:33,380
+So let's go back to that Thursday morning, and that meeting.
 
 138
-00:12:36,950 --> 00:12:42,230
-Because nothing in our system checked the jaw, locked the settings,
+00:12:34,560 --> 00:12:36,460
+Why does this keep happening?
 
 139
-00:12:42,510 --> 00:12:46,370
-controlled the film, or caught a bad seal early.
+00:12:36,980 --> 00:12:42,260
+Because nothing in our system checked the jaw, locked the settings,
 
 140
-00:12:46,690 --> 00:12:49,210
-It was never one unlucky operator.
+00:12:42,520 --> 00:12:46,400
+controlled the film, or caught a bad seal early.
 
 141
-00:12:50,250 --> 00:12:50,950
-What is it costing us?
+00:12:46,740 --> 00:12:49,240
+It was never one unlucky operator.
 
 142
-00:12:50,510 --> 00:12:56,440
-$263,400 a year.
+00:12:50,280 --> 00:12:50,980
+What is it costing us?
 
 143
-00:12:56,490 --> 00:13:02,000
-And the proof the countermeasure works is $219,
+00:12:50,540 --> 00:12:56,470
+$263,400 a year.
 
 144
-00:13:02,050 --> 00:13:09,730
-500 saved and verified, and 40 hours of line time back.
+00:12:56,520 --> 00:13:02,050
+And the proof the countermeasure works is $219,
 
 145
-00:13:10,590 --> 00:13:13,230
-And this is the dashboard.
+00:13:02,100 --> 00:13:09,760
+500 saved and verified, and 40 hours of line time back.
 
 146
-00:13:13,950 --> 00:13:17,010
-You see it all on one screen: what failures are costing you,
+00:13:10,540 --> 00:13:13,260
+And this is the dashboard.
 
 147
-00:13:17,670 --> 00:13:26,330
-what you've saved and verified, and the actions still open.
+00:13:13,960 --> 00:13:17,040
+You see it all on one screen: what failures are costing you,
 
 148
-00:13:27,290 --> 00:13:33,660
-That's the method.
+00:13:17,680 --> 00:13:26,360
+what you've saved and verified, and the actions still open.
 
 149
-00:13:33,710 --> 00:13:34,580
-com.
+00:13:27,300 --> 00:13:33,690
+That's the method.
 
 150
-00:13:34,630 --> 00:13:37,390
+00:13:33,740 --> 00:13:34,600
+com.
+
+151
+00:13:34,660 --> 00:13:37,420
 The link is in the description.
 
