@@ -17,7 +17,7 @@ import { compare, DEFAULT_THRESHOLD, loadBaseline, makeBaseline } from "./gate";
 import { buildJudgePrompt, getJudgeModel, JUDGE_SYSTEM, judge } from "./judge";
 import { addUsage, costOf, fmtUsd, zeroUsage, type Usage } from "./pricing";
 import { featureStats, finalScore, renderMarkdown, type ItemResult } from "./report";
-import { installUsageCapture, runModel } from "./runtime";
+import { installUsageCapture, isFatalStatus, runModel, statusOfDetail } from "./runtime";
 import { selfTest } from "./selftest";
 
 const HELP = `Usage: npm run evals -- [options]   (run from web/)
@@ -32,7 +32,7 @@ const HELP = `Usage: npm run evals -- [options]   (run from web/)
   --baseline <file>     Baseline file. Default evals/baseline.json.
   --out-dir <dir>       Where results go. Default evals/results.
 
-Environment: ANTHROPIC_API_KEY (required for a real run), ANTHROPIC_MODEL (default claude-sonnet-5-5), JUDGE_MODEL (default claude-opus-5-5).`;
+Environment: ANTHROPIC_API_KEY (required for a real run), ANTHROPIC_MODEL (default claude-sonnet-5-5), JUDGE_MODEL (default claude-sonnet-5-5; set claude-opus-5-5 for Opus grading).`;
 
 async function pool<T, R>(items: T[], n: number, fn: (x: T, i: number) => Promise<R>): Promise<R[]> {
   const out = new Array<R>(items.length);
@@ -96,14 +96,26 @@ const blankItem = (call: EvalCall): ItemResult => ({
   judgeUsage: zeroUsage(),
 });
 
+/** Set by the first 400, 401, 402 or 403 from the model or the judge; once set, no further calls are made. */
+const abortState: { reason: string | null } = { reason: null };
+const abortWith = (who: "model" | "judge", status: number, message: string) => {
+  abortState.reason ??= `${who} call refused with HTTP ${status}${message ? `: ${message}` : ""}`;
+};
+
 async function evalReal(call: EvalCall): Promise<ItemResult> {
   const item = blankItem(call);
+  if (abortState.reason) {
+    item.error = "skipped: run aborted";
+    return item;
+  }
   const m = modelCall(call.request);
   const out = await runModel(m.call);
   item.modelUsage = out.usage;
   if (!out.ok) {
     if (out.kind === "error") {
-      item.error = `model call failed after retries (${out.code} ${out.detail})`.trim();
+      item.error = `model call failed after retries (${out.code} ${out.detail}${out.message ? `: ${out.message}` : ""})`.trim();
+      const status = statusOfDetail(out.detail);
+      if (isFatalStatus(status)) abortWith("model", status as number, out.message);
       return item;
     }
     // The model gave nothing usable (refusal, cut off, not JSON): that is a failed answer, scored 0.
@@ -120,10 +132,17 @@ async function evalReal(call: EvalCall): Promise<ItemResult> {
     item.score = 0;
     return item;
   }
+  if (abortState.reason) {
+    item.error = "skipped: run aborted";
+    return item;
+  }
   const j = await judge(call, a.result);
   item.judgeUsage = j.usage;
   if (j.ok) item.judge = j.judgement;
-  else item.judgeError = `judge failed (${j.code})`;
+  else {
+    item.judgeError = `judge failed (${j.code}${j.message ? `: ${j.message}` : ""})`;
+    if (isFatalStatus(j.status)) abortWith("judge", j.status as number, j.message ?? "");
+  }
   item.score = finalScore(item);
   return item;
 }
@@ -268,6 +287,13 @@ async function main(): Promise<number> {
     log(`[${done}/${calls.length}] ${call.callId}: ${state}`);
     return item;
   });
+
+  if (abortState.reason) {
+    const ran = items.filter((i) => i.error !== "skipped: run aborted").length;
+    log(`\nABORTED: ${abortState.reason}`);
+    log(`No further calls were made (${calls.length - ran} of ${calls.length} answers skipped; calls already in flight finished). This is an account, credit or key problem, not a model result. Fix it and run again. No results or baseline were written.`);
+    return 2;
+  }
 
   const stats = featureStats(items);
   const baselineFile = o.baseline ? path.resolve(o.baseline) : path.join(EVALS_DIR, "baseline.json");

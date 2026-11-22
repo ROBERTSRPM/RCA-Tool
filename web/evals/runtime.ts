@@ -10,7 +10,38 @@ import { AsyncLocalStorage } from "node:async_hooks";
 import { AiError, callModel } from "../lib/ai/anthropic";
 import { addUsage, fromApiUsage, zeroUsage, type Usage } from "./pricing";
 
-const store = new AsyncLocalStorage<{ usage: Usage }>();
+const store = new AsyncLocalStorage<{ usage: Usage; apiMessage?: string }>();
+
+/** Statuses that mean the account, key or request is wrong: retrying or running more cases cannot help. */
+export const FATAL_STATUSES = [400, 401, 402, 403];
+export const isFatalStatus = (status: number | null | undefined): boolean => typeof status === "number" && FATAL_STATUSES.includes(status);
+
+/** The human message inside an Anthropic error body ({"error":{"message":...}}), or a short plain-text fallback. */
+export function apiErrorMessage(body: string): string {
+  const clip = (t: string) => t.replace(/\s+/g, " ").trim().slice(0, 300);
+  try {
+    const j = JSON.parse(body) as { error?: { message?: unknown }; message?: unknown };
+    const m = j?.error?.message ?? j?.message;
+    if (typeof m === "string" && m.trim()) return clip(m);
+  } catch {
+    /* not JSON */
+  }
+  return clip(body);
+}
+
+/** Status and message from an SDK error thrown by the judge's own client. */
+export function describeSdkError(err: unknown): { status: number | null; message: string } {
+  const e = err as { status?: unknown; message?: unknown; error?: { error?: { message?: unknown } } } | null;
+  const status = typeof e?.status === "number" ? e.status : null;
+  const inner = e?.error?.error?.message;
+  const message = typeof inner === "string" && inner.trim() ? apiErrorMessage(JSON.stringify({ error: { message: inner } })) : apiErrorMessage(String(e?.message ?? ""));
+  return { status, message };
+}
+
+/** The HTTP status in an AiError's detail (classifyError stores the status code there), if there is one. */
+export function statusOfDetail(detail: string): number | null {
+  return /^\d{3}$/.test(detail) ? Number(detail) : null;
+}
 let patched = false;
 
 export function installUsageCapture(): void {
@@ -21,12 +52,17 @@ export function installUsageCapture(): void {
     const res = await real(input, init);
     const acc = store.getStore();
     const url = typeof input === "string" ? input : input instanceof URL ? input.href : (input as Request).url;
-    if (acc && res.ok && url.includes("/v1/messages")) {
+    if (acc && url.includes("/v1/messages")) {
       try {
-        const body = (await res.clone().json()) as { usage?: unknown };
-        if (body.usage) acc.usage = addUsage(acc.usage, fromApiUsage(body.usage));
+        if (res.ok) {
+          const body = (await res.clone().json()) as { usage?: unknown };
+          if (body.usage) acc.usage = addUsage(acc.usage, fromApiUsage(body.usage));
+        } else {
+          // The app's classifyError keeps only the status (users must see a generic message), so keep the API's message here, for the eval record only.
+          acc.apiMessage = apiErrorMessage(await res.clone().text());
+        }
       } catch {
-        /* usage is best effort */
+        /* usage and error detail are best effort */
       }
     }
     return res;
@@ -73,16 +109,16 @@ export async function withRetry<T>(fn: () => Promise<T>, opts: RetryOptions = DE
 
 export type ModelOutcome =
   | { ok: true; raw: unknown; usage: Usage }
-  | { ok: false; kind: "unusable" | "error"; code: string; detail: string; usage: Usage };
+  | { ok: false; kind: "unusable" | "error"; code: string; detail: string; /** The API's error message, eval path only. */ message: string; usage: Usage };
 
 /** One production model call. "unusable" (refusal, cut-off, not JSON) is the model's failure; "error" is infrastructure. */
 export async function runModel(call: Parameters<typeof callModel>[0], retry: RetryOptions = DEFAULT_RETRY): Promise<ModelOutcome> {
-  const acc = { usage: zeroUsage() };
+  const acc: { usage: Usage; apiMessage?: string } = { usage: zeroUsage() };
   try {
     const raw = await withRetry(() => store.run(acc, () => callModel(call)), retry);
     return { ok: true, raw, usage: acc.usage };
   } catch (err) {
     const e = err instanceof AiError ? err : new AiError("unavailable", (err as Error)?.name ?? "error");
-    return { ok: false, kind: e.code === "unusable" ? "unusable" : "error", code: e.code, detail: e.detail, usage: acc.usage };
+    return { ok: false, kind: e.code === "unusable" ? "unusable" : "error", code: e.code, detail: e.detail, message: acc.apiMessage ?? "", usage: acc.usage };
   }
 }

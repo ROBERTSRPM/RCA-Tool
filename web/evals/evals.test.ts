@@ -1,12 +1,14 @@
 import { describe, expect, it } from "vitest";
 import { AiError } from "../lib/ai/anthropic";
 import { buildAllCalls, coreCases, filterCases, loadCases, loadCoreIds, parseFeatureFilter } from "./cases";
-import { runHardChecks } from "./checks";
+import { findWordingProblem as runHardChecksWording, runHardChecks } from "./checks";
 import { compare, makeBaseline, type Baseline } from "./gate";
 import { parseJudgement } from "./judge";
 import { costOf } from "./pricing";
 import { featureStats, finalScore, renderMarkdown, worst, type ItemResult } from "./report";
-import { isRetryable, withRetry } from "./runtime";
+import { apiErrorMessage, describeSdkError, isFatalStatus, isRetryable, statusOfDetail, withRetry } from "./runtime";
+import { DEFAULT_JUDGE_MODEL, getJudgeModel } from "./judge";
+import { derivedNumbers, findDates, findInventedNumber, findVerifiedClaims } from "./checks";
 import { selfTest } from "./selftest";
 import { modelCall } from "../lib/ai/handler";
 
@@ -29,6 +31,60 @@ describe("hard checks", () => {
     const bad = run(s("The operator error caused 12345 failures and the cause is verified"));
     expect(bad.filter((c) => !c.pass).map((c) => c.name).sort()).toEqual(["noInventedNumbers", "noPersonBlamedAsRoot", "nothingMarkedVerified"]);
     expect(run({ suggestions: "nope" })[0]).toMatchObject({ name: "schemaValid", pass: false });
+  });
+});
+
+describe("false-alarm fixes in the hard checks", () => {
+  const known = ["Output seal lip hard and cracked"];
+  it("verified: questions and instructions pass", () => {
+    for (const t of ["Who confirmed the cause?", "Check whether X is verified.", "Confirm with the fitter.", "Ask who has verified it.", "Find out if it was confirmed.", "Review what was verified.", "Please verify the confirmed cause."]) {
+      expect(findVerifiedClaims([t], known), t).toBeNull();
+    }
+  });
+  it("verified: real assertions still fail", () => {
+    expect(findVerifiedClaims(["The cause is verified."], known)).not.toBeNull();
+    expect(findVerifiedClaims(["Why? Contamination is confirmed as the cause."], known)).not.toBeNull();
+    expect(findVerifiedClaims(["Confirmed contamination caused it."], known)).not.toBeNull();
+  });
+  const allowed = (texts: string[]) => new Set(["14", "1", ...derivedNumbers(texts)]);
+  it("numbers: differences, sums, products and day counts pass", () => {
+    const texts = ["Changed 14 times, with 1 spare, 3 shifts.", "Failed 2026-09-04 and 2026-09-21."];
+    const set = new Set(["14", "1", "3", ...derivedNumbers(texts)]);
+    for (const n of ["13", "15", "17", "42", "11"]) expect(findInventedNumber([`${n} here`], set, false), n).toBeNull();
+    expect(derivedNumbers(["Failed on 4 May 2026 and 21 May 2026."]).has("17")).toBe(true);
+    expect(findDates(["1 Oct 2026 and May 9, 2026"]).days.length).toBe(2);
+    expect(allowed(texts).has("13")).toBe(true);
+  });
+  it("numbers: an invented interval still fails", () => {
+    const set = new Set(["14", "1", "3", ...derivedNumbers(["Changed 14 times, with 1 spare, 3 shifts."])]);
+    expect(findInventedNumber(["Inspect the seal every 6 weeks."], set, false)).toBe("6");
+    expect(findInventedNumber(["Expect 47 trips a year."], set, false)).toBe("47");
+  });
+  it("wording: fix as a noun still fails", () => {
+    expect(runHardChecksWording(["The permanent fix is a new sleeve."])).not.toBeNull();
+  });
+});
+
+describe("judge default and account errors", () => {
+  it("defaults the judge to Sonnet, Opus stays selectable", () => {
+    expect(DEFAULT_JUDGE_MODEL).toBe("claude-sonnet-5-5");
+    expect(getJudgeModel({} as NodeJS.ProcessEnv)).toBe("claude-sonnet-5-5");
+    expect(getJudgeModel({ JUDGE_MODEL: "claude-opus-5-5" } as unknown as NodeJS.ProcessEnv)).toBe("claude-opus-5-5");
+  });
+  it("keeps the API message and flags 400, 401, 402 and 403 as fatal", () => {
+    expect(apiErrorMessage('{"type":"error","error":{"type":"invalid_request_error","message":"Your credit balance is too low to access the API."}}')).toBe("Your credit balance is too low to access the API.");
+    expect(apiErrorMessage("upstream down")).toBe("upstream down");
+    expect(describeSdkError({ status: 400, message: "400 {}", error: { error: { message: "credit balance is too low" } } })).toEqual({ status: 400, message: "credit balance is too low" });
+    expect([400, 401, 402, 403].every(isFatalStatus)).toBe(true);
+    expect([429, 500, 529, 404, null].some((s) => isFatalStatus(s))).toBe(false);
+    expect(statusOfDetail("402")).toBe(402);
+    expect(statusOfDetail("APIConnectionError")).toBeNull();
+  });
+  it("the production error stays generic (no API detail in the AiError)", async () => {
+    const { classifyError } = await import("../lib/ai/anthropic");
+    const e = classifyError({ status: 400, message: "credit balance is too low" });
+    expect(e.detail).toBe("400");
+    expect(e.message).toBe("unavailable");
   });
 });
 
@@ -124,7 +180,7 @@ describe("scoring and gate", () => {
   });
   it("markdown escapes html outside code fences and never breaks the fence", () => {
     const evil = item({ score: 1, answer: { t: "```<img src=x onerror=1>```" }, judge: { score: 1, met: [], missed: ["<b>x</b>"], violations: [], reason: "<script>" } });
-    const md = renderMarkdown({ startedAt: "t", model: "m", judgeModel: "j", caseCount: 1, items: [evil], stats: featureStats([evil]), gate: compare(featureStats([evil]), null, opts), totals: { model: evil.modelUsage, judge: evil.judgeUsage, modelName: "claude-sonnet-5-5", judgeName: "claude-opus-5-5" }, partial: false });
+    const md = renderMarkdown({ startedAt: "t", model: "m", judgeModel: "j", caseCount: 1, items: [evil], stats: featureStats([evil]), gate: compare(featureStats([evil]), null, opts), totals: { model: evil.modelUsage, judge: evil.judgeUsage, modelName: "claude-sonnet-5-5", judgeName: "claude-sonnet-5-5" }, partial: false });
     expect(md).not.toMatch(/Judge: <script>/);
     expect(md).toContain("&lt;script&gt;");
     expect(md).toContain("````text");

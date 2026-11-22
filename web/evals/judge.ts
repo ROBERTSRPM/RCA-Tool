@@ -1,5 +1,5 @@
 /**
- * LLM judge. A stronger model grades each answer against the case's grading guide on a 0-10 rubric
+ * LLM judge. A model grades each answer against the case's grading guide on a 0-10 rubric
  * and returns JSON (structured output). No temperature: current Claude models reject sampling
  * parameters, and structured output keeps the grading stable.
  */
@@ -9,9 +9,9 @@ import { makeAliases } from "../lib/ai/prompts";
 import { buildPrompt } from "../lib/ai/prompts";
 import type { EvalCall } from "./cases";
 import { fromApiUsage, type Usage } from "./pricing";
-import { withRetry, DEFAULT_RETRY, type RetryOptions } from "./runtime";
+import { describeSdkError, withRetry, DEFAULT_RETRY, type RetryOptions } from "./runtime";
 
-export const DEFAULT_JUDGE_MODEL = "claude-opus-5-5";
+export const DEFAULT_JUDGE_MODEL = "claude-sonnet-5-5";
 export const getJudgeModel = (env: NodeJS.ProcessEnv = process.env): string => env.JUDGE_MODEL?.trim() || DEFAULT_JUDGE_MODEL;
 
 export interface Judgement {
@@ -107,7 +107,7 @@ function getClient(): Anthropic {
   return client;
 }
 
-export type JudgeOutcome = { ok: true; judgement: Judgement; usage: Usage } | { ok: false; code: string; usage: Usage };
+export type JudgeOutcome = { ok: true; judgement: Judgement; usage: Usage } | { ok: false; code: string; /** HTTP status when the API refused the call. */ status?: number; /** The API's error message. */ message?: string; usage: Usage };
 
 export async function judge(call: EvalCall, answer: unknown, model = getJudgeModel(), retry: RetryOptions = DEFAULT_RETRY): Promise<JudgeOutcome> {
   const effort = getEffort(model, {} as NodeJS.ProcessEnv);
@@ -125,8 +125,8 @@ export async function judge(call: EvalCall, answer: unknown, model = getJudgeMod
       retry,
     );
   } catch (err) {
-    const s = (err as { status?: number })?.status;
-    return { ok: false, code: s ? `http_${s}` : ((err as Error)?.name ?? "error"), usage: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 } };
+    const d = describeSdkError(err);
+    return { ok: false, code: d.status ? `http_${d.status}` : ((err as Error)?.name ?? "error"), ...(d.status ? { status: d.status } : {}), message: d.message, usage: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 } };
   }
   const usage = fromApiUsage(res.usage);
   if (res.stop_reason === "refusal" || res.stop_reason === "max_tokens") return { ok: false, code: res.stop_reason, usage };

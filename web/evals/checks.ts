@@ -134,6 +134,13 @@ const VERIFIED_WORD = /\b(?:verified|proven|proved|confirmed)\b/i;
 const STATUS_TALK =
   /\b(?:not|never|no|un|yet|to be|needs? to be|need to be|should be|must be|has to be|have to be|until|once|before|if|whether|cannot|can't|isn't|aren't|hasn't|haven't|without|marked|listed|flagged|labelled|labeled|status|claimed|recorded|stated|says?|shown|hypothes[ie]s|still|only|would|could|may|might|when|after|so that|show|prove|proves|proving|check|checks|test|tests)\b/i;
 
+// A sentence that ends in a question mark asks; one that starts with a verb of checking gives an instruction.
+// Neither asserts that anything is verified.
+const IMPERATIVE_START =
+  /^\W*(?:(?:please|then|first|next|also|and|now)\s+)*(?:check|confirm|ask|verify|find out|review|establish|determine|obtain|validate|ensure|test|inspect|identify|collect|look)\b/i;
+const isQuestion = (sent: string): boolean => /\?["')\]]*\s*$/.test(sent);
+const isInstruction = (sent: string): boolean => IMPERATIVE_START.test(sent);
+
 const tokens = (s: string): string[] => (s.toLowerCase().match(/[a-z]{4,}/g) ?? []);
 
 /** Sentences that call something verified/proven without it being status talk or a node the input already marks verified. */
@@ -142,6 +149,7 @@ export function findVerifiedClaims(strings: string[], verifiedNodeTexts: string[
   for (const s of strings) {
     for (const sent of sentences(s)) {
       if (!VERIFIED_WORD.test(sent)) continue;
+      if (isQuestion(sent) || isInstruction(sent)) continue;
       if (STATUS_TALK.test(sent)) continue;
       const st = new Set(tokens(sent));
       const matchesKnown = known.some((k) => k.size > 0 && [...k].filter((t) => st.has(t)).length / k.size >= 0.6);
@@ -163,7 +171,56 @@ export function extractNumbers(s: string): string[] {
   return (s.match(/\d+(?:[.,]\d+)*/g) ?? []).map(canon);
 }
 
-/** Numbers in the input text, the case's allowedNumbers and the context cost line. */
+const MONTHS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+const DATE_RES: { re: RegExp; at: (m: RegExpExecArray) => [number, number, number] | null }[] = [
+  { re: /\b(\d{4})-(\d{2})-(\d{2})\b/g, at: (m) => [+m[1], +m[2], +m[3]] },
+  { re: /\b(\d{1,2})\s+(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?,?\s+(\d{4})\b/gi, at: (m) => [+m[3], MONTHS.indexOf(m[2].toLowerCase()) + 1, +m[1]] },
+  { re: /\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?\s+(\d{1,2}),?\s+(\d{4})\b/gi, at: (m) => [+m[3], MONTHS.indexOf(m[1].toLowerCase()) + 1, +m[2]] },
+];
+
+/** Whole-day numbers of every date written in the texts (ISO, "9 May 2026" or "May 9, 2026"), and the texts with those dates removed. */
+export function findDates(texts: string[]): { days: number[]; rest: string[] } {
+  const days = new Set<number>();
+  const rest = texts.map((t) => {
+    let out = t;
+    for (const { re, at } of DATE_RES) {
+      out = out.replace(re, (...a) => {
+        const m = a.slice(0, -2) as unknown as RegExpExecArray;
+        const d = at(m);
+        if (d && d[1] >= 1 && d[1] <= 12 && d[2] >= 1 && d[2] <= 31) days.add(Math.round(Date.UTC(d[0], d[1] - 1, d[2]) / 86_400_000));
+        return " ";
+      });
+    }
+    return out;
+  });
+  return { days: [...days], rest };
+}
+
+const fmtNum = (x: number): string => String(Number(x.toFixed(4)));
+
+/**
+ * Numbers a reader can work out from the input with one simple step: the difference or sum of two
+ * input numbers, the product of two input numbers, or the days between two input dates.
+ * Years and the parts of dates are not used as operands.
+ */
+export function derivedNumbers(inputTexts: string[], extra: string[] = []): Set<string> {
+  const { days, rest } = findDates(inputTexts);
+  const base = [...new Set([...rest, ...extra].flatMap((t) => extractNumbers(t)).map(Number))].filter((n) => Number.isFinite(n) && !(n >= 1900 && n <= 2100));
+  const out = new Set<string>();
+  for (let i = 0; i < base.length; i++) {
+    for (let j = i + 1; j < base.length; j++) {
+      const a = base[i];
+      const b = base[j];
+      out.add(fmtNum(Math.abs(a - b)));
+      out.add(fmtNum(a + b));
+      if (a * b <= 1_000_000) out.add(fmtNum(a * b));
+    }
+  }
+  for (let i = 0; i < days.length; i++) for (let j = i + 1; j < days.length; j++) out.add(fmtNum(Math.abs(days[i] - days[j])));
+  return out;
+}
+
+/** Numbers in the input text, the case's allowedNumbers and the context cost line, plus what follows from them by simple arithmetic. */
 export function buildAllowedNumbers(spec: HardChecksSpec, inputTexts: string[], ctx: AiContext): Set<string> {
   const set = new Set<string>();
   for (const n of spec.allowedNumbers ?? []) extractNumbers(String(n)).forEach((x) => set.add(x));
@@ -171,6 +228,8 @@ export function buildAllowedNumbers(spec: HardChecksSpec, inputTexts: string[], 
   extractNumbers(ctx.loss).forEach((x) => set.add(x));
   extractNumbers(ctx.spares).forEach((x) => set.add(x));
   extractNumbers(ctx.verification).forEach((x) => set.add(x));
+  const fromCase = [...(spec.allowedNumbers ?? []).map(String), ctx.loss, ctx.spares, ctx.verification];
+  derivedNumbers(inputTexts, fromCase).forEach((x) => set.add(x));
   return set;
 }
 

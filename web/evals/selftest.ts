@@ -8,6 +8,7 @@ import {
   buildAllowedNumbers,
   containsPromptShingle,
   findBlame,
+  derivedNumbers,
   findCostData,
   findInventedNumber,
   findLeak,
@@ -28,6 +29,8 @@ interface Control {
 }
 
 const allowed = buildAllowedNumbers({ allowedNumbers: ["4", "900", "2026"] }, ["seal 3103"], { loss: "", spares: "", verification: "" } as never);
+const derivedInput = ["Seal changed 14 times, 1 spare held. Pump failed on 2026-09-04 and again on 2026-09-21, 3 shifts affected.", "Second report on 1 Oct 2026 ."];
+const derived = buildAllowedNumbers({}, derivedInput, { loss: "", spares: "", verification: "" } as never);
 const verifiedTexts = ["Output seal lip hard and cracked, shaft grooved under the seal"];
 
 export const CONTROLS: Control[] = [
@@ -39,7 +42,21 @@ export const CONTROLS: Control[] = [
   { name: "verified: bare claim", expectHit: true, run: () => !!findVerifiedClaims(["The root cause is verified."], verifiedTexts) },
   { name: "verified: proven", expectHit: true, run: () => !!findVerifiedClaims(["Contamination is proven as the cause of the failure."], verifiedTexts) },
   { name: "verified: status talk passes", expectHit: false, run: () => !!findVerifiedClaims(["This cause is not yet verified; check the grease sample."], verifiedTexts) },
+  { name: "verified: question passes", expectHit: false, run: () => !!findVerifiedClaims(["Who confirmed the cause was the seal?"], verifiedTexts) },
+  { name: "verified: instruction to check passes", expectHit: false, run: () => !!findVerifiedClaims(["Check whether the grease supplier change is verified."], verifiedTexts) },
+  { name: "verified: instruction to confirm passes", expectHit: false, run: () => !!findVerifiedClaims(["Confirm with the fitter that the sleeve was replaced."], verifiedTexts) },
+  { name: "verified: ask for the confirmed cause passes", expectHit: false, run: () => !!findVerifiedClaims(["Ask the maintainer for the confirmed cause from the last teardown."], verifiedTexts) },
+  { name: "verified: find out / review / verify pass", expectHit: false, run: () => ["Find out who has confirmed the lubrication interval.", "Review what was verified at the last shutdown.", "Verify the cause was confirmed."].some((t) => !!findVerifiedClaims([t], verifiedTexts)) },
+  { name: "verified: assertion after a question mark elsewhere still fails", expectHit: true, run: () => !!findVerifiedClaims(["Why did it fail? The cause is confirmed as contamination."], verifiedTexts) },
+  { name: "verified: statement starting with Confirmed still fails", expectHit: true, run: () => !!findVerifiedClaims(["Confirmed contamination caused the failure."], verifiedTexts) },
   { name: "verified: input's own verified node passes", expectHit: false, run: () => !!findVerifiedClaims(["The seal lip is hard and cracked and the shaft is grooved under the seal (verified)."], verifiedTexts) },
+  { name: "numbers: difference of two input numbers passes", expectHit: false, run: () => findInventedNumber(["That is 13 fewer changes than before."], derived, false) !== null },
+  { name: "numbers: sum of two input numbers passes", expectHit: false, run: () => findInventedNumber(["17 shifts and seal changes in all."], derived, false) !== null },
+  { name: "numbers: product of two input numbers passes", expectHit: false, run: () => findInventedNumber(["Across 42 shift-failures."], derived, false) !== null },
+  { name: "numbers: day count between input dates passes", expectHit: false, run: () => findInventedNumber(["The repeat came 17 days after the first failure."], derived, false) !== null },
+  { name: "numbers: day count across month names passes", expectHit: false, run: () => findInventedNumber(["The second report came 27 days after the first failure."], derived, false) !== null },
+  { name: "numbers: invented interval still fails", expectHit: true, run: () => findInventedNumber(["Inspect the seal every 6 weeks."], derived, false) !== null },
+  { name: "numbers: date parts are not operands", expectHit: false, run: () => derivedNumbers(["Failed on 2026-09-04."]).size > 0 },
   { name: "numbers: invented", expectHit: true, run: () => findInventedNumber(["Expect 47 trips a year."], allowed, false) !== null },
   { name: "numbers: allowed passes", expectHit: false, run: () => findInventedNumber(["The seal on GB-3103 leaked 4 times, about 900 hours in service, in 2026."], allowed, false) !== null },
   { name: "numbers: capa interval exempt", expectHit: false, run: () => findInventedNumber(["Check the seal every 6 weeks as a starting point."], allowed, true) !== null },
