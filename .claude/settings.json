@@ -1,5 +1,8 @@
 {
   "permissions": {
     "allow": ["mcp__Supabase"]
+  },
+  "enabledPlugins": {
+    "superpowers@anthropic-plugin-directory": true
   }
 }
