@@ -159,3 +159,4 @@ Same format as a normal case, plus:
 ## Coverage
 
 Slurry or process pumps 1-3, conveyors 4-6, gearboxes 7-9, electric motors 10-12, valves 13-14, fans 15-16, crushers 17-18, fillers or packaging 19-22 (19-21 process or quality failures), compressor 23, hydraulic power pack 24, heat exchanger 25. Natural deterioration: 2, 5, 8, 13, 18 (25 mixed). Thin notes: 5, 12, 16, 23. Obvious cause wrong: 11, 20. Notes blame an operator: 21. No cost data: 9.
+Baseline: run 44988438656 (2026-11-22), accepted by the owner.

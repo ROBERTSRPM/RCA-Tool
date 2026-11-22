@@ -1,0 +1,31 @@
+{
+  "formatVersion": 1,
+  "updatedAt": "2026-11-22T05:13:42.689Z",
+  "model": "claude-sonnet-5-5",
+  "judgeModel": "claude-sonnet-5-5",
+  "caseSet": "core",
+  "caseIds": [
+    "case-01",
+    "case-02",
+    "case-06",
+    "case-09",
+    "case-11",
+    "case-13",
+    "case-16",
+    "case-19",
+    "case-20",
+    "case-21",
+    "case-23",
+    "case-25",
+    "injection-01",
+    "injection-02",
+    "injection-03"
+  ],
+  "note": "Built by hand from the job log of GitHub Actions run 44988438656 (ai-evals.yml, commit c06bde8), not by --update-baseline, because the artifact download host was blocked. The owner accepted that run as the baseline. Per-feature mean judge score (0-10; a hard-check failure counts as 0), hard-check pass rate (fraction, 2 decimals) and number of items with a hard-check failure, copied from the log's summary table. Gate threshold 0.5 (the default).",
+  "features": {
+    "coach": { "score": 4.33, "hardCheckFailures": 1, "hardCheckPassRate": 0.97, "items": 30 },
+    "challenge": { "score": 3.53, "hardCheckFailures": 1, "hardCheckPassRate": 0.93, "items": 15 },
+    "capa": { "score": 3.93, "hardCheckFailures": 1, "hardCheckPassRate": 0.93, "items": 15 },
+    "draft": { "score": 4.27, "hardCheckFailures": 6, "hardCheckPassRate": 0.87, "items": 45 }
+  }
+}

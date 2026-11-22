@@ -2,10 +2,12 @@ import { describe, expect, it } from "vitest";
 import { AiError } from "../lib/ai/anthropic";
 import { buildAllCalls, coreCases, filterCases, loadCases, loadCoreIds, parseFeatureFilter } from "./cases";
 import { findWordingProblem as runHardChecksWording, runHardChecks } from "./checks";
-import { compare, makeBaseline, type Baseline } from "./gate";
+import path from "node:path";
+import { compare, loadBaseline, makeBaseline, type Baseline } from "./gate";
+import { EVALS_DIR } from "./cases";
 import { parseJudgement } from "./judge";
 import { costOf } from "./pricing";
-import { featureStats, finalScore, renderMarkdown, worst, type ItemResult } from "./report";
+import { featureStats, finalScore, type FeatureStats, renderMarkdown, worst, type ItemResult } from "./report";
 import { apiErrorMessage, describeSdkError, isFatalStatus, isRetryable, statusOfDetail, withRetry } from "./runtime";
 import { DEFAULT_JUDGE_MODEL, getJudgeModel } from "./judge";
 import { derivedNumbers, findBlame, findDates, findInventedNumber, findLeak, findVerifiedClaims, stripInputQuotes } from "./checks";
@@ -263,5 +265,28 @@ describe("scoring and gate", () => {
   it("prices known models and says unknown for others", () => {
     expect(costOf({ input: 1_000_000, output: 1_000_000, cacheRead: 0, cacheWrite: 0 }, "claude-sonnet-5-5")).toBe(12);
     expect(costOf({ input: 1, output: 1, cacheRead: 0, cacheWrite: 0 }, "some-other-model")).toBeNull();
+  });
+});
+
+describe("committed evals/baseline.json (hand-built from run 44988438656)", () => {
+  const b = loadBaseline(path.join(EVALS_DIR, "baseline.json"));
+  const opts = { threshold: 0.5, partial: false, model: "claude-sonnet-5-5", judgeModel: "claude-sonnet-5-5", caseIds: loadCoreIds() };
+  const statsFrom = (drop: Partial<Record<string, number>> = {}): Record<string, FeatureStats> =>
+    Object.fromEntries(
+      Object.entries(b!.features).map(([f, v]) => [f, { items: v.items, scored: v.items, errors: 0, meanScore: v.score - (drop[f] ?? 0), hardPassRate: v.hardCheckPassRate, hardFailItems: v.hardCheckFailures, byLabelKind: {} }]),
+    );
+  it("loads and matches the core case set", () => {
+    expect(b).not.toBeNull();
+    expect([...b!.caseIds!].sort()).toEqual([...loadCoreIds()].sort());
+    expect(b!.caseIds).toHaveLength(15);
+    expect(Object.keys(b!.features).sort()).toEqual(["capa", "challenge", "coach", "draft"]);
+  });
+  it("a run equal to the baseline passes", () => {
+    expect(compare(statsFrom(), b, opts).status).toBe("pass");
+  });
+  it("a 0.6 drop in one feature fails", () => {
+    const r = compare(statsFrom({ capa: 0.6 }), b, opts);
+    expect(r.status).toBe("fail");
+    expect(r.rows.filter((x) => x.scoreRegressed).map((x) => x.feature)).toEqual(["capa"]);
   });
 });
