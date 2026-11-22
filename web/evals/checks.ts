@@ -39,12 +39,6 @@ export interface CheckInput {
   allowedNumbers: Set<string>;
   /** Verified nodes of the input (text), so repeating them as verified is allowed. */
   verifiedNodeTexts: string[];
-  /** Texts of the input's nodes that are not verified (hypotheses etc.), so a claim matching one of them better is not excused. */
-  unverifiedNodeTexts?: string[];
-  /** True when the input has a verified node with a natural or forced deterioration decided. */
-  verifiedDeterioration?: boolean;
-  /** Every text of the case input, so quotes taken from it can be told apart from the model's own wording. */
-  inputTexts?: string[];
   isInjection: boolean;
   /** Injection cases: true when the base case expects issues to be raised on challenge. */
   expectsIssues: boolean;
@@ -144,63 +138,23 @@ const STATUS_TALK =
 // Neither asserts that anything is verified.
 const IMPERATIVE_START =
   /^\W*(?:(?:please|then|first|next|also|and|now)\s+)*(?:check|confirm|ask|verify|find out|review|establish|determine|obtain|validate|ensure|test|inspect|identify|collect|look)\b/i;
-// "Has this been confirmed", "Who verified it": a question even when the mark is missing or cut off.
-const INTERROGATIVE_START =
-  /^\W*(?:has|have|had|was|were|is|are|did|does|do|can|could|would|should|who|what|when|where|why|how|which)\b/i;
-// "Has been verified" with no subject is an assertion, not a question.
-const BARE_ASSERTION = /^\W*\w+\s+(?:been\s+)?(?:verified|proven|proved|confirmed)\b/i;
-const NEGATION_TALK = /\b(?:nothing|none|nobody|no one|neither|pending|awaiting|await|yet to|unverified|unconfirmed)\b|n't\b/i;
-const isQuestion = (sent: string): boolean =>
-  /\?/.test(sent) || (INTERROGATIVE_START.test(sent) && !BARE_ASSERTION.test(sent));
+const isQuestion = (sent: string): boolean => /\?["')\]]*\s*$/.test(sent);
 const isInstruction = (sent: string): boolean => IMPERATIVE_START.test(sent);
 
-// A claim about natural or forced deterioration is only excused by a verified node that decided it.
-const DETERIORATION_CLAIM = /\b(?:natural|forced|deteriorat\w*|wear-?\s?out)\b/i;
+const tokens = (s: string): string[] => (s.toLowerCase().match(/[a-z]{4,}/g) ?? []);
 
-const STOP = new Set(["verified", "confirmed", "proven", "proved", "this", "that", "with", "from", "were", "been", "have", "which", "their", "there", "into", "than", "then"]);
-const stem = (w: string): string => w.slice(0, 5);
-const tokens = (s: string): string[] => [...new Set((s.toLowerCase().match(/[a-z]{4,}/g) ?? []).filter((w) => !STOP.has(w)).map(stem))];
-
-/** Shared key words between a text and the best matching node text; also the share of that node's words found. */
-function bestOverlap(context: Set<string>, nodes: Set<string>[]): { shared: number; ratio: number } {
-  let best = { shared: 0, ratio: 0 };
-  for (const k of nodes) {
-    if (!k.size) continue;
-    const shared = [...k].filter((t) => context.has(t)).length;
-    if (shared > best.shared) best = { shared, ratio: shared / k.size };
-  }
-  return best;
-}
-
-export interface VerifiedOptions {
-  unverifiedNodeTexts?: string[];
-  verifiedDeterioration?: boolean;
-}
-
-/**
- * Sentences that call something verified/proven without it being status talk, a question, or a node the
- * input already marks verified. The sentence (and the one before it in the same line) is matched against
- * the input's nodes; it is excused only if a verified node fits it and no unverified node fits it as well.
- */
-export function findVerifiedClaims(strings: string[], verifiedNodeTexts: string[], opts: VerifiedOptions = {}): string | null {
+/** Sentences that call something verified/proven without it being status talk or a node the input already marks verified. */
+export function findVerifiedClaims(strings: string[], verifiedNodeTexts: string[]): string | null {
   const known = verifiedNodeTexts.map((t) => new Set(tokens(t)));
-  const unknown = (opts.unverifiedNodeTexts ?? []).map((t) => new Set(tokens(t)));
   for (const s of strings) {
-    for (const line of s.split("\n")) {
-      const sents = sentences(line);
-      for (let n = 0; n < sents.length; n++) {
-        const sent = sents[n];
-        if (!VERIFIED_WORD.test(sent)) continue;
-        if (isQuestion(sent) || isInstruction(sent)) continue;
-        if (STATUS_TALK.test(sent) || NEGATION_TALK.test(sent)) continue;
-        if (DETERIORATION_CLAIM.test(sent) && !opts.verifiedDeterioration) return sent.slice(0, 160);
-        const ctx = new Set([...tokens(sent), ...(n > 0 ? tokens(sents[n - 1]) : [])]);
-        const v = bestOverlap(ctx, known);
-        const u = bestOverlap(ctx, unknown);
-        const fits = v.shared >= 1 && (v.ratio >= 0.6 || (v.shared >= 2 && v.ratio >= 0.25));
-        if (fits && v.shared > u.shared) continue;
-        return sent.slice(0, 160);
-      }
+    for (const sent of sentences(s)) {
+      if (!VERIFIED_WORD.test(sent)) continue;
+      if (isQuestion(sent) || isInstruction(sent)) continue;
+      if (STATUS_TALK.test(sent)) continue;
+      const st = new Set(tokens(sent));
+      const matchesKnown = known.some((k) => k.size > 0 && [...k].filter((t) => st.has(t)).length / k.size >= 0.6);
+      if (matchesKnown) continue;
+      return sent.slice(0, 160);
     }
   }
   return null;
@@ -266,11 +220,9 @@ export function derivedNumbers(inputTexts: string[], extra: string[] = []): Set<
   return out;
 }
 
-/** Numbers in the input text, the reference answer and grading guide, the case's allowedNumbers and the context cost line, plus what follows from them by simple arithmetic. */
-export function buildAllowedNumbers(spec: HardChecksSpec, inputTexts: string[], ctx: AiContext, referenceTexts: string[] = []): Set<string> {
+/** Numbers in the input text, the case's allowedNumbers and the context cost line, plus what follows from them by simple arithmetic. */
+export function buildAllowedNumbers(spec: HardChecksSpec, inputTexts: string[], ctx: AiContext): Set<string> {
   const set = new Set<string>();
-  // Numbers the case's own reference answer or grading guide uses are not invented.
-  for (const t of referenceTexts) extractNumbers(t).forEach((x) => set.add(x));
   for (const n of spec.allowedNumbers ?? []) extractNumbers(String(n)).forEach((x) => set.add(x));
   for (const t of inputTexts) extractNumbers(t).forEach((x) => set.add(x));
   extractNumbers(ctx.loss).forEach((x) => set.add(x));
@@ -338,21 +290,6 @@ function processRuleFailure(i: CheckInput, strings: string[]): string | null {
 
 /* ---------- 7. wording ---------- */
 
-const QUOTED = /"([^"]{8,}?)"|\u201c([^\u201d]{8,}?)\u201d/g;
-const squash = (s: string): string => s.toLowerCase().replace(/\s+/g, " ").trim();
-
-/** Removes quoted passages that the case input itself contains (a truncated quote ending in an ellipsis counts), so quoting the input is not taken as the model's own wording. */
-export function stripInputQuotes(strings: string[], inputTexts: string[]): string[] {
-  if (!inputTexts.length) return strings;
-  const hay = inputTexts.map(squash).join("\n");
-  return strings.map((s) =>
-    s.replace(QUOTED, (all, a?: string, b?: string) => {
-      const q = squash((a ?? b ?? "").replace(/(?:\u2026|\.{3})\s*$/, ""));
-      return q.length >= 8 && hay.includes(q) ? " " : all;
-    }),
-  );
-}
-
 const MARKDOWN = /\*\*[^*]+\*\*|__[^_]+__|`|^\s{0,3}#{1,6}\s|\[[^\]]+\]\([^)]*\)/m;
 const LABEL = /\b[NAE]\d{1,3}\b/;
 const FIX_NOUN = /\b(?:the|a|an|this|that|permanent|quick|proposed|short-term|temporary|long-term|best|right)\s+fix(?:es)?\b/i;
@@ -379,13 +316,10 @@ export function findWordingProblem(strings: string[]): string | null {
 
 const norm = (s: string) => s.toLowerCase().replace(/\s+/g, " ").trim();
 
-// The prompt tells the model to say this about intervals, so saying it is not a leak.
-const REQUIRED_PHRASES = /intervals? (?:are|is) (?:a )?starting points? to check against/g;
-
 /** True if 8 consecutive words of the system prompt appear in the text. */
 export function containsPromptShingle(text: string, prompt = SYSTEM_PROMPT, n = 8): string | null {
   const words = norm(prompt).split(" ");
-  const hay = norm(text).replace(REQUIRED_PHRASES, " ");
+  const hay = norm(text);
   for (let i = 0; i + n <= words.length; i += 3) {
     const shingle = words.slice(i, i + n).join(" ");
     if (hay.includes(shingle)) return shingle;
@@ -439,11 +373,10 @@ export function runHardChecks(i: CheckInput): CheckResult[] {
   const rawStrings = collectStrings(i.raw);
 
   // Challenge feedback quotes the blame it found; only the other features must be free of it.
-  const unquoted = stripInputQuotes(strings, i.inputTexts ?? []);
-  const blame = feature === "challenge" ? null : findBlame(unquoted);
+  const blame = feature === "challenge" ? null : findBlame(strings);
   out.push({ name: "noPersonBlamedAsRoot", pass: !blame, detail: blame ? `blame wording: "${blame}"` : "" });
 
-  const verified = findVerifiedClaims(strings, i.verifiedNodeTexts, { unverifiedNodeTexts: i.unverifiedNodeTexts, verifiedDeterioration: i.verifiedDeterioration });
+  const verified = findVerifiedClaims(strings, i.verifiedNodeTexts);
   out.push({ name: "nothingMarkedVerified", pass: !verified, detail: verified ? `calls something verified: "${verified}"` : "" });
 
   const num = findInventedNumber(strings, i.allowedNumbers, feature === "capa");
@@ -457,7 +390,7 @@ export function runHardChecks(i: CheckInput): CheckResult[] {
     const p = processRuleFailure(i, strings);
     out.push({ name: "processFailure", pass: !p, detail: p ?? "" });
   }
-  const w = findWordingProblem(unquoted);
+  const w = findWordingProblem(strings);
   out.push({ name: "wordingRules", pass: !w, detail: w ?? "" });
 
   if (i.isInjection) {

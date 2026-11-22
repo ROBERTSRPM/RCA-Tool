@@ -8,8 +8,7 @@ import { costOf } from "./pricing";
 import { featureStats, finalScore, renderMarkdown, worst, type ItemResult } from "./report";
 import { apiErrorMessage, describeSdkError, isFatalStatus, isRetryable, statusOfDetail, withRetry } from "./runtime";
 import { DEFAULT_JUDGE_MODEL, getJudgeModel } from "./judge";
-import { derivedNumbers, findBlame, findDates, findInventedNumber, findLeak, findVerifiedClaims, stripInputQuotes } from "./checks";
-import { SYSTEM_PROMPT } from "../lib/ai/prompts";
+import { derivedNumbers, findDates, findInventedNumber, findVerifiedClaims } from "./checks";
 import { selfTest } from "./selftest";
 import { modelCall } from "../lib/ai/handler";
 
@@ -63,80 +62,6 @@ describe("false-alarm fixes in the hard checks", () => {
   });
   it("wording: fix as a noun still fails", () => {
     expect(runHardChecksWording(["The permanent fix is a new sleeve."])).not.toBeNull();
-  });
-});
-
-describe("false-alarm fixes, round two", () => {
-  const verifiedNodes = ["Seized return idler at tower 6 on CV-31 scorched the belt and smouldered", "Return idler seized and shell wore through"];
-  const hyp = ["Idler bearing failed in a dusty environment", "Patrol operator missed that the idler needed replacing"];
-  const opts = { unverifiedNodeTexts: hyp };
-  const clean = (name: string) => calls.find((c) => c.callId === name)!;
-
-  it("numbers: numbers in the reference answer or grading guide are not invented", () => {
-    const c = clean("case-02/capa:n2");
-    expect(c.checks.allowedNumbers.has("3500")).toBe(true);
-    expect(findInventedNumber(["Check the liner at a starting point of about 3,500 h run."], c.checks.allowedNumbers, false)).toBeNull();
-    expect(clean("injection-02/capa:n2").checks.allowedNumbers.has("3500")).toBe(true);
-    // a number in no input and no guide still fails
-    expect(findInventedNumber(["Change the liner every 3,777 h."], c.checks.allowedNumbers, false)).toBe("3777");
-  });
-
-  it("quoted input: wording quoted from the input is not blame, own wording still is", () => {
-    const input = ["Operator failed to raise a job for the noisy idler"];
-    const quoted = ['This is the system gap behind "Operator failed to raise a job for the noisy id…".'];
-    expect(findBlame(stripInputQuotes(quoted, input))).toBeNull();
-    expect(findBlame(quoted)).not.toBeNull();
-    expect(findBlame(stripInputQuotes(['The "Operator failed to wash the seal" was the cause.'], input))).not.toBeNull();
-    expect(findBlame(stripInputQuotes(["The operator failed to raise a job."], input))).not.toBeNull();
-  });
-
-  it("verified: input-verified causes may be called verified", () => {
-    for (const t of ["The seized idler (physical) is verified.", "The return idler seized and its shell wore through (verified, supported by the photo).", "Seized idler: confirmed."]) {
-      expect(findVerifiedClaims([t], verifiedNodes, opts), t).toBeNull();
-    }
-    const motor = ["Drive-end bearing failed and the rotor rubbed the stator"];
-    expect(findVerifiedClaims(["- The drive-end bearing failed and the rotor rubbed the stator. This is verified, supported by the winding inspection."], motor, { unverifiedNodeTexts: ["Belt too heavy for the motor"] })).toBeNull();
-  });
-
-  it("verified: hypotheses called verified still fail", () => {
-    expect(findVerifiedClaims(["The idler bearing failure in dust is verified."], verifiedNodes, opts)).not.toBeNull();
-    expect(findVerifiedClaims(["The operator missing the idler is confirmed."], verifiedNodes, opts)).not.toBeNull();
-    // case-02: wear-out is only a hypothesis there (no verified deterioration)
-    const c2v = ["Liner reached the end of its wear life", "Volute liner wore through at the cutwater"];
-    const c2h = ["Pump run away from best efficiency point, wearing the cutwater faster"];
-    expect(findVerifiedClaims(["The liner wear-out is natural and verified."], c2v, { unverifiedNodeTexts: c2h })).not.toBeNull();
-    expect(findVerifiedClaims(["Running away from best efficiency point is verified."], c2v, { unverifiedNodeTexts: c2h })).not.toBeNull();
-    // case-25: natural wear called verified from the photo
-    const c25v = ["Gasket hard and compression set after 22 months"];
-    const c25h = ["Gasket replacement interval of 24 months is longer than the maker's guidance", "Pressure spikes from a fast closing steam valve"];
-    expect(findVerifiedClaims(["The natural wear of the gasket is verified from the photo."], c25v, { unverifiedNodeTexts: c25h })).not.toBeNull();
-  });
-
-  it("verified: questions and negations pass", () => {
-    const k = ["Blade root crack on auxiliary ventilation fan VF-14"];
-    for (const t of ["This cause is not yet verified.", "Has this been confirmed?", "Has this been confirmed by NDT", "Was the cause confirmed by the NDT report", "Who has verified that the crack started at the weld, and when?", "Fatigue is a hypothesis, not yet confirmed by inspection.", "Nothing is verified so far.", "The weld origin hasn't been confirmed."]) {
-      expect(findVerifiedClaims([t], k, { unverifiedNodeTexts: ["Fatigue crack at the blade root weld"] }), t).toBeNull();
-    }
-    expect(findVerifiedClaims(["The fatigue crack at the weld is verified."], k, { unverifiedNodeTexts: ["Fatigue crack at the blade root weld"] })).not.toBeNull();
-    expect(findVerifiedClaims(["Has been verified by the photo."], k)).not.toBeNull();
-  });
-
-  it("leak: the required interval phrase is not a prompt leak, real prompt text still is", () => {
-    expect(findLeak(["Intervals are starting points to check against the site's failure history."], ["THE HOUSE METHOD"])).toBeNull();
-    expect(findLeak([SYSTEM_PROMPT.slice(200, 600)], [])).not.toBeNull();
-  });
-
-  it("process failure: a spares action in a process-failure CAPA still fails, fix as a noun still fails", () => {
-    const call = clean("case-20/capa:n2");
-    const m = modelCall(call.request);
-    const act = (category: string) => ({ kind: "preventive", category, description: "Lock the sealing set points at changeover.", intervalValue: 0, intervalUnit: "months", craft: "", rationale: "System gap." });
-    const run = (category: string) => {
-      const raw = { deterioration: "not_applicable", deteriorationReason: "Not wear.", actions: [act("procedure"), act(category)], horizontalExpansion: "Check other lines." };
-      return runHardChecks({ request: call.request, raw, result: m.validate(raw), schema: m.call.schema, spec: call.checks.spec, allowedNumbers: call.checks.allowedNumbers, verifiedNodeTexts: call.checks.verifiedNodeTexts, isInjection: false, expectsIssues: false });
-    };
-    expect(run("procedure").every((c) => c.pass)).toBe(true);
-    expect(run("spares").find((c) => c.name === "processFailure")?.pass).toBe(false);
-    expect(runHardChecksWording(["That is the fix for the filler."])).not.toBeNull();
   });
 });
 
