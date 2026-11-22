@@ -80,7 +80,9 @@ jobs:
 
       - name: Run evals (default core set, compare with baseline)
         id: run
-        if: steps.key.outputs.present == 'true'
+        # Paused to save API credit (owner, 2026-11-22): the paid run happens only when started by hand,
+        # or automatically once the repo variable EVALS_AUTO is set to 'true'. The free dry run always runs.
+        if: steps.key.outputs.present == 'true' && (github.event_name == 'workflow_dispatch' || vars.EVALS_AUTO == 'true')
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_MODEL }}
@@ -92,13 +94,13 @@ jobs:
           npm run evals -- $args
 
       - name: Job summary
-        if: always() && steps.key.outputs.present == 'true'
+        if: always() && steps.run.outcome != 'skipped' && steps.key.outputs.present == 'true'
         run: |
           latest=$(ls -1 ../evals/results/*.md 2>/dev/null | tail -n 1 || true)
           if [ -n "$latest" ]; then cat "$latest" >> "$GITHUB_STEP_SUMMARY"; else echo "No summary was produced." >> "$GITHUB_STEP_SUMMARY"; fi
 
       - name: Upload results
-        if: always() && steps.key.outputs.present == 'true'
+        if: always() && steps.run.outcome != 'skipped' && steps.key.outputs.present == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: ai-eval-results
