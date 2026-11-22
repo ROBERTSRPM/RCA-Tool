@@ -1,7 +1,7 @@
 # Outreach templates (drafts for owner review)
 
 Email only: roberts@intelbeyond.com. Do not offer phone calls.
-Pricing is a DRAFT: A$2,500 90-day site pilot, then A$450 a month per site, ex GST.
+Pricing is not set. Do not quote any price. Use the reply in section 6.
 Placeholders in [square brackets]. Edit each one so it sounds like you wrote it that day.
 
 Demo video: https://youtu.be/3_s0V_pwHdE
@@ -111,7 +111,7 @@ Subject: Would you be one of 5 design partner sites?
 > - Send me written feedback by email every two weeks.
 > - Agree to a short case study at the end, with your approval of every word and your name only if you want it used.
 >
-> Terms: [DRAFT: pilot fee of A$2,500 ex GST, waived / reduced / credited for design partners: owner to choose before sending]. After 90 days, the draft price is A$450 a month per site, ex GST. No lock-in.
+> Terms: We're setting pricing with our first sites. I'll take you through it on a call. [OWNER: confirm the terms for design partners before sending.] No lock-in.
 >
 > I'm keeping this to 5 sites. If it's worth a look, the 3-minute demo is here: https://youtu.be/3_s0V_pwHdE
 >
@@ -120,20 +120,16 @@ Subject: Would you be one of 5 design partner sites?
 > Roberts
 > roberts@intelbeyond.com
 
-## 6. Reply to "how much?" (DRAFT pricing)
+## 6. Reply to "how much?"
 
-Short:
-> Draft pricing, still being tested with the first sites:
-> - A$2,500 for a 90-day site pilot. I load your asset register, adjust terminology and co-lead your first 1 or 2 RCAs. [Credited against the first year if you continue: owner to confirm.]
-> - Then A$450 a month per site, up to 10 users, AI included within fair-use limits. All ex GST.
->
-> One avoided breakdown on a critical asset usually costs more than a year's fee. For the first sites I'm open to adjusting the terms. What does a typical repeat failure cost you?
+Use this answer every time, in every channel:
+> We're setting pricing with our first sites. I'll take you through it on a call.
 
-If they push for a number before they've seen it:
-> Fair question. Draft price is A$2,500 for the 90-day pilot, then A$450 a month per site, ex GST. It's not final. Easiest next step is the 3-minute demo: https://youtu.be/3_s0V_pwHdE. Then tell me which failure you'd start with.
+If they push for a number before they've seen the demo:
+> Fair question. We're setting pricing with our first sites. I'll take you through it on a call. Easiest next step is the 3-minute demo: https://youtu.be/3_s0V_pwHdE. Then tell me which failure you'd start with.
 
 If they say it is too much:
-> Understood. What would a repeat failure on [asset/line] cost you in a year? If it's under about A$2,500, this probably isn't worth it yet. If it's well above, the pilot pays for itself with one countermeasure that holds.
+> Understood. What would a repeat failure on [asset/line] cost you in a year? If the figure is small, this probably isn't worth it yet. If it's large, one countermeasure that holds can matter more than the cost of the pilot. And if no repeat-failure cost has been put on a failure within 30 days, you can stop with no further charge.
 
 ## Notes for the owner
 - Say what you actually did at past sites. Put one real detail in every message.

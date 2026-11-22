@@ -1,6 +1,6 @@
 # Landing page review (https://www.rcapilot.com, from web/app/page.tsx)
 
-Review only. The app has not been touched. Suggestions are ranked by likely effect on conversion. Pricing mentioned here is a DRAFT: A$2,500 90-day site pilot, then A$450 a month per site, ex GST.
+Review only. The app has not been touched. Suggestions are ranked by likely effect on conversion. Pricing is not set.
 
 ## What works
 - The page is clean, loads one idea at a time, and the screenshots show the real product.
@@ -13,7 +13,7 @@ Review only. The app has not been touched. Suggestions are ranked by likely effe
 
 1. **There is no way to say "I'm interested" for a site.** The only contacts are the sample, the account button and a footer email. For a B2B tool that sells as a pilot, add a clear "Talk to the founder by email" button: `mailto:roberts@intelbeyond.com?subject=Pilot%20at%20our%20site`. Put it in the hero and the closing band. Email only. Do not add a phone number or booking link.
 2. **The page does not say who it is for.** "Get your plant out of firefighting mode" is memorable but vague. A visitor must read down to learn it's for maintenance and plant teams. Add a one-line audience under the headline: "For maintenance, reliability and operations teams at food, beverage and process plants."
-3. **No "pilot for sites" section.** Add a short band: "Start with one site. A 90-day pilot, with set-up and help on your first RCAs." Show the draft price only once it is final. Until then, say "Pricing on request by email" so the page does not make visitors guess.
+3. **No "pilot for sites" section.** Add a short band: "Start with one site. A 90-day pilot, with set-up and help on your first RCAs." Do not show a price. Until pricing is set, say: "We're setting pricing with our first sites. I'll take you through it on a call."
 4. **The credibility line is the strongest asset and it's buried.** Move it up, directly under the hero, and make it specific: "Built by Roberts, a former Maintenance, Production and Site Manager." A name and a role beat "a former manager". Consider a short sentence about a real failure he ran.
 5. **Lead with the dollar figure.** The demo thumbnail option B ("$238K a year. One pump.") is the stronger hook for managers. Try it in the hero sub-line: "Put a dollar figure on repeat failures, and prove the countermeasure held." Use an A/B test on the headline once there is traffic.
 
