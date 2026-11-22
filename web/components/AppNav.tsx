@@ -6,13 +6,14 @@ import { usePathname } from "next/navigation";
 const LINKS = [
   { href: "/app", label: "Investigations", match: (p: string) => p === "/app" || p.startsWith("/app/investigations") },
   { href: "/app/assets", label: "Assets", match: (p: string) => p.startsWith("/app/assets") },
+  { href: "/app/actions", label: "Actions", match: (p: string) => p.startsWith("/app/actions") },
   { href: "/app/account", label: "Account", match: (p: string) => p.startsWith("/app/account") },
 ];
 
 /** Section links in the app header. Desktop sits inline; phones get a second row. */
 export function AppNav({ variant }: { variant: "inline" | "row" }) {
   const path = usePathname() ?? "";
-  const links = variant === "row" ? LINKS.slice(0, 2) : LINKS;
+  const links = variant === "row" ? LINKS.slice(0, 3) : LINKS;
   return (
     <nav
       aria-label={variant === "row" ? "Sections" : "Main"}

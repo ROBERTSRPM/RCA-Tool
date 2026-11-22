@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { calcLoss, formatMoney, formatNumber, isLossQuantified, LOSS_NOT_COSTED } from "@/lib/finance";
+import { OPEN_ACTIONS_HREF, OVERDUE_ACTIONS_HREF } from "@/lib/action-list";
 import { formatDate, todayISO } from "@/lib/dates";
 import { rolloutProgress } from "@/lib/rollout";
 import { getAssetStore, getStore } from "@/lib/store";
@@ -227,12 +228,14 @@ export function Dashboard() {
           label="Open actions"
           value={items ? String(totals.open) : "…"}
           hint="Not yet done"
+          href={OPEN_ACTIONS_HREF}
         />
         <Stat
           label="Overdue actions"
           value={items ? String(totals.overdue) : "…"}
           hint="Past their due date"
           tone={totals.overdue > 0 ? "bad" : "neutral"}
+          href={OVERDUE_ACTIONS_HREF}
         />
         <Stat
           label="Verified annual savings"
@@ -421,7 +424,9 @@ function Stat({
   extra,
   tone = "neutral",
   className = "",
+  href,
 }: {
+  href?: string;
   className?: string;
   label: string;
   value: string;
@@ -432,8 +437,8 @@ function Stat({
 }) {
   const color =
     tone === "good" ? "text-emerald-700" : tone === "bad" ? "text-red-700" : "text-slate-900";
-  return (
-    <div className={`bg-white p-4 ${className}`}>
+  const body = (
+    <>
       <p className="eyebrow">{label}</p>
       <p className={`mt-1.5 text-xl font-semibold tabular-nums tracking-tight sm:text-2xl ${color}`}>
         {value}
@@ -441,6 +446,14 @@ function Stat({
       <p className="mt-0.5 text-xs text-slate-500">{hint}</p>
       {split && <p className="mt-0.5 text-xs text-slate-500">{split}</p>}
       {extra && <p className="mt-0.5 text-xs text-slate-500">{extra}</p>}
-    </div>
+    </>
   );
+  if (href) {
+    return (
+      <Link href={href} className={`block bg-white p-4 hover:bg-slate-50 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent ${className}`}>
+        {body}
+      </Link>
+    );
+  }
+  return <div className={`bg-white p-4 ${className}`}>{body}</div>;
 }
