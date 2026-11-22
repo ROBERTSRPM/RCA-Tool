@@ -11,7 +11,7 @@ from scipy.ndimage import minimum_filter1d, uniform_filter1d
 SR = 48000
 # scene -> list of (part, start, end) source seconds; segments are joined with 0.2 s of silence
 CUTS = {
- 1: [(1, 2.3, 30.05), (1, 30.05, 37.9, "s"), (1, 37.9, 65.0)],
+ 1: [(1, 2.3, 29.85), (1, 29.85, 37.9, "s"), (1, 37.9, 65.0)],
  2: [(1, 68.1, 124.5)],
  3: [(1, 128.35, 150.0)],
  4: [(1, 153.4, 198.9), (1, 216.55, 233.3)],
@@ -61,7 +61,27 @@ def shorten(seg_db, seg, thr, maxgap=2.2, keep=1.4):
 sos = butter(4, 80, "hp", fs=SR, output="sos")
 REC = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "recordings")
 REPL_FILES = {"a": "scene10-line-a", "b": "scene10-line-b", "p": "scene11-line-preventive", "o": "scene15-line-opening", "s": "scene1-line-phones"}
-TRIM_DB = {"s": -3.0}
+TRIM_DB = {"a": 1.3, "b": 0.8, "p": 0.8, "o": -1.0, "s": 0.0}
+_REF = {}
+def ref_spectrum():
+    """Average speech spectrum of the main recordings (both parts, raw): the target every re-recorded section is matched to."""
+    if "s" not in _REF:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))); import tone
+        _REF["tone"] = tone; _REF["s"] = tone.spectrum(np.concatenate([srcs[1][int(3 * SR):], srcs[2][int(100 * SR):int(200 * SR)]]))
+    return _REF["s"], _REF["tone"]
+def match_eq(y, tag, outdir):
+    """Tone matching: a smooth linear-phase EQ (1/3-octave steps, limited to +-8 dB, none above 10 kHz or below 100 Hz) that brings the long-term speech spectrum of a re-recorded
+    section to the main recordings' average spectrum. Written to the report so the before/after distance is on record."""
+    from scipy.signal import firwin2, fftconvolve
+    ref, tone = ref_spectrum(); cur = tone.spectrum(y)
+    d = np.clip(ref - cur, -8, 8); d = np.convolve(np.pad(d, 1, mode="edge"), [0.25, 0.5, 0.25], "valid")
+    fr = np.array([0] + list(tone.BANDS) + [SR / 2]); gdb = np.array([d[0]] + list(d) + [d[-1]])
+    gdb[-2:] = 0; gdb[0] = d[0] * 0.0 if False else d[0]
+    h = firwin2(4097, fr / (SR / 2), 10 ** (gdb / 20), fs=None) if False else firwin2(4097, np.minimum(fr / (SR / 2), 1.0), 10 ** (gdb / 20))
+    out = fftconvolve(y, h, mode="same")
+    MATCH[tag] = {"before_rms_db": float(np.sqrt(np.mean((cur - ref) ** 2))), "after_rms_db": float(np.sqrt(np.mean((tone.spectrum(out) - ref) ** 2))), "eq_db": [round(float(x), 1) for x in d]}
+    return out
+MATCH = {}
 def replacement(tag):
     """Owner's re-recorded line for a tagged piece (recordings/<name>.<ext>), or None."""
     fs_ = [f for f in glob.glob(os.path.join(REC, REPL_FILES[tag] + ".*")) if not f.endswith(".wav.tmp")]
@@ -69,15 +89,19 @@ def replacement(tag):
     wav = os.path.join(os.path.dirname(os.path.abspath(sys.argv[3] + "/x")), f"repl-{tag}.wav")
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", fs_[0], "-ac", "1", "-ar", str(SR), wav], check=True)
     y = sf.read(wav, dtype="float64")[0]
-    # re-recorded lines can come from a noisier room than the main takes (here about -52 dBFS against -85): clean each one with its own
-    # noise profile (its leading silence), then gate the gaps down to the level of the rest of the scene so there is no step in the room tone
-    lead = y[: int(0.4 * SR)]; lead_db = 20 * np.log10(np.sqrt(np.mean(lead ** 2)) + 1e-9)
-    if not (-72 < lead_db < -42): return y   # quiet room or speech in the lead-in: the normal chain is enough
-    y = nr.reduce_noise(y=y, sr=SR, y_noise=lead, stationary=True, prop_decrease=0.97, n_fft=2048, freq_mask_smooth_hz=400, time_mask_smooth_ms=60)
-    w_ = int(0.02 * SR); e_ = 20 * np.log10(np.sqrt(uniform_filter1d(y ** 2, w_)) + 1e-9)
-    thr_ = np.percentile(e_, 90) - 30
-    g_ = np.where(e_ < thr_, 10 ** (-24 / 20), 1.0); g_ = uniform_filter1d(g_, int(0.08 * SR))
-    y = y * g_
+    # re-recorded lines can come from a noisier room than the main takes (about -52 to -60 dBFS against -82): clean each one with its own noise profile
+    # (its quietest 0.4 s that is not digital silence), then gate the gaps down to the level of the rest of the scene so there is no step in the room tone
+    hh = int(0.4 * SR); step = int(0.05 * SR)
+    wins = [(20 * np.log10(np.sqrt(np.mean(y[i:i + hh] ** 2)) + 1e-9), i) for i in range(0, max(1, len(y) - hh), step)]
+    wins = [w for w in wins if w[0] > -85]
+    floor_db, i0 = min(wins) if wins else (-90, 0); lead = y[i0:i0 + hh]
+    if floor_db < -42 and floor_db > -79:
+        y = nr.reduce_noise(y=y, sr=SR, y_noise=lead, stationary=True, prop_decrease=0.97, n_fft=2048, freq_mask_smooth_hz=400, time_mask_smooth_ms=60)
+        w_ = int(0.02 * SR); e_ = 20 * np.log10(np.sqrt(uniform_filter1d(y ** 2, w_)) + 1e-9)
+        thr_ = np.percentile(e_, 90) - 30
+        g_ = np.where(e_ < thr_, 10 ** (-30 / 20), 1.0); g_ = uniform_filter1d(g_, int(0.08 * SR))
+        y = y * g_
+    y = match_eq(y, tag, os.path.dirname(wav))
     return y
 def peaking(f0, gain_db, q):  # RBJ peaking biquad as sos
     A = 10 ** (gain_db / 40); w = 2 * np.pi * f0 / SR; al = np.sin(w) / (2 * q); cw = np.cos(w)
@@ -98,7 +122,7 @@ for sc, cuts in CUTS.items():
             m = pyln.Meter(SR); old = seg[np.where(sdb.repeat(H) > floors[p] + 14)[0]] if False else seg
             try: g = 10 ** ((m.integrated_loudness(old) - m.integrated_loudness(r)) / 20)
             except Exception: g = 1.0
-            g *= 10 ** (TRIM_DB.get(tag, 0.0) / 20)  # measured on the processed scene: the integrated match alone left tag s about 3 dB louder than the sentences around it
+            g *= 10 ** (TRIM_DB.get(tag, 0.0) / 20)  # measured on the processed scenes (speech median against the finished main-voice scenes): the integrated match alone left these sections up to 1.6 dB off
             parts.append(fade(r * g)); info.append({"part": p, "src": [round(a2, 2), round(b2, 2)], "replaced_by": REPL_FILES[tag], "gain_db": round(20 * np.log10(g), 1)})
             gaps.append(0.18); continue
         pcs, lg = shorten(sdb, seg, floors[p] + 12)
@@ -154,5 +178,6 @@ for sc, y in scenes.items():
     y = limit(y * gain); sf.write(f"{out}/s{sc}.wav", y.astype(np.float32), SR, subtype="PCM_16")
     report[sc]["lufs"] = round(meter.integrated_loudness(y), 1); report[sc]["peak_dbfs"] = round(20 * np.log10(np.abs(y).max()), 2)
 report["gain_db"] = round(20 * np.log10(gain), 2); report["joined_lufs_raw"] = round(l0, 1); report["floors_db"] = {k: round(float(v), 1) for k, v in floors.items()}
+report["tone_match"] = MATCH
 json.dump(report, open(f"{out}/report.json", "w"), indent=1)
 print(json.dumps({k: v for k, v in report.items() if not str(k).isdigit()}), {k: (v["seconds"], v["lufs"]) for k, v in report.items() if str(k).isdigit()})

@@ -75,8 +75,8 @@ def buzz(at, rep=3, gap=1.05):
     for r in range(rep):
         a = at + r * gap; m = int(0.42 * SR); tt = np.arange(m) / SR
         put(sfx, a, np.sin(2 * np.pi * 170 * tt) * (0.6 + 0.4 * np.sin(2 * np.pi * 38 * tt)) * np.minimum(np.minimum(tt / 0.01, (0.42 - tt) / 0.03), 1) + bp(rng.standard_normal(m), 150, 600) * 0.2, 0.08)
-ring(29.4, [880, 660, 880, 660], rep=2, amp=0.09); buzz(29.4, rep=3)
-ring(34.8, [523, 659, 784], rep=2, amp=0.09); buzz(34.8, rep=3)  # second phone starts on "QA Manager" (spoken at 34.84 s)
+ring(29.2, [880, 660, 880, 660], rep=2, amp=0.09); buzz(29.2, rep=3)
+ring(34.4, [523, 659, 784], rep=2, amp=0.09); buzz(34.4, rep=3)  # second phone starts on "QA Manager" (spoken at 34.4 s in the processed scene)
 # 5. slack pack and the count of events (37 to 43 s): six soft taps, the sixth lower
 for i in range(6):
     m = int(0.2 * SR); tt = np.arange(m) / SR; f = 760 if i < 5 else 420

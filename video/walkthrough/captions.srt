@@ -1,9 +1,9 @@
 1
-00:00:00,680 --> 00:00:03,270
+00:00:00,700 --> 00:00:03,720
 It's 4 o'clock in the morning on a Thursday,
 
 2
-00:00:03,320 --> 00:00:08,480
+00:00:03,960 --> 00:00:08,460
 and the night shift on Line 3 is doing its 2-hourly seal check.
 
 3
@@ -11,31 +11,31 @@ and the night shift on Line 3 is doing its 2-hourly seal check.
 The operator takes 3 packs off the end of the line and drops them in the leak tester,
 
 4
-00:00:12,180 --> 00:00:18,600
+00:00:12,180 --> 00:00:18,580
 and 2 of them leak along the seal.
 
 5
-00:00:19,000 --> 00:00:27,300
+00:00:19,100 --> 00:00:27,280
 That means everything we've packed since the last good check, about 6,000 packs, goes on hold.
 
 6
-00:00:28,520 --> 00:00:31,000
+00:00:27,800 --> 00:00:30,300
 Then the phones start ringing.
 
 7
-00:00:31,300 --> 00:00:36,040
+00:00:30,660 --> 00:00:35,740
 First the Production Manager at home, then the QA Manager.
 
 8
-00:00:36,780 --> 00:00:44,380
+00:00:36,480 --> 00:00:44,380
 A retailer already complained about slack packs last month, and this is the 6th time this year.
 
 9
-00:00:45,180 --> 00:00:49,420
+00:00:45,180 --> 00:00:49,440
 When I ran the operation, this was the call nobody wanted,
 
 10
-00:00:49,800 --> 00:00:54,370
+00:00:49,780 --> 00:00:54,370
 because I knew the general manager would ask two questions.
 
 11
@@ -47,23 +47,23 @@ Why does this keep happening, and what is it actually costing us?
 So what do we want?
 
 13
-00:01:07,590 --> 00:01:12,410
+00:01:07,870 --> 00:01:12,430
 First, find the real cause, not just the faulty pack.
 
 14
-00:01:12,890 --> 00:01:17,290
+00:01:12,870 --> 00:01:17,290
 Second, understand the financial impact to the business.
 
 15
-00:01:17,830 --> 00:01:21,450
+00:01:17,830 --> 00:01:21,430
 Third, put in a countermeasure that holds.
 
 16
-00:01:22,050 --> 00:01:25,990
+00:01:22,050 --> 00:01:26,010
 And finally, prove it, months later.
 
 17
-00:01:26,530 --> 00:01:31,810
+00:01:26,530 --> 00:01:31,790
 I'll do it in RCA Pilot, starting from a blank page.
 
 18
@@ -71,19 +71,19 @@ I'll do it in RCA Pilot, starting from a blank page.
 The numbers are illustrative, made up to show the method.
 
 19
-00:01:37,610 --> 00:01:41,220
+00:01:37,610 --> 00:01:41,200
 We have 6 events a year, and each one stops the line for 8 hours.
 
 20
-00:01:41,270 --> 00:01:50,500
+00:01:41,250 --> 00:01:50,520
 The line runs at 3,000 packs an hour, with 45 cents margin a pack.
 
 21
-00:01:50,550 --> 00:02:00,190
+00:01:50,570 --> 00:02:00,190
 On top of that, each event costs on average about $33,100 in cash.
 
 22
-00:02:02,630 --> 00:02:09,040
+00:02:02,610 --> 00:02:09,040
 So where do we start?
 
 23
@@ -91,7 +91,7 @@ So where do we start?
 com and make an account with an email and password.
 
 24
-00:02:14,670 --> 00:02:15,370
+00:02:14,690 --> 00:02:15,390
 You need an account for the AI buttons.
 
 25
@@ -107,15 +107,15 @@ Step 1 is the Problem.
 This is where a lot of investigations go wrong.
 
 28
-00:02:31,430 --> 00:02:36,610
+00:02:31,450 --> 00:02:36,630
 Somebody writes "seals bad", and everyone moves on.
 
 29
-00:02:37,510 --> 00:02:40,510
+00:02:37,530 --> 00:02:40,530
 First I set the Type of failure.
 
 30
-00:02:41,310 --> 00:02:45,470
+00:02:41,310 --> 00:02:45,450
 A leaking pack is a Process or quality failure.
 
 31
@@ -135,7 +135,7 @@ The AI turns the notes into a clear statement, using only what I wrote.
 It doesn't guess a cause.
 
 35
-00:03:10,930 --> 00:03:18,370
+00:03:10,910 --> 00:03:18,370
 It also lists what's missing, under Not in your notes, worth finding out.
 
 36
@@ -151,7 +151,7 @@ Then I press Use this draft and correct anything that's wrong.
 Two small things matter later.
 
 39
-00:03:32,150 --> 00:03:37,970
+00:03:32,150 --> 00:03:37,990
 If this started as a non-conformance, put the number in Quality reference.
 
 40
@@ -179,55 +179,55 @@ This is the one the general manager cares about.
 If you don't have figures yet, choose Not known yet, or put in a rough yearly estimate.
 
 46
-00:04:10,050 --> 00:04:14,890
+00:04:10,050 --> 00:04:14,870
 A rough number beats none.
 
 47
-00:04:15,850 --> 00:04:22,260
+00:04:16,130 --> 00:04:22,850
 Here we have 6 events a year, 8 hours each, at 3,000 packs an hour.
 
 48
-00:04:22,310 --> 00:04:27,650
+00:04:23,170 --> 00:04:27,650
 So each event, we don't make 24,000 packs.
 
 49
-00:04:28,930 --> 00:04:35,150
+00:04:29,030 --> 00:04:35,170
 At 45 cents a pack, that's $10,800 of lost margin.
 
 50
-00:04:36,170 --> 00:04:36,870
+00:04:36,130 --> 00:04:36,830
 Then there's the cash.
 
 51
-00:04:36,550 --> 00:04:46,370
+00:04:36,550 --> 00:04:45,920
 There's the $1,200 call-out, and then everything that quietly adds up under Other costs.
 
 52
-00:04:47,170 --> 00:04:49,760
+00:04:45,970 --> 00:04:49,740
 Scrapped product is $14,500.
 
 53
-00:04:49,810 --> 00:04:54,370
+00:04:49,790 --> 00:04:54,390
 Product on hold is $3,200.
 
 54
-00:04:54,950 --> 00:04:55,740
+00:04:54,890 --> 00:04:55,720
 Customer claims and credits are $6,800, retailer penalties $5,000, and rework $2,400.
 
 55
-00:04:55,790 --> 00:05:13,210
+00:04:55,770 --> 00:05:13,230
 Claims and penalties don't hit every event, so these are averages across the year.
 
 56
-00:05:14,190 --> 00:05:18,480
+00:05:13,970 --> 00:05:18,930
 That makes $33,100 of cash.
 
 57
-00:05:18,530 --> 00:05:32,470
+00:05:19,450 --> 00:05:32,190
 So on average, one event costs $43,900, and 6 a year comes to $263,400.
 
 58
-00:05:33,550 --> 00:05:39,790
+00:05:33,090 --> 00:05:39,810
 And because the line runs at capacity, that output is gone for good.
 
 59
@@ -243,7 +243,7 @@ In any plant meeting, that means evidence before opinions,
 because everyone has a theory about those seals.
 
 62
-00:05:54,310 --> 00:06:00,250
+00:05:54,310 --> 00:06:00,270
 Each piece gets a title, a type, a date and a note.
 
 63
@@ -263,23 +263,23 @@ Keep the retained packs and the worn parts, and photograph them before anything 
 Now we get to Step 4, the Cause tree.
 
 67
-00:06:32,110 --> 00:06:34,790
+00:06:32,110 --> 00:06:34,810
 This is where the real thinking happens.
 
 68
-00:06:35,130 --> 00:06:39,830
+00:06:35,030 --> 00:06:39,830
 The top box is the failure event, and we keep asking Why?
 
 69
-00:06:40,430 --> 00:06:41,910
+00:06:40,410 --> 00:06:41,910
 in plain words.
 
 70
-00:06:42,910 --> 00:06:45,050
+00:06:43,010 --> 00:06:45,050
 Why were the packs leaking?
 
 71
-00:06:45,790 --> 00:06:48,710
+00:06:45,770 --> 00:06:48,710
 Because the seals were weak along the flange.
 
 72
@@ -287,11 +287,11 @@ Because the seals were weak along the flange.
 Why?
 
 73
-00:06:49,890 --> 00:06:56,830
+00:06:50,750 --> 00:06:56,830
 Because the jaw ran 17 degrees low, and the silicone was worn.
 
 74
-00:06:57,390 --> 00:06:59,330
+00:06:57,430 --> 00:06:59,330
 That's the physical cause.
 
 75
@@ -299,7 +299,7 @@ That's the physical cause.
 If we stopped there, we'd be back here in a few weeks.
 
 76
-00:07:04,430 --> 00:07:07,790
+00:07:04,450 --> 00:07:07,790
 So we ask why it wasn't caught.
 
 77
@@ -307,7 +307,7 @@ So we ask why it wasn't caught.
 Nothing in the maintenance plan checks the jaw temperature or replaces that silicone.
 
 78
-00:07:15,350 --> 00:07:23,890
+00:07:15,350 --> 00:07:23,870
 That's the system level, and the real root, so I mark it with This is a root cause.
 
 79
@@ -319,11 +319,11 @@ The other branches work the same way.
 Operators raised the speed and cut the dwell time to keep up.
 
 81
-00:07:33,710 --> 00:07:35,840
+00:07:33,710 --> 00:07:35,820
 A new film batch came in.
 
 82
-00:07:35,890 --> 00:07:39,840
+00:07:35,870 --> 00:07:39,840
 And the seal check was only 3 packs every 2 hours.
 
 83
@@ -339,7 +339,7 @@ If I can't prove it, it stays a theory.
 With equipment, I always ask one question.
 
 86
-00:07:58,610 --> 00:08:00,970
+00:07:58,610 --> 00:08:00,990
 Is the wear natural, or forced?
 
 87
@@ -347,15 +347,15 @@ Is the wear natural, or forced?
 Silicone on a sealing jaw wears out eventually.
 
 88
-00:08:06,050 --> 00:08:07,270
+00:08:06,030 --> 00:08:07,270
 That's natural.
 
 89
-00:08:07,790 --> 00:08:15,730
+00:08:07,770 --> 00:08:15,730
 But running it a year past its life, because nothing prompted anyone to change it, is forced.
 
 90
-00:08:16,390 --> 00:08:21,540
+00:08:16,410 --> 00:08:21,540
 That's wear we allowed, so I record it under Type of wear.
 
 91
@@ -371,15 +371,15 @@ Now the AI help.
 I treat it as a second pair of eyes, not the boss.
 
 94
-00:08:38,910 --> 00:08:43,150
+00:08:38,890 --> 00:08:43,170
 The Cause coach suggests causes I may have missed.
 
 95
-00:08:43,990 --> 00:08:51,330
+00:08:43,970 --> 00:08:51,310
 Each one says what would confirm it or rule it out, and I choose Add to tree or Dismiss.
 
 96
-00:08:52,230 --> 00:08:55,610
+00:08:52,230 --> 00:08:55,630
 It suggests product contaminating the flange.
 
 97
@@ -387,35 +387,35 @@ It suggests product contaminating the flange.
 I hadn't thought of that, so it goes in.
 
 98
-00:08:59,030 --> 00:09:04,510
+00:08:59,030 --> 00:09:04,490
 It also suggests the seal plate is marked and not flat.
 
 99
-00:09:04,870 --> 00:09:07,170
+00:09:04,930 --> 00:09:07,170
 The inspection found those marks.
 
 100
-00:09:07,650 --> 00:09:09,430
+00:09:07,770 --> 00:09:09,410
 So that one goes in too.
 
 101
-00:09:10,250 --> 00:09:13,530
+00:09:10,270 --> 00:09:13,530
 Next, I click Challenge my analysis.
 
 102
-00:09:14,390 --> 00:09:18,990
+00:09:14,430 --> 00:09:18,990
 It reviews the tree the way an experienced investigator would.
 
 103
-00:09:19,750 --> 00:09:24,330
+00:09:19,770 --> 00:09:24,330
 It points out that the film root cause has no evidence linked.
 
 104
-00:09:24,690 --> 00:09:28,650
+00:09:24,830 --> 00:09:28,140
 That's fair, so I link the film specification.
 
 105
-00:09:29,450 --> 00:09:30,380
+00:09:28,190 --> 00:09:30,380
 The AI suggests.
 
 106
@@ -423,7 +423,7 @@ The AI suggests.
 You decide.
 
 107
-00:09:34,280 --> 00:09:36,540
+00:09:34,300 --> 00:09:36,540
 Step 5 is Actions.
 
 108
@@ -439,11 +439,11 @@ So every action gets an owner, a due date and a cost.
 Corrective actions deal with this failure.
 
 111
-00:09:53,900 --> 00:09:56,470
+00:09:53,900 --> 00:09:56,450
 Preventive actions stop it from coming back.
 
 112
-00:09:56,520 --> 00:10:03,190
+00:09:56,500 --> 00:10:03,190
 For the jaw, it's a Maintenance task: check the temperature every week,
 
 113
@@ -451,11 +451,11 @@ For the jaw, it's a Maintenance task: check the temperature every week,
 and replace the silicone every 3 months.
 
 114
-00:10:07,220 --> 00:10:14,400
+00:10:07,220 --> 00:10:14,380
 For the settings, it's a Design or equipment change, to lock them by recipe.
 
 115
-00:10:15,200 --> 00:10:21,080
+00:10:15,160 --> 00:10:21,080
 For the film, it's a Procedure or standard, with supplier change control.
 
 116
@@ -467,11 +467,11 @@ And for the seal checks, it's more frequent checks and a faster leak tester.
 The total cost is $20,200.
 
 118
-00:10:33,180 --> 00:10:40,080
+00:10:33,180 --> 00:10:40,120
 If you get stuck for ideas, each root cause has a Suggested actions button.
 
 119
-00:10:40,800 --> 00:10:44,280
+00:10:40,780 --> 00:10:44,280
 Nothing goes in until I click Add to actions.
 
 120
@@ -479,7 +479,7 @@ Nothing goes in until I click Add to actions.
 And the Quality check lists any gaps, like a root cause with no action against it.
 
 121
-00:10:55,100 --> 00:11:02,820
+00:10:55,080 --> 00:11:02,440
 Now the part almost nobody does: Step 6, proving it stopped.
 
 122
@@ -487,11 +487,11 @@ Now the part almost nobody does: Step 6, proving it stopped.
 Savings only count once every action is Done,
 
 123
-00:11:07,320 --> 00:11:11,400
+00:11:07,300 --> 00:11:11,400
 the review date is in, and the failure hasn't come back.
 
 124
-00:11:12,100 --> 00:11:16,180
+00:11:12,080 --> 00:11:16,160
 So, months later, I mark the actions Done.
 
 125
@@ -507,15 +507,15 @@ That brings the loss down to $43,900 a year, so the verified saving is $219,500.
 1 months, and we got 40 hours of line time back.
 
 128
-00:11:45,840 --> 00:11:49,050
+00:11:45,840 --> 00:11:49,070
 Then I ask where else this could happen.
 
 129
-00:11:49,100 --> 00:11:53,760
+00:11:49,120 --> 00:11:53,760
 With Roll out this countermeasure,
 
 130
-00:11:54,500 --> 00:12:00,300
+00:11:54,480 --> 00:12:00,300
 I add a check for Lines 1 and 2, each with an owner and a date.
 
 131
@@ -527,7 +527,7 @@ The last step is the Report.
 This is where you answer the general manager's two questions.
 
 133
-00:12:08,760 --> 00:12:14,200
+00:12:08,780 --> 00:12:14,200
 I click Draft report, and it writes the report from everything I've entered.
 
 134
@@ -547,19 +547,19 @@ Then I Print or Save as PDF.
 So let's go back to that Thursday morning, and that meeting.
 
 138
-00:12:34,560 --> 00:12:36,460
+00:12:34,540 --> 00:12:36,460
 Why does this keep happening?
 
 139
-00:12:36,980 --> 00:12:42,260
+00:12:37,000 --> 00:12:42,260
 Because nothing in our system checked the jaw, locked the settings,
 
 140
-00:12:42,520 --> 00:12:46,400
+00:12:42,500 --> 00:12:46,400
 controlled the film, or caught a bad seal early.
 
 141
-00:12:46,740 --> 00:12:49,240
+00:12:46,700 --> 00:12:49,240
 It was never one unlucky operator.
 
 142
@@ -575,19 +575,19 @@ $263,400 a year.
 And the proof the countermeasure works is $219,
 
 145
-00:13:02,100 --> 00:13:09,760
+00:13:02,100 --> 00:13:09,740
 500 saved and verified, and 40 hours of line time back.
 
 146
-00:13:10,540 --> 00:13:13,260
+00:13:10,580 --> 00:13:13,260
 And this is the dashboard.
 
 147
-00:13:13,960 --> 00:13:17,040
+00:13:13,920 --> 00:13:17,040
 You see it all on one screen: what failures are costing you,
 
 148
-00:13:17,680 --> 00:13:26,360
+00:13:17,700 --> 00:13:26,360
 what you've saved and verified, and the actions still open.
 
 149
@@ -595,10 +595,10 @@ what you've saved and verified, and the actions still open.
 That's the method.
 
 150
-00:13:33,740 --> 00:13:34,600
+00:13:33,740 --> 00:13:34,560
 com.
 
 151
-00:13:34,660 --> 00:13:37,420
+00:13:35,240 --> 00:13:37,420
 The link is in the description.
 

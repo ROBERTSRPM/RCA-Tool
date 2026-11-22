@@ -118,8 +118,8 @@ const Phone = ({t}: {t: number}) => {
     <Stage dark t={t} a={28.3} b={36.4}>
       <svg width={1920} height={1080}>
         <rect x={0} y={820} width={1920} height={260} fill="#1c222c" />
-        <Ph x={520} label="Production Manager" a={29.4} />
-        <Ph x={1140} label="QA Manager" a={34.8} />
+        <Ph x={520} label="Production Manager" a={29.2} />
+        <Ph x={1140} label="QA Manager" a={34.4} />
       </svg>
     </Stage>
   );

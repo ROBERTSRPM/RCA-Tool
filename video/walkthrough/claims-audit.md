@@ -98,7 +98,7 @@ Scenes 1 and 2 are simple illustrations in the app's style (no footage, no peopl
 | s9 | forced | is forced | 20.84 | 21.7 to 25.4 | yes | yes | yes | yes | yes | PASS |
 | s10 | accept | It suggests product | 21.66 | 22.5 to 24.8 | yes | yes | yes | yes | yes | PASS |
 | s10 | accept2 | seal plate | 30.16 | 31.0 to 33.3 | yes | yes | yes | yes | yes | PASS |
-| s10 | chal | film root cause | 49.56 | 50.4 to 51.8 | yes | yes | yes | yes | yes | PASS |
+| s10 | chal | film root cause | 49.56 | 50.4 to 52.0 | yes | yes | yes | yes | yes | PASS |
 | s10 | e5 | film specification | 55 | 55.9 to 58.0 | yes | yes | yes | yes | yes | PASS |
 | s11 | t-total | The total cost | 53 | 53.9 to 58.6 | yes | yes | yes | yes | yes | PASS |
 | s13 | review-date | the review date | 12.54 | 13.4 to 15.1 | yes | yes | yes | yes | yes | PASS |
@@ -109,16 +109,16 @@ Scenes 1 and 2 are simple illustrations in the app's style (no footage, no peopl
 | s13 | t-payback | about 1 | 44.42 | 45.3 to 47.2 | yes | yes | yes | yes | yes | PASS |
 | s13 | t-linetime | 40 hours | 47.32 | 48.2 to 51.3 | yes | yes | yes | yes | yes | PASS |
 | s14 | printbtn | Then I print | 22.04 | 22.9 to 26.2 | yes | yes | yes | yes | yes | PASS |
-| s15 | root-jaw | checked the | 10.5 | 11.3 to 12.2 | yes | yes | yes | yes | yes | PASS |
-| s15 | root-settings | locked the | 12.3 | 13.2 to 14.1 | yes | yes | yes | yes | yes | PASS |
-| s15 | root-film | controlled the | 14.2 | 15.1 to 15.7 | yes | yes | yes | yes | yes | PASS |
+| s15 | root-jaw | checked the | 10.52 | 11.4 to 12.3 | yes | yes | yes | yes | yes | PASS |
+| s15 | root-settings | locked the | 12.36 | 13.2 to 14.1 | yes | yes | yes | yes | yes | PASS |
+| s15 | root-film | controlled the | 14.16 | 15.0 to 15.7 | yes | yes | yes | yes | yes | PASS |
 | s15 | root-seal | caught a | 15.78 | 16.6 to 20.5 | yes | yes | yes | yes | yes | PASS |
-| s15 | t-before | $263 | 25.52 | 26.4 to 31.2 | yes | yes | yes | yes | yes | PASS |
-| s15 | t-saving | $219 | 31.88 | 32.7 to 37.5 | yes | yes | yes | yes | yes | PASS |
-| s15 | t-linetime | and 40 | 38.36 | 39.2 to 42.3 | yes | yes | yes | yes | yes | PASS |
-| s15 | d-loss | What failures | 49.36 | 50.2 to 51.8 | yes | yes | yes | yes | yes | PASS |
-| s15 | d-saved | what you have | 51.94 | 52.8 to 55.8 | yes | yes | yes | yes | yes | PASS |
-| s15 | d-actions | the actions still | 55.88 | 56.7 to 61.5 | yes | yes | yes | yes | yes | PASS |
+| s15 | t-before | $263 | 25.48 | 26.3 to 31.1 | yes | yes | yes | yes | yes | PASS |
+| s15 | t-saving | $219 | 31.86 | 32.7 to 37.5 | yes | yes | yes | yes | yes | PASS |
+| s15 | t-linetime | and 40 | 38.36 | 39.2 to 42.2 | yes | yes | yes | yes | yes | PASS |
+| s15 | d-loss | What failures | 49.36 | 50.2 to 51.9 | yes | yes | yes | yes | yes | PASS |
+| s15 | d-saved | what you have | 51.96 | 52.8 to 55.8 | yes | yes | yes | yes | yes | PASS |
+| s15 | d-actions | the actions still | 55.9 | 56.8 to 61.5 | yes | yes | yes | yes | yes | PASS |
 <!-- CUE-CHECK-END -->
 
 ## Round 3 notes
